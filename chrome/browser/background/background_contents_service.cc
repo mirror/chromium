@@ -61,6 +61,11 @@
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_settings.h"
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/login/user_flow.h"
+#include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
+#endif
+
 using content::SiteInstance;
 using content::WebContents;
 using extensions::BackgroundInfo;
@@ -172,7 +177,7 @@ void NotificationImageReady(
 
   // Origin URL must be different from the crashed extension to avoid the
   // conflict. NotificationSystemObserver will cancel all notifications from
-  // the same origin when NOTIFICATION_EXTENSION_UNLOADED_DEPRECATED.
+  // the same origin when OnExtensionUnloaded() is called.
   Notification notification(message_center::NOTIFICATION_TYPE_SIMPLE,
                             base::string16(),
                             message,
@@ -435,6 +440,12 @@ void BackgroundContentsService::Observe(
           extensions::Manifest::IsComponentLocation(extension->location()) ||
           extensions::Manifest::IsPolicyLocation(extension->location());
       if (!force_installed) {
+#if defined(OS_CHROMEOS)
+        chromeos::UserFlow* user_flow =
+            chromeos::ChromeUserManager::Get()->GetCurrentUserFlow();
+        if (!user_flow->AllowsNotificationBalloons())
+          break;
+#endif
         ShowBalloon(extension, profile);
       } else {
         // Restart the extension.

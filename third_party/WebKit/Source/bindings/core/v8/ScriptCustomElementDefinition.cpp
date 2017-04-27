@@ -5,7 +5,7 @@
 #include "bindings/core/v8/ScriptCustomElementDefinition.h"
 
 #include "bindings/core/v8/ScriptState.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8BindingMacros.h"
 #include "bindings/core/v8/V8CustomElementRegistry.h"
 #include "bindings/core/v8/V8Element.h"
@@ -274,9 +274,9 @@ Element* ScriptCustomElementDefinition::CallConstructor() {
   ExecutionContext* execution_context =
       ExecutionContext::From(script_state_.Get());
   v8::Local<v8::Value> result;
-  if (!V8Call(V8ScriptRunner::CallAsConstructor(isolate, Constructor(),
-                                                execution_context, 0, nullptr),
-              result)) {
+  if (!V8ScriptRunner::CallAsConstructor(isolate, Constructor(),
+                                         execution_context, 0, nullptr)
+           .ToLocal(&result)) {
     return nullptr;
   }
   return V8Element::toImplWithTypeCheck(isolate, result);

@@ -413,6 +413,7 @@ css_properties("make_core_generated_computed_style_base") {
   in_files = [ "css/ComputedStyleExtraFields.json5" ]
   other_inputs = [
     "../build/scripts/templates/fields/field.tmpl",
+    "../build/scripts/templates/fields/group.tmpl",
     "../build/scripts/templates/fields/base.tmpl",
     "../build/scripts/templates/fields/keyword.tmpl",
     "../build/scripts/templates/fields/primitive.tmpl",
@@ -1326,9 +1327,9 @@ source_set("unit_tests") {
     "layout/ng/geometry/ng_box_strut_test.cc",
     "layout/ng/geometry/ng_logical_offset_test.cc",
     "layout/ng/geometry/ng_physical_rect_test.cc",
+    "layout/ng/inline/ng_inline_items_builder_test.cc",
     "layout/ng/inline/ng_inline_layout_algorithm_test.cc",
     "layout/ng/inline/ng_inline_node_test.cc",
-    "layout/ng/inline/ng_layout_inline_items_builder_test.cc",
     "layout/ng/ng_absolute_utils_test.cc",
     "layout/ng/ng_base_layout_algorithm_test.cc",
     "layout/ng/ng_base_layout_algorithm_test.h",

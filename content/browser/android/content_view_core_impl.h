@@ -260,18 +260,13 @@ class ContentViewCoreImpl : public ContentViewCore,
                        const gfx::SizeF& viewport_size,
                        const float top_controls_height,
                        const float top_controls_shown_ratio,
-                       bool is_mobile_optimized_hint,
-                       const gfx::SelectionBound& selection_start);
+                       bool is_mobile_optimized_hint);
 
   bool HasFocus();
   void RequestDisallowInterceptTouchEvent();
   void OnGestureEventAck(const blink::WebGestureEvent& event,
                          InputEventAckState ack_result);
   bool FilterInputEvent(const blink::WebInputEvent& event);
-  void OnSelectionChanged(const std::string& text);
-  void OnSelectionEvent(ui::SelectionEventType event,
-                        const gfx::PointF& selection_anchor,
-                        const gfx::RectF& selection_rect);
 
   // Shows the disambiguation popup
   // |rect_pixels|   --> window coordinates which |zoomed_bitmap| represents

@@ -316,7 +316,7 @@ DEFINE_TRACE_AFTER_DISPATCH(StyleRuleFontFace) {
 StyleRuleGroup::StyleRuleGroup(RuleType type,
                                HeapVector<Member<StyleRuleBase>>& adopt_rule)
     : StyleRuleBase(type) {
-  child_rules_.Swap(adopt_rule);
+  child_rules_.swap(adopt_rule);
 }
 
 StyleRuleGroup::StyleRuleGroup(const StyleRuleGroup& group_rule)
@@ -353,7 +353,7 @@ StyleRuleCondition::StyleRuleCondition(const StyleRuleCondition& condition_rule)
     : StyleRuleGroup(condition_rule),
       condition_text_(condition_rule.condition_text_) {}
 
-StyleRuleMedia::StyleRuleMedia(MediaQuerySet* media,
+StyleRuleMedia::StyleRuleMedia(RefPtr<MediaQuerySet> media,
                                HeapVector<Member<StyleRuleBase>>& adopt_rules)
     : StyleRuleCondition(kMedia, adopt_rules), media_queries_(media) {}
 
@@ -363,17 +363,16 @@ StyleRuleMedia::StyleRuleMedia(const StyleRuleMedia& media_rule)
     media_queries_ = media_rule.media_queries_->Copy();
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(StyleRuleMedia) {
-  visitor->Trace(media_queries_);
-  StyleRuleCondition::TraceAfterDispatch(visitor);
-}
-
 StyleRuleSupports::StyleRuleSupports(
     const String& condition_text,
     bool condition_is_supported,
     HeapVector<Member<StyleRuleBase>>& adopt_rules)
     : StyleRuleCondition(kSupports, condition_text, adopt_rules),
       condition_is_supported_(condition_is_supported) {}
+
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleMedia) {
+  StyleRuleCondition::TraceAfterDispatch(visitor);
+}
 
 StyleRuleSupports::StyleRuleSupports(const StyleRuleSupports& supports_rule)
     : StyleRuleCondition(supports_rule),

@@ -116,7 +116,7 @@ bool ImageCapture::HasPendingActivity() const {
 
 void ImageCapture::ContextDestroyed(ExecutionContext*) {
   RemoveAllEventListeners();
-  service_requests_.Clear();
+  service_requests_.clear();
   DCHECK(!HasEventListeners());
 }
 
@@ -496,10 +496,14 @@ void ImageCapture::OnPhotoCapabilities(
     // TODO(mcasas): Remove the explicit MediaSettingsRange::create() when
     // mojo::StructTraits supports garbage-collected mappings,
     // https://crbug.com/700180.
-    caps->SetImageHeight(
-        MediaSettingsRange::Create(std::move(capabilities->height)));
-    caps->SetImageWidth(
-        MediaSettingsRange::Create(std::move(capabilities->width)));
+    if (capabilities->height->min != 0 || capabilities->height->max != 0) {
+      caps->SetImageHeight(
+          MediaSettingsRange::Create(std::move(capabilities->height)));
+    }
+    if (capabilities->width->min != 0 || capabilities->width->max != 0) {
+      caps->SetImageWidth(
+          MediaSettingsRange::Create(std::move(capabilities->width)));
+    }
     caps->SetFillLightMode(capabilities->fill_light_mode);
 
     resolver->Resolve(caps);
@@ -646,7 +650,7 @@ void ImageCapture::OnServiceConnectionError() {
   service_.reset();
   for (ScriptPromiseResolver* resolver : service_requests_)
     resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
-  service_requests_.Clear();
+  service_requests_.clear();
 }
 
 DEFINE_TRACE(ImageCapture) {

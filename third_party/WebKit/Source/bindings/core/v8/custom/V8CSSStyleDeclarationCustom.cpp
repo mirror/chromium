@@ -32,7 +32,7 @@
 
 #include <algorithm>
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/CSSPropertyMetadata.h"
@@ -135,7 +135,7 @@ static CSSPropertyID ParseCSSPropertyID(const String& property_name) {
 static CSSPropertyID CssPropertyInfo(const AtomicString& name) {
   typedef HashMap<String, CSSPropertyID> CSSPropertyIDMap;
   DEFINE_STATIC_LOCAL(CSSPropertyIDMap, map, ());
-  CSSPropertyIDMap::iterator iter = map.Find(name);
+  CSSPropertyIDMap::iterator iter = map.find(name);
   if (iter != map.end())
     return iter->value;
 

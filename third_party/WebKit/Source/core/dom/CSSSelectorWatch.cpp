@@ -84,8 +84,8 @@ void CSSSelectorWatch::CallbackSelectorChangeTimerFired(TimerBase*) {
     GetSupplementable()->GetFrame()->Loader().Client()->SelectorMatchChanged(
         added_selectors, removed_selectors);
   }
-  added_selectors_.Clear();
-  removed_selectors_.Clear();
+  added_selectors_.clear();
+  removed_selectors_.clear();
   timer_expirations_ = 0;
 }
 
@@ -100,7 +100,7 @@ void CSSSelectorWatch::UpdateSelectorMatches(
 
     // Count reached 0.
     should_update_timer = true;
-    auto it = added_selectors_.Find(selector);
+    auto it = added_selectors_.find(selector);
     if (it != added_selectors_.end())
       added_selectors_.erase(it);
     else
@@ -114,7 +114,7 @@ void CSSSelectorWatch::UpdateSelectorMatches(
       continue;
 
     should_update_timer = true;
-    auto it = removed_selectors_.Find(selector);
+    auto it = removed_selectors_.find(selector);
     if (it != removed_selectors_.end())
       removed_selectors_.erase(it);
     else

@@ -1453,9 +1453,9 @@ Color LayoutObject::SelectionEmphasisMarkColor(
   return SelectionColor(CSSPropertyWebkitTextEmphasisColor, global_paint_flags);
 }
 
-void LayoutObject::SelectionStartEnd(int& start_pos, int& end_pos) const {
+std::pair<int, int> LayoutObject::SelectionStartEnd() const {
   DCHECK(!View()->NeedsLayout());
-  GetFrame()->Selection().LayoutSelectionStartEnd(start_pos, end_pos);
+  return GetFrame()->Selection().LayoutSelectionStartEnd();
 }
 
 // Called when an object that was floating or positioned becomes a normal flow
@@ -1543,7 +1543,8 @@ StyleDifference LayoutObject::AdjustStyleDifference(
   // needed if we have style or text affected by these properties.
   if (diff.TextDecorationOrColorChanged() &&
       !diff.NeedsFullPaintInvalidation()) {
-    if (Style()->HasBorder() || Style()->HasOutline() ||
+    if (Style()->HasBorderColorReferencingCurrentColor() ||
+        Style()->HasOutlineWithCurrentColor() ||
         Style()->HasBackgroundRelatedColorReferencingCurrentColor() ||
         // Skip any text nodes that do not contain text boxes. Whitespace cannot
         // be skipped or we will miss invalidating decorations (e.g.,
@@ -2493,7 +2494,7 @@ void LayoutObject::AddLayerHitTestRects(
   // WebLayer::setTouchEventHandlerRegion - crbug.com/300282.
   const size_t kMaxRectsPerLayer = 100;
 
-  LayerHitTestRects::iterator iter = layer_rects.Find(current_layer);
+  LayerHitTestRects::iterator iter = layer_rects.find(current_layer);
   Vector<LayoutRect>* iter_value;
   if (iter == layer_rects.end())
     iter_value = &layer_rects.insert(current_layer, Vector<LayoutRect>())

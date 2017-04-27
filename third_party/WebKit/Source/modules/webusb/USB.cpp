@@ -134,9 +134,9 @@ const AtomicString& USB::InterfaceName() const {
 
 void USB::ContextDestroyed(ExecutionContext*) {
   device_manager_.reset();
-  device_manager_requests_.Clear();
+  device_manager_requests_.clear();
   chooser_service_.reset();
-  chooser_service_requests_.Clear();
+  chooser_service_requests_.clear();
 }
 
 USBDevice* USB::GetOrCreateDevice(UsbDeviceInfoPtr device_info) {
@@ -154,7 +154,7 @@ USBDevice* USB::GetOrCreateDevice(UsbDeviceInfoPtr device_info) {
 
 void USB::OnGetDevices(ScriptPromiseResolver* resolver,
                        Vector<UsbDeviceInfoPtr> device_infos) {
-  auto request_entry = device_manager_requests_.Find(resolver);
+  auto request_entry = device_manager_requests_.find(resolver);
   if (request_entry == device_manager_requests_.end())
     return;
   device_manager_requests_.erase(request_entry);
@@ -168,7 +168,7 @@ void USB::OnGetDevices(ScriptPromiseResolver* resolver,
 
 void USB::OnGetPermission(ScriptPromiseResolver* resolver,
                           UsbDeviceInfoPtr device_info) {
-  auto request_entry = chooser_service_requests_.Find(resolver);
+  auto request_entry = chooser_service_requests_.find(resolver);
   if (request_entry == chooser_service_requests_.end())
     return;
   chooser_service_requests_.erase(request_entry);
@@ -206,14 +206,14 @@ void USB::OnDeviceManagerConnectionError() {
   client_binding_.Close();
   for (ScriptPromiseResolver* resolver : device_manager_requests_)
     resolver->Resolve(HeapVector<Member<USBDevice>>(0));
-  device_manager_requests_.Clear();
+  device_manager_requests_.clear();
 }
 
 void USB::OnChooserServiceConnectionError() {
   chooser_service_.reset();
   for (ScriptPromiseResolver* resolver : chooser_service_requests_)
     resolver->Reject(DOMException::Create(kNotFoundError, kNoDeviceSelected));
-  chooser_service_requests_.Clear();
+  chooser_service_requests_.clear();
 }
 
 void USB::AddedEventListener(const AtomicString& event_type,

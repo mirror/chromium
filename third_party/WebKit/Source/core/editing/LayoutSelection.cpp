@@ -41,10 +41,6 @@ LayoutSelection::LayoutSelection(FrameSelection& frame_selection)
       selection_start_pos_(-1),
       selection_end_pos_(-1) {}
 
-const VisibleSelection& LayoutSelection::GetVisibleSelection() const {
-  return frame_selection_->ComputeVisibleSelectionInDOMTree();
-}
-
 SelectionInFlatTree LayoutSelection::CalcVisibleSelection(
     const VisibleSelectionInFlatTree& original_selection) const {
   const PositionInFlatTree& start = original_selection.Start();
@@ -306,10 +302,9 @@ void LayoutSelection::SetSelection(
     i->key->SetShouldInvalidateSelection();
 }
 
-void LayoutSelection::SelectionStartEnd(int& start_pos, int& end_pos) {
+std::pair<int, int> LayoutSelection::SelectionStartEnd() {
   Commit();
-  start_pos = selection_start_pos_;
-  end_pos = selection_end_pos_;
+  return std::make_pair(selection_start_pos_, selection_end_pos_);
 }
 
 void LayoutSelection::ClearSelection() {

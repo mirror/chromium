@@ -772,7 +772,7 @@ IDBIndex* IDBObjectStore::index(const String& name,
     return nullptr;
   }
 
-  IDBIndexMap::iterator it = index_map_.Find(name);
+  IDBIndexMap::iterator it = index_map_.find(name);
   if (it != index_map_.end())
     return it->value;
 
@@ -826,7 +826,7 @@ void IDBObjectStore::deleteIndex(const String& name,
   BackendDB()->DeleteIndex(transaction_->Id(), Id(), index_id);
 
   metadata_->indexes.erase(index_id);
-  IDBIndexMap::iterator it = index_map_.Find(name);
+  IDBIndexMap::iterator it = index_map_.find(name);
   if (it != index_map_.end()) {
     transaction_->IndexDeleted(it->value);
     it->value->MarkDeleted();
@@ -958,7 +958,7 @@ void IDBObjectStore::MarkDeleted() {
       << "An object store got deleted outside a versionchange transaction.";
 
   deleted_ = true;
-  metadata_->indexes.Clear();
+  metadata_->indexes.clear();
 
   for (auto& it : index_map_) {
     IDBIndex* index = it.value;
@@ -977,7 +977,7 @@ void IDBObjectStore::ClearIndexCache() {
   clear_index_cache_called_ = true;
 #endif  // DCHECK_IS_ON()
 
-  index_map_.Clear();
+  index_map_.clear();
 }
 
 void IDBObjectStore::RevertMetadata(
@@ -1032,7 +1032,7 @@ void IDBObjectStore::RenameIndex(int64_t index_id, const String& new_name) {
 
   BackendDB()->RenameIndex(transaction_->Id(), Id(), index_id, new_name);
 
-  auto metadata_iterator = metadata_->indexes.Find(index_id);
+  auto metadata_iterator = metadata_->indexes.find(index_id);
   DCHECK_NE(metadata_iterator, metadata_->indexes.end()) << "Invalid index_id";
   const String& old_name = metadata_iterator->value->name;
 

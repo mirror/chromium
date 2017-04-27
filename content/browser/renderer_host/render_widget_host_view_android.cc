@@ -41,6 +41,7 @@
 #include "content/browser/android/content_view_core_impl.h"
 #include "content/browser/android/ime_adapter_android.h"
 #include "content/browser/android/overscroll_controller_android.h"
+#include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
@@ -765,7 +766,7 @@ void RenderWidgetHostViewAndroid::OnTextSelectionChanged(
   if (is_in_vr_)
     return;
 
-  if (!content_view_core_)
+  if (!selection_popup_controller_)
     return;
 
   RenderWidgetHostImpl* focused_widget = GetFocusedWidget();
@@ -775,7 +776,7 @@ void RenderWidgetHostViewAndroid::OnTextSelectionChanged(
   const TextInputManager::TextSelection& selection =
       *text_input_manager_->GetTextSelection(focused_widget->GetView());
 
-  content_view_core_->OnSelectionChanged(
+  selection_popup_controller_->OnSelectionChanged(
       base::UTF16ToUTF8(selection.selected_text()));
 }
 
@@ -1294,7 +1295,7 @@ void RenderWidgetHostViewAndroid::SelectBetweenCoordinates(
 
 void RenderWidgetHostViewAndroid::OnSelectionEvent(
     ui::SelectionEventType event) {
-  DCHECK(content_view_core_);
+  DCHECK(selection_popup_controller_);
   DCHECK(touch_selection_controller_);
   // If a selection drag has started, it has taken over the active touch
   // sequence. Immediately cancel gesture detection and any downstream touch
@@ -1303,7 +1304,7 @@ void RenderWidgetHostViewAndroid::OnSelectionEvent(
       gesture_provider_.GetCurrentDownEvent()) {
     ResetGestureDetection();
   }
-  content_view_core_->OnSelectionEvent(
+  selection_popup_controller_->OnSelectionEvent(
       event, touch_selection_controller_->GetStartPosition(),
       GetSelectionRect(*touch_selection_controller_));
 }
@@ -1369,6 +1370,15 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   bool is_mobile_optimized = IsMobileOptimizedFrame(frame_metadata);
   gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
+  float dip_scale = view_.GetDipScale();
+  float top_controls_pix = frame_metadata.top_controls_height * dip_scale;
+  float top_shown_pix =
+      top_controls_pix * frame_metadata.top_controls_shown_ratio;
+
+  if (ime_adapter_android_)
+    ime_adapter_android_->UpdateFrameInfo(frame_metadata.selection.start,
+                                          dip_scale, top_shown_pix);
+
   if (!content_view_core_)
     return;
 
@@ -1395,22 +1405,17 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
       frame_metadata.top_controls_height *
           frame_metadata.top_controls_shown_ratio));
 
-  float dip_scale = view_.GetDipScale();
-  float top_controls_pix = frame_metadata.top_controls_height * dip_scale;
-  float top_shown_pix =
-      top_controls_pix * frame_metadata.top_controls_shown_ratio;
   bool top_changed = !FloatEquals(top_shown_pix, prev_top_shown_pix_);
-
-  float bottom_controls_pix = frame_metadata.bottom_controls_height * dip_scale;
-  float bottom_shown_pix =
-      bottom_controls_pix * frame_metadata.bottom_controls_shown_ratio;
-  bool bottom_changed = !FloatEquals(bottom_shown_pix, prev_bottom_shown_pix_);
-
   if (top_changed) {
     float translate = top_shown_pix - top_controls_pix;
     view_.OnTopControlsChanged(translate, top_shown_pix);
     prev_top_shown_pix_ = top_shown_pix;
   }
+
+  float bottom_controls_pix = frame_metadata.bottom_controls_height * dip_scale;
+  float bottom_shown_pix =
+      bottom_controls_pix * frame_metadata.bottom_controls_shown_ratio;
+  bool bottom_changed = !FloatEquals(bottom_shown_pix, prev_bottom_shown_pix_);
   if (bottom_changed) {
     float translate = bottom_controls_pix - bottom_shown_pix;
     view_.OnBottomControlsChanged(translate, bottom_shown_pix);
@@ -1419,16 +1424,12 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
 
   // All offsets and sizes are in CSS pixels.
   content_view_core_->UpdateFrameInfo(
-      frame_metadata.root_scroll_offset,
-      frame_metadata.page_scale_factor,
+      frame_metadata.root_scroll_offset, frame_metadata.page_scale_factor,
       gfx::Vector2dF(frame_metadata.min_page_scale_factor,
                      frame_metadata.max_page_scale_factor),
-      frame_metadata.root_layer_size,
-      frame_metadata.scrollable_viewport_size,
+      frame_metadata.root_layer_size, frame_metadata.scrollable_viewport_size,
       frame_metadata.top_controls_height,
-      frame_metadata.top_controls_shown_ratio,
-      is_mobile_optimized,
-      frame_metadata.selection.start);
+      frame_metadata.top_controls_shown_ratio, is_mobile_optimized);
 }
 
 void RenderWidgetHostViewAndroid::ShowInternal() {

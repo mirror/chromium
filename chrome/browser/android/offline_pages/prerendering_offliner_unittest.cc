@@ -45,7 +45,8 @@ class MockPrerenderingLoader : public PrerenderingLoader {
         mock_loading_(false),
         mock_loaded_(false),
         mock_is_lowbar_met_(false),
-        start_snapshot_called_(false) {}
+        start_snapshot_called_(false),
+        web_contents_(nullptr) {}
   ~MockPrerenderingLoader() override { delete web_contents_; }
 
   bool LoadPage(const GURL& url,
@@ -207,7 +208,7 @@ class PrerenderingOfflinerTest : public testing::Test {
   void OnCompletion(const SavePageRequest& request,
                     Offliner::RequestStatus status);
   void OnProgress(const SavePageRequest& request, int64_t bytes);
-  void OnCancel(int64_t offline_id);
+  void OnCancel(const SavePageRequest& request);
 
   content::TestBrowserThreadBundle thread_bundle_;
   TestingProfile profile_;
@@ -251,7 +252,7 @@ void PrerenderingOfflinerTest::OnCompletion(const SavePageRequest& request,
 void PrerenderingOfflinerTest::OnProgress(const SavePageRequest& request,
                                           int64_t bytes) {}
 
-void PrerenderingOfflinerTest::OnCancel(int64_t offline_id) {
+void PrerenderingOfflinerTest::OnCancel(const SavePageRequest& request) {
   DCHECK(!cancel_callback_called_);
   cancel_callback_called_ = true;
 }
@@ -481,7 +482,7 @@ TEST_F(PrerenderingOfflinerTest, HandleTimeoutWithLowbarAndCompletedTriesMet) {
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   loader()->set_is_lowbar_met(true);
-  EXPECT_TRUE(offliner()->HandleTimeout(request));
+  EXPECT_TRUE(offliner()->HandleTimeout(kRequestId));
   EXPECT_TRUE(loader()->start_snapshot_called());
   PumpLoop();
   // EXPECT_TRUE(SaveInProgress());
@@ -502,7 +503,7 @@ TEST_F(PrerenderingOfflinerTest,
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   loader()->set_is_lowbar_met(true);
-  EXPECT_TRUE(offliner()->HandleTimeout(request));
+  EXPECT_TRUE(offliner()->HandleTimeout(kRequestId));
   EXPECT_TRUE(loader()->start_snapshot_called());
 }
 
@@ -517,7 +518,7 @@ TEST_F(PrerenderingOfflinerTest,
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   loader()->set_is_lowbar_met(false);
-  EXPECT_FALSE(offliner()->HandleTimeout(request));
+  EXPECT_FALSE(offliner()->HandleTimeout(kRequestId));
   EXPECT_FALSE(loader()->start_snapshot_called());
 }
 
@@ -532,7 +533,7 @@ TEST_F(PrerenderingOfflinerTest,
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   loader()->set_is_lowbar_met(false);
-  EXPECT_FALSE(offliner()->HandleTimeout(request));
+  EXPECT_FALSE(offliner()->HandleTimeout(kRequestId));
   EXPECT_FALSE(loader()->start_snapshot_called());
 }
 
@@ -546,7 +547,7 @@ TEST_F(PrerenderingOfflinerTest, HandleTimeoutWithLowbarAndStartedTriesMet) {
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   loader()->set_is_lowbar_met(true);
-  EXPECT_TRUE(offliner()->HandleTimeout(request));
+  EXPECT_TRUE(offliner()->HandleTimeout(kRequestId));
   EXPECT_TRUE(loader()->start_snapshot_called());
 }
 
@@ -559,7 +560,7 @@ TEST_F(PrerenderingOfflinerTest, DISABLED_HandleTimeoutWithOnlyLowbarMet) {
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
   loader()->set_is_lowbar_met(true);
-  EXPECT_FALSE(offliner()->HandleTimeout(request));
+  EXPECT_FALSE(offliner()->HandleTimeout(kRequestId));
   EXPECT_FALSE(loader()->start_snapshot_called());
 }
 

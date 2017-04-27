@@ -142,11 +142,11 @@ void HTMLSlotElement::ClearDistribution() {
   // lazyReattachDistributedNodesIfNeeded()
   assigned_nodes_.clear();
   distributed_nodes_.clear();
-  distributed_indices_.Clear();
+  distributed_indices_.clear();
 }
 
 void HTMLSlotElement::SaveAndClearDistribution() {
-  old_distributed_nodes_.Swap(distributed_nodes_);
+  old_distributed_nodes_.swap(distributed_nodes_);
   ClearDistribution();
 }
 
@@ -158,7 +158,7 @@ void HTMLSlotElement::DispatchSlotChangeEvent() {
 
 Node* HTMLSlotElement::DistributedNodeNextTo(const Node& node) const {
   DCHECK(SupportsDistribution());
-  const auto& it = distributed_indices_.Find(&node);
+  const auto& it = distributed_indices_.find(&node);
   if (it == distributed_indices_.end())
     return nullptr;
   size_t index = it->value;
@@ -169,7 +169,7 @@ Node* HTMLSlotElement::DistributedNodeNextTo(const Node& node) const {
 
 Node* HTMLSlotElement::DistributedNodePreviousTo(const Node& node) const {
   DCHECK(SupportsDistribution());
-  const auto& it = distributed_indices_.Find(&node);
+  const auto& it = distributed_indices_.find(&node);
   if (it == distributed_indices_.end())
     return nullptr;
   size_t index = it->value;

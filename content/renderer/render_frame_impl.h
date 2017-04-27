@@ -501,6 +501,8 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::WebApplicationCacheHostClient* client) override;
   blink::WebWorkerContentSettingsClientProxy*
   CreateWorkerContentSettingsClientProxy() override;
+  std::unique_ptr<blink::WebWorkerFetchContext> CreateWorkerFetchContext()
+      override;
   blink::WebExternalPopupMenu* CreateExternalPopupMenu(
       const blink::WebPopupMenuInfo& popup_menu_info,
       blink::WebExternalPopupMenuClient* popup_menu_client) override;
@@ -625,10 +627,9 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidCreateScriptContext(blink::WebLocalFrame* frame,
                               v8::Local<v8::Context> context,
                               int world_id) override;
-  void WillReleaseScriptContext(blink::WebLocalFrame* frame,
-                                v8::Local<v8::Context> context,
+  void WillReleaseScriptContext(v8::Local<v8::Context> context,
                                 int world_id) override;
-  void DidChangeScrollOffset(blink::WebLocalFrame* frame) override;
+  void DidChangeScrollOffset() override;
   void WillInsertBody(blink::WebLocalFrame* frame) override;
   void ReportFindInPageMatchCount(int request_id,
                                   int count,
@@ -685,7 +686,11 @@ class CONTENT_EXPORT RenderFrameImpl
   void BindEngagement(blink::mojom::EngagementClientAssociatedRequest request);
 
   // Binds to the FrameHost in the browser.
-  void BindFrame(mojom::FrameRequest request, mojom::FrameHostPtr frame_host);
+  void BindFrame(mojom::FrameRequest request,
+                 mojom::FrameHostInterfaceBrokerPtr frame_host);
+
+  // Virtual so the test render frame can flush the interface.
+  virtual mojom::FrameHostAssociatedPtr GetFrameHost();
 
   void BindFrameBindingsControl(
       mojom::FrameBindingsControlAssociatedRequest request);
@@ -1380,7 +1385,7 @@ class CONTENT_EXPORT RenderFrameImpl
   mojo::AssociatedBinding<mojom::HostZoom> host_zoom_binding_;
   mojo::AssociatedBinding<mojom::FrameBindingsControl>
       frame_bindings_control_binding_;
-  mojom::FrameHostPtr frame_host_;
+  mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker_;
 
   // Indicates whether |didAccessInitialDocument| was called.
   bool has_accessed_initial_document_;

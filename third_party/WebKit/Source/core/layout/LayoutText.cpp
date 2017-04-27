@@ -43,6 +43,7 @@
 #include "core/layout/line/InlineTextBox.h"
 #include "platform/fonts/CharacterRange.h"
 #include "platform/geometry/FloatQuad.h"
+#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/text/BidiResolver.h"
 #include "platform/text/Character.h"
 #include "platform/text/Hyphenation.h"
@@ -51,7 +52,6 @@
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebScheduler.h"
 #include "public/platform/WebThread.h"
 
 namespace blink {
@@ -367,7 +367,7 @@ static FloatRect LocalQuadForTextBox(InlineTextBox* box,
 void LayoutText::AbsoluteRectsForRange(Vector<IntRect>& rects,
                                        unsigned start,
                                        unsigned end,
-                                       bool use_selection_height) {
+                                       bool use_selection_height) const {
   // Work around signed/unsigned issues. This function takes unsigneds, and is
   // often passed UINT_MAX to mean "all the way to the end". InlineTextBox
   // coordinates are unsigneds, so changing this function to take ints causes
@@ -486,7 +486,7 @@ void LayoutText::AbsoluteQuads(Vector<FloatQuad>& quads,
 void LayoutText::AbsoluteQuadsForRange(Vector<FloatQuad>& quads,
                                        unsigned start,
                                        unsigned end,
-                                       bool use_selection_height) {
+                                       bool use_selection_height) const {
   // Work around signed/unsigned issues. This function takes unsigneds, and is
   // often passed UINT_MAX to mean "all the way to the end". InlineTextBox
   // coordinates are unsigneds, so changing this function to take ints causes
@@ -1559,7 +1559,7 @@ void LayoutText::SetSelectionState(SelectionState state) {
     if (state == SelectionStart || state == SelectionEnd ||
         state == SelectionBoth) {
       int start_pos, end_pos;
-      SelectionStartEnd(start_pos, end_pos);
+      std::tie(start_pos, end_pos) = SelectionStartEnd();
       if (GetSelectionState() == SelectionStart) {
         end_pos = TextLength();
 
@@ -2025,7 +2025,7 @@ LayoutRect LayoutText::LocalSelectionRect() const {
     start_pos = 0;
     end_pos = TextLength();
   } else {
-    SelectionStartEnd(start_pos, end_pos);
+    std::tie(start_pos, end_pos) = SelectionStartEnd();
     if (GetSelectionState() == SelectionStart)
       end_pos = TextLength();
     else if (GetSelectionState() == SelectionEnd)

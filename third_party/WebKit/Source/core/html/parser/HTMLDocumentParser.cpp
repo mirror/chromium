@@ -54,11 +54,11 @@
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
-#include "public/platform/WebScheduler.h"
 #include "public/platform/WebThread.h"
 
 namespace blink {
@@ -466,7 +466,7 @@ void HTMLDocumentParser::DiscardSpeculationsAndResumeFrom(
                       ("Parser.DiscardedTokenCount", 1, 100000, 50));
   discarded_token_count_histogram.Count(discarded_token_count);
 
-  speculations_.Clear();
+  speculations_.clear();
   pending_csp_meta_token_ = nullptr;
   queued_preloads_.clear();
 

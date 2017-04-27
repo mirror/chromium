@@ -468,7 +468,7 @@ ScriptPromise USBDevice::reset(ScriptState* script_state) {
 
 void USBDevice::ContextDestroyed(ExecutionContext*) {
   device_.reset();
-  device_requests_.Clear();
+  device_requests_.clear();
 }
 
 DEFINE_TRACE(USBDevice) {
@@ -920,11 +920,11 @@ void USBDevice::OnConnectionError() {
   opened_ = false;
   for (ScriptPromiseResolver* resolver : device_requests_)
     resolver->Reject(DOMException::Create(kNotFoundError, kDeviceUnavailable));
-  device_requests_.Clear();
+  device_requests_.clear();
 }
 
 bool USBDevice::MarkRequestComplete(ScriptPromiseResolver* resolver) {
-  auto request_entry = device_requests_.Find(resolver);
+  auto request_entry = device_requests_.find(resolver);
   if (request_entry == device_requests_.end())
     return false;
   device_requests_.erase(request_entry);

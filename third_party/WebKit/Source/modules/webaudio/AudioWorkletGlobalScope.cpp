@@ -5,7 +5,7 @@
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 
 #include "bindings/core/v8/ToV8ForCore.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8BindingMacros.h"
 #include "bindings/core/v8/V8ObjectConstructor.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
@@ -43,7 +43,7 @@ AudioWorkletGlobalScope::~AudioWorkletGlobalScope() {}
 
 void AudioWorkletGlobalScope::Dispose() {
   DCHECK(IsContextThread());
-  processor_definition_map_.Clear();
+  processor_definition_map_.clear();
   processor_instances_.clear();
   ThreadedWorkletGlobalScope::Dispose();
 }

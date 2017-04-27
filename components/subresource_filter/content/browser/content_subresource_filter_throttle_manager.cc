@@ -39,6 +39,9 @@ class ForwardingNavigationThrottle : public content::NavigationThrottle {
     delegate_->WillProcessResponse(navigation_handle());
     return content::NavigationThrottle::PROCEED;
   }
+  const char* GetNameForLogging() override {
+    return "ForwardingNavigationThrottle";
+  }
 
  private:
   ContentSubresourceFilterThrottleManager::Delegate* delegate_;
@@ -193,6 +196,18 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
         activation_throttle.get();
     throttles->push_back(std::move(activation_throttle));
   }
+}
+
+bool ContentSubresourceFilterThrottleManager::ShouldDisallowNewWindow() {
+  auto it = activated_frame_hosts_.find(web_contents()->GetMainFrame());
+  if (it == activated_frame_hosts_.end())
+    return false;
+  const ActivationState state = it->second->activation_state();
+  // This should trigger the standard popup blocking UI, so don't force the
+  // subresource filter specific UI here.
+  return state.activation_level == ActivationLevel::ENABLED &&
+         !state.filtering_disabled_for_document &&
+         !state.generic_blocking_rules_disabled;
 }
 
 std::unique_ptr<SubframeNavigationFilteringThrottle>

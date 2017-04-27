@@ -2272,7 +2272,7 @@ bool LayoutBox::IsBreakBetweenControllable(EBreakBetween break_value) const {
       // If this is a flow thread for a multicol container, and we have a break
       // value for paged, we need to keep looking.
     }
-    if (curr->IsFloatingOrOutOfFlowPositioned())
+    if (curr->IsOutOfFlowPositioned())
       return false;
     curr = curr->ContainingBlock();
   }
@@ -5865,7 +5865,7 @@ void LayoutBox::ClearSnapAreas() {
   if (SnapAreaSet* areas = SnapAreas()) {
     for (auto& snap_area : *areas)
       snap_area->rare_data_->snap_container_ = nullptr;
-    areas->Clear();
+    areas->clear();
   }
 }
 

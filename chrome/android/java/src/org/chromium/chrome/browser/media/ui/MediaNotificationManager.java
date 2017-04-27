@@ -21,7 +21,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -33,6 +35,7 @@ import android.util.SparseArray;
 import android.view.KeyEvent;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.blink.mojom.MediaSessionAction;
@@ -42,6 +45,7 @@ import org.chromium.chrome.browser.notifications.ChannelDefinitions;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
 import org.chromium.chrome.browser.notifications.NotificationConstants;
+import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.content_public.common.MediaMetadata;
 
 import java.util.ArrayList;
@@ -108,6 +112,8 @@ public class MediaNotificationManager {
                         NotificationConstants.GROUP_MEDIA_REMOTE));
     }
 
+    private final NotificationUmaTracker mNotificationUmaTracker;
+
     private int mNotificationId;
 
     // ListenerService running for the notification. Only non-null when showing.
@@ -128,6 +134,98 @@ public class MediaNotificationManager {
 
     @VisibleForTesting
     MediaSessionCompat mMediaSession;
+
+    @VisibleForTesting
+    Throttler mThrottler;
+
+    @VisibleForTesting
+    static class Throttler {
+        @VisibleForTesting
+        static final int THROTTLE_MILLIS = 500;
+
+        @VisibleForTesting
+        MediaNotificationManager mManager;
+
+        private final Handler mHandler;
+
+        @VisibleForTesting
+        Throttler(@NonNull MediaNotificationManager manager) {
+            mManager = manager;
+            mHandler = new Handler();
+        }
+
+        // When |mTask| is non-null, it will always be queued in mHandler. When |mTask| is non-null,
+        // all notification updates will be throttled and their info will be stored as
+        // mLastPendingInfo. When |mTask| fires, it will call {@link showNotification()} with
+        // the latest queued notification info.
+        @VisibleForTesting
+        Runnable mTask;
+
+        // The last pending info. If non-null, it will be the latest notification info.
+        // Otherwise, the latest notification info will be |mManager.mMediaNotificationInfo|.
+        @VisibleForTesting
+        MediaNotificationInfo mLastPendingInfo;
+
+        /**
+         * Queue |mediaNotificationInfo| for update. In unthrottled state (i.e. |mTask| != null),
+         * the notification will be updated immediately and enter the throttled state. In
+         * unthrottled state, the method will only update the pending notification info, which will
+         * be used for updating the notification when |mTask| is fired.
+         *
+         * @param mediaNotificationInfo The notification info to be queued.
+         */
+        public void queueNotification(MediaNotificationInfo mediaNotificationInfo) {
+            assert mediaNotificationInfo != null;
+
+            MediaNotificationInfo latestMediaNotificationInfo =
+                    mLastPendingInfo != null ? mLastPendingInfo : mManager.mMediaNotificationInfo;
+
+            if (shouldIgnoreMediaNotificationInfo(
+                        latestMediaNotificationInfo, mediaNotificationInfo)) {
+                return;
+            }
+
+            if (mTask == null) {
+                showNotificationImmediately(mediaNotificationInfo);
+            } else {
+                mLastPendingInfo = mediaNotificationInfo;
+            }
+        }
+
+        /**
+         * Clears the pending notification and enter unthrottled state.
+         */
+        public void clearPendingNotifications() {
+            mHandler.removeCallbacks(mTask);
+            mLastPendingInfo = null;
+            mTask = null;
+        }
+
+        @VisibleForTesting
+        void showNotificationImmediately(MediaNotificationInfo mediaNotificationInfo) {
+            // If no notification hasn't been updated in the last THROTTLE_MILLIS, update
+            // immediately and queue a task for blocking further updates.
+            mManager.showNotification(mediaNotificationInfo);
+            mTask = new Runnable() {
+                @Override
+                public void run() {
+                    if (mLastPendingInfo != null) {
+                        // If any notification info is pended during the throttling time window,
+                        // update the notification.
+                        showNotificationImmediately(mLastPendingInfo);
+                        mLastPendingInfo = null;
+                    } else {
+                        // Otherwise, clear the task so further update is unthrottled.
+                        mTask = null;
+                    }
+                }
+            };
+            if (!mHandler.postDelayed(mTask, THROTTLE_MILLIS)) {
+                Log.w(TAG, "Failed to post the throttler task.");
+                mTask = null;
+            }
+        }
+    }
 
     private final MediaSessionCompat.Callback mMediaSessionCallback =
             new MediaSessionCompat.Callback() {
@@ -464,11 +562,12 @@ public class MediaNotificationManager {
     public static void show(MediaNotificationInfo notificationInfo) {
         MediaNotificationManager manager = sManagers.get(notificationInfo.id);
         if (manager == null) {
-            manager = new MediaNotificationManager(notificationInfo.id);
+            manager = new MediaNotificationManager(
+                    NotificationUmaTracker.getInstance(), notificationInfo.id);
             sManagers.put(notificationInfo.id, manager);
         }
 
-        manager.showNotification(notificationInfo);
+        manager.mThrottler.queueNotification(notificationInfo);
     }
 
     /**
@@ -616,7 +715,8 @@ public class MediaNotificationManager {
     }
 
     @VisibleForTesting
-    MediaNotificationManager(int notificationId) {
+    MediaNotificationManager(NotificationUmaTracker umaTracker, int notificationId) {
+        mNotificationUmaTracker = umaTracker;
         mNotificationId = notificationId;
 
         mActionToButtonInfo = new SparseArray<>();
@@ -644,6 +744,8 @@ public class MediaNotificationManager {
                 new MediaButtonInfo(R.drawable.ic_fast_rewind_white_36dp,
                         R.string.accessibility_seek_backward,
                         ListenerService.ACTION_SEEK_BACKWARD));
+
+        mThrottler = new Throttler(this);
     }
 
     /**
@@ -657,6 +759,8 @@ public class MediaNotificationManager {
 
         mService = service;
         updateNotification();
+        mNotificationUmaTracker.onNotificationShown(
+                NotificationUmaTracker.MEDIA, ChannelDefinitions.CHANNEL_ID_MEDIA);
     }
 
     /**
@@ -692,9 +796,7 @@ public class MediaNotificationManager {
 
     @VisibleForTesting
     void showNotification(MediaNotificationInfo mediaNotificationInfo) {
-        if (mediaNotificationInfo.equals(mMediaNotificationInfo)) return;
-        if (mediaNotificationInfo.isPaused && mMediaNotificationInfo != null
-                && mediaNotificationInfo.tabId != mMediaNotificationInfo.tabId) {
+        if (shouldIgnoreMediaNotificationInfo(mMediaNotificationInfo, mediaNotificationInfo)) {
             return;
         }
 
@@ -715,7 +817,15 @@ public class MediaNotificationManager {
         }
     }
 
-    private void clearNotification() {
+    private static boolean shouldIgnoreMediaNotificationInfo(
+            MediaNotificationInfo oldInfo, MediaNotificationInfo newInfo) {
+        return newInfo.equals(oldInfo)
+                || ((newInfo.isPaused && oldInfo != null && newInfo.tabId != oldInfo.tabId));
+    }
+
+    @VisibleForTesting
+    void clearNotification() {
+        mThrottler.clearPendingNotifications();
         if (mMediaNotificationInfo == null) return;
 
         NotificationManagerCompat manager = NotificationManagerCompat.from(getContext());

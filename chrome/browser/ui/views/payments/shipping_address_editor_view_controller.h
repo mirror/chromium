@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/strings/string16.h"
 #include "chrome/browser/ui/views/payments/editor_view_controller.h"
 #include "chrome/browser/ui/views/payments/validating_textfield.h"
 
@@ -26,11 +27,18 @@ class PaymentRequestDialogView;
 // Shipping Address editor screen of the Payment Request flow.
 class ShippingAddressEditorViewController : public EditorViewController {
  public:
-  // Does not take ownership of the arguments, which should outlive this object.
-  ShippingAddressEditorViewController(PaymentRequestSpec* spec,
-                                      PaymentRequestState* state,
-                                      PaymentRequestDialogView* dialog,
-                                      autofill::AutofillProfile* profile);
+  // Does not take ownership of the arguments (except for the |on_edited| and
+  // |on_added| callbacks), which should outlive this object. Additionally,
+  // |profile| could be nullptr if we are adding a new shipping address. Else,
+  // it's a valid pointer to a card that needs to be updated, and which will
+  // outlive this controller.
+  ShippingAddressEditorViewController(
+      PaymentRequestSpec* spec,
+      PaymentRequestState* state,
+      PaymentRequestDialogView* dialog,
+      base::OnceClosure on_edited,
+      base::OnceCallback<void(const autofill::AutofillProfile&)> on_added,
+      autofill::AutofillProfile* profile);
   ~ShippingAddressEditorViewController() override;
 
   // EditorViewController:
@@ -74,6 +82,12 @@ class ShippingAddressEditorViewController : public EditorViewController {
   };
   friend class ShippingAddressValidationDelegate;
 
+  // Called when |profile_to_edit_| was successfully edited.
+  base::OnceClosure on_edited_;
+  // Called when a new profile was added. The const reference is short-lived,
+  // and the callee should make a copy.
+  base::OnceCallback<void(const autofill::AutofillProfile&)> on_added_;
+
   // If non-nullptr, a point to an object to be edited, which should outlive
   // this controller.
   autofill::AutofillProfile* profile_to_edit_;
@@ -100,8 +114,9 @@ class ShippingAddressEditorViewController : public EditorViewController {
   // Updates |editor_fields_| based on the current country.
   void UpdateEditorFields();
 
-  // Called when data changes need to force a view update.
-  void OnDataChanged();
+  // Called when data changes need to force a view update. |synchronous|
+  // specifies whether the view update can be done synchronously.
+  void OnDataChanged(bool synchronous);
 
   // Saves the current state of the |editor_fields_| in |profile| and ignore
   // errors if |ignore_errors| is true. Return false on errors, ignored or not.
@@ -111,6 +126,9 @@ class ShippingAddressEditorViewController : public EditorViewController {
   // When a combobox model has changed, a view update might be needed, e.g., if
   // there is no data in the combobox and it must be converted to a text field.
   void OnComboboxModelChanged(views::Combobox* combobox);
+
+  // Failed to fetch the region data in time.
+  void RegionDataLoadTimedOut();
 
   DISALLOW_COPY_AND_ASSIGN(ShippingAddressEditorViewController);
 };

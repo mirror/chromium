@@ -330,7 +330,7 @@ void ResourceFetcher::RequestLoadStarted(unsigned long identifier,
   }
 
   if (validated_urls_.size() >= kMaxValidatedURLsSize) {
-    validated_urls_.Clear();
+    validated_urls_.clear();
   }
   validated_urls_.insert(params.GetResourceRequest().Url());
 }
@@ -624,9 +624,6 @@ Resource* ResourceFetcher::RequestResource(
   // TODO(yoav): turn to a DCHECK. See https://crbug.com/690632
   CHECK_EQ(resource->GetType(), factory.GetType());
 
-  if (!resource->IsAlive())
-    dead_stats_recorder_.Update(policy);
-
   if (policy != kUse)
     resource->SetIdentifier(identifier);
 
@@ -670,7 +667,7 @@ Resource* ResourceFetcher::RequestResource(
 void ResourceFetcher::ResourceTimingReportTimerFired(TimerBase* timer) {
   DCHECK_EQ(timer, &resource_timing_report_timer_);
   Vector<RefPtr<ResourceTimingInfo>> timing_reports;
-  timing_reports.Swap(scheduled_resource_timing_reports_);
+  timing_reports.swap(scheduled_resource_timing_reports_);
   for (const auto& timing_info : timing_reports)
     Context().AddResourceTiming(*timing_info);
 }
@@ -801,7 +798,7 @@ void ResourceFetcher::RecordResourceTimingOnRedirect(
     Resource* resource,
     const ResourceResponse& redirect_response,
     bool cross_origin) {
-  ResourceTimingInfoMap::iterator it = resource_timing_info_map_.Find(resource);
+  ResourceTimingInfoMap::iterator it = resource_timing_info_map_.find(resource);
   if (it != resource_timing_info_map_.end()) {
     it->value->AddRedirect(redirect_response, cross_origin);
   }
@@ -900,11 +897,7 @@ ResourceFetcher::DetermineRevalidationPolicy(
     return kReload;
   }
 
-  // If resource was populated from a SubstituteData load or data: url, use it.
-  if (is_static_data)
-    return kUse;
-
-  if (!existing_resource->CanReuse(fetch_params))
+  if (!is_static_data && !existing_resource->CanReuse(fetch_params))
     return kReload;
 
   // Certain requests (e.g., XHRs) might have manually set headers that require
@@ -918,20 +911,27 @@ ResourceFetcher::DetermineRevalidationPolicy(
   // status code, but for a manual revalidation the response code remains 304.
   // In this case, the Resource likely has insufficient context to provide a
   // useful cache hit or revalidation. See http://crbug.com/643659
-  if (request.IsConditional() ||
-      existing_resource->GetResponse().HttpStatusCode() == 304) {
+  if (!is_static_data &&
+      (request.IsConditional() ||
+       existing_resource->GetResponse().HttpStatusCode() == 304)) {
     return kReload;
   }
 
-  // Don't reload resources while pasting.
-  if (allow_stale_resources_)
-    return kUse;
-
-  if (!fetch_params.Options().CanReuseRequest(existing_resource->Options()))
+  if (!is_static_data &&
+      !fetch_params.Options().CanReuseRequest(existing_resource->Options())) {
     return kReload;
+  }
 
   // Always use preloads.
   if (existing_resource->IsPreloaded())
+    return kUse;
+
+  // If resource was populated from a SubstituteData load or data: url, use it.
+  if (is_static_data)
+    return kUse;
+
+  // Don't reload resources while pasting.
+  if (allow_stale_resources_)
     return kUse;
 
   // WebCachePolicy::ReturnCacheDataElseLoad uses the cache no matter what.
@@ -1519,43 +1519,6 @@ void ResourceFetcher::EmulateLoadStartedForInspector(
                        SecurityViolationReportingPolicy::kReport,
                        params.GetOriginRestriction());
   RequestLoadStarted(resource->Identifier(), resource, params, kUse);
-}
-
-ResourceFetcher::DeadResourceStatsRecorder::DeadResourceStatsRecorder()
-    : use_count_(0), revalidate_count_(0), load_count_(0) {}
-
-ResourceFetcher::DeadResourceStatsRecorder::~DeadResourceStatsRecorder() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      CustomCountHistogram, hit_count_histogram,
-      new CustomCountHistogram("WebCore.ResourceFetcher.HitCount", 0, 1000,
-                               50));
-  hit_count_histogram.Count(use_count_);
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      CustomCountHistogram, revalidate_count_histogram,
-      new CustomCountHistogram("WebCore.ResourceFetcher.RevalidateCount", 0,
-                               1000, 50));
-  revalidate_count_histogram.Count(revalidate_count_);
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      CustomCountHistogram, load_count_histogram,
-      new CustomCountHistogram("WebCore.ResourceFetcher.LoadCount", 0, 1000,
-                               50));
-  load_count_histogram.Count(load_count_);
-}
-
-void ResourceFetcher::DeadResourceStatsRecorder::Update(
-    RevalidationPolicy policy) {
-  switch (policy) {
-    case kReload:
-    case kLoad:
-      ++load_count_;
-      return;
-    case kRevalidate:
-      ++revalidate_count_;
-      return;
-    case kUse:
-      ++use_count_;
-      return;
-  }
 }
 
 DEFINE_TRACE(ResourceFetcher) {

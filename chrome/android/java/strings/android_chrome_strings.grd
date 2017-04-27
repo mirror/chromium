@@ -2356,9 +2356,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_BOOKMARK_PAGE_FAILED" desc="Message shown when the user tries to add a bookmark but the browser fails to save it.">
         Failed to add bookmark.
       </message>
-      <message name="IDS_BOOKMARK_DRAWER_FOLDERS" desc="Title for the list of folders in the drawer view. [CHAR-LIMIT=32]">
-        Folders
-      </message>
       <message name="IDS_BOOKMARK_PARENT_FOLDER" desc="Header text for title of parent folder of the bookmark [CHAR-LIMIT=32]">
         Parent folder
       </message>
@@ -2475,9 +2472,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
       <message name="IDS_READER_MODE_MAXIMIZED_TITLE" desc="Message shown on the reader mode button bar when it is opened to show reader mode. Reader mode extracts content and removes clutter from a web page and puts the result in a panel making it easier to read.">
         Mobile-friendly view
-      </message>
-      <message name="IDS_FRE_LABEL" desc="First Run Experience Strings">
-        First Run Experience
       </message>
       <message name="IDS_CONTENT_PROVIDER_SEARCH_DESCRIPTION" desc="Description for Chrome's entry in QSB's list of search suggestion providers [CHAR-LIMIT=32]">
         Bookmarks and web history
@@ -2946,6 +2940,14 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       </message>
       <message name="IDS_CONTEXTMENU_VIDEO_TITLE" desc="The title of a context menu tab when the item pressed contains more than one type. This indicates that all the actions are related to a video.">
         VIDEO
+      </message>
+
+      <!-- In-Product Help strings -->
+      <message name="IDS_IPH_DOWNLOAD_PAGE_FOR_OFFLINE_USAGE_TEXT" desc="The in-product-help message after a successful navigation prompting user to download the pages to view offline.">
+        Download pages to use them offline
+      </message>
+      <message name="IDS_IPH_DOWNLOAD_HOME_TEXT" desc="The in-product-help message to open download home after a restart.">
+        Find your files and pages in Downloads
       </message>
 
       <!-- Search Widget strings -->

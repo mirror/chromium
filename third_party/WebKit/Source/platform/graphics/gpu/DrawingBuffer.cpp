@@ -204,7 +204,7 @@ void DrawingBuffer::SetIsHidden(bool hidden) {
     return;
   is_hidden_ = hidden;
   if (is_hidden_)
-    recycled_color_buffer_queue_.Clear();
+    recycled_color_buffer_queue_.clear();
 }
 
 void DrawingBuffer::SetFilterQuality(SkFilterQuality filter_quality) {
@@ -635,7 +635,10 @@ DrawingBuffer::ColorBuffer::~ColorBuffer() {
     gpu_memory_buffer.reset();
   }
   gl->DeleteTextures(1, &texture_id);
-  gl->DeleteTextures(1, &rgb_workaround_texture_id);
+  if (rgb_workaround_texture_id) {
+    // Avoid deleting this texture if it was unused.
+    gl->DeleteTextures(1, &rgb_workaround_texture_id);
+  }
 }
 
 bool DrawingBuffer::Initialize(const IntSize& size, bool use_multisampling) {
@@ -797,7 +800,7 @@ void DrawingBuffer::BeginDestruction() {
   destruction_in_progress_ = true;
 
   ClearPlatformLayer();
-  recycled_color_buffer_queue_.Clear();
+  recycled_color_buffer_queue_.clear();
 
   if (multisample_fbo_)
     gl_->DeleteFramebuffers(1, &multisample_fbo_);
@@ -949,7 +952,7 @@ bool DrawingBuffer::ResizeFramebufferInternal(const IntSize& new_size) {
     size_ = adjusted_size;
     // Free all mailboxes, because they are now of the wrong size. Only the
     // first call in this loop has any effect.
-    recycled_color_buffer_queue_.Clear();
+    recycled_color_buffer_queue_.clear();
     recycled_bitmaps_.clear();
 
     if (adjusted_size.IsEmpty())

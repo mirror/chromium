@@ -4,20 +4,14 @@
 
 #include "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.h"
 
-#include <memory>
-#include <string>
 #include <utility>
-#include <vector>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/location.h"
+#include "base/callback.h"
 #include "base/memory/ptr_util.h"
-#include "base/single_thread_task_runner.h"
-#include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view.h"
 #include "chrome/browser/ui/views/payments/validating_combobox.h"
 #include "chrome/browser/ui/views/payments/validating_textfield.h"
@@ -33,7 +27,6 @@
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/payments/content/payment_request_state.h"
 #include "components/strings/grit/components_strings.h"
-#include "content/public/browser/web_contents.h"
 #include "third_party/libaddressinput/messages.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/views/controls/textfield/textfield.h"
@@ -74,8 +67,12 @@ ShippingAddressEditorViewController::ShippingAddressEditorViewController(
     PaymentRequestSpec* spec,
     PaymentRequestState* state,
     PaymentRequestDialogView* dialog,
+    base::OnceClosure on_edited,
+    base::OnceCallback<void(const autofill::AutofillProfile&)> on_added,
     autofill::AutofillProfile* profile)
     : EditorViewController(spec, state, dialog),
+      on_edited_(std::move(on_edited)),
+      on_added_(std::move(on_added)),
       profile_to_edit_(profile),
       chosen_country_index_(0),
       failed_to_load_region_data_(false) {
@@ -120,6 +117,8 @@ bool ShippingAddressEditorViewController::ValidateModelAndSave() {
     // Add the profile (will not add a duplicate).
     profile.set_origin(autofill::kSettingsOrigin);
     state()->GetPersonalDataManager()->AddProfile(profile);
+    std::move(on_added_).Run(profile);
+    on_edited_.Reset();
   } else {
     // Copy the temporary object's data to the object to be edited. Prefer this
     // method to copying |profile| into |profile_to_edit_|, because the latter
@@ -130,6 +129,8 @@ bool ShippingAddressEditorViewController::ValidateModelAndSave() {
     DCHECK(success);
     profile_to_edit_->set_origin(autofill::kSettingsOrigin);
     state()->GetPersonalDataManager()->UpdateProfile(*profile_to_edit_);
+    std::move(on_edited_).Run();
+    on_added_.Reset();
   }
 
   return true;
@@ -164,17 +165,18 @@ ShippingAddressEditorViewController::GetComboboxModelForType(
     }
     case autofill::ADDRESS_HOME_STATE: {
       std::unique_ptr<autofill::RegionComboboxModel> model =
-          base::MakeUnique<autofill::RegionComboboxModel>(
-              state()->GetAddressInputSource(),
-              state()->GetAddressInputStorage(),
-              state()->GetApplicationLocale(),
-              country_codes_[chosen_country_index_]);
-      // If the data was already pre-loaded, the observer won't get notified so
-      // we have to check for failure here.
-      if (!model->pending_region_data_load()) {
+          base::MakeUnique<autofill::RegionComboboxModel>();
+      model->LoadRegionData(country_codes_[chosen_country_index_],
+                            state()->GetRegionDataLoader(),
+                            /*timeout_ms=*/5000);
+      if (!model->IsPendingRegionDataLoad()) {
+        // If the data was already pre-loaded, the observer won't get notified
+        // so we have to check for failure here.
         failed_to_load_region_data_ = model->failed_to_load_data();
-        if (failed_to_load_region_data_)
-          OnDataChanged();
+        if (failed_to_load_region_data_) {
+          // We can update the view synchronously while building the view.
+          OnDataChanged(/*synchronous=*/false);
+        }
       }
       return std::move(model);
     }
@@ -194,7 +196,9 @@ void ShippingAddressEditorViewController::OnPerformAction(
   if (chosen_country_index_ != static_cast<size_t>(sender->selected_index())) {
     chosen_country_index_ = sender->selected_index();
     failed_to_load_region_data_ = false;
-    OnDataChanged();
+    // View update must be asynchronous to let the combobox finish performing
+    // the action.
+    OnDataChanged(/*synchronous=*/false);
   }
 }
 
@@ -211,8 +215,10 @@ void ShippingAddressEditorViewController::UpdateEditorView() {
 }
 
 base::string16 ShippingAddressEditorViewController::GetSheetTitle() {
-  return l10n_util::GetStringUTF16(
-      IDS_PAYMENT_REQUEST_ADDRESS_EDITOR_ADD_TITLE);
+  // TODO(crbug.com/712074): Editor title should reflect the missing information
+  // in the case that one or more fields are missing.
+  return profile_to_edit_ ? l10n_util::GetStringUTF16(IDS_PAYMENTS_EDIT_ADDRESS)
+                          : l10n_util::GetStringUTF16(IDS_PAYMENTS_ADD_ADDRESS);
 }
 
 void ShippingAddressEditorViewController::UpdateEditorFields() {
@@ -293,17 +299,19 @@ void ShippingAddressEditorViewController::UpdateEditorFields() {
       EditorField::ControlType::TEXTFIELD);
 }
 
-void ShippingAddressEditorViewController::OnDataChanged() {
+void ShippingAddressEditorViewController::OnDataChanged(bool synchronous) {
   temporary_profile_.reset(new autofill::AutofillProfile);
-
   SaveFieldsToProfile(temporary_profile_.get(), /*ignore_errors*/ true);
-  UpdateEditorFields();
 
-  // The editor can't be updated while in the middle of a combobox event.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&ShippingAddressEditorViewController::UpdateEditorView,
-                     base::Unretained(this)));
+  UpdateEditorFields();
+  if (synchronous) {
+    UpdateEditorView();
+  } else {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ShippingAddressEditorViewController::UpdateEditorView,
+                       base::Unretained(this)));
+  }
 }
 
 bool ShippingAddressEditorViewController::SaveFieldsToProfile(
@@ -352,11 +360,13 @@ void ShippingAddressEditorViewController::OnComboboxModelChanged(
     return;
   autofill::RegionComboboxModel* model =
       static_cast<autofill::RegionComboboxModel*>(combobox->model());
-  if (model->pending_region_data_load())
+  if (model->IsPendingRegionDataLoad())
     return;
   if (model->failed_to_load_data()) {
     failed_to_load_region_data_ = true;
-    OnDataChanged();
+    // It is safe to update synchronously since the change comes from the model
+    // and not from the UI.
+    OnDataChanged(/*synchronous=*/true);
   }
 }
 

@@ -16,6 +16,7 @@
 #include "base/debug/asan_invalid_access.h"
 #include "base/debug/crash_logging.h"
 #include "base/debug/dump_without_crashing.h"
+#include "base/feature_list.h"
 #include "base/files/file.h"
 #include "base/i18n/char_iterator.h"
 #include "base/logging.h"
@@ -69,6 +70,7 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
+#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/bindings_policy.h"
@@ -142,6 +144,7 @@
 #include "content/renderer/renderer_webcolorchooser_impl.h"
 #include "content/renderer/savable_resources.h"
 #include "content/renderer/screen_orientation/screen_orientation_dispatcher.h"
+#include "content/renderer/service_worker/worker_fetch_context_impl.h"
 #include "content/renderer/shared_worker/shared_worker_repository.h"
 #include "content/renderer/shared_worker/websharedworker_proxy.h"
 #include "content/renderer/skia_benchmarking_extension.h"
@@ -160,6 +163,7 @@
 #include "media/base/media.h"
 #include "media/base/media_log.h"
 #include "media/base/media_switches.h"
+#include "media/base/renderer_factory_selector.h"
 #include "media/blink/url_index.h"
 #include "media/blink/webencryptedmediaclient_impl.h"
 #include "media/blink/webmediaplayer_impl.h"
@@ -178,6 +182,7 @@
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/data_element.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
+#include "third_party/WebKit/public/platform/InterfaceProvider.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebCachePolicy.h"
 #include "third_party/WebKit/public/platform/WebData.h"
@@ -1197,6 +1202,12 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
 #endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
 }
 
+mojom::FrameHostAssociatedPtr RenderFrameImpl::GetFrameHost() {
+  mojom::FrameHostAssociatedPtr frame_host_ptr;
+  GetRemoteAssociatedInterfaces()->GetInterface(&frame_host_ptr);
+  return frame_host_ptr;
+}
+
 RenderFrameImpl::~RenderFrameImpl() {
   // If file chooser is still waiting for answer, dispatch empty answer.
   while (!file_chooser_completions_.empty()) {
@@ -1665,11 +1676,12 @@ void RenderFrameImpl::BindEngagement(
   engagement_binding_.Bind(std::move(request));
 }
 
-void RenderFrameImpl::BindFrame(mojom::FrameRequest request,
-                                mojom::FrameHostPtr host) {
+void RenderFrameImpl::BindFrame(
+    mojom::FrameRequest request,
+    mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
   frame_binding_.Bind(std::move(request));
-  frame_host_ = std::move(host);
-  frame_host_->GetInterfaceProvider(
+  frame_host_interface_broker_ = std::move(frame_host_interface_broker);
+  frame_host_interface_broker_->GetInterfaceProvider(
       std::move(pending_remote_interface_provider_request_));
 }
 
@@ -2891,6 +2903,7 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
 #endif  // defined(OS_ANDROID)
 
   std::unique_ptr<media::RendererFactory> media_renderer_factory;
+  media::RendererFactorySelector::FactoryType factory_type;
   if (use_fallback_path) {
 #if defined(OS_ANDROID)
     auto mojo_renderer_factory = base::MakeUnique<media::MojoRendererFactory>(
@@ -2905,6 +2918,12 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
                    render_thread->GetStreamTexureFactory(),
                    base::ThreadTaskRunnerHandle::Get()));
 #endif  // defined(OS_ANDROID)
+
+    // TODO(tguilbert): Move this line back into an #if defined(OS_ANDROID).
+    // This will never be reached, unless we are on Android. Moving this line
+    // outside of the #if/#endif block fixes a "sometimes-uninitialized" error
+    // on desktop. This will be fixed with the next CL for crbug.com/663503.
+    factory_type = media::RendererFactorySelector::FactoryType::MEDIA_PLAYER;
   } else {
 #if defined(ENABLE_MOJO_RENDERER)
 #if BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
@@ -2914,6 +2933,8 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
           media_log.get(), GetDecoderFactory(),
           base::Bind(&RenderThreadImpl::GetGpuFactories,
                      base::Unretained(render_thread)));
+
+      factory_type = media::RendererFactorySelector::FactoryType::DEFAULT;
     }
 #endif  // BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
     if (!media_renderer_factory) {
@@ -2921,12 +2942,16 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
           base::Bind(&RenderThreadImpl::GetGpuFactories,
                      base::Unretained(render_thread)),
           GetMediaInterfaceProvider());
+
+      factory_type = media::RendererFactorySelector::FactoryType::MOJO;
     }
 #else
     media_renderer_factory = base::MakeUnique<media::DefaultRendererFactory>(
         media_log.get(), GetDecoderFactory(),
         base::Bind(&RenderThreadImpl::GetGpuFactories,
                    base::Unretained(render_thread)));
+
+    factory_type = media::RendererFactorySelector::FactoryType::DEFAULT;
 #endif  // defined(ENABLE_MOJO_RENDERER)
   }
 
@@ -2934,10 +2959,17 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
   media_renderer_factory =
       base::MakeUnique<media::remoting::AdaptiveRendererFactory>(
           std::move(media_renderer_factory), std::move(remoting_controller));
+
+  factory_type = media::RendererFactorySelector::FactoryType::ADAPTIVE;
 #endif
 
   if (!url_index_.get() || url_index_->frame() != frame_)
     url_index_.reset(new media::UrlIndex(frame_));
+
+  auto factory_selector = base::MakeUnique<media::RendererFactorySelector>();
+
+  factory_selector->AddFactory(factory_type, std::move(media_renderer_factory));
+  factory_selector->SetBaseFactoryType(factory_type);
 
   std::unique_ptr<media::WebMediaPlayerParams> params(
       new media::WebMediaPlayerParams(
@@ -2960,7 +2992,7 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       frame_, client, encrypted_client, GetWebMediaPlayerDelegate(),
-      std::move(media_renderer_factory), url_index_, std::move(params));
+      std::move(factory_selector), url_index_, std::move(params));
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   media_player->SetMediaPlayerManager(GetMediaPlayerManager());
@@ -2996,6 +3028,31 @@ RenderFrameImpl::CreateWorkerContentSettingsClientProxy() {
     return NULL;
   return GetContentClient()->renderer()->CreateWorkerContentSettingsClientProxy(
       this, frame_);
+}
+
+std::unique_ptr<blink::WebWorkerFetchContext>
+RenderFrameImpl::CreateWorkerFetchContext() {
+  DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
+  mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
+  RenderThreadImpl::current()
+      ->blink_platform_impl()
+      ->GetInterfaceProvider()
+      ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
+  std::unique_ptr<WorkerFetchContextImpl> worker_fetch_context =
+      base::MakeUnique<WorkerFetchContextImpl>(
+          worker_url_loader_factory_provider.PassInterface());
+  blink::WebServiceWorkerNetworkProvider* web_provider =
+      frame_->DataSource()->GetServiceWorkerNetworkProvider();
+  if (web_provider) {
+    ServiceWorkerNetworkProvider* provider =
+        ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
+            web_provider);
+    worker_fetch_context->set_service_worker_provider_id(
+        provider->provider_id());
+    worker_fetch_context->set_is_controlled_by_service_worker(
+        provider->IsControlledByServiceWorker());
+  }
+  return std::move(worker_fetch_context);
 }
 
 WebExternalPopupMenu* RenderFrameImpl::CreateExternalPopupMenu(
@@ -4559,17 +4616,13 @@ void RenderFrameImpl::DidCreateScriptContext(blink::WebLocalFrame* frame,
     observer.DidCreateScriptContext(context, world_id);
 }
 
-void RenderFrameImpl::WillReleaseScriptContext(blink::WebLocalFrame* frame,
-                                               v8::Local<v8::Context> context,
+void RenderFrameImpl::WillReleaseScriptContext(v8::Local<v8::Context> context,
                                                int world_id) {
-  DCHECK_EQ(frame_, frame);
-
   for (auto& observer : observers_)
     observer.WillReleaseScriptContext(context, world_id);
 }
 
-void RenderFrameImpl::DidChangeScrollOffset(blink::WebLocalFrame* frame) {
-  DCHECK_EQ(frame_, frame);
+void RenderFrameImpl::DidChangeScrollOffset() {
   render_view_->StartNavStateSyncTimerIfNecessary(this);
 
   for (auto& observer : observers_)

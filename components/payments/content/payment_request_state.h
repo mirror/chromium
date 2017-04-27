@@ -14,17 +14,11 @@
 #include "components/payments/content/payment_response_helper.h"
 #include "components/payments/mojom/payment_request.mojom.h"
 
-namespace i18n {
-namespace addressinput {
-class Storage;
-class Source;
-}  // namespace addressinput
-}  // namespace i18n
-
 namespace autofill {
 class AutofillProfile;
 class CreditCard;
 class PersonalDataManager;
+class RegionDataLoader;
 }  // namespace autofill
 
 namespace payments {
@@ -130,6 +124,12 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate {
   void AddAutofillPaymentInstrument(bool selected,
                                     const autofill::CreditCard& card);
 
+  // Creates and adds an AutofillProfile as a shipping profile, which makes a
+  // copy of |profile|. |selected| indicates if the newly-created shipping
+  // profile should be selected, after which observers will be notified.
+  void AddAutofillShippingProfile(bool selected,
+                                  const autofill::AutofillProfile& profile);
+
   // Setters to change the selected information. Will have the side effect of
   // recomputing "is ready to pay" and notify observers.
   void SetSelectedShippingOption(const std::string& shipping_option_id);
@@ -141,8 +141,7 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate {
 
   const std::string& GetApplicationLocale();
   autofill::PersonalDataManager* GetPersonalDataManager();
-  std::unique_ptr<const ::i18n::addressinput::Source> GetAddressInputSource();
-  std::unique_ptr<::i18n::addressinput::Storage> GetAddressInputStorage();
+  autofill::RegionDataLoader* GetRegionDataLoader();
 
   Delegate* delegate() { return delegate_; }
 

@@ -5,7 +5,7 @@
 #include "core/workers/ThreadedWorklet.h"
 
 #include "bindings/core/v8/ScriptSourceCode.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
@@ -66,7 +66,9 @@ void ThreadedWorklet::ContextDestroyed(ExecutionContext* execution_context) {
   DCHECK(IsMainThread());
   for (const auto& script_loader : loader_to_resolver_map_.Keys())
     script_loader->Cancel();
-  loader_to_resolver_map_.Clear();
+  loader_to_resolver_map_.clear();
+  if (IsInitialized())
+    GetWorkletGlobalScopeProxy()->TerminateWorkletGlobalScope();
   Worklet::ContextDestroyed(execution_context);
 }
 

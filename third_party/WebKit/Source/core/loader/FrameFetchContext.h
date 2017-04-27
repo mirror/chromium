@@ -71,7 +71,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   void AddAdditionalRequestHeaders(ResourceRequest&,
                                    FetchResourceType) override;
   WebCachePolicy ResourceRequestCachePolicy(
-      ResourceRequest&,
+      const ResourceRequest&,
       Resource::Type,
       FetchParameters::DeferOption) const override;
   void DispatchDidChangeResourcePriority(unsigned long identifier,
@@ -151,6 +151,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
       ResourceLoadPriority) override;
 
   RefPtr<WebTaskRunner> LoadingTaskRunner() const override;
+
+  std::unique_ptr<WebURLLoader> CreateURLLoader() override;
 
   DECLARE_VIRTUAL_TRACE();
 

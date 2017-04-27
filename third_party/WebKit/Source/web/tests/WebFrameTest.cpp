@@ -38,7 +38,7 @@
 #include "SkBitmap.h"
 #include "SkCanvas.h"
 #include "bindings/core/v8/SerializedScriptValueFactory.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8Node.h"
 #include "bindings/core/v8/serialization/V8ScriptValueSerializer.h"
 #include "core/clipboard/DataTransfer.h"
@@ -285,12 +285,12 @@ class WebFrameTest : public ::testing::Test {
     LocalFrame* frame =
         ToLocalFrame(web_view_helper->WebView()->GetPage()->MainFrame());
     DCHECK(frame);
-    Element* element = frame->GetDocument()->GetElementById(testcase.c_str());
+    Element* element = frame->GetDocument()->getElementById(testcase.c_str());
     return frame->NodeImage(*element);
   }
 
   void RemoveElementById(WebLocalFrameImpl* frame, const AtomicString& id) {
-    Element* element = frame->GetFrame()->GetDocument()->GetElementById(id);
+    Element* element = frame->GetFrame()->GetDocument()->getElementById(id);
     DCHECK(element);
     element->remove();
   }
@@ -1962,7 +1962,7 @@ TEST_F(WebFrameTest,
 
   WebLocalFrameImpl* frame = web_view_helper.WebView()->MainFrameImpl();
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("tap_button");
+  Element* element = document->getElementById("tap_button");
 
   ASSERT_NE(nullptr, element);
   EXPECT_EQ(String("oldValue"), element->innerText());
@@ -4449,30 +4449,67 @@ class ContextLifetimeTestWebFrameClient
     int world_id;
   };
 
+  ContextLifetimeTestWebFrameClient(
+      Vector<std::unique_ptr<Notification>>& create_notifications,
+      Vector<std::unique_ptr<Notification>>& release_notifications)
+      : create_notifications_(create_notifications),
+        release_notifications_(release_notifications) {}
+
   ~ContextLifetimeTestWebFrameClient() override { Reset(); }
 
   void Reset() {
-    create_notifications.clear();
-    release_notifications.clear();
+    create_notifications_.clear();
+    release_notifications_.clear();
   }
 
-  Vector<std::unique_ptr<Notification>> create_notifications;
-  Vector<std::unique_ptr<Notification>> release_notifications;
-
  private:
+  Vector<std::unique_ptr<Notification>>& create_notifications_;
+  Vector<std::unique_ptr<Notification>>& release_notifications_;
+
   void DidCreateScriptContext(WebLocalFrame* frame,
                               v8::Local<v8::Context> context,
                               int world_id) override {
-    create_notifications.push_back(
+    ASSERT_EQ(Frame(), frame);
+    create_notifications_.push_back(
         WTF::MakeUnique<Notification>(frame, context, world_id));
   }
 
-  void WillReleaseScriptContext(WebLocalFrame* frame,
-                                v8::Local<v8::Context> context,
+  void WillReleaseScriptContext(v8::Local<v8::Context> context,
                                 int world_id) override {
-    release_notifications.push_back(
-        WTF::MakeUnique<Notification>(frame, context, world_id));
+    release_notifications_.push_back(
+        WTF::MakeUnique<Notification>(Frame(), context, world_id));
   }
+};
+
+class ContextLifetimeTestMainFrameClient
+    : public ContextLifetimeTestWebFrameClient {
+ public:
+  ContextLifetimeTestMainFrameClient(
+      Vector<std::unique_ptr<Notification>>& create_notifications,
+      Vector<std::unique_ptr<Notification>>& release_notifications)
+      : ContextLifetimeTestWebFrameClient(create_notifications,
+                                          release_notifications),
+        child_client_(create_notifications, release_notifications) {}
+
+  WebLocalFrame* CreateChildFrame(
+      WebLocalFrame* parent,
+      WebTreeScopeType scope,
+      const WebString& name,
+      const WebString& fallback_name,
+      WebSandboxFlags sandbox_flags,
+      const WebParsedFeaturePolicy& container_policy,
+      const WebFrameOwnerProperties&) override {
+    WebLocalFrame* frame =
+        WebLocalFrame::Create(scope, &child_client_, nullptr, nullptr);
+    child_client_.SetFrame(frame);
+    parent->AppendChild(frame);
+    return frame;
+  }
+
+  ContextLifetimeTestWebFrameClient& ChildClient() { return child_client_; }
+
+ private:
+  ContextLifetimeTestWebFrameClient child_client_;
 };
 
 TEST_P(ParameterizedWebFrameTest, ContextNotificationsLoadUnload) {
@@ -4483,7 +4520,12 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsLoadUnload) {
 
   // Load a frame with an iframe, make sure we get the right create
   // notifications.
-  ContextLifetimeTestWebFrameClient web_frame_client;
+  Vector<std::unique_ptr<ContextLifetimeTestWebFrameClient::Notification>>
+      create_notifications;
+  Vector<std::unique_ptr<ContextLifetimeTestWebFrameClient::Notification>>
+      release_notifications;
+  ContextLifetimeTestMainFrameClient web_frame_client(create_notifications,
+                                                      release_notifications);
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(
       base_url_ + "context_notifications_test.html", true, &web_frame_client);
@@ -4491,11 +4533,11 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsLoadUnload) {
   WebFrame* main_frame = web_view_helper.WebView()->MainFrame();
   WebFrame* child_frame = main_frame->FirstChild();
 
-  ASSERT_EQ(2u, web_frame_client.create_notifications.size());
-  EXPECT_EQ(0u, web_frame_client.release_notifications.size());
+  ASSERT_EQ(2u, create_notifications.size());
+  EXPECT_EQ(0u, release_notifications.size());
 
-  auto& first_create_notification = web_frame_client.create_notifications[0];
-  auto& second_create_notification = web_frame_client.create_notifications[1];
+  auto& first_create_notification = create_notifications[0];
+  auto& second_create_notification = create_notifications[1];
 
   EXPECT_EQ(main_frame, first_create_notification->frame);
   EXPECT_EQ(main_frame->MainWorldScriptContext(),
@@ -4511,9 +4553,9 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsLoadUnload) {
   // the same as the create ones, in reverse order.
   web_view_helper.Reset();
 
-  ASSERT_EQ(2u, web_frame_client.release_notifications.size());
-  auto& first_release_notification = web_frame_client.release_notifications[0];
-  auto& second_release_notification = web_frame_client.release_notifications[1];
+  ASSERT_EQ(2u, release_notifications.size());
+  auto& first_release_notification = release_notifications[0];
+  auto& second_release_notification = release_notifications[1];
 
   ASSERT_TRUE(
       first_create_notification->Equals(second_release_notification.get()));
@@ -4527,7 +4569,12 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsReload) {
   RegisterMockedHttpURLLoad("context_notifications_test.html");
   RegisterMockedHttpURLLoad("context_notifications_test_frame.html");
 
-  ContextLifetimeTestWebFrameClient web_frame_client;
+  Vector<std::unique_ptr<ContextLifetimeTestWebFrameClient::Notification>>
+      create_notifications;
+  Vector<std::unique_ptr<ContextLifetimeTestWebFrameClient::Notification>>
+      release_notifications;
+  ContextLifetimeTestMainFrameClient web_frame_client(create_notifications,
+                                                      release_notifications);
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(
       base_url_ + "context_notifications_test.html", true, &web_frame_client);
@@ -4535,25 +4582,22 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsReload) {
   // Refresh, we should get two release notifications and two more create
   // notifications.
   FrameTestHelpers::ReloadFrame(web_view_helper.WebView()->MainFrame());
-  ASSERT_EQ(4u, web_frame_client.create_notifications.size());
-  ASSERT_EQ(2u, web_frame_client.release_notifications.size());
+  ASSERT_EQ(4u, create_notifications.size());
+  ASSERT_EQ(2u, release_notifications.size());
 
   // The two release notifications we got should be exactly the same as the
   // first two create notifications.
-  for (size_t i = 0; i < web_frame_client.release_notifications.size(); ++i) {
-    EXPECT_TRUE(web_frame_client.release_notifications[i]->Equals(
-        web_frame_client
-            .create_notifications[web_frame_client.create_notifications.size() -
-                                  3 - i]
-            .get()));
+  for (size_t i = 0; i < release_notifications.size(); ++i) {
+    EXPECT_TRUE(release_notifications[i]->Equals(
+        create_notifications[create_notifications.size() - 3 - i].get()));
   }
 
   // The last two create notifications should be for the current frames and
   // context.
   WebFrame* main_frame = web_view_helper.WebView()->MainFrame();
   WebFrame* child_frame = main_frame->FirstChild();
-  auto& first_refresh_notification = web_frame_client.create_notifications[2];
-  auto& second_refresh_notification = web_frame_client.create_notifications[3];
+  auto& first_refresh_notification = create_notifications[2];
+  auto& second_refresh_notification = create_notifications[3];
 
   EXPECT_EQ(main_frame, first_refresh_notification->frame);
   EXPECT_EQ(main_frame->MainWorldScriptContext(),
@@ -4573,7 +4617,12 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsIsolatedWorlds) {
   RegisterMockedHttpURLLoad("context_notifications_test.html");
   RegisterMockedHttpURLLoad("context_notifications_test_frame.html");
 
-  ContextLifetimeTestWebFrameClient web_frame_client;
+  Vector<std::unique_ptr<ContextLifetimeTestWebFrameClient::Notification>>
+      create_notifications;
+  Vector<std::unique_ptr<ContextLifetimeTestWebFrameClient::Notification>>
+      release_notifications;
+  ContextLifetimeTestMainFrameClient web_frame_client(create_notifications,
+                                                      release_notifications);
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(
       base_url_ + "context_notifications_test.html", true, &web_frame_client);
@@ -4588,8 +4637,8 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsIsolatedWorlds) {
       isolated_world_id, &script_source, num_sources);
 
   // We should now have a new create notification.
-  ASSERT_EQ(1u, web_frame_client.create_notifications.size());
-  auto& notification = web_frame_client.create_notifications[0];
+  ASSERT_EQ(1u, create_notifications.size());
+  auto& notification = create_notifications[0];
   ASSERT_EQ(isolated_world_id, notification->world_id);
   ASSERT_EQ(web_view_helper.WebView()->MainFrame(), notification->frame);
 
@@ -4602,14 +4651,13 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsIsolatedWorlds) {
 
   // We should have gotten three release notifications (one for each of the
   // frames, plus one for the isolated context).
-  ASSERT_EQ(3u, web_frame_client.release_notifications.size());
+  ASSERT_EQ(3u, release_notifications.size());
 
   // And one of them should be exactly the same as the create notification for
   // the isolated context.
   int match_count = 0;
-  for (size_t i = 0; i < web_frame_client.release_notifications.size(); ++i) {
-    if (web_frame_client.release_notifications[i]->Equals(
-            web_frame_client.create_notifications[0].get()))
+  for (size_t i = 0; i < release_notifications.size(); ++i) {
+    if (release_notifications[i]->Equals(create_notifications[0].get()))
       ++match_count;
   }
   EXPECT_EQ(1, match_count);
@@ -6472,7 +6520,7 @@ TEST_P(ParameterizedWebFrameTest, ReplaceMisspelledRange) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6520,7 +6568,7 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkers) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6573,7 +6621,7 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkersUnderWords) {
 
   LocalFrame* frame = web_frame->GetFrame();
   Document* document = frame->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6652,7 +6700,7 @@ TEST_P(ParameterizedWebFrameTest, SlowSpellcheckMarkerPosition) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6693,7 +6741,7 @@ TEST_P(ParameterizedWebFrameTest, CancelSpellingRequestCrash) {
   frame->SetTextCheckClient(0);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6714,7 +6762,7 @@ TEST_P(ParameterizedWebFrameTest, SpellcheckResultErasesMarkers) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6754,7 +6802,7 @@ TEST_P(ParameterizedWebFrameTest, SpellcheckResultsSavedInDocument) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6956,11 +7004,11 @@ class TestScrolledFrameClient : public FrameTestHelpers::TestWebFrameClient {
   bool WasFrameScrolled() const { return did_scroll_frame_; }
 
   // WebFrameClient:
-  void DidChangeScrollOffset(WebLocalFrame* frame) override {
-    if (frame->Parent())
+  void DidChangeScrollOffset() override {
+    if (Frame()->Parent())
       return;
     EXPECT_FALSE(did_scroll_frame_);
-    FrameView* view = ToWebLocalFrameImpl(frame)->GetFrameView();
+    FrameView* view = ToWebLocalFrameImpl(Frame())->GetFrameView();
     // FrameView can be scrolled in FrameView::setFixedVisibleContentRect which
     // is called from LocalFrame::createView (before the frame is associated
     // with the the view).
@@ -7750,10 +7798,10 @@ TEST_P(ParameterizedWebFrameTest, fixedPositionInFixedViewport) {
   web_view_helper.Resize(WebSize(100, 100));
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
-  Element* bottom_fixed = document->GetElementById("bottom-fixed");
-  Element* top_bottom_fixed = document->GetElementById("top-bottom-fixed");
-  Element* right_fixed = document->GetElementById("right-fixed");
-  Element* left_right_fixed = document->GetElementById("left-right-fixed");
+  Element* bottom_fixed = document->getElementById("bottom-fixed");
+  Element* top_bottom_fixed = document->getElementById("top-bottom-fixed");
+  Element* right_fixed = document->getElementById("right-fixed");
+  Element* left_right_fixed = document->getElementById("left-right-fixed");
 
   // The layout viewport will hit the min-scale limit of 0.25, so it'll be
   // 400x800.
@@ -7896,7 +7944,7 @@ TEST_P(ParameterizedWebFrameTest, FullscreenLayerSize) {
   Document* document =
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
-  Element* div_fullscreen = document->GetElementById("div1");
+  Element* div_fullscreen = document->getElementById("div1");
   Fullscreen::RequestFullscreen(*div_fullscreen);
   EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
@@ -7939,7 +7987,7 @@ TEST_F(WebFrameTest, FullscreenLayerNonScrollable) {
   Document* document =
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
-  Element* div_fullscreen = document->GetElementById("div1");
+  Element* div_fullscreen = document->getElementById("div1");
   Fullscreen::RequestFullscreen(*div_fullscreen);
   EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
@@ -8059,7 +8107,7 @@ TEST_P(ParameterizedWebFrameTest, FullscreenSubframe) {
           ->GetFrame()
           ->GetDocument();
   UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
-  Element* div_fullscreen = document->GetElementById("div1");
+  Element* div_fullscreen = document->getElementById("div1");
   Fullscreen::RequestFullscreen(*div_fullscreen);
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
@@ -8391,7 +8439,7 @@ TEST_P(ParameterizedWebFrameTest, OverlayFullscreenVideo) {
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
   HTMLVideoElement* video =
-      toHTMLVideoElement(document->GetElementById("video"));
+      toHTMLVideoElement(document->getElementById("video"));
   EXPECT_TRUE(video->UsesOverlayFullscreenVideo());
   EXPECT_FALSE(video->IsFullscreen());
   EXPECT_FALSE(layer_tree_view.has_transparent_background);
@@ -8420,12 +8468,12 @@ TEST_P(ParameterizedWebFrameTest, LayoutBlockPercentHeightDescendants) {
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
   LayoutBlock* container =
-      ToLayoutBlock(document->GetElementById("container")->GetLayoutObject());
+      ToLayoutBlock(document->getElementById("container")->GetLayoutObject());
   LayoutBox* percent_height_in_anonymous =
-      ToLayoutBox(document->GetElementById("percent-height-in-anonymous")
+      ToLayoutBox(document->getElementById("percent-height-in-anonymous")
                       ->GetLayoutObject());
   LayoutBox* percent_height_direct_child =
-      ToLayoutBox(document->GetElementById("percent-height-direct-child")
+      ToLayoutBox(document->getElementById("percent-height-direct-child")
                       ->GetLayoutObject());
 
   EXPECT_TRUE(
@@ -9716,7 +9764,7 @@ TEST_P(ParameterizedWebFrameTest, ResizeInvalidatesDeviceMediaQueries) {
                                     ConfigureAndroid);
   LocalFrame* frame =
       ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame());
-  Element* element = frame->GetDocument()->GetElementById("test");
+  Element* element = frame->GetDocument()->getElementById("test");
   ASSERT_TRUE(element);
 
   client.screen_info_.rect = WebRect(0, 0, 700, 500);
@@ -10972,7 +11020,7 @@ TEST_F(WebFrameTest, HidingScrollbarsOnScrollableAreaDisablesScrollbars) {
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
   FrameView* frame_view = web_view->MainFrameImpl()->GetFrameView();
-  Element* scroller = document->GetElementById("scroller");
+  Element* scroller = document->getElementById("scroller");
   ScrollableArea* scroller_area =
       ToLayoutBox(scroller->GetLayoutObject())->GetScrollableArea();
 
@@ -11046,7 +11094,7 @@ TEST_F(WebFrameTest, MouseOverDifferntNodeClearsTooltip) {
   web_view->UpdateAllLifecyclePhases();
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
-  Element* div1_tag = document->GetElementById("div1");
+  Element* div1_tag = document->getElementById("div1");
 
   HitTestResult hit_test_result = web_view->CoreHitTestResultAt(
       WebPoint(div1_tag->OffsetLeft() + 5, div1_tag->OffsetTop() + 5));
@@ -11071,7 +11119,7 @@ TEST_F(WebFrameTest, MouseOverDifferntNodeClearsTooltip) {
       div1_tag,
       document->GetFrame()->GetChromeClient().LastSetTooltipNodeForTesting());
 
-  Element* div2_tag = document->GetElementById("div2");
+  Element* div2_tag = document->getElementById("div2");
 
   WebMouseEvent mouse_move_event(
       WebInputEvent::kMouseMove,
@@ -11113,7 +11161,7 @@ TEST_F(WebFrameTest, MouseOverLinkAndOverlayScrollbar) {
   web_view->UpdateAllLifecyclePhases();
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
-  Element* a_tag = document->GetElementById("a");
+  Element* a_tag = document->getElementById("a");
 
   // Ensure hittest only has scrollbar.
   HitTestResult hit_test_result =
@@ -11222,7 +11270,7 @@ TEST_F(WebFrameTest, MouseOverCustomScrollbar) {
   Document* document =
       ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
 
-  Element* scrollbar_div = document->GetElementById("scrollbar");
+  Element* scrollbar_div = document->getElementById("scrollbar");
   EXPECT_TRUE(scrollbar_div);
 
   // Ensure hittest only has DIV
@@ -11279,7 +11327,7 @@ TEST_F(WebFrameTest, MouseOverScrollbarAndIFrame) {
 
   Document* document =
       ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
-  Element* iframe = document->GetElementById("iframe");
+  Element* iframe = document->getElementById("iframe");
   DCHECK(iframe);
 
   // Ensure hittest only has IFRAME.
@@ -11356,8 +11404,8 @@ TEST_F(WebFrameTest, MouseOverScrollbarAndParentElement) {
   Document* document =
       ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
 
-  Element* parent_div = document->GetElementById("parent");
-  Element* child_div = document->GetElementById("child");
+  Element* parent_div = document->getElementById("parent");
+  Element* child_div = document->getElementById("child");
   EXPECT_TRUE(parent_div);
   EXPECT_TRUE(child_div);
 
@@ -11439,7 +11487,7 @@ TEST_F(WebFrameTest, MouseReleaseUpdatesScrollbarHoveredPart) {
   Document* document =
       ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
 
-  Element* scrollbar_div = document->GetElementById("scrollbar");
+  Element* scrollbar_div = document->getElementById("scrollbar");
   EXPECT_TRUE(scrollbar_div);
 
   ScrollableArea* scrollable_area =
@@ -11561,7 +11609,7 @@ TEST_F(WebFrameTest, TestNonCompositedOverlayScrollbarsFade) {
   WebLocalFrameImpl* frame = web_view_helper.WebView()->MainFrameImpl();
   Document* document =
       ToLocalFrame(web_view_impl->GetPage()->MainFrame())->GetDocument();
-  Element* container = document->GetElementById("container");
+  Element* container = document->getElementById("container");
   ScrollableArea* scrollable_area =
       ToLayoutBox(container->GetLayoutObject())->GetScrollableArea();
 
@@ -11579,9 +11627,6 @@ TEST_F(WebFrameTest, TestNonCompositedOverlayScrollbarsFade) {
   frame->ExecuteScript(WebScriptSource(
       "document.getElementById('space').style.height = '500px';"));
   frame->View()->UpdateAllLifecyclePhases();
-
-  EXPECT_FALSE(scrollable_area->ScrollbarsHidden());
-  testing::RunDelayedTasks(kMockOverlayFadeOutDelayMs);
   EXPECT_TRUE(scrollable_area->ScrollbarsHidden());
 
   frame->ExecuteScript(WebScriptSource(

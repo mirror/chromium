@@ -47,7 +47,7 @@ public class VrShellTest extends ChromeTabbedActivityTestBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mDelegate = VrShellDelegate.getInstanceForTesting();
+        mDelegate = VrUtils.getVrShellDelegateInstance();
     }
 
     @Override

@@ -1,71 +1,7 @@
 'use strict';
 
-// This polyfil library implements the following WebIDL:
-//
-// partial interface USB {
-//   [SameObject] readonly attribute USBTest test;
-// }
-//
-// interface USBTest {
-//   attribute EventHandler ondeviceclose;
-//   attribute FakeUSBDevice? chosenDevice;
-//   attribute FrozenArray<USBDeviceFilter>? lastFilters;
-//
-//   Promise<void> initialize();
-//   Promise<void> attachToWindow(Window window);
-//   FakeUSBDevice addFakeDevice(FakeUSBDeviceInit deviceInit);
-//   void reset();
-// };
-//
-// interface FakeUSBDevice {
-//   void disconnect();
-// };
-//
-// dictionary FakeUSBDeviceInit {
-//   octet usbVersionMajor;
-//   octet usbVersionMinor;
-//   octet usbVersionSubminor;
-//   octet deviceClass;
-//   octet deviceSubclass;
-//   octet deviceProtocol;
-//   unsigned short vendorId;
-//   unsigned short productId;
-//   octet deviceVersionMajor;
-//   octet deviceVersionMinor;
-//   octet deviceVersionSubminor;
-//   DOMString? manufacturerName;
-//   DOMString? productName;
-//   DOMString? serialNumber;
-//   octet activeConfigurationValue = 0;
-//   sequence<FakeUSBConfigurationInit> configurations;
-// };
-//
-// dictionary FakeUSBConfigurationInit {
-//   octet configurationValue;
-//   DOMString? configurationName;
-//   sequence<FakeUSBInterfaceInit> interfaces;
-// };
-//
-// dictionary FakeUSBInterfaceInit {
-//   octet interfaceNumber;
-//   sequence<FakeUSBAlternateInterfaceInit> alternates;
-// };
-//
-// dictionary FakeUSBAlternateInterfaceInit {
-//   octet alternateSetting;
-//   octet interfaceClass;
-//   octet interfaceSubclass;
-//   octet interfaceProtocol;
-//   DOMString? interfaceName;
-//   sequence<FakeUSBEndpointInit> endpoints;
-// };
-//
-// dictionary FakeUSBEndpointInit {
-//   octet endpointNumber;
-//   USBDirection direction;
-//   USBEndpointType type;
-//   unsigned long packetSize;
-// };
+// This polyfill library implements the WebUSB Test API as specified here:
+// https://wicg.github.io/webusb/test/
 
 (() => {
 
@@ -78,8 +14,6 @@ let mojo = null;
 let g_initializePromise = null;
 let g_chooserService = null;
 let g_deviceManager = null;
-let g_closeListener = null;
-let g_nextGuid = 0;
 
 function fakeDeviceInitToDeviceInfo(guid, init) {
   let deviceInfo = {
@@ -413,8 +347,8 @@ class FakeDeviceManager {
       let binding = new mojo.bindings.Binding(
           mojo.device.UsbDevice, new FakeDevice(device.info), request);
       binding.setConnectionErrorHandler(() => {
-        if (g_closeListener)
-          g_closeListener(device.fakeDevice);
+        if (device.fakeDevice.onclose)
+          device.fakeDevice.onclose();
       });
       device.bindingArray.push(binding);
     } else {
@@ -458,6 +392,10 @@ class FakeChooserService {
 
 // Unlike FakeDevice this class is exported to callers of USBTest.addFakeDevice.
 class FakeUSBDevice {
+  constructor() {
+    this.onclose = null;
+  }
+
   disconnect() {
     setTimeout(() => g_deviceManager.removeDevice(this), 0);
   }
@@ -549,10 +487,6 @@ class USBTest {
     return fakeDevice;
   }
 
-  set ondeviceclose(func) {
-    g_closeListener = func;
-  }
-
   set chosenDevice(fakeDevice) {
     if (!g_chooserService)
       throw new Error('Call initialize() before setting chosenDevice.');
@@ -573,7 +507,6 @@ class USBTest {
 
     g_deviceManager.removeAllDevices();
     g_chooserService.setChosenDevice(null);
-    g_closeListener = null;
   }
 }
 

@@ -8,6 +8,7 @@
 
 #include "ash/session/session_observer.h"
 #include "ash/shell.h"
+#include "ash/system/power/power_event_observer.h"
 #include "ash/wm/lock_state_controller.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -53,10 +54,6 @@ SessionController::~SessionController() {
 
 void SessionController::BindRequest(mojom::SessionControllerRequest request) {
   bindings_.AddBinding(this, std::move(request));
-}
-
-int SessionController::GetMaximumNumberOfLoggedInUsers() const {
-  return session_manager::kMaxmiumNumberOfUserSessions;
 }
 
 int SessionController::NumberOfLoggedInUsers() const {
@@ -244,6 +241,10 @@ void SessionController::StartLock(const StartLockCallback& callback) {
       base::Bind(&SessionController::OnLockAnimationFinished,
                  weak_ptr_factory_.GetWeakPtr()));
   lock_state_controller->OnStartingLock();
+}
+
+void SessionController::NotifyChromeLockAnimationsComplete() {
+  Shell::Get()->power_event_observer()->OnLockAnimationsComplete();
 }
 
 void SessionController::RunUnlockAnimation(

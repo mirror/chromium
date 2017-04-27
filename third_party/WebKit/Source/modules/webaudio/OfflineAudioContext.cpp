@@ -104,7 +104,7 @@ OfflineAudioContext* OfflineAudioContext::Create(
 
 #if DEBUG_AUDIONODE_REFERENCES
   fprintf(stderr, "[%16p]: OfflineAudioContext::OfflineAudioContext()\n",
-          audioContext);
+          audio_context);
 #endif
   DEFINE_STATIC_LOCAL(SparseHistogram, offline_context_channel_count_histogram,
                       ("WebAudio.OfflineAudioContext.ChannelCount"));
@@ -420,7 +420,7 @@ void OfflineAudioContext::ResolveSuspendOnMainThread(size_t frame) {
     // |frame| must exist in the map.
     DCHECK(scheduled_suspends_.Contains(frame));
 
-    SuspendMap::iterator it = scheduled_suspends_.Find(frame);
+    SuspendMap::iterator it = scheduled_suspends_.find(frame);
     it->value->Resolve();
 
     scheduled_suspends_.erase(it);
@@ -441,7 +441,7 @@ void OfflineAudioContext::RejectPendingResolvers() {
         kInvalidStateError, "Audio context is going away"));
   }
 
-  scheduled_suspends_.Clear();
+  scheduled_suspends_.clear();
   DCHECK_EQ(resume_resolvers_.size(), 0u);
 
   RejectPendingDecodeAudioDataResolvers();

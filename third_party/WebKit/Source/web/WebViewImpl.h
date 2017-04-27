@@ -40,6 +40,7 @@
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/heap/Handle.h"
+#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/Compiler.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/RefCounted.h"
@@ -53,7 +54,6 @@
 #include "public/platform/WebLayer.h"
 #include "public/platform/WebPoint.h"
 #include "public/platform/WebRect.h"
-#include "public/platform/WebScheduler.h"
 #include "public/platform/WebSize.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
@@ -77,7 +77,7 @@ class CompositorAnimationHost;
 class DevToolsEmulator;
 class Frame;
 class FullscreenController;
-class InspectorOverlay;
+class InspectorOverlayAgent;
 class LinkHighlightImpl;
 class PageOverlay;
 class PageScaleConstraintsSet;
@@ -504,7 +504,7 @@ class WEB_EXPORT WebViewImpl final
   }
 
  private:
-  InspectorOverlay* GetInspectorOverlay();
+  InspectorOverlayAgent* GetInspectorOverlay();
 
   void SetPageScaleFactorAndLocation(float, const FloatPoint&);
   void PropagateZoomFactorToLocalFrameRoots(Frame*, float);

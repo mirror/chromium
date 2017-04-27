@@ -14,7 +14,6 @@
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/wm_shelf.h"
-#include "ash/shelf/wm_shelf_util.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -241,11 +240,7 @@ void SystemTray::Shutdown() {
 }
 
 void SystemTray::CreateItems(SystemTrayDelegate* delegate) {
-  // Create user items for each possible user.
-  const int maximum_user_profiles =
-      Shell::Get()->session_controller()->GetMaximumNumberOfLoggedInUsers();
-  for (int i = 0; i < maximum_user_profiles; i++)
-    AddTrayItem(base::MakeUnique<TrayUser>(this, i));
+  AddTrayItem(base::MakeUnique<TrayUser>(this));
 
   // Crucially, this trailing padding has to be inside the user item(s).
   // Otherwise it could be a main axis margin on the tray's box layout.
@@ -256,7 +251,8 @@ void SystemTray::CreateItems(SystemTrayDelegate* delegate) {
 
   AddTrayItem(base::MakeUnique<TraySessionLengthLimit>(this));
   AddTrayItem(base::MakeUnique<TrayEnterprise>(this));
-  AddTrayItem(base::MakeUnique<TraySupervisedUser>(this));
+  tray_supervised_user_ = new TraySupervisedUser(this);
+  AddTrayItem(base::WrapUnique(tray_supervised_user_));
   AddTrayItem(base::MakeUnique<TrayIME>(this));
   AddTrayItem(base::WrapUnique(tray_accessibility_));
   AddTrayItem(base::MakeUnique<TrayTracing>(this));
@@ -304,7 +300,6 @@ void SystemTray::AddTrayItem(std::unique_ptr<SystemTrayItem> item) {
   if (tray_item) {
     tray_container()->AddChildViewAt(tray_item, 0);
     PreferredSizeChanged();
-    tray_item_map_[item_ptr] = tray_item;
   }
 }
 
@@ -612,18 +607,16 @@ void SystemTray::HideBubble(const TrayBubbleView* bubble_view) {
   HideBubbleWithView(bubble_view);
 }
 
-views::View* SystemTray::GetTrayItemViewForTest(SystemTrayItem* item) {
-  std::map<SystemTrayItem*, views::View*>::iterator it =
-      tray_item_map_.find(item);
-  return it == tray_item_map_.end() ? NULL : it->second;
-}
-
 TrayCast* SystemTray::GetTrayCastForTesting() const {
   return tray_cast_;
 }
 
 TrayNetwork* SystemTray::GetTrayNetworkForTesting() const {
   return tray_network_;
+}
+
+TraySupervisedUser* SystemTray::GetTraySupervisedUserForTesting() const {
+  return tray_supervised_user_;
 }
 
 TraySystemInfo* SystemTray::GetTraySystemInfoForTesting() const {

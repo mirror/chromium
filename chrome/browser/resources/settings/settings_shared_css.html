@@ -5,12 +5,6 @@
 <dom-module id="settings-shared">
   <template>
     <style include="cr-shared-style">
-      /* Included here so we don't have to include "iron-positioning" in every
-       * stylesheet. See crbug.com/498405. */
-      [hidden] {
-        display: none !important;
-      }
-
       :host-context([dir=rtl]) button[is='paper-icon-button-light'] {
         transform: scaleX(-1);  /* Flip on the X axis (aka mirror). */
       }
@@ -61,13 +55,11 @@
       }
 
       .primary-button,
-      .tertiary-button,
       a[href] {
         color: var(--google-blue-700);
       }
 
-      .primary-button,
-      .tertiary-button {
+      .primary-button {
         --paper-button-flat-keyboard-focus: {
           background: rgba(51, 103, 214, .12);  /* --google-blue-700 */
         };
@@ -75,6 +67,11 @@
 
       a[href] {
         text-decoration: none;
+      }
+
+      /* For elements that are simple outlinks but dont look like anchors. */
+      .inherit-color {
+        color: inherit !important;
       }
 
       /* There are three main button styles, .primary-button, .secondary-button,
@@ -108,14 +105,6 @@
         };
         --paper-button-flat-keyboard-focus: {
           background: rgba(0, 0, 0, .12);
-        };
-      }
-
-      /* See notes in .primary-button. */
-      .tertiary-button {
-        --paper-button: {
-          font-weight: 400;
-          text-decoration: none;
         };
       }
 
@@ -344,7 +333,11 @@
         align-items: center;
         display: flex;
         flex-shrink: 0;
-        height: var(--settings-row-min-height);
+        height: 36px;
+      }
+
+      :-webkit-any(.settings-box, .list-item).two-line .secondary-action {
+        height: 46px;
       }
 
       /* Helper for a list frame to automatically avoid the separator line. */

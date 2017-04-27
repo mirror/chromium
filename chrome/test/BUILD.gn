@@ -9,7 +9,6 @@ import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//chrome/common/features.gni")
 import("//chrome/chrome_repack_locales.gni")
-import("//chrome/test/base/js2gtest.gni")
 import("//components/os_crypt/features.gni")
 import("//components/spellcheck/spellcheck_build_features.gni")
 import("//extensions/features/features.gni")
@@ -462,7 +461,6 @@ if (!is_android) {
     ldflags = []
 
     deps = [
-      ":interactive_ui_tests_js_webui",
       ":test_support",
       ":test_support_ui",
       "//chrome:packed_resources",
@@ -471,6 +469,7 @@ if (!is_android) {
       "//chrome/browser",
       "//chrome/browser/devtools",
       "//chrome/renderer",
+      "//chrome/test/data/webui:interactive_ui_tests_js_webui",
       "//components/resources",
       "//components/sync",
       "//components/sync:test_support_model",
@@ -926,165 +925,6 @@ if (!is_android) {
     }
   }
 
-  js2gtest("interactive_ui_tests_js_webui") {
-    test_type = "webui"
-
-    sources = [
-      "data/webui/cr_elements/cr_elements_focus_test.js",
-      "data/webui/md_history/md_history_focus_test.js",
-      "data/webui/settings/cr_settings_interactive_ui_tests.js",
-    ]
-
-    gen_include_files = [
-      "data/webui/polymer_browser_test_base.js",
-      "data/webui/polymer_interactive_ui_test.js",
-    ]
-
-    deps = [
-      "//chrome/browser/ui",
-    ]
-
-    defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
-  }
-
-  js2gtest("browser_tests_js_webui") {
-    test_type = "webui"
-
-    # Javascript sources. These are combined with the .cc files in the GYP build
-    # and are handled by a rule, but in the GN build they're in a separate
-    # action so need to be separated out.
-    sources = [
-      "../browser/ui/webui/app_list/start_page_browsertest.js",
-      "../browser/ui/webui/chromeos/bluetooth_pairing_ui_browsertest.js",
-      "../browser/ui/webui/chromeos/certificate_manager_dialog_browsertest.js",
-      "../browser/ui/webui/chromeos/set_time_ui_browsertest.js",
-      "../browser/ui/webui/extensions/chromeos/kiosk_apps_browsertest.js",
-      "../browser/ui/webui/extensions/extension_settings_browsertest.js",
-      "../browser/ui/webui/help/help_browsertest.js",
-      "../browser/ui/webui/identity_internals_ui_browsertest.js",
-      "../browser/ui/webui/options/autofill_options_browsertest.js",
-      "../browser/ui/webui/options/browser_options_browsertest.js",
-      "../browser/ui/webui/options/certificate_manager_browsertest.js",
-      "../browser/ui/webui/options/chromeos/accounts_options_browsertest.js",
-      "../browser/ui/webui/options/chromeos/bluetooth_options_browsertest.js",
-      "../browser/ui/webui/options/chromeos/date_time_options_browsertest.js",
-      "../browser/ui/webui/options/chromeos/guest_mode_options_browsertest.js",
-      "../browser/ui/webui/options/chromeos/power_overlay_browsertest.js",
-      "../browser/ui/webui/options/content_options_browsertest.js",
-      "../browser/ui/webui/options/content_settings_exception_area_browsertest.js",
-      "../browser/ui/webui/options/cookies_view_browsertest.js",
-      "../browser/ui/webui/options/edit_dictionary_browsertest.js",
-      "../browser/ui/webui/options/font_settings_browsertest.js",
-      "../browser/ui/webui/options/language_options_browsertest.js",
-      "../browser/ui/webui/options/language_options_dictionary_download_browsertest.js",
-      "../browser/ui/webui/options/manage_profile_browsertest.js",
-      "../browser/ui/webui/options/multilanguage_options_webui_browsertest.js",
-      "../browser/ui/webui/options/options_browsertest.js",
-      "../browser/ui/webui/options/options_browsertest_base.js",
-      "../browser/ui/webui/options/password_manager_browsertest.js",
-      "../browser/ui/webui/options/profile_settings_reset_browsertest.js",
-      "../browser/ui/webui/options/search_engine_manager_browsertest.js",
-      "../browser/ui/webui/options/settings_format_browsertest.js",
-      "../browser/ui/webui/options/startup_page_list_browsertest.js",
-      "../browser/ui/webui/sync_internals_browsertest.js",
-      "../browser/ui/webui/sync_setup_browsertest.js",
-      "data/chromeos/oobe_webui_browsertest.js",
-      "data/webui/about_invalidations_browsertest.js",
-      "data/webui/accessibility_audit_browsertest.js",
-      "data/webui/assertions.js",
-      "data/webui/async_gen.js",
-      "data/webui/bluetooth_internals_browsertest.js",
-      "data/webui/certificate_viewer_dialog_test.js",
-      "data/webui/chrome_send_browsertest.js",
-      "data/webui/cr_elements/cr_elements_browsertest.js",
-      "data/webui/extensions/cr_extensions_browsertest.js",
-      "data/webui/history_browsertest.js",
-      "data/webui/md_bookmarks/md_bookmarks_browsertest.js",
-      "data/webui/md_downloads/downloads_browsertest.js",
-      "data/webui/md_history/md_history_browsertest.js",
-      "data/webui/md_user_manager/user_manager_browsertest.js",
-      "data/webui/media_router/media_router_elements_browsertest.js",
-      "data/webui/mock4js_browsertest.js",
-      "data/webui/net_internals/bandwidth_view.js",
-      "data/webui/net_internals/chromeos_view.js",
-      "data/webui/net_internals/dns_view.js",
-      "data/webui/net_internals/events_view.js",
-      "data/webui/net_internals/hsts_view.js",
-      "data/webui/net_internals/log_util.js",
-      "data/webui/net_internals/log_view_painter.js",
-      "data/webui/net_internals/main.js",
-      "data/webui/net_internals/net_internals_test.js",
-      "data/webui/net_internals/prerender_view.js",
-      "data/webui/net_internals/sdch_view.js",
-      "data/webui/net_internals/timeline_view.js",
-      "data/webui/ntp4.js",
-      "data/webui/polymer_browser_test_base.js",
-      "data/webui/print_preview.js",
-      "data/webui/print_preview_destination_search_test.js",
-      "data/webui/sandboxstatus_browsertest.js",
-      "data/webui/text_defaults_browsertest.js",
-      "data/webui/webui_resource_async_browsertest.js",
-    ]
-
-    if (!is_asan) {
-      sources += [
-        "data/webui/settings/advanced_page_browsertest.js",
-        "data/webui/settings/animation_browsertest.js",
-        "data/webui/settings/basic_page_browsertest.js",
-        "data/webui/settings/cr_settings_browsertest.js",
-        "data/webui/settings/help_page_browsertest.js",
-        "data/webui/settings/languages_page_browsertest.js",
-        "data/webui/settings/on_startup_browsertest.js",
-        "data/webui/settings/passwords_and_autofill_fake_data.js",
-        "data/webui/settings/passwords_and_forms_browsertest.js",
-        "data/webui/settings/settings_autofill_section_browsertest.js",
-        "data/webui/settings/settings_idle_load_browsertest.js",
-        "data/webui/settings/settings_page_browsertest.js",
-        "data/webui/settings/settings_passwords_section_browsertest.js",
-        "data/webui/settings/settings_subpage_browsertest.js",
-        "data/webui/settings/settings_ui_browsertest.js",
-        "data/webui/settings/site_settings_page_browsertest.js",
-      ]
-
-      if (is_chromeos) {
-        sources += [ "data/webui/settings/easy_unlock_browsertest_chromeos.js" ]
-      }
-    }
-
-    if (is_chrome_branded) {
-      # crbug.com/230471
-      sources -= [ "data/webui/accessibility_audit_browsertest.js" ]
-    }
-    if (!is_chromeos) {
-      sources -= [ "data/webui/certificate_viewer_dialog_test.js" ]
-    } else {
-      sources -= [ "data/webui/md_user_manager/user_manager_browsertest.js" ]
-    }
-    if (is_mac) {
-      sources -= [
-        # TODO(rouslan): This test depends on the custom dictionary UI,
-        # which is disabled on Mac.
-        "../browser/ui/webui/options/edit_dictionary_browsertest.js",
-
-        # TODO(rouslan): This test depends on hunspell and we cannot run it
-        # on Mac, which does not use hunspell by default.
-        "../browser/ui/webui/options/language_options_dictionary_download_browsertest.js",
-        "../browser/ui/webui/options/multilanguage_options_webui_browsertest.js",
-      ]
-    }
-    if (!enable_app_list) {
-      sources -= [ "../browser/ui/webui/app_list/start_page_browsertest.js" ]
-    }
-    if (!enable_print_preview) {
-      sources -= [ "data/webui/print_preview.js" ]
-    }
-    deps = [
-      "//chrome/browser/ui",
-      "//skia",
-    ]
-    defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
-  }
-
   group("telemetry_unittests") {
     testonly = true
     deps = [
@@ -1135,6 +975,20 @@ if (!is_android) {
       "//testing/scripts/run_telemetry_as_googletest.py",
     ]
   }
+
+  # TODO(dpranke), TODO(crbug.com/714336): tab_capture_end2end_tests
+  # is really just browser_tests with some different flags. Figure out
+  # what the right way to run this is given the different ways to
+  # configure things in the //testing/buildbot/*.json files, here,
+  # gn_isolate_map.pyl, and mb.py. There's too many knobs and the interaction
+  # is strange and unclear at this point. For now, I *think* this will just
+  # have the effect of disabling the test in analyze. :(.
+  group("tab_capture_end2end_tests") {
+    testonly = true
+    deps = [
+      # ":browser_tests",
+    ]
+  }
 }
 
 static_library("browser_tests_runner") {
@@ -1155,7 +1009,7 @@ static_library("browser_tests_runner") {
     ]
 
     deps += [
-      "//mash/package",
+      "//chrome/app/mash:embedded_services",
       "//mash/session/public/interfaces:constants",
       "//services/service_manager/background:lib",
     ]
@@ -1301,8 +1155,6 @@ test("browser_tests") {
       "../browser/browsing_data/browsing_data_indexed_db_helper_browsertest.cc",
       "../browser/browsing_data/browsing_data_local_storage_helper_browsertest.cc",
       "../browser/browsing_data/browsing_data_remover_browsertest.cc",
-      "../browser/browsing_data/browsing_data_remover_test_util.cc",
-      "../browser/browsing_data/browsing_data_remover_test_util.h",
       "../browser/browsing_data/cache_counter_browsertest.cc",
       "../browser/browsing_data/conditional_cache_counting_helper_browsertest.cc",
       "../browser/browsing_data/downloads_counter_browsertest.cc",
@@ -1873,7 +1725,6 @@ test("browser_tests") {
     ]
 
     deps += [
-      ":browser_tests_js_webui",
       ":sync_integration_test_support",
       ":test_support_ui",
       "//base:i18n",
@@ -1884,6 +1735,7 @@ test("browser_tests") {
       "//chrome:strings",
       "//chrome/browser",
       "//chrome/renderer",
+      "//chrome/test/data/webui:browser_tests_js_webui",
       "//chrome/test/media_router:media_router_browsertests",
       "//components/autofill/content/browser:risk_proto",
       "//components/autofill/content/renderer:test_support",
@@ -2058,6 +1910,8 @@ test("browser_tests") {
         "../browser/extensions/extension_browsertest.h",
         "../browser/extensions/extension_function_test_utils.cc",
         "../browser/extensions/extension_function_test_utils.h",
+        "../browser/extensions/extension_with_management_policy_apitest.cc",
+        "../browser/extensions/extension_with_management_policy_apitest.h",
         "../browser/extensions/updater/extension_cache_fake.cc",
         "../browser/extensions/updater/extension_cache_fake.h",
         "../browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model_browsertest_win.cc",
@@ -2119,6 +1973,7 @@ test("browser_tests") {
         "../browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
         "../browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
         "../browser/ui/views/passwords/manage_passwords_bubble_view_browsertest.cc",
+        "../browser/ui/views/payments/contact_info_editor_view_controller_browsertest.cc",
         "../browser/ui/views/payments/credit_card_editor_view_controller_browsertest.cc",
         "../browser/ui/views/payments/cvc_unmask_view_controller_browsertest.cc",
         "../browser/ui/views/payments/error_message_view_controller_browsertest.cc",
@@ -3007,36 +2862,6 @@ group("angle_perftests") {
   ]
 }
 
-js2gtest("unit_tests_js") {
-  test_type = "unit"
-  sources = [
-    "../browser/resources/md_downloads/action_service_unittest.gtestjs",
-    "../browser/resources/print_preview/data/measurement_system_unittest.gtestjs",
-    "../browser/resources/print_preview/print_preview_utils_unittest.gtestjs",
-    "../renderer/resources/extensions/notifications_custom_bindings.gtestjs",
-    "../test/data/unit/framework_unittest.gtestjs",
-  ]
-  extra_js_files = [
-    "../browser/resources/md_downloads/action_service.js",
-    "../browser/resources/print_preview/data/measurement_system.js",
-    "../browser/resources/print_preview/print_preview_utils.js",
-    "../renderer/resources/extensions/notifications_custom_bindings.js",
-    "../renderer/resources/extensions/notifications_test_util.js",
-    "//ui/webui/resources/js/cr.js",
-  ]
-  if (is_chromeos) {
-    sources += [
-      "../browser/resources/chromeos/braille_ime/braille_ime_unittest.gtestjs",
-      "../browser/resources/chromeos/select_to_speak/select_to_speak_unittest.gtestjs",
-    ]
-    extra_js_files += [
-      "../browser/resources/chromeos/braille_ime/braille_ime.js",
-      "../browser/resources/chromeos/select_to_speak/select_to_speak.js",
-      "../browser/resources/chromeos/select_to_speak/test_support.js",
-    ]
-  }
-}
-
 test("unit_tests") {
   sources = [
     # histograms.xml is analyzed by AboutFlagsHistogramTest, so this
@@ -3101,9 +2926,6 @@ test("unit_tests") {
     "../browser/browsing_data/browsing_data_local_storage_helper_unittest.cc",
     "../browser/browsing_data/browsing_data_media_license_helper_unittest.cc",
     "../browser/browsing_data/browsing_data_quota_helper_unittest.cc",
-    "../browser/browsing_data/browsing_data_remover_impl_unittest.cc",
-    "../browser/browsing_data/browsing_data_remover_test_util.cc",
-    "../browser/browsing_data/browsing_data_remover_test_util.h",
     "../browser/browsing_data/browsing_data_service_worker_helper_unittest.cc",
     "../browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
     "../browser/browsing_data/cookies_tree_model_unittest.cc",
@@ -3260,6 +3082,7 @@ test("unit_tests") {
     "../browser/page_load_metrics/observers/previews_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/protocol_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/resource_prefetch_predictor_page_load_metrics_observer_unittest.cc",
+    "../browser/page_load_metrics/observers/resource_tracking_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/service_worker_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/tab_restore_page_load_metrics_observer_unittest.cc",
@@ -3356,7 +3179,7 @@ test("unit_tests") {
     "../browser/status_icons/status_icon_unittest.cc",
     "../browser/status_icons/status_tray_unittest.cc",
     "../browser/storage/durable_storage_permission_context_unittest.cc",
-    "../browser/subresource_filter/subresource_filter_content_settings_manager_factory_unittest.cc",
+    "../browser/subresource_filter/subresource_filter_content_settings_manager_unittest.cc",
     "../browser/subresource_filter/subresource_filter_unittest.cc",
     "../browser/subresource_filter/test_ruleset_publisher.cc",
     "../browser/subresource_filter/test_ruleset_publisher.h",
@@ -3659,6 +3482,7 @@ test("unit_tests") {
       "../browser/search/instant_unittest_base.cc",
       "../browser/search/instant_unittest_base.h",
       "../browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
+      "../browser/search/one_google_bar/one_google_bar_service_unittest.cc",
       "../browser/search/search_unittest.cc",
       "../browser/sessions/persistent_tab_restore_service_unittest.cc",
       "../browser/signin/mutable_profile_oauth2_token_service_delegate_unittest.cc",
@@ -3829,7 +3653,7 @@ test("unit_tests") {
       "../utility/media_router/dial_device_description_parser_impl_unittest.cc",
     ]
     deps += [
-      ":unit_tests_js",
+      "//chrome/test/data/webui:unit_tests_js",
       "//components/bubble:test_support",
     ]
     data += [
@@ -4009,6 +3833,7 @@ test("unit_tests") {
       "../browser/extensions/extension_service_unittest.cc",
       "../browser/extensions/extension_special_storage_policy_unittest.cc",
       "../browser/extensions/extension_sync_data_unittest.cc",
+      "../browser/extensions/extension_tab_util_unittest.cc",
       "../browser/extensions/extension_test_message_listener_unittest.cc",
       "../browser/extensions/extension_user_script_loader_unittest.cc",
       "../browser/extensions/extension_web_ui_unittest.cc",
@@ -5139,36 +4964,19 @@ if (is_chromeos && enable_package_mash_services) {
     testonly = true
     data_deps = [
       ":browser_tests",
-      "//chrome/app/mash:mash_service_overrides",
     ]
   }
 
   service_manifest("mash_browser_tests_manifest") {
     name = "mash_browser_tests"
-
     source = "base/mash_browser_tests_manifest.json"
-    packaged_services = [
-      "//ash/autoclick/mus:manifest",
-      "//ash/mus:manifest",
-      "//ash/touch_hud/mus:manifest",
-      "//mash/catalog_viewer:manifest",
-      "//mash/quick_launch:manifest",
-      "//mash/session:manifest",
-      "//mash/task_viewer:manifest",
-      "//services/ui:manifest",
-      "//services/ui/ime/test_ime_driver:manifest",
-    ]
-
-    if (is_linux && !is_android) {
-      packaged_services += [ "//components/font_service:manifest" ]
-    }
   }
 
   catalog("mash_browser_tests_catalog") {
     testonly = true
     embedded_services = [ ":mash_browser_tests_manifest" ]
     standalone_services = [ "//services/tracing:manifest" ]
-    catalog_deps = [ "//chrome/app:catalog_for_mash" ]
+    catalog_deps = [ "//chrome/app/mash:catalog" ]
   }
 
   copy("mash_browser_tests_catalog_copy") {
@@ -5193,22 +5001,19 @@ if (is_chromeos && enable_package_mash_services) {
     testonly = true
     data_deps = [
       ":browser_tests",
-      "//chrome/app/mash:mash_service_overrides",
     ]
   }
 
   service_manifest("mus_browser_tests_manifest") {
     name = "mus_browser_tests"
-
     source = "base/mus_browser_tests_manifest.json"
-    packaged_services = [ "//services/ui:manifest" ]
   }
 
   catalog("mus_browser_tests_catalog") {
     testonly = true
     embedded_services = [ ":mus_browser_tests_manifest" ]
     standalone_services = [ "//services/tracing:manifest" ]
-    catalog_deps = [ "//chrome/app:catalog" ]
+    catalog_deps = [ "//chrome/app/mash:catalog_mus" ]
   }
 
   copy("mus_browser_tests_catalog_copy") {

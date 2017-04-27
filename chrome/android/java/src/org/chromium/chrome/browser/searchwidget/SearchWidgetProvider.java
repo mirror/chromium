@@ -27,6 +27,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.LoadListener;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrlServiceObserver;
@@ -94,14 +95,7 @@ public class SearchWidgetProvider extends AppWidgetProvider {
         }
 
         private void updateCachedEngineName() {
-            assert LibraryLoader.isInitialized();
-
-            // Getting an instance of the TemplateUrlService requires that the native library be
-            // loaded, but the TemplateUrlService also itself needs to be initialized.
-            TemplateUrlService service = TemplateUrlService.getInstance();
-            assert service.isLoaded();
-            SearchWidgetProvider.updateCachedEngineName(
-                    service.getDefaultSearchEngineTemplateUrl().getShortName());
+            SearchWidgetProvider.updateCachedEngineName();
         }
     }
 
@@ -119,7 +113,7 @@ public class SearchWidgetProvider extends AppWidgetProvider {
             "org.chromium.chrome.browser.searchwidget.IS_VOICE_SEARCH_AVAILABLE";
     private static final String PREF_NUM_CONSECUTIVE_CRASHES =
             "org.chromium.chrome.browser.searchwidget.NUM_CONSECUTIVE_CRASHES";
-    private static final String PREF_SEARCH_ENGINE_SHORTNAME =
+    static final String PREF_SEARCH_ENGINE_SHORTNAME =
             "org.chromium.chrome.browser.searchwidget.SEARCH_ENGINE_SHORTNAME";
 
     /** Number of consecutive crashes this widget will absorb before giving up. */
@@ -168,7 +162,7 @@ public class SearchWidgetProvider extends AppWidgetProvider {
             @Override
             public void run() {
                 if (IntentHandler.isIntentChromeOrFirstParty(intent)) {
-                    handleAction(intent.getAction());
+                    handleAction(intent);
                 } else {
                     SearchWidgetProvider.super.onReceive(context, intent);
                 }
@@ -188,11 +182,12 @@ public class SearchWidgetProvider extends AppWidgetProvider {
 
     /** Handles the intent actions to the widget. */
     @VisibleForTesting
-    static void handleAction(String action) {
+    static void handleAction(Intent intent) {
+        String action = intent.getAction();
         if (ACTION_START_TEXT_QUERY.equals(action)) {
-            startSearchActivity(false);
+            startSearchActivity(intent, false);
         } else if (ACTION_START_VOICE_QUERY.equals(action)) {
-            startSearchActivity(true);
+            startSearchActivity(intent, true);
         } else if (ACTION_UPDATE_ALL_WIDGETS.equals(action)) {
             performUpdate(null);
         } else {
@@ -200,9 +195,12 @@ public class SearchWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private static void startSearchActivity(boolean startVoiceSearch) {
+    private static void startSearchActivity(Intent intent, boolean startVoiceSearch) {
         Log.d(TAG, "Launching SearchActivity: VOICE=" + startVoiceSearch);
         Context context = getDelegate().getContext();
+
+        // Abort if the user needs to go through First Run.
+        if (FirstRunFlowSequencer.launch(context, intent, true)) return;
 
         // Launch the SearchActivity.
         Intent searchIntent = new Intent();
@@ -258,7 +256,7 @@ public class SearchWidgetProvider extends AppWidgetProvider {
         }
 
         // Update what string is displayed by the widget.
-        String text = TextUtils.isEmpty(engineName)
+        String text = TextUtils.isEmpty(engineName) || !shouldShowFullString()
                 ? context.getString(R.string.search_widget_default)
                 : context.getString(R.string.search_with_product, engineName);
         views.setTextViewText(R.id.title, text);
@@ -283,6 +281,19 @@ public class SearchWidgetProvider extends AppWidgetProvider {
         }
     }
 
+    /** Attempts to update the cached search engine name. */
+    public static void updateCachedEngineName() {
+        ThreadUtils.assertOnUiThread();
+        if (!LibraryLoader.isInitialized()) return;
+
+        // Getting an instance of the TemplateUrlService requires that the native library be
+        // loaded, but the TemplateUrlService also itself needs to be initialized.
+        TemplateUrlService service = TemplateUrlService.getInstance();
+        if (!service.isLoaded()) return;
+
+        updateCachedEngineName(service.getDefaultSearchEngineTemplateUrl().getShortName());
+    }
+
     /**
      * Updates the name of the user's default search engine that is cached in SharedPreferences.
      * Caching it in SharedPreferences prevents us from having to load the native library and the
@@ -290,6 +301,9 @@ public class SearchWidgetProvider extends AppWidgetProvider {
      */
     static void updateCachedEngineName(String engineName) {
         SharedPreferences prefs = getDelegate().getSharedPreferences();
+
+        if (!shouldShowFullString()) engineName = null;
+
         if (!TextUtils.equals(getCachedEngineName(prefs), engineName)) {
             prefs.edit().putString(PREF_SEARCH_ENGINE_SHORTNAME, engineName).apply();
             performUpdate(null);
@@ -355,6 +369,12 @@ public class SearchWidgetProvider extends AppWidgetProvider {
                 throw e;
             }
         }
+    }
+
+    static boolean shouldShowFullString() {
+        Intent freIntent = FirstRunFlowSequencer.checkIfFirstRunIsNecessary(
+                getDelegate().getContext(), null, false);
+        return freIntent == null;
     }
 
     /** Sets an {@link SearchWidgetProviderDelegate} to interact with. */

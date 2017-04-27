@@ -950,7 +950,7 @@ void LayoutBlock::InsertPositionedObject(LayoutBox* o) {
   DCHECK_EQ(o->ContainingBlock(), this);
 
   if (g_positioned_container_map) {
-    auto container_map_it = g_positioned_container_map->Find(o);
+    auto container_map_it = g_positioned_container_map->find(o);
     if (container_map_it != g_positioned_container_map->end()) {
       if (container_map_it->value == this) {
         DCHECK(HasPositionedObjects());
@@ -2205,6 +2205,11 @@ LayoutUnit LayoutBlock::AvailableLogicalHeightForPercentageComputation() const {
 
 bool LayoutBlock::HasDefiniteLogicalHeight() const {
   return AvailableLogicalHeightForPercentageComputation() != LayoutUnit(-1);
+}
+
+bool LayoutBlock::NeedsPreferredWidthsRecalculation() const {
+  return (HasRelativeLogicalHeight() && Style()->LogicalWidth().IsAuto()) ||
+         LayoutBox::NeedsPreferredWidthsRecalculation();
 }
 
 }  // namespace blink

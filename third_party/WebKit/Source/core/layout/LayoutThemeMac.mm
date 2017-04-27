@@ -339,13 +339,13 @@ static RGBA32 MenuBackgroundColor() {
 }
 
 void LayoutThemeMac::PlatformColorsDidChange() {
-  system_color_cache_.Clear();
+  system_color_cache_.clear();
   LayoutTheme::PlatformColorsDidChange();
 }
 
 Color LayoutThemeMac::SystemColor(CSSValueID css_value_id) const {
   {
-    HashMap<int, RGBA32>::iterator it = system_color_cache_.Find(css_value_id);
+    HashMap<int, RGBA32>::iterator it = system_color_cache_.find(css_value_id);
     if (it != system_color_cache_.end())
       return it->value;
   }

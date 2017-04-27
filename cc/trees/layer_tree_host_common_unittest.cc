@@ -5538,10 +5538,10 @@ TEST_F(LayerTreeHostCommonTest, SubtreeHiddenWithCopyRequest) {
   inputs.can_adjust_raster_scales = true;
   LayerTreeHostCommon::CalculateDrawPropertiesForTesting(&inputs);
 
-  EXPECT_GT(root_layer->num_copy_requests_in_target_subtree(), 0);
-  EXPECT_GT(copy_grand_parent_layer->num_copy_requests_in_target_subtree(), 0);
-  EXPECT_GT(copy_parent_layer->num_copy_requests_in_target_subtree(), 0);
-  EXPECT_GT(copy_layer->num_copy_requests_in_target_subtree(), 0);
+  EXPECT_TRUE(root_layer->has_copy_requests_in_target_subtree());
+  EXPECT_TRUE(copy_grand_parent_layer->has_copy_requests_in_target_subtree());
+  EXPECT_TRUE(copy_parent_layer->has_copy_requests_in_target_subtree());
+  EXPECT_TRUE(copy_layer->has_copy_requests_in_target_subtree());
 
   // We should have four render surfaces, one for the root, one for the grand
   // parent since it has opacity and two drawing descendants, one for the parent
@@ -7343,7 +7343,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionBottomInnerViewportDelta) {
 
   // We start to hide the toolbar, but not far enough that the sticky element
   // should be moved up yet.
-  root_impl->SetBoundsDelta(gfx::Vector2dF(0.f, -10.f));
+  root_impl->SetViewportBoundsDelta(gfx::Vector2dF(0.f, -10.f));
   ExecuteCalculateDrawProperties(root_impl, 1.f, 1.f, root_impl, inner_scroll,
                                  nullptr);
   EXPECT_VECTOR2DF_EQ(
@@ -7351,7 +7351,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionBottomInnerViewportDelta) {
       sticky_pos_impl->ScreenSpaceTransform().To2dTranslation());
 
   // On hiding more of the toolbar the sticky element starts to stick.
-  root_impl->SetBoundsDelta(gfx::Vector2dF(0.f, -20.f));
+  root_impl->SetViewportBoundsDelta(gfx::Vector2dF(0.f, -20.f));
   ExecuteCalculateDrawProperties(root_impl, 1.f, 1.f, root_impl, inner_scroll,
                                  nullptr);
   EXPECT_VECTOR2DF_EQ(
@@ -7360,7 +7360,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionBottomInnerViewportDelta) {
 
   // On hiding more the sticky element stops moving as it has reached its
   // limit.
-  root_impl->SetBoundsDelta(gfx::Vector2dF(0.f, -30.f));
+  root_impl->SetViewportBoundsDelta(gfx::Vector2dF(0.f, -30.f));
   ExecuteCalculateDrawProperties(root_impl, 1.f, 1.f, root_impl, inner_scroll,
                                  nullptr);
   EXPECT_VECTOR2DF_EQ(
@@ -7420,7 +7420,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionBottomOuterViewportDelta) {
 
   // We start to hide the toolbar, but not far enough that the sticky element
   // should be moved up yet.
-  outer_clip_impl->SetBoundsDelta(gfx::Vector2dF(0.f, -10.f));
+  outer_clip_impl->SetViewportBoundsDelta(gfx::Vector2dF(0.f, -10.f));
   ExecuteCalculateDrawProperties(root_impl, 1.f, 1.f, root_impl, inner_scroll,
                                  outer_scroll);
   EXPECT_VECTOR2DF_EQ(
@@ -7428,7 +7428,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionBottomOuterViewportDelta) {
       sticky_pos_impl->ScreenSpaceTransform().To2dTranslation());
 
   // On hiding more of the toolbar the sticky element starts to stick.
-  outer_clip_impl->SetBoundsDelta(gfx::Vector2dF(0.f, -20.f));
+  outer_clip_impl->SetViewportBoundsDelta(gfx::Vector2dF(0.f, -20.f));
   ExecuteCalculateDrawProperties(root_impl, 1.f, 1.f, root_impl, inner_scroll,
                                  outer_scroll);
 
@@ -7438,7 +7438,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionBottomOuterViewportDelta) {
       gfx::Vector2dF(0.f, 60.f),
       sticky_pos_impl->ScreenSpaceTransform().To2dTranslation());
 
-  outer_clip_impl->SetBoundsDelta(gfx::Vector2dF(0.f, -30.f));
+  outer_clip_impl->SetViewportBoundsDelta(gfx::Vector2dF(0.f, -30.f));
   ExecuteCalculateDrawProperties(root_impl, 1.f, 1.f, root_impl, inner_scroll,
                                  outer_scroll);
 
@@ -8857,7 +8857,7 @@ TEST_F(LayerTreeHostCommonTest, VisibleContentRectInChildRenderSurface) {
   EXPECT_EQ(gfx::Rect(768 / 2, 582 / 2), content->visible_layer_rect());
 }
 
-TEST_F(LayerTreeHostCommonTest, BoundsDeltaAffectVisibleContentRect) {
+TEST_F(LayerTreeHostCommonTest, ViewportBoundsDeltaAffectVisibleContentRect) {
   FakeImplTaskRunnerProvider task_runner_provider;
   TestTaskGraphRunner task_graph_runner;
   FakeLayerTreeHostImpl host_impl(&task_runner_provider, &task_graph_runner);
@@ -8881,6 +8881,11 @@ TEST_F(LayerTreeHostCommonTest, BoundsDeltaAffectVisibleContentRect) {
   root->SetBounds(root_size);
   root->SetMasksToBounds(true);
 
+  // Make root the inner viewport scroll layer. This ensures the later call to
+  // |SetViewportBoundsDelta| will be on a viewport layer.
+  host_impl.active_tree()->SetViewportLayersFromIds(
+      Layer::INVALID_ID, Layer::INVALID_ID, root->id(), Layer::INVALID_ID);
+
   root->test_properties()->AddChild(
       LayerImpl::Create(host_impl.active_tree(), 2));
 
@@ -8897,7 +8902,7 @@ TEST_F(LayerTreeHostCommonTest, BoundsDeltaAffectVisibleContentRect) {
   LayerTreeHostCommon::CalculateDrawPropertiesForTesting(&inputs);
   EXPECT_EQ(gfx::Rect(root_size), sublayer->visible_layer_rect());
 
-  root->SetBoundsDelta(gfx::Vector2dF(0.0, 50.0));
+  root->SetViewportBoundsDelta(gfx::Vector2dF(0.0, 50.0));
   LayerTreeHostCommon::CalculateDrawPropertiesForTesting(&inputs);
 
   gfx::Rect affected_by_delta(0, 0, root_size.width(),
@@ -8905,7 +8910,7 @@ TEST_F(LayerTreeHostCommonTest, BoundsDeltaAffectVisibleContentRect) {
   EXPECT_EQ(affected_by_delta, sublayer->visible_layer_rect());
 }
 
-TEST_F(LayerTreeHostCommonTest, NodesAffectedByBoundsDeltaGetUpdated) {
+TEST_F(LayerTreeHostCommonTest, NodesAffectedByViewportBoundsDeltaGetUpdated) {
   scoped_refptr<Layer> root = Layer::Create();
   scoped_refptr<Layer> inner_viewport_container_layer = Layer::Create();
   scoped_refptr<Layer> inner_viewport_scroll_layer = Layer::Create();
@@ -9344,14 +9349,7 @@ TEST_F(LayerTreeHostCommonTest, UpdateScrollChildPosition) {
 
 static void CopyOutputCallback(std::unique_ptr<CopyOutputResult> result) {}
 
-TEST_F(LayerTreeHostCommonTest, NumCopyRequestsInTargetSubtree) {
-  // If the layer has a node in effect_tree, the return value of
-  // num_copy_requests_in_target_subtree()  must be equal to the actual number
-  // of copy requests in the sub-layer_tree; Otherwise, the number is expected
-  // to be the value of its nearest ancestor that owns an effect node and
-  // greater than or equal to the actual number of copy requests in the
-  // sub-layer_tree.
-
+TEST_F(LayerTreeHostCommonTest, HasCopyRequestsInTargetSubtree) {
   scoped_refptr<Layer> root = Layer::Create();
   scoped_refptr<Layer> child1 = Layer::Create();
   scoped_refptr<Layer> child2 = Layer::Create();
@@ -9371,11 +9369,11 @@ TEST_F(LayerTreeHostCommonTest, NumCopyRequestsInTargetSubtree) {
   child2->SetOpacity(0.f);
   ExecuteCalculateDrawPropertiesAndSaveUpdateLayerList(root.get());
 
-  EXPECT_EQ(root->num_copy_requests_in_target_subtree(), 2);
-  EXPECT_EQ(child1->num_copy_requests_in_target_subtree(), 2);
-  EXPECT_EQ(child2->num_copy_requests_in_target_subtree(), 0);
-  EXPECT_EQ(grandchild->num_copy_requests_in_target_subtree(), 2);
-  EXPECT_EQ(greatgrandchild->num_copy_requests_in_target_subtree(), 1);
+  EXPECT_TRUE(root->has_copy_requests_in_target_subtree());
+  EXPECT_TRUE(child1->has_copy_requests_in_target_subtree());
+  EXPECT_FALSE(child2->has_copy_requests_in_target_subtree());
+  EXPECT_TRUE(grandchild->has_copy_requests_in_target_subtree());
+  EXPECT_TRUE(greatgrandchild->has_copy_requests_in_target_subtree());
 }
 
 TEST_F(LayerTreeHostCommonTest, SkippingSubtreeMain) {
@@ -9781,10 +9779,10 @@ TEST_F(LayerTreeHostCommonTest, LayerTreeRebuildTest) {
       CopyOutputRequest::CreateRequest(base::Bind(&EmptyCopyOutputCallback)));
 
   ExecuteCalculateDrawPropertiesAndSaveUpdateLayerList(root.get());
-  EXPECT_GT(root->num_copy_requests_in_target_subtree(), 0);
+  EXPECT_TRUE(root->has_copy_requests_in_target_subtree());
 
   ExecuteCalculateDrawPropertiesAndSaveUpdateLayerList(root.get());
-  EXPECT_GT(root->num_copy_requests_in_target_subtree(), 0);
+  EXPECT_TRUE(root->has_copy_requests_in_target_subtree());
 }
 
 TEST_F(LayerTreeHostCommonTest, ResetPropertyTreeIndices) {

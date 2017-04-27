@@ -21,8 +21,8 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/test/test_timeouts.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -198,8 +198,12 @@ class PushTimesMockURLRequestJob : public net::URLRequestMockHTTPJob {
             request,
             network_delegate,
             file_path,
-            BrowserThread::GetBlockingPool()->GetTaskRunnerWithShutdownBehavior(
-                base::SequencedWorkerPool::SKIP_ON_SHUTDOWN)) {}
+            base::CreateTaskRunnerWithTraits(
+                base::TaskTraits()
+                    .MayBlock()
+                    .WithPriority(base::TaskPriority::BACKGROUND)
+                    .WithShutdownBehavior(
+                        base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN))) {}
 
   void Start() override {
     load_timing_info_.socket_reused = true;
@@ -741,7 +745,7 @@ class WorkerDevToolsSanityTest : public InProcessBrowserTest {
   static void TerminateWorker(scoped_refptr<WorkerData> worker_data) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::Bind(&TerminateWorkerOnIOThread, worker_data));
+        base::BindOnce(&TerminateWorkerOnIOThread, worker_data));
     content::RunMessageLoop();
   }
 
@@ -767,9 +771,8 @@ class WorkerDevToolsSanityTest : public InProcessBrowserTest {
   static scoped_refptr<WorkerData> WaitForFirstSharedWorker(const char* path) {
     scoped_refptr<WorkerData> worker_data(new WorkerData());
     BrowserThread::PostTask(
-        BrowserThread::IO,
-        FROM_HERE,
-        base::Bind(&WaitForFirstSharedWorkerOnIOThread, path, worker_data));
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&WaitForFirstSharedWorkerOnIOThread, path, worker_data));
     content::RunMessageLoop();
     return worker_data;
   }
@@ -1669,12 +1672,13 @@ IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestNetworkPushTime) {
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&TestInterceptor::Register, push_url, file_path));
+      base::BindOnce(&TestInterceptor::Register, push_url, file_path));
 
   DispatchOnTestSuite(window_, "testPushTimes", push_url.spec().c_str());
 
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::Bind(&TestInterceptor::Unregister, push_url));
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&TestInterceptor::Unregister, push_url));
 
   CloseDevToolsWindow();
 }

@@ -134,12 +134,6 @@ extern const char kPrintPdfAsImageName[];
 // preview.
 extern const char kPrintPdfAsImageDescription[];
 
-// Name for the flag to add the print scaling feature to print preview.
-extern const char kPrintScalingName[];
-
-// Description for the flag to add the print scaling feature to print preview.
-extern const char kPrintScalingDescription[];
-
 // Name of the 'Native Client' lab.
 extern const char kNaclName[];
 
@@ -198,6 +192,15 @@ extern const char kMarkHttpAsName[];
 extern const char kMarkHttpAsDescription[];
 
 extern const char kMarkHttpAsDangerous[];
+
+//  Material Design of the Incognito NTP.
+
+// Name for the flag to enable the material redesign of the Incognito NTP.
+extern const char kMaterialDesignIncognitoNTPName[];
+
+// Description for the flag to enable the material redesign
+// of the Incognito NTP.
+extern const char kMaterialDesignIncognitoNTPDescription[];
 
 // Name of the 'Save Page as MHTML' lab.
 extern const char kSavePageAsMhtmlName[];
@@ -594,6 +597,14 @@ extern const char kWebrtcHwH264EncodingName[];
 // encoding support.
 extern const char kWebrtcHwH264EncodingDescription[];
 
+// Name of chrome:flags option to turn on WebRTC vp8 hardware video encoding
+// support.
+extern const char kWebrtcHwVP8EncodingName[];
+
+// Description of chrome:flags option to turn on WebRTC hardware vp8 video
+// encoding support.
+extern const char kWebrtcHwVP8EncodingDescription[];
+
 // Name of chrome:flags option to enable GCM cipher suites for WebRTC
 extern const char kWebrtcSrtpAesGcmName[];
 
@@ -704,16 +715,6 @@ extern const char kGestureRequirementForMediaPlaybackName[];
 // Description for the flag for gesture requiment for media playback
 extern const char kGestureRequirementForMediaPlaybackDescription[];
 
-#if !defined(OS_ANDROID)
-
-// Title for the flag for gesture requiment for media playback
-extern const char kCrossOriginMediaPlaybackRequiresUserGestureName[];
-
-// Description for the flag for gesture requiment for media playback
-extern const char kCrossOriginMediaPlaybackRequiresUserGestureDescription[];
-
-#endif  // !defined(OS_ANDROID)
-
 // Description for the flag to adjust the default behaviour for document level
 // passive touch listeners.
 extern const char kPassiveDocumentEventListenersDescription[];
@@ -812,11 +813,11 @@ extern const char kAshEnableMirroredScreenName[];
 // Description for the flag to enable the mirrored screen mode.
 extern const char kAshEnableMirroredScreenDescription[];
 
-// Title for the flag to enable smooth rotation animations.
-extern const char kAshEnableSmoothScreenRotationName[];
+// Title for the flag to disable smooth rotation animations.
+extern const char kAshDisableSmoothScreenRotationName[];
 
-// Description for the flag to enable smooth rotation animations.
-extern const char kAshEnableSmoothScreenRotationDescription[];
+// Description for the flag to disable smooth rotation animations.
+extern const char kAshDisableSmoothScreenRotationDescription[];
 
 // Description for the flag that sets material design ink drop animation speed
 // of fast.
@@ -2778,13 +2779,6 @@ extern const char kAndroidPaymentAppsName[];
 // Description for the flag to enable third party Android payment apps
 extern const char kAndroidPaymentAppsDescription[];
 
-// Title of the flag to enable filtering out third party Android payment apps
-extern const char kAndroidPaymentAppsFilterTitle[];
-
-// Description for the flag to enable filtering out third party Android payment
-// apps
-extern const char kAndroidPaymentAppsFilterDescription[];
-
 #endif  // defined(OS_ANDROID)
 
 // Name for the flag to enable feature policy.
@@ -3299,6 +3293,32 @@ extern const char kEnableIdleTimeSpellCheckingName[];
 
 // Description of the flag that enables Blink's idle time spell checker.
 extern const char kEnableIdleTimeSpellCheckingDescription[];
+
+#if defined(OS_ANDROID)
+
+// Name of the flag that enables the omnibox's clipboard URL provider.
+extern const char kEnableOmniboxClipboardProviderName[];
+
+// Description of the flag that enables the omnibox's clipboard URL provider.
+extern const char kEnableOmniboxClipboardProviderDescription[];
+
+#endif  // defined(OS_ANDROID)
+
+// Name of the autoplay policy flag.
+extern const char kAutoplayPolicyName[];
+
+// Description of the autoplay policy entry.
+extern const char kAutoplayPolicyDescription[];
+
+// Description of the autoplay policy that requires a user gesture on cross
+// origin iframes.
+extern const char kAutoplayPolicyCrossOriginUserGestureRequired[];
+
+// Description of the autoplay policy that has no user gesture requirements.
+extern const char kAutoplayPolicyNoUserGestureRequired[];
+
+// Description of the autoplay policy that requires a user gesture.
+extern const char kAutoplayPolicyUserGestureRequired[];
 
 }  // namespace flag_descriptions
 

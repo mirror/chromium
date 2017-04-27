@@ -5,7 +5,7 @@
 #include "core/workers/MainThreadWorklet.h"
 
 #include "bindings/core/v8/ScriptSourceCode.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
@@ -46,9 +46,6 @@ ScriptPromise MainThreadWorklet::addModule(ScriptState* script_state,
                           kSyntaxError, "'" + url + "' is not a valid URL."));
   }
 
-  if (!IsInitialized())
-    Initialize();
-
   int32_t request_id = GetNextRequestId();
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
@@ -73,7 +70,8 @@ void MainThreadWorklet::DidFetchAndInvokeScript(int32_t request_id,
 
 void MainThreadWorklet::ContextDestroyed(ExecutionContext* execution_context) {
   DCHECK(IsMainThread());
-  resolver_map_.Clear();
+  resolver_map_.clear();
+  GetWorkletGlobalScopeProxy()->TerminateWorkletGlobalScope();
   Worklet::ContextDestroyed(execution_context);
 }
 

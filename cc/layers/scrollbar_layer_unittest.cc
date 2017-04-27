@@ -107,11 +107,9 @@ class ScrollbarLayerTest : public testing::Test {
     layer_tree_settings_.use_zero_copy = true;
     layer_tree_settings_.scrollbar_animator =
         LayerTreeSettings::ANDROID_OVERLAY;
-    layer_tree_settings_.scrollbar_show_delay =
+    layer_tree_settings_.scrollbar_fade_delay =
         base::TimeDelta::FromMilliseconds(20);
-    layer_tree_settings_.scrollbar_fade_out_delay =
-        base::TimeDelta::FromMilliseconds(20);
-    layer_tree_settings_.scrollbar_fade_out_duration =
+    layer_tree_settings_.scrollbar_fade_duration =
         base::TimeDelta::FromMilliseconds(20);
 
     scrollbar_layer_id_ = -1;
@@ -387,6 +385,7 @@ TEST_F(ScrollbarLayerTest, UpdatePropertiesOfScrollBarWhenThumbRemoved) {
   LayerImpl* root_clip_layer_impl = nullptr;
   PaintedScrollbarLayerImpl* scrollbar_layer_impl = nullptr;
 
+  layer_tree_host_->BuildPropertyTreesForTesting();
   UPDATE_AND_EXTRACT_LAYER_POINTERS();
   EXPECT_EQ(gfx::Rect(10, 0, 4, 10).ToString(),
             scrollbar_layer_impl->ComputeThumbQuadRect().ToString());
@@ -746,8 +745,10 @@ TEST_F(ScrollbarLayerTest, ScrollbarLayerPushProperties) {
   layer_tree_root->SetBounds(gfx::Size(2, 2));
   scroll_layer->SetBounds(gfx::Size(10, 10));
   layer_tree_host_->UpdateLayers();
-  layer_tree_host_->CommitAndCreateLayerImplTree();
   LayerTreeHostImpl* host_impl = layer_tree_host_->host_impl();
+  host_impl->CreatePendingTree();
+  layer_tree_host_->CommitAndCreatePendingTree();
+  host_impl->ActivateSyncTree();
   EXPECT_TRUE(host_impl->ScrollbarAnimationControllerForElementId(
       scroll_layer->element_id()));
 

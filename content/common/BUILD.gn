@@ -367,6 +367,7 @@ source_set("common") {
     "//components/tracing:startup_tracing",
     "//content:resources",
     "//content/app/resources",
+    "//content/public/common:service_names",
     "//device/base/synchronization",
     "//device/bluetooth",
     "//gpu",
@@ -395,7 +396,7 @@ source_set("common") {
     "//ppapi/features",
     "//sandbox",
     "//sandbox:sandbox_features",
-    "//services/resource_coordinator/public/interfaces",
+    "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//services/service_manager",
     "//services/service_manager/embedder",
     "//services/service_manager/public/cpp",
@@ -608,6 +609,7 @@ mojom("mojo_bindings") {
     "url_loader.mojom",
     "url_loader_factory.mojom",
     "video_capture.mojom",
+    "worker_url_loader_factory_provider.mojom",
   ]
 
   import_dirs = [ "//mojo/services" ]
@@ -641,4 +643,5 @@ mojom("mojo_bindings") {
   export_class_attribute = "CONTENT_EXPORT"
   export_define = "CONTENT_IMPLEMENTATION=1"
   export_header = "content/common/content_export.h"
+  use_once_callback = true
 }

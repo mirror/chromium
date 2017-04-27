@@ -33,7 +33,7 @@
 #include "bindings/core/v8/ScriptController.h"
 
 #include "bindings/core/v8/ScriptSourceCode.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8GCController.h"
 #include "bindings/core/v8/V8ScriptRunner.h"
 #include "bindings/core/v8/WindowProxy.h"
@@ -128,15 +128,14 @@ v8::Local<v8::Value> ScriptController::ExecuteScriptAndReturnValue(
     try_catch.SetVerbose(true);
 
     v8::Local<v8::Script> script;
-    if (!V8Call(
-            V8ScriptRunner::CompileScript(
-                source, GetIsolate(), access_control_status, v8_cache_options),
-            script, try_catch))
+    if (!V8ScriptRunner::CompileScript(source, GetIsolate(),
+                                       access_control_status, v8_cache_options)
+             .ToLocal(&script))
       return result;
 
-    if (!V8Call(V8ScriptRunner::RunCompiledScript(GetIsolate(), script,
-                                                  GetFrame()->GetDocument()),
-                result, try_catch))
+    if (!V8ScriptRunner::RunCompiledScript(GetIsolate(), script,
+                                           GetFrame()->GetDocument())
+             .ToLocal(&result))
       return result;
   }
 

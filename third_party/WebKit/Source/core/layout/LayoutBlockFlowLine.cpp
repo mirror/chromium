@@ -626,7 +626,7 @@ static inline void SetLogicalWidthForTextRun(
     if (last_end_offset != run->stop_) {
       // If we don't have enough cached data, we'll measure the run again.
       can_use_cached_word_measurements = false;
-      fallback_fonts.Clear();
+      fallback_fonts.clear();
     }
   }
 
@@ -1060,7 +1060,7 @@ void LayoutBlockFlow::AppendFloatsToLastLine(
   FloatingObjectSetIterator end = floating_object_set.end();
   if (layout_state.LastFloat()) {
     FloatingObjectSetIterator last_float_iterator =
-        floating_object_set.Find(layout_state.LastFloat());
+        floating_object_set.find(layout_state.LastFloat());
     DCHECK(last_float_iterator != end);
     ++last_float_iterator;
     it = last_float_iterator;

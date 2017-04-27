@@ -236,6 +236,7 @@
 #include "platform/network/ContentSecurityPolicyParsers.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/network/NetworkStateNotifier.h"
+#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/text/PlatformLocale.h"
 #include "platform/text/SegmentedString.h"
@@ -256,7 +257,6 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebPrerenderingSupport.h"
-#include "public/platform/WebScheduler.h"
 #include "public/platform/modules/sensitive_input_visibility/sensitive_input_visibility_service.mojom-blink.h"
 #include "public/platform/site_engagement.mojom-blink.h"
 
@@ -375,6 +375,54 @@ static inline bool IsValidNamePart(UChar32 c) {
   return true;
 }
 
+// Tests whether |name| is something the HTML parser would accept as a
+// tag name.
+template <typename CharType>
+static inline bool IsValidElementNamePerHTMLParser(const CharType* characters,
+                                                   unsigned length) {
+  CharType c = characters[0] | 0x20;
+  if (!('a' <= c && c < 'z'))
+    return false;
+
+  for (unsigned i = 1; i < length; ++i) {
+    c = characters[i];
+    if (c == '\t' || c == '\n' || c == '\f' || c == '\r' || c == ' ' ||
+        c == '/' || c == '>')
+      return false;
+  }
+
+  return true;
+}
+
+static bool IsValidElementNamePerHTMLParser(const String& name) {
+  unsigned length = name.length();
+  if (!length)
+    return false;
+
+  if (name.Is8Bit()) {
+    const LChar* characters = name.Characters8();
+    return IsValidElementNamePerHTMLParser(characters, length);
+  }
+  const UChar* characters = name.Characters16();
+  return IsValidElementNamePerHTMLParser(characters, length);
+}
+
+// Tests whether |name| is a valid name per DOM spec. Also checks
+// whether the HTML parser would accept this element name and counts
+// cases of mismatches.
+static bool IsValidElementName(const LocalDOMWindow* window,
+                               const String& name) {
+  bool is_valid_dom_name = Document::IsValidName(name);
+  bool is_valid_html_name = IsValidElementNamePerHTMLParser(name);
+  if (UNLIKELY(is_valid_html_name != is_valid_dom_name && window)) {
+    UseCounter::Count(window->GetFrame(),
+                      is_valid_dom_name
+                          ? UseCounter::kElementNameDOMValidHTMLParserInvalid
+                          : UseCounter::kElementNameDOMInvalidHTMLParserValid);
+  }
+  return is_valid_dom_name;
+}
+
 static bool AcceptsEditingFocus(const Element& element) {
   DCHECK(HasEditableStyle(element));
 
@@ -488,7 +536,7 @@ Document::Document(const DocumentInit& initializer,
           this,
           &Document::UpdateFocusAppearanceTimerFired),
       css_target_(nullptr),
-      load_event_progress_(kLoadEventCompleted),
+      load_event_progress_(kLoadEventNotRun),
       start_time_(CurrentTime()),
       script_runner_(ScriptRunner::Create(this)),
       xml_version_("1.0"),
@@ -694,9 +742,10 @@ AtomicString Document::ConvertLocalName(const AtomicString& name) {
 }
 
 // https://dom.spec.whatwg.org/#dom-document-createelement
-Element* Document::createElement(const AtomicString& name,
+Element* Document::createElement(const LocalDOMWindow* window,
+                                 const AtomicString& name,
                                  ExceptionState& exception_state) {
-  if (!IsValidName(name)) {
+  if (!IsValidElementName(window, name)) {
     exception_state.ThrowDOMException(
         kInvalidCharacterError,
         "The tag name provided ('" + name + "') is not a valid name.");
@@ -746,11 +795,12 @@ String GetTypeExtension(Document* document,
 }
 
 // https://dom.spec.whatwg.org/#dom-document-createelement
-Element* Document::createElement(const AtomicString& local_name,
+Element* Document::createElement(const LocalDOMWindow* window,
+                                 const AtomicString& local_name,
                                  const StringOrDictionary& string_or_options,
                                  ExceptionState& exception_state) {
   // 1. If localName does not match Name production, throw InvalidCharacterError
-  if (!IsValidName(local_name)) {
+  if (!IsValidElementName(window, local_name)) {
     exception_state.ThrowDOMException(
         kInvalidCharacterError,
         "The tag name provided ('" + local_name + "') is not a valid name.");
@@ -806,7 +856,7 @@ Element* Document::createElement(const AtomicString& local_name,
         *this,
         QualifiedName(g_null_atom, converted_local_name, xhtmlNamespaceURI));
   } else {
-    element = createElement(local_name, exception_state);
+    element = createElement(window, local_name, exception_state);
     if (exception_state.HadException())
       return nullptr;
   }
@@ -846,7 +896,8 @@ static inline QualifiedName CreateQualifiedName(
   return q_name;
 }
 
-Element* Document::createElementNS(const AtomicString& namespace_uri,
+Element* Document::createElementNS(const LocalDOMWindow* window,
+                                   const AtomicString& namespace_uri,
                                    const AtomicString& qualified_name,
                                    ExceptionState& exception_state) {
   QualifiedName q_name(
@@ -860,7 +911,8 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
 }
 
 // https://dom.spec.whatwg.org/#internal-createelementns-steps
-Element* Document::createElementNS(const AtomicString& namespace_uri,
+Element* Document::createElementNS(const LocalDOMWindow* window,
+                                   const AtomicString& namespace_uri,
                                    const AtomicString& qualified_name,
                                    const StringOrDictionary& string_or_options,
                                    ExceptionState& exception_state) {
@@ -882,7 +934,7 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
       AtomicString(GetTypeExtension(this, string_or_options, exception_state));
   const AtomicString& name = should_create_builtin ? is : qualified_name;
 
-  if (!IsValidName(qualified_name)) {
+  if (!IsValidElementName(window, qualified_name)) {
     exception_state.ThrowDOMException(
         kInvalidCharacterError, "The tag name provided ('" + qualified_name +
                                     "') is not a valid name.");
@@ -2129,7 +2181,7 @@ void Document::UpdateStyle() {
 
   // Only retain the HashMap for the duration of StyleRecalc and
   // LayoutTreeConstruction.
-  non_attached_style_.Clear();
+  non_attached_style_.clear();
   ClearChildNeedsStyleRecalc();
   ClearChildNeedsReattachLayoutTree();
 
@@ -2727,7 +2779,15 @@ void Document::open(Document* entered_document,
       return;
     }
     SetSecurityOrigin(entered_document->GetSecurityOrigin());
-    SetURL(entered_document->Url());
+
+    if (this != entered_document) {
+      // Clear the hash fragment from the inherited URL to prevent a
+      // scroll-into-view for any document.open()'d frame.
+      KURL new_url = entered_document->Url();
+      new_url.SetFragmentIdentifier(String());
+      SetURL(new_url);
+    }
+
     cookie_url_ = entered_document->CookieURL();
   }
 
@@ -2770,6 +2830,9 @@ void Document::open() {
 
   if (frame_)
     frame_->Loader().DidExplicitOpen();
+  if (load_event_progress_ != kLoadEventInProgress &&
+      PageDismissalEventBeingDispatched() == kNoDismissal)
+    load_event_progress_ = kLoadEventNotRun;
 }
 
 void Document::DetachParser() {
@@ -2784,11 +2847,12 @@ void Document::CancelParsing() {
   DetachParser();
   SetParsingState(kFinishedParsing);
   SetReadyState(kComplete);
-  SuppressLoadEvent();
 }
 
 DocumentParser* Document::ImplicitOpen(
     ParserSynchronizationPolicy parser_sync_policy) {
+  DetachParser();
+
   RemoveChildren();
   DCHECK(!focused_element_);
 
@@ -2802,16 +2866,11 @@ DocumentParser* Document::ImplicitOpen(
     parser_sync_policy = kForceSynchronousParsing;
   }
 
-  DetachParser();
   parser_sync_policy_ = parser_sync_policy;
   parser_ = CreateParser();
   DocumentParserTiming::From(*this).MarkParserStart();
   SetParsingState(kParsing);
   SetReadyState(kLoading);
-  if (load_event_progress_ != kLoadEventInProgress &&
-      PageDismissalEventBeingDispatched() == kNoDismissal) {
-    load_event_progress_ = kLoadEventNotRun;
-  }
 
   return parser_;
 }
@@ -2953,15 +3012,30 @@ void Document::close() {
       !GetScriptableDocumentParser()->IsParsing())
     return;
 
-  parser_->Finish();
-  if (!parser_ || !parser_->IsParsing())
-    SetReadyState(kComplete);
-  CheckCompleted();
+  if (DocumentParser* parser = parser_)
+    parser->Finish();
+
+  if (!frame_) {
+    // Because we have no frame, we don't know if all loading has completed,
+    // so we just call implicitClose() immediately. FIXME: This might fire
+    // the load event prematurely
+    // <http://bugs.webkit.org/show_bug.cgi?id=14568>.
+    ImplicitClose();
+    return;
+  }
+
+  frame_->Loader().CheckCompleted();
 }
 
 void Document::ImplicitClose() {
   DCHECK(!InStyleRecalc());
-  DCHECK(parser_);
+  if (ProcessingLoadEvent() || !parser_)
+    return;
+  if (GetFrame() &&
+      GetFrame()->GetNavigationScheduler().LocationChangePending()) {
+    SuppressLoadEvent();
+    return;
+  }
 
   load_event_progress_ = kLoadEventInProgress;
 
@@ -3041,69 +3115,6 @@ void Document::ImplicitClose() {
 
   if (SvgExtensions())
     AccessSVGExtensions().StartAnimations();
-}
-
-static bool AllDescendantsAreComplete(Frame* frame) {
-  if (!frame)
-    return true;
-  for (Frame* child = frame->Tree().FirstChild(); child;
-       child = child->Tree().TraverseNext(frame)) {
-    if (child->IsLoading())
-      return false;
-  }
-  return true;
-}
-
-bool Document::ShouldComplete() {
-  return parsing_state_ == kFinishedParsing && HaveImportsLoaded() &&
-         !fetcher_->BlockingRequestCount() && !IsDelayingLoadEvent() &&
-         load_event_progress_ != kLoadEventInProgress &&
-         AllDescendantsAreComplete(frame_);
-}
-
-void Document::CheckCompleted() {
-  if (!ShouldComplete())
-    return;
-
-  if (frame_) {
-    frame_->Client()->RunScriptsAtDocumentIdle();
-
-    // Injected scripts may have disconnected this frame.
-    if (!frame_)
-      return;
-
-    // Check again, because runScriptsAtDocumentIdle() may have delayed the load
-    // event.
-    if (!ShouldComplete())
-      return;
-  }
-
-  // OK, completed. Fire load completion events as needed.
-  SetReadyState(kComplete);
-  if (LoadEventStillNeeded())
-    ImplicitClose();
-
-  // The readystatechanged or load event may have disconnected this frame.
-  if (!frame_ || !frame_->IsAttached())
-    return;
-  frame_->GetNavigationScheduler().StartTimer();
-  View()->HandleLoadCompleted();
-  // The document itself is complete, but if a child frame was restarted due to
-  // an event, this document is still considered to be in progress.
-  if (!AllDescendantsAreComplete(frame_))
-    return;
-
-  // No need to repeat if we've already notified this load as finished.
-  if (!Loader()->SentDidFinishLoad()) {
-    if (frame_->IsMainFrame())
-      ViewportDescription().ReportMobilePageStats(frame_);
-    Loader()->SetSentDidFinishLoad();
-    frame_->Client()->DispatchDidFinishLoad();
-    if (!frame_)
-      return;
-  }
-
-  frame_->Loader().DidFinishNavigation();
 }
 
 bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
@@ -4107,9 +4118,17 @@ bool Document::SetFocusedElement(Element* new_focused_element,
   Element* old_focused_element = focused_element_;
   focused_element_ = nullptr;
 
+  UpdateDistribution();
+  Node* ancestor = (old_focused_element && old_focused_element->isConnected() &&
+                    new_focused_element)
+                       ? FlatTreeTraversal::CommonAncestor(*old_focused_element,
+                                                           *new_focused_element)
+                       : nullptr;
+
   // Remove focus from the existing focus node (if any)
   if (old_focused_element) {
     old_focused_element->SetFocused(false, params.type);
+    old_focused_element->SetHasFocusWithinUpToAncestor(false, ancestor);
 
     // Dispatch the blur event and let the node do any other blur related
     // activities (important for text fields)
@@ -4157,6 +4176,8 @@ bool Document::SetFocusedElement(Element* new_focused_element,
     SetSequentialFocusNavigationStartingPoint(focused_element_.Get());
 
     focused_element_->SetFocused(true, params.type);
+    focused_element_->SetHasFocusWithinUpToAncestor(true, ancestor);
+
     // Element::setFocused for frames can dispatch events.
     if (focused_element_ != new_focused_element) {
       focus_change_blocked = true;
@@ -4593,43 +4614,53 @@ void Document::AddMutationEventListenerTypeIfEnabled(
     AddListenerType(listener_type);
 }
 
-void Document::AddListenerTypeIfNeeded(const AtomicString& event_type) {
+void Document::AddListenerTypeIfNeeded(const AtomicString& event_type,
+                                       EventTarget& event_target) {
   if (event_type == EventTypeNames::DOMSubtreeModified) {
     UseCounter::Count(*this, UseCounter::kDOMSubtreeModifiedEvent);
-    AddMutationEventListenerTypeIfEnabled(DOMSUBTREEMODIFIED_LISTENER);
+    AddMutationEventListenerTypeIfEnabled(kDOMSubtreeModifiedListener);
   } else if (event_type == EventTypeNames::DOMNodeInserted) {
     UseCounter::Count(*this, UseCounter::kDOMNodeInsertedEvent);
-    AddMutationEventListenerTypeIfEnabled(DOMNODEINSERTED_LISTENER);
+    AddMutationEventListenerTypeIfEnabled(kDOMNodeInsertedListener);
   } else if (event_type == EventTypeNames::DOMNodeRemoved) {
     UseCounter::Count(*this, UseCounter::kDOMNodeRemovedEvent);
-    AddMutationEventListenerTypeIfEnabled(DOMNODEREMOVED_LISTENER);
+    AddMutationEventListenerTypeIfEnabled(kDOMNodeRemovedListener);
   } else if (event_type == EventTypeNames::DOMNodeRemovedFromDocument) {
     UseCounter::Count(*this, UseCounter::kDOMNodeRemovedFromDocumentEvent);
-    AddMutationEventListenerTypeIfEnabled(DOMNODEREMOVEDFROMDOCUMENT_LISTENER);
+    AddMutationEventListenerTypeIfEnabled(kDOMNodeRemovedFromDocumentListener);
   } else if (event_type == EventTypeNames::DOMNodeInsertedIntoDocument) {
     UseCounter::Count(*this, UseCounter::kDOMNodeInsertedIntoDocumentEvent);
-    AddMutationEventListenerTypeIfEnabled(DOMNODEINSERTEDINTODOCUMENT_LISTENER);
+    AddMutationEventListenerTypeIfEnabled(kDOMNodeInsertedIntoDocumentListener);
   } else if (event_type == EventTypeNames::DOMCharacterDataModified) {
     UseCounter::Count(*this, UseCounter::kDOMCharacterDataModifiedEvent);
-    AddMutationEventListenerTypeIfEnabled(DOMCHARACTERDATAMODIFIED_LISTENER);
+    AddMutationEventListenerTypeIfEnabled(kDOMCharacterDataModifiedListener);
   } else if (event_type == EventTypeNames::webkitAnimationStart ||
              event_type == EventTypeNames::animationstart) {
-    AddListenerType(ANIMATIONSTART_LISTENER);
+    AddListenerType(kAnimationStartListener);
   } else if (event_type == EventTypeNames::webkitAnimationEnd ||
              event_type == EventTypeNames::animationend) {
-    AddListenerType(ANIMATIONEND_LISTENER);
+    AddListenerType(kAnimationEndListener);
   } else if (event_type == EventTypeNames::webkitAnimationIteration ||
              event_type == EventTypeNames::animationiteration) {
-    AddListenerType(ANIMATIONITERATION_LISTENER);
+    AddListenerType(kAnimationIterationListener);
     if (View()) {
       // Need to re-evaluate time-to-effect-change for any running animations.
       View()->ScheduleAnimation();
     }
   } else if (event_type == EventTypeNames::webkitTransitionEnd ||
              event_type == EventTypeNames::transitionend) {
-    AddListenerType(TRANSITIONEND_LISTENER);
+    AddListenerType(kTransitionEndListener);
   } else if (event_type == EventTypeNames::scroll) {
-    AddListenerType(SCROLL_LISTENER);
+    AddListenerType(kScrollListener);
+  } else if (event_type == EventTypeNames::load) {
+    if (Node* node = event_target.ToNode()) {
+      if (isHTMLStyleElement(*node)) {
+        AddListenerType(kLoadListenerAtCapturePhaseOrAtStyleElement);
+        return;
+      }
+    }
+    if (event_target.HasCapturingEventListeners(event_type))
+      AddListenerType(kLoadListenerAtCapturePhaseOrAtStyleElement);
   }
 }
 
@@ -6037,8 +6068,8 @@ void Document::DecrementLoadEventDelayCountAndCheckLoadEvent() {
   DCHECK(load_event_delay_count_);
   --load_event_delay_count_;
 
-  if (!load_event_delay_count_)
-    CheckCompleted();
+  if (!load_event_delay_count_ && GetFrame())
+    GetFrame()->Loader().CheckCompleted();
 }
 
 void Document::CheckLoadEventSoon() {
@@ -6060,7 +6091,8 @@ bool Document::IsDelayingLoadEvent() {
 }
 
 void Document::LoadEventDelayTimerFired(TimerBase*) {
-  CheckCompleted();
+  if (GetFrame())
+    GetFrame()->Loader().CheckCompleted();
 }
 
 void Document::LoadPluginsSoon() {

@@ -162,7 +162,8 @@ void NetworkStateHandler::SetTechnologyEnabled(
                        << "TECHNOLOGY_ENABLED or TECHNOLOGY_AVAILABLE.";
         network_handler::RunErrorCallback(
             error_callback, kTetherDevicePath,
-            NetworkConnectionHandler::kEnabledOrDisabledWhenNotAvailable, "");
+            NetworkConnectionHandler::kErrorEnabledOrDisabledWhenNotAvailable,
+            "");
         continue;
       }
 
@@ -1257,8 +1258,11 @@ NetworkState* NetworkStateHandler::GetModifiableNetworkState(
     const std::string& service_path) const {
   ManagedState* managed =
       GetModifiableManagedState(&network_list_, service_path);
-  if (!managed)
-    return nullptr;
+  if (!managed) {
+    managed = GetModifiableManagedState(&tether_network_list_, service_path);
+    if (!managed)
+      return nullptr;
+  }
   return managed->AsNetworkState();
 }
 

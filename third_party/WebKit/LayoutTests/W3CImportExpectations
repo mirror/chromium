@@ -50,6 +50,8 @@ external/wpt/conformance-checkers [ Skip ]
 # external/wpt/content-security-policy [ Pass ]
 external/wpt/cookies [ Skip ]
 external/wpt/cors [ Skip ]
+## Owners: kojii@chromium.org,ksakamoto@chromium.org
+# external/wpt/css-font-loading [ Pass ]
 external/wpt/css/CSS1 [ Skip ]
 ## Owners: kojii@chromium.org
 # external/wpt/css/CSS2 [ Pass ]
@@ -194,7 +196,8 @@ external/wpt/css/css-variables-1 [ Skip ]
 external/wpt/css/css3-color [ Skip ]
 external/wpt/css/css3-selectors [ Skip ]
 external/wpt/css/filter-effects-1 [ Skip ]
-external/wpt/css/geometry-1 [ Skip ]
+## Owners: xlai@chromium.org,jinho.bang@samsung.com,hs1217.lee@samsung.com
+# external/wpt/css/geometry-1 [ Pass ]
 external/wpt/css/mediaqueries-3 [ Skip ]
 ## Owners: rego@igalia.com
 # external/wpt/css/selectors4 [ Pass ]
@@ -257,7 +260,9 @@ external/wpt/eventsource [ Skip ]
 external/wpt/ext-xhtml-pubid [ Skip ]
 ## Owners: tyoshino@chromium.org,yhirano@chromium.org,mkwst@chromium.org,japhet@chromium.org
 # external/wpt/fetch [ Pass ]
-external/wpt/fonts [ Skip ]
+## Owners: none; No tests in the directory.
+# external/wpt/fonts [ Pass ]
+external/wpt/fonts/math [ Skip ]
 ## Owners: foolip@chromium.org
 # external/wpt/fullscreen [ Pass ]
 ## Owners: bajones@chromium.org

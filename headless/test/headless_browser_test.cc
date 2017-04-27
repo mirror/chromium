@@ -137,22 +137,15 @@ HeadlessBrowserTest::HeadlessBrowserTest() {
 
 HeadlessBrowserTest::~HeadlessBrowserTest() {}
 
-void HeadlessBrowserTest::SetUpOnMainThread() {}
-
-void HeadlessBrowserTest::TearDownOnMainThread() {
-  browser()->Shutdown();
-}
-
-void HeadlessBrowserTest::RunTestOnMainThreadLoop() {
+void HeadlessBrowserTest::PreRunTestOnMainThread() {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
 
   // Pump startup related events.
   base::RunLoop().RunUntilIdle();
+}
 
-  SetUpOnMainThread();
-  RunTestOnMainThread();
-  TearDownOnMainThread();
-
+void HeadlessBrowserTest::PostRunTestOnMainThread() {
+  browser()->Shutdown();
   for (content::RenderProcessHost::iterator i(
            content::RenderProcessHost::AllHostsIterator());
        !i.IsAtEnd(); i.Advance()) {
@@ -218,9 +211,9 @@ void HeadlessAsyncDevTooledBrowserTest::RenderProcessExited(
   if (status == base::TERMINATION_STATUS_NORMAL_TERMINATION)
     return;
 
+  FAIL() << "Abnormal renderer termination";
   FinishAsynchronousTest();
   render_process_exited_ = true;
-  FAIL() << "Abnormal renderer termination";
 }
 
 void HeadlessAsyncDevTooledBrowserTest::RunTest() {

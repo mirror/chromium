@@ -128,6 +128,7 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/scroll/ScrollerSizeMetrics.h"
 #include "platform/text/TextStream.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/PtrUtil.h"
@@ -167,8 +168,10 @@ static const double kResourcePriorityUpdateDelayAfterScroll = 0.250;
 
 static bool g_initial_track_all_paint_invalidations = false;
 
-FrameView::FrameView(LocalFrame& frame)
+FrameView::FrameView(LocalFrame& frame, IntRect frame_rect)
     : frame_(frame),
+      frame_rect_(frame_rect),
+      parent_(nullptr),
       display_mode_(kWebDisplayModeBrowser),
       can_have_scrollbars_(true),
       has_pending_layout_(false),
@@ -215,14 +218,13 @@ FrameView::FrameView(LocalFrame& frame)
 }
 
 FrameView* FrameView::Create(LocalFrame& frame) {
-  FrameView* view = new FrameView(frame);
+  FrameView* view = new FrameView(frame, IntRect());
   view->Show();
   return view;
 }
 
 FrameView* FrameView::Create(LocalFrame& frame, const IntSize& initial_size) {
-  FrameView* view = new FrameView(frame);
-  view->FrameViewBase::SetFrameRect(IntRect(view->Location(), initial_size));
+  FrameView* view = new FrameView(frame, IntRect(IntPoint(), initial_size));
   view->SetLayoutSizeInternal(initial_size);
 
   view->Show();
@@ -235,6 +237,7 @@ FrameView::~FrameView() {
 
 DEFINE_TRACE(FrameView) {
   visitor->Trace(frame_);
+  visitor->Trace(parent_);
   visitor->Trace(fragment_anchor_);
   visitor->Trace(scrollable_areas_);
   visitor->Trace(animating_scrollable_areas_);
@@ -543,16 +546,15 @@ void FrameView::InvalidateRect(const IntRect& rect) {
   layout_item.InvalidatePaintRectangle(LayoutRect(paint_invalidation_rect));
 }
 
-void FrameView::SetFrameRect(const IntRect& new_rect) {
-  IntRect old_rect = FrameRect();
-  if (new_rect == old_rect)
+void FrameView::SetFrameRect(const IntRect& frame_rect) {
+  if (frame_rect == frame_rect_)
     return;
 
-  FrameViewBase::SetFrameRect(new_rect);
+  const bool width_changed = frame_rect_.Width() != frame_rect.Width();
+  const bool height_changed = frame_rect_.Height() != frame_rect.Height();
+  frame_rect_ = frame_rect;
 
-  const bool frame_size_changed = old_rect.Size() != new_rect.Size();
-
-  needs_scrollbars_update_ = frame_size_changed;
+  needs_scrollbars_update_ = width_changed || height_changed;
   // TODO(wjmaclean): find out why scrollbars fail to resize for complex
   // subframes after changing the zoom level. For now always calling
   // updateScrollbarsIfNeeded() here fixes the issue, but it would be good to
@@ -573,9 +575,8 @@ void FrameView::SetFrameRect(const IntRect& new_rect) {
   if (auto layout_view_item = this->GetLayoutViewItem())
     layout_view_item.SetMayNeedPaintInvalidation();
 
-  if (frame_size_changed) {
-    ViewportSizeChanged(new_rect.Width() != old_rect.Width(),
-                        new_rect.Height() != old_rect.Height());
+  if (width_changed || height_changed) {
+    ViewportSizeChanged(width_changed, height_changed);
 
     if (frame_->IsMainFrame())
       frame_->GetPage()->GetVisualViewport().MainFrameDidChangeSize();
@@ -2185,6 +2186,25 @@ void FrameView::HandleLoadCompleted() {
   // finishes.
   if (!NeedsLayout())
     ClearFragmentAnchor();
+
+  if (!scrollable_areas_)
+    return;
+  for (const auto& scrollable_area : *scrollable_areas_) {
+    if (!scrollable_area->IsPaintLayerScrollableArea())
+      continue;
+    PaintLayerScrollableArea* paint_layer_scrollable_area =
+        ToPaintLayerScrollableArea(scrollable_area);
+    if (paint_layer_scrollable_area->ScrollsOverflow() &&
+        !paint_layer_scrollable_area->Layer()->IsRootLayer()) {
+      DEFINE_STATIC_LOCAL(
+          CustomCountHistogram, scrollable_area_size_histogram,
+          ("Event.Scroll.ScrollerSize.OnLoad", 1, kScrollerSizeLargestBucket,
+           kScrollerSizeBucketCount));
+      scrollable_area_size_histogram.Count(
+          paint_layer_scrollable_area->VisibleContentRect().Width() *
+          paint_layer_scrollable_area->VisibleContentRect().Height());
+    }
+  }
 }
 
 void FrameView::ClearLayoutSubtreeRoot(const LayoutObject& root) {
@@ -3636,7 +3656,7 @@ IntPoint FrameView::ConvertSelfToChild(const FrameViewBase* child,
 
 IntRect FrameView::ConvertToContainingFrameViewBase(
     const IntRect& local_rect) const {
-  if (const FrameView* parent = ToFrameView(Parent())) {
+  if (parent_) {
     // Get our layoutObject in the parent view
     LayoutPartItem layout_item = frame_->OwnerLayoutItem();
     if (layout_item.IsNull())
@@ -3646,7 +3666,7 @@ IntRect FrameView::ConvertToContainingFrameViewBase(
     // Add borders and padding??
     rect.Move((layout_item.BorderLeft() + layout_item.PaddingLeft()).ToInt(),
               (layout_item.BorderTop() + layout_item.PaddingTop()).ToInt());
-    return parent->ConvertFromLayoutItem(layout_item, rect);
+    return parent_->ConvertFromLayoutItem(layout_item, rect);
   }
 
   return local_rect;
@@ -3654,10 +3674,10 @@ IntRect FrameView::ConvertToContainingFrameViewBase(
 
 IntRect FrameView::ConvertFromContainingFrameViewBase(
     const IntRect& parent_rect) const {
-  if (const FrameView* parent = ToFrameView(Parent())) {
+  if (parent_) {
     IntRect local_rect = parent_rect;
     local_rect.SetLocation(
-        parent->ConvertSelfToChild(this, local_rect.Location()));
+        parent_->ConvertSelfToChild(this, local_rect.Location()));
     return local_rect;
   }
 
@@ -3666,7 +3686,7 @@ IntRect FrameView::ConvertFromContainingFrameViewBase(
 
 IntPoint FrameView::ConvertToContainingFrameViewBase(
     const IntPoint& local_point) const {
-  if (const FrameView* parent = ToFrameView(Parent())) {
+  if (parent_) {
     // Get our layoutObject in the parent view
     LayoutPartItem layout_item = frame_->OwnerLayoutItem();
     if (layout_item.IsNull())
@@ -3677,7 +3697,7 @@ IntPoint FrameView::ConvertToContainingFrameViewBase(
     // Add borders and padding
     point.Move((layout_item.BorderLeft() + layout_item.PaddingLeft()).ToInt(),
                (layout_item.BorderTop() + layout_item.PaddingTop()).ToInt());
-    return parent->ConvertFromLayoutItem(layout_item, point);
+    return parent_->ConvertFromLayoutItem(layout_item, point);
   }
 
   return local_point;
@@ -3685,13 +3705,13 @@ IntPoint FrameView::ConvertToContainingFrameViewBase(
 
 IntPoint FrameView::ConvertFromContainingFrameViewBase(
     const IntPoint& parent_point) const {
-  if (const FrameView* parent = ToFrameView(Parent())) {
+  if (parent_) {
     // Get our layoutObject in the parent view
     LayoutPartItem layout_item = frame_->OwnerLayoutItem();
     if (layout_item.IsNull())
       return parent_point;
 
-    IntPoint point = parent->ConvertToLayoutItem(layout_item, parent_point);
+    IntPoint point = parent_->ConvertToLayoutItem(layout_item, parent_point);
     // Subtract borders and padding
     point.Move((-layout_item.BorderLeft() - layout_item.PaddingLeft()).ToInt(),
                (-layout_item.BorderTop() - layout_item.PaddingTop()).ToInt());
@@ -3782,7 +3802,7 @@ void FrameView::RemoveResizerArea(LayoutBox& resizer_box) {
   if (!resizer_areas_)
     return;
 
-  ResizerAreaSet::iterator it = resizer_areas_->Find(&resizer_box);
+  ResizerAreaSet::iterator it = resizer_areas_->find(&resizer_box);
   if (it != resizer_areas_->end())
     resizer_areas_->erase(it);
 }
@@ -3821,11 +3841,24 @@ void FrameView::RemoveAnimatingScrollableArea(ScrollableArea* scrollable_area) {
   animating_scrollable_areas_->erase(scrollable_area);
 }
 
-void FrameView::SetParent(FrameViewBase* parent) {
-  if (parent == Parent())
+FrameView* FrameView::Root() const {
+  const FrameView* top = this;
+  while (top->Parent())
+    top = ToFrameView(top->Parent());
+  return const_cast<FrameView*>(top);
+}
+
+void FrameView::SetParent(FrameViewBase* parent_frame_view_base) {
+  FrameView* parent = ToFrameView(parent_frame_view_base);
+  if (parent == parent_)
     return;
 
-  FrameViewBase::SetParent(parent);
+  DCHECK(!parent || !parent_);
+  if (!parent || !parent->IsVisible())
+    SetParentVisible(false);
+  parent_ = parent;
+  if (parent && parent->IsVisible())
+    SetParentVisible(true);
 
   UpdateParentScrollableAreaSet();
   SetupRenderThrottling();
@@ -3961,7 +3994,6 @@ IntSize FrameView::MaximumScrollOffsetInt() const {
 
 void FrameView::AddChild(FrameViewBase* child) {
   DCHECK(child != this && !child->Parent());
-  DCHECK(!child->IsPluginView());
   child->SetParent(this);
   children_.insert(child);
 }
@@ -4078,8 +4110,6 @@ void FrameView::UpdateScrollOffset(const ScrollOffset& offset,
   if (scroll_delta.IsZero())
     return;
 
-  ShowOverlayScrollbars();
-
   if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
     // Don't scroll the FrameView!
     ASSERT_NOT_REACHED();
@@ -4090,8 +4120,6 @@ void FrameView::UpdateScrollOffset(const ScrollOffset& offset,
   if (!ScrollbarsSuppressed())
     pending_scroll_delta_ += scroll_delta;
 
-  if (ScrollTypeClearsFragmentAnchor(scroll_type))
-    ClearFragmentAnchor();
   UpdateLayersAndCompositingAfterScrollIfNeeded();
 
   Document* document = frame_->GetDocument();
@@ -4125,8 +4153,12 @@ void FrameView::UpdateScrollOffset(const ScrollOffset& offset,
       document_loader->GetInitialScrollState().was_scrolled_by_user = true;
   }
 
-  if (scroll_type != kAnchoringScroll && scroll_type != kClampingScroll)
+  if (IsExplicitScrollType(scroll_type)) {
+    if (scroll_type != kCompositorScroll)
+      ShowOverlayScrollbars();
+    ClearFragmentAnchor();
     ClearScrollAnchor();
+  }
 }
 
 void FrameView::DidChangeScrollOffset() {
@@ -4715,17 +4747,17 @@ bool FrameView::ScrollbarCornerPresent() const {
 }
 
 IntRect FrameView::ConvertToRootFrame(const IntRect& local_rect) const {
-  if (const FrameView* parent = ToFrameView(Parent())) {
+  if (parent_) {
     IntRect parent_rect = ConvertToContainingFrameViewBase(local_rect);
-    return parent->ConvertToRootFrame(parent_rect);
+    return parent_->ConvertToRootFrame(parent_rect);
   }
   return local_rect;
 }
 
 IntPoint FrameView::ConvertToRootFrame(const IntPoint& local_point) const {
-  if (const FrameView* parent = ToFrameView(Parent())) {
+  if (parent_) {
     IntPoint parent_point = ConvertToContainingFrameViewBase(local_point);
-    return parent->ConvertToRootFrame(parent_point);
+    return parent_->ConvertToRootFrame(parent_point);
   }
   return local_point;
 }
@@ -4754,7 +4786,7 @@ void FrameView::SetParentVisible(bool visible) {
   // and potentially child frame views.
   SetNeedsCompositingUpdate(GetLayoutViewItem(), kCompositingUpdateRebuildTree);
 
-  FrameViewBase::SetParentVisible(visible);
+  parent_visible_ = visible;
 
   if (!IsSelfVisible())
     return;

@@ -34,7 +34,7 @@
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/V8ArrayBuffer.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8ObjectBuilder.h"
 #include "bindings/modules/v8/V8CryptoKey.h"
 #include "core/dom/ContextLifecycleObserver.h"
@@ -182,8 +182,8 @@ void CryptoResultImpl::CompleteWithJson(const char* utf8_data,
 
   v8::TryCatch exception_catcher(script_state->GetIsolate());
   v8::Local<v8::Value> json_dictionary;
-  if (V8Call(v8::JSON::Parse(script_state->GetIsolate(), json_string),
-             json_dictionary, exception_catcher))
+  if (v8::JSON::Parse(script_state->GetIsolate(), json_string)
+          .ToLocal(&json_dictionary))
     resolver_->Resolve(json_dictionary);
   else
     resolver_->Reject(exception_catcher.Exception());

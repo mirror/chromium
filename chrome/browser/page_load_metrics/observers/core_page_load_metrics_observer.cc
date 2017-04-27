@@ -164,6 +164,10 @@ const char kHistogramPageTimingForegroundDurationAfterPaint[] =
     "PageLoad.PageTiming.ForegroundDuration.AfterPaint";
 const char kHistogramPageTimingForegroundDurationNoCommit[] =
     "PageLoad.PageTiming.ForegroundDuration.NoCommit";
+const char kHistogramPageTimingForegroundDurationWithPaint[] =
+    "PageLoad.PageTiming.ForegroundDuration.WithPaint";
+const char kHistogramPageTimingForegroundDurationWithoutPaint[] =
+    "PageLoad.PageTiming.ForegroundDuration.WithoutPaint";
 
 const char kHistogramLoadTypeParseStartReload[] =
     "PageLoad.ParseTiming.NavigationToParseStart.LoadType.Reload";
@@ -669,13 +673,14 @@ void CorePageLoadMetricsObserver::OnUserInput(
 }
 
 void CorePageLoadMetricsObserver::OnLoadedResource(
-    const page_load_metrics::ExtraRequestInfo& extra_request_info) {
-  if (extra_request_info.was_cached) {
+    const page_load_metrics::ExtraRequestCompleteInfo&
+        extra_request_complete_info) {
+  if (extra_request_complete_info.was_cached) {
     ++num_cache_resources_;
-    cache_bytes_ += extra_request_info.raw_body_bytes;
+    cache_bytes_ += extra_request_complete_info.raw_body_bytes;
   } else {
     ++num_network_resources_;
-    network_bytes_ += extra_request_info.raw_body_bytes;
+    network_bytes_ += extra_request_complete_info.raw_body_bytes;
   }
 }
 
@@ -741,6 +746,13 @@ void CorePageLoadMetricsObserver::RecordForegroundDurationHistograms(
           internal::kHistogramPageTimingForegroundDurationAfterPaint,
           foreground_duration.value() -
               timing.paint_timing.first_paint.value());
+      PAGE_LOAD_LONG_HISTOGRAM(
+          internal::kHistogramPageTimingForegroundDurationWithPaint,
+          foreground_duration.value());
+    } else {
+      PAGE_LOAD_LONG_HISTOGRAM(
+          internal::kHistogramPageTimingForegroundDurationWithoutPaint,
+          foreground_duration.value());
     }
   } else {
     PAGE_LOAD_LONG_HISTOGRAM(

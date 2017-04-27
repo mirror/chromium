@@ -192,6 +192,10 @@ extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate{
 const base::Feature kMaterialDesignHistory{"MaterialDesignHistory",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
+// The material redesign of the Incognito NTP.
+const base::Feature kMaterialDesignIncognitoNTP{
+    "MaterialDesignIncognitoNTP", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables or disables the Material Design version of chrome://settings.
 // Also affects chrome://help.
 const base::Feature kMaterialDesignSettings{"MaterialDesignSettings",
@@ -220,9 +224,14 @@ const base::Feature kModuleDatabase{"ModuleDatabase",
 // Enables the use of native notification centers instead of using the Message
 // Center for displaying the toasts.
 #if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
+#if defined(OS_MACOSX) || defined(OS_ANDROID)
+const base::Feature kNativeNotifications{"NativeNotifications",
+                                         base::FEATURE_ENABLED_BY_DEFAULT};
+#else
 const base::Feature kNativeNotifications{"NativeNotifications",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
+#endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 
 // If enabled, the list of content suggestions on the New Tab page will contain
 // pages that the user downloaded for later use.
@@ -258,13 +267,10 @@ const base::Feature kPreloadLockScreen{"PreloadLockScreen",
                                        base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
-// Enables the Print Scaling feature in print preview.
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+// Enables the Print as Image feature in print preview.
 const base::Feature kPrintPdfAsImage{"PrintPdfAsImage",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kPrintScaling{"PrintScaling",
-                                  base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 // Enables or disables push subscriptions keeping Chrome running in the

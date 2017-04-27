@@ -7,6 +7,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/ToV8ForCore.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "modules/mediasession/MediaImage.h"
@@ -117,7 +118,7 @@ void MediaMetadata::SetArtworkInternal(ScriptState* script_state,
   }
 
   DCHECK(!exception_state.HadException());
-  artwork_.Swap(processed_artwork);
+  artwork_.swap(processed_artwork);
 }
 
 DEFINE_TRACE(MediaMetadata) {

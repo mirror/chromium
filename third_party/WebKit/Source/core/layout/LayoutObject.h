@@ -1544,7 +1544,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // to get notified of any image change.
   virtual void ImageChanged(WrappedImagePtr, const IntRect* = nullptr) {}
 
-  void SelectionStartEnd(int& spos, int& epos) const;
+  std::pair<int, int> SelectionStartEnd() const;
 
   void Remove() {
     if (Parent())
@@ -1816,6 +1816,10 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
       if (auto* paint_data = layout_object_.GetRarePaintData())
         return paint_data->PaintProperties();
       return nullptr;
+    }
+    void ClearPaintProperties() {
+      if (auto* paint_data = layout_object_.GetRarePaintData())
+        paint_data->ClearPaintProperties();
     }
 
     // The following non-const functions for local border box properties should

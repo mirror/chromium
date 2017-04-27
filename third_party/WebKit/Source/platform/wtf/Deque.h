@@ -109,13 +109,13 @@ class Deque : public ConditionalDestructor<Deque<T, INLINE_CAPACITY, Allocator>,
   T TakeLast();
 
   T& at(size_t i) {
-    RELEASE_ASSERT(i < size());
+    CHECK_LT(i, size());
     size_t right = buffer_.capacity() - start_;
     return i < right ? buffer_.Buffer()[start_ + i]
                      : buffer_.Buffer()[i - right];
   }
   const T& at(size_t i) const {
-    RELEASE_ASSERT(i < size());
+    CHECK_LT(i, size());
     size_t right = buffer_.capacity() - start_;
     return i < right ? buffer_.Buffer()[start_ + i]
                      : buffer_.Buffer()[i - right];
@@ -140,7 +140,7 @@ class Deque : public ConditionalDestructor<Deque<T, INLINE_CAPACITY, Allocator>,
   template <typename... Args>
   void emplace_front(Args&&...);
 
-  void Clear();
+  void clear();
 
   template <typename VisitorDispatcher>
   void Trace(VisitorDispatcher);
@@ -412,7 +412,7 @@ inline void Deque<T, inlineCapacity, Allocator>::Swap(Deque& other) {
 }
 
 template <typename T, size_t inlineCapacity, typename Allocator>
-inline void Deque<T, inlineCapacity, Allocator>::Clear() {
+inline void Deque<T, inlineCapacity, Allocator>::clear() {
   DestroyAll();
   start_ = 0;
   end_ = 0;
@@ -647,13 +647,13 @@ inline void DequeIteratorBase<T, inlineCapacity, Allocator>::Decrement() {
 
 template <typename T, size_t inlineCapacity, typename Allocator>
 inline T* DequeIteratorBase<T, inlineCapacity, Allocator>::After() const {
-  RELEASE_ASSERT(index_ != deque_->end_);
+  CHECK_NE(index_, deque_->end_);
   return &deque_->buffer_.Buffer()[index_];
 }
 
 template <typename T, size_t inlineCapacity, typename Allocator>
 inline T* DequeIteratorBase<T, inlineCapacity, Allocator>::Before() const {
-  RELEASE_ASSERT(index_ != deque_->start_);
+  CHECK_NE(index_, deque_->start_);
   if (!index_)
     return &deque_->buffer_.buffer()[deque_->buffer_.capacity() - 1];
   return &deque_->buffer_.buffer()[index_ - 1];

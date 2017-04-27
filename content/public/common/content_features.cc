@@ -242,7 +242,7 @@ const base::Feature kTouchpadAndWheelScrollLatching{
 
 // Controls whether vibrate requires user gesture.
 const base::Feature kVibrateRequiresUserGesture{
-    "VibrateRequiresUserGesture", base::FEATURE_DISABLED_BY_DEFAULT};
+    "VibrateRequiresUserGesture", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enables VR UI.
 const base::Feature kVrShell{"VrShell", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -274,6 +274,16 @@ const base::Feature kWebRtcUseGpuMemoryBufferVideoFrames{
 // Enables HW H264 encoding on Android.
 const base::Feature kWebRtcHWH264Encoding{
     "WebRtcHWH264Encoding", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enables HW VP8 encoding on Android.
+const base::Feature kWebRtcHWVP8Encoding {
+  "WebRtcHWVP8Encoding",
+#if defined(OS_ANDROID)
+      base::FEATURE_DISABLED_BY_DEFAULT
+#else
+      base::FEATURE_ENABLED_BY_DEFAULT
+#endif
+};
 
 // Enables the WebRTC Echo Canceller version 3 (AEC3). Feature for
 // http://crbug.com/688388. This value is sent to WebRTC's echo canceller to
@@ -328,14 +338,6 @@ const base::Feature kWebNfc{"WebNFC", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kWebPayments{"WebPayments",
                                  base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
-
-#if !defined(OS_ANDROID)
-// Controls whether media playback in cross-origin iframes is enabled. The
-// feature overrides |kDisableGestureRequirementForMediaPlayback|.
-const base::Feature kCrossOriginMediaPlaybackRequiresUserGesture{
-    "CrossOriginMediaPlaybackRequiresUserGesture",
-    base::FEATURE_DISABLED_BY_DEFAULT};
-#endif  // !defined(OS_ANDROID)
 
 #if defined(OS_WIN)
 // Emergency "off switch" for new Windows sandbox security mitigation,

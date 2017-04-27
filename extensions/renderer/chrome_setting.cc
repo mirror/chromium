@@ -18,7 +18,7 @@
 namespace extensions {
 
 v8::Local<v8::Object> ChromeSetting::Create(
-    v8::Local<v8::Context> context,
+    v8::Isolate* isolate,
     const std::string& property_name,
     const base::ListValue* property_values,
     APIRequestHandler* request_handler,
@@ -29,10 +29,9 @@ v8::Local<v8::Object> ChromeSetting::Create(
   const base::DictionaryValue* value_spec = nullptr;
   CHECK(property_values->GetDictionary(1u, &value_spec));
 
-  gin::Handle<ChromeSetting> handle =
-      gin::CreateHandle(context->GetIsolate(),
-                        new ChromeSetting(request_handler, event_handler,
-                                          type_refs, pref_name, *value_spec));
+  gin::Handle<ChromeSetting> handle = gin::CreateHandle(
+      isolate, new ChromeSetting(request_handler, event_handler, type_refs,
+                                 pref_name, *value_spec));
   return handle.ToV8().As<v8::Object>();
 }
 
@@ -133,11 +132,7 @@ void ChromeSetting::HandleFunction(const std::string& method_name,
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context = arguments->GetHolderCreationContext();
 
-  std::vector<v8::Local<v8::Value>> argument_list;
-  if (arguments->Length() > 0) {
-    // Just copying handles should never fail.
-    CHECK(arguments->GetRemaining(&argument_list));
-  }
+  std::vector<v8::Local<v8::Value>> argument_list = arguments->GetAll();
 
   std::string full_name = "types.ChromeSetting." + method_name;
   std::unique_ptr<base::ListValue> converted_arguments;

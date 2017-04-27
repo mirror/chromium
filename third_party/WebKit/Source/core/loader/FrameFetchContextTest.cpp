@@ -335,7 +335,7 @@ TEST_F(FrameFetchContextModifyRequestTest, UpgradeInsecureResourceRequests) {
   document->SetInsecureRequestPolicy(kUpgradeInsecureRequests);
 
   for (const auto& test : tests) {
-    document->InsecureNavigationsToUpgrade()->Clear();
+    document->InsecureNavigationsToUpgrade()->clear();
 
     // We always upgrade for FrameTypeNone and FrameTypeNested.
     ExpectUpgrade(test.original, WebURLRequest::kRequestContextScript,
@@ -665,11 +665,6 @@ TEST_F(FrameFetchContextTest, MainResourceCachePolicy) {
 }
 
 TEST_F(FrameFetchContextTest, SubResourceCachePolicy) {
-  // Reset load event state: if the load event is finished, we ignore the
-  // DocumentLoader load type.
-  document->open();
-  ASSERT_FALSE(document->LoadEventFinished());
-
   // Default case
   ResourceRequest request("http://www.example.com/mock");
   EXPECT_EQ(WebCachePolicy::kUseProtocolCachePolicy,

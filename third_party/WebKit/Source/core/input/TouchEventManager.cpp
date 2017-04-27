@@ -103,8 +103,8 @@ TouchEventManager::TouchEventManager(LocalFrame& frame) : frame_(frame) {
 
 void TouchEventManager::Clear() {
   touch_sequence_document_.Clear();
-  target_for_touch_id_.Clear();
-  region_for_touch_id_.Clear();
+  target_for_touch_id_.clear();
+  region_for_touch_id_.clear();
   touch_pressed_ = false;
   suppressing_touchmoves_within_slop_ = false;
   current_touch_action_ = kTouchActionAuto;
@@ -162,11 +162,11 @@ WebInputEventResult TouchEventManager::DispatchTouchEvents(
     // Ensure this target's touch list exists, even if it ends up empty, so
     // it can always be passed to TouchEvent::Create below.
     TargetTouchesHeapMap::iterator target_touches_iterator =
-        touches_by_target.Find(touch_info.touch_node.Get());
+        touches_by_target.find(touch_info.touch_node.Get());
     if (target_touches_iterator == touches_by_target.end()) {
       touches_by_target.Set(touch_info.touch_node.Get(), TouchList::Create());
       target_touches_iterator =
-          touches_by_target.Find(touch_info.touch_node.Get());
+          touches_by_target.find(touch_info.touch_node.Get());
     }
 
     // |touches| and |targetTouches| should only contain information about

@@ -293,7 +293,7 @@
     },
     {
       name: "CSSSnapSize",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "CSSStickyPosition",
@@ -681,6 +681,9 @@
       status: "stable",
     },
     {
+      name: "OffMainThreadFetch",
+    },
+    {
       name: "OnDeviceChange",
       status: "stable",
     },
@@ -855,6 +858,10 @@
       status: "experimental",
     },
     {
+      name: "SendMouseEventsDisabledFormControls",
+      status: "experimental",
+    },
+    {
       name: "Sensor",
       status: "experimental",
     },
@@ -959,7 +966,7 @@
     },
     {
       name: "VibrateRequiresUserGesture",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "VideoFullscreenDetection",

@@ -321,9 +321,10 @@ class FrameFactoryImpl : public mojom::FrameFactory {
 
  private:
   // mojom::FrameFactory:
-  void CreateFrame(int32_t frame_routing_id,
-                   mojom::FrameRequest frame_request,
-                   mojom::FrameHostPtr frame_host) override {
+  void CreateFrame(
+      int32_t frame_routing_id,
+      mojom::FrameRequest frame_request,
+      mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) override {
     // TODO(morrita): This is for investigating http://crbug.com/415059 and
     // should be removed once it is fixed.
     CHECK_LT(routing_id_highmark_, frame_routing_id);
@@ -336,11 +337,13 @@ class FrameFactoryImpl : public mojom::FrameFactory {
     // we want.
     if (!frame) {
       RenderThreadImpl::current()->RegisterPendingFrameCreate(
-          frame_routing_id, std::move(frame_request), std::move(frame_host));
+          frame_routing_id, std::move(frame_request),
+          std::move(frame_host_interface_broker));
       return;
     }
 
-    frame->BindFrame(std::move(frame_request), std::move(frame_host));
+    frame->BindFrame(std::move(frame_request),
+                     std::move(frame_host_interface_broker));
   }
 
  private:
@@ -878,8 +881,6 @@ void RenderThreadImpl::Init(
       base::ThreadPriority::BACKGROUND);
 #endif
 
-  record_purge_suspend_metric_closure_.Reset(base::Bind(
-      &RenderThreadImpl::RecordPurgeAndSuspendMetrics, base::Unretained(this)));
   record_purge_suspend_growth_metric_closure_.Reset(
       base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
                  base::Unretained(this)));
@@ -996,7 +997,8 @@ void RenderThreadImpl::AddRoute(int32_t routing_id, IPC::Listener* listener) {
     return;
 
   scoped_refptr<PendingFrameCreate> create(it->second);
-  frame->BindFrame(it->second->TakeFrameRequest(), it->second->TakeFrameHost());
+  frame->BindFrame(it->second->TakeFrameRequest(),
+                   it->second->TakeInterfaceBroker());
   pending_frame_creates_.erase(it);
 }
 
@@ -1024,12 +1026,12 @@ void RenderThreadImpl::RemoveEmbeddedWorkerRoute(int32_t routing_id) {
 void RenderThreadImpl::RegisterPendingFrameCreate(
     int routing_id,
     mojom::FrameRequest frame_request,
-    mojom::FrameHostPtr frame_host) {
+    mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
   std::pair<PendingFrameCreateMap::iterator, bool> result =
       pending_frame_creates_.insert(std::make_pair(
-          routing_id,
-          make_scoped_refptr(new PendingFrameCreate(
-              routing_id, std::move(frame_request), std::move(frame_host)))));
+          routing_id, make_scoped_refptr(new PendingFrameCreate(
+                          routing_id, std::move(frame_request),
+                          std::move(frame_host_interface_broker)))));
   CHECK(result.second) << "Inserting a duplicate item.";
 }
 
@@ -1157,7 +1159,7 @@ void RenderThreadImpl::InitializeWebKit(
   // same queue to ensure tasks are executed in the expected order.
   child_resource_message_filter()->SetMainThreadTaskRunner(
       resource_task_queue2);
-  resource_dispatcher()->SetMainThreadTaskRunner(resource_task_queue2);
+  resource_dispatcher()->SetThreadTaskRunner(resource_task_queue2);
 
   if (!command_line.HasSwitch(switches::kDisableThreadedCompositing))
     InitializeCompositorThread();
@@ -1634,10 +1636,6 @@ void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
   } else {
     renderer_scheduler_->OnRendererForegrounded();
 
-    record_purge_suspend_metric_closure_.Cancel();
-    record_purge_suspend_metric_closure_.Reset(
-        base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMetrics,
-                   base::Unretained(this)));
     record_purge_suspend_growth_metric_closure_.Cancel();
     record_purge_suspend_growth_metric_closure_.Reset(
         base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
@@ -1650,18 +1648,27 @@ void RenderThreadImpl::OnProcessPurgeAndSuspend() {
   if (!RendererIsHidden())
     return;
 
-  if (base::FeatureList::IsEnabled(features::kPurgeAndSuspend)) {
-    base::MemoryCoordinatorClientRegistry::GetInstance()->PurgeMemory();
-  }
-  // Since purging is not a synchronous task (e.g. v8 GC, oilpan GC, ...),
-  // we need to wait until the task is finished. So wait 15 seconds and
-  // update purge+suspend UMA histogram.
-  // TODO(tasak): use MemoryCoordinator's callback to report purge+suspend
-  // UMA when MemoryCoordinator is available.
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE, record_purge_suspend_metric_closure_.callback(),
-      base::TimeDelta::FromSeconds(15));
+  if (!base::FeatureList::IsEnabled(features::kPurgeAndSuspend))
+    return;
+
+  base::MemoryCoordinatorClientRegistry::GetInstance()->PurgeMemory();
   needs_to_record_first_active_paint_ = true;
+
+  RendererMemoryMetrics memory_metrics;
+  if (!GetRendererMemoryMetrics(&memory_metrics))
+    return;
+
+  purge_and_suspend_memory_metrics_ = memory_metrics;
+  // record how many memory usage increases after purged.
+  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
+      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
+      base::TimeDelta::FromMinutes(5));
+  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
+      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
+      base::TimeDelta::FromMinutes(10));
+  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
+      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
+      base::TimeDelta::FromMinutes(15));
 }
 
 // TODO(tasak): Replace the following GetMallocUsage() with memory-infra
@@ -1756,47 +1763,6 @@ bool RenderThreadImpl::GetRendererMemoryMetrics(
       total_allocated / render_view_count / 1024 / 1024;
 
   return true;
-}
-
-// TODO(tasak): Once it is possible to use memory-infra without tracing,
-// we should collect the metrics using memory-infra.
-// TODO(tasak): We should also report a difference between the memory usages
-// before and after purging by using memory-infra.
-void RenderThreadImpl::RecordPurgeAndSuspendMetrics() {
-  // If this renderer is resumed, we should not update UMA.
-  if (!RendererIsHidden())
-    return;
-
-  // TODO(tasak): Compare memory metrics between purge-enabled renderers and
-  // purge-disabled renderers (A/B testing).
-  RendererMemoryMetrics memory_metrics;
-  if (!GetRendererMemoryMetrics(&memory_metrics))
-    return;
-
-  UMA_HISTOGRAM_MEMORY_KB("PurgeAndSuspend.Memory.PartitionAllocKB",
-                          memory_metrics.partition_alloc_kb);
-  UMA_HISTOGRAM_MEMORY_KB("PurgeAndSuspend.Memory.BlinkGCKB",
-                          memory_metrics.blink_gc_kb);
-  UMA_HISTOGRAM_MEMORY_MB("PurgeAndSuspend.Memory.MallocMB",
-                          memory_metrics.malloc_mb);
-  UMA_HISTOGRAM_MEMORY_KB("PurgeAndSuspend.Memory.DiscardableKB",
-                          memory_metrics.discardable_kb);
-  UMA_HISTOGRAM_MEMORY_MB("PurgeAndSuspend.Memory.V8MainThreadIsolateMB",
-                          memory_metrics.v8_main_thread_isolate_mb);
-  UMA_HISTOGRAM_MEMORY_MB("PurgeAndSuspend.Memory.TotalAllocatedMB",
-                          memory_metrics.total_allocated_mb);
-  purge_and_suspend_memory_metrics_ = memory_metrics;
-
-  // record how many memory usage increases after purged.
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
-      base::TimeDelta::FromMinutes(5));
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
-      base::TimeDelta::FromMinutes(10));
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
-      base::TimeDelta::FromMinutes(15));
 }
 
 #define GET_MEMORY_GROWTH(current, previous, allocator) \
@@ -2396,16 +2362,16 @@ void RenderThreadImpl::ReleaseFreeMemory() {
 RenderThreadImpl::PendingFrameCreate::PendingFrameCreate(
     int routing_id,
     mojom::FrameRequest frame_request,
-    mojom::FrameHostPtr frame_host)
+    mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker)
     : routing_id_(routing_id),
       frame_request_(std::move(frame_request)),
-      frame_host_(std::move(frame_host)) {
+      frame_host_interface_broker_(std::move(frame_host_interface_broker)) {
   // The RenderFrame may be deleted before the CreateFrame message is received.
   // In that case, the RenderFrameHost should cancel the create, which is
-  // detected by setting an error handler on |frame_host_|.
-  frame_host_.set_connection_error_handler(base::Bind(
-      &RenderThreadImpl::PendingFrameCreate::OnConnectionError,
-      base::Unretained(this)));
+  // detected by setting an error handler on |frame_host_interface_broker_|.
+  frame_host_interface_broker_.set_connection_error_handler(
+      base::Bind(&RenderThreadImpl::PendingFrameCreate::OnConnectionError,
+                 base::Unretained(this)));
 }
 
 RenderThreadImpl::PendingFrameCreate::~PendingFrameCreate() {

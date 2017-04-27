@@ -35,10 +35,12 @@
 #include "core/dom/Document.h"
 #include "core/dom/SecurityContext.h"
 #include "core/dom/TaskRunnerHelper.h"
+#include "core/exported/WebDataSourceImpl.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/ThreadableLoadingContext.h"
+#include "core/loader/WorkerFetchContext.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/WorkerClients.h"
@@ -51,6 +53,7 @@
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "modules/serviceworkers/ServiceWorkerThread.h"
 #include "platform/Histogram.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/SharedBuffer.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/SubstituteData.h"
@@ -62,6 +65,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/web/WebConsoleMessage.h"
@@ -73,7 +77,6 @@
 #include "web/IndexedDBClientImpl.h"
 #include "web/ServiceWorkerGlobalScopeClientImpl.h"
 #include "web/ServiceWorkerGlobalScopeProxy.h"
-#include "web/WebDataSourceImpl.h"
 #include "web/WebLocalFrameImpl.h"
 
 namespace blink {
@@ -418,6 +421,17 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   ProvideServiceWorkerContainerClientToWorker(
       worker_clients,
       WTF::WrapUnique(worker_context_client_->CreateServiceWorkerProvider()));
+
+  if (RuntimeEnabledFeatures::offMainThreadFetchEnabled()) {
+    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
+
+        worker_context_client_->CreateServiceWorkerFetchContext();
+    DCHECK(web_worker_fetch_context);
+    // TODO(horo): Set more information about the context (ex: DataSaverEnabled)
+    // to |web_worker_fetch_context|.
+    ProvideWorkerFetchContextToWorker(worker_clients,
+                                      std::move(web_worker_fetch_context));
+  }
 
   // We need to set the CSP to both the shadow page's document and the
   // ServiceWorkerGlobalScope.

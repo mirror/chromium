@@ -92,13 +92,13 @@
 #include "platform/json/JSONValues.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/plugins/PluginData.h"
+#include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "platform/text/TextStream.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/InterfaceRegistry.h"
 #include "public/platform/WebScreenInfo.h"
-#include "public/platform/WebViewScheduler.h"
 #include "third_party/skia/include/core/SkImage.h"
 #include "third_party/skia/include/core/SkSurface.h"
 
@@ -463,7 +463,7 @@ void LocalFrame::Detach(FrameDetachType type) {
   probe::frameDetachedFromParent(this);
   Frame::Detach(type);
 
-  supplements_.Clear();
+  supplements_.clear();
   frame_scheduler_.reset();
   WeakIdentifierMap<LocalFrame>::NotifyObjectDestroyed(this);
   lifecycle_.AdvanceTo(FrameLifecycle::kDetached);

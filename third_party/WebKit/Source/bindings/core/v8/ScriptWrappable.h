@@ -126,7 +126,7 @@ class CORE_EXPORT ScriptWrappable : public TraceWrapperBase {
     wrapper_type_info->ConfigureWrapper(&main_world_wrapper_);
     main_world_wrapper_.SetWeak();
     DCHECK(ContainsWrapper());
-    ScriptWrappableVisitor::WriteBarrier(&main_world_wrapper_);
+    ScriptWrappableVisitor::WriteBarrier(isolate, &main_world_wrapper_);
     return true;
   }
 
@@ -141,23 +141,6 @@ class CORE_EXPORT ScriptWrappable : public TraceWrapperBase {
   bool IsEqualTo(const v8::Local<v8::Object>& other) const {
     return main_world_wrapper_ == other;
   }
-
-  // Provides a way to convert Node* to ScriptWrappable* without including
-  // "core/dom/Node.h".
-  //
-  // Example:
-  //   void foo(const void*) { ... }       // [1]
-  //   void foo(ScriptWrappable*) { ... }  // [2]
-  //   class Node;
-  //   Node* node;
-  //   foo(node);  // This calls [1] because there is no definition of Node
-  //               // and compilers do not know that Node is a subclass of
-  //               // ScriptWrappable.
-  //   foo(ScriptWrappable::fromNode(node));  // This calls [2] as expected.
-  //
-  // The definition of fromNode is placed in Node.h because we'd like to
-  // inline calls to fromNode as much as possible.
-  static ScriptWrappable* FromNode(Node*);
 
   bool SetReturnValue(v8::ReturnValue<v8::Value> return_value) {
     return_value.Set(main_world_wrapper_);

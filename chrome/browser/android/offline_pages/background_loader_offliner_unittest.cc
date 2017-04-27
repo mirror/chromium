@@ -69,6 +69,14 @@ class MockOfflinePageModel : public StubOfflinePageModel {
         base::Bind(save_page_callback_, SavePageResult::SUCCESS, 123456));
   }
 
+  void CompleteSavingAsAlreadyExists() {
+    DCHECK(mock_saving_);
+    mock_saving_ = false;
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(save_page_callback_,
+                              SavePageResult::ALREADY_EXISTS, 123456));
+  }
+
   bool mock_saving() const { return mock_saving_; }
 
  private:
@@ -163,7 +171,7 @@ class BackgroundLoaderOfflinerTest : public testing::Test {
   void OnCompletion(const SavePageRequest& request,
                     Offliner::RequestStatus status);
   void OnProgress(const SavePageRequest& request, int64_t bytes);
-  void OnCancel(int64_t offline_id);
+  void OnCancel(const SavePageRequest& request);
   content::TestBrowserThreadBundle thread_bundle_;
   TestingProfile profile_;
   std::unique_ptr<OfflinerPolicy> policy_;
@@ -208,7 +216,7 @@ void BackgroundLoaderOfflinerTest::OnProgress(const SavePageRequest& request,
   progress_ = bytes;
 }
 
-void BackgroundLoaderOfflinerTest::OnCancel(int64_t offline_id) {
+void BackgroundLoaderOfflinerTest::OnCancel(const SavePageRequest& request) {
   DCHECK(!cancel_callback_called_);
   cancel_callback_called_ = true;
 }
@@ -376,6 +384,24 @@ TEST_F(BackgroundLoaderOfflinerTest, LoadAndSaveSuccess) {
   EXPECT_FALSE(SaveInProgress());
 }
 
+TEST_F(BackgroundLoaderOfflinerTest, LoadAndSaveAlreadyExists) {
+  base::Time creation_time = base::Time::Now();
+  SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
+                          kUserRequested);
+  EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
+                                      progress_callback()));
+
+  CompleteLoading();
+  PumpLoop();
+  model()->CompleteSavingAsAlreadyExists();
+  PumpLoop();
+
+  EXPECT_TRUE(completion_callback_called());
+  EXPECT_EQ(Offliner::RequestStatus::SAVED, request_status());
+  EXPECT_FALSE(offliner()->is_loading());
+  EXPECT_FALSE(SaveInProgress());
+}
+
 TEST_F(BackgroundLoaderOfflinerTest, FailsOnInvalidURL) {
   base::Time creation_time = base::Time::Now();
   SavePageRequest request(kRequestId, kFileUrl, kClientId, creation_time,
@@ -495,13 +521,13 @@ TEST_F(BackgroundLoaderOfflinerTest, HandleTimeoutWithLowBarStartedTriesMet) {
   base::Time creation_time = base::Time::Now();
   SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
                           kUserRequested);
+  request.set_started_attempt_count(policy()->GetMaxStartedTries() - 1);
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
-  request.set_started_attempt_count(policy()->GetMaxStartedTries() - 1);
-  // Sets lowbar.
+  // Guarantees low bar for saving is met.
   offliner()->DocumentAvailableInMainFrame();
   // Timeout
-  EXPECT_TRUE(offliner()->HandleTimeout(request));
+  EXPECT_TRUE(offliner()->HandleTimeout(kRequestId));
   EXPECT_TRUE(SaveInProgress());
   model()->CompleteSavingAsSuccess();
   PumpLoop();
@@ -512,13 +538,13 @@ TEST_F(BackgroundLoaderOfflinerTest, HandleTimeoutWithLowBarCompletedTriesMet) {
   base::Time creation_time = base::Time::Now();
   SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
                           kUserRequested);
+  request.set_completed_attempt_count(policy()->GetMaxCompletedTries() - 1);
   EXPECT_TRUE(offliner()->LoadAndSave(request, completion_callback(),
                                       progress_callback()));
-  request.set_completed_attempt_count(policy()->GetMaxCompletedTries() - 1);
-  // Sets lowbar.
+  // Guarantees low bar for saving is met.
   offliner()->DocumentAvailableInMainFrame();
   // Timeout
-  EXPECT_TRUE(offliner()->HandleTimeout(request));
+  EXPECT_TRUE(offliner()->HandleTimeout(kRequestId));
   EXPECT_TRUE(SaveInProgress());
   model()->CompleteSavingAsSuccess();
   PumpLoop();
@@ -533,7 +559,7 @@ TEST_F(BackgroundLoaderOfflinerTest, HandleTimeoutWithNoLowBarStartedTriesMet) {
                                       progress_callback()));
   request.set_started_attempt_count(policy()->GetMaxStartedTries() - 1);
   // Timeout
-  EXPECT_FALSE(offliner()->HandleTimeout(request));
+  EXPECT_FALSE(offliner()->HandleTimeout(kRequestId));
   EXPECT_FALSE(SaveInProgress());
 }
 
@@ -546,7 +572,7 @@ TEST_F(BackgroundLoaderOfflinerTest,
                                       progress_callback()));
   request.set_completed_attempt_count(policy()->GetMaxCompletedTries() - 1);
   // Timeout
-  EXPECT_FALSE(offliner()->HandleTimeout(request));
+  EXPECT_FALSE(offliner()->HandleTimeout(kRequestId));
   EXPECT_FALSE(SaveInProgress());
 }
 
@@ -559,7 +585,7 @@ TEST_F(BackgroundLoaderOfflinerTest, HandleTimeoutWithLowBarNoRetryLimit) {
   // Sets lowbar.
   offliner()->DocumentAvailableInMainFrame();
   // Timeout
-  EXPECT_FALSE(offliner()->HandleTimeout(request));
+  EXPECT_FALSE(offliner()->HandleTimeout(kRequestId));
   EXPECT_FALSE(SaveInProgress());
 }
 

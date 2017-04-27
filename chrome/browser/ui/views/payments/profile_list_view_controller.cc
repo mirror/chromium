@@ -81,7 +81,7 @@ class ProfileItem : public PaymentRequestItemList::Item {
   }
 
   void PerformSelectionFallback() override {
-    dialog_->ShowShippingAddressEditor(profile_);
+    parent_view_->ShowEditor(profile_);
   }
 
   ProfileListViewController* parent_view_;
@@ -115,6 +115,17 @@ class ShippingProfileViewController : public ProfileListViewController {
     state()->SetSelectedShippingProfile(profile);
   }
 
+  void ShowEditor(autofill::AutofillProfile* profile) override {
+    dialog()->ShowShippingAddressEditor(
+        /*on_edited=*/base::BindOnce(
+            &PaymentRequestState::SetSelectedShippingProfile,
+            base::Unretained(state()), profile),
+        /*on_added=*/
+        base::BindOnce(&PaymentRequestState::AddAutofillShippingProfile,
+                       base::Unretained(state()), /*selected=*/true),
+        profile);
+  }
+
   autofill::AutofillProfile* GetSelectedProfile() override {
     return state()->selected_shipping_profile();
   }
@@ -144,10 +155,6 @@ class ShippingProfileViewController : public ProfileListViewController {
     return static_cast<int>(DialogViewID::PAYMENT_METHOD_ADD_SHIPPING_BUTTON);
   }
 
-  void OnSecondaryButtonPressed() override {
-    dialog()->ShowShippingAddressEditor();
-  }
-
  private:
   DISALLOW_COPY_AND_ASSIGN(ShippingProfileViewController);
 };
@@ -173,6 +180,10 @@ class ContactProfileViewController : public ProfileListViewController {
 
   void SelectProfile(autofill::AutofillProfile* profile) override {
     state()->SetSelectedContactProfile(profile);
+  }
+
+  void ShowEditor(autofill::AutofillProfile* profile) override {
+    dialog()->ShowContactInfoEditor(profile);
   }
 
   autofill::AutofillProfile* GetSelectedProfile() override {
@@ -203,10 +214,6 @@ class ContactProfileViewController : public ProfileListViewController {
 
   int GetSecondaryButtonViewId() override {
     return static_cast<int>(DialogViewID::PAYMENT_METHOD_ADD_CONTACT_BUTTON);
-  }
-
-  void OnSecondaryButtonPressed() override {
-    // TODO(crbug.com/704263): Add Contact Editor.
   }
 
  private:
@@ -279,7 +286,7 @@ ProfileListViewController::CreateExtraFooterView() {
 void ProfileListViewController::ButtonPressed(views::Button* sender,
                                               const ui::Event& event) {
   if (sender->tag() == GetSecondaryButtonTag())
-    OnSecondaryButtonPressed();
+    ShowEditor(nullptr);
   else
     PaymentRequestSheetController::ButtonPressed(sender, event);
 }

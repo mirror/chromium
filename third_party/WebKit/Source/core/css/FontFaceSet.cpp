@@ -71,7 +71,7 @@ class LoadFontPromiseResolver final
       : num_loading_(faces.size()),
         error_occured_(false),
         resolver_(ScriptPromiseResolver::Create(script_state)) {
-    font_faces_.Swap(faces);
+    font_faces_.swap(faces);
   }
 
   HeapVector<Member<FontFace>> font_faces_;
@@ -298,7 +298,7 @@ bool FontFaceSet::deleteForBinding(ScriptState*,
   if (!InActiveDocumentContext())
     return false;
   HeapListHashSet<Member<FontFace>>::iterator it =
-      non_css_connected_faces_.Find(font_face);
+      non_css_connected_faces_.find(font_face);
   if (it != non_css_connected_faces_.end()) {
     non_css_connected_faces_.erase(it);
     CSSFontSelector* font_selector =

@@ -12,7 +12,6 @@
 #include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/metrics/field_trial_params.h"
-#include "chrome/browser/ntp_snippets/ntp_snippets_features.h"
 #include "chrome/common/chrome_features.h"
 #include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
@@ -49,7 +48,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kAndroidPayIntegrationV1,
     &kAndroidPayIntegrationV2,
     &kAndroidPaymentApps,
-    &kAndroidPaymentAppsFilter,
+    &kCCTBackgroundTab,
     &kCCTExternalLinkHandling,
     &kCCTPostMessageAPI,
     &kChromeHomeFeature,
@@ -82,11 +81,11 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kWebVRCardboardSupport,
     &ntp_snippets::kIncreasedVisibility,
     &ntp_snippets::kForeignSessionsSuggestionsFeature,
+    &ntp_snippets::kNotificationsFeature,
     &ntp_snippets::kPublisherFaviconsFromNewServerFeature,
     &offline_pages::kBackgroundLoaderForDownloadsFeature,
     &offline_pages::kOfflinePagesCTFeature,  // See crbug.com/620421.
     &offline_pages::kOfflinePagesSharingFeature,
-    &params::ntp_snippets::kNotificationsFeature,
     &password_manager::features::kViewPasswords,
     &subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI,
 };
@@ -113,8 +112,8 @@ const base::Feature kAndroidPayIntegrationV2{"AndroidPayIntegrationV2",
 const base::Feature kAndroidPaymentApps{"AndroidPaymentApps",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kAndroidPaymentAppsFilter{
-    "AndroidPaymentAppsFilter", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kCCTBackgroundTab{"CCTBackgroundTab",
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kCCTExternalLinkHandling{"CCTExternalLinkHandling",
                                              base::FEATURE_ENABLED_BY_DEFAULT};
@@ -153,6 +152,12 @@ const base::Feature kImportantSitesInCBD{"ImportantSitesInCBD",
 // URL which opens Chrome in fullscreen.
 const base::Feature kImprovedA2HS{"ImprovedA2HS",
                                   base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kSearchEnginePromoExistingDevice{
+    "SearchEnginePromo.ExistingDevice", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kSearchEnginePromoNewDevice{
+    "SearchEnginePromo.NewDevice", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kNewPhotoPicker{"NewPhotoPicker",
                                     base::FEATURE_DISABLED_BY_DEFAULT};

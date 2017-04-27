@@ -431,33 +431,34 @@ bool IsValidNFCRecord(const NFCRecord& record) {
   return false;
 }
 
-DOMException* IsValidNFCRecordArray(const HeapVector<NFCRecord>& records) {
-  // https://w3c.github.io/web-nfc/#the-push-method
-  // If NFCMessage.data is empty, reject promise with SyntaxError
+bool IsValidNFCRecordArray(const HeapVector<NFCRecord>& records) {
   if (records.IsEmpty())
-    return DOMException::Create(kSyntaxError);
+    return false;
 
   for (const auto& record : records) {
     if (!IsValidNFCRecord(record))
-      return DOMException::Create(kSyntaxError);
+      return false;
   }
 
-  return nullptr;
+  return true;
 }
 
-DOMException* IsValidNFCPushMessage(const NFCPushMessage& message) {
+bool IsValidNFCPushMessage(const NFCPushMessage& message) {
+  // If NFCPushMessage of invalid type, reject promise with TypeError
   if (!message.isNFCMessage() && !message.isString() &&
       !message.isArrayBuffer())
-    return DOMException::Create(kTypeMismatchError);
+    return false;
 
   if (message.isNFCMessage()) {
+    // https://w3c.github.io/web-nfc/#the-push-method
+    // If NFCMessage.data is empty, reject promise with TypeError
     if (!message.getAsNFCMessage().hasData())
-      return DOMException::Create(kTypeMismatchError);
+      return false;
 
     return IsValidNFCRecordArray(message.getAsNFCMessage().data());
   }
 
-  return nullptr;
+  return true;
 }
 
 bool SetURL(const String& origin,
@@ -512,7 +513,7 @@ v8::Local<v8::Value> ToV8(
           device::nfc::mojom::blink::NFCRecordType::JSON) {
         v8::Local<v8::Value> json_object;
         v8::TryCatch try_catch(isolate);
-        if (!V8Call(v8::JSON::Parse(isolate, string), json_object, try_catch)) {
+        if (!v8::JSON::Parse(isolate, string).ToLocal(&json_object)) {
           return v8::Null(isolate);
         }
 
@@ -601,8 +602,8 @@ void NFC::Dispose() {
 
 void NFC::ContextDestroyed(ExecutionContext*) {
   nfc_.reset();
-  requests_.Clear();
-  callbacks_.Clear();
+  requests_.clear();
+  callbacks_.clear();
 }
 
 // https://w3c.github.io/web-nfc/#writing-or-pushing-content
@@ -614,9 +615,24 @@ ScriptPromise NFC::push(ScriptState* script_state,
   if (!promise.IsEmpty())
     return promise;
 
-  DOMException* exception = IsValidNFCPushMessage(push_message);
-  if (exception)
-    return ScriptPromise::RejectWithDOMException(script_state, exception);
+  if (!IsValidNFCPushMessage(push_message)) {
+    return ScriptPromise::Reject(
+        script_state, V8ThrowException::CreateTypeError(
+                          script_state->GetIsolate(),
+                          "Invalid NFCPushMessage type was provided."));
+  }
+
+  // https://w3c.github.io/web-nfc/#dom-nfc-push
+  // 9. If timeout value is NaN or negative, reject promise with "TypeError"
+  // and abort these steps.
+  if (options.hasTimeout() &&
+      (std::isnan(options.timeout()) || options.timeout() < 0)) {
+    return ScriptPromise::Reject(
+        script_state,
+        V8ThrowException::CreateTypeError(
+            script_state->GetIsolate(),
+            "Invalid NFCPushOptions.timeout value was provided."));
+  }
 
   device::nfc::mojom::blink::NFCMessagePtr message =
       device::nfc::mojom::blink::NFCMessage::From(push_message);
@@ -712,7 +728,7 @@ ScriptPromise NFC::cancelWatch(ScriptState* script_state) {
   if (!promise.IsEmpty())
     return promise;
 
-  callbacks_.Clear();
+  callbacks_.clear();
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   requests_.insert(resolver);
   nfc_->CancelAllWatches(ConvertToBaseCallback(
@@ -748,7 +764,7 @@ void NFC::OnRequestCompleted(ScriptPromiseResolver* resolver,
 
 void NFC::OnConnectionError() {
   nfc_.reset();
-  callbacks_.Clear();
+  callbacks_.clear();
 
   // If NFCService is not available or disappears when NFC hardware is
   // disabled, reject promise with NotSupportedError exception.
@@ -756,13 +772,13 @@ void NFC::OnConnectionError() {
     resolver->Reject(NFCError::Take(
         resolver, device::nfc::mojom::blink::NFCErrorType::NOT_SUPPORTED));
 
-  requests_.Clear();
+  requests_.clear();
 }
 
 void NFC::OnWatch(const WTF::Vector<uint32_t>& ids,
                   device::nfc::mojom::blink::NFCMessagePtr message) {
   for (const auto& id : ids) {
-    auto it = callbacks_.Find(id);
+    auto it = callbacks_.find(id);
     if (it != callbacks_.end()) {
       MessageCallback* callback = it->value;
       ScriptState* script_state = callback->GetScriptState();

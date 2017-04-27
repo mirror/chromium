@@ -98,7 +98,7 @@ void ModuleMap::Entry::NotifyNewSingleModuleFinished(
   for (const auto& client : clients_) {
     DispatchFinishedNotificationAsync(client);
   }
-  clients_.Clear();
+  clients_.clear();
 }
 
 ModuleScript* ModuleMap::Entry::GetModuleScript() const {
@@ -151,7 +151,7 @@ void ModuleMap::FetchSingleModuleScript(const ModuleScriptFetchRequest& request,
 }
 
 ModuleScript* ModuleMap::GetFetchedModuleScript(const KURL& url) const {
-  MapImpl::const_iterator it = map_.Find(url);
+  MapImpl::const_iterator it = map_.find(url);
   CHECK_NE(it, map_.end());
   return it->value->GetModuleScript();
 }

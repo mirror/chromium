@@ -26,12 +26,13 @@
 
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
-#include "bindings/core/v8/V8Binding.h"
 #include "core/HTMLNames.h"
 #include "core/SVGNames.h"
+#include "core/dom/ClassicPendingScript.h"
 #include "core/dom/ClassicScript.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParserTiming.h"
+#include "core/dom/DocumentWriteIntervention.h"
 #include "core/dom/IgnoreDestructiveWriteCountIncrementer.h"
 #include "core/dom/Script.h"
 #include "core/dom/ScriptElementBase.h"
@@ -48,7 +49,6 @@
 #include "platform/WebFrameScheduler.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/loader/fetch/FetchParameters.h"
-#include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -614,12 +614,28 @@ bool ScriptLoader::FetchClassicScript(
   // "Fetch a classic script given url, settings, ..."
   ResourceRequest resource_request(url);
 
+  FetchParameters::DeferOption defer = FetchParameters::kNoDefer;
+  if (!parser_inserted_ || element_->AsyncAttributeValue() ||
+      element_->DeferAttributeValue())
+    defer = FetchParameters::kLazyLoad;
+
   // [Intervention]
   if (document_write_intervention_ ==
       DocumentWriteIntervention::kFetchDocWrittenScriptDeferIdle) {
     resource_request.SetHTTPHeaderField(
         "Intervention",
         "<https://www.chromestatus.com/feature/5718547946799104>");
+    defer = FetchParameters::kIdleLoad;
+  }
+
+  // [Intervention]
+  // For users on slow connections, we want to avoid blocking the parser in
+  // the main frame on script loads inserted via document.write, since it can
+  // add significant delays before page content is displayed on the screen.
+  if (MaybeDisallowFetchForDocWrittenScript(resource_request, defer,
+                                            element_->GetDocument())) {
+    document_write_intervention_ =
+        DocumentWriteIntervention::kDoNotFetchDocWrittenScript;
   }
 
   FetchParameters params(resource_request, element_->InitiatorName());
@@ -643,13 +659,6 @@ bool ScriptLoader::FetchClassicScript(
 
   // This DeferOption logic is only for classic scripts, as we always set
   // |kLazyLoad| for module scripts in ModuleScriptLoader.
-  FetchParameters::DeferOption defer = FetchParameters::kNoDefer;
-  if (!parser_inserted_ || element_->AsyncAttributeValue() ||
-      element_->DeferAttributeValue())
-    defer = FetchParameters::kLazyLoad;
-  if (document_write_intervention_ ==
-      DocumentWriteIntervention::kFetchDocWrittenScriptDeferIdle)
-    defer = FetchParameters::kIdleLoad;
   params.SetDefer(defer);
 
   resource_ = ScriptResource::Fetch(params, fetcher);
@@ -657,20 +666,12 @@ bool ScriptLoader::FetchClassicScript(
   if (!resource_)
     return false;
 
-  // [Intervention]
-  if (created_during_document_write_ &&
-      resource_->GetResourceRequest().GetCachePolicy() ==
-          WebCachePolicy::kReturnCacheDataDontLoad) {
-    document_write_intervention_ =
-        DocumentWriteIntervention::kDoNotFetchDocWrittenScript;
-  }
-
   return true;
 }
 
 PendingScript* ScriptLoader::CreatePendingScript() {
   CHECK(resource_);
-  return PendingScript::Create(element_, resource_);
+  return ClassicPendingScript::Create(element_, resource_);
 }
 
 bool ScriptLoader::ExecuteScript(const Script* script) {
@@ -776,13 +777,14 @@ bool ScriptLoader::DoExecuteScript(const Script* script) {
 void ScriptLoader::Execute() {
   DCHECK(!will_be_parser_executed_);
   DCHECK(async_exec_type_ != ScriptRunner::kNone);
-  DCHECK(pending_script_->GetResource());
+  DCHECK(pending_script_->IsExternal());
   bool error_occurred = false;
   Script* script = pending_script_->GetSource(KURL(), error_occurred);
+  const bool wasCanceled = pending_script_->WasCanceled();
   DetachPendingScript();
   if (error_occurred) {
     DispatchErrorEvent();
-  } else if (!resource_->WasCanceled()) {
+  } else if (!wasCanceled) {
     if (ExecuteScript(script))
       DispatchLoadEvent();
     else
@@ -794,7 +796,6 @@ void ScriptLoader::Execute() {
 void ScriptLoader::PendingScriptFinished(PendingScript* pending_script) {
   DCHECK(!will_be_parser_executed_);
   DCHECK_EQ(pending_script_, pending_script);
-  DCHECK_EQ(pending_script->GetResource(), resource_);
 
   // We do not need this script in the memory cache. The primary goals of
   // sending this fetch request are to let the third party server know
@@ -802,7 +803,8 @@ void ScriptLoader::PendingScriptFinished(PendingScript* pending_script) {
   // cache for subsequent uses.
   if (document_write_intervention_ ==
       DocumentWriteIntervention::kFetchDocWrittenScriptDeferIdle) {
-    GetMemoryCache()->Remove(pending_script_->GetResource());
+    DCHECK_EQ(pending_script_->GetScriptType(), ScriptType::kClassic);
+    pending_script_->RemoveFromMemoryCache();
     pending_script_->StopWatchingForLoad();
     return;
   }

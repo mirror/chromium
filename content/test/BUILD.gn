@@ -54,6 +54,8 @@ static_library("test_support") {
     "../public/test/browser_test_base.h",
     "../public/test/browser_test_utils.cc",
     "../public/test/browser_test_utils.h",
+    "../public/test/browsing_data_remover_test_util.cc",
+    "../public/test/browsing_data_remover_test_util.h",
     "../public/test/cache_test_util.cc",
     "../public/test/cache_test_util.h",
     "../public/test/content_test_suite_base.cc",
@@ -106,6 +108,8 @@ static_library("test_support") {
     "../public/test/test_fileapi_operation_waiter.h",
     "../public/test/test_frame_navigation_observer.cc",
     "../public/test/test_frame_navigation_observer.h",
+    "../public/test/test_host_resolver.cc",
+    "../public/test/test_host_resolver.h",
     "../public/test/test_launcher.cc",
     "../public/test/test_launcher.h",
     "../public/test/test_navigation_observer.cc",
@@ -243,6 +247,8 @@ static_library("test_support") {
     "//content/gpu",
     "//content/public/browser",
     "//content/public/child",
+    "//content/public/common:interfaces",
+    "//content/public/common:service_names",
     "//content/public/renderer",
     "//content/public/utility",
     "//content/renderer:for_content_tests",
@@ -585,7 +591,6 @@ test("content_browsertests") {
     "../browser/accessibility/snapshot_ax_tree_browsertest.cc",
     "../browser/accessibility/touch_accessibility_aura_browsertest.cc",
     "../browser/background_sync/background_sync_browsertest.cc",
-    "../browser/battery_status/battery_monitor_impl_browsertest.cc",
     "../browser/blob_storage/blob_storage_browsertest.cc",
     "../browser/blob_storage/blob_url_browsertest.cc",
     "../browser/bookmarklet_browsertest.cc",
@@ -633,6 +638,7 @@ test("content_browsertests") {
     "../browser/media/media_browsertest.cc",
     "../browser/media/media_browsertest.h",
     "../browser/media/media_canplaytype_browsertest.cc",
+    "../browser/media/media_capabilities_browsertest.cc",
     "../browser/media/media_color_browsertest.cc",
     "../browser/media/media_redirect_browsertest.cc",
     "../browser/media/media_source_browsertest.cc",
@@ -740,8 +746,6 @@ test("content_browsertests") {
     "//content/shell:pak",
     "//content/test:test_support",
     "//device/base/synchronization",
-    "//device/battery",
-    "//device/battery:mojo_bindings",
     "//device/generic_sensor",
     "//device/power_save_blocker",
     "//device/screen_orientation/public/interfaces",
@@ -867,7 +871,6 @@ test("content_browsertests") {
       "../shell/android/browsertests_apk/content_browser_tests_jni_onload.cc",
     ]
     sources -= [
-      "../browser/battery_status/battery_monitor_impl_browsertest.cc",
       "../browser/media/session/audio_focus_delegate_default_browsertest.cc",
       "../browser/pointer_lock_browsertest.cc",
       "../browser/pointer_lock_browsertest.h",
@@ -879,7 +882,6 @@ test("content_browsertests") {
       "//content/shell/android:content_shell_jni_headers",
       "//testing/android/native_test:native_test_support",
     ]
-    deps -= [ "//device/battery" ]
     android_manifest =
         "${target_gen_dir}/content_browsertests_manifest/AndroidManifest.xml"
     android_manifest_dep = ":content_browsertests_manifest"
@@ -928,7 +930,10 @@ test("content_browsertests") {
       "../browser/webrtc/webrtc_webcam_browsertest.cc",
       "../browser/webrtc/webrtc_webcam_browsertest.h",
     ]
-    deps += [ "//testing/perf" ]
+    deps += [
+      "//content/public/common:features",
+      "//testing/perf",
+    ]
   }
 
   if (enable_plugins) {
@@ -1049,6 +1054,7 @@ test("content_unittests") {
     "../browser/browser_thread_unittest.cc",
     "../browser/browser_url_handler_impl_unittest.cc",
     "../browser/browsing_data/browsing_data_filter_builder_impl_unittest.cc",
+    "../browser/browsing_data/browsing_data_remover_impl_unittest.cc",
     "../browser/browsing_data/clear_site_data_throttle_unittest.cc",
     "../browser/byte_stream_unittest.cc",
     "../browser/cache_storage/cache_storage_blob_to_disk_cache_unittest.cc",
@@ -1082,6 +1088,7 @@ test("content_unittests") {
     "../browser/download/parallel_download_utils_unittest.cc",
     "../browser/download/rate_estimator_unittest.cc",
     "../browser/download/save_package_unittest.cc",
+    "../browser/fileapi/browser_file_system_helper_unittest.cc",
     "../browser/fileapi/file_system_operation_runner_unittest.cc",
     "../browser/fileapi/fileapi_message_filter_unittest.cc",
     "../browser/fileapi/upload_file_system_file_element_reader_unittest.cc",
@@ -1452,8 +1459,6 @@ test("content_unittests") {
     "//content/public/renderer",
     "//content/renderer:for_content_tests",
     "//crypto",
-    "//device/battery",
-    "//device/battery:mojo_bindings",
     "//device/bluetooth",
     "//device/bluetooth:mocks",
     "//device/gamepad",
@@ -1496,6 +1501,7 @@ test("content_unittests") {
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/WebKit/public:blink",
+    "//third_party/WebKit/public:offscreen_canvas_mojo_bindings",
     "//third_party/icu",
     "//third_party/leveldatabase",
     "//third_party/re2",
@@ -1699,7 +1705,6 @@ test("content_unittests") {
       "../browser/media/session/audio_focus_manager_unittest.cc",
       "../browser/webui/url_data_manager_backend_unittest.cc",
     ]
-    deps -= [ "//device/battery" ]
 
     deps += [
       "//base:base_java_unittest_support",

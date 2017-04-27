@@ -501,10 +501,9 @@ class CONTENT_EXPORT ContentBrowserClient {
   // Returns true if the given page is allowed to open a window of the given
   // type. If true is returned, |no_javascript_access| will indicate whether
   // the window that is created should be scriptable/in the same process.
-  // This is called on the IO thread.
+  // This is called on the UI thread.
   virtual bool CanCreateWindow(
-      int opener_render_process_id,
-      int opener_render_frame_id,
+      RenderFrameHost* opener,
       const GURL& opener_url,
       const GURL& opener_top_level_frame_url,
       const GURL& source_origin,
@@ -516,7 +515,6 @@ class CONTENT_EXPORT ContentBrowserClient {
       const blink::mojom::WindowFeatures& features,
       bool user_gesture,
       bool opener_suppressed,
-      ResourceContext* context,
       bool* no_javascript_access);
 
   // Notifies the embedder that the ResourceDispatcherHost has been created.
@@ -542,15 +540,18 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual void BrowserURLHandlerCreated(BrowserURLHandler* handler) {}
 
   // Clears browser cache.
+  // TODO(crbug.com/668114): Deprecated. Use BrowsingDataRemover instead.
   virtual void ClearCache(RenderFrameHost* rfh) {}
 
   // Clears browser cookies.
+  // TODO(crbug.com/668114): Deprecated. Use BrowsingDataRemover instead.
   virtual void ClearCookies(RenderFrameHost* rfh) {}
 
   // Clears |browser_context|'s data stored for the given |origin|.
   // The datatypes to be removed are specified by |remove_cookies|,
   // |remove_storage|, and |remove_cache|. Note that cookies should be removed
   // for the entire eTLD+1 of |origin|. Must call |callback| when finished.
+  // TODO(crbug.com/668114): Depreacated. Use BrowsingDataRemover instead.
   virtual void ClearSiteData(content::BrowserContext* browser_context,
                              const url::Origin& origin,
                              bool remove_cookies,

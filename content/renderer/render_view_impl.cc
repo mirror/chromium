@@ -54,6 +54,7 @@
 #include "content/common/page_messages.h"
 #include "content/common/render_message_filter.mojom.h"
 #include "content/common/view_messages.h"
+#include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
@@ -1394,6 +1395,8 @@ void RenderViewImpl::OnForceRedraw(const ui::LatencyInfo& latency_info) {
 
 // blink::WebViewClient ------------------------------------------------------
 
+// TODO(csharrison): Migrate this method to WebFrameClient / RenderFrameImpl, as
+// it is now serviced by a mojo interface scoped to the opener frame.
 WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
                                     const WebURLRequest& request,
                                     const WebWindowFeatures& features,
@@ -1402,7 +1405,6 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
                                     bool suppress_opener) {
   RenderFrameImpl* creator_frame = RenderFrameImpl::FromWebFrame(creator);
   mojom::CreateNewWindowParamsPtr params = mojom::CreateNewWindowParams::New();
-  params->opener_render_frame_id = creator_frame->GetRoutingID();
   params->user_gesture = WebUserGestureIndicator::IsProcessingUserGesture();
   if (GetContentClient()->renderer()->AllowPopup())
     params->user_gesture = true;
@@ -1411,29 +1413,7 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
   if (frame_name != "_blank")
     params->frame_name = frame_name.Utf8(
         WebString::UTF8ConversionMode::kStrictReplacingErrorsWithFFFD);
-  params->opener_url = creator->GetDocument().Url();
 
-  // The browser process uses the top frame's URL for a content settings check
-  // to determine whether the popup is allowed.  If the top frame is remote,
-  // its URL is not available, so use its replicated origin instead.
-  //
-  // TODO(alexmos): This works fine for regular origins but may break path
-  // matching for file URLs with OOP subframes that open popups.  This should
-  // be fixed by either moving this lookup to the browser process or removing
-  // path-based matching for file URLs from content settings.  See
-  // https://crbug.com/466297.
-  if (creator->Top()->IsWebLocalFrame()) {
-    params->opener_top_level_frame_url = creator->Top()->GetDocument().Url();
-  } else {
-    params->opener_top_level_frame_url =
-        url::Origin(creator->Top()->GetSecurityOrigin()).GetURL();
-  }
-
-  GURL security_url(
-      url::Origin(creator->GetDocument().GetSecurityOrigin()).GetURL());
-  if (!security_url.is_valid())
-    security_url = GURL();
-  params->opener_security_origin = security_url;
   params->opener_suppressed = suppress_opener;
   params->disposition = NavigationPolicyToDisposition(policy);
   if (!request.IsNull()) {
@@ -1449,8 +1429,8 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
   bool opened_by_user_gesture = params->user_gesture;
 
   mojom::CreateNewWindowReplyPtr reply;
-  RenderThreadImpl::current_render_message_filter()->CreateNewWindow(
-      std::move(params), &reply);
+  mojom::FrameHostAssociatedPtr frame_host_ptr = creator_frame->GetFrameHost();
+  frame_host_ptr->CreateNewWindow(std::move(params), &reply);
   if (reply->route_id == MSG_ROUTING_NONE)
     return nullptr;
 

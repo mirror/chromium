@@ -381,7 +381,7 @@ void NetworkResourcesData::AddPendingEncodedDataLength(
 void NetworkResourcesData::Clear(const String& preserved_loader_id) {
   if (!request_id_to_resource_data_map_.size())
     return;
-  request_ids_deque_.Clear();
+  request_ids_deque_.clear();
   content_size_ = 0;
 
   ResourceDataMap preserved_map;
@@ -394,7 +394,7 @@ void NetworkResourcesData::Clear(const String& preserved_loader_id) {
   }
   request_id_to_resource_data_map_.swap(preserved_map);
 
-  reused_xhr_replay_data_request_ids_.Clear();
+  reused_xhr_replay_data_request_ids_.clear();
 }
 
 void NetworkResourcesData::SetResourcesDataSizeLimits(

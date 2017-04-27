@@ -35,8 +35,6 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
-#include "chrome/browser/browsing_data/browsing_data_remover.h"
-#include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/budget_service/budget_service_impl.h"
 #include "chrome/browser/chrome_content_browser_client_parts.h"
@@ -164,6 +162,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browser_url_handler.h"
 #include "content/public/browser/browsing_data_filter_builder.h"
+#include "content/public/browser/browsing_data_remover.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/client_certificate_delegate.h"
@@ -776,20 +775,11 @@ void SetApplicationLocaleOnIOThread(const std::string& locale) {
   g_io_thread_application_locale.Get() = locale;
 }
 
-void HandleBlockedPopupOnUIThread(const BlockedWindowParams& params) {
-  RenderFrameHost* render_frame_host = RenderFrameHost::FromID(
-      params.render_process_id(), params.opener_render_frame_id());
-  if (!render_frame_host)
-    return;
-  WebContents* tab = WebContents::FromRenderFrameHost(render_frame_host);
-  // The tab might already have navigated away.  We only need to do this check
-  // for main frames, since the RenderFrameHost for a subframe opener will have
-  // already been deleted if the main frame navigates away.
-  if (!tab ||
-      (!render_frame_host->GetParent() &&
-       tab->GetMainFrame() != render_frame_host))
-    return;
-
+void HandleBlockedPopupOnUIThread(const BlockedWindowParams& params,
+                                  RenderFrameHost* opener,
+                                  WebContents* tab) {
+  DCHECK(tab);
+  DCHECK(opener);
   prerender::PrerenderContents* prerender_contents =
       prerender::PrerenderContents::FromWebContents(tab);
   if (prerender_contents) {
@@ -803,22 +793,6 @@ void HandleBlockedPopupOnUIThread(const BlockedWindowParams& params) {
     return;
   popup_helper->AddBlockedPopup(params);
 }
-
-#if BUILDFLAG(ENABLE_PLUGINS)
-void HandleFlashDownloadActionOnUIThread(int render_process_id,
-                                         int render_frame_id,
-                                         const GURL& source_url) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  RenderFrameHost* render_frame_host =
-      RenderFrameHost::FromID(render_process_id, render_frame_id);
-  if (!render_frame_host)
-    return;
-  WebContents* web_contents =
-      WebContents::FromRenderFrameHost(render_frame_host);
-  FlashDownloadInterception::InterceptFlashDownloadNavigation(web_contents,
-                                                              source_url);
-}
-#endif  // BUILDFLAG(ENABLE_PLUGINS)
 
 // An implementation of the SSLCertReporter interface used by
 // SSLErrorHandler. Uses CertificateReportingService to send reports. The
@@ -863,14 +837,6 @@ float GetDeviceScaleAdjustment() {
   return ratio * (kMaxFSM - kMinFSM) + kMinFSM;
 }
 
-void HandleSingleTabModeBlockOnUIThread(const BlockedWindowParams& params) {
-  WebContents* web_contents = tab_util::GetWebContentsByFrameID(
-      params.render_process_id(), params.opener_render_frame_id());
-  if (!web_contents)
-    return;
-
-  SingleTabModeTabHelper::FromWebContents(web_contents)->HandleOpenUrl(params);
-}
 #endif  // defined(OS_ANDROID)
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -963,9 +929,9 @@ bool GetDataSaverEnabledPref(const PrefService* prefs) {
 // A BrowsingDataRemover::Observer that waits for |count|
 // OnBrowsingDataRemoverDone() callbacks, translates them into
 // one base::Closure, and then destroys itself.
-class ClearSiteDataObserver : public BrowsingDataRemover::Observer {
+class ClearSiteDataObserver : public content::BrowsingDataRemover::Observer {
  public:
-  explicit ClearSiteDataObserver(BrowsingDataRemover* remover,
+  explicit ClearSiteDataObserver(content::BrowsingDataRemover* remover,
                                  const base::Closure& callback,
                                  int count)
       : remover_(remover), callback_(callback), count_(count) {
@@ -985,7 +951,7 @@ class ClearSiteDataObserver : public BrowsingDataRemover::Observer {
   }
 
  private:
-  BrowsingDataRemover* remover_;
+  content::BrowsingDataRemover* remover_;
   base::Closure callback_;
   int count_;
 };
@@ -995,6 +961,25 @@ WebContents* GetWebContents(int render_process_id, int render_frame_id) {
       RenderFrameHost::FromID(render_process_id, render_frame_id);
   return WebContents::FromRenderFrameHost(rfh);
 }
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+// Returns true if there is is an extension with the same origin as
+// |source_origin| in |opener_render_process_id| with
+// APIPermission::kBackground.
+bool SecurityOriginHasExtensionBackgroundPermission(
+    extensions::ProcessMap* process_map,
+    extensions::ExtensionRegistry* registry,
+    const GURL& source_origin,
+    int opener_render_process_id) {
+  // Note: includes web URLs that are part of an extension's web extent.
+  const Extension* extension =
+      registry->enabled_extensions().GetExtensionOrAppByURL(source_origin);
+  return extension &&
+         extension->permissions_data()->HasAPIPermission(
+             APIPermission::kBackground) &&
+         process_map->Contains(extension->id(), opener_render_process_id);
+}
+#endif
 
 }  // namespace
 
@@ -2455,8 +2440,7 @@ ChromeContentBrowserClient::GetPlatformNotificationService() {
 }
 
 bool ChromeContentBrowserClient::CanCreateWindow(
-    int opener_render_process_id,
-    int opener_render_frame_id,
+    RenderFrameHost* opener,
     const GURL& opener_url,
     const GURL& opener_top_level_frame_url,
     const GURL& source_origin,
@@ -2468,21 +2452,26 @@ bool ChromeContentBrowserClient::CanCreateWindow(
     const blink::mojom::WindowFeatures& features,
     bool user_gesture,
     bool opener_suppressed,
-    content::ResourceContext* context,
     bool* no_javascript_access) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(opener);
 
+  content::WebContents* web_contents =
+      content::WebContents::FromRenderFrameHost(opener);
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents->GetBrowserContext());
+  DCHECK(profile);
   *no_javascript_access = false;
 
   // If the opener is trying to create a background window but doesn't have
   // the appropriate permission, fail the attempt.
   if (container_type == content::mojom::WindowContainerType::BACKGROUND) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-    ProfileIOData* io_data = ProfileIOData::FromResourceContext(context);
-    InfoMap* map = io_data->GetExtensionInfoMap();
-    if (!map->SecurityOriginHasAPIPermission(source_origin,
-                                             opener_render_process_id,
-                                             APIPermission::kBackground)) {
+    auto* process_map = extensions::ProcessMap::Get(profile);
+    auto* registry = extensions::ExtensionRegistry::Get(profile);
+    if (!SecurityOriginHasExtensionBackgroundPermission(
+            process_map, registry, source_origin,
+            opener->GetProcess()->GetID())) {
       return false;
     }
 
@@ -2493,7 +2482,7 @@ bool ChromeContentBrowserClient::CanCreateWindow(
     // already. We must use the full URL to find hosted apps, though, and not
     // just the origin.
     const Extension* extension =
-        map->extensions().GetExtensionOrAppByURL(opener_url);
+        registry->enabled_extensions().GetExtensionOrAppByURL(opener_url);
     if (extension && !extensions::BackgroundInfo::AllowJSAccess(extension))
       *no_javascript_access = true;
 #endif
@@ -2503,18 +2492,16 @@ bool ChromeContentBrowserClient::CanCreateWindow(
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   if (extensions::WebViewRendererState::GetInstance()->IsGuest(
-          opener_render_process_id)) {
+          opener->GetProcess()->GetID())) {
     return true;
   }
 
   if (target_url.SchemeIs(extensions::kExtensionScheme)) {
-    // Intentionally duplicating |io_data| and |map| code from above because we
-    // want to reduce calls to retrieve them as this function is a SYNC IPC
-    // handler.
-    ProfileIOData* io_data = ProfileIOData::FromResourceContext(context);
-    InfoMap* map = io_data->GetExtensionInfoMap();
+    // Intentionally duplicating |registry| code from above because we want to
+    // reduce calls to retrieve them as this function is a SYNC IPC handler.
+    auto* registry = extensions::ExtensionRegistry::Get(profile);
     const Extension* extension =
-        map->extensions().GetExtensionOrAppByURL(target_url);
+        registry->enabled_extensions().GetExtensionOrAppByURL(target_url);
     if (extension && extension->is_platform_app()) {
       UMA_HISTOGRAM_ENUMERATION(
           "Extensions.AppLoadedInTab",
@@ -2528,47 +2515,51 @@ bool ChromeContentBrowserClient::CanCreateWindow(
 #endif
 
   HostContentSettingsMap* content_settings =
-      ProfileIOData::FromResourceContext(context)->GetHostContentSettingsMap();
+      HostContentSettingsMapFactory::GetForProfile(profile);
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   if (FlashDownloadInterception::ShouldStopFlashDownloadAction(
           content_settings, opener_top_level_frame_url, target_url,
           user_gesture)) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&HandleFlashDownloadActionOnUIThread,
-                       opener_render_process_id, opener_render_frame_id,
-                       opener_top_level_frame_url));
+    FlashDownloadInterception::InterceptFlashDownloadNavigation(
+        web_contents, opener_top_level_frame_url);
     return false;
   }
 #endif
 
-  BlockedWindowParams blocked_params(
-      target_url, referrer, frame_name, disposition, features, user_gesture,
-      opener_suppressed, opener_render_process_id, opener_render_frame_id);
-
-  if (!user_gesture &&
+  auto* driver_factory = subresource_filter::
+      ContentSubresourceFilterDriverFactory::FromWebContents(web_contents);
+  const bool popup_block_candidate =
+      !user_gesture ||
+      (driver_factory &&
+       driver_factory->throttle_manager()->ShouldDisallowNewWindow());
+  if (popup_block_candidate &&
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisablePopupBlocking)) {
-    if (content_settings->GetContentSetting(opener_top_level_frame_url,
-                                            opener_top_level_frame_url,
-                                            CONTENT_SETTINGS_TYPE_POPUPS,
-                                            std::string()) !=
-        CONTENT_SETTING_ALLOW) {
-      BrowserThread::PostTask(
-          BrowserThread::UI, FROM_HERE,
-          base::BindOnce(&HandleBlockedPopupOnUIThread, blocked_params));
+    if (content_settings->GetContentSetting(
+            opener_top_level_frame_url, opener_top_level_frame_url,
+            CONTENT_SETTINGS_TYPE_POPUPS,
+            std::string()) != CONTENT_SETTING_ALLOW) {
+      BlockedWindowParams blocked_params(target_url, referrer, frame_name,
+                                         disposition, features, user_gesture,
+                                         opener_suppressed);
+      HandleBlockedPopupOnUIThread(blocked_params, opener, web_contents);
       return false;
     }
   }
 
 #if defined(OS_ANDROID)
-  if (SingleTabModeTabHelper::IsRegistered(opener_render_process_id,
-                                           opener_render_frame_id)) {
-    BrowserThread::PostTask(BrowserThread::UI,
-                            FROM_HERE,
-                            base::Bind(&HandleSingleTabModeBlockOnUIThread,
-                                       blocked_params));
+  auto* single_tab_mode_helper =
+      SingleTabModeTabHelper::FromWebContents(web_contents);
+  if (single_tab_mode_helper->block_all_new_windows()) {
+    if (TabAndroid* tab_android = TabAndroid::FromWebContents(web_contents)) {
+      BlockedWindowParams blocked_params(target_url, referrer, frame_name,
+                                         disposition, features, user_gesture,
+                                         opener_suppressed);
+      chrome::NavigateParams nav_params =
+          blocked_params.CreateNavigateParams(web_contents);
+      tab_android->HandlePopupNavigation(&nav_params);
+    }
     return false;
   }
 #endif
@@ -2778,13 +2769,12 @@ void ChromeContentBrowserClient::BrowserURLHandlerCreated(
 }
 
 void ChromeContentBrowserClient::ClearCache(RenderFrameHost* rfh) {
-  Profile* profile = Profile::FromBrowserContext(
-      rfh->GetSiteInstance()->GetProcess()->GetBrowserContext());
-  BrowsingDataRemover* remover =
-      BrowsingDataRemoverFactory::GetForBrowserContext(profile);
+  content::BrowsingDataRemover* remover =
+      content::BrowserContext::GetBrowsingDataRemover(
+          rfh->GetSiteInstance()->GetProcess()->GetBrowserContext());
   remover->Remove(base::Time(), base::Time::Max(),
-                  BrowsingDataRemover::DATA_TYPE_CACHE,
-                  BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
+                  content::BrowsingDataRemover::DATA_TYPE_CACHE,
+                  content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
 }
 
 void ChromeContentBrowserClient::ClearSiteData(
@@ -2794,8 +2784,8 @@ void ChromeContentBrowserClient::ClearSiteData(
     bool remove_storage,
     bool remove_cache,
     const base::Closure& callback) {
-  BrowsingDataRemover* remover =
-      BrowsingDataRemoverFactory::GetForBrowserContext(browser_context);
+  content::BrowsingDataRemover* remover =
+      content::BrowserContext::GetBrowsingDataRemover(browser_context);
 
   // ClearSiteDataObserver deletes itself when callbacks from both removal
   // tasks are received.
@@ -2822,8 +2812,8 @@ void ChromeContentBrowserClient::ClearSiteData(
 
     remover->RemoveWithFilterAndReply(
         base::Time(), base::Time::Max(),
-        BrowsingDataRemover::DATA_TYPE_COOKIES |
-            BrowsingDataRemover::DATA_TYPE_CHANNEL_IDS |
+        content::BrowsingDataRemover::DATA_TYPE_COOKIES |
+            content::BrowsingDataRemover::DATA_TYPE_CHANNEL_IDS |
             ChromeBrowsingDataRemoverDelegate::DATA_TYPE_PLUGIN_DATA,
         ChromeBrowsingDataRemoverDelegate::ALL_ORIGIN_TYPES,
         std::move(domain_filter_builder), observer);
@@ -2835,9 +2825,9 @@ void ChromeContentBrowserClient::ClearSiteData(
   // Delete origin-scoped data.
   int remove_mask = 0;
   if (remove_storage)
-    remove_mask |= BrowsingDataRemover::DATA_TYPE_DOM_STORAGE;
+    remove_mask |= content::BrowsingDataRemover::DATA_TYPE_DOM_STORAGE;
   if (remove_cache)
-    remove_mask |= BrowsingDataRemover::DATA_TYPE_CACHE;
+    remove_mask |= content::BrowsingDataRemover::DATA_TYPE_CACHE;
 
   if (remove_mask) {
     std::unique_ptr<BrowsingDataFilterBuilder> origin_filter_builder(

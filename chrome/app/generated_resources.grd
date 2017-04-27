@@ -6854,12 +6854,6 @@ I don't think this site should be blocked!
         <message name="IDS_PRINT_PREVIEW_OFFLINE" desc="Shown when printer is currently offline.">
           Currently offline
         </message>
-        <message name="IDS_PRINT_PREVIEW_FEDEX_TOS" desc="Terms-of-service for using the FedEx Office printer.">
-          By printing to FedEx Office, you accept their <ph name="START_LINK">$1</ph>terms of use<ph name="END_LINK">$2</ph>.
-        </message>
-        <message name="IDS_PRINT_PREVIEW_TOS_CHECKBOX_LABEL" desc="Label of the terms-of-service agreement checkbox.">
-          I agree
-        </message>
         <message name="IDS_PRINT_PREVIEW_NO_DESTS_PROMO_TITLE" desc="Title of promotion shown when user has no Google Cloud Print printers.">
           Add Printers
         </message>
@@ -10457,6 +10451,9 @@ Tell us what happened exactly before you got the profile error message:
       <message name="IDS_MANAGE_PASSWORDS_AUTO_SIGNIN_TITLE" desc="The title of the auto-signin toast.">
         Signing in as <ph name="username">$1<ex>chef@google.com</ex></ph>
       </message>
+      <message name="IDS_MANAGE_PASSWORDS_AUTO_SIGNIN_TITLE_MD" desc="The title of the auto-signin toast in Material Design mode.">
+        Signing in as
+      </message>
       <message name="IDS_AUTO_SIGNIN_FIRST_RUN_TITLE_MANY_DEVICES" desc="The title of the dialog during the autosign-in first run experience for the Chrome syncing users.">
         Sign in easily across devices
       </message>
@@ -12246,23 +12243,6 @@ read aloud to screenreader users to announce that a completion is available.">
         New Incognito Tab
       </message>
     </if>
-
-    <!-- Payment Request -->
-    <message name="IDS_PAYMENT_REQUEST_PAYMENT_SHEET_TITLE" desc=" The title on top of the desktop Payment Request Payment Sheet screen">
-      Your payment
-    </message>
-
-    <message name="IDS_PAYMENT_REQUEST_ORDER_SUMMARY_TITLE" desc="The title on top of the desktop Payment Request Order Summary screen">
-      Order summary
-    </message>
-
-    <message name="IDS_PAYMENT_REQUEST_CREDIT_CARD_EDITOR_ADD_TITLE" desc="The title on the top of the dialog for adding a new credit card.">
-      Add a card
-    </message>
-
-    <message name="IDS_PAYMENT_REQUEST_ADDRESS_EDITOR_ADD_TITLE" desc="The title on the top of the dialog for adding a new address.">
-      Add address
-    </message>
 
     <!-- Safe Browsing Subresource Filter UI strings. -->
     <if expr="use_titlecase">

@@ -67,7 +67,7 @@
 #include "web/CompositorMutatorImpl.h"
 #include "web/CompositorWorkerProxyClientImpl.h"
 #include "web/ContextMenuAllowedScope.h"
-#include "web/InspectorOverlay.h"
+#include "web/InspectorOverlayAgent.h"
 #include "web/PageOverlay.h"
 #include "web/WebDevToolsAgentImpl.h"
 #include "web/WebInputEventConversion.h"
@@ -251,7 +251,7 @@ void WebFrameWidgetImpl::UpdateAllLifecyclePhases() {
   if (!local_root_)
     return;
 
-  if (InspectorOverlay* overlay = GetInspectorOverlay()) {
+  if (InspectorOverlayAgent* overlay = GetInspectorOverlay()) {
     overlay->UpdateAllLifecyclePhases();
     // TODO(chrishtr): integrate paint into the overlay's lifecycle.
     if (overlay->GetPageOverlay() &&
@@ -363,7 +363,7 @@ WebInputEventResult WebFrameWidgetImpl::HandleInputEvent(
   if (!GetPage())
     return WebInputEventResult::kNotHandled;
 
-  if (InspectorOverlay* overlay = GetInspectorOverlay()) {
+  if (InspectorOverlayAgent* overlay = GetInspectorOverlay()) {
     if (overlay->HandleInputEvent(input_event))
       return WebInputEventResult::kHandledSuppressed;
   }
@@ -1074,6 +1074,14 @@ void WebFrameWidgetImpl::InitializeLayerTreeView() {
   if (layer_tree_view_) {
     GetPage()->LayerTreeViewInitialized(*layer_tree_view_,
                                         local_root_->GetFrame()->View());
+
+    // TODO(kenrb): Currently GPU rasterization is always enabled for OOPIFs.
+    // This is okay because it is only necessarily to set the trigger to false
+    // for certain cases that affect the top-level frame, but it would be better
+    // to be consistent with the top-level frame. Ideally the logic should
+    // be moved from WebViewImpl into WebFrameWidget and used for all local
+    // frame roots. https://crbug.com/712794
+    layer_tree_view_->HeuristicsForGpuRasterizationUpdated(true);
   }
 
   // FIXME: only unittests, click to play, Android priting, and printing (for
@@ -1181,11 +1189,11 @@ HitTestResult WebFrameWidgetImpl::HitTestResultForRootFramePos(
   return result;
 }
 
-InspectorOverlay* WebFrameWidgetImpl::GetInspectorOverlay() {
+InspectorOverlayAgent* WebFrameWidgetImpl::GetInspectorOverlay() {
   if (!local_root_)
     return nullptr;
   if (WebDevToolsAgentImpl* devtools = local_root_->DevToolsAgentImpl())
-    return devtools->Overlay();
+    return devtools->OverlayAgent();
   return nullptr;
 }
 

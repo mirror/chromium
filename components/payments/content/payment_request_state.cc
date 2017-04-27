@@ -105,6 +105,20 @@ void PaymentRequestState::AddAutofillPaymentInstrument(
     SetSelectedInstrument(available_instruments_.back().get());
 }
 
+void PaymentRequestState::AddAutofillShippingProfile(
+    bool selected,
+    const autofill::AutofillProfile& profile) {
+  profile_cache_.push_back(
+      base::MakeUnique<autofill::AutofillProfile>(profile));
+  // TODO(tmartino): Implement deduplication rules specific to shipping
+  // profiles.
+  autofill::AutofillProfile* new_cached_profile = profile_cache_.back().get();
+  shipping_profiles_.push_back(new_cached_profile);
+
+  if (selected)
+    SetSelectedShippingProfile(new_cached_profile);
+}
+
 void PaymentRequestState::SetSelectedShippingOption(
     const std::string& shipping_option_id) {
   spec_->StartWaitingForUpdateWith(
@@ -144,14 +158,8 @@ autofill::PersonalDataManager* PaymentRequestState::GetPersonalDataManager() {
   return personal_data_manager_;
 }
 
-std::unique_ptr<const ::i18n::addressinput::Source>
-PaymentRequestState::GetAddressInputSource() {
-  return payment_request_delegate_->GetAddressInputSource();
-}
-
-std::unique_ptr<::i18n::addressinput::Storage>
-PaymentRequestState::GetAddressInputStorage() {
-  return payment_request_delegate_->GetAddressInputStorage();
+autofill::RegionDataLoader* PaymentRequestState::GetRegionDataLoader() {
+  return payment_request_delegate_->GetRegionDataLoader();
 }
 
 void PaymentRequestState::PopulateProfileCache() {

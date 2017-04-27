@@ -7,7 +7,7 @@
 #include <memory>
 
 #include "bindings/core/v8/ScriptState.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8BindingMacros.h"
 #include "bindings/core/v8/V8GCController.h"
 #include "core/dom/Document.h"
@@ -58,14 +58,13 @@ class ReadableStreamBytesConsumerTest : public ::testing::Test {
     v8::Local<v8::Script> script;
     v8::MicrotasksScope microtasks(GetIsolate(),
                                    v8::MicrotasksScope::kDoNotRunMicrotasks);
-    if (!V8Call(v8::String::NewFromUtf8(GetIsolate(), s,
-                                        v8::NewStringType::kNormal),
-                source)) {
+    if (!v8::String::NewFromUtf8(GetIsolate(), s, v8::NewStringType::kNormal)
+             .ToLocal(&source)) {
       ADD_FAILURE();
       return v8::MaybeLocal<v8::Value>();
     }
-    if (!V8Call(v8::Script::Compile(GetScriptState()->GetContext(), source),
-                script)) {
+    if (!v8::Script::Compile(GetScriptState()->GetContext(), source)
+             .ToLocal(&script)) {
       ADD_FAILURE() << "Compilation fails";
       return v8::MaybeLocal<v8::Value>();
     }

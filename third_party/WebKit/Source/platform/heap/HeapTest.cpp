@@ -1538,7 +1538,7 @@ class PreFinalizerBackingShrinkForbidden
     // Check that map_ hasn't shrunk.
     EXPECT_LT(31ul, map_.Capacity());
     // Just releasing the backing is allowed.
-    map_.Clear();
+    map_.clear();
     EXPECT_EQ(0ul, map_.Capacity());
   }
 
@@ -2179,7 +2179,7 @@ TEST(HeapTest, HashMapOfMembers) {
 
     Persistent<HeapObjectIdentityMap> map = new HeapObjectIdentityMap();
 
-    map->Clear();
+    map->clear();
     size_t after_set_was_created = heap.ObjectPayloadSizeForTesting();
     EXPECT_TRUE(after_set_was_created > initial_object_payload_size);
 
@@ -2430,7 +2430,7 @@ TEST(HeapTest, HeapVectorWithInlineCapacity) {
 
     vector1.push_back(one);
     vector2.push_back(two);
-    vector1.Swap(vector2);
+    vector1.swap(vector2);
     ConservativelyCollectGarbage();
     EXPECT_TRUE(vector1.Contains(two));
     EXPECT_TRUE(vector2.Contains(one));
@@ -2445,7 +2445,7 @@ TEST(HeapTest, HeapVectorWithInlineCapacity) {
     vector2.push_back(four);
     vector2.push_back(five);
     vector2.push_back(six);
-    vector1.Swap(vector2);
+    vector1.swap(vector2);
     ConservativelyCollectGarbage();
     EXPECT_TRUE(vector1.Contains(three));
     EXPECT_TRUE(vector1.Contains(four));
@@ -2660,19 +2660,19 @@ TEST(HeapTest, HeapCollectionTypes) {
       EXPECT_EQ(3u, deque_uw2->size());
 
       MemberVector& cvec = container->vector;
-      cvec.Swap(*vector.Get());
-      vector2->Swap(cvec);
-      vector->Swap(cvec);
+      cvec.swap(*vector.Get());
+      vector2->swap(cvec);
+      vector->swap(cvec);
 
       VectorWU& cvec_wu = container->vector_wu;
-      cvec_wu.Swap(*vector_wu.Get());
-      vector_wu2->Swap(cvec_wu);
-      vector_wu->Swap(cvec_wu);
+      cvec_wu.swap(*vector_wu.Get());
+      vector_wu2->swap(cvec_wu);
+      vector_wu->swap(cvec_wu);
 
       VectorUW& cvec_uw = container->vector_uw;
-      cvec_uw.Swap(*vector_uw.Get());
-      vector_uw2->Swap(cvec_uw);
-      vector_uw->Swap(cvec_uw);
+      cvec_uw.swap(*vector_uw.Get());
+      vector_uw2->swap(cvec_uw);
+      vector_uw->swap(cvec_uw);
 
       MemberDeque& c_deque = container->deque;
       c_deque.Swap(*deque.Get());
@@ -2859,7 +2859,7 @@ TEST(HeapTest, PersistentVector) {
 
     vector1.push_back(one);
     vector2.push_back(two);
-    vector1.Swap(vector2);
+    vector1.swap(vector2);
     ConservativelyCollectGarbage();
     EXPECT_TRUE(vector1.Contains(two));
     EXPECT_TRUE(vector2.Contains(one));
@@ -2874,7 +2874,7 @@ TEST(HeapTest, PersistentVector) {
     vector2.push_back(four);
     vector2.push_back(five);
     vector2.push_back(six);
-    vector1.Swap(vector2);
+    vector1.swap(vector2);
     ConservativelyCollectGarbage();
     EXPECT_TRUE(vector1.Contains(three));
     EXPECT_TRUE(vector1.Contains(four));
@@ -2925,7 +2925,7 @@ TEST(HeapTest, CrossThreadPersistentVector) {
 
     vector1.push_back(one);
     vector2.push_back(two);
-    vector1.Swap(vector2);
+    vector1.swap(vector2);
     ConservativelyCollectGarbage();
     EXPECT_TRUE(vector1.Contains(two));
     EXPECT_TRUE(vector2.Contains(one));
@@ -2940,7 +2940,7 @@ TEST(HeapTest, CrossThreadPersistentVector) {
     vector2.push_back(four);
     vector2.push_back(five);
     vector2.push_back(six);
-    vector1.Swap(vector2);
+    vector1.swap(vector2);
     ConservativelyCollectGarbage();
     EXPECT_TRUE(vector1.Contains(three));
     EXPECT_TRUE(vector1.Contains(four));
@@ -2981,7 +2981,7 @@ TEST(HeapTest, PersistentSet) {
     EXPECT_TRUE(set.Contains(three));
     EXPECT_TRUE(set.Contains(four));
 
-    set.Clear();
+    set.clear();
     ConservativelyCollectGarbage();
     EXPECT_FALSE(set.Contains(one));
     EXPECT_FALSE(set.Contains(two));
@@ -3032,7 +3032,7 @@ TEST(HeapTest, CrossThreadPersistentSet) {
     EXPECT_TRUE(set.Contains(three));
     EXPECT_TRUE(set.Contains(four));
 
-    set.Clear();
+    set.clear();
     ConservativelyCollectGarbage();
     EXPECT_FALSE(set.Contains(one));
     EXPECT_FALSE(set.Contains(two));
@@ -3370,8 +3370,8 @@ static void HeapMapDestructorHelper(bool clear_maps) {
 
   luck.Clear();
   if (clear_maps) {
-    map->Clear();      // Clear map.
-    ref_map->Clear();  // Clear map.
+    map->clear();      // Clear map.
+    ref_map->clear();  // Clear map.
   } else {
     map.Clear();      // Clear Persistent handle, not map.
     ref_map.Clear();  // Clear Persistent handle, not map.
@@ -3615,13 +3615,13 @@ TEST(HeapTest, HeapWeakCollectionTypes) {
         keep_numbers_alive[i] = nullptr;
 
       if (collection_number != kWeakStrongIndex)
-        weak_strong->Clear();
+        weak_strong->clear();
       if (collection_number != kStrongWeakIndex)
-        strong_weak->Clear();
+        strong_weak->clear();
       if (collection_number != kWeakWeakIndex)
-        weak_weak->Clear();
+        weak_weak->clear();
       if (collection_number != kWeakSetIndex)
-        weak_set->Clear();
+        weak_set->clear();
       if (collection_number != kWeakOrderedSetIndex)
         weak_ordered_set->clear();
 
@@ -4049,7 +4049,7 @@ TEST(HeapTest, PersistentHeapCollectionTypes) {
     p_deque.push_back(two);
 
     Vec* vec = new Vec();
-    vec->Swap(p_vec);
+    vec->swap(p_vec);
 
     p_vec.push_back(two);
     p_vec.push_back(three);
@@ -4116,10 +4116,10 @@ TEST(HeapTest, CollectionNesting) {
   map->insert(key, IntVector());
   map2->insert(key, IntDeque());
 
-  HeapHashMap<void*, IntVector>::iterator it = map->Find(key);
+  HeapHashMap<void*, IntVector>::iterator it = map->find(key);
   EXPECT_EQ(0u, map->at(key).size());
 
-  HeapHashMap<void*, IntDeque>::iterator it2 = map2->Find(key);
+  HeapHashMap<void*, IntDeque>::iterator it2 = map2->find(key);
   EXPECT_EQ(0u, map2->at(key).size());
 
   it->value.push_back(IntWrapper::Create(42));
@@ -4175,7 +4175,7 @@ TEST(HeapTest, CollectionNesting2) {
 
   map->insert(key, IntSet());
 
-  HeapHashMap<void*, IntSet>::iterator it = map->Find(key);
+  HeapHashMap<void*, IntSet>::iterator it = map->find(key);
   EXPECT_EQ(0u, map->at(key).size());
 
   it->value.insert(IntWrapper::Create(42));
@@ -4661,7 +4661,7 @@ TEST(HeapTest, DestructorsCalled) {
   SimpleClassWithDestructor* has_destructor = new SimpleClassWithDestructor();
   map.insert(IntWrapper::Create(1), WTF::WrapUnique(has_destructor));
   SimpleClassWithDestructor::was_destructed_ = false;
-  map.Clear();
+  map.clear();
   EXPECT_TRUE(SimpleClassWithDestructor::was_destructed_);
 }
 
@@ -5187,7 +5187,7 @@ TEST(HeapTest, EphemeronsInEphemerons) {
       } else {
         EXPECT_EQ(0u, outer->size());
       }
-      outer->Clear();
+      outer->clear();
       Persistent<IntWrapper> deep = IntWrapper::Create(42);
       Persistent<IntWrapper> home = IntWrapper::Create(103);
       Persistent<IntWrapper> composite = IntWrapper::Create(91);
@@ -6699,7 +6699,7 @@ TEST(HeapTest, HeapHashMapCallsDestructor) {
   }
 
   EXPECT_FALSE(string.Impl()->HasOneRef());
-  map.Clear();
+  map.clear();
 
   EXPECT_TRUE(string.Impl()->HasOneRef());
 }

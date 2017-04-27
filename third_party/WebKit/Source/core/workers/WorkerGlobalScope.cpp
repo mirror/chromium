@@ -40,6 +40,7 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/inspector/WorkerThreadDebugger.h"
+#include "core/loader/WorkerFetchContext.h"
 #include "core/loader/WorkerThreadableLoader.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/WorkerClients.h"
@@ -51,14 +52,15 @@
 #include "core/workers/WorkerThread.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/InstanceCounters.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
+#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebScheduler.h"
 #include "public/platform/WebURLRequest.h"
 
 namespace blink {
@@ -97,7 +99,7 @@ void WorkerGlobalScope::Dispose() {
   while (!listeners.IsEmpty()) {
     for (const auto& listener : listeners)
       listener->ClearListenerObject();
-    listeners.Clear();
+    listeners.clear();
     // Pick up any additions made while iterating.
     listeners.swap(event_listeners_);
   }
@@ -141,7 +143,7 @@ void WorkerGlobalScope::RegisterEventListener(
 
 void WorkerGlobalScope::DeregisterEventListener(
     V8AbstractEventListener* event_listener) {
-  auto it = event_listeners_.Find(event_listener);
+  auto it = event_listeners_.find(event_listener);
   CHECK(it != event_listeners_.end() || closing_);
   event_listeners_.erase(it);
 }
@@ -300,6 +302,14 @@ ExecutionContext* WorkerGlobalScope::GetExecutionContext() const {
   return const_cast<WorkerGlobalScope*>(this);
 }
 
+WorkerFetchContext* WorkerGlobalScope::GetFetchContext() {
+  DCHECK(RuntimeEnabledFeatures::offMainThreadFetchEnabled());
+  if (fetch_context_)
+    return fetch_context_;
+  fetch_context_ = WorkerFetchContext::Create(*this);
+  return fetch_context_;
+}
+
 WorkerGlobalScope::WorkerGlobalScope(
     const KURL& url,
     const String& user_agent,
@@ -375,6 +385,7 @@ DEFINE_TRACE(WorkerGlobalScope) {
   visitor->Trace(timers_);
   visitor->Trace(event_listeners_);
   visitor->Trace(pending_error_events_);
+  visitor->Trace(fetch_context_);
   ExecutionContext::Trace(visitor);
   EventTargetWithInlineData::Trace(visitor);
   SecurityContext::Trace(visitor);

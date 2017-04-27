@@ -205,7 +205,9 @@ String DOMSelection::type() const {
   // http://msdn.microsoft.com/en-us/library/ms534692(VS.85).aspx
   if (rangeCount() == 0)
     return "None";
-  if (isCollapsed())
+  // Do not use isCollapsed() here. We'd like to return "Range" for
+  // range-selection in text control elements.
+  if (GetFrame()->Selection().GetSelectionInDOMTree().IsCaret())
     return "Caret";
   return "Range";
 }
@@ -441,6 +443,10 @@ void DOMSelection::modify(const String& alter_string,
     granularity = kDocumentBoundary;
   else
     return;
+
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   Element* focused_element = GetFrame()->GetDocument()->FocusedElement();
   GetFrame()->Selection().Modify(alter, direction, granularity);

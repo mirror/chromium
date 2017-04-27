@@ -383,8 +383,8 @@ by a child template that "extends" this file.
         </activity>
         <activity android:name="org.chromium.chrome.browser.firstrun.FirstRunActivity"
             android:theme="@style/DialogWhenLarge"
-            android:label="@string/fre_label"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
             android:autoRemoveFromRecents="true"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize">
@@ -672,7 +672,6 @@ by a child template that "extends" this file.
         <receiver android:name="org.chromium.chrome.browser.bookmarkswidget.BookmarkWidgetProxy"
             android:exported="false" />
 
-        {% if channel in ['canary', 'default'] %}
         <!-- Search widget -->
         <receiver
                 android:name="org.chromium.chrome.browser.searchwidget.SearchWidgetProvider"
@@ -706,7 +705,6 @@ by a child template that "extends" this file.
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
             android:hardwareAccelerated="false" />
-        {% endif %}
 
         <!-- Receiver for GCM messages. -->
         <receiver android:name="com.google.android.gms.gcm.GcmReceiver"

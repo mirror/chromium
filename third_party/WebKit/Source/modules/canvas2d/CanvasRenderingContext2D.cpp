@@ -115,7 +115,7 @@ CanvasRenderingContext2D::CanvasRenderingContext2D(
     HTMLCanvasElement* canvas,
     const CanvasContextCreationAttributes& attrs,
     Document& document)
-    : CanvasRenderingContext(canvas, nullptr, attrs),
+    : CanvasRenderingContext(canvas, attrs),
       context_lost_mode_(kNotLostContext),
       context_restorable_(true),
       try_restore_context_attempt_count_(0),
@@ -365,11 +365,11 @@ void CanvasRenderingContext2D::DidDraw(const SkIRect& dirty_rect) {
 }
 
 bool CanvasRenderingContext2D::StateHasFilter() {
-  return GetState().HasFilter(canvas(), canvas()->size(), this);
+  return GetState().HasFilter(canvas(), canvas()->Size(), this);
 }
 
 sk_sp<SkImageFilter> CanvasRenderingContext2D::StateGetFilter() {
-  return GetState().GetFilter(canvas(), canvas()->size(), this);
+  return GetState().GetFilter(canvas(), canvas()->Size(), this);
 }
 
 void CanvasRenderingContext2D::SnapshotStateForFilter() {
@@ -464,7 +464,7 @@ void CanvasRenderingContext2D::setFont(const String& new_font) {
   const ComputedStyle* computed_style = canvas()->EnsureComputedStyle();
   if (computed_style) {
     HashMap<String, Font>::iterator i =
-        fonts_resolved_using_current_style_.Find(new_font);
+        fonts_resolved_using_current_style_.find(new_font);
     if (i != fonts_resolved_using_current_style_.end()) {
       DCHECK(font_lru_list_.Contains(new_font));
       font_lru_list_.erase(new_font);
@@ -532,7 +532,7 @@ void CanvasRenderingContext2D::PruneLocalFontCache(size_t target_size) {
   if (target_size == 0) {
     // Short cut: LRU does not matter when evicting everything
     font_lru_list_.clear();
-    fonts_resolved_using_current_style_.Clear();
+    fonts_resolved_using_current_style_.clear();
     return;
   }
   while (font_lru_list_.size() > target_size) {

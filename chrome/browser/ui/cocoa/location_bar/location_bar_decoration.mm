@@ -38,6 +38,7 @@ const CGFloat kBackgroundFrameYInset = 2.0;
 // VoiceOver.
 @interface DecorationAccessibilityView : NSButton {
   LocationBarDecoration* owner_;  // weak
+  NSRect apparentFrame_;
 }
 
 // NSView:
@@ -49,6 +50,8 @@ const CGFloat kBackgroundFrameYInset = 2.0;
 
 // This method is called when this DecorationAccessibilityView is activated.
 - (void)actionDidHappen;
+
+- (void)setApparentFrame:(NSRect)r;
 @end
 
 @implementation DecorationAccessibilityView
@@ -60,6 +63,7 @@ const CGFloat kBackgroundFrameYInset = 2.0;
     self->owner_ = owner;
     [self setAction:@selector(actionDidHappen)];
     [self setTarget:self];
+    self->apparentFrame_ = NSZeroRect;
   }
   return self;
 }
@@ -67,11 +71,7 @@ const CGFloat kBackgroundFrameYInset = 2.0;
 - (BOOL)acceptsFirstResponder {
   // This NSView is only focusable if the owning LocationBarDecoration can
   // accept mouse presses.
-  // TODO(ellyjones): Once the key view loop order in ToolbarController is fixed
-  // up properly (which will require some redesign of
-  // LocationBarViewMac::GetDecorationAccessibilityViews()), this method should
-  // honor |owner_->AcceptsMousePress()|. See https://crbug.com/623883.
-  return NO;
+  return owner_->AcceptsMousePress() ? YES : NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -88,7 +88,23 @@ const CGFloat kBackgroundFrameYInset = 2.0;
 }
 
 - (NSString*)accessibilityLabel {
-  return owner_->GetToolTip();
+  NSString* label = owner_->GetAccessibilityLabel();
+  return label ? label : owner_->GetToolTip();
+}
+
+- (void)setApparentFrame:(NSRect)r {
+  apparentFrame_ = r;
+}
+
+// The focus ring (and all other visuals) should be positioned using the
+// apparent frame, not the real frame, because of the hack in
+// LocationBarViewMac::UpdateAccessibilityView().
+- (void)drawFocusRingMask {
+  NSRectFill([self focusRingMaskBounds]);
+}
+
+- (NSRect)focusRingMaskBounds {
+  return [[self superview] convertRect:apparentFrame_ toView:self];
 }
 
 @end
@@ -162,6 +178,12 @@ NSRect LocationBarDecoration::GetBackgroundFrame(NSRect frame) {
   return NSInsetRect(frame, 0.0, kBackgroundFrameYInset);
 }
 
+void LocationBarDecoration::UpdateAccessibilityView(NSRect apparent_frame) {
+  auto v = static_cast<DecorationAccessibilityView*>(accessibility_view_);
+  [accessibility_view_ setEnabled:AcceptsMousePress()];
+  [v setApparentFrame:apparent_frame];
+}
+
 void LocationBarDecoration::DrawInFrame(NSRect frame, NSView* control_view) {
   NOTREACHED();
 }
@@ -194,6 +216,10 @@ void LocationBarDecoration::DrawWithBackgroundInFrame(NSRect frame,
 }
 
 NSString* LocationBarDecoration::GetToolTip() {
+  return nil;
+}
+
+NSString* LocationBarDecoration::GetAccessibilityLabel() {
   return nil;
 }
 

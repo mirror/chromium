@@ -41,6 +41,7 @@ class TabContentManager;
 }
 
 namespace content {
+class DevToolsAgentHost;
 class WebContents;
 }
 
@@ -115,8 +116,6 @@ class TabAndroid : public CoreTabHelperDelegate,
   void HandlePopupNavigation(chrome::NavigateParams* params);
 
   bool HasPrerenderedUrl(GURL gurl);
-
-  void ShowOfflinePages();
 
   // Overridden from CoreTabHelperDelegate:
   void SwapTabContents(content::WebContents* old_contents,
@@ -211,16 +210,6 @@ class TabAndroid : public CoreTabHelperDelegate,
                       const base::android::JavaParamRef<jobject>& obj,
                       jboolean only_editable);
 
-  jboolean HasOfflineCopy(JNIEnv* env,
-                          const base::android::JavaParamRef<jobject>& obj);
-
-  jboolean IsOfflinePage(JNIEnv* env,
-                         const base::android::JavaParamRef<jobject>& obj);
-
-  base::android::ScopedJavaLocalRef<jobject> GetOfflinePage(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
-
   void SetInterceptNavigationDelegate(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
@@ -252,6 +241,10 @@ class TabAndroid : public CoreTabHelperDelegate,
 
   bool ShouldEnableEmbeddedMediaExperience() const;
 
+  scoped_refptr<content::DevToolsAgentHost> GetDevToolsAgentHost();
+
+  void SetDevToolsAgentHost(scoped_refptr<content::DevToolsAgentHost> host);
+
   // Register the Tab's native methods through JNI.
   static bool RegisterTabAndroid(JNIEnv* env);
 
@@ -274,7 +267,7 @@ class TabAndroid : public CoreTabHelperDelegate,
   std::unique_ptr<content::WebContents> web_contents_;
   std::unique_ptr<android::TabWebContentsDelegateAndroid>
       web_contents_delegate_;
-
+  scoped_refptr<content::DevToolsAgentHost> devtools_host_;
   std::unique_ptr<browser_sync::SyncedTabDelegateAndroid> synced_tab_delegate_;
 
   std::string webapp_manifest_scope_;

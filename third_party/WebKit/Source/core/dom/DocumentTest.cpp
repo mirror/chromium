@@ -479,7 +479,7 @@ TEST_F(DocumentTest, StyleVersion) {
       "</style>"
       "<div id='x'><span class='c'></span></div>");
 
-  Element* element = GetDocument().GetElementById("x");
+  Element* element = GetDocument().getElementById("x");
   EXPECT_TRUE(element);
 
   uint64_t previous_style_version = GetDocument().StyleVersion();
@@ -727,10 +727,10 @@ TEST_F(DocumentTest, ValidationMessageCleanup) {
   MockValidationMessageClient* mock_client = new MockValidationMessageClient();
   GetDocument().GetSettings()->SetScriptEnabled(true);
   GetPage().SetValidationMessageClient(mock_client);
-  // ImplicitOpen()-CancelParsing() makes Document.loadEventFinished()
+  // implicitOpen()-implicitClose() makes Document.loadEventFinished()
   // true. It's necessary to kick unload process.
   GetDocument().ImplicitOpen(kForceSynchronousParsing);
-  GetDocument().CancelParsing();
+  GetDocument().ImplicitClose();
   GetDocument().AppendChild(GetDocument().createElement("html"));
   SetHtmlInnerHTML("<body><input required></body>");
   Element* script = GetDocument().createElement("script");

@@ -16,6 +16,8 @@
 #include <stdio.h>
 #endif
 
+static constexpr int kMaxNumberOfSlowPathsBeforeVeto = 5;
+
 namespace blink {
 
 void PaintController::SetTracksRasterInvalidations(bool value) {
@@ -133,7 +135,7 @@ bool PaintController::UseCachedSubsequenceIfPossible(
 
 PaintController::SubsequenceMarkers* PaintController::GetSubsequenceMarkers(
     const DisplayItemClient& client) {
-  auto result = current_cached_subsequences_.Find(&client);
+  auto result = current_cached_subsequences_.find(&client);
   if (result == current_cached_subsequences_.end())
     return nullptr;
   return &result->value;
@@ -159,7 +161,7 @@ void PaintController::AddCachedSubsequence(const DisplayItemClient& client,
     }
   }
 
-  DCHECK(new_cached_subsequences_.Find(&client) ==
+  DCHECK(new_cached_subsequences_.find(&client) ==
          new_cached_subsequences_.end());
 
   new_cached_subsequences_.insert(&client, SubsequenceMarkers(start, end));
@@ -185,7 +187,7 @@ void PaintController::RemoveLastDisplayItem() {
 
 #if DCHECK_IS_ON()
   // Also remove the index pointing to the removed display item.
-  IndicesByClientMap::iterator it = new_display_item_indices_by_client_.Find(
+  IndicesByClientMap::iterator it = new_display_item_indices_by_client_.find(
       &new_display_item_list_.Last().Client());
   if (it != new_display_item_indices_by_client_.end()) {
     Vector<size_t>& indices = it->value;
@@ -326,7 +328,7 @@ size_t PaintController::FindMatchingItemFromIndex(
     const IndicesByClientMap& display_item_indices_by_client,
     const DisplayItemList& list) {
   IndicesByClientMap::const_iterator it =
-      display_item_indices_by_client.Find(&id.client);
+      display_item_indices_by_client.find(&id.client);
   if (it == display_item_indices_by_client.end())
     return kNotFound;
 
@@ -351,7 +353,7 @@ void PaintController::AddItemToIndexIfNeeded(
     return;
 
   IndicesByClientMap::iterator it =
-      display_item_indices_by_client.Find(&display_item.Client());
+      display_item_indices_by_client.find(&display_item.Client());
   Vector<size_t>& indices =
       it == display_item_indices_by_client.end()
           ? display_item_indices_by_client
@@ -529,20 +531,20 @@ void PaintController::CommitNewDisplayItems(
   // These data structures are used during painting only.
   DCHECK(!IsSkippingCache());
 #if DCHECK_IS_ON()
-  new_display_item_indices_by_client_.Clear();
+  new_display_item_indices_by_client_.clear();
 #endif
 
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
       !new_display_item_list_.IsEmpty())
     GenerateChunkRasterInvalidationRects(new_paint_chunks_.LastChunk());
 
-  SkPictureGpuAnalyzer gpu_analyzer;
+  int num_slow_paths = 0;
 
   current_cache_generation_ =
       DisplayItemClient::CacheGenerationOrInvalidationReason::Next();
 
   new_cached_subsequences_.swap(current_cached_subsequences_);
-  new_cached_subsequences_.Clear();
+  new_cached_subsequences_.clear();
   last_cached_subsequence_end_ = 0;
   for (auto& item : current_cached_subsequences_) {
     item.key->SetDisplayItemsCached(current_cache_generation_);
@@ -555,8 +557,8 @@ void PaintController::CommitNewDisplayItems(
   Vector<const DisplayItemClient*> skipped_cache_clients;
   for (const auto& item : new_display_item_list_) {
     // No reason to continue the analysis once we have a veto.
-    if (gpu_analyzer.suitableForGpuRasterization())
-      item.AnalyzeForGpuRasterization(gpu_analyzer);
+    if (num_slow_paths <= kMaxNumberOfSlowPathsBeforeVeto)
+      num_slow_paths += item.NumberOfSlowPaths();
 
     // TODO(wkorman): Only compute and append visual rect for drawings.
     new_display_item_list_.AppendVisualRect(
@@ -594,10 +596,10 @@ void PaintController::CommitNewDisplayItems(
   new_display_item_list_.ShrinkToFit();
   current_paint_artifact_ = PaintArtifact(
       std::move(new_display_item_list_), new_paint_chunks_.ReleasePaintChunks(),
-      gpu_analyzer.suitableForGpuRasterization());
+      num_slow_paths <= kMaxNumberOfSlowPathsBeforeVeto);
   ResetCurrentListIndices();
-  out_of_order_item_indices_.Clear();
-  out_of_order_chunk_indices_.Clear();
+  out_of_order_item_indices_.clear();
+  out_of_order_chunk_indices_.clear();
   items_moved_into_new_list_.clear();
 
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
@@ -688,7 +690,7 @@ void PaintController::GenerateChunkRasterInvalidationRects(
 
     // Add skipped old chunks into the index.
     if (old_chunk.id) {
-      auto it = out_of_order_chunk_indices_.Find(&old_chunk.id->client);
+      auto it = out_of_order_chunk_indices_.find(&old_chunk.id->client);
       Vector<size_t>& indices =
           it == out_of_order_chunk_indices_.end()
               ? out_of_order_chunk_indices_
@@ -701,7 +703,7 @@ void PaintController::GenerateChunkRasterInvalidationRects(
   }
 
   // Sequential matching reaches the end. Find from the out-of-order index.
-  auto it = out_of_order_chunk_indices_.Find(&new_chunk.id->client);
+  auto it = out_of_order_chunk_indices_.find(&new_chunk.id->client);
   if (it != out_of_order_chunk_indices_.end()) {
     for (size_t i : it->value) {
       if (new_chunk.Matches(old_chunks[i])) {

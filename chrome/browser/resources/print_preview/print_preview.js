@@ -19,13 +19,6 @@ cr.define('print_preview', function() {
     print_preview.Component.call(this);
 
     /**
-     * Whether the print scaling feature is enabled.
-     * @type {boolean}
-     * @private
-     */
-    this.scalingEnabled_ = loadTimeData.getBoolean('scalingEnabled');
-
-    /**
      * Used to communicate with Chromium's print system.
      * @type {!print_preview.NativeLayer}
      * @private
@@ -166,17 +159,15 @@ cr.define('print_preview', function() {
         new print_preview.DpiSettings(this.printTicketStore_.dpi);
     this.addChild(this.dpiSettings_);
 
-    if (this.scalingEnabled_) {
-      /**
-       * Component that renders the scaling settings.
-       * @type {!print_preview.ScalingSettings}
-       * @private
-       */
-      this.scalingSettings_ =
-          new print_preview.ScalingSettings(this.printTicketStore_.scaling,
-                                            this.printTicketStore_.fitToPage);
-      this.addChild(this.scalingSettings_);
-    }
+    /**
+     * Component that renders the scaling settings.
+     * @type {!print_preview.ScalingSettings}
+     * @private
+     */
+    this.scalingSettings_ =
+        new print_preview.ScalingSettings(this.printTicketStore_.scaling,
+                                          this.printTicketStore_.fitToPage);
+    this.addChild(this.scalingSettings_);
 
     /**
      * Component that renders miscellaneous print options.
@@ -219,11 +210,9 @@ cr.define('print_preview', function() {
         this.marginSettings_,
         this.colorSettings_,
         this.dpiSettings_,
+        this.scalingSettings_,
         this.otherOptionsSettings_,
         this.advancedOptionsSettings_];
-    if (this.scalingEnabled_) {
-      settingsSections.splice(8, 0, this.scalingSettings_);
-    }
 
     /**
      * Component representing more/less settings button.
@@ -373,12 +362,10 @@ cr.define('print_preview', function() {
           this.nativeLayer_,
           print_preview.NativeLayer.EventType.PRINT_PRESET_OPTIONS,
           this.onPrintPresetOptionsFromDocument_.bind(this));
-      if (this.scalingEnabled_) {
-        this.tracker.add(
-            this.nativeLayer_,
-            print_preview.NativeLayer.EventType.PAGE_COUNT_READY,
-            this.onPageCountReady_.bind(this));
-      }
+      this.tracker.add(
+          this.nativeLayer_,
+          print_preview.NativeLayer.EventType.PAGE_COUNT_READY,
+          this.onPageCountReady_.bind(this));
       this.tracker.add(
           this.nativeLayer_,
           print_preview.NativeLayer.EventType.PRIVET_PRINT_FAILED,
@@ -503,8 +490,7 @@ cr.define('print_preview', function() {
       this.mediaSizeSettings_.decorate($('media-size-settings'));
       this.marginSettings_.decorate($('margin-settings'));
       this.dpiSettings_.decorate($('dpi-settings'));
-      if (this.scalingEnabled_)
-        this.scalingSettings_.decorate($('scaling-settings'));
+      this.scalingSettings_.decorate($('scaling-settings'));
       this.otherOptionsSettings_.decorate($('other-options-settings'));
       this.advancedOptionsSettings_.decorate($('advanced-options-settings'));
       this.advancedSettings_.decorate($('advanced-settings'));
@@ -532,8 +518,7 @@ cr.define('print_preview', function() {
       this.mediaSizeSettings_.isEnabled = isEnabled;
       this.marginSettings_.isEnabled = isEnabled;
       this.dpiSettings_.isEnabled = isEnabled;
-      if (this.scalingEnabled_)
-         this.scalingSettings_.isEnabled = isEnabled;
+      this.scalingSettings_.isEnabled = isEnabled;
       this.otherOptionsSettings_.isEnabled = isEnabled;
       this.advancedOptionsSettings_.isEnabled = isEnabled;
     },
@@ -716,11 +701,6 @@ cr.define('print_preview', function() {
           this.cloudPrintInterface_,
           cloudprint.CloudPrintInterface.EventType.PRINTER_FAILED,
           this.onCloudPrintError_.bind(this));
-      this.tracker.add(
-          this.cloudPrintInterface_,
-          cloudprint.CloudPrintInterface.EventType.
-              UPDATE_PRINTER_TOS_ACCEPTANCE_FAILED,
-          this.onCloudPrintError_.bind(this));
 
       this.destinationStore_.setCloudPrintInterface(this.cloudPrintInterface_);
       this.invitationStore_.setCloudPrintInterface(this.cloudPrintInterface_);
@@ -783,12 +763,6 @@ cr.define('print_preview', function() {
       assert(this.uiState_ == PrintPreview.UiState_.PRINTING,
              'Submited job to Google Cloud Print but not in printing state ' +
                  this.uiState_);
-      if (this.destinationStore_.selectedDestination.id ==
-              print_preview.Destination.GooglePromotedId.FEDEX) {
-        this.nativeLayer_.startForceOpenNewTab(
-            'https://www.google.com/cloudprint/fedexcode.html?jobid=' +
-            event.jobId);
-      }
       this.close_();
     },
 
@@ -799,12 +773,13 @@ cr.define('print_preview', function() {
      * @private
      */
     onCloudPrintError_: function(event) {
+      if (event.status == 0) {
+        return; // Ignore, the system does not have internet connectivity.
+      }
       if (event.status == 403) {
         if (!this.isInAppKioskMode_) {
           this.destinationSearch_.showCloudPrintPromo();
         }
-      } else if (event.status == 0) {
-        return; // Ignore, the system does not have internet connectivity.
       } else {
         this.printHeader_.setErrorMessage(event.message);
       }
@@ -1364,7 +1339,6 @@ cr.define('print_preview', function() {
 // <include src="search/recent_destination_list.js">
 // <include src="search/destination_list_item.js">
 // <include src="search/destination_search.js">
-// <include src="search/fedex_tos.js">
 // <include src="search/provisional_destination_resolver.js">
 
 window.addEventListener('DOMContentLoaded', function() {

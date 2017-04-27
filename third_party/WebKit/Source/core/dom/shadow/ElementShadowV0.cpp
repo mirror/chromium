@@ -145,7 +145,7 @@ const InsertionPoint* ElementShadowV0::FinalDestinationInsertionPointFor(
   DCHECK(key);
   DCHECK(!key->NeedsDistributionRecalc());
   NodeToDestinationInsertionPoints::const_iterator it =
-      node_to_insertion_points_.Find(key);
+      node_to_insertion_points_.find(key);
   return it == node_to_insertion_points_.end() ? nullptr : it->value->back();
 }
 
@@ -154,7 +154,7 @@ ElementShadowV0::DestinationInsertionPointsFor(const Node* key) const {
   DCHECK(key);
   DCHECK(!key->NeedsDistributionRecalc());
   NodeToDestinationInsertionPoints::const_iterator it =
-      node_to_insertion_points_.Find(key);
+      node_to_insertion_points_.find(key);
   return it == node_to_insertion_points_.end() ? nullptr : it->value;
 }
 
@@ -250,7 +250,7 @@ void ElementShadowV0::WillAffectSelector() {
 }
 
 void ElementShadowV0::ClearDistribution() {
-  node_to_insertion_points_.Clear();
+  node_to_insertion_points_.clear();
 
   for (ShadowRoot* root = &element_shadow_->YoungestShadowRoot(); root;
        root = root->OlderShadowRoot())

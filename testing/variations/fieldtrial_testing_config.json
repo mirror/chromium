@@ -263,7 +263,6 @@
     "BackgroundVideoOptimizations": [
         {
             "platforms": [
-                "android",
                 "chromeos",
                 "linux",
                 "mac",
@@ -271,9 +270,30 @@
             ],
             "experiments": [
                 {
-                    "name": "BackgroundOptimizationEnabled5sOrLess",
+                    "name": "BackgroundOptimizationEnabled1sOrLessMediaSource",
                     "params": {
-                        "max_keyframe_distance_ms": "5000"
+                        "max_keyframe_distance_media_source_ms": "1000",
+                        "max_keyframe_distance_ms": "0"
+                    },
+                    "enable_features": [
+                        "BackgroundVideoTrackOptimization"
+                    ]
+                },
+                {
+                    "name": "BackgroundOptimizationEnabled3sOrLessMediaSource",
+                    "params": {
+                        "max_keyframe_distance_media_source_ms": "3000",
+                        "max_keyframe_distance_ms": "0"
+                    },
+                    "enable_features": [
+                        "BackgroundVideoTrackOptimization"
+                    ]
+                },
+                {
+                    "name": "BackgroundOptimizationEnabled5sOrLessMediaSource",
+                    "params": {
+                        "max_keyframe_distance_media_source_ms": "5000",
+                        "max_keyframe_distance_ms": "0"
                     },
                     "enable_features": [
                         "BackgroundVideoTrackOptimization"
@@ -287,30 +307,30 @@
             ],
             "experiments": [
                 {
-                    "name": "BackgroundOptimizationEnabled",
+                    "name": "BackgroundOptimizationEnabled1sOrLessMediaSource",
                     "params": {
-                        "max_keyframe_distance_media_source_ms": "10000",
+                        "max_keyframe_distance_media_source_ms": "1000",
                         "max_keyframe_distance_ms": "1000"
                     },
                     "enable_features": [
                         "BackgroundVideoTrackOptimization"
                     ]
-                }
-            ]
-        },
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
+                },
                 {
-                    "name": "BackgroundOptimizationEnabled",
+                    "name": "BackgroundOptimizationEnabled3sOrLessMediaSource",
                     "params": {
-                        "max_keyframe_distance_media_source_ms": "10000",
-                        "max_keyframe_distance_ms": "0"
+                        "max_keyframe_distance_media_source_ms": "3000",
+                        "max_keyframe_distance_ms": "1000"
+                    },
+                    "enable_features": [
+                        "BackgroundVideoTrackOptimization"
+                    ]
+                },
+                {
+                    "name": "BackgroundOptimizationEnabled5sOrLessMediaSource",
+                    "params": {
+                        "max_keyframe_distance_media_source_ms": "5000",
+                        "max_keyframe_distance_ms": "1000"
                     },
                     "enable_features": [
                         "BackgroundVideoTrackOptimization"
@@ -1431,14 +1451,13 @@
             ],
             "experiments": [
                 {
-                    "name": "EnabledSoftFetches",
+                    "name": "EnabledSoftFetchesChromeReader_Rest",
                     "params": {
-                        "fetching_interval_hours-wifi-active_ntp_user": "8",
-                        "scheduler_trigger_types": "persistent_scheduler_wake_up,ntp_opened",
-                        "send_top_languages": "true",
-                        "soft_fetching_interval_hours-active-active_ntp_user": "2",
-                        "soft_fetching_interval_hours-active-active_suggestions_consumer": "1",
-                        "soft_fetching_interval_hours-active-rare_ntp_user": "4"
+                        "soft_fetching_interval_hours-fallback-active_ntp_user": "10",
+                        "soft_fetching_interval_hours-fallback-active_suggestions_consumer": "1",
+                        "soft_fetching_interval_hours-fallback-rare_ntp_user": "4",
+                        "user_classifier_active_consumer_clicks_at_least_once_per_hours": "96",
+                        "user_classifier_rare_user_opens_ntp_at_most_once_per_hours": "66"
                     },
                     "enable_features": [
                         "NTPArticleSuggestions"
@@ -1715,9 +1734,11 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled",
+                    "name": "PrerenderDisabled",
                     "params": {
-                        "mode": "no_state_prefetch"
+                        "instant_mode": "simple_load",
+                        "mode": "simple_load",
+                        "omnibox_mode": "simple_load"
                     },
                     "enable_features": [
                         "NoStatePrefetch"

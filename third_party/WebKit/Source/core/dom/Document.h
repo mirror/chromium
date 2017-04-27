@@ -269,7 +269,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   using SecurityContext::GetSecurityOrigin;
   using SecurityContext::GetContentSecurityPolicy;
-  using TreeScope::GetElementById;
+  using TreeScope::getElementById;
 
   bool CanContainRangeEndPoint() const override { return true; }
 
@@ -317,8 +317,9 @@ class CORE_EXPORT Document : public ContainerNode,
 
   Location* location() const;
 
-  Element* createElement(const AtomicString& name,
-                         ExceptionState& = ASSERT_NO_EXCEPTION);
+  Element* createElement(const LocalDOMWindow*,
+                         const AtomicString& name,
+                         ExceptionState&);
   DocumentFragment* createDocumentFragment();
   Text* createTextNode(const String& data);
   Comment* createComment(const String& data);
@@ -332,7 +333,8 @@ class CORE_EXPORT Document : public ContainerNode,
                           ExceptionState&,
                           bool should_ignore_namespace_checks = false);
   Node* importNode(Node* imported_node, bool deep, ExceptionState&);
-  Element* createElementNS(const AtomicString& namespace_uri,
+  Element* createElementNS(const LocalDOMWindow*,
+                           const AtomicString& namespace_uri,
                            const AtomicString& qualified_name,
                            ExceptionState&);
   Element* createElement(const QualifiedName&, CreateElementFlags);
@@ -566,8 +568,8 @@ class CORE_EXPORT Document : public ContainerNode,
   void close(ExceptionState&);
   // This is used internally and does not handle exceptions.
   void close();
-
-  void CheckCompleted();
+  // implicitClose() actually does the work of closing the input stream.
+  void ImplicitClose();
 
   bool DispatchBeforeUnloadEvent(ChromeClient&,
                                  bool is_reload,
@@ -680,6 +682,9 @@ class CORE_EXPORT Document : public ContainerNode,
   enum ParsingState { kParsing, kInDOMContentLoaded, kFinishedParsing };
   void SetParsingState(ParsingState);
   bool Parsing() const { return parsing_state_ == kParsing; }
+  bool IsInDOMContentLoaded() const {
+    return parsing_state_ == kInDOMContentLoaded;
+  }
   bool HasFinishedParsing() const { return parsing_state_ == kFinishedParsing; }
 
   bool ShouldScheduleLayout() const;
@@ -781,24 +786,25 @@ class CORE_EXPORT Document : public ContainerNode,
   // keep track of what types of event listeners are registered, so we don't
   // dispatch events unnecessarily
   enum ListenerType {
-    DOMSUBTREEMODIFIED_LISTENER = 1,
-    DOMNODEINSERTED_LISTENER = 1 << 1,
-    DOMNODEREMOVED_LISTENER = 1 << 2,
-    DOMNODEREMOVEDFROMDOCUMENT_LISTENER = 1 << 3,
-    DOMNODEINSERTEDINTODOCUMENT_LISTENER = 1 << 4,
-    DOMCHARACTERDATAMODIFIED_LISTENER = 1 << 5,
-    ANIMATIONEND_LISTENER = 1 << 6,
-    ANIMATIONSTART_LISTENER = 1 << 7,
-    ANIMATIONITERATION_LISTENER = 1 << 8,
-    TRANSITIONEND_LISTENER = 1 << 9,
-    SCROLL_LISTENER = 1 << 10
-    // 5 bits remaining
+    kDOMSubtreeModifiedListener = 1,
+    kDOMNodeInsertedListener = 1 << 1,
+    kDOMNodeRemovedListener = 1 << 2,
+    kDOMNodeRemovedFromDocumentListener = 1 << 3,
+    kDOMNodeInsertedIntoDocumentListener = 1 << 4,
+    kDOMCharacterDataModifiedListener = 1 << 5,
+    kAnimationEndListener = 1 << 6,
+    kAnimationStartListener = 1 << 7,
+    kAnimationIterationListener = 1 << 8,
+    kTransitionEndListener = 1 << 9,
+    kScrollListener = 1 << 10,
+    kLoadListenerAtCapturePhaseOrAtStyleElement = 1 << 11
+    // 4 bits remaining
   };
 
   bool HasListenerType(ListenerType listener_type) const {
     return (listener_types_ & listener_type);
   }
-  void AddListenerTypeIfNeeded(const AtomicString& event_type);
+  void AddListenerTypeIfNeeded(const AtomicString& event_type, EventTarget&);
 
   bool HasMutationObserversOfType(MutationObserver::MutationType type) const {
     return mutation_observer_types_ & type;
@@ -1047,6 +1053,9 @@ class CORE_EXPORT Document : public ContainerNode,
   bool LoadEventStillNeeded() const {
     return load_event_progress_ == kLoadEventNotRun;
   }
+  bool ProcessingLoadEvent() const {
+    return load_event_progress_ == kLoadEventInProgress;
+  }
   bool LoadEventFinished() const {
     return load_event_progress_ >= kLoadEventCompleted;
   }
@@ -1132,10 +1141,17 @@ class CORE_EXPORT Document : public ContainerNode,
 
   TextAutosizer* GetTextAutosizer();
 
-  Element* createElement(const AtomicString& local_name,
+  Element* createElement(
+      const AtomicString& local_name,
+      ExceptionState& exception_state = ASSERT_NO_EXCEPTION) {
+    return createElement(nullptr, local_name, exception_state);
+  }
+  Element* createElement(const LocalDOMWindow*,
+                         const AtomicString& local_name,
                          const StringOrDictionary&,
                          ExceptionState& = ASSERT_NO_EXCEPTION);
-  Element* createElementNS(const AtomicString& namespace_uri,
+  Element* createElementNS(const LocalDOMWindow*,
+                           const AtomicString& namespace_uri,
                            const AtomicString& qualified_name,
                            const StringOrDictionary&,
                            ExceptionState&);
@@ -1157,6 +1173,7 @@ class CORE_EXPORT Document : public ContainerNode,
   }
   HTMLImportLoader* ImportLoader() const;
 
+  bool HaveImportsLoaded() const;
   void DidLoadAllImports();
 
   void AdjustFloatQuadsForScrollAndAbsoluteZoom(Vector<FloatQuad>&,
@@ -1366,10 +1383,6 @@ class CORE_EXPORT Document : public ContainerNode,
   void UpdateStyle();
   void NotifyLayoutTreeOfSubtreeChanges();
 
-  // ImplicitClose() actually does the work of closing the input stream.
-  void ImplicitClose();
-  bool ShouldComplete();
-
   void DetachParser();
 
   void BeginLifecycleUpdatesIfRenderingReady();
@@ -1434,8 +1447,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void RunExecutionContextTask(std::unique_ptr<ExecutionContextTask>,
                                bool instrumenting);
-
-  bool HaveImportsLoaded() const;
 
   DocumentLifecycle lifecycle_;
 

@@ -28,7 +28,6 @@
 #include "cc/base/switches.h"
 #include "chrome/browser/experiments/memory_ablation_experiment.h"
 #include "chrome/browser/flag_descriptions.h"
-#include "chrome/browser/ntp_snippets/ntp_snippets_features.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/prerender/prerender_field_trial.h"
 #include "chrome/common/channel_info.h"
@@ -77,7 +76,7 @@
 #include "content/public/common/feature_h264_with_openh264_ffmpeg.h"
 #include "content/public/common/features.h"
 #include "device/base/features.h"
-#include "device/vr/features.h"
+#include "device/vr/features/features.h"
 #include "extensions/features/features.h"
 #include "gin/public/gin_features.h"
 #include "gpu/config/gpu_switches.h"
@@ -632,9 +631,9 @@ const FeatureEntry::FeatureVariation
 #if defined(OS_ANDROID)
 const FeatureEntry::FeatureVariation kRemoteSuggestionsFeatureVariations[] = {
     {"via content suggestion server (backed by ChromeReader)", nullptr, 0,
-     nullptr},
+     "3313421"},
     {"via content suggestion server (backed by Google Now)", nullptr, 0,
-     "3313279"}};
+     "3313422"}};
 #endif  // OS_ANDROID
 
 #if defined(OS_ANDROID)
@@ -706,6 +705,21 @@ const FeatureEntry::Choice kEnableDefaultMediaSessionChoices[] = {
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 };
 #endif  // !defined(OS_ANDROID)
+
+const FeatureEntry::Choice kAutoplayPolicyChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kAutoplayPolicyNoUserGestureRequired,
+     switches::kAutoplayPolicy,
+     switches::autoplay::kNoUserGestureRequiredPolicy},
+#if defined(OS_ANDROID)
+    {flag_descriptions::kAutoplayPolicyUserGestureRequired,
+     switches::kAutoplayPolicy, switches::autoplay::kUserGestureRequiredPolicy},
+#else
+    {flag_descriptions::kAutoplayPolicyCrossOriginUserGestureRequired,
+     switches::kAutoplayPolicy,
+     switches::autoplay::kCrossOriginUserGestureRequiredPolicy},
+#endif
+};
 
 const FeatureEntry::FeatureParam kNoStatePrefetchEnabled[] = {
     {prerender::kNoStatePrefetchFeatureModeParameterName,
@@ -982,6 +996,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebrtcHwH264EncodingName,
      flag_descriptions::kWebrtcHwH264EncodingDescription, kOsAndroid | kOsCrOS,
      FEATURE_VALUE_TYPE(features::kWebRtcHWH264Encoding)},
+    {"enable-webrtc-hw-vp8-encoding",
+     flag_descriptions::kWebrtcHwVP8EncodingName,
+     flag_descriptions::kWebrtcHwVP8EncodingDescription, kOsAndroid | kOsCrOS,
+     FEATURE_VALUE_TYPE(features::kWebRtcHWVP8Encoding)},
     {"enable-webrtc-srtp-aes-gcm", flag_descriptions::kWebrtcSrtpAesGcmName,
      flag_descriptions::kWebrtcSrtpAesGcmDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebRtcSrtpAesGcm)},
@@ -1434,15 +1452,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kGestureRequirementForMediaPlaybackDescription, kOsAll,
      SINGLE_DISABLE_VALUE_TYPE(
          switches::kDisableGestureRequirementForMediaPlayback)},
-#if !defined(OS_ANDROID)
-    {"cross-origin-media-playback-requires-user-gesture",
-     flag_descriptions::kCrossOriginMediaPlaybackRequiresUserGestureName,
-     flag_descriptions::kCrossOriginMediaPlaybackRequiresUserGestureDescription,
-     kOsDesktop,
-     FEATURE_VALUE_TYPE(
-         features::kCrossOriginMediaPlaybackRequiresUserGesture)},
-#endif  // !defined(OS_ANDROID)
-
 #if defined(OS_CHROMEOS)
     {"enable-virtual-keyboard", flag_descriptions::kVirtualKeyboardName,
      flag_descriptions::kVirtualKeyboardDescription, kOsCrOS,
@@ -2068,6 +2077,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-md-history", flag_descriptions::kEnableMaterialDesignHistoryName,
      flag_descriptions::kEnableMaterialDesignHistoryDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kMaterialDesignHistory)},
+    {"enable-md-incognito-ntp",
+     flag_descriptions::kMaterialDesignIncognitoNTPName,
+     flag_descriptions::kMaterialDesignIncognitoNTPDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kMaterialDesignIncognitoNTP)},
     {"enable-md-settings", flag_descriptions::kEnableMaterialDesignSettingsName,
      flag_descriptions::kEnableMaterialDesignSettingsDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kMaterialDesignSettings)},
@@ -2227,9 +2240,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableNtpSuggestionsNotificationsDescription,
      kOsAndroid,
      FEATURE_WITH_PARAMS_VALUE_TYPE(
-         params::ntp_snippets::kNotificationsFeature,
+         ntp_snippets::kNotificationsFeature,
          kContentSuggestionsNotificationsFeatureVariations,
-         params::ntp_snippets::kNotificationsFeature.name)},
+         ntp_snippets::kNotificationsFeature.name)},
     {"ntp-condensed-layout", flag_descriptions::kNtpCondensedLayoutName,
      flag_descriptions::kNtpCondensedLayoutDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kNTPCondensedLayoutFeature)},
@@ -2370,10 +2383,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"android-payment-apps", flag_descriptions::kAndroidPaymentAppsName,
      flag_descriptions::kAndroidPaymentAppsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kAndroidPaymentApps)},
-    {"android-payment-apps-filter",
-     flag_descriptions::kAndroidPaymentAppsFilterTitle,
-     flag_descriptions::kAndroidPaymentAppsFilterDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kAndroidPaymentAppsFilter)},
 #endif  // OS_ANDROID
 #if defined(OS_CHROMEOS)
     {"disable-eol-notification", flag_descriptions::kEolNotificationName,
@@ -2468,16 +2477,11 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(
          features::kDisplayPersistenceToggleInPermissionPrompts)},
 #endif
-#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-#if !defined(OS_WIN) && !defined(OS_MACOSX)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OS_WIN) && !defined(OS_MACOSX)
     {"print-pdf-as-image", flag_descriptions::kPrintPdfAsImageName,
      flag_descriptions::kPrintPdfAsImageDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kPrintPdfAsImage)},
-#endif  // !defined(OS_WIN) && !defined(OS_MACOSX)
-    {"print-scaling", flag_descriptions::kPrintScalingName,
-     flag_descriptions::kPrintScalingDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(features::kPrintScaling)},
-#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#endif
 #if defined(OS_ANDROID)
     {"enable-consistent-omnibox-geolocation",
      flag_descriptions::kEnableConsistentOmniboxGeolocationName,
@@ -2712,10 +2716,10 @@ const FeatureEntry kFeatureEntries[] = {
 #endif
 
 #if defined(USE_ASH)
-    {"ash-enable-smooth-screen-rotation",
-     flag_descriptions::kAshEnableSmoothScreenRotationName,
-     flag_descriptions::kAshEnableSmoothScreenRotationDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(ash::switches::kAshEnableSmoothScreenRotation)},
+    {"ash-disable-smooth-screen-rotation",
+     flag_descriptions::kAshDisableSmoothScreenRotationName,
+     flag_descriptions::kAshDisableSmoothScreenRotationDescription, kOsCrOS,
+     SINGLE_DISABLE_VALUE_TYPE(ash::switches::kAshDisableSmoothScreenRotation)},
 #endif  // defined(USE_ASH)
 
 #if defined(OS_CHROMEOS)
@@ -2752,6 +2756,17 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableIdleTimeSpellCheckingName,
      flag_descriptions::kEnableIdleTimeSpellCheckingDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kIdleTimeSpellChecking)},
+
+#if defined(OS_ANDROID)
+    {"enable-clipboard-provider",
+     flag_descriptions::kEnableOmniboxClipboardProviderName,
+     flag_descriptions::kEnableOmniboxClipboardProviderDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(omnibox::kEnableClipboardProvider)},
+#endif
+
+    {"autoplay-policy", flag_descriptions::kAutoplayPolicyName,
+     flag_descriptions::kAutoplayPolicyDescription, kOsAll,
+     MULTI_VALUE_TYPE(kAutoplayPolicyChoices)},
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms.xml. See note in
@@ -2802,6 +2817,15 @@ bool SkipConditionalFeatureEntry(const FeatureEntry& entry) {
     return true;
   }
 #endif  // OS_ANDROID
+
+#if defined(OS_CHROMEOS)
+  // Don't expose --mash outside of Canary or developer builds.
+  if (!strcmp("mash", entry.internal_name) &&
+      channel != version_info::Channel::DEV &&
+      channel != version_info::Channel::UNKNOWN) {
+    return true;
+  }
+#endif  // defined(OS_CHROMEOS)
 
   // data-reduction-proxy-lo-fi and enable-data-reduction-proxy-lite-page
   // are only available for Chromium builds and the Canary/Dev/Beta channels.

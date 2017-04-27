@@ -330,7 +330,7 @@ Elements.ElementsPanel = class extends UI.Panel {
   willHide() {
     UI.context.setFlavor(Elements.ElementsPanel, null);
 
-    SDK.DOMModel.hideDOMNodeHighlight();
+    SDK.OverlayModel.hideDOMNodeHighlight();
     for (var i = 0; i < this._treeOutlines.length; ++i) {
       var treeOutline = this._treeOutlines[i];
       treeOutline.setVisible(false);
@@ -417,7 +417,6 @@ Elements.ElementsPanel = class extends UI.Panel {
     }
 
     this._hasNonDefaultSelectedNode = false;
-    Components.domBreakpointsSidebarPane.restoreBreakpoints(inspectedRootDocument);
 
     if (this._omitDefaultSelection)
       return;
@@ -964,13 +963,6 @@ Elements.ElementsPanel.ContextMenuProvider = class {
     if (!(object instanceof SDK.RemoteObject && (/** @type {!SDK.RemoteObject} */ (object)).isNode()) &&
         !(object instanceof SDK.DOMNode) && !(object instanceof SDK.DeferredDOMNode))
       return;
-
-
-    // Add debbuging-related actions
-    if (object instanceof SDK.DOMNode) {
-      contextMenu.appendSeparator();
-      Components.domBreakpointsSidebarPane.populateNodeContextMenu(object, contextMenu, true);
-    }
 
     // Skip adding "Reveal..." menu item for our own tree outline.
     if (Elements.ElementsPanel.instance().element.isAncestor(/** @type {!Node} */ (event.target)))

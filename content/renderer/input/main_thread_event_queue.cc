@@ -201,7 +201,8 @@ MainThreadEventQueue::SharedState::~SharedState() {}
 MainThreadEventQueue::MainThreadEventQueue(
     MainThreadEventQueueClient* client,
     const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner,
-    blink::scheduler::RendererScheduler* renderer_scheduler)
+    blink::scheduler::RendererScheduler* renderer_scheduler,
+    bool allow_raf_aligned_input)
     : client_(client),
       last_touch_start_forced_nonblocking_due_to_fling_(false),
       enable_fling_passive_listener_flag_(base::FeatureList::IsEnabled(
@@ -210,8 +211,10 @@ MainThreadEventQueue::MainThreadEventQueue(
           base::FeatureList::IsEnabled(
               features::kMainThreadBusyScrollIntervention)),
       handle_raf_aligned_touch_input_(
+          allow_raf_aligned_input &&
           base::FeatureList::IsEnabled(features::kRafAlignedTouchInputEvents)),
       handle_raf_aligned_mouse_input_(
+          allow_raf_aligned_input &&
           base::FeatureList::IsEnabled(features::kRafAlignedMouseInputEvents)),
       main_task_runner_(main_task_runner),
       renderer_scheduler_(renderer_scheduler) {
@@ -341,13 +344,6 @@ void MainThreadEventQueue::QueueClosure(const base::Closure& closure) {
     PostTaskToMainThread();
 }
 
-void MainThreadEventQueue::DispatchInFlightEvent() {
-  if (in_flight_event_) {
-    in_flight_event_->Dispatch(this);
-    in_flight_event_.reset();
-  }
-}
-
 void MainThreadEventQueue::PossiblyScheduleMainFrame() {
   if (IsRafAlignedInputDisabled())
     return;
@@ -383,15 +379,16 @@ void MainThreadEventQueue::DispatchEvents() {
   }
 
   while (events_to_process--) {
+    std::unique_ptr<MainThreadEventQueueTask> task;
     {
       base::AutoLock lock(shared_state_lock_);
       if (shared_state_.events_.empty())
         return;
-      in_flight_event_ = shared_state_.events_.Pop();
+      task = shared_state_.events_.Pop();
     }
 
     // Dispatching the event is outside of critical section.
-    DispatchInFlightEvent();
+    task->Dispatch(this);
   }
   PossiblyScheduleMainFrame();
 }
@@ -424,6 +421,7 @@ void MainThreadEventQueue::DispatchRafAlignedInput(base::TimeTicks frame_time) {
   }
 
   while (queue_size_at_start--) {
+    std::unique_ptr<MainThreadEventQueueTask> task;
     {
       base::AutoLock lock(shared_state_lock_);
 
@@ -442,11 +440,10 @@ void MainThreadEventQueue::DispatchRafAlignedInput(base::TimeTicks frame_time) {
           shared_state_.last_async_touch_move_timestamp_ = frame_time;
         }
       }
-      in_flight_event_ = shared_state_.events_.Pop();
+      task = shared_state_.events_.Pop();
     }
-
     // Dispatching the event is outside of critical section.
-    DispatchInFlightEvent();
+    task->Dispatch(this);
   }
 
   PossiblyScheduleMainFrame();

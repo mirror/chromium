@@ -51,8 +51,8 @@ var TileVisualType = {
   ICON_REAL: 1,
   ICON_COLOR: 2,
   ICON_DEFAULT: 3,
-  THUMBNAIL: 4,
-  THUMBNAIL_FAILED: 5,
+  THUMBNAIL: 7,
+  THUMBNAIL_FAILED: 8,
 };
 
 
@@ -72,7 +72,8 @@ var NUM_TITLE_LINES = 1;
 
 
 /**
- * The origin of this request.
+ * The origin of this request, i.e. 'https://www.google.TLD' for the remote NTP,
+ * or 'chrome-search://local-ntp' for the local NTP.
  * @const {string}
  */
 var DOMAIN_ORIGIN = '{{ORIGIN}}';

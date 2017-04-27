@@ -5,7 +5,7 @@
 #include "core/frame/HostsUsingFeatures.h"
 
 #include "bindings/core/v8/ScriptState.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/page/Page.h"
@@ -71,7 +71,7 @@ void HostsUsingFeatures::CountName(Feature feature, const String& name) {
 }
 
 void HostsUsingFeatures::Clear() {
-  value_by_name_.Clear();
+  value_by_name_.clear();
   url_and_values_.clear();
 }
 
@@ -142,7 +142,7 @@ void HostsUsingFeatures::RecordNamesToRappor() {
   for (auto& name_and_value : value_by_name_)
     name_and_value.value.RecordNameToRappor(name_and_value.key);
 
-  value_by_name_.Clear();
+  value_by_name_.clear();
 }
 
 void HostsUsingFeatures::Value::Aggregate(HostsUsingFeatures::Value other) {

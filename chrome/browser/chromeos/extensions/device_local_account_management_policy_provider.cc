@@ -433,10 +433,9 @@ const char* const kSafePermissionStrings[] = {
 
     "certificateProvider",
 
-    // This is risky, but blocking extensions just because they declare
-    // clipboardRead is unfortunate. Options: (1) Make clipboardRead return
-    // empty string (2) confirmation dialog.
-    // "clipboardRead",
+    // clipboardRead is restricted to return an empty string (except for
+    // whitelisted extensions - ie. Chrome RDP client).
+    "clipboardRead",
 
     // Writing to clipboard is safe.
     "clipboardWrite",
@@ -637,8 +636,8 @@ const char* const kSafePermissionStrings[] = {
     // request is made via chrome.tabCapture.capture call.
     "tabCapture",
 
-    // Privacy sensitive URL access.
-    // "tabs",
+    // The URL returned by chrome.tabs API is scrubbed down to the origin.
+    "tabs",
 
     // Privacy sensitive URL access.
     // "topSites",

@@ -5,7 +5,7 @@
 #include "core/inspector/InspectorAnimationAgent.h"
 
 #include <memory>
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/animation/Animation.h"
 #include "core/animation/AnimationEffectReadOnly.h"
 #include "core/animation/AnimationEffectTiming.h"
@@ -72,19 +72,19 @@ Response InspectorAnimationAgent::disable() {
     clone->cancel();
   state_->setBoolean(AnimationAgentState::animationAgentEnabled, false);
   instrumenting_agents_->removeInspectorAnimationAgent(this);
-  id_to_animation_.Clear();
-  id_to_animation_type_.Clear();
-  id_to_animation_clone_.Clear();
-  cleared_animations_.Clear();
+  id_to_animation_.clear();
+  id_to_animation_type_.clear();
+  id_to_animation_clone_.clear();
+  cleared_animations_.clear();
   return Response::OK();
 }
 
 void InspectorAnimationAgent::DidCommitLoadForLocalFrame(LocalFrame* frame) {
   if (frame == inspected_frames_->Root()) {
-    id_to_animation_.Clear();
-    id_to_animation_type_.Clear();
-    id_to_animation_clone_.Clear();
-    cleared_animations_.Clear();
+    id_to_animation_.clear();
+    id_to_animation_type_.clear();
+    id_to_animation_clone_.clear();
+    cleared_animations_.clear();
   }
   double playback_rate = 1;
   state_->getDouble(AnimationAgentState::animationAgentPlaybackRate,

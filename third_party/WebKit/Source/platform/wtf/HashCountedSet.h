@@ -66,7 +66,7 @@ class HashCountedSet {
   void swap(HashCountedSet& other) { impl_.swap(other.impl_); }
 
   unsigned size() const { return impl_.size(); }
-  unsigned capacity() const { return impl_.capacity(); }
+  unsigned Capacity() const { return impl_.capacity(); }
   bool IsEmpty() const { return impl_.IsEmpty(); }
 
   // Iterators iterate over pairs of values (called key) and counts (called
@@ -76,7 +76,7 @@ class HashCountedSet {
   const_iterator begin() const { return impl_.begin(); }
   const_iterator end() const { return impl_.end(); }
 
-  iterator find(const ValueType& value) { return impl_.Find(value); }
+  iterator find(const ValueType& value) { return impl_.find(value); }
   const_iterator find(const ValueType& value) const {
     return impl_.find(value);
   }
@@ -101,7 +101,7 @@ class HashCountedSet {
   void RemoveAll(iterator);
 
   // Clears the whole set.
-  void clear() { impl_.Clear(); }
+  void clear() { impl_.clear(); }
 
   Vector<Value> AsVector() const;
 

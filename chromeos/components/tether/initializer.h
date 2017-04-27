@@ -25,7 +25,9 @@ class RemoteBeaconSeedFetcher;
 
 namespace chromeos {
 
+class ManagedNetworkConfigurationHandler;
 class NetworkConnect;
+class NetworkConnectionHandler;
 class NetworkStateHandler;
 
 namespace tether {
@@ -37,10 +39,12 @@ class DeviceIdTetherNetworkGuidMap;
 class HostScanner;
 class HostScanDevicePrioritizer;
 class LocalDeviceDataProvider;
+class NetworkConfigurationRemover;
 class NotificationPresenter;
 class TetherConnector;
 class TetherDeviceStateManager;
 class TetherHostFetcher;
+class TetherNetworkDisconnectionHandler;
 class WifiHotspotConnector;
 
 // Initializes the Tether Chrome OS component.
@@ -53,7 +57,9 @@ class Initializer : public OAuth2TokenService::Observer {
       PrefService* pref_service,
       ProfileOAuth2TokenService* token_service,
       NetworkStateHandler* network_state_handler,
-      NetworkConnect* network_connect);
+      ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
+      NetworkConnect* network_connect,
+      NetworkConnectionHandler* network_connection_handler);
 
   // Shuts down the tether feature, destroying all internal classes. This should
   // be called before the dependencies passed to Init() are destroyed.
@@ -66,12 +72,15 @@ class Initializer : public OAuth2TokenService::Observer {
 
   static Initializer* instance_;
 
-  Initializer(cryptauth::CryptAuthService* cryptauth_service,
-              std::unique_ptr<NotificationPresenter> notification_presenter,
-              PrefService* pref_service,
-              ProfileOAuth2TokenService* token_service,
-              NetworkStateHandler* network_state_handler,
-              NetworkConnect* network_connect);
+  Initializer(
+      cryptauth::CryptAuthService* cryptauth_service,
+      std::unique_ptr<NotificationPresenter> notification_presenter,
+      PrefService* pref_service,
+      ProfileOAuth2TokenService* token_service,
+      NetworkStateHandler* network_state_handler,
+      ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
+      NetworkConnect* network_connect,
+      NetworkConnectionHandler* network_connection_handler);
   ~Initializer() override;
 
   // OAuth2TokenService::Observer:
@@ -90,7 +99,9 @@ class Initializer : public OAuth2TokenService::Observer {
   PrefService* pref_service_;
   ProfileOAuth2TokenService* token_service_;
   NetworkStateHandler* network_state_handler_;
+  ManagedNetworkConfigurationHandler* managed_network_configuration_handler_;
   NetworkConnect* network_connect_;
+  NetworkConnectionHandler* network_connection_handler_;
 
   // Declare new objects in the order that they will be created during
   // initialization to ensure that they are destroyed in the correct order. This
@@ -109,6 +120,9 @@ class Initializer : public OAuth2TokenService::Observer {
   std::unique_ptr<DeviceIdTetherNetworkGuidMap>
       device_id_tether_network_guid_map_;
   std::unique_ptr<TetherConnector> tether_connector_;
+  std::unique_ptr<NetworkConfigurationRemover> network_configuration_remover_;
+  std::unique_ptr<TetherNetworkDisconnectionHandler>
+      tether_network_disconnection_handler_;
   std::unique_ptr<HostScanner> host_scanner_;
 
   base::WeakPtrFactory<Initializer> weak_ptr_factory_;

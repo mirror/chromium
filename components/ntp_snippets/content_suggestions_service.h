@@ -15,6 +15,7 @@
 #include "base/observer_list.h"
 #include "base/optional.h"
 #include "base/scoped_observer.h"
+#include "base/supports_user_data.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "base/time/time.h"
 #include "components/history/core/browser/history_service.h"
@@ -47,6 +48,7 @@ class RemoteSuggestionsProvider;
 // Retrieves suggestions from a number of ContentSuggestionsProviders and serves
 // them grouped into categories. There can be at most one provider per category.
 class ContentSuggestionsService : public KeyedService,
+                                  public base::SupportsUserData,
                                   public ContentSuggestionsProvider::Observer,
                                   public SigninManagerBase::Observer,
                                   public history::HistoryServiceObserver {
@@ -328,6 +330,8 @@ class ContentSuggestionsService : public KeyedService,
   void RestoreDismissedCategoriesFromPrefs();
   void StoreDismissedCategoriesToPrefs();
 
+  // Get the domain of the suggestion suitable for fetching the favicon.
+  GURL GetFaviconDomain(const ContentSuggestion::ID& suggestion_id);
   // Callbacks for fetching favicons.
   void OnGetFaviconFromCacheFinished(
       const GURL& publisher_url,

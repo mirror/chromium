@@ -42,6 +42,7 @@
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
+#include "public/platform/WebURLLoader.h"
 
 namespace blink {
 
@@ -85,7 +86,7 @@ class PLATFORM_EXPORT FetchContext
   // a const reference as a header needs to be added for doc.write blocking
   // intervention.
   virtual WebCachePolicy ResourceRequestCachePolicy(
-      ResourceRequest&,
+      const ResourceRequest&,
       Resource::Type,
       FetchParameters::DeferOption) const;
 
@@ -213,6 +214,8 @@ class PLATFORM_EXPORT FetchContext
   PlatformProbeSink* GetPlatformProbeSink() const {
     return platform_probe_sink_;
   }
+
+  virtual std::unique_ptr<WebURLLoader> CreateURLLoader() { return nullptr; }
 
  protected:
   FetchContext();

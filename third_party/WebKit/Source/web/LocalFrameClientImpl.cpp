@@ -38,6 +38,7 @@
 #include "core/events/MessageEvent.h"
 #include "core/events/MouseEvent.h"
 #include "core/events/UIEventWithKeyState.h"
+#include "core/exported/WebDataSourceImpl.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLFrameElementBase.h"
@@ -101,7 +102,6 @@
 #include "v8/include/v8.h"
 #include "web/DevToolsEmulator.h"
 #include "web/SharedWorkerRepositoryClientImpl.h"
-#include "web/WebDataSourceImpl.h"
 #include "web/WebDevToolsAgentImpl.h"
 #include "web/WebDevToolsFrontendImpl.h"
 #include "web/WebLocalFrameImpl.h"
@@ -212,8 +212,7 @@ void LocalFrameClientImpl::WillReleaseScriptContext(
     v8::Local<v8::Context> context,
     int world_id) {
   if (web_frame_->Client()) {
-    web_frame_->Client()->WillReleaseScriptContext(web_frame_, context,
-                                                   world_id);
+    web_frame_->Client()->WillReleaseScriptContext(context, world_id);
   }
 }
 
@@ -223,7 +222,7 @@ bool LocalFrameClientImpl::AllowScriptExtensions() {
 
 void LocalFrameClientImpl::DidChangeScrollOffset() {
   if (web_frame_->Client())
-    web_frame_->Client()->DidChangeScrollOffset(web_frame_);
+    web_frame_->Client()->DidChangeScrollOffset();
 }
 
 void LocalFrameClientImpl::DidUpdateCurrentHistoryItem() {

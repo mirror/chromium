@@ -137,9 +137,6 @@ class BASE_EXPORT Value {
   ListStorage& GetList();
   const ListStorage& GetList() const;
 
-  size_t GetSize() const;         // DEPRECATED, use GetBlob().size() instead.
-  const char* GetBuffer() const;  // DEPRECATED, use GetBlob().data() instead.
-
   // These methods allow the convenient retrieval of the contents of the Value.
   // If the current object can be converted into the given type, the value is
   // returned through the |out_value| parameter and true is returned;
@@ -151,7 +148,6 @@ class BASE_EXPORT Value {
   bool GetAsString(string16* out_value) const;
   bool GetAsString(const Value** out_value) const;
   bool GetAsString(StringPiece* out_value) const;
-  bool GetAsBinary(const Value** out_value) const;
   // ListValue::From is the equivalent for std::unique_ptr conversions.
   bool GetAsList(ListValue** out_value);
   bool GetAsList(const ListValue** out_value) const;
@@ -408,8 +404,6 @@ class BASE_EXPORT ListValue : public Value {
   // Values will be used to pad out the list.
   // Returns true if successful, or false if the index was negative or
   // the value is a null pointer.
-  bool Set(size_t index, Value* in_value);
-  // Preferred version of the above. TODO(estade): remove the above.
   bool Set(size_t index, std::unique_ptr<Value> in_value);
 
   // Gets the Value at the given index.  Modifies |out_value| (and returns true)

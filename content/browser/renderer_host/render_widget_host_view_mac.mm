@@ -150,7 +150,7 @@ RenderWidgetHostView* GetRenderWidgetHostViewToUse(
 @property(nonatomic, assign) NSRange selectedRange;
 @property(nonatomic, assign) NSRange markedRange;
 
-+ (BOOL)shouldAutohideCursorForEvent:(NSEvent*)event;
+- (BOOL)shouldAutohideCursorForEvent:(NSEvent*)event;
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r;
 - (void)processedWheelEvent:(const blink::WebMouseWheelEvent&)event
                    consumed:(BOOL)consumed;
@@ -542,24 +542,24 @@ cc::SurfaceId RenderWidgetHostViewMac::SurfaceIdForTesting() const {
 ui::TextInputType RenderWidgetHostViewMac::GetTextInputType() {
   if (!GetActiveWidget())
     return ui::TEXT_INPUT_TYPE_NONE;
-  return GetTextInputManager()->GetTextInputState()->type;
+  return text_input_manager_->GetTextInputState()->type;
 }
 
 RenderWidgetHostImpl* RenderWidgetHostViewMac::GetActiveWidget() {
-  return GetTextInputManager() ? GetTextInputManager()->GetActiveWidget()
-                               : nullptr;
+  return text_input_manager_ ? text_input_manager_->GetActiveWidget() : nullptr;
 }
 
 const TextInputManager::CompositionRangeInfo*
 RenderWidgetHostViewMac::GetCompositionRangeInfo() {
-  return GetTextInputManager() ? text_input_manager_->GetCompositionRangeInfo()
-                               : nullptr;
+  return text_input_manager_ ? text_input_manager_->GetCompositionRangeInfo()
+                             : nullptr;
 }
 
 const TextInputManager::TextSelection*
 RenderWidgetHostViewMac::GetTextSelection() {
-  return text_input_manager_->GetTextSelection(
-      GetFocusedViewForTextSelection());
+  return text_input_manager_ ? text_input_manager_->GetTextSelection(
+                                   GetFocusedViewForTextSelection())
+                             : nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1106,7 +1106,7 @@ void RenderWidgetHostViewMac::SpeakSelection() {
     return;
   }
 
-  SpeakText(selected_text_);
+  SpeakText(base::UTF16ToUTF8(selection->selected_text()));
 }
 
 bool RenderWidgetHostViewMac::IsSpeaking() const {
@@ -2149,7 +2149,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     widgetHost->ForwardKeyboardEvent(event);
 
     // Possibly autohide the cursor.
-    if ([RenderWidgetHostViewCocoa shouldAutohideCursorForEvent:theEvent])
+    if ([self shouldAutohideCursorForEvent:theEvent])
       [NSCursor setHiddenUntilMouseMoves:YES];
 
     return;
@@ -2315,7 +2315,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   }
 
   // Possibly autohide the cursor.
-  if ([RenderWidgetHostViewCocoa shouldAutohideCursorForEvent:theEvent])
+  if ([self shouldAutohideCursorForEvent:theEvent])
     [NSCursor setHiddenUntilMouseMoves:YES];
 }
 
@@ -2421,41 +2421,32 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
       NSPerformService(@"Look Up in Dictionary", pasteboard->get());
     return;
   }
-  dispatch_async(dispatch_get_main_queue(), ^{
-    NSPoint flippedBaselinePoint = {
-        baselinePoint.x, [view frame].size.height - baselinePoint.y,
-    };
-    [view showDefinitionForAttributedString:string
-                                    atPoint:flippedBaselinePoint];
-  });
+  NSPoint flippedBaselinePoint = {
+      baselinePoint.x, [view frame].size.height - baselinePoint.y,
+  };
+  [view showDefinitionForAttributedString:string atPoint:flippedBaselinePoint];
 }
 
 - (void)showLookUpDictionaryOverlayFromRange:(NSRange)range
                                   targetView:(NSView*)targetView {
-  RenderWidgetHostImpl* widgetHost = renderWidgetHostView_->render_widget_host_;
-  if (!widgetHost || !widgetHost->delegate())
+  content::RenderWidgetHostViewBase* focusedView =
+      renderWidgetHostView_->GetFocusedViewForTextSelection();
+  if (!focusedView)
     return;
-  widgetHost = widgetHost->delegate()->GetFocusedRenderWidgetHost(widgetHost);
 
+  RenderWidgetHostImpl* widgetHost =
+      RenderWidgetHostImpl::From(focusedView->GetRenderWidgetHost());
   if (!widgetHost)
     return;
 
-  // TODO(ekaramad): The position reported by the renderer is with respect to
-  // |widgetHost|'s coordinate space with y-axis inverted to conform to AppKit
-  // coordinate system. The point will need to be transformed into root view's
-  // coordinate system (RenderWidgetHostViewMac in this case). However, since
-  // the callback is invoked on IO thread it will require some thread hopping to
-  // do so. For this reason, for now, we accept this non-ideal way of fixing the
-  // point offset manually from the view bounds. This should be revisited when
-  // fixing issues in TextInputClientMac (https://crbug.com/643233).
-  gfx::Rect root_box = renderWidgetHostView_->GetViewBounds();
-  gfx::Rect view_box = widgetHost->GetView()->GetViewBounds();
-
   TextInputClientMac::GetInstance()->GetStringFromRange(
       widgetHost, range, ^(NSAttributedString* string, NSPoint baselinePoint) {
-        baselinePoint.x += view_box.origin().x() - root_box.origin().x();
-        baselinePoint.y +=
-            root_box.bottom_left().y() - view_box.bottom_left().y();
+        if (auto* rwhv = widgetHost->GetView()) {
+          gfx::Point pointInRootView = rwhv->TransformPointToRootCoordSpace(
+              gfx::Point(baselinePoint.x, baselinePoint.y));
+          baselinePoint.x = pointInRootView.x();
+          baselinePoint.y = pointInRootView.y();
+        }
         [self showLookUpDictionaryOverlayInternal:string
                                     baselinePoint:baselinePoint
                                        targetView:targetView];
@@ -2479,23 +2470,15 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   if (!widgetHost)
     return;
 
-  // TODO(ekaramad): The position reported by the renderer is with respect to
-  // |widgetHost|'s coordinate space with y-axis inverted to conform to AppKit
-  // coordinate system. The point will need to be transformed into root view's
-  // coordinate system (RenderWidgetHostViewMac in this case). However, since
-  // the callback is invoked on IO thread it will require some thread hopping to
-  // do so. For this reason, for now, we accept this non-ideal way of fixing the
-  // point offset manually from the view bounds. This should be revisited when
-  // fixing issues in TextInputClientMac (https://crbug.com/643233).
-  gfx::Rect root_box = renderWidgetHostView_->GetViewBounds();
-  gfx::Rect view_box = widgetHost->GetView()->GetViewBounds();
-
   TextInputClientMac::GetInstance()->GetStringAtPoint(
       widgetHost, transformedPoint,
       ^(NSAttributedString* string, NSPoint baselinePoint) {
-        baselinePoint.x += view_box.origin().x() - root_box.origin().x();
-        baselinePoint.y +=
-            root_box.bottom_left().y() - view_box.bottom_left().y();
+        if (auto* rwhv = widgetHost->GetView()) {
+          gfx::Point pointInRootView = rwhv->TransformPointToRootCoordSpace(
+              gfx::Point(baselinePoint.x, baselinePoint.y));
+          baselinePoint.x = pointInRootView.x();
+          baselinePoint.y = pointInRootView.y();
+        }
         [self showLookUpDictionaryOverlayInternal:string
                                     baselinePoint:baselinePoint
                                        targetView:self];
@@ -2833,9 +2816,13 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 // Determine whether we should autohide the cursor (i.e., hide it until mouse
 // move) for the given event. Customize here to be more selective about which
 // key presses to autohide on.
-+ (BOOL)shouldAutohideCursorForEvent:(NSEvent*)event {
-  return ([event type] == NSKeyDown &&
-             !([event modifierFlags] & NSCommandKeyMask)) ? YES : NO;
+- (BOOL)shouldAutohideCursorForEvent:(NSEvent*)event {
+  return (renderWidgetHostView_->GetTextInputType() !=
+              ui::TEXT_INPUT_TYPE_NONE &&
+          [event type] == NSKeyDown &&
+          !([event modifierFlags] & NSCommandKeyMask))
+             ? YES
+             : NO;
 }
 
 - (NSArray *)accessibilityArrayAttributeValues:(NSString *)attribute

@@ -623,7 +623,7 @@ base::TimeDelta QuicStreamRequest::GetTimeDelayForWaitingJob() const {
   return factory_->GetTimeDelayForWaitingJob(server_id_);
 }
 
-std::unique_ptr<QuicHttpStream> QuicStreamRequest::CreateStream() {
+std::unique_ptr<HttpStream> QuicStreamRequest::CreateStream() {
   if (!session_)
     return nullptr;
   return base::MakeUnique<QuicHttpStream>(session_, http_server_properties_);
@@ -1057,12 +1057,6 @@ void QuicStreamFactory::OnJobComplete(Job* job, int rv) {
 
 void QuicStreamFactory::OnCertVerifyJobComplete(CertVerifierJob* job, int rv) {
   active_cert_verifier_jobs_.erase(job->server_id());
-}
-
-std::unique_ptr<QuicHttpStream> QuicStreamFactory::CreateFromSession(
-    QuicChromiumClientSession* session) {
-  return base::MakeUnique<QuicHttpStream>(session->GetWeakPtr(),
-                                          http_server_properties_);
 }
 
 void QuicStreamFactory::OnIdleSession(QuicChromiumClientSession* session) {}

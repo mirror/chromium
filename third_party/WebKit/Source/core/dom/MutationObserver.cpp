@@ -206,7 +206,7 @@ void MutationObserver::CleanSlotChangeList(Document& document) {
     if (slot->GetDocument() != document)
       kept.push_back(slot);
   }
-  ActiveSlotChangeList().Swap(kept);
+  ActiveSlotChangeList().swap(kept);
 }
 
 static void ActivateObserver(MutationObserver* observer) {
@@ -292,10 +292,10 @@ void MutationObserver::DeliverMutations() {
 
   MutationObserverVector observers;
   CopyToVector(ActiveMutationObservers(), observers);
-  ActiveMutationObservers().Clear();
+  ActiveMutationObservers().clear();
 
   SlotChangeList slots;
-  slots.Swap(ActiveSlotChangeList());
+  slots.swap(ActiveSlotChangeList());
   for (const auto& slot : slots)
     slot->ClearSlotChangeEventEnqueued();
 

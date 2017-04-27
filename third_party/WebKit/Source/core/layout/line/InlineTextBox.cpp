@@ -75,7 +75,7 @@ LayoutRect InlineTextBox::LogicalOverflowRect() const {
   if (KnownToHaveNoOverflow() || !g_text_boxes_with_overflow)
     return LogicalFrameRect();
 
-  const auto& it = g_text_boxes_with_overflow->Find(this);
+  const auto& it = g_text_boxes_with_overflow->find(this);
   if (it != g_text_boxes_with_overflow->end())
     return it->value;
 
@@ -94,7 +94,7 @@ void InlineTextBox::Move(const LayoutSize& delta) {
   InlineBox::Move(delta);
 
   if (!KnownToHaveNoOverflow() && g_text_boxes_with_overflow) {
-    const auto& it = g_text_boxes_with_overflow->Find(this);
+    const auto& it = g_text_boxes_with_overflow->find(this);
     if (it != g_text_boxes_with_overflow->end())
       it->value.Move(IsHorizontal() ? delta : delta.TransposedSize());
   }
@@ -138,7 +138,7 @@ SelectionState InlineTextBox::GetSelectionState() const {
   if (state == SelectionStart || state == SelectionEnd ||
       state == SelectionBoth) {
     int start_pos, end_pos;
-    GetLineLayoutItem().SelectionStartEnd(start_pos, end_pos);
+    std::tie(start_pos, end_pos) = GetLineLayoutItem().SelectionStartEnd();
     // The position after a hard line break is considered to be past its end.
     // See the corresponding code in InlineTextBox::isSelected.
     int last_selectable = Start() + Len() - (IsLineBreak() ? 1 : 0);
@@ -502,7 +502,7 @@ void InlineTextBox::SelectionStartEnd(int& s_pos, int& e_pos) const {
     start_pos = 0;
     end_pos = GetLineLayoutItem().TextLength();
   } else {
-    GetLineLayoutItem().SelectionStartEnd(start_pos, end_pos);
+    std::tie(start_pos, end_pos) = GetLineLayoutItem().SelectionStartEnd();
     if (GetLineLayoutItem().GetSelectionState() == SelectionStart)
       end_pos = GetLineLayoutItem().TextLength();
     else if (GetLineLayoutItem().GetSelectionState() == SelectionEnd)

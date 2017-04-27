@@ -37,9 +37,6 @@ class ASH_EXPORT SessionController
   // Binds the mojom::SessionControllerRequest to this object.
   void BindRequest(mojom::SessionControllerRequest request);
 
-  // Returns the maximum possible number of logged in users.
-  int GetMaximumNumberOfLoggedInUsers() const;
-
   // Returns the number of signed in users. If 0 is returned, there is either
   // no session in progress or no active user.
   int NumberOfLoggedInUsers() const;
@@ -120,6 +117,7 @@ class ASH_EXPORT SessionController
   void SetUserSessionOrder(
       const std::vector<uint32_t>& user_session_order) override;
   void StartLock(const StartLockCallback& callback) override;
+  void NotifyChromeLockAnimationsComplete() override;
   void RunUnlockAnimation(const RunUnlockAnimationCallback& callback) override;
   void NotifyChromeTerminating() override;
 

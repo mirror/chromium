@@ -713,12 +713,12 @@ void InspectorCSSAgent::FlushPendingProtocolNotifications() {
 }
 
 void InspectorCSSAgent::Reset() {
-  id_to_inspector_style_sheet_.Clear();
-  id_to_inspector_style_sheet_for_inline_style_.Clear();
-  css_style_sheet_to_inspector_style_sheet_.Clear();
-  document_to_css_style_sheets_.Clear();
-  invalidated_documents_.Clear();
-  node_to_inspector_style_sheet_.Clear();
+  id_to_inspector_style_sheet_.clear();
+  id_to_inspector_style_sheet_for_inline_style_.clear();
+  css_style_sheet_to_inspector_style_sheet_.clear();
+  document_to_css_style_sheets_.clear();
+  invalidated_documents_.clear();
+  node_to_inspector_style_sheet_.clear();
   ResetNonPersistentData();
 }
 
@@ -856,7 +856,7 @@ void InspectorCSSAgent::ForcePseudoState(Element* element,
     return;
 
   NodeIdToForcedPseudoState::iterator it =
-      node_id_to_forced_pseudo_state_.Find(node_id);
+      node_id_to_forced_pseudo_state_.find(node_id);
   if (it == node_id_to_forced_pseudo_state_.end())
     return;
 
@@ -1572,7 +1572,7 @@ Response InspectorCSSAgent::forcePseudoState(
   unsigned forced_pseudo_state =
       ComputePseudoClassMask(std::move(forced_pseudo_classes));
   NodeIdToForcedPseudoState::iterator it =
-      node_id_to_forced_pseudo_state_.Find(node_id);
+      node_id_to_forced_pseudo_state_.find(node_id);
   unsigned current_forced_pseudo_state =
       it == node_id_to_forced_pseudo_state_.end() ? 0 : it->value;
   bool need_style_recalc = forced_pseudo_state != current_forced_pseudo_state;
@@ -1612,7 +1612,8 @@ std::unique_ptr<protocol::CSS::CSSMedia> InspectorCSSAgent::BuildMediaObject(
   }
 
   const MediaQuerySet* queries = media->Queries();
-  const HeapVector<Member<MediaQuery>>& query_vector = queries->QueryVector();
+  const Vector<std::unique_ptr<MediaQuery>>& query_vector =
+      queries->QueryVector();
   LocalFrame* frame = nullptr;
   if (parent_style_sheet) {
     if (Document* document = parent_style_sheet->OwnerDocument())
@@ -1629,15 +1630,15 @@ std::unique_ptr<protocol::CSS::CSSMedia> InspectorCSSAgent::BuildMediaObject(
   MediaValues* media_values = MediaValues::CreateDynamicIfFrameExists(frame);
   bool has_media_query_items = false;
   for (size_t i = 0; i < query_vector.size(); ++i) {
-    MediaQuery* query = query_vector.at(i).Get();
-    const ExpressionHeapVector& expressions = query->Expressions();
+    MediaQuery& query = *query_vector.at(i);
+    const ExpressionHeapVector& expressions = query.Expressions();
     std::unique_ptr<protocol::Array<protocol::CSS::MediaQueryExpression>>
         expression_array =
             protocol::Array<protocol::CSS::MediaQueryExpression>::create();
     bool has_expression_items = false;
     for (size_t j = 0; j < expressions.size(); ++j) {
-      MediaQueryExp* media_query_exp = expressions.at(j).Get();
-      MediaQueryExpValue exp_value = media_query_exp->ExpValue();
+      const MediaQueryExp& media_query_exp = expressions.at(j);
+      MediaQueryExpValue exp_value = media_query_exp.ExpValue();
       if (!exp_value.is_value)
         continue;
       const char* value_name =
@@ -1647,7 +1648,7 @@ std::unique_ptr<protocol::CSS::CSSMedia> InspectorCSSAgent::BuildMediaObject(
               protocol::CSS::MediaQueryExpression::create()
                   .setValue(exp_value.value)
                   .setUnit(String(value_name))
-                  .setFeature(media_query_exp->MediaFeature())
+                  .setFeature(media_query_exp.MediaFeature())
                   .build();
 
       if (inspector_style_sheet && media->ParentRule())
@@ -1784,7 +1785,7 @@ InspectorCSSAgent::BuildMediaListChain(CSSRule* rule) {
 InspectorStyleSheetForInlineStyle* InspectorCSSAgent::AsInspectorStyleSheet(
     Element* element) {
   NodeToInspectorStyleSheet::iterator it =
-      node_to_inspector_style_sheet_.Find(element);
+      node_to_inspector_style_sheet_.find(element);
   if (it != node_to_inspector_style_sheet_.end())
     return it->value.Get();
 
@@ -1893,7 +1894,7 @@ Response InspectorCSSAgent::AssertInspectorStyleSheetForId(
     const String& style_sheet_id,
     InspectorStyleSheet*& result) {
   IdToInspectorStyleSheet::iterator it =
-      id_to_inspector_style_sheet_.Find(style_sheet_id);
+      id_to_inspector_style_sheet_.find(style_sheet_id);
   if (it == id_to_inspector_style_sheet_.end())
     return Response::Error("No style sheet with given id found");
   result = it->value.Get();
@@ -1911,7 +1912,7 @@ Response InspectorCSSAgent::AssertStyleSheetForId(
     return response;
   }
   IdToInspectorStyleSheetForInlineStyle::iterator it =
-      id_to_inspector_style_sheet_for_inline_style_.Find(style_sheet_id);
+      id_to_inspector_style_sheet_for_inline_style_.find(style_sheet_id);
   if (it == id_to_inspector_style_sheet_for_inline_style_.end())
     return Response::Error("No style sheet with given id found");
   result = it->value.Get();
@@ -2051,7 +2052,7 @@ void InspectorCSSAgent::DidRemoveDOMNode(Node* node) {
     node_id_to_forced_pseudo_state_.erase(node_id);
 
   NodeToInspectorStyleSheet::iterator it =
-      node_to_inspector_style_sheet_.Find(node);
+      node_to_inspector_style_sheet_.find(node);
   if (it == node_to_inspector_style_sheet_.end())
     return;
 
@@ -2064,7 +2065,7 @@ void InspectorCSSAgent::DidModifyDOMAttr(Element* element) {
     return;
 
   NodeToInspectorStyleSheet::iterator it =
-      node_to_inspector_style_sheet_.Find(element);
+      node_to_inspector_style_sheet_.find(element);
   if (it == node_to_inspector_style_sheet_.end())
     return;
 
@@ -2087,7 +2088,7 @@ void InspectorCSSAgent::ResetPseudoStates() {
       documents_to_change.insert(element->ownerDocument());
   }
 
-  node_id_to_forced_pseudo_state_.Clear();
+  node_id_to_forced_pseudo_state_.clear();
   for (auto& document : documents_to_change)
     document->SetNeedsStyleRecalc(
         kSubtreeStyleChange,
@@ -2349,7 +2350,7 @@ int InspectorCSSAgent::GetStyleIndexForNode(
   if (all_properties_empty)
     return -1;
 
-  ComputedStylesMap::iterator it = style_to_index_map.Find(style);
+  ComputedStylesMap::iterator it = style_to_index_map.find(style);
   if (it != style_to_index_map.end())
     return it->value;
 

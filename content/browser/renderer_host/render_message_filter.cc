@@ -195,59 +195,24 @@ void RenderMessageFilter::OverrideThreadForMessage(const IPC::Message& message,
 }
 
 void RenderMessageFilter::GenerateRoutingID(
-    const GenerateRoutingIDCallback& callback) {
-  callback.Run(render_widget_helper_->GetNextRoutingID());
+    GenerateRoutingIDCallback callback) {
+  std::move(callback).Run(render_widget_helper_->GetNextRoutingID());
 }
 
-void RenderMessageFilter::CreateNewWindow(
-    mojom::CreateNewWindowParamsPtr params,
-    const CreateNewWindowCallback& callback) {
-  bool no_javascript_access;
-  bool can_create_window = GetContentClient()->browser()->CanCreateWindow(
-      render_process_id_, params->opener_render_frame_id, params->opener_url,
-      params->opener_top_level_frame_url, params->opener_security_origin,
-      params->window_container_type, params->target_url, params->referrer,
-      params->frame_name, params->disposition, *params->features,
-      params->user_gesture, params->opener_suppressed, resource_context_,
-      &no_javascript_access);
-
-  mojom::CreateNewWindowReplyPtr reply = mojom::CreateNewWindowReply::New();
-  if (!can_create_window) {
-    reply->route_id = MSG_ROUTING_NONE;
-    reply->main_frame_route_id = MSG_ROUTING_NONE;
-    reply->main_frame_widget_route_id = MSG_ROUTING_NONE;
-    reply->cloned_session_storage_namespace_id = 0;
-    return callback.Run(std::move(reply));
-  }
-
-  // This will clone the sessionStorage for namespace_id_to_clone.
-  scoped_refptr<SessionStorageNamespaceImpl> cloned_namespace =
-      new SessionStorageNamespaceImpl(dom_storage_context_.get(),
-                                      params->session_storage_namespace_id);
-  reply->cloned_session_storage_namespace_id = cloned_namespace->id();
-
-  render_widget_helper_->CreateNewWindow(
-      std::move(params), no_javascript_access, &reply->route_id,
-      &reply->main_frame_route_id, &reply->main_frame_widget_route_id,
-      cloned_namespace.get());
-  callback.Run(std::move(reply));
-}
-
-void RenderMessageFilter::CreateNewWidget(
-    int32_t opener_id,
-    blink::WebPopupType popup_type,
-    const CreateNewWidgetCallback& callback) {
+void RenderMessageFilter::CreateNewWidget(int32_t opener_id,
+                                          blink::WebPopupType popup_type,
+                                          CreateNewWidgetCallback callback) {
   int route_id = MSG_ROUTING_NONE;
   render_widget_helper_->CreateNewWidget(opener_id, popup_type, &route_id);
-  callback.Run(route_id);
+  std::move(callback).Run(route_id);
 }
 
 void RenderMessageFilter::CreateFullscreenWidget(
     int opener_id,
-    const CreateFullscreenWidgetCallback& callback) {
+    CreateFullscreenWidgetCallback callback) {
   int route_id = 0;
   render_widget_helper_->CreateNewFullscreenWidget(opener_id, &route_id);
-  callback.Run(route_id);
+  std::move(callback).Run(route_id);
 }
 
 void RenderMessageFilter::GetSharedBitmapManager(

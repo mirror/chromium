@@ -30,7 +30,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/timer/elapsed_timer.h"
 #include "build/build_config.h"
@@ -181,8 +180,12 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
             request,
             network_delegate,
             base::FilePath(),
-            BrowserThread::GetBlockingPool()->GetTaskRunnerWithShutdownBehavior(
-                base::SequencedWorkerPool::SKIP_ON_SHUTDOWN)),
+            base::CreateTaskRunnerWithTraits(
+                base::TaskTraits()
+                    .MayBlock()
+                    .WithPriority(base::TaskPriority::BACKGROUND)
+                    .WithShutdownBehavior(
+                        base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN))),
         verify_job_(verify_job),
         seek_position_(0),
         bytes_read_(0),
@@ -201,10 +204,6 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
   void GetResponseInfo(net::HttpResponseInfo* info) override {
     *info = response_info_;
   }
-
-  // This always returns 200 because a URLRequestExtensionJob will only get
-  // created in MaybeCreateJob() if the file exists.
-  int GetResponseCode() const override { return 200; }
 
   void Start() override {
     request_timer_.reset(new base::ElapsedTimer());

@@ -62,17 +62,19 @@
         {
             "type": "setting",
             "category": "Debugger",
-            "settingName": "enableAsyncStackTraces",
+            "title": "Disable async stack traces",
+            "settingName": "disableAsyncStackTraces",
             "settingType": "boolean",
             "defaultValue": false,
+            "order": 2,
             "options": [
                 {
                     "value": true,
-                    "title": "Capture async stack traces"
+                    "title": "Do not capture async stack traces"
                 },
                 {
                     "value": false,
-                    "title": "Do not capture async stack traces"
+                    "title": "Capture async stack traces"
                 }
             ]
         },
@@ -80,6 +82,34 @@
             "type": "setting",
             "settingName": "showMetricsRulers",
             "settingType": "boolean",
+            "defaultValue": false
+        },
+        {
+            "type": "setting",
+            "settingName": "showPaintRects",
+            "settingType": "boolean",
+            "storageType": "session",
+            "defaultValue": false
+        },
+        {
+            "type": "setting",
+            "settingName": "showDebugBorders",
+            "settingType": "boolean",
+            "storageType": "session",
+            "defaultValue": false
+        },
+        {
+            "type": "setting",
+            "settingName": "showFPSCounter",
+            "settingType": "boolean",
+            "storageType": "session",
+            "defaultValue": false
+        },
+        {
+            "type": "setting",
+            "settingName": "showScrollBottleneckRects",
+            "settingType": "boolean",
+            "storageType": "session",
             "defaultValue": false
         },
         {
@@ -137,6 +167,7 @@
         "ServiceWorkerManager.js",
         "TracingManager.js",
         "TracingModel.js",
+        "OverlayModel.js",
         "RuntimeModel.js",
         "ScreenCaptureModel.js",
         "Script.js",

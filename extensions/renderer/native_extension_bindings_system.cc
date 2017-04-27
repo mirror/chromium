@@ -18,6 +18,7 @@
 #include "extensions/renderer/api_binding_js_util.h"
 #include "extensions/renderer/chrome_setting.h"
 #include "extensions/renderer/console.h"
+#include "extensions/renderer/content_setting.h"
 #include "extensions/renderer/module_system.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/script_context_set.h"
@@ -197,8 +198,7 @@ v8::Local<v8::Object> CreateRootBinding(v8::Local<v8::Context> context,
                                         APIBindingsSystem* bindings_system) {
   APIBindingHooks* hooks = nullptr;
   v8::Local<v8::Object> binding_object = bindings_system->CreateAPIInstance(
-      name, context, context->GetIsolate(),
-      base::Bind(&IsAPIMethodAvailable, script_context), &hooks);
+      name, context, base::Bind(&IsAPIMethodAvailable, script_context), &hooks);
 
   gin::Handle<APIBindingBridge> bridge_handle = gin::CreateHandle(
       context->GetIsolate(),
@@ -351,6 +351,9 @@ NativeExtensionBindingsSystem::NativeExtensionBindingsSystem(
                                  base::Bind(&StorageArea::CreateStorageArea));
   api_system_.RegisterCustomType("types.ChromeSetting",
                                  base::Bind(&ChromeSetting::Create));
+  api_system_.RegisterCustomType(
+      "contentSettings.ContentSetting",
+      base::Bind(&ContentSetting::Create, base::Bind(&CallJsFunction)));
   api_system_.GetHooksForAPI("webRequest")
       ->SetDelegate(base::MakeUnique<WebRequestHooks>());
 }

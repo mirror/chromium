@@ -25,7 +25,6 @@ U2fHidDevice::U2fHidDevice(scoped_refptr<HidDeviceInfo> device_info)
       state_(State::INIT),
       device_info_(device_info),
       weak_factory_(this) {
-  channel_id_ = kBroadcastChannel;
 }
 
 U2fHidDevice::~U2fHidDevice() {
@@ -341,6 +340,10 @@ std::string U2fHidDevice::GetId() {
 bool U2fHidDevice::IsTestEnabled() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   return command_line->HasSwitch(switches::kEnableU2fHidTest);
+}
+
+base::WeakPtr<U2fDevice> U2fHidDevice::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
 }
 
 }  // namespace device

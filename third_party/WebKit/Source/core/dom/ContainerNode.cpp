@@ -1069,13 +1069,6 @@ void ContainerNode::SetFocused(bool received, WebFocusType focus_type) {
 
   FocusStateChanged();
 
-  UpdateDistribution();
-  for (ContainerNode* node = this; node;
-       node = FlatTreeTraversal::Parent(*node)) {
-    node->SetHasFocusWithin(received);
-    node->FocusWithinStateChanged();
-  }
-
   if (GetLayoutObject() || received)
     return;
 
@@ -1097,6 +1090,14 @@ void ContainerNode::SetFocused(bool received, WebFocusType focus_type) {
                         StyleChangeReasonForTracing::CreateWithExtraData(
                             StyleChangeReason::kPseudoClass,
                             StyleChangeExtraData::g_focus_within));
+  }
+}
+
+void ContainerNode::SetHasFocusWithinUpToAncestor(bool flag, Node* ancestor) {
+  for (ContainerNode* node = this; node && node != ancestor;
+       node = FlatTreeTraversal::Parent(*node)) {
+    node->SetHasFocusWithin(flag);
+    node->FocusWithinStateChanged();
   }
 }
 
@@ -1237,13 +1238,13 @@ static void DispatchChildInsertionEvents(Node& child) {
   Document* document = &child.GetDocument();
 
   if (c->parentNode() &&
-      document->HasListenerType(Document::DOMNODEINSERTED_LISTENER))
+      document->HasListenerType(Document::kDOMNodeInsertedListener))
     c->DispatchScopedEvent(MutationEvent::Create(
         EventTypeNames::DOMNodeInserted, true, c->parentNode()));
 
   // dispatch the DOMNodeInsertedIntoDocument event to all descendants
   if (c->isConnected() && document->HasListenerType(
-                              Document::DOMNODEINSERTEDINTODOCUMENT_LISTENER)) {
+                              Document::kDOMNodeInsertedIntoDocumentListener)) {
     for (; c; c = NodeTraversal::Next(*c, &child))
       c->DispatchScopedEvent(MutationEvent::Create(
           EventTypeNames::DOMNodeInsertedIntoDocument, false));
@@ -1267,7 +1268,7 @@ static void DispatchChildRemovalEvents(Node& child) {
 
   // Dispatch pre-removal mutation events.
   if (c->parentNode() &&
-      document->HasListenerType(Document::DOMNODEREMOVED_LISTENER)) {
+      document->HasListenerType(Document::kDOMNodeRemovedListener)) {
     NodeChildRemovalTracker scope(child);
     c->DispatchScopedEvent(MutationEvent::Create(EventTypeNames::DOMNodeRemoved,
                                                  true, c->parentNode()));
@@ -1275,7 +1276,7 @@ static void DispatchChildRemovalEvents(Node& child) {
 
   // Dispatch the DOMNodeRemovedFromDocument event to all descendants.
   if (c->isConnected() && document->HasListenerType(
-                              Document::DOMNODEREMOVEDFROMDOCUMENT_LISTENER)) {
+                              Document::kDOMNodeRemovedFromDocumentListener)) {
     NodeChildRemovalTracker scope(child);
     for (; c; c = NodeTraversal::Next(*c, &child))
       c->DispatchScopedEvent(MutationEvent::Create(
@@ -1487,7 +1488,7 @@ Element* ContainerNode::getElementById(const AtomicString& id) const {
   if (IsInTreeScope()) {
     // Fast path if we are in a tree scope: call getElementById() on tree scope
     // and check if the matching element is in our subtree.
-    Element* element = ContainingTreeScope().GetElementById(id);
+    Element* element = ContainingTreeScope().getElementById(id);
     if (!element)
       return nullptr;
     if (element->IsDescendantOf(this))

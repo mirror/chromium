@@ -5,6 +5,7 @@
 #include "ash/test/ash_test_helper.h"
 
 #include "ash/accelerators/accelerator_controller_delegate_aura.h"
+#include "ash/ash_switches.h"
 #include "ash/aura/shell_port_classic.h"
 #include "ash/mus/bridge/shell_port_mash.h"
 #include "ash/mus/screen_mus.h"
@@ -32,6 +33,7 @@
 #include "chromeos/network/network_handler.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "device/bluetooth/dbus/bluez_dbus_manager.h"
+#include "services/ui/public/cpp/input_devices/input_device_client.h"
 #include "ui/aura/env.h"
 #include "ui/aura/input_state_lookup.h"
 #include "ui/aura/mus/window_tree_client.h"
@@ -44,6 +46,7 @@
 #include "ui/base/test/material_design_controller_test_api.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
 #include "ui/compositor/test/context_factories_for_test.h"
+#include "ui/display/display_switches.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/test/display_manager_test_api.h"
@@ -82,6 +85,31 @@ AshTestHelper::AshTestHelper(AshTestEnvironment* ash_test_environment)
 AshTestHelper::~AshTestHelper() {}
 
 void AshTestHelper::SetUp(bool start_session) {
+  command_line_ = base::MakeUnique<base::test::ScopedCommandLine>();
+  // TODO(jamescook): Can we do this without changing command line?
+  // Use the origin (1,1) so that it doesn't over
+  // lap with the native mouse cursor.
+  if (!command_line_->GetProcessCommandLine()->HasSwitch(
+          ::switches::kHostWindowBounds)) {
+    command_line_->GetProcessCommandLine()->AppendSwitchASCII(
+        ::switches::kHostWindowBounds, "1+1-800x600");
+  }
+
+  // TODO(wutao): We enabled a smooth screen rotation animation, which is using
+  // an asynchronous method. However for some tests require to evaluate the
+  // screen rotation immediately after the operation of setting display
+  // rotation, we need to append a slow screen rotation animation flag to pass
+  // the tests. When we remove the flag "ash-disable-smooth-screen-rotation", we
+  // need to disable the screen rotation animation in the test.
+  if (!command_line_->GetProcessCommandLine()->HasSwitch(
+          switches::kAshDisableSmoothScreenRotation)) {
+    command_line_->GetProcessCommandLine()->AppendSwitch(
+        switches::kAshDisableSmoothScreenRotation);
+  }
+
+  if (config_ == Config::MUS)
+    input_device_client_ = base::MakeUnique<ui::InputDeviceClient>();
+
   display::ResetDisplayIdForTest();
   if (config_ != Config::CLASSIC)
     aura::test::EnvTestHelper().SetAlwaysUseLastMouseLocation(true);
@@ -219,6 +247,10 @@ void AshTestHelper::TearDown() {
 
   test_views_delegate_.reset();
   wm_state_.reset();
+
+  input_device_client_.reset();
+
+  command_line_.reset();
 
   // WindowManager owns the CaptureController for mus/mash.
   CHECK(config_ != Config::CLASSIC || !::wm::CaptureController::Get());

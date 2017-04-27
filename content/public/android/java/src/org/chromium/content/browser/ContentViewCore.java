@@ -824,9 +824,8 @@ public class ContentViewCore
     }
 
     private void setTouchScrollInProgress(boolean inProgress) {
-        if (mTouchScrollInProgress == inProgress) return;
         mTouchScrollInProgress = inProgress;
-        mSelectionPopupController.hideActionMode(inProgress);
+        mSelectionPopupController.setScrollInProgress(isScrollInProgress());
     }
 
     @SuppressWarnings("unused")
@@ -1308,35 +1307,19 @@ public class ContentViewCore
 
     /**
      * @see View#onHoverEvent(MotionEvent)
-     * Mouse move events are sent on hover enter, hover move and hover exit.
-     * They are sent on hover exit because sometimes it acts as both a hover
-     * move and hover exit.
+     * Mouse move events are sent on hover move.
      */
     public boolean onHoverEvent(MotionEvent event) {
         TraceEvent.begin("onHoverEvent");
 
-        int eventAction = event.getActionMasked();
-
-        // Ignore ACTION_HOVER_ENTER & ACTION_HOVER_EXIT: every mouse-down on
-        // Android follows a hover-exit and is followed by a hover-enter. The
-        // MotionEvent spec seems to support this behavior indirectly.
-        if (eventAction == MotionEvent.ACTION_HOVER_ENTER
-                || eventAction == MotionEvent.ACTION_HOVER_EXIT) {
-            return false;
-        }
-
         MotionEvent offset = createOffsetMotionEvent(event);
         try {
-            if (mBrowserAccessibilityManager != null && !mIsObscuredByAnotherView) {
-                return mBrowserAccessibilityManager.onHoverEvent(offset);
+            if (mBrowserAccessibilityManager != null && !mIsObscuredByAnotherView
+                    && mBrowserAccessibilityManager.onHoverEvent(offset)) {
+                return true;
             }
 
-            getEventForwarder().sendMouseEvent(event.getEventTime(), eventAction, offset.getX(),
-                    offset.getY(), event.getPointerId(0), event.getPressure(0),
-                    event.getOrientation(0), event.getAxisValue(MotionEvent.AXIS_TILT, 0),
-                    0 /* changedButton */, event.getButtonState(), event.getMetaState(),
-                    event.getToolType(0));
-            return true;
+            return getEventForwarder().onMouseEvent(event);
         } finally {
             offset.recycle();
             TraceEvent.end("onHoverEvent");
@@ -1584,13 +1567,6 @@ public class ContentViewCore
         mPreserveSelectionOnNextLossOfFocus = true;
     }
 
-    @CalledByNative
-    private void onSelectionEvent(
-            int eventType, int xAnchor, int yAnchor, int left, int top, int right, int bottom) {
-        mSelectionPopupController.onSelectionEvent(eventType, xAnchor, yAnchor,
-                left, top, right, bottom, isScrollInProgress(), mTouchScrollInProgress);
-    }
-
     private void setTextHandlesTemporarilyHidden(boolean hide) {
         if (mNativeContentViewCore == 0) return;
         nativeSetTextHandlesTemporarilyHidden(mNativeContentViewCore, hide);
@@ -1602,9 +1578,7 @@ public class ContentViewCore
             float minPageScaleFactor, float maxPageScaleFactor, float contentWidth,
             float contentHeight, float viewportWidth, float viewportHeight,
             float browserControlsHeightDp, float browserControlsShownRatio,
-            boolean isMobileOptimizedHint, boolean hasInsertionMarker,
-            boolean isInsertionMarkerVisible, float insertionMarkerHorizontal,
-            float insertionMarkerTop, float insertionMarkerBottom) {
+            boolean isMobileOptimizedHint) {
         TraceEvent.begin("ContentViewCore:updateFrameInfo");
         mIsMobileOptimizedHint = isMobileOptimizedHint;
         // Adjust contentWidth/Height to be always at least as big as
@@ -1668,10 +1642,6 @@ public class ContentViewCore
         if (mBrowserAccessibilityManager != null) {
             mBrowserAccessibilityManager.notifyFrameInfoInitialized();
         }
-
-        mImeAdapter.onUpdateFrameInfo(mRenderCoordinates, hasInsertionMarker,
-                isInsertionMarkerVisible, insertionMarkerHorizontal, insertionMarkerTop,
-                insertionMarkerBottom);
 
         TraceEvent.end("ContentViewCore:updateFrameInfo");
     }
@@ -1768,12 +1738,6 @@ public class ContentViewCore
     @CalledByNative
     private MotionEventSynthesizer createMotionEventSynthesizer() {
         return new MotionEventSynthesizer(getContainerView(), this);
-    }
-
-    @SuppressWarnings("unused")
-    @CalledByNative
-    private void onSelectionChanged(String text) {
-        mSelectionPopupController.onSelectionChanged(text);
     }
 
     @SuppressWarnings("unused")
@@ -2351,20 +2315,21 @@ public class ContentViewCore
         final boolean touchScrollInProgress = mTouchScrollInProgress;
         final int potentiallyActiveFlingCount = mPotentiallyActiveFlingCount;
 
-        setTouchScrollInProgress(false);
         mPotentiallyActiveFlingCount = 0;
+        setTouchScrollInProgress(false);
         if (touchScrollInProgress) updateGestureStateListener(GestureEventType.SCROLL_END);
         if (potentiallyActiveFlingCount > 0) updateGestureStateListener(GestureEventType.FLING_END);
     }
 
     @CalledByNative
     private void onNativeFlingStopped() {
+        if (mPotentiallyActiveFlingCount > 0) {
+            mPotentiallyActiveFlingCount--;
+            updateGestureStateListener(GestureEventType.FLING_END);
+        }
         // Note that mTouchScrollInProgress should normally be false at this
         // point, but we reset it anyway as another failsafe.
         setTouchScrollInProgress(false);
-        if (mPotentiallyActiveFlingCount <= 0) return;
-        mPotentiallyActiveFlingCount--;
-        updateGestureStateListener(GestureEventType.FLING_END);
     }
 
     // DisplayAndroidObserver method.

@@ -236,8 +236,8 @@ void LayoutGrid::UpdateBlockLayout(bool relayout_children) {
       SimplifiedLayout())
     return;
 
-  row_axis_alignment_context_.Clear();
-  col_axis_alignment_context_.Clear();
+  row_axis_alignment_context_.clear();
+  col_axis_alignment_context_.clear();
 
   SubtreeLayoutScope layout_scope(*this);
 
@@ -279,6 +279,22 @@ void LayoutGrid::UpdateBlockLayout(bool relayout_children) {
     // updateLogicalHeight() require a previous call to setLogicalHeight() to
     // resolve heights properly (like for positioned items for example).
     ComputeTrackSizesForDefiniteSize(kForColumns, available_space_for_columns);
+
+    // We take the chance to store the intrinsic sizes as they are just an
+    // intermediate result of the track sizing algorithm. Apart from eventually
+    // saving an algorithm execution (if {min|max}PreferredLogicalWidth() are
+    // called later), it fixes the use case of computing the preferred logical
+    // widths *after* the layout process. Although not very common, this happens
+    // in the Mac (content::RenderViewImpl::didUpdateLayout()) or under some
+    // circumstances when grids are also flex items (crbug.com/708159).
+    if (PreferredLogicalWidthsDirty()) {
+      LayoutUnit scrollbar_width = LayoutUnit(ScrollbarLogicalWidth());
+      min_preferred_logical_width_ =
+          track_sizing_algorithm_.MinContentSize() + scrollbar_width;
+      max_preferred_logical_width_ =
+          track_sizing_algorithm_.MaxContentSize() + scrollbar_width;
+      ClearPreferredLogicalWidthsDirty();
+    }
 
     // 2- Next, the track sizing algorithm resolves the sizes of the grid rows,
     // using the grid column sizes calculated in the previous step.
@@ -423,7 +439,7 @@ LayoutUnit LayoutGrid::GuttersSize(const Grid& grid,
     size_t non_empty_tracks_after_end_line =
         grid.NumTracks(direction) - end_line;
     auto current_empty_track =
-        grid.AutoRepeatEmptyTracks(direction)->Find(end_line - 1);
+        grid.AutoRepeatEmptyTracks(direction)->find(end_line - 1);
     auto end_empty_track = grid.AutoRepeatEmptyTracks(direction)->end();
     // HashSet iterators do not implement operator- so we have to manually
     // iterate to know the number of remaining empty tracks.

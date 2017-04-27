@@ -175,7 +175,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
     blink::WebMediaPlayerClient* client,
     blink::WebMediaPlayerEncryptedMediaClient* encrypted_client,
     WebMediaPlayerDelegate* delegate,
-    std::unique_ptr<RendererFactory> renderer_factory,
+    std::unique_ptr<RendererFactorySelector> renderer_factory_selector,
     linked_ptr<UrlIndex> url_index,
     std::unique_ptr<WebMediaPlayerParams> params)
     : frame_(frame),
@@ -230,7 +230,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
 #endif
       volume_(1.0),
       volume_multiplier_(1.0),
-      renderer_factory_(std::move(renderer_factory)),
+      renderer_factory_selector_(std::move(renderer_factory_selector)),
       surface_manager_(params->surface_manager()),
       overlay_surface_id_(SurfaceManager::kNoSurfaceID),
       suppress_destruction_errors_(false),
@@ -249,7 +249,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
           params->embedded_media_experience_enabled()) {
   DVLOG(1) << __func__;
   DCHECK(!adjust_allocated_memory_cb_.is_null());
-  DCHECK(renderer_factory_);
+  DCHECK(renderer_factory_selector_);
   DCHECK(client_);
   DCHECK(delegate_);
 
@@ -880,9 +880,7 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   TRACE_EVENT0("media", "WebMediaPlayerImpl:paint");
 
-  // TODO(sandersd): Move this check into GetCurrentFrameFromCompositor() when
-  // we have other ways to check if decoder owns video frame.
-  // See http://crbug.com/595716 and http://crbug.com/602708
+  // We can't copy from protected frames.
   if (cdm_)
     return;
 
@@ -958,9 +956,7 @@ bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   TRACE_EVENT0("media", "WebMediaPlayerImpl:copyVideoTextureToPlatformTexture");
 
-  // TODO(sandersd): Move this check into GetCurrentFrameFromCompositor() when
-  // we have other ways to check if decoder owns video frame.
-  // See http://crbug.com/595716 and http://crbug.com/602708
+  // We can't copy from protected frames.
   if (cdm_)
     return false;
 
@@ -1725,7 +1721,7 @@ std::unique_ptr<Renderer> WebMediaPlayerImpl::CreateRenderer() {
   request_surface_cb = BindToCurrentLoop(
       base::Bind(&WebMediaPlayerImpl::OnSurfaceRequested, AsWeakPtr()));
 #endif
-  return renderer_factory_->CreateRenderer(
+  return renderer_factory_selector_->GetCurrentFactory()->CreateRenderer(
       media_task_runner_, worker_task_runner_, audio_source_provider_.get(),
       compositor_, request_surface_cb);
 }

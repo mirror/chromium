@@ -64,11 +64,19 @@ WATERFALL = {
   'type': Types.GPU,
 
   'builders': {
-    'GPU Win Builder' : {},
+    'GPU Win Builder' : {
+      # TODO(machenbach): Remove additional browser_tests here and on several
+      # release bots below when http://crbug.com/714976 is resolved.
+      'additional_compile_targets' : [ "browser_tests" ],
+    },
     'GPU Win Builder (dbg)' : {},
-    'GPU Mac Builder' : {},
+    'GPU Mac Builder' : {
+      'additional_compile_targets' : [ "browser_tests" ],
+    },
     'GPU Mac Builder (dbg)' : {},
-    'GPU Linux Builder' : {},
+    'GPU Linux Builder' : {
+      'additional_compile_targets' : [ "browser_tests" ],
+    },
     'GPU Linux Builder (dbg)' : {},
    },
 
@@ -171,13 +179,23 @@ FYI_WATERFALL = {
   'type': Types.GPU_FYI,
 
   'builders': {
-    'GPU Win Builder' : {},
+    'GPU Win Builder' : {
+      # TODO(machenbach): Remove additional browser_tests here and on several
+      # release bots below when http://crbug.com/714976 is resolved.
+      'additional_compile_targets' : [ "browser_tests" ],
+    },
     'GPU Win Builder (dbg)' : {},
-    'GPU Win x64 Builder' : {},
+    'GPU Win x64 Builder' : {
+      'additional_compile_targets' : [ "browser_tests" ],
+    },
     'GPU Win x64 Builder (dbg)' : {},
-    'GPU Mac Builder' : {},
+    'GPU Mac Builder' : {
+      'additional_compile_targets' : [ "browser_tests" ],
+    },
     'GPU Mac Builder (dbg)' : {},
-    'GPU Linux Builder' : {},
+    'GPU Linux Builder' : {
+      'additional_compile_targets' : [ "browser_tests" ],
+    },
     'GPU Linux Builder (dbg)' : {},
     'Linux ChromiumOS Builder' : {
       'additional_compile_targets' : [ "All" ]
@@ -1470,13 +1488,6 @@ COMMON_GTESTS = {
         'os_types': ['android'],
       },
     ],
-    'args': [
-      '--enable-gpu',
-      '--test-launcher-jobs=1',
-      '--test-launcher-filter-file=../../testing/buildbot/filters/' + \
-      'tab-capture-end2end-tests.browser_tests.filter',
-    ],
-    'test': 'browser_tests',
   },
   'video_decode_accelerator_d3d11_unittest': {
     'tester_configs': [
@@ -1555,8 +1566,8 @@ NON_SWARMED_GTESTS = {
     'args': [
       '--enable-gpu',
       '--test-launcher-jobs=1',
-      '--test-launcher-filter-file=../../testing/buildbot/filters/' + \
-      'tab-capture-end2end-tests.browser_tests.filter',
+      '--gtest_filter=CastStreamingApiTestWithPixelOutput.EndToEnd*:' + \
+          'TabCaptureApiPixelTest.EndToEnd*'
     ],
     'swarming': {
       'can_use_on_swarming_builders': False,
@@ -2312,7 +2323,11 @@ def generate_telemetry_test(tester_name, tester_config,
   prefix_args = [
     benchmark_name,
     '--show-stdout',
-    '--browser=%s' % tester_config['build_config'].lower()
+    '--browser=%s' % tester_config['build_config'].lower(),
+    # --passthrough displays more of the logging in Telemetry when run
+    # --via typ, in particular some of the warnings about tests being
+    # --expected to fail, but passing.
+    '--passthrough',
   ]
   return generate_isolated_test(tester_name, tester_config, test,
                                 test_config, extra_browser_args,

@@ -411,7 +411,7 @@ void SelectorQuery::ExecuteWithId(
     return;
   }
 
-  Element* element = scope.GetElementById(selector_id_);
+  Element* element = scope.getElementById(selector_id_);
   if (!element)
     return;
   if (selector_id_is_rightmost_) {
@@ -544,7 +544,7 @@ SelectorQuery* SelectorQueryCache::Add(const AtomicString& selectors,
   }
 
   HashMap<AtomicString, std::unique_ptr<SelectorQuery>>::iterator it =
-      entries_.Find(selectors);
+      entries_.find(selectors);
   if (it != entries_.end())
     return it->value.get();
 
@@ -570,7 +570,7 @@ SelectorQuery* SelectorQueryCache::Add(const AtomicString& selectors,
 }
 
 void SelectorQueryCache::Invalidate() {
-  entries_.Clear();
+  entries_.clear();
 }
 
 }  // namespace blink

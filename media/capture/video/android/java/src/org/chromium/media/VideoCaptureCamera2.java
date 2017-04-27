@@ -43,7 +43,7 @@ import java.util.List;
  * and their capabilities, using android.hardware.camera2.CameraManager.
  **/
 @JNINamespace("media")
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+@TargetApi(Build.VERSION_CODES.M)
 public class VideoCaptureCamera2 extends VideoCapture {
     // Inner class to extend a CameraDevice state change listener.
     private class CrStateListener extends CameraDevice.StateCallback {
@@ -805,7 +805,13 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 break;
             }
         }
-        // TODO(mcasas): query |cameraCharacteristics| for CONTROL_AE_LOCK_AVAILABLE (API 23)
+        try {
+            if (cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_LOCK_AVAILABLE)) {
+                exposureModes.add(Integer.valueOf(AndroidMeteringMode.FIXED));
+            }
+        } catch (NoSuchFieldError e) {
+            // Ignore this exception, it means CONTROL_AE_LOCK_AVAILABLE is not known.
+        }
         builder.setExposureModes(integerArrayListToArray(exposureModes));
 
         int jniExposureMode = AndroidMeteringMode.CONTINUOUS;
@@ -838,7 +844,13 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 break;
             }
         }
-        // TODO(mcasas): query |cameraCharacteristics| for CONTROL_AWE_LOCK_AVAILABLE (API 23)
+        try {
+            if (cameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_LOCK_AVAILABLE)) {
+                whiteBalanceModes.add(Integer.valueOf(AndroidMeteringMode.FIXED));
+            }
+        } catch (NoSuchFieldError e) {
+            // Ignore this exception, it means CONTROL_AWB_LOCK_AVAILABLE is not known.
+        }
         builder.setWhiteBalanceModes(integerArrayListToArray(whiteBalanceModes));
 
         final int whiteBalanceMode = mPreviewRequest.get(CaptureRequest.CONTROL_AWB_MODE);

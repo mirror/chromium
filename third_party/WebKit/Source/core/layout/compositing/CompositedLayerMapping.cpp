@@ -1596,26 +1596,6 @@ void CompositedLayerMapping::UpdateDecorationOutlineLayerGeometry(
       graphics_layer_->OffsetFromLayoutObject());
 }
 
-void CompositedLayerMapping::RegisterScrollingLayers() {
-  // Register fixed position layers and their containers with the scrolling
-  // coordinator.
-  ScrollingCoordinator* scrolling_coordinator =
-      owning_layer_.GetScrollingCoordinator();
-  if (!scrolling_coordinator)
-    return;
-
-  scrolling_coordinator->UpdateLayerPositionConstraint(&owning_layer_);
-
-  // Page scale is applied as a transform on the root layout view layer. Because
-  // the scroll layer is further up in the hierarchy, we need to avoid marking
-  // the root layout view layer as a container.
-  bool is_container =
-      owning_layer_.GetLayoutObject().CanContainFixedPositionObjects() &&
-      !owning_layer_.IsRootLayer();
-  scrolling_coordinator->SetLayerIsContainerForFixedPositionLayers(
-      graphics_layer_.get(), is_container);
-}
-
 void CompositedLayerMapping::UpdateInternalHierarchy() {
   // m_foregroundLayer has to be inserted in the correct order with child
   // layers, so it's not inserted here.
@@ -2488,6 +2468,37 @@ void CompositedLayerMapping::UpdateClipParent(const PaintLayer* scroll_parent) {
     UpdateClipParentForGraphicsLayer(graphics_layer_.get(), topmost_layer,
                                      clip_parent, scrolling_coordinator);
   }
+}
+
+void CompositedLayerMapping::RegisterScrollingLayers() {
+  // Register fixed position layers and their containers with the scrolling
+  // coordinator.
+  ScrollingCoordinator* scrolling_coordinator =
+      owning_layer_.GetScrollingCoordinator();
+  if (!scrolling_coordinator)
+    return;
+
+  scrolling_coordinator->UpdateLayerPositionConstraint(&owning_layer_);
+
+  // Page scale is applied as a transform on the root layout view layer. Because
+  // the scroll layer is further up in the hierarchy, we need to avoid marking
+  // the root layout view layer as a container.
+  bool is_container =
+      owning_layer_.GetLayoutObject().CanContainFixedPositionObjects() &&
+      !owning_layer_.IsRootLayer();
+  scrolling_coordinator->SetLayerIsContainerForFixedPositionLayers(
+      graphics_layer_.get(), is_container);
+  // Fixed-pos descendants inherits the space that has all CSS property applied,
+  // including perspective, overflow scroll/clip. Thus we also mark every layers
+  // below the main graphics layer so transforms implemented by them don't get
+  // skipped.
+  ApplyToGraphicsLayers(
+      this,
+      [scrolling_coordinator, is_container](GraphicsLayer* layer) {
+        scrolling_coordinator->SetLayerIsContainerForFixedPositionLayers(
+            layer, is_container);
+      },
+      kApplyToChildContainingLayers);
 }
 
 bool CompositedLayerMapping::UpdateSquashingLayers(
@@ -3432,7 +3443,7 @@ void CompositedLayerMapping::InvalidateTargetElementForTesting() {
   // The below is an artificial construct formed intentionally to focus a
   // microbenchmark on the cost of paint with a partial invalidation.
   Element* target_element =
-      owning_layer_.GetLayoutObject().GetDocument().GetElementById(
+      owning_layer_.GetLayoutObject().GetDocument().getElementById(
           AtomicString(kTestPaintInvalidationTargetName));
   // TODO(wkorman): If we don't find the expected target element, we could
   // consider walking to the first leaf node so that the partial-invalidation

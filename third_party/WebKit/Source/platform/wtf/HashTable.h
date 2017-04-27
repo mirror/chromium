@@ -742,8 +742,8 @@ class HashTable final
   template <typename HashTranslator, typename T, typename Extra>
   AddResult InsertPassingHashCode(T&& key, Extra&&);
 
-  iterator Find(KeyPeekInType key) { return Find<IdentityTranslatorType>(key); }
-  const_iterator Find(KeyPeekInType key) const {
+  iterator find(KeyPeekInType key) { return Find<IdentityTranslatorType>(key); }
+  const_iterator find(KeyPeekInType key) const {
     return Find<IdentityTranslatorType>(key);
   }
   bool Contains(KeyPeekInType key) const {
@@ -991,7 +991,7 @@ void HashTable<Key,
     new_capacity = KeyTraits::kMinimumTableSize;
 
   if (new_capacity > Capacity()) {
-    RELEASE_ASSERT(!static_cast<int>(
+    CHECK(!static_cast<int>(
         new_capacity >>
         31));  // HashTable capacity should not overflow 32bit int.
     Rehash(new_capacity, 0);
@@ -1526,7 +1526,7 @@ template <typename Key,
 inline void
 HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
     erase(KeyPeekInType key) {
-  erase(Find(key));
+  erase(find(key));
 }
 
 template <typename Key,
@@ -1624,7 +1624,7 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
     new_size = table_size_;
   } else {
     new_size = table_size_ * 2;
-    RELEASE_ASSERT(new_size > table_size_);
+    CHECK_GT(new_size, table_size_);
   }
 
   return Rehash(new_size, entry);

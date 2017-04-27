@@ -870,11 +870,6 @@ EffectNode* EffectTree::FindNodeFromElementId(ElementId id) {
 bool EffectTree::OnOpacityAnimated(ElementId id, float opacity) {
   EffectNode* node = FindNodeFromElementId(id);
   DCHECK(node);
-  // TODO(crbug.com/706766): Avoid crash. Need more investigation for what is
-  // calling this without setting element id.
-  if (!node)
-    return false;
-
   if (node->opacity == opacity)
     return false;
   node->opacity = opacity;
@@ -888,11 +883,6 @@ bool EffectTree::OnFilterAnimated(ElementId id,
                                   const FilterOperations& filters) {
   EffectNode* node = FindNodeFromElementId(id);
   DCHECK(node);
-  // TODO(crbug.com/706766): Avoid crash. Need more investigation for what is
-  // calling this without setting element id.
-  if (!node)
-    return false;
-
   if (node->filters == filters)
     return false;
   node->filters = filters;
@@ -986,7 +976,7 @@ bool EffectTree::HasCopyRequests() const {
 
 void EffectTree::ClearCopyRequests() {
   for (auto& node : nodes()) {
-    node.num_copy_requests_in_subtree = 0;
+    node.subtree_has_copy_request = false;
     node.has_copy_request = false;
   }
 

@@ -131,7 +131,7 @@ void ScopedStyleResolver::ResetAuthorStyle() {
   author_style_sheets_.clear();
   viewport_dependent_media_query_results_.clear();
   device_dependent_media_query_results_.clear();
-  keyframes_rule_map_.Clear();
+  keyframes_rule_map_.clear();
   tree_boundary_crossing_rule_set_ = nullptr;
   has_deep_or_shadow_selector_ = false;
   needs_append_all_sheets_ = false;
@@ -142,7 +142,7 @@ StyleRuleKeyframes* ScopedStyleResolver::KeyframeStylesForAnimation(
   if (keyframes_rule_map_.IsEmpty())
     return nullptr;
 
-  KeyframesRuleMap::iterator it = keyframes_rule_map_.Find(animation_name);
+  KeyframesRuleMap::iterator it = keyframes_rule_map_.find(animation_name);
   if (it == keyframes_rule_map_.end())
     return nullptr;
 
@@ -153,7 +153,7 @@ void ScopedStyleResolver::AddKeyframeStyle(StyleRuleKeyframes* rule) {
   AtomicString s(rule->GetName());
 
   if (rule->IsVendorPrefixed()) {
-    KeyframesRuleMap::iterator it = keyframes_rule_map_.Find(s.Impl());
+    KeyframesRuleMap::iterator it = keyframes_rule_map_.find(s.Impl());
     if (it == keyframes_rule_map_.end())
       keyframes_rule_map_.Set(s.Impl(), rule);
     else if (it->value->IsVendorPrefixed())
@@ -257,8 +257,6 @@ void ScopedStyleResolver::MatchPageRules(PageRuleCollector& collector) {
 DEFINE_TRACE(ScopedStyleResolver) {
   visitor->Trace(scope_);
   visitor->Trace(author_style_sheets_);
-  visitor->Trace(viewport_dependent_media_query_results_);
-  visitor->Trace(device_dependent_media_query_results_);
   visitor->Trace(keyframes_rule_map_);
   visitor->Trace(tree_boundary_crossing_rule_set_);
 }

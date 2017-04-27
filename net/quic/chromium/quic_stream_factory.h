@@ -130,7 +130,7 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
   // returns the amount of time waiting job should be delayed.
   base::TimeDelta GetTimeDelayForWaitingJob() const;
 
-  std::unique_ptr<QuicHttpStream> CreateStream();
+  std::unique_ptr<HttpStream> CreateStream();
 
   std::unique_ptr<BidirectionalStreamImpl> CreateBidirectionalStreamImpl();
 
@@ -398,10 +398,6 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   typedef std::map<QuicServerId, RequestSet> ServerIDRequestsMap;
   typedef std::map<QuicServerId, std::unique_ptr<CertVerifierJob>>
       CertVerifierJobMap;
-
-  // Returns a newly created QuicHttpStream owned by the caller.
-  std::unique_ptr<QuicHttpStream> CreateFromSession(
-      QuicChromiumClientSession* session);
 
   bool OnResolution(const QuicSessionKey& key, const AddressList& address_list);
   void OnJobComplete(Job* job, int rv);

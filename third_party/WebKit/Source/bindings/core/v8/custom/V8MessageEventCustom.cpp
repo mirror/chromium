@@ -35,7 +35,7 @@
 #include "bindings/core/v8/SerializedScriptValue.h"
 #include "bindings/core/v8/SerializedScriptValueFactory.h"
 #include "bindings/core/v8/V8ArrayBuffer.h"
-#include "bindings/core/v8/V8Binding.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8Blob.h"
 #include "bindings/core/v8/V8EventTarget.h"
 #include "bindings/core/v8/V8MessagePort.h"
@@ -107,10 +107,12 @@ void V8MessageEvent::initMessageEventMethodCustom(
   TOSTRING_VOID(V8StringResource<>, type_arg, info[0]);
   bool can_bubble_arg = false;
   bool cancelable_arg = false;
-  if (!V8Call(info[1]->BooleanValue(info.GetIsolate()->GetCurrentContext()),
-              can_bubble_arg) ||
-      !V8Call(info[2]->BooleanValue(info.GetIsolate()->GetCurrentContext()),
-              cancelable_arg))
+  if (!info[1]
+           ->BooleanValue(info.GetIsolate()->GetCurrentContext())
+           .To(&can_bubble_arg) ||
+      !info[2]
+           ->BooleanValue(info.GetIsolate()->GetCurrentContext())
+           .To(&cancelable_arg))
     return;
   v8::Local<v8::Value> data_arg = info[3];
   TOSTRING_VOID(V8StringResource<>, origin_arg, info[4]);

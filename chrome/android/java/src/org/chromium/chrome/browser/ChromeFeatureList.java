@@ -145,8 +145,8 @@ public abstract class ChromeFeatureList {
     public static final String ANDROID_PAY_INTEGRATION_V1 = "AndroidPayIntegrationV1";
     public static final String ANDROID_PAY_INTEGRATION_V2 = "AndroidPayIntegrationV2";
     public static final String ANDROID_PAYMENT_APPS = "AndroidPaymentApps";
-    public static final String ANDROID_PAYMENT_APPS_FILTER = "AndroidPaymentAppsFilter";
     public static final String AUTOFILL_SCAN_CARDHOLDER_NAME = "AutofillScanCardholderName";
+    public static final String CCT_BACKGROUND_TAB = "CCTBackgroundTab";
     public static final String CCT_EXTERNAL_LINK_HANDLING = "CCTExternalLinkHandling";
     public static final String CCT_POST_MESSAGE_API = "CCTPostMessageAPI";
     public static final String CHROME_HOME = "ChromeHome";
@@ -171,6 +171,9 @@ public abstract class ChromeFeatureList {
     public static final String IMPORTANT_SITES_IN_CBD = "ImportantSitesInCBD";
     public static final String TABS_IN_CBD = "TabsInCBD";
     public static final String IMPROVED_A2HS = "ImprovedA2HS";
+    public static final String SEARCH_ENGINE_PROMO_EXISTING_DEVICE =
+            "SearchEnginePromo.ExistingDevice";
+    public static final String SEARCH_ENGINE_PROMO_NEW_DEVICE = "SearchEnginePromo.NewDevice";
     public static final String NEW_PHOTO_PICKER = "NewPhotoPicker";
     public static final String NO_CREDIT_CARD_ABORT = "NoCreditCardAbort";
     public static final String NTP_CONDENSED_LAYOUT = "NTPCondensedLayout";

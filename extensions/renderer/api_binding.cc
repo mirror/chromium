@@ -289,9 +289,9 @@ APIBinding::~APIBinding() {}
 
 v8::Local<v8::Object> APIBinding::CreateInstance(
     v8::Local<v8::Context> context,
-    v8::Isolate* isolate,
     const AvailabilityCallback& is_available) {
   DCHECK(IsContextValid(context));
+  v8::Isolate* isolate = context->GetIsolate();
   if (object_template_.IsEmpty())
     InitializeTemplate(isolate);
   DCHECK(!object_template_.IsEmpty());
@@ -474,12 +474,13 @@ void APIBinding::GetCustomPropertyObject(
   if (!IsContextValid(context))
     return;
 
+  v8::Context::Scope context_scope(context);
   CHECK(info.Data()->IsExternal());
   auto* property_data =
       static_cast<CustomPropertyData*>(info.Data().As<v8::External>()->Value());
 
   v8::Local<v8::Object> property = property_data->create_custom_type.Run(
-      context, property_data->type_name, property_data->property_name,
+      isolate, property_data->type_name, property_data->property_name,
       property_data->property_values);
   if (property.IsEmpty())
     return;
@@ -498,11 +499,7 @@ void APIBinding::HandleCall(const std::string& name,
   // GetCurrentContext() should always be correct.
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
-  std::vector<v8::Local<v8::Value>> argument_list;
-  if (arguments->Length() > 0) {
-    // Just copying handles should never fail.
-    CHECK(arguments->GetRemaining(&argument_list));
-  }
+  std::vector<v8::Local<v8::Value>> argument_list = arguments->GetAll();
 
   bool invalid_invocation = false;
   v8::Local<v8::Function> custom_callback;

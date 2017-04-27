@@ -125,12 +125,6 @@ const char kPrintPdfAsImageDescription[] =
     "If enabled, an option to print PDF files as images will be available "
     "in print preview.";
 
-const char kPrintScalingName[] = "Print Scaling.";
-
-const char kPrintScalingDescription[] =
-    "If enabled, an option to scale documents will be available in print "
-    "preview.";
-
 const char kNaclName[] = "Native Client";
 
 #if defined(OS_ANDROID)
@@ -191,6 +185,15 @@ const char kMarkHttpAsName[] = "Mark non-secure origins as non-secure";
 const char kMarkHttpAsDescription[] = "Change the UI treatment for HTTP pages";
 
 const char kMarkHttpAsDangerous[] = "Always mark HTTP as actively dangerous";
+
+//  Material design of the Incognito NTP.
+
+extern const char kMaterialDesignIncognitoNTPName[] =
+    "Material Design Incognito NTP.";
+
+extern const char kMaterialDesignIncognitoNTPDescription[] =
+    "If enabled, the Incognito New Tab page uses the new material design "
+    "with a better readable text.";
 
 const char kSavePageAsMhtmlName[] = "Save Page as MHTML";
 
@@ -545,6 +548,12 @@ const char kWebrtcHwH264EncodingDescription[] =
     "Support in WebRTC for encoding h264 video streams using platform "
     "hardware.";
 
+const char kWebrtcHwVP8EncodingName[] = "WebRTC hardware vp8 video encoding";
+
+const char kWebrtcHwVP8EncodingDescription[] =
+    "Support in WebRTC for encoding vp8 video streams using platform "
+    "hardware.";
+
 const char kWebrtcSrtpAesGcmName[] =
     "Negotiation with GCM cipher suites for SRTP in WebRTC";
 
@@ -645,17 +654,6 @@ const char kGestureRequirementForMediaPlaybackDescription[] =
     "User gesture requirement for playing media elements. Disabling this "
     "will allow autoplay to work.";
 
-#if !defined(OS_ANDROID)
-
-const char kCrossOriginMediaPlaybackRequiresUserGestureName[] =
-    "Media playback in cross-origin iframes requires user gesture";
-
-const char kCrossOriginMediaPlaybackRequiresUserGestureDescription[] =
-    "Playing media elements in cross-origin iframes requires user gesture. "
-    "Disabling this will allow autoplay in cross-origin iframes to work.";
-
-#endif  // !defined(OS_ANDROID)
-
 const char kPassiveDocumentEventListenersDescription[] =
     "Forces touchstart, and touchmove event listeners on document level "
     "targets (which haven't requested otherwise) to be treated as passive.";
@@ -739,11 +737,11 @@ const char kAshEnableMirroredScreenDescription[] =
     "Enable the mirrored screen mode. This mode flips the screen image "
     "horizontally.";
 
-const char kAshEnableSmoothScreenRotationName[] =
-    "Enable smooth rotation animations.";
+const char kAshDisableSmoothScreenRotationName[] =
+    "Disable smooth rotation animations.";
 
-const char kAshEnableSmoothScreenRotationDescription[] =
-    "Enable smooth rotation animations.";
+const char kAshDisableSmoothScreenRotationDescription[] =
+    "Disable smooth rotation animations.";
 
 const char kMaterialDesignInkDropAnimationFast[] = "Fast";
 
@@ -2558,12 +2556,6 @@ const char kAndroidPaymentAppsName[] = "Android payment apps";
 const char kAndroidPaymentAppsDescription[] =
     "Enable third party Android apps to integrate as payment apps";
 
-const char kAndroidPaymentAppsFilterTitle[] = "Android payment apps filter";
-
-const char kAndroidPaymentAppsFilterDescription[] =
-    "Enable filtering out third party Android apps that can not be shown in "
-    "settings";
-
 #endif  // defined(OS_ANDROID)
 
 const char kFeaturePolicyName[] = "Feature Policy";
@@ -3032,5 +3024,29 @@ const char kEnableIdleTimeSpellCheckingName[] =
 const char kEnableIdleTimeSpellCheckingDescription[] =
     "Make spell-checking code run only when the browser is idle, so that input "
     "latency is reduced, especially when editing long articles, emails, etc.";
+
+#if defined(OS_ANDROID)
+
+const char kEnableOmniboxClipboardProviderName[] =
+    "Omnibox clipboard URL suggestions";
+
+const char kEnableOmniboxClipboardProviderDescription[] =
+    "Provide a suggestion of the URL stored in the clipboard (if any) upon "
+    "focus in the omnibox.";
+
+#endif  // defined(OS_ANDROID)
+
+const char kAutoplayPolicyName[] = "Autoplay policy";
+
+const char kAutoplayPolicyDescription[] =
+    "Policy used when deciding if audio or video is allowed to autoplay.";
+
+const char kAutoplayPolicyNoUserGestureRequired[] =
+    "No user gesture is required.";
+
+const char kAutoplayPolicyUserGestureRequired[] = "User gesture is required.";
+
+const char kAutoplayPolicyCrossOriginUserGestureRequired[] =
+    "User gesture is required for cross-origin iframes.";
 
 }  // namespace flag_descriptions

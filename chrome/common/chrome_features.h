@@ -111,6 +111,8 @@ extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate;
 
 extern const base::Feature kMaterialDesignHistory;
 
+extern const base::Feature kMaterialDesignIncognitoNTP;
+
 extern const base::Feature kMaterialDesignSettings;
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
@@ -148,8 +150,6 @@ extern const base::Feature kPreloadLockScreen;
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 extern const base::Feature kPrintPdfAsImage;
-
-extern const base::Feature kPrintScaling;
 #endif
 
 extern const base::Feature kPushMessagingBackgroundMode;

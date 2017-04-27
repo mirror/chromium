@@ -2830,7 +2830,7 @@ TEST_F(LayerTreeHostImplTest, PageScaleAnimationCompletedNotification) {
   host_impl_->DidFinishImplFrame();
 }
 
-TEST_F(LayerTreeHostImplTest, MaxScrollOffsetAffectedByBoundsDelta) {
+TEST_F(LayerTreeHostImplTest, MaxScrollOffsetAffectedByViewportBoundsDelta) {
   SetupScrollAndContentsLayers(gfx::Size(100, 100));
   host_impl_->SetViewportSize(gfx::Size(50, 50));
   host_impl_->active_tree()->PushPageScaleFromMainThread(1.f, 0.5f, 4.f);
@@ -2843,17 +2843,17 @@ TEST_F(LayerTreeHostImplTest, MaxScrollOffsetAffectedByBoundsDelta) {
   DCHECK(inner_container);
   EXPECT_EQ(gfx::ScrollOffset(50, 50), inner_scroll->MaxScrollOffset());
 
-  inner_container->SetBoundsDelta(gfx::Vector2dF(15.f, 15.f));
-  inner_scroll->SetBoundsDelta(gfx::Vector2dF(7.f, 7.f));
+  inner_container->SetViewportBoundsDelta(gfx::Vector2dF(15.f, 15.f));
+  inner_scroll->SetViewportBoundsDelta(gfx::Vector2dF(7.f, 7.f));
   EXPECT_EQ(gfx::ScrollOffset(42, 42), inner_scroll->MaxScrollOffset());
 
-  inner_container->SetBoundsDelta(gfx::Vector2dF());
-  inner_scroll->SetBoundsDelta(gfx::Vector2dF());
+  inner_container->SetViewportBoundsDelta(gfx::Vector2dF());
+  inner_scroll->SetViewportBoundsDelta(gfx::Vector2dF());
   inner_scroll->SetBounds(gfx::Size());
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   DrawFrame();
 
-  inner_scroll->SetBoundsDelta(gfx::Vector2dF(60.f, 60.f));
+  inner_scroll->SetViewportBoundsDelta(gfx::Vector2dF(60.f, 60.f));
   EXPECT_EQ(gfx::ScrollOffset(10, 10), inner_scroll->MaxScrollOffset());
 }
 
@@ -2931,12 +2931,10 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
   void RunTest(LayerTreeSettings::ScrollbarAnimator animator) {
     LayerTreeSettings settings = DefaultSettings();
     settings.scrollbar_animator = animator;
-    settings.scrollbar_show_delay = base::TimeDelta::FromMilliseconds(20);
-    settings.scrollbar_fade_out_delay = base::TimeDelta::FromMilliseconds(20);
+    settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(20);
     settings.scrollbar_fade_out_resize_delay =
         base::TimeDelta::FromMilliseconds(20);
-    settings.scrollbar_fade_out_duration =
-        base::TimeDelta::FromMilliseconds(20);
+    settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(20);
 
     // If no animator is set, scrollbar won't show and no animation is expected.
     bool expecting_animations = animator != LayerTreeSettings::NO_ANIMATOR;
@@ -3155,10 +3153,8 @@ class LayerTreeHostImplTestScrollbarOpacity : public LayerTreeHostImplTest {
   void RunTest(LayerTreeSettings::ScrollbarAnimator animator) {
     LayerTreeSettings settings = DefaultSettings();
     settings.scrollbar_animator = animator;
-    settings.scrollbar_show_delay = base::TimeDelta::FromMilliseconds(20);
-    settings.scrollbar_fade_out_delay = base::TimeDelta::FromMilliseconds(20);
-    settings.scrollbar_fade_out_duration =
-        base::TimeDelta::FromMilliseconds(20);
+    settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(20);
+    settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(20);
     gfx::Size content_size(100, 100);
 
     // If no animator is set, scrollbar won't show and no animation is expected.
@@ -3254,9 +3250,8 @@ TEST_F(LayerTreeHostImplTestScrollbarOpacity, NoAnimator) {
 TEST_F(LayerTreeHostImplTest, ScrollbarVisibilityChangeCausesRedrawAndCommit) {
   LayerTreeSettings settings = DefaultSettings();
   settings.scrollbar_animator = LayerTreeSettings::AURA_OVERLAY;
-  settings.scrollbar_show_delay = base::TimeDelta::FromMilliseconds(20);
-  settings.scrollbar_fade_out_delay = base::TimeDelta::FromMilliseconds(20);
-  settings.scrollbar_fade_out_duration = base::TimeDelta::FromMilliseconds(20);
+  settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(20);
+  settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(20);
   gfx::Size content_size(100, 100);
 
   CreateHostImpl(settings, CreateCompositorFrameSink());
@@ -3288,14 +3283,14 @@ TEST_F(LayerTreeHostImplTest, ScrollbarVisibilityChangeCausesRedrawAndCommit) {
 
     base::TimeTicks fake_now = base::TimeTicks::Now();
     scrollbar_controller->Animate(fake_now);
-    fake_now += settings.scrollbar_fade_out_delay;
+    fake_now += settings.scrollbar_fade_delay;
     scrollbar_controller->Animate(fake_now);
 
     ASSERT_TRUE(scrollbar_controller->ScrollbarsHidden());
   }
 
-  // Move the mouse over the scrollbar region. This should post a delayed show
-  // task. Execute it to show the scrollbars.
+  // Move the mouse over the scrollbar region. This should post a delayed fade
+  // in task. Execute it to show the scrollbars.
   {
     animation_task_ = base::Closure();
     scrollbar_controller->DidMouseMoveNear(VERTICAL, 0);
@@ -3303,13 +3298,19 @@ TEST_F(LayerTreeHostImplTest, ScrollbarVisibilityChangeCausesRedrawAndCommit) {
     ASSERT_FALSE(animation_task_.IsCancelled());
   }
 
-  // The show task should cause the scrollbars to show. Ensure that we
+  // The fade in task should cause the scrollbars to show. Ensure that we
   // requested a redraw and a commit.
   {
     did_request_redraw_ = false;
     did_request_commit_ = false;
     ASSERT_TRUE(scrollbar_controller->ScrollbarsHidden());
     animation_task_.Run();
+
+    base::TimeTicks fake_now = base::TimeTicks::Now();
+    scrollbar_controller->Animate(fake_now);
+    fake_now += settings.scrollbar_fade_duration;
+    scrollbar_controller->Animate(fake_now);
+
     ASSERT_FALSE(scrollbar_controller->ScrollbarsHidden());
     EXPECT_TRUE(did_request_redraw_);
     EXPECT_TRUE(did_request_commit_);
@@ -3353,9 +3354,8 @@ TEST_F(LayerTreeHostImplTest, ScrollbarInnerLargerThanOuter) {
 TEST_F(LayerTreeHostImplTest, ScrollbarRegistration) {
   LayerTreeSettings settings = DefaultSettings();
   settings.scrollbar_animator = LayerTreeSettings::ANDROID_OVERLAY;
-  settings.scrollbar_show_delay = base::TimeDelta::FromMilliseconds(20);
-  settings.scrollbar_fade_out_delay = base::TimeDelta::FromMilliseconds(20);
-  settings.scrollbar_fade_out_duration = base::TimeDelta::FromMilliseconds(20);
+  settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(20);
+  settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(20);
   CreateHostImpl(settings, CreateCompositorFrameSink());
 
   gfx::Size viewport_size(300, 200);
@@ -3410,8 +3410,9 @@ TEST_F(LayerTreeHostImplTest, ScrollbarRegistration) {
   // Changing one of the viewport layers should result in a scrollbar animation
   // update.
   animation_task_ = base::Closure();
-  host_impl_->active_tree()->InnerViewportContainerLayer()->SetBoundsDelta(
-      gfx::Vector2dF(10, 10));
+  host_impl_->active_tree()
+      ->InnerViewportContainerLayer()
+      ->SetViewportBoundsDelta(gfx::Vector2dF(10, 10));
   EXPECT_FALSE(animation_task_.Equals(base::Closure()));
   animation_task_ = base::Closure();
   host_impl_->active_tree()->OuterViewportScrollLayer()->SetCurrentScrollOffset(
@@ -3482,9 +3483,8 @@ TEST_F(LayerTreeHostImplTest, ScrollbarRegistration) {
 void LayerTreeHostImplTest::SetupMouseMoveAtWithDeviceScale(
     float device_scale_factor) {
   LayerTreeSettings settings = DefaultSettings();
-  settings.scrollbar_show_delay = base::TimeDelta::FromMilliseconds(500);
-  settings.scrollbar_fade_out_delay = base::TimeDelta::FromMilliseconds(500);
-  settings.scrollbar_fade_out_duration = base::TimeDelta::FromMilliseconds(300);
+  settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(500);
+  settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
   settings.scrollbar_animator = LayerTreeSettings::AURA_OVERLAY;
 
   gfx::Size viewport_size(300, 200);
@@ -4826,7 +4826,8 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
   // account for the difference between the layout height and the current
   // browser controls offset.
   EXPECT_EQ(viewport_size_, inner_clip_ptr->bounds());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0.f, 50.f), inner_clip_ptr->bounds_delta());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(0.f, 50.f),
+                   inner_clip_ptr->ViewportBoundsDelta());
 
   host_impl_->active_tree()->SetCurrentBrowserControlsShownRatio(1.f);
   host_impl_->DidChangeBrowserControlsPosition();
@@ -4835,7 +4836,8 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
             host_impl_->browser_controls_manager()->TopControlsShownRatio());
   EXPECT_EQ(50.f, host_impl_->browser_controls_manager()->TopControlsHeight());
   EXPECT_EQ(50.f, host_impl_->browser_controls_manager()->ContentTopOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0.f, 0.f), inner_clip_ptr->bounds_delta());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(0.f, 0.f),
+                   inner_clip_ptr->ViewportBoundsDelta());
   EXPECT_EQ(gfx::Size(viewport_size_.width(), viewport_size_.height() - 50.f),
             inner_clip_ptr->bounds());
 }
@@ -12111,9 +12113,8 @@ TEST_F(LayerTreeHostImplTest, RecomputeGpuRasterOnCompositorFrameSinkChange) {
 void LayerTreeHostImplTest::SetupMouseMoveAtTestScrollbarStates(
     bool main_thread_scrolling) {
   LayerTreeSettings settings = DefaultSettings();
-  settings.scrollbar_show_delay = base::TimeDelta::FromMilliseconds(500);
-  settings.scrollbar_fade_out_delay = base::TimeDelta::FromMilliseconds(500);
-  settings.scrollbar_fade_out_duration = base::TimeDelta::FromMilliseconds(300);
+  settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(500);
+  settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
   settings.scrollbar_animator = LayerTreeSettings::AURA_OVERLAY;
 
   gfx::Size viewport_size(300, 200);

@@ -8,6 +8,8 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/ui/browser_dialogs.h"
+#include "chrome/browser/ui/views/payments/contact_info_editor_view_controller.h"
 #include "chrome/browser/ui/views/payments/credit_card_editor_view_controller.h"
 #include "chrome/browser/ui/views/payments/cvc_unmask_view_controller.h"
 #include "chrome/browser/ui/views/payments/error_message_view_controller.h"
@@ -74,6 +76,8 @@ PaymentRequestDialogView::PaymentRequestDialogView(
   SetupSpinnerOverlay();
 
   ShowInitialPaymentSheet();
+
+  chrome::RecordDialogCreation(chrome::DialogIdentifier::PAYMENT_REQUEST);
 }
 
 PaymentRequestDialogView::~PaymentRequestDialogView() {}
@@ -245,14 +249,28 @@ void PaymentRequestDialogView::ShowCreditCardEditor(
 }
 
 void PaymentRequestDialogView::ShowShippingAddressEditor(
+    base::OnceClosure on_edited,
+    base::OnceCallback<void(const autofill::AutofillProfile&)> on_added,
     autofill::AutofillProfile* profile) {
   view_stack_->Push(CreateViewAndInstallController(
                         base::MakeUnique<ShippingAddressEditorViewController>(
-                            request_->spec(), request_->state(), this, profile),
+                            request_->spec(), request_->state(), this,
+                            std::move(on_edited), std::move(on_added), profile),
                         &controller_map_),
                     /* animate = */ true);
   if (observer_for_testing_)
     observer_for_testing_->OnShippingAddressEditorOpened();
+}
+
+void PaymentRequestDialogView::ShowContactInfoEditor(
+    autofill::AutofillProfile* profile) {
+  view_stack_->Push(CreateViewAndInstallController(
+                        base::MakeUnique<ContactInfoEditorViewController>(
+                            request_->spec(), request_->state(), this, profile),
+                        &controller_map_),
+                    /* animate = */ true);
+  if (observer_for_testing_)
+    observer_for_testing_->OnContactInfoEditorOpened();
 }
 
 void PaymentRequestDialogView::EditorViewUpdated() {

@@ -84,7 +84,7 @@ DocumentMarkerController::DocumentMarkerController(Document& document)
 }
 
 void DocumentMarkerController::Clear() {
-  markers_.Clear();
+  markers_.clear();
   possibly_existing_marker_types_ = 0;
 }
 
@@ -482,7 +482,7 @@ void DocumentMarkerController::RemoveMarkersForNode(
     return;
   DCHECK(!markers_.IsEmpty());
 
-  MarkerMap::iterator iterator = markers_.Find(node);
+  MarkerMap::iterator iterator = markers_.find(node);
   if (iterator != markers_.end())
     RemoveMarkersFromList(iterator, marker_types);
 }
@@ -491,17 +491,16 @@ void DocumentMarkerController::RemoveSpellingMarkersUnderWords(
     const Vector<String>& words) {
   for (auto& node_markers : markers_) {
     const Node& node = *node_markers.key;
-    if (!node.IsTextNode())  // MarkerRemoverPredicate requires a Text node.
+    if (!node.IsTextNode())
       continue;
     MarkerLists* markers = node_markers.value;
-    for (DocumentMarker::MarkerType type : DocumentMarker::AllMarkers()) {
+    for (DocumentMarker::MarkerType type :
+         DocumentMarker::MisspellingMarkers()) {
       MarkerList* list = ListForType(markers, type);
       if (!list)
         continue;
-      bool removed_markers = DocumentMarkerListEditor::RemoveMarkersUnderWords(
+      DocumentMarkerListEditor::RemoveMarkersUnderWords(
           list, ToText(node).data(), words);
-      if (removed_markers && type == DocumentMarker::kTextMatch)
-        InvalidatePaintForTickmarks(node);
     }
   }
 }
@@ -516,7 +515,7 @@ void DocumentMarkerController::RemoveMarkersOfTypes(
   CopyKeysToVector(markers_, nodes_with_markers);
   unsigned size = nodes_with_markers.size();
   for (unsigned i = 0; i < size; ++i) {
-    MarkerMap::iterator iterator = markers_.Find(nodes_with_markers[i]);
+    MarkerMap::iterator iterator = markers_.find(nodes_with_markers[i]);
     if (iterator != markers_.end())
       RemoveMarkersFromList(iterator, marker_types);
   }

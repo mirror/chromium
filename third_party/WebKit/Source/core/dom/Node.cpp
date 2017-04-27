@@ -1519,11 +1519,10 @@ unsigned short Node::compareDocumentPosition(
 
   // There was no difference between the two parent chains, i.e., one was a
   // subset of the other.  The shorter chain is the ancestor.
-  return index1 < index2
-             ? kDocumentPositionFollowing | kDocumentPositionContainedBy |
-                   connection
-             : kDocumentPositionPreceding | kDocumentPositionContains |
-                   connection;
+  return index1 < index2 ? kDocumentPositionFollowing |
+                               kDocumentPositionContainedBy | connection
+                         : kDocumentPositionPreceding |
+                               kDocumentPositionContains | connection;
 }
 
 String Node::DebugName() const {
@@ -1867,7 +1866,7 @@ void Node::DidMoveToNewDocument(Document& old_document) {
         event_target_data->event_listener_map;
     if (!listener_map.IsEmpty()) {
       for (const auto& type : listener_map.EventTypes())
-        GetDocument().AddListenerTypeIfNeeded(type);
+        GetDocument().AddListenerTypeIfNeeded(type, *this);
     }
   }
 
@@ -1894,7 +1893,7 @@ void Node::DidMoveToNewDocument(Document& old_document) {
 void Node::AddedEventListener(const AtomicString& event_type,
                               RegisteredEventListener& registered_listener) {
   EventTarget::AddedEventListener(event_type, registered_listener);
-  GetDocument().AddListenerTypeIfNeeded(event_type);
+  GetDocument().AddListenerTypeIfNeeded(event_type, *this);
   if (Page* page = GetDocument().GetPage())
     page->GetEventHandlerRegistry().DidAddEventHandler(
         *this, event_type, registered_listener.Options());
@@ -2099,7 +2098,8 @@ void Node::HandleLocalEvents(Event& event) {
   if (!HasEventTargetData())
     return;
 
-  if (IsDisabledFormControl(this) && event.IsMouseEvent()) {
+  if (IsDisabledFormControl(this) && event.IsMouseEvent() &&
+      !RuntimeEnabledFeatures::sendMouseEventsDisabledFormControlsEnabled()) {
     UseCounter::Count(GetDocument(),
                       UseCounter::kDispatchMouseEventOnDisabledFormControl);
     return;
@@ -2125,7 +2125,7 @@ void Node::DispatchSubtreeModifiedEvent() {
   DCHECK(!EventDispatchForbiddenScope::IsEventDispatchForbidden());
 #endif
 
-  if (!GetDocument().HasListenerType(Document::DOMSUBTREEMODIFIED_LISTENER))
+  if (!GetDocument().HasListenerType(Document::kDOMSubtreeModifiedListener))
     return;
 
   DispatchScopedEvent(

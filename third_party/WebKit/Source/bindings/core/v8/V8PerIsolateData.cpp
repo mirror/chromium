@@ -125,10 +125,10 @@ void V8PerIsolateData::Destroy(v8::Isolate* isolate) {
   data->private_property_.reset();
   data->string_cache_->Dispose();
   data->string_cache_.reset();
-  data->interface_template_map_for_non_main_world_.Clear();
-  data->interface_template_map_for_main_world_.Clear();
-  data->operation_template_map_for_non_main_world_.Clear();
-  data->operation_template_map_for_main_world_.Clear();
+  data->interface_template_map_for_non_main_world_.clear();
+  data->interface_template_map_for_main_world_.clear();
+  data->operation_template_map_for_non_main_world_.clear();
+  data->operation_template_map_for_main_world_.clear();
   if (IsMainThread())
     g_main_thread_per_isolate_data = 0;
 
@@ -157,7 +157,7 @@ v8::Local<v8::FunctionTemplate> V8PerIsolateData::FindOrCreateOperationTemplate(
     v8::Local<v8::Signature> signature,
     int length) {
   auto& map = SelectOperationTemplateMap(world);
-  auto result = map.Find(key);
+  auto result = map.find(key);
   if (result != map.end())
     return result->value.Get(GetIsolate());
 
@@ -172,7 +172,7 @@ v8::Local<v8::FunctionTemplate> V8PerIsolateData::FindInterfaceTemplate(
     const DOMWrapperWorld& world,
     const void* key) {
   auto& map = SelectInterfaceTemplateMap(world);
-  auto result = map.Find(key);
+  auto result = map.find(key);
   if (result != map.end())
     return result->value.Get(GetIsolate());
   return v8::Local<v8::FunctionTemplate>();
@@ -190,7 +190,7 @@ const v8::Eternal<v8::Name>* V8PerIsolateData::FindOrCreateEternalNameCache(
     const void* lookup_key,
     const char* const names[],
     size_t count) {
-  auto it = eternal_name_cache_.Find(lookup_key);
+  auto it = eternal_name_cache_.find(lookup_key);
   const Vector<v8::Eternal<v8::Name>>* vector = nullptr;
   if (UNLIKELY(it == eternal_name_cache_.end())) {
     v8::Isolate* isolate = this->GetIsolate();
@@ -238,7 +238,7 @@ bool V8PerIsolateData::HasInstance(
     const WrapperTypeInfo* untrusted_wrapper_type_info,
     v8::Local<v8::Value> value,
     V8FunctionTemplateMap& map) {
-  auto result = map.Find(untrusted_wrapper_type_info);
+  auto result = map.find(untrusted_wrapper_type_info);
   if (result == map.end())
     return false;
   v8::Local<v8::FunctionTemplate> templ = result->value.Get(GetIsolate());
@@ -262,7 +262,7 @@ v8::Local<v8::Object> V8PerIsolateData::FindInstanceInPrototypeChain(
     V8FunctionTemplateMap& map) {
   if (value.IsEmpty() || !value->IsObject())
     return v8::Local<v8::Object>();
-  auto result = map.Find(info);
+  auto result = map.find(info);
   if (result == map.end())
     return v8::Local<v8::Object>();
   v8::Local<v8::FunctionTemplate> templ = result->value.Get(GetIsolate());
@@ -276,7 +276,7 @@ void V8PerIsolateData::AddEndOfScopeTask(std::unique_ptr<EndOfScopeTask> task) {
 
 void V8PerIsolateData::RunEndOfScopeTasks() {
   Vector<std::unique_ptr<EndOfScopeTask>> tasks;
-  tasks.Swap(end_of_scope_tasks_);
+  tasks.swap(end_of_scope_tasks_);
   for (const auto& task : tasks)
     task->Run();
   DCHECK(end_of_scope_tasks_.IsEmpty());

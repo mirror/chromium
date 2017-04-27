@@ -61,9 +61,7 @@
 #import "ios/web/public/web_client.h"
 #include "ios/web/public/web_kit_constants.h"
 #import "ios/web/public/web_state/context_menu_params.h"
-#include "ios/web/public/web_state/credential.h"
 #import "ios/web/public/web_state/crw_web_controller_observer.h"
-#include "ios/web/public/web_state/js/credential_util.h"
 #import "ios/web/public/web_state/js/crw_js_injection_manager.h"
 #import "ios/web/public/web_state/js/crw_js_injection_receiver.h"
 #import "ios/web/public/web_state/page_display_state.h"
@@ -493,6 +491,10 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // unless the request was a POST.
 @property(nonatomic, readonly) NSDictionary* currentHTTPHeaders;
 
+// YES if a user interaction has been registered at any time since the page has
+// loaded.
+@property(nonatomic, readwrite) BOOL userInteractionRegistered;
+
 // Updates web view's user agent according to |userAgentType|. It is no-op if
 // |userAgentType| is NONE.
 - (void)updateWebViewUserAgentFromUserAgentType:
@@ -629,6 +631,11 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 - (void)goDelta:(int)delta;
 // Informs the native controller if web usage is allowed or not.
 - (void)setNativeControllerWebUsageEnabled:(BOOL)webUsageEnabled;
+// Acts on a single message from the JS object, parsed from JSON into a
+// DictionaryValue. Returns NO if the format for the message was invalid.
+- (BOOL)respondToMessage:(base::DictionaryValue*)crwMessage
+       userIsInteracting:(BOOL)userIsInteracting
+               originURL:(const GURL&)originURL;
 // Called when web controller receives a new message from the web page.
 - (void)didReceiveScriptMessage:(WKScriptMessage*)message;
 // Returns a new script which wraps |script| with windowID check so |script| is
@@ -750,6 +757,8 @@ typedef void (^ViewportStateCompletion)(const web::PageViewportState*);
 - (BOOL)isMainFrameNavigationAction:(WKNavigationAction*)action;
 // Returns whether external URL navigation action should be opened.
 - (BOOL)shouldOpenExternalURLForNavigationAction:(WKNavigationAction*)action;
+// Returns the header height.
+- (CGFloat)headerHeight;
 // Updates SSL status for the current navigation item based on the information
 // provided by web view.
 - (void)updateSSLStatusForCurrentNavigationItem;
@@ -840,18 +849,6 @@ typedef void (^ViewportStateCompletion)(const web::PageViewportState*);
 // Handles 'form.activity' message.
 - (BOOL)handleFormActivityMessage:(base::DictionaryValue*)message
                           context:(NSDictionary*)context;
-// Handles 'navigator.credentials.request' message.
-- (BOOL)handleCredentialsRequestedMessage:(base::DictionaryValue*)message
-                                  context:(NSDictionary*)context;
-// Handles 'navigator.credentials.notifySignedIn' message.
-- (BOOL)handleSignedInMessage:(base::DictionaryValue*)message
-                      context:(NSDictionary*)context;
-// Handles 'navigator.credentials.notifySignedOut' message.
-- (BOOL)handleSignedOutMessage:(base::DictionaryValue*)message
-                       context:(NSDictionary*)context;
-// Handles 'navigator.credentials.notifyFailedSignIn' message.
-- (BOOL)handleSignInFailedMessage:(base::DictionaryValue*)message
-                          context:(NSDictionary*)context;
 // Handles 'window.error' message.
 - (BOOL)handleWindowErrorMessage:(base::DictionaryValue*)message
                          context:(NSDictionary*)context;
@@ -879,6 +876,10 @@ typedef void (^ViewportStateCompletion)(const web::PageViewportState*);
 - (BOOL)handleWindowHistoryDidReplaceStateMessage:
             (base::DictionaryValue*)message
                                           context:(NSDictionary*)context;
+
+// Caches request POST data in the given session entry.
+- (void)cachePOSTDataForRequest:(NSURLRequest*)request
+               inNavigationItem:(web::NavigationItemImpl*)item;
 
 // Returns YES if the given |action| should be allowed to continue.
 // If this returns NO, the load should be cancelled.
@@ -2362,14 +2363,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
         @selector(handleDocumentSubmitMessage:context:);
     (*handlers)["form.activity"] =
         @selector(handleFormActivityMessage:context:);
-    (*handlers)["navigator.credentials.request"] =
-        @selector(handleCredentialsRequestedMessage:context:);
-    (*handlers)["navigator.credentials.notifySignedIn"] =
-        @selector(handleSignedInMessage:context:);
-    (*handlers)["navigator.credentials.notifySignedOut"] =
-        @selector(handleSignedOutMessage:context:);
-    (*handlers)["navigator.credentials.notifyFailedSignIn"] =
-        @selector(handleSignInFailedMessage:context:);
     (*handlers)["window.error"] = @selector(handleWindowErrorMessage:context:);
     (*handlers)["window.hashchange"] =
         @selector(handleWindowHashChangeMessage:context:);
@@ -2581,99 +2574,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
   _webStateImpl->OnFormActivityRegistered(formName, fieldName, type, value,
                                           inputMissing);
-  return YES;
-}
-
-- (BOOL)handleCredentialsRequestedMessage:(base::DictionaryValue*)message
-                                  context:(NSDictionary*)context {
-  double request_id = -1;
-  if (!message->GetDouble("requestId", &request_id)) {
-    DLOG(WARNING) << "JS message parameter not found: requestId";
-    return NO;
-  }
-  bool unmediated = false;
-  if (!message->GetBoolean("unmediated", &unmediated)) {
-    DLOG(WARNING) << "JS message parameter not found: unmediated";
-    return NO;
-  }
-  base::ListValue* federations_value = nullptr;
-  if (!message->GetList("federations", &federations_value)) {
-    DLOG(WARNING) << "JS message parameter not found: federations";
-    return NO;
-  }
-  std::vector<std::string> federations;
-  for (const auto& federation_value : *federations_value) {
-    std::string federation;
-    if (!federation_value.GetAsString(&federation)) {
-      DLOG(WARNING) << "JS message parameter 'federations' contains wrong type";
-      return NO;
-    }
-    federations.push_back(federation);
-  }
-  DCHECK(context[kUserIsInteractingKey]);
-  _webStateImpl->OnCredentialsRequested(
-      static_cast<int>(request_id), net::GURLWithNSURL(context[kOriginURLKey]),
-      unmediated, federations, [context[kUserIsInteractingKey] boolValue]);
-  return YES;
-}
-
-- (BOOL)handleSignedInMessage:(base::DictionaryValue*)message
-                      context:(NSDictionary*)context {
-  double request_id = -1;
-  if (!message->GetDouble("requestId", &request_id)) {
-    DLOG(WARNING) << "JS message parameter not found: requestId";
-    return NO;
-  }
-  base::DictionaryValue* credential_data = nullptr;
-  web::Credential credential;
-  if (message->GetDictionary("credential", &credential_data)) {
-    if (!web::DictionaryValueToCredential(*credential_data, &credential)) {
-      DLOG(WARNING) << "JS message parameter 'credential' is invalid";
-      return NO;
-    }
-    _webStateImpl->OnSignedIn(static_cast<int>(request_id),
-                              net::GURLWithNSURL(context[kOriginURLKey]),
-                              credential);
-  } else {
-    _webStateImpl->OnSignedIn(static_cast<int>(request_id),
-                              net::GURLWithNSURL(context[kOriginURLKey]));
-  }
-  return YES;
-}
-
-- (BOOL)handleSignedOutMessage:(base::DictionaryValue*)message
-                       context:(NSDictionary*)context {
-  double request_id = -1;
-  if (!message->GetDouble("requestId", &request_id)) {
-    DLOG(WARNING) << "JS message parameter not found: requestId";
-    return NO;
-  }
-  _webStateImpl->OnSignedOut(static_cast<int>(request_id),
-                             net::GURLWithNSURL(context[kOriginURLKey]));
-  return YES;
-}
-
-- (BOOL)handleSignInFailedMessage:(base::DictionaryValue*)message
-                          context:(NSDictionary*)context {
-  double request_id = -1;
-  if (!message->GetDouble("requestId", &request_id)) {
-    DLOG(WARNING) << "JS message parameter not found: requestId";
-    return NO;
-  }
-  base::DictionaryValue* credential_data = nullptr;
-  web::Credential credential;
-  if (message->GetDictionary("credential", &credential_data)) {
-    if (!web::DictionaryValueToCredential(*credential_data, &credential)) {
-      DLOG(WARNING) << "JS message parameter 'credential' is invalid";
-      return NO;
-    }
-    _webStateImpl->OnSignInFailed(static_cast<int>(request_id),
-                                  net::GURLWithNSURL(context[kOriginURLKey]),
-                                  credential);
-  } else {
-    _webStateImpl->OnSignInFailed(static_cast<int>(request_id),
-                                  net::GURLWithNSURL(context[kOriginURLKey]));
-  }
   return YES;
 }
 
@@ -5163,11 +5063,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 - (NSUInteger)observerCount {
   DCHECK_EQ(_observerBridges.size(), [_observers count]);
   return [_observers count];
-}
-
-- (void)simulateLoadRequestWithURL:(const GURL&)URL {
-  _lastRegisteredRequestURL = URL;
-  _loadPhase = web::LOAD_REQUESTED;
 }
 
 - (NSString*)referrerFromNavigationAction:(WKNavigationAction*)action {
