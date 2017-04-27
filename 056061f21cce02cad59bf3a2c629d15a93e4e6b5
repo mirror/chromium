@@ -52,6 +52,24 @@
       "revId": "056061f21cce02cad59bf3a2c629d15a93e4e6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a96895_fb5c2811",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-04-27T22:48:05Z",
+      "side": 1,
+      "message": "Actually I got confused. The workaround I put in (call PrepareTiles on SetVisible true) was removed (by me!) later in https://codereview.chromium.org/1247033007/ when I made scheduler end the begin frame when going invisible. So the test doesn\u0027t capture LTHI behavior correctly.\n\nI propose that we test this:\ncall DidPrepareTiles N times\nrun a begin frame, no call to PrepareTiles because we\u0027ve counted it as already done for the current frame\nrun a begin frame, should call PrepareTiles\n(Note that this test has nothing to do with SetVisible)\n\nI\u0027ll also remove the did_prepare_tiles_ \u003d false in SchedulerStateMachine::SetVisible because that\u0027s not needed.\n\nWDYT?",
+      "parentUuid": "189309d3_6b0dd479",
+      "revId": "056061f21cce02cad59bf3a2c629d15a93e4e6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
