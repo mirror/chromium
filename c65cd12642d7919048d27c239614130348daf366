@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c054bed3_c5e243aa",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-04-27T21:55:13Z",
+      "side": 1,
+      "message": "Is it possible to just reuse \"LUCI linux_chromium_variable\" above but have a dedicated build dir for \"Linux Builder (dbg)\"?",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 173,
+        "endChar": 5
+      },
+      "revId": "c65cd12642d7919048d27c239614130348daf366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
