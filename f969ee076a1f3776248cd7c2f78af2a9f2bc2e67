@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5ff9dca_ef082605",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-04-27T01:02:54Z",
+      "side": 1,
+      "message": "Can you refactor line 616 to 627 to a separate method \u0026 add unittest for it? Something like ShouldBenchmarkBeScheduled(benchmark, config_platform)",
+      "revId": "f969ee076a1f3776248cd7c2f78af2a9f2bc2e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064a0d1f_d8ef45d7",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-04-27T01:02:54Z",
+      "side": 1,
+      "message": "I think there is nothing hacky about this. The logic is very straight forward: \"Telemetry specifies that the benchmark is onl enabled on Android, so we skip it\" :-)",
+      "range": {
+        "startLine": 621,
+        "startChar": 75,
+        "endLine": 621,
+        "endChar": 0
+      },
+      "revId": "f969ee076a1f3776248cd7c2f78af2a9f2bc2e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83abb7dd_804bb3de",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-04-27T01:02:54Z",
+      "side": 1,
+      "message": "How many benchmarks are Disabled(\u0027all\u0027)? I think we probably should move them all to contrib/",
+      "range": {
+        "startLine": 893,
+        "startChar": 67,
+        "endLine": 893,
+        "endChar": 0
+      },
+      "revId": "f969ee076a1f3776248cd7c2f78af2a9f2bc2e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5456314_8a83e4ee",
         "filename": "tools/perf/core/perf_data_generator.py",
         "patchSetId": 11
