@@ -38,9 +38,16 @@ cr.define('gpu', function() {
       if (browserBridge.clientInfo) {
         var clientInfo = browserBridge.clientInfo;
 
-        var commandLineParts = clientInfo.command_line.split(' ');
-        commandLineParts.shift(); // Pop off the exe path
-        var commandLineString = commandLineParts.join(' ')
+        var commandLinePath, commandLineArgs
+        var commandLineMatch = clientInfo.command_line.match(/^"(.*)" (.*)$/)
+        if (commandLineMatch) {
+          commnadLinePath = commandLineMatch[1]
+          commandLineArgs = commandLineMatch[2]
+        } else {
+          var commandLineParts = clientInfo.command_line.split(' ')
+          commandLinePath = commandLineParts.shift()
+          commandLineArgs = commandLineParts.join(' ')
+        }
 
         this.setTable_('client-info', [
           {
@@ -72,8 +79,12 @@ cr.define('gpu', function() {
             value: clientInfo.graphics_backend
           },
           {
+            description: 'Command Line Path',
+            value: commandLinePath
+          },
+          {
             description: 'Command Line Args',
-            value: commandLineString
+            value: commandLineArgs
           }]);
       } else {
         this.setText_('client-info', '... loading...');
