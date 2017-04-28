@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a199817e_04aff21f",
+        "filename": "chrome/browser/spellchecker/spellcheck_service_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-04-28T16:23:01Z",
+      "side": 1,
+      "message": "Yes, it was being reached while binding_ was already bound.  I\u0027ve removed this line.  There was an extra Bind happening.  Debugging found it in the void InitSpellcheck() helper, which\n\n  - creates a SpellcheckService\n       + creates a singleton instance if needed\n          + that internally calls spellcheck-\u003eInitForRenderer (Bind #1)\n       + returns the singleton instance\n  - then explicitly calls spellcheck-\u003eInitForRenderer (Bind #2)\n\nThere\u0027s no need for the explicit call for the tests (removed), the first Bind #1 is enough.",
+      "parentUuid": "08703c69_442c4df2",
+      "revId": "ea19ae3f7f82c778cd488431e34ad99df55e3a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c37b2bc_835a88ed",
         "filename": "components/spellcheck/common/BUILD.gn",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "723e55ac_feb67735",
+        "filename": "components/spellcheck/common/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-04-28T16:23:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c37b2bc_835a88ed",
+      "revId": "ea19ae3f7f82c778cd488431e34ad99df55e3a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28ce09a4_0b3476ff",
         "filename": "components/spellcheck/renderer/spellcheck.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-04-27T17:06:07Z",
       "side": 1,
       "message": "We never SetForProcess outside of the browser process, so this is always null in all render processes, testing or not.\n\nYou want ChildThread::Get()-\u003eGetServiceManagerConnection().",
+      "revId": "ea19ae3f7f82c778cd488431e34ad99df55e3a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1713e90f_40f7886a",
+        "filename": "components/spellcheck/renderer/spellcheck.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-04-28T16:23:01Z",
+      "side": 1,
+      "message": "\u003e We never SetForProcess outside of the browser process, so this is always null in all render processes, testing or not.\n\nAh thanks (the API name confused me, I expected it meant any process).\n\n\u003e You want ChildThread::Get()-\u003eGetServiceManagerConnection().\n\nRighto, will go with that.",
+      "parentUuid": "28ce09a4_0b3476ff",
       "revId": "ea19ae3f7f82c778cd488431e34ad99df55e3a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
