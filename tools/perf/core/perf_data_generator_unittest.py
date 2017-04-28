@@ -2,11 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 import unittest
+import mock
 
 from core import perf_data_generator
 from core.perf_data_generator import BenchmarkMetadata
 
 from telemetry import benchmark
+from telemetry import decorators
 
 
 class PerfDataGeneratorTest(unittest.TestCase):
@@ -140,3 +142,42 @@ class PerfDataGeneratorTest(unittest.TestCase):
     self.assertEquals(
         generated_test_names,
         {'blacklisted', 'not_blacklisted', 'not_blacklisted.reference'})
+
+  @mock.patch('telemetry.decorators.GetDisabledAttributes')
+  @mock.patch('telemetry.decorators.GetEnabledAttributes')
+  def testShouldBenchmarkBeScheduledNormal(self, enabled_f, disabled_f):
+    disabled_f.return_value = []
+    enabled_f.return_value = []
+    self.assertEqual(
+        perf_data_generator.ShouldBenchmarkBeScheduled(None, 'win'),
+        True)
+
+  @mock.patch('telemetry.decorators.GetDisabledAttributes')
+  @mock.patch('telemetry.decorators.GetEnabledAttributes')
+  def testShouldBenchmarkBeScheduledDisabledAll(self, enabled_f, disabled_f):
+    disabled_f.return_value = ['all']
+    enabled_f.return_value = []
+    self.assertEqual(
+        perf_data_generator.ShouldBenchmarkBeScheduled(None, 'win'),
+        False)
+
+  @mock.patch('telemetry.decorators.GetDisabledAttributes')
+  @mock.patch('telemetry.decorators.GetEnabledAttributes')
+  def testShouldBenchmarkBeScheduledOnDesktopMobileTest(
+      self, enabled_f, disabled_f):
+    disabled_f.return_value = []
+    enabled_f.return_value = ['android']
+    self.assertEqual(
+        perf_data_generator.ShouldBenchmarkBeScheduled(None, 'win'),
+        False)
+
+  @mock.patch('telemetry.decorators.GetDisabledAttributes')
+  @mock.patch('telemetry.decorators.GetEnabledAttributes')
+  def testShouldBenchmarkBeScheduledOnMobileMobileTest(
+      self, enabled_f, disabled_f):
+    disabled_f.return_value = []
+    enabled_f.return_value = ['android']
+    self.assertEqual(
+        perf_data_generator.ShouldBenchmarkBeScheduled(None, 'android'),
+        True)
+
