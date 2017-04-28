@@ -42,6 +42,8 @@ bool BorderObscuresBackgroundEdge(const ComputedStyle& style) {
 
 BackgroundBleedAvoidance BoxDecorationData::DetermineBackgroundBleedAvoidance(
     const LayoutBox& layout_box) {
+  return kBackgroundBleedClipLayer;
+
   if (layout_box.IsDocumentElement())
     return kBackgroundBleedNone;
 
