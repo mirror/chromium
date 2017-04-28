@@ -16,6 +16,24 @@
       "revId": "7d57a8fa0d13db4fcb178bb58bb9389fa7670d74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c9c95e_a2fbf292",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8ErrorEventCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-04-28T08:45:39Z",
+      "side": 0,
+      "message": "Hmm, if we want to keep per-world error it seems we can\u0027t remove this custom getter.\n\nMaybe we should mitigate a risk of overwriting an error by adding checks in ErrorEvent::SetError() ?\nif (!error_.IsEmpty() \u0026\u0026 world_ !\u003d script_state-\u003eWorld()) { /* reject setting error */ } ?",
+      "parentUuid": "55b23b25_6cd6556f",
+      "revId": "7d57a8fa0d13db4fcb178bb58bb9389fa7670d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
