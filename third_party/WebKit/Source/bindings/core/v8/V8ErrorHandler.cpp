@@ -66,16 +66,19 @@ v8::Local<v8::Value> V8ErrorHandler::CallListenerFunction(
   v8::Local<v8::Object> event_object;
   if (!js_event->ToObject(script_state->GetContext()).ToLocal(&event_object))
     return v8::Null(GetIsolate());
-  auto private_error = V8PrivateProperty::GetErrorEventError(GetIsolate());
-  v8::Local<v8::Value> error = private_error.GetOrUndefined(event_object);
-  if (error->IsUndefined())
-    error = v8::Null(GetIsolate());
+  v8::Local<v8::Value> v8_error;
+  ScriptValue error = error_event->error(script_state);
+  if (error.IsEmpty() || error.IsUndefined()) {
+    v8_error = v8::Null(GetIsolate());
+  } else {
+    v8_error = error.V8Value();
+  }
 
   v8::Local<v8::Value> parameters[5] = {
       V8String(GetIsolate(), error_event->message()),
       V8String(GetIsolate(), error_event->filename()),
       v8::Integer::New(GetIsolate(), error_event->lineno()),
-      v8::Integer::New(GetIsolate(), error_event->colno()), error};
+      v8::Integer::New(GetIsolate(), error_event->colno()), v8_error};
   v8::TryCatch try_catch(GetIsolate());
   try_catch.SetVerbose(true);
   v8::MaybeLocal<v8::Value> result;
@@ -101,15 +104,8 @@ void V8ErrorHandler::StoreExceptionOnErrorEventWrapper(
     ErrorEvent* event,
     v8::Local<v8::Value> data,
     v8::Local<v8::Object> creation_context) {
-  v8::Local<v8::Value> wrapped_event =
-      ToV8(event, creation_context, script_state->GetIsolate());
-  if (wrapped_event.IsEmpty())
-    return;
-
-  DCHECK(wrapped_event->IsObject());
-  auto private_error =
-      V8PrivateProperty::GetErrorEventError(script_state->GetIsolate());
-  private_error.Set(wrapped_event.As<v8::Object>(), data);
+  DCHECK(event);
+  event->SetError(script_state, data);
 }
 
 // static
@@ -117,19 +113,8 @@ v8::Local<v8::Value> V8ErrorHandler::LoadExceptionFromErrorEventWrapper(
     ScriptState* script_state,
     ErrorEvent* event,
     v8::Local<v8::Object> creation_context) {
-  v8::Local<v8::Value> wrapped_event =
-      ToV8(event, creation_context, script_state->GetIsolate());
-  if (wrapped_event.IsEmpty() || !wrapped_event->IsObject())
-    return v8::Local<v8::Value>();
-
-  DCHECK(wrapped_event->IsObject());
-  auto private_error =
-      V8PrivateProperty::GetErrorEventError(script_state->GetIsolate());
-  v8::Local<v8::Value> error =
-      private_error.GetOrUndefined(wrapped_event.As<v8::Object>());
-  if (error->IsUndefined())
-    return v8::Local<v8::Value>();
-  return error;
+  DCHECK(event);
+  return event->error(script_state).V8Value();
 }
 
 bool V8ErrorHandler::ShouldPreventDefault(v8::Local<v8::Value> return_value) {

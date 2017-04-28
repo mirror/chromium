@@ -40,21 +40,25 @@ namespace blink {
 ErrorEvent::ErrorEvent()
     : sanitized_message_(),
       location_(SourceLocation::Create(String(), 0, 0, nullptr)),
+      error_(this),
       world_(DOMWrapperWorld::Current(v8::Isolate::GetCurrent())) {}
 
-ErrorEvent::ErrorEvent(const AtomicString& type,
+ErrorEvent::ErrorEvent(ScriptState* script_state,
+                       const AtomicString& type,
                        const ErrorEventInit& initializer)
     : Event(type, initializer),
       sanitized_message_(),
-      world_(DOMWrapperWorld::Current(v8::Isolate::GetCurrent())) {
+      error_(this),
+      world_(script_state->World()) {
   if (initializer.hasMessage())
     sanitized_message_ = initializer.message();
   location_ = SourceLocation::Create(
       initializer.hasFilename() ? initializer.filename() : String(),
       initializer.hasLineno() ? initializer.lineno() : 0,
       initializer.hasColno() ? initializer.colno() : 0, nullptr);
-  if (initializer.hasError())
-    error_ = initializer.error();
+  if (initializer.hasError()) {
+    error_.Set(initializer.error().GetIsolate(), initializer.error().V8Value());
+  }
 }
 
 ErrorEvent::ErrorEvent(const String& message,
@@ -64,8 +68,13 @@ ErrorEvent::ErrorEvent(const String& message,
     : Event(EventTypeNames::error, false, true),
       sanitized_message_(message),
       location_(std::move(location)),
-      error_(error),
-      world_(world) {}
+      error_(this),
+      world_(world) {
+  // TODO(bashi): Not sure checking InContext() here is correct.
+  if (!error.IsEmpty() && error.GetIsolate()->InContext()) {
+    error_.Set(error.GetIsolate(), error.V8Value());
+  }
+}
 
 void ErrorEvent::SetUnsanitizedMessage(const String& message) {
   DCHECK(unsanitized_message_.IsEmpty());
@@ -79,19 +88,32 @@ const AtomicString& ErrorEvent::InterfaceName() const {
 }
 
 ScriptValue ErrorEvent::error(ScriptState* script_state) const {
-  // Don't return |m_error| when we are in the different worlds to avoid
+  // Don't return |error_| when we are in the different worlds to avoid
   // leaking a V8 value.
   // We do not clone Error objects (exceptions), for 2 reasons:
   // 1) Errors carry a reference to the isolated world's global object, and
   //    thus passing it around would cause leakage.
   // 2) Errors cannot be cloned (or serialized):
-  if (World() != &script_state->World())
-    return ScriptValue();
-  return error_;
+  if (World() != &script_state->World() || error_.IsEmpty())
+    return ScriptValue(script_state, v8::Null(script_state->GetIsolate()));
+  return ScriptValue(script_state, error_.NewLocal(script_state->GetIsolate()));
+}
+
+void ErrorEvent::SetError(ScriptState* script_state,
+                          v8::Local<v8::Value> error) {
+  if (!error.IsEmpty()) {
+    world_ = RefPtr<DOMWrapperWorld>(script_state->World());
+    error_.Set(script_state->GetIsolate(), error);
+  }
 }
 
 DEFINE_TRACE(ErrorEvent) {
   Event::Trace(visitor);
+}
+
+DEFINE_TRACE_WRAPPERS(ErrorEvent) {
+  visitor->TraceWrappers(error_);
+  Event::TraceWrappers(visitor);
 }
 
 }  // namespace blink

@@ -40,7 +40,6 @@ class ScriptWrappable;
   X(CustomElementLifecycle, DetachedCallback)         \
   X(CustomEvent, Detail)                              \
   X(DOMException, Error)                              \
-  X(ErrorEvent, Error)                                \
   X(FetchEvent, Request)                              \
   X(Global, Event)                                    \
   X(IDBCursor, Request)                               \
