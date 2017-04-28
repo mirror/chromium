@@ -15,7 +15,6 @@ bindings_core_v8_files =
                     "core/v8/custom/V8CustomXPathNSResolver.h",
                     "core/v8/custom/V8DevToolsHostCustom.cpp",
                     "core/v8/custom/V8DocumentCustom.cpp",
-                    "core/v8/custom/V8ErrorEventCustom.cpp",
                     "core/v8/custom/V8EventTargetCustom.cpp",
                     "core/v8/custom/V8HTMLAllCollectionCustom.cpp",
                     "core/v8/custom/V8HTMLPlugInElementCustom.cpp",
