@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55b23b25_6cd6556f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8ErrorEventCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-04-28T08:22:03Z",
+      "side": 0,
+      "message": "I\u0027m not sure if we can remove line 42 - 48. What we\u0027re doing here is that:\n\n1) Check if there\u0027s a per-world error stored by V8ErrorHandler::StoreExceptionOnErrorEventWrapper.\n2) Check if there\u0027s an error stored in ErrorEvent.\n\nHere you\u0027re removing the logic 1). It might be correct but not obvious to me. If you use ErrorEvent::error_ to store the per-world error in 1), there is a risk of overwriting an error stored by another world. (Maybe it should not happen though.)",
+      "revId": "7d57a8fa0d13db4fcb178bb58bb9389fa7670d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

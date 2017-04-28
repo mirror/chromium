@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd8ec1b1_32ebd2ce",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ErrorHandler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-04-28T08:22:03Z",
+      "side": 1,
+      "message": "Can we probably remove the helper function?",
+      "revId": "5196e546f85913311215c29ce531a81e07412da4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a35a01b_5d9ed191",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ErrorHandler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-04-28T08:22:03Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5196e546f85913311215c29ce531a81e07412da4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
