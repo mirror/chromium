@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b9e96a_e1005b91",
+        "filename": "tools/perf/core/benchmark_sharding_map.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-04-29T15:21:57Z",
+      "side": 1,
+      "message": "Instead of keying by benchmarks, I think we can key by bots. i.e:\n\n\"build149-m1\": {\n    \"benchmarks\": [\n                 \"battor.steady_state\", \n                 \"blink_perf.blink_gc\",\n                  ....\n     ],\n    \"expected_cycle_time\": ...\n\",\n....\n\nThe reason is this make it easy to glance how well balanced the bots are \u0026 evaluate what happen when we add/remove a benchmark. Wdyt?",
+      "range": {
+        "startLine": 3,
+        "startChar": 19,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "8a34aa4b5fce8137ad00b7eb82db16e45ac61334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
