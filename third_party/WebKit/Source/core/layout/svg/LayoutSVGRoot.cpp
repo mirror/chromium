@@ -196,10 +196,6 @@ void LayoutSVGRoot::UpdateLayout() {
   is_layout_size_changed_ =
       viewport_may_have_changed && svg->HasRelativeLengths();
 
-  SubtreeLayoutScope scope(*this);
-  if (is_layout_size_changed_ && IsDocumentElement())
-    svg->InvalidateRelativeLengthClients(&scope);
-
   SVGLayoutSupport::LayoutChildren(FirstChild(), false,
                                    did_screen_scale_factor_change_,
                                    is_layout_size_changed_);
