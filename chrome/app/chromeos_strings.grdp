@@ -3880,6 +3880,9 @@ Press any key to continue exploring.
   <message name="IDS_NETWORK_TYPE_ETHERNET" desc="The ethernet network type.">
     Ethernet
   </message>
+  <message name="IDS_NETWORK_TYPE_TETHER" desc="The tether network type.">
+    Tether
+  </message>
   <message name="IDS_NETWORK_TYPE_WIFI" desc="The wifi network type.">
     Wi-Fi
   </message>
@@ -4788,14 +4791,14 @@ Battery full
   <message name="IDS_KEYBOARD_OVERLAY_TOGGLE_HIGH_CONTRAST_MODE" desc="The text in the keyboard overlay to explain the shortcut (Toggle high contrast mode).">
     Toggle High Contrast Mode
   </message>
-  <message name="IDS_KEYBOARD_OVERLAY_TOGGLE_PROJECTION_TOUCH_HUD" desc="The text in the keyboard overlay to explain the shortcut.">
-    Projection touch HUD
+  <message name="IDS_KEYBOARD_OVERLAY_TOGGLE_PROJECTION_TOUCH_HUD" desc="The text in the keyboard overlay to explain the shortcut to show the points where a user interfaces with the touch screen. This would be useful for someone doing a presentation where they need the audience to see the points on the screen that are touched.">
+    Show touch points
   </message>
   <message name="IDS_KEYBOARD_OVERLAY_TOGGLE_SPEECH_INPUT" desc="The text in the keyboard overlay to explain the shortcut (start or stop speech input).">
     Speech input
   </message>
-  <message name="IDS_KEYBOARD_OVERLAY_TOUCH_HUD_MODE_CHANGE" desc="The text in the keyboard overlay to explain the shortcut (touch hub mode change).">
-    Touch HUD mode change
+  <message name="IDS_KEYBOARD_OVERLAY_TOUCH_HUD_MODE_CHANGE" desc="The text in the keyboard overlay to explain the shortcut to change the mode of the debug touch HUD. 'HUD' stands for 'heads-up display'. 'Touch' refers to the touch interface.">
+    Change touch HUD mode
   </message>
   <message name="IDS_KEYBOARD_OVERLAY_UNDO" desc="The text in the keyboard overlay to explain the shortcut.">
     Undo
@@ -5556,12 +5559,6 @@ Battery full
   </message>
   <message name="IDS_LOGIN_API_KEYS_NOTICE" desc="Notice displayed on the login screen in case if API keys are missing.">
     You will not be able to add users because Google API keys are missing. See <ph name="DETAILS_URL">$1<ex>http://www.example.com</ex></ph> for details.
-  </message>
-  <message name="IDS_DEVICE_OWNED_BY_NOTICE" desc="Text for notifications showing that this is managed device.">
-    This device is managed by <ph name="DOMAIN">$1<ex>acmecorp.com</ex></ph>.
-  </message>
-  <message name="IDS_DEVICE_ENTERPRISE_MANAGED_NOTICE" desc="Text for notifications showing that this device is enterprise managed.">
-    This device is enterprise managed
   </message>
   <message name="IDS_LOGIN_PUBLIC_ACCOUNT_INFO_FORMAT" desc="Template for text shown in the public account user pod, informing the user that this is a public, managed account.">
     Managed by <ph name="DOMAIN">$1<ex>yourdomain.com</ex></ph>

@@ -83,6 +83,7 @@
 #include "platform/Histogram.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/scroll/ScrollbarTheme.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/Suborigin.h"
 #include "public/platform/Platform.h"
@@ -529,21 +530,24 @@ void LocalDOMWindow::Reset() {
 
 void LocalDOMWindow::SendOrientationChangeEvent() {
   ASSERT(RuntimeEnabledFeatures::orientationEventEnabled());
-  ASSERT(GetFrame()->IsMainFrame());
+  DCHECK(GetFrame()->IsLocalRoot());
 
   // Before dispatching the event, build a list of all frames in the page
   // to send the event to, to mitigate side effects from event handlers
   // potentially interfering with others.
-  HeapVector<Member<Frame>> frames;
-  for (Frame* f = GetFrame(); f; f = f->Tree().TraverseNext())
-    frames.push_back(f);
+  HeapVector<Member<LocalFrame>> frames;
+  frames.push_back(GetFrame());
+  for (size_t i = 0; i < frames.size(); i++) {
+    for (Frame* child = frames[i]->Tree().FirstChild(); child;
+         child = child->Tree().NextSibling()) {
+      if (child->IsLocalFrame())
+        frames.push_back(ToLocalFrame(child));
+    }
+  }
 
-  for (size_t i = 0; i < frames.size(); ++i) {
-    if (!frames[i]->IsLocalFrame())
-      continue;
-    ToLocalFrame(frames[i].Get())
-        ->DomWindow()
-        ->DispatchEvent(Event::Create(EventTypeNames::orientationchange));
+  for (LocalFrame* frame : frames) {
+    frame->DomWindow()->DispatchEvent(
+        Event::Create(EventTypeNames::orientationchange));
   }
 }
 
@@ -975,11 +979,17 @@ FloatSize LocalDOMWindow::GetViewportSize(
   if (!page)
     return FloatSize();
 
-  // The main frame's viewport size depends on the page scale. Since the
-  // initial page scale depends on the content width and is set after a
-  // layout, perform one now so queries during page load will use the up to
-  // date viewport.
-  if (page->GetSettings().GetViewportEnabled() && GetFrame()->IsMainFrame())
+  // The main frame's viewport size depends on the page scale. If viewport is
+  // enabled, the initial page scale depends on the content width and is set
+  // after a layout, perform one now so queries during page load will use the
+  // up to date viewport.
+  bool affectedByScale =
+      page->GetSettings().GetViewportEnabled() && GetFrame()->IsMainFrame();
+  bool affectedByScrollbars =
+      scrollbar_inclusion == kExcludeScrollbars &&
+      !ScrollbarTheme::GetTheme().UsesOverlayScrollbars();
+
+  if (affectedByScale || affectedByScrollbars)
     document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   // FIXME: This is potentially too much work. We really only need to know the
@@ -1429,8 +1439,7 @@ bool LocalDOMWindow::isSecureContext() const {
   if (!GetFrame())
     return false;
 
-  return document()->IsSecureContext(
-      ExecutionContext::kStandardSecureContextCheck);
+  return document()->IsSecureContext();
 }
 
 void LocalDOMWindow::AddedEventListener(

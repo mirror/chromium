@@ -202,12 +202,12 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #   define SK_IGNORE_ETC1_SUPPORT
 #endif
 
-#ifndef    SK_SUPPORT_GPU_REF_ENCODED_DATA
-#   define SK_SUPPORT_GPU_REF_ENCODED_DATA
-#endif
-
 #ifndef    SK_IGNORE_GPU_DITHER
 #   define SK_IGNORE_GPU_DITHER
+#endif
+
+#ifndef SK_SUPPORT_LEGACY_BITMAP_COPYTO
+#define SK_SUPPORT_LEGACY_BITMAP_COPYTO
 #endif
 
 // Remove this after we fixed all the issues related to the new SDF algorithm
@@ -218,6 +218,10 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 
 #ifndef SK_DISABLE_DEFERRED_PROXIES
 #define SK_DISABLE_DEFERRED_PROXIES
+#endif
+
+#ifndef SK_SUPPORT_LEGACY_PIXELREF_API
+#define SK_SUPPORT_LEGACY_PIXELREF_API
 #endif
 
 #ifndef SK_LEGACY_SWEEP_GRADIENT

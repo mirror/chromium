@@ -84,6 +84,16 @@ std::unique_ptr<Connector> ConnectorImpl::Clone() {
   return base::MakeUnique<ConnectorImpl>(connector.PassInterface());
 }
 
+void ConnectorImpl::FilterInterfaces(const std::string& spec,
+                                     const Identity& source_identity,
+                                     mojom::InterfaceProviderRequest request,
+                                     mojom::InterfaceProviderPtr target) {
+  if (!BindConnectorIfNecessary())
+    return;
+  connector_->FilterInterfaces(spec, source_identity, std::move(request),
+                               std::move(target));
+}
+
 void ConnectorImpl::BindConnectorRequest(mojom::ConnectorRequest request) {
   if (!BindConnectorIfNecessary())
     return;

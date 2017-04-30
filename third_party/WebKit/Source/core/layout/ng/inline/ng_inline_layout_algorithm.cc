@@ -49,6 +49,11 @@ NGLogicalOffset GetOriginPointForFloats(const NGConstraintSpace& space,
   origin_point.block_offset += content_size;
   return origin_point;
 }
+
+inline bool IsObjectReplacementCharacter(UChar character) {
+  return character == kObjectReplacementCharacter;
+}
+
 }  // namespace
 
 NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
@@ -216,7 +221,7 @@ const NGLayoutResult* NGInlineLayoutAlgorithm::LayoutItem(
   // Returns the cached NGLayoutResult if available.
   const Vector<NGInlineItem>& items = Node()->Items();
   if (layout_results_.IsEmpty())
-    layout_results_.Resize(items.size());
+    layout_results_.resize(items.size());
   unsigned index = std::distance(items.begin(), &item);
   RefPtr<NGLayoutResult>* layout_result = &layout_results_[index];
   if (*layout_result)
@@ -474,7 +479,12 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   baseline = LayoutUnit(baseline.Round());
 
   // Check if the line fits into the constraint space in block direction.
-  LayoutUnit line_bottom = baseline + line_box.Metrics().descent;
+  LayoutUnit line_bottom = baseline;
+
+  // See http://crrev.com/2840883002
+  if (!Node()->Text().IsAllSpecialCharacters<IsObjectReplacementCharacter>())
+    line_bottom += line_box.Metrics().descent;
+
   if (!container_builder_.Children().IsEmpty() &&
       ConstraintSpace().AvailableSize().block_size != NGSizeIndefinite &&
       line_bottom > ConstraintSpace().AvailableSize().block_size) {

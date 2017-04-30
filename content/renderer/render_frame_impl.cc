@@ -177,8 +177,8 @@
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/http/http_util.h"
 #include "ppapi/features/features.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-#include "services/service_manager/public/cpp/interface_registry.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/data_element.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
@@ -1152,12 +1152,7 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
       frame_bindings_control_binding_(this),
       has_accessed_initial_document_(false),
       weak_factory_(this) {
-  // We don't have a service_manager::Connection at this point, so use empty
-  // identity/specs.
-  // TODO(beng): We should fix this, so we can apply policy about which
-  //             interfaces get exposed.
-  interface_registry_ = base::MakeUnique<service_manager::InterfaceRegistry>(
-      mojom::kNavigation_FrameSpec);
+  interface_registry_ = base::MakeUnique<service_manager::BinderRegistry>();
   service_manager::mojom::InterfaceProviderPtr remote_interfaces;
   pending_remote_interface_provider_request_ = MakeRequest(&remote_interfaces);
   remote_interfaces_.reset(new service_manager::InterfaceProvider);
@@ -1317,6 +1312,16 @@ void RenderFrameImpl::InitializeBlameContext(RenderFrameImpl* parent_frame) {
   DCHECK(!blame_context_);
   blame_context_ = base::MakeUnique<FrameBlameContext>(this, parent_frame);
   blame_context_->Initialize();
+}
+
+void RenderFrameImpl::GetInterface(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  // TODO(beng): We should be getting this info from the frame factory request.
+  service_manager::ServiceInfo browser_info =
+      ChildThreadImpl::current()->GetBrowserServiceInfo();
+  interface_registry_->BindInterface(browser_info.identity, interface_name,
+                                     std::move(interface_pipe));
 }
 
 RenderWidget* RenderFrameImpl::GetRenderWidget() {
@@ -2564,7 +2569,7 @@ void RenderFrameImpl::ExecuteJavaScript(const base::string16& javascript) {
   OnJavaScriptExecuteRequest(javascript, 0, false);
 }
 
-service_manager::InterfaceRegistry* RenderFrameImpl::GetInterfaceRegistry() {
+service_manager::BinderRegistry* RenderFrameImpl::GetInterfaceRegistry() {
   return interface_registry_.get();
 }
 
@@ -2734,21 +2739,13 @@ void RenderFrameImpl::SetEngagementLevel(const url::Origin& origin,
 
 void RenderFrameImpl::GetInterfaceProvider(
     service_manager::mojom::InterfaceProviderRequest request) {
-  service_manager::ServiceInfo child_info =
-      ChildThreadImpl::current()->GetChildServiceInfo();
+  // TODO(beng): We should be getting this info from the frame factory request.
   service_manager::ServiceInfo browser_info =
       ChildThreadImpl::current()->GetBrowserServiceInfo();
-
-  service_manager::InterfaceProviderSpec child_spec, browser_spec;
-  // TODO(beng): CHECK these return true.
-  service_manager::GetInterfaceProviderSpec(
-      mojom::kNavigation_FrameSpec, child_info.interface_provider_specs,
-      &child_spec);
-  service_manager::GetInterfaceProviderSpec(
-      mojom::kNavigation_FrameSpec, browser_info.interface_provider_specs,
-      &browser_spec);
-  interface_registry_->Bind(std::move(request), child_info.identity, child_spec,
-                            browser_info.identity, browser_spec);
+  service_manager::Connector* connector = ChildThread::Get()->GetConnector();
+  connector->FilterInterfaces(
+      mojom::kNavigation_FrameSpec, browser_info.identity, std::move(request),
+      interface_provider_bindings_.CreateInterfacePtrAndBind(this));
 }
 
 void RenderFrameImpl::AllowBindings(int32_t enabled_bindings_flags) {
@@ -2897,63 +2894,67 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
   std::unique_ptr<media::MediaLog> media_log(
       new RenderMediaLog(url::Origin(security_origin).GetURL()));
 
-  bool use_fallback_path = false;
+  auto factory_selector = base::MakeUnique<media::RendererFactorySelector>();
+
 #if defined(OS_ANDROID)
-  use_fallback_path = UseMediaPlayerRenderer(url);
+  // The only MojoRendererService that is registered at the RenderFrameHost
+  // level uses the MediaPlayerRenderer as its underlying media::Renderer.
+  auto mojo_media_player_renderer_factory =
+      base::MakeUnique<media::MojoRendererFactory>(
+          media::MojoRendererFactory::GetGpuFactoriesCB(),
+          GetRemoteInterfaces()->get());
+
+  // Always give |factory_selector| a MediaPlayerRendererClient factory. WMPI
+  // might fallback to it if the final redirected URL is an HLS url.
+  factory_selector->AddFactory(
+      media::RendererFactorySelector::FactoryType::MEDIA_PLAYER,
+      base::MakeUnique<MediaPlayerRendererClientFactory>(
+          render_thread->compositor_task_runner(),
+          std::move(mojo_media_player_renderer_factory),
+          base::Bind(&StreamTextureWrapperImpl::Create,
+                     render_thread->EnableStreamTextureCopy(),
+                     render_thread->GetStreamTexureFactory(),
+                     base::ThreadTaskRunnerHandle::Get())));
+
+  factory_selector->SetUseMediaPlayer(UseMediaPlayerRenderer(url));
 #endif  // defined(OS_ANDROID)
 
+  // |factory_type| will be overwritten in all possible path below, and the
+  // DEFAULT value is not accurate. However, this prevents the compiler from
+  // issuing a -Wsometimes-uninitialized warning.
+  // TODO(tguilbert): Remove |factory_type|, and clean up the logic. The work is
+  // already completed and incrementally being submitted. See crbug.com/663503.
+  auto factory_type = media::RendererFactorySelector::FactoryType::DEFAULT;
   std::unique_ptr<media::RendererFactory> media_renderer_factory;
-  media::RendererFactorySelector::FactoryType factory_type;
-  if (use_fallback_path) {
-#if defined(OS_ANDROID)
-    auto mojo_renderer_factory = base::MakeUnique<media::MojoRendererFactory>(
-        media::MojoRendererFactory::GetGpuFactoriesCB(),
-        GetRemoteInterfaces()->get());
 
-    media_renderer_factory = base::MakeUnique<MediaPlayerRendererClientFactory>(
-        render_thread->compositor_task_runner(),
-        std::move(mojo_renderer_factory),
-        base::Bind(&StreamTextureWrapperImpl::Create,
-                   render_thread->EnableStreamTextureCopy(),
-                   render_thread->GetStreamTexureFactory(),
-                   base::ThreadTaskRunnerHandle::Get()));
-#endif  // defined(OS_ANDROID)
-
-    // TODO(tguilbert): Move this line back into an #if defined(OS_ANDROID).
-    // This will never be reached, unless we are on Android. Moving this line
-    // outside of the #if/#endif block fixes a "sometimes-uninitialized" error
-    // on desktop. This will be fixed with the next CL for crbug.com/663503.
-    factory_type = media::RendererFactorySelector::FactoryType::MEDIA_PLAYER;
-  } else {
 #if defined(ENABLE_MOJO_RENDERER)
 #if BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
-    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kDisableMojoRenderer)) {
-      media_renderer_factory = base::MakeUnique<media::DefaultRendererFactory>(
-          media_log.get(), GetDecoderFactory(),
-          base::Bind(&RenderThreadImpl::GetGpuFactories,
-                     base::Unretained(render_thread)));
-
-      factory_type = media::RendererFactorySelector::FactoryType::DEFAULT;
-    }
-#endif  // BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
-    if (!media_renderer_factory) {
-      media_renderer_factory = base::MakeUnique<media::MojoRendererFactory>(
-          base::Bind(&RenderThreadImpl::GetGpuFactories,
-                     base::Unretained(render_thread)),
-          GetMediaInterfaceProvider());
-
-      factory_type = media::RendererFactorySelector::FactoryType::MOJO;
-    }
-#else
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableMojoRenderer)) {
     media_renderer_factory = base::MakeUnique<media::DefaultRendererFactory>(
         media_log.get(), GetDecoderFactory(),
         base::Bind(&RenderThreadImpl::GetGpuFactories,
                    base::Unretained(render_thread)));
 
     factory_type = media::RendererFactorySelector::FactoryType::DEFAULT;
-#endif  // defined(ENABLE_MOJO_RENDERER)
   }
+#endif  // BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
+  if (!media_renderer_factory) {
+    media_renderer_factory = base::MakeUnique<media::MojoRendererFactory>(
+        base::Bind(&RenderThreadImpl::GetGpuFactories,
+                   base::Unretained(render_thread)),
+        GetMediaInterfaceProvider());
+
+    factory_type = media::RendererFactorySelector::FactoryType::MOJO;
+  }
+#else
+  media_renderer_factory = base::MakeUnique<media::DefaultRendererFactory>(
+      media_log.get(), GetDecoderFactory(),
+      base::Bind(&RenderThreadImpl::GetGpuFactories,
+                 base::Unretained(render_thread)));
+
+  factory_type = media::RendererFactorySelector::FactoryType::DEFAULT;
+#endif  // defined(ENABLE_MOJO_RENDERER)
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
   media_renderer_factory =
@@ -2965,8 +2966,6 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
 
   if (!url_index_.get() || url_index_->frame() != frame_)
     url_index_.reset(new media::UrlIndex(frame_));
-
-  auto factory_selector = base::MakeUnique<media::RendererFactorySelector>();
 
   factory_selector->AddFactory(factory_type, std::move(media_renderer_factory));
   factory_selector->SetBaseFactoryType(factory_type);
@@ -2997,7 +2996,6 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
 #if defined(OS_ANDROID)  // WMPI_CAST
   media_player->SetMediaPlayerManager(GetMediaPlayerManager());
   media_player->SetDeviceScaleFactor(render_view_->GetDeviceScaleFactor());
-  media_player->SetUseFallbackPath(use_fallback_path);
 #endif  // defined(OS_ANDROID)
 
   return media_player;
@@ -5113,16 +5111,6 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     if (params.origin.scheme() != url::kFileScheme ||
         !render_view_->GetWebkitPreferences()
              .allow_universal_access_from_file_urls) {
-      base::debug::SetCrashKeyValue("origin_mismatch_url", params.url.spec());
-      base::debug::SetCrashKeyValue("origin_mismatch_origin",
-                                    params.origin.Serialize());
-      base::debug::SetCrashKeyValue("origin_mismatch_transition",
-                                    base::IntToString(params.transition));
-      base::debug::SetCrashKeyValue("origin_mismatch_redirects",
-                                    base::IntToString(params.redirects.size()));
-      base::debug::SetCrashKeyValue(
-          "origin_mismatch_same_page",
-          base::IntToString(params.was_within_same_document));
       CHECK(params.origin.IsSamePhysicalOriginWith(url::Origin(params.url)))
           << " url:" << params.url << " origin:" << params.origin;
     }

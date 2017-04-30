@@ -148,9 +148,10 @@ public class EventForwarder {
                 || eventAction == MotionEvent.ACTION_POINTER_UP;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     public boolean onMouseEvent(MotionEvent event) {
         TraceEvent.begin("sendMouseEvent");
+
+        assert mNativeEventForwarder != 0;
 
         MotionEvent offsetEvent = createOffsetMotionEvent(event);
         try {
@@ -167,10 +168,10 @@ public class EventForwarder {
             // behaving device, so mLastMouseButtonState is only nonzero on a buggy one.
             if (eventAction == MotionEvent.ACTION_HOVER_ENTER) {
                 if (mLastMouseButtonState == MotionEvent.BUTTON_PRIMARY) {
-                    sendMouseEvent(event.getEventTime(), MotionEvent.ACTION_BUTTON_RELEASE,
-                            offsetEvent.getX(), offsetEvent.getY(), event.getPointerId(0),
-                            event.getPressure(0), event.getOrientation(0),
-                            event.getAxisValue(MotionEvent.AXIS_TILT, 0),
+                    nativeOnMouseEvent(mNativeEventForwarder, event.getEventTime(),
+                            MotionEvent.ACTION_BUTTON_RELEASE, offsetEvent.getX(),
+                            offsetEvent.getY(), event.getPointerId(0), event.getPressure(0),
+                            event.getOrientation(0), event.getAxisValue(MotionEvent.AXIS_TILT, 0),
                             MotionEvent.BUTTON_PRIMARY, event.getButtonState(),
                             event.getMetaState(), event.getToolType(0));
                 }
@@ -189,14 +190,17 @@ public class EventForwarder {
             // and ACTION_BUTTON_RELEASE respectively because they provide
             // info about the changed-button.
             if (eventAction == MotionEvent.ACTION_DOWN || eventAction == MotionEvent.ACTION_UP) {
-                return false;
+                // While we use the action buttons for the changed state it is important to still
+                // consume the down/up events to get the complete stream for a drag gesture, which
+                // is provided using ACTION_MOVE touch events.
+                return true;
             }
 
-            sendMouseEvent(event.getEventTime(), eventAction, offsetEvent.getX(),
-                    offsetEvent.getY(), event.getPointerId(0), event.getPressure(0),
-                    event.getOrientation(0), event.getAxisValue(MotionEvent.AXIS_TILT, 0),
-                    event.getActionButton(), event.getButtonState(), event.getMetaState(),
-                    event.getToolType(0));
+            nativeOnMouseEvent(mNativeEventForwarder, event.getEventTime(), eventAction,
+                    offsetEvent.getX(), offsetEvent.getY(), event.getPointerId(0),
+                    event.getPressure(0), event.getOrientation(0),
+                    event.getAxisValue(MotionEvent.AXIS_TILT, 0), getMouseEventActionButton(event),
+                    event.getButtonState(), event.getMetaState(), event.getToolType(0));
             return true;
         } finally {
             offsetEvent.recycle();
@@ -205,12 +209,11 @@ public class EventForwarder {
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public void sendMouseEvent(long timeMs, int action, float x, float y, int pointerId,
-            float pressure, float orientation, float tilt, int actionButton, int buttonState,
-            int metaState, int toolType) {
-        assert mNativeEventForwarder != 0;
-        nativeOnMouseEvent(mNativeEventForwarder, timeMs, action, x, y, pointerId, pressure,
-                orientation, tilt, actionButton, buttonState, metaState, toolType);
+    private int getMouseEventActionButton(MotionEvent event) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) return event.getActionButton();
+
+        // On <M, the only mice events sent are hover events, which cannot have a button.
+        return 0;
     }
 
     public boolean onMouseWheelEvent(

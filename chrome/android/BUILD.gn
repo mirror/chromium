@@ -372,6 +372,7 @@ junit_binary("chrome_junit_tests") {
     "//third_party/android_tools:android_support_v7_mediarouter_java",
     "//third_party/android_tools:android_support_v7_recyclerview_java",
     "//third_party/cacheinvalidation:cacheinvalidation_javalib",
+    "//third_party/custom_tabs_client:custom_tabs_support_java",
     "//third_party/hamcrest:hamcrest_java",
     "//ui/android:ui_java",
     "//url/mojo:url_mojom_gurl_java",
@@ -455,6 +456,7 @@ android_library("chrome_test_java") {
     "//content/public/test/android:content_java_test_support",
     "//device/geolocation:geolocation_java",
     "//device/geolocation:geolocation_java_test_support",
+    "//media/base/android:media_java",
     "//mojo/public/java:bindings_java",
     "//mojo/public/java:system_java",
     "//net/android:net_java",
@@ -512,9 +514,11 @@ if (enable_vr) {
 
     java_files = [
       "javatests/src/org/chromium/chrome/browser/media/RouterTestUtils.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/EmulatedVrController.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/MockVrCoreVersionCheckerImpl.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/MockVrDaydreamApi.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTest.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/VrTestBase.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
     ]
@@ -531,6 +535,7 @@ if (enable_vr) {
       "//third_party/android_protobuf:protobuf_nano_javalib",
       "//third_party/android_support_test_runner:runner_java",
       "//third_party/android_tools:android_support_v7_appcompat_java",
+      "//third_party/gvr-android-sdk:controller_test_api_java",
       "//third_party/gvr-android-sdk:gvr_common_java",
       "//ui/android:ui_java",
     ]
@@ -882,6 +887,11 @@ instrumentation_test_apk("chrome_public_test_apk") {
     "//net/android:net_test_support_apk",
   ]
   proguard_enabled = !is_java_debug
+
+  # The test APK contains code from both the APK under test and the
+  # test APK when proguard is enabled. That causes this APK to exceed
+  # the dex limit.
+  enable_multidex = proguard_enabled
 }
 
 if (enable_vr) {

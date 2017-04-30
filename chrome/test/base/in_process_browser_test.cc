@@ -299,6 +299,7 @@ void InProcessBrowserTest::SetUpDefaultCommandLine(
 }
 
 bool InProcessBrowserTest::RunAccessibilityChecks(std::string* error_message) {
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   if (!browser()) {
     *error_message = "browser is NULL";
     return false;
@@ -570,8 +571,9 @@ void InProcessBrowserTest::PreRunTestOnMainThread() {
   autorelease_pool_->Recycle();
 #endif
 
-  // TODO(jam): remove this.
+#if defined(OS_CHROMEOS)  // http://crbug.com/715735
   disable_io_checks();
+#endif
 }
 
 void InProcessBrowserTest::PostRunTestOnMainThread() {

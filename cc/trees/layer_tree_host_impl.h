@@ -226,7 +226,7 @@ class CC_EXPORT LayerTreeHostImpl
     std::vector<gfx::Rect> occluding_screen_space_rects;
     std::vector<gfx::Rect> non_occluding_screen_space_rects;
     RenderPassList render_passes;
-    const LayerImplList* render_surface_layer_list;
+    const RenderSurfaceList* render_surface_list;
     LayerImplList will_draw_layers;
     bool has_no_damage;
     bool may_contain_video;
@@ -709,6 +709,7 @@ class CC_EXPORT LayerTreeHostImpl
   void UpdateScrollSourceInfo(bool is_wheel_scroll);
 
   bool IsScrolledBy(LayerImpl* child, ScrollNode* ancestor);
+  void ShowScrollbarsForImplScroll(ElementId element_id);
 
   using UIResourceMap = std::unordered_map<UIResourceId, UIResourceData>;
   UIResourceMap ui_resource_map_;

@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'c7be00366bb0171e2d247ea71e291a64e3d10254',
+  'skia_revision': '135c908812874e1b1ee1b9dcaf7d55544d1f8e2a',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '83d9ade42120db9133e0c94d4d193386d69456f8',
+  'v8_revision': '733cb1f17938ff20487ac7d0151b29cdc8400834',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -60,11 +60,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
-  'swiftshader_revision': 'dc7759ccc3151a1aefefa9f86610e66f6fe9311c',
+  'swiftshader_revision': '35e0ba7753cab88905b428b65577669620798507',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '2bbb55162f0c9490a2085ed6eaa38038a7605609',
+  'pdfium_revision': 'ce8e51e6c444f6caaa160bf8b1decd5d7ec84e6f',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -72,7 +72,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling BoringSSL
   # and whatever else without interference from each other.
-  'boringssl_revision': '777fdd6443d5f01420b67137118febdf56a1c8e4',
+  'boringssl_revision': 'afd88c27f2fe9f8f1a6d5b287cc16b1bc8f06198',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling google-toolbox-for-mac
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '380124f4ad9d972449c81462ec99a4c916fcd2d8',
+  'catapult_revision': '1c3f4b92178893dfd439e64740a3aa334fdac21f',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -137,6 +137,9 @@ deps = {
 
   'src/testing/gmock':
     Var('chromium_git') + '/external/googlemock.git' + '@' + '0421b6f358139f02e102c9c332ce19a33faf75be', # from svn revision 566
+
+  'src/third_party/freetype/src':
+    Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + Var('freetype_revision'),
 
   'src/third_party/glslang/src':
     Var('chromium_git') + '/external/github.com/google/glslang.git' + '@' + '210c6bf4d8119dc5f8ac21da2d4c87184f7015e0',
@@ -196,7 +199,7 @@ deps = {
     Var('chromium_git') + '/external/bidichecker/lib.git' + '@' + '97f2aa645b74c28c57eca56992235c79850fa9e0',
 
   'src/third_party/webgl/src':
-    Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + '40d75ac0e565191d93ff3c4e8fd19f8b2df7f617',
+    Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + '239528772a1362d0e0c2d1cb2f256f19d6e0c1c1',
 
   'src/third_party/webdriver/pylib':
     Var('chromium_git') + '/external/selenium/py.git' + '@' + '5fd78261a75fe08d27ca4835fb6c5ce4b42275bd',
@@ -208,7 +211,7 @@ deps = {
     Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + '28a5cdde5c32bcf66715343c10f74e85713f7aaf',
 
   'src/third_party/usrsctp/usrsctplib':
-    Var('chromium_git') + '/external/github.com/sctplab/usrsctp' + '@' + '8679f2b0bf063ac894dc473debefd61dbbebf622',
+    Var('chromium_git') + '/external/github.com/sctplab/usrsctp' + '@' + '2f6478eb8d40f1766a96b5b033ed26c0c2244589',
 
   'src/third_party/libsrtp':
     Var('chromium_git') + '/chromium/deps/libsrtp.git' + '@' + 'ccf84786f8ef803cb9c75e919e5a3976b9f5a672',
@@ -232,7 +235,7 @@ deps = {
     Var('chromium_git') + '/native_client/src/third_party/scons-2.0.1.git' + '@' + '1c1550e17fc26355d08627fbdec13d8291227067',
 
   'src/third_party/webrtc':
-    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + 'ce4e632d4dd043996afe4402d4edf27186b33032', # commit position 17884
+    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + '5515dcd0567c4df4f3cdd9487f4f1556e558dfc3', # commit position 17923
 
   'src/third_party/openmax_dl':
     Var('chromium_git') + '/external/webrtc/deps/third_party/openmax.git' + '@' +  Var('openmax_dl_revision'),
@@ -241,7 +244,7 @@ deps = {
     Var('chromium_git') + '/external/github.com/open-source-parsers/jsoncpp.git' + '@' + 'f572e8e42e22cfcf5ab0aea26574f408943edfa4', # from svn 248
 
   'src/third_party/libyuv':
-    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + 'fc02cc3806a394a6b887979ba74aa49955f3199b',  # from r1652
+    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + '3b583396bf138334e90e06ad901f73589a929474',  # from r1652
 
   'src/third_party/smhasher/src':
     Var('chromium_git') + '/external/smhasher.git' + '@' + 'e87738e57558e0ec472b2fc3a643b838e5b6e88f',
@@ -315,9 +318,6 @@ deps = {
 
 deps_os = {
   'win': {
-    'src/third_party/freetype/src':
-      Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + Var('freetype_revision'),
-
     'src/third_party/cygwin':
       Var('chromium_git') + '/chromium/deps/cygwin.git' + '@' + 'c89e446b273697fadf3a10ff1007a97c0b7de6df',
 
@@ -390,9 +390,6 @@ deps_os = {
     'src/chrome/installer/mac/third_party/xz/xz':
       Var('chromium_git') + '/chromium/deps/xz.git' + '@' + 'eecaf55632ca72e90eb2641376bce7cdbc7284f7',
 
-    'src/third_party/freetype/src':
-      Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + Var('freetype_revision'),
-
     'src/third_party/google_toolbox_for_mac/src':
       Var('chromium_git') + '/external/github.com/google/google-toolbox-for-mac.git' + '@' + Var('google_toolbox_for_mac_revision'),
 
@@ -409,10 +406,7 @@ deps_os = {
 
     # For Linux and Chromium OS.
     'src/third_party/cros_system_api':
-      Var('chromium_git') + '/chromiumos/platform/system_api.git' + '@' + 'f425c1c372b0077a67937855f03f1089d0df7970',
-
-    'src/third_party/freetype/src':
-      Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + Var('freetype_revision'),
+      Var('chromium_git') + '/chromiumos/platform/system_api.git' + '@' + 'c6eab9e4d0b4f56176df23d30b815dc94b774a3d',
 
     # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
     'src/third_party/chromite':
@@ -466,7 +460,7 @@ deps_os = {
       Var('chromium_git') + '/external/android_protobuf.git' + '@' + '999188d0dc72e97f7fe08bb756958a2cf090f4e7',
 
     'src/third_party/android_tools':
-      Var('chromium_git') + '/android_tools.git' + '@' + 'b65c4776dac2cf1b80e969b3b2d4e081b9c84f29',
+      Var('chromium_git') + '/android_tools.git' + '@' + 'cb6bc21107001e2f2eeee2707b482b2b755baf51',
 
     'src/third_party/apache-portable-runtime/src':
       Var('chromium_git') + '/external/apache-portable-runtime.git' + '@' + 'c76a8c4277e09a82eaa229e35246edea1ee0a6a1',
@@ -476,9 +470,6 @@ deps_os = {
 
     'src/third_party/findbugs':
       Var('chromium_git') + '/chromium/deps/findbugs.git' + '@' + '57f05238d3ac77ea0a194813d3065dd780c6e566',
-
-    'src/third_party/freetype/src':
-      Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + Var('freetype_revision'),
 
     'src/third_party/elfutils/src':
       Var('chromium_git') + '/external/elfutils.git' + '@' + '249673729a7e5dbd5de4f3760bdcaa3d23d154d7',
@@ -493,10 +484,10 @@ deps_os = {
       Var('chromium_git') + '/external/mockito/mockito.git' + '@' + 'de83ad4598ad4cf5ea53c69a8a8053780b04b850',
 
     'src/third_party/netty-tcnative/src':
-      Var('chromium_git') + '/external/netty-tcnative.git' + '@' + '2a25ec75d6889d32594a6f8b4d42962c15255d76',
+      Var('chromium_git') + '/external/netty-tcnative.git' + '@' + '5b46a8ef4a39c39c576fcdaaf718b585d75df463',
 
     'src/third_party/netty4/src':
-      Var('chromium_git') + '/external/netty4.git' + '@' + 'e0f26303b4ce635365be19414d0ac81f2ef6ba3c',
+      Var('chromium_git') + '/external/netty4.git' + '@' + 'cc4420b13bb4eeea5b1cf4f93b2755644cd3b120',
 
     'src/third_party/robolectric/robolectric':
       Var('chromium_git') + '/external/robolectric.git' + '@' + '2a0b6ba221c14f3371813a676ce06143353e448d',
@@ -514,7 +505,7 @@ deps_os = {
       Var('chromium_git') + '/external/github.com/kennethreitz/requests.git' + '@' + 'f172b30356d821d180fa4ecfa3e71c7274a32de4',
 
     'src/third_party/custom_tabs_client/src':
-      Var('chromium_git') + '/external/github.com/GoogleChrome/custom-tabs-client.git' + '@' + '3c95e2dda9b292653ff13454f093e5ff136814d2',
+      Var('chromium_git') + '/external/github.com/GoogleChrome/custom-tabs-client.git' + '@' + '4889dd9d552d24f08584dde29f639c0da4ea0f12',
 
     'src/third_party/gvr-android-sdk/src':
       Var('chromium_git') + '/external/github.com/googlevr/gvr-android-sdk.git' + '@' + '8d1395957283ee13ebe2bc672ba24e5ca4ec343f',
@@ -957,6 +948,17 @@ hooks = [
                 '-s', 'src/third_party/gvr-android-sdk/common_library.aar.sha1',
     ],
   },
+  {
+    'name': 'vr_controller_test_api',
+    'pattern': '\\.sha1',
+    'action': [ 'download_from_google_storage',
+                '--no_resume',
+                '--platform=linux*',
+                '--no_auth',
+                '--bucket', 'chromium-gvr-static-shim/controller_test_api',
+                '-s', 'src/third_party/gvr-android-sdk/test-libraries/controller_test_api.aar.sha1',
+    ],
+  },
   # Pull luci-go binaries (isolate, swarming) using checked-in hashes.
   {
     'name': 'luci-go_win',
@@ -1148,6 +1150,15 @@ hooks = [
     'pattern': '.',
     'action': [ 'python',
                'src/third_party/gvr-android-sdk/test-apks/update.py',
+    ],
+  },
+
+  # Download Telemetry's binary dependencies
+  {
+    'name': 'fetch_telemetry_binary_dependencies',
+    'pattern': '.',
+    'action': [ 'python',
+                'src/third_party/catapult/telemetry/bin/fetch_telemetry_binary_dependencies',
     ],
   },
 ]

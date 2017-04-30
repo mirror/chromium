@@ -12,9 +12,9 @@
 #include "base/files/file.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
+#include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_record.h"
 #include "cc/paint/paint_recorder.h"
-#include "cc/paint/skia_paint_canvas.h"
 #include "printing/print_settings.h"
 #include "third_party/skia/include/core/SkDocument.h"
 #include "third_party/skia/include/core/SkStream.h"
@@ -23,6 +23,14 @@
 #include "third_party/skia/src/utils/SkMultiPictureDocument.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/skia_util.h"
+
+#if defined(OS_MACOSX)
+#include "printing/pdf_metafile_cg_mac.h"
+#endif
+
+#if defined(OS_POSIX)
+#include "base/file_descriptor_posix.h"
+#endif
 
 namespace {
 
@@ -96,6 +104,10 @@ struct PdfMetafileSkiaData {
   float scale_factor_;
   SkSize size_;
   SkiaDocumentType type_;
+
+#if defined(OS_MACOSX)
+  PdfMetafileCg pdf_cg_;
+#endif
 };
 
 PdfMetafileSkia::~PdfMetafileSkia() {}
@@ -233,9 +245,39 @@ skia::NativeDrawingContext PdfMetafileSkia::context() const {
 
 
 #if defined(OS_WIN)
+bool PdfMetafileSkia::Playback(skia::NativeDrawingContext hdc,
+                               const RECT* rect) const {
+  NOTREACHED();
+  return false;
+}
+
 bool PdfMetafileSkia::SafePlayback(skia::NativeDrawingContext hdc) const {
   NOTREACHED();
   return false;
+}
+
+#elif defined(OS_MACOSX)
+/* TODO(caryclark): The set up of PluginInstance::PrintPDFOutput may result in
+   rasterized output.  Even if that flow uses PdfMetafileCg::RenderPage,
+   the drawing of the PDF into the canvas may result in a rasterized output.
+   PDFMetafileSkia::RenderPage should be not implemented as shown and instead
+   should do something like the following CL in PluginInstance::PrintPDFOutput:
+http://codereview.chromium.org/7200040/diff/1/webkit/plugins/ppapi/ppapi_plugin_instance.cc
+*/
+bool PdfMetafileSkia::RenderPage(unsigned int page_number,
+                                 CGContextRef context,
+                                 const CGRect rect,
+                                 const MacRenderPageParams& params) const {
+  DCHECK_GT(GetDataSize(), 0U);
+  if (data_->pdf_cg_.GetDataSize() == 0) {
+    if (GetDataSize() == 0)
+      return false;
+    size_t length = data_->pdf_data_->getLength();
+    std::vector<uint8_t> buffer(length);
+    (void)WriteAssetToBuffer(data_->pdf_data_.get(), &buffer[0], length);
+    data_->pdf_cg_.InitFromData(&buffer[0], length);
+  }
+  return data_->pdf_cg_.RenderPage(page_number, context, rect, params);
 }
 #endif
 

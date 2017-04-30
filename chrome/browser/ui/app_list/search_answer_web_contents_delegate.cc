@@ -34,9 +34,11 @@ SearchAnswerWebContentsDelegate::SearchAnswerWebContentsDelegate(
               profile,
               content::SiteInstance::Create(profile)))),
       answer_server_url_(switches::AnswerServerUrl()) {
+  content::RendererPreferences* renderer_prefs =
+      web_contents_->GetMutableRendererPrefs();
+  renderer_prefs->can_accept_load_drops = false;
   // We need the OpenURLFromTab() to get called.
-  web_contents_->GetMutableRendererPrefs()
-      ->browser_handles_all_top_level_requests = true;
+  renderer_prefs->browser_handles_all_top_level_requests = true;
   web_contents_->GetRenderViewHost()->SyncRendererPrefs();
 
   Observe(web_contents_.get());
@@ -76,9 +78,11 @@ void SearchAnswerWebContentsDelegate::Update() {
   replacements.SetQueryStr(prefixed_query);
   current_request_url_ = answer_server_url_.ReplaceComponents(replacements);
 
-  web_contents_->GetController().LoadURL(
-      current_request_url_, content::Referrer(),
-      ui::PAGE_TRANSITION_AUTO_TOPLEVEL, std::string());
+  content::NavigationController::LoadURLParams load_params(
+      current_request_url_);
+  load_params.transition_type = ui::PAGE_TRANSITION_AUTO_TOPLEVEL;
+  load_params.should_clear_history_list = true;
+  web_contents_->GetController().LoadURLWithParams(load_params);
 
   // We are going to call WebContents::GetPreferredSize().
   web_contents_->GetRenderViewHost()->EnablePreferredSizeMode();
@@ -96,16 +100,30 @@ content::WebContents* SearchAnswerWebContentsDelegate::OpenURLFromTab(
   if (!params.user_gesture)
     return WebContentsDelegate::OpenURLFromTab(source, params);
 
-  // Open the user-clicked link in a new browser tab. This will automatically
-  // close the app list.
+  // Open the user-clicked link in the browser taking into account the requested
+  // disposition.
   chrome::NavigateParams new_tab_params(profile_, params.url,
                                         params.transition);
-  new_tab_params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
-  new_tab_params.window_action = chrome::NavigateParams::SHOW_WINDOW;
+
+  new_tab_params.disposition = params.disposition;
+
+  if (params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB) {
+    // When the user asks to open a link as a background tab, we show an
+    // activated window with the new activated tab after the user closes the
+    // launcher. So it's "background" relative to the launcher itself.
+    new_tab_params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
+    new_tab_params.window_action = chrome::NavigateParams::SHOW_WINDOW_INACTIVE;
+  }
 
   chrome::Navigate(&new_tab_params);
 
   return new_tab_params.target_contents;
+}
+
+bool SearchAnswerWebContentsDelegate::HandleContextMenu(
+    const content::ContextMenuParams& params) {
+  // Disable showing the menu.
+  return true;
 }
 
 void SearchAnswerWebContentsDelegate::DidFinishNavigation(

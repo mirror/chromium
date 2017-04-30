@@ -289,7 +289,7 @@
     },
     {
       name: "CSSSelectorsFocusWithin",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "CSSSnapSize",
@@ -342,10 +342,6 @@
     },
     {
       name: "DesktopCaptureDisableLocalEchoControl",
-      status: "experimental",
-    },
-    {
-      name: "DeviceLight",
       status: "experimental",
     },
     {
@@ -520,7 +516,7 @@
     },
     {
       name: "InputEvent",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "InputModeAttribute",
@@ -538,6 +534,10 @@
     {
       name: "IntersectionObserver",
       status: "stable",
+    },
+    {
+      name: "KeyboardLock",
+      status: "test",
     },
     {
       name: "LangAttributeAwareFormControlUI",
@@ -658,6 +658,10 @@
     {
       name: "NetworkInformation",
       status: "stable",
+    },
+    // Not a web exposed feature, enabled from the command line.
+    {
+      name: "NewRemotePlaybackPipeline",
     },
     {
       name: "NotificationBadge",
@@ -975,6 +979,9 @@
       name: "VideoFullscreenOrientationLock",
     },
     {
+      name: "VideoRotateToFullscreen",
+    },
+    {
       name: "VisibilityChangeOnUnload",
       status: "stable",
     },
@@ -997,7 +1004,7 @@
     {
       name: "WebAssemblyStreaming",
       status: "experimental",
-    }, 
+    },
     {
       name: "WebAuth",
       status: "experimental",

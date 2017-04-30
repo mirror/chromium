@@ -96,6 +96,7 @@
 #include "net/proxy/proxy_config_service_fixed.h"
 #include "net/proxy/proxy_script_fetcher_impl.h"
 #include "net/proxy/proxy_service.h"
+#include "net/reporting/reporting_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/client_cert_store.h"
 #include "net/url_request/data_protocol_handler.h"
@@ -234,7 +235,7 @@ class DebugDevToolsInterceptor : public net::URLRequestInterceptor {
           base::CreateTaskRunnerWithTraits(
               base::TaskTraits()
                   .MayBlock()
-                  .WithPriority(base::TaskPriority::BACKGROUND)
+                  .WithPriority(base::TaskPriority::USER_VISIBLE)
                   .WithShutdownBehavior(
                       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN)));
 
@@ -578,7 +579,14 @@ void ProfileIOData::AppRequestContext::SetJobFactory(
   set_job_factory(job_factory_.get());
 }
 
+void ProfileIOData::AppRequestContext::SetReportingService(
+    std::unique_ptr<net::ReportingService> reporting_service) {
+  reporting_service_ = std::move(reporting_service);
+  set_reporting_service(reporting_service_.get());
+}
+
 ProfileIOData::AppRequestContext::~AppRequestContext() {
+  SetReportingService(std::unique_ptr<net::ReportingService>());
   AssertNoURLRequests();
 }
 
@@ -661,6 +669,10 @@ ProfileIOData::~ProfileIOData() {
 
   if (transport_security_state_)
     transport_security_state_->SetRequireCTDelegate(nullptr);
+
+  // And the same for the ReportingService.
+  main_request_context_storage()->set_reporting_service(
+      std::unique_ptr<net::ReportingService>());
 
   // TODO(ajwong): These AssertNoURLRequests() calls are unnecessary since they
   // are already done in the URLRequestContext destructor.
@@ -1027,8 +1039,8 @@ void ProfileIOData::Init(
               base::SequencedWorkerPool::BLOCK_SHUTDOWN),
           IsOffTheRecord()));
 
-  certificate_report_sender_.reset(new net::ReportSender(
-      main_request_context_.get(), net::ReportSender::DO_NOT_SEND_COOKIES));
+  certificate_report_sender_.reset(
+      new net::ReportSender(main_request_context_.get()));
   transport_security_state_->SetReportSender(certificate_report_sender_.get());
 
   expect_ct_reporter_.reset(
@@ -1137,7 +1149,7 @@ ProfileIOData::SetUpJobFactoryDefaults(
           base::CreateTaskRunnerWithTraits(
               base::TaskTraits()
                   .MayBlock()
-                  .WithPriority(base::TaskPriority::BACKGROUND)
+                  .WithPriority(base::TaskPriority::USER_VISIBLE)
                   .WithShutdownBehavior(
                       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN))));
   DCHECK(set_protocol);
@@ -1170,7 +1182,7 @@ ProfileIOData::SetUpJobFactoryDefaults(
       content::ContentProtocolHandler::Create(base::CreateTaskRunnerWithTraits(
           base::TaskTraits()
               .MayBlock()
-              .WithPriority(base::TaskPriority::BACKGROUND)
+              .WithPriority(base::TaskPriority::USER_VISIBLE)
               .WithShutdownBehavior(
                   base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN))));
 #endif

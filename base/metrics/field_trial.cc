@@ -414,7 +414,8 @@ FieldTrial::FieldTrial(const std::string& trial_name,
       ref_(FieldTrialList::FieldTrialAllocator::kReferenceNull) {
   DCHECK_GT(total_probability, 0);
   DCHECK(!trial_name_.empty());
-  DCHECK(!default_group_name_.empty());
+  DCHECK(!default_group_name_.empty())
+      << "Trial " << trial_name << " is missing a default group name.";
 }
 
 FieldTrial::~FieldTrial() {}
@@ -1156,11 +1157,7 @@ bool FieldTrialList::CreateTrialsFromDescriptor(int fd_key) {
   if (fd == -1)
     return false;
 
-#if defined(OS_MACOSX) && !defined(OS_IOS)
   SharedMemoryHandle shm_handle(FileDescriptor(fd, true));
-#else
-  SharedMemoryHandle shm_handle(fd, true);
-#endif
 
   bool result = FieldTrialList::CreateTrialsFromSharedMemoryHandle(shm_handle);
   DCHECK(result);

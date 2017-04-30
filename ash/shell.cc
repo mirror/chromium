@@ -139,7 +139,9 @@
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/env.h"
 #include "ui/aura/layout_manager.h"
+#include "ui/aura/mus/focus_synchronizer.h"
 #include "ui/aura/mus/user_activity_forwarder.h"
+#include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/base/ui_base_switches.h"
@@ -152,6 +154,7 @@
 #include "ui/display/manager/chromeos/display_configurator.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/screen.h"
+#include "ui/display/types/native_display_delegate.h"
 #include "ui/events/event_target_iterator.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/image/image_skia.h"
@@ -169,16 +172,6 @@
 #include "ui/wm/core/shadow_controller.h"
 #include "ui/wm/core/visibility_controller.h"
 #include "ui/wm/core/window_modality_controller.h"
-
-#if defined(USE_X11)
-#include "ui/display/manager/chromeos/x11/native_display_delegate_x11.h"
-#include "ui/gfx/x/x11_types.h"  // nogncheck
-#endif
-
-#if defined(USE_OZONE)
-#include "ui/display/types/native_display_delegate.h"
-#include "ui/ozone/public/ozone_platform.h"
-#endif
 
 namespace ash {
 
@@ -376,6 +369,13 @@ void Shell::UpdateShelfVisibility() {
     root->GetRootWindowController()->GetShelf()->UpdateVisibilityState();
 }
 
+PrefService* Shell::GetActiveUserPrefService() const {
+  if (shell_port_->GetAshConfig() == Config::MASH)
+    return pref_service_.get();
+
+  return shell_delegate_->GetActiveUserPrefService();
+}
+
 WebNotificationTray* Shell::GetWebNotificationTray() {
   return GetPrimaryRootWindowController()
       ->GetStatusAreaWidget()
@@ -409,7 +409,7 @@ void Shell::CreateShelfView() {
   DCHECK_GT(session_controller()->NumberOfLoggedInUsers(), 0);
 
   // Notify the ShellDelegate that the shelf is being initialized.
-  // TODO(msw): Refine ChromeLauncherControllerImpl lifetime management.
+  // TODO(msw): Refine ChromeLauncherController lifetime management.
   shell_delegate_->ShelfInit();
 
   if (!shelf_window_watcher_)
@@ -570,9 +570,10 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
   // TODO(sky): better refactor cash/mash dependencies. Perhaps put all cash
   // state on ShellPortClassic. http://crbug.com/671246.
 
+  gpu_support_.reset(shell_delegate_->CreateGPUSupport());
+
   // Don't use Shell::GetAshConfig() as |instance_| has not yet been set.
   if (shell_port_->GetAshConfig() != Config::MASH) {
-    gpu_support_.reset(shell_delegate_->CreateGPUSupport());
     display_manager_.reset(ScreenAsh::CreateDisplayManager());
     window_tree_host_manager_.reset(new WindowTreeHostManager);
     user_metrics_recorder_.reset(new UserMetricsRecorder);
@@ -729,7 +730,7 @@ Shell::~Shell() {
   shelf_model()->DestroyItemDelegates();
 
   // Notify the ShellDelegate that the shelf is shutting down.
-  // TODO(msw): Refine ChromeLauncherControllerImpl lifetime management.
+  // TODO(msw): Refine ChromeLauncherController lifetime management.
   shell_delegate_->ShelfShutdown();
 
   // Removes itself as an observer of |pref_service_|.
@@ -740,6 +741,11 @@ Shell::~Shell() {
   // Depends on |focus_controller_|, so must be destroyed before.
   window_tree_host_manager_.reset();
   focus_controller_->RemoveObserver(this);
+  if (config != Config::CLASSIC &&
+      window_tree_client_->focus_synchronizer()->active_focus_client() ==
+          focus_controller_.get()) {
+    window_tree_client_->focus_synchronizer()->SetSingletonFocusClient(nullptr);
+  }
   focus_controller_.reset();
   screen_position_controller_.reset();
 
@@ -832,24 +838,20 @@ void Shell::Init(const ShellInitParams& init_params) {
   }
 
   shell_delegate_->PreInit();
-  bool display_initialized = true;
-  if (config == Config::CLASSIC) {
-    // TODO: decide if this needs to be made to work in Config::MUS.
-    // http://crbug.com/705595.
-    display_initialized = display_manager_->InitFromCommandLine();
-
+  // TODO(sky): remove MASH from here.
+  bool display_initialized =
+      (config == Config::MASH || display_manager_->InitFromCommandLine());
+  if (config == Config::MUS && !display_initialized) {
+    // Run display configuration off device in mus mode.
+    display_manager_->set_configure_displays(true);
+    display_configurator_->set_configure_display(true);
+  }
+  if (config != Config::MASH) {
+    // TODO(sky): should work in mash too.
     display_configuration_controller_.reset(new DisplayConfigurationController(
         display_manager_.get(), window_tree_host_manager_.get()));
-
-#if defined(USE_OZONE)
-    display_configurator_->Init(
-        ui::OzonePlatform::GetInstance()->CreateNativeDisplayDelegate(),
-        !gpu_support_->IsPanelFittingDisabled());
-#elif defined(USE_X11)
-    display_configurator_->Init(
-        base::MakeUnique<display::NativeDisplayDelegateX11>(),
-        !gpu_support_->IsPanelFittingDisabled());
-#endif
+    display_configurator_->Init(shell_port_->CreateNativeDisplayDelegate(),
+                                !gpu_support_->IsPanelFittingDisabled());
   }
 
   // The DBusThreadManager must outlive this Shell. See the DCHECK in ~Shell.
@@ -860,7 +862,10 @@ void Shell::Init(const ShellInitParams& init_params) {
   display_configurator_->AddObserver(projecting_observer_.get());
   AddShellObserver(projecting_observer_.get());
 
-  if (!display_initialized && chromeos::IsRunningAsSystemCompositor()) {
+  // TODO(sky): once simplified display management is enabled for mash
+  // config == Config::MUS should be config != Config::CLASSIC.
+  if (!display_initialized &&
+      (config == Config::MUS || chromeos::IsRunningAsSystemCompositor())) {
     display_change_observer_ = base::MakeUnique<display::DisplayChangeObserver>(
         display_configurator_.get(), display_manager_.get());
 
@@ -907,6 +912,10 @@ void Shell::Init(const ShellInitParams& init_params) {
   focus_controller_ =
       base::MakeUnique<::wm::FocusController>(new wm::AshFocusRules());
   focus_controller_->AddObserver(this);
+  if (config != Config::CLASSIC) {
+    window_tree_client_->focus_synchronizer()->SetSingletonFocusClient(
+        focus_controller_.get());
+  }
 
   screen_position_controller_.reset(new ScreenPositionController);
 
@@ -1039,7 +1048,8 @@ void Shell::Init(const ShellInitParams& init_params) {
   // WindowTreeHostManager::InitDisplays()
   // since AshTouchTransformController listens on
   // WindowTreeHostManager::Observer::OnDisplaysInitialized().
-  if (config != Config::MASH) {
+  // TODO(sky): needs to to work for mus too.
+  if (config == Config::CLASSIC) {
     touch_transformer_controller_.reset(new AshTouchTransformController(
         display_configurator_.get(), display_manager_.get()));
   }

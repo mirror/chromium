@@ -23,6 +23,15 @@
   "Android Tests": {
     "gtest_tests": [
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "android_webview_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "override_compile_targets": [
           "android_webview_test_apk"
         ],
@@ -289,6 +298,15 @@
         "test": "chrome_public_test_apk"
       },
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "chrome_sync_shell_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "override_compile_targets": [
           "chrome_sync_shell_test_apk"
         ],
@@ -418,6 +436,15 @@
         "test": "content_browsertests"
       },
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "content_shell_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "override_compile_targets": [
           "content_shell_test_apk"
         ],
@@ -1278,6 +1305,15 @@
   "Android Tests (dbg)": {
     "gtest_tests": [
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "android_webview_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "override_compile_targets": [
           "android_webview_test_apk"
         ],
@@ -1500,6 +1536,15 @@
         "test": "cc_unittests"
       },
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "chrome_public_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "override_compile_targets": [
           "chrome_public_test_apk"
         ],
@@ -1520,7 +1565,7 @@
               "device_type": "hammerhead"
             }
           ],
-          "hard_timeout": 1800,
+          "hard_timeout": 2400,
           "output_links": [
             {
               "link": [
@@ -1535,6 +1580,15 @@
         "test": "chrome_public_test_apk"
       },
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "chrome_sync_shell_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "override_compile_targets": [
           "chrome_sync_shell_test_apk"
         ],
@@ -1664,6 +1718,15 @@
         "test": "content_browsertests"
       },
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "content_shell_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "override_compile_targets": [
           "content_shell_test_apk"
         ],
@@ -2935,6 +2998,18 @@
       },
       {
         "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "blink_heap_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "blink_platform_unittests"
+      },
+      {
+        "swarming": {
           "can_use_on_swarming_builders": true,
           "shards": 5
         },
@@ -3510,7 +3585,19 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "webkit_unit_tests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "wm_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "wtf_unittests"
       }
     ],
     "isolated_scripts": [

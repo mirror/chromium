@@ -436,7 +436,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
 
             // LocaleManager can only function after the native library is loaded.
             mLocaleManager = LocaleManager.getInstance();
-            mLocaleManager.showSearchEnginePromoIfNeeded(this);
+            mLocaleManager.showSearchEnginePromoIfNeeded(this, null);
 
             super.finishNativeInitialization();
         } finally {
@@ -453,7 +453,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
     @SuppressLint("NewApi")
     private boolean shouldDestroyIncognitoProfile() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return false;
-        if (VrShellDelegate.isInVr()) return false; // VR uses an incognito profile for rendering.
 
         Context context = ContextUtils.getApplicationContext();
         ActivityManager manager =
@@ -671,7 +670,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                     // This assumes that the keyboard can not be seen at the same time as the
                     // newtab button on the toolbar.
                     getCurrentTabCreator().launchNTP();
-                    mLocaleManager.showSearchEnginePromoIfNeeded(ChromeTabbedActivity.this);
+                    mLocaleManager.showSearchEnginePromoIfNeeded(ChromeTabbedActivity.this, null);
                 }
             };
             OnClickListener bookmarkClickHandler = new OnClickListener() {
@@ -924,7 +923,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             mIsOnFirstRun = false;
             if (resultCode == RESULT_OK) {
                 refreshSignIn();
-                mLocaleManager.showSearchEnginePromoIfNeeded(this);
+                mLocaleManager.showSearchEnginePromoIfNeeded(this, null);
             } else {
                 if (data != null && data.getBooleanExtra(
                         FirstRunActivity.RESULT_CLOSE_APP, false)) {
@@ -1433,7 +1432,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             RecordUserAction.record("MobileNewTabOpened");
             reportNewTabShortcutUsed(false);
             getTabCreator(false).launchUrl(UrlConstants.NTP_URL, TabLaunchType.FROM_CHROME_UI);
-            mLocaleManager.showSearchEnginePromoIfNeeded(this);
+            mLocaleManager.showSearchEnginePromoIfNeeded(this, null);
         } else if (id == R.id.new_incognito_tab_menu_id) {
             if (PrefServiceBridge.getInstance().isIncognitoModeEnabled()) {
                 getTabModelSelector().getModel(false).commitAllTabClosures();
@@ -1985,12 +1984,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
     public void onExitVr() {
         super.onExitVr();
         mControlContainer.setVisibility(View.VISIBLE);
-
-        // We prevent the incognito profile from being destroyed while in VR, so upon exiting VR we
-        // should destroy it if necessary.
-        if (shouldDestroyIncognitoProfile()) {
-            Profile.getLastUsedProfile().getOffTheRecordProfile().destroyWhenAppropriate();
-        }
     }
 
     /**
@@ -2037,5 +2030,10 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             if (info.id == sMergedInstanceTaskId) return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean supportsFullscreenActivity() {
+        return true;
     }
 }

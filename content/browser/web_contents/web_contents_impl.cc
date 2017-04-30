@@ -1025,7 +1025,8 @@ void WebContentsImpl::AddAccessibilityMode(AccessibilityMode mode) {
   SetAccessibilityMode(new_mode);
 }
 
-void WebContentsImpl::RequestAXTreeSnapshot(AXTreeSnapshotCallback callback) {
+void WebContentsImpl::RequestAXTreeSnapshot(
+    const AXTreeSnapshotCallback& callback) {
   // Send a request to each of the frames in parallel. Each one will return
   // an accessibility tree snapshot, and AXTreeSnapshotCombiner will combine
   // them into a single tree and call |callback| with that result, then
@@ -1844,6 +1845,10 @@ void WebContentsImpl::RenderWidgetWasResized(
   RenderFrameHostImpl* rfh = GetMainFrame();
   if (!rfh || render_widget_host != rfh->GetRenderWidgetHost())
     return;
+
+  ScreenInfo screen_info;
+  GetScreenInfo(&screen_info);
+  SendPageMessage(new PageMsg_UpdateScreenInfo(MSG_ROUTING_NONE, screen_info));
 
   for (auto& observer : observers_)
     observer.MainFrameWasResized(width_changed);
@@ -3619,7 +3624,7 @@ void WebContentsImpl::DidNavigateAnyFramePostCommit(
   has_accessed_initial_document_ = false;
 
   // If we navigate off the page, close all JavaScript dialogs.
-  if (!details.is_in_page)
+  if (!details.is_same_document)
     CancelActiveAndPendingDialogs();
 
   // If this is a user-initiated navigation, start allowing JavaScript dialogs
@@ -4515,6 +4520,11 @@ void WebContentsImpl::RenderViewReady(RenderViewHost* rvh) {
     return;
   }
 
+  RenderWidgetHostViewBase* rwhv =
+      static_cast<RenderWidgetHostViewBase*>(GetRenderWidgetHostView());
+  if (rwhv)
+    rwhv->SetMainFrameAXTreeID(GetMainFrame()->GetAXTreeID());
+
   notify_disconnection_ = true;
   // TODO(avi): Remove. http://crbug.com/170921
   NotificationService::current()->Notify(
@@ -5075,6 +5085,11 @@ void WebContentsImpl::NotifySwappedFromRenderManager(RenderFrameHost* old_host,
       view_->SetOverscrollControllerEnabled(CanOverscrollContent());
 
     view_->RenderViewSwappedIn(new_host->GetRenderViewHost());
+
+    RenderWidgetHostViewBase* rwhv =
+        static_cast<RenderWidgetHostViewBase*>(GetRenderWidgetHostView());
+    if (rwhv)
+      rwhv->SetMainFrameAXTreeID(GetMainFrame()->GetAXTreeID());
   }
 
   NotifyFrameSwapped(old_host, new_host);

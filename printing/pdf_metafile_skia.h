@@ -54,7 +54,14 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
   skia::NativeDrawingContext context() const override;
 
 #if defined(OS_WIN)
+  bool Playback(skia::NativeDrawingContext hdc,
+                const RECT* rect) const override;
   bool SafePlayback(skia::NativeDrawingContext hdc) const override;
+#elif defined(OS_MACOSX)
+  bool RenderPage(unsigned int page_number,
+                  skia::NativeDrawingContext context,
+                  const CGRect rect,
+                  const MacRenderPageParams& params) const override;
 #endif
 
   bool SaveTo(base::File* file) const override;

@@ -536,7 +536,7 @@ Document::Document(const DocumentInit& initializer,
           this,
           &Document::UpdateFocusAppearanceTimerFired),
       css_target_(nullptr),
-      load_event_progress_(kLoadEventNotRun),
+      load_event_progress_(kLoadEventCompleted),
       start_time_(CurrentTime()),
       script_runner_(ScriptRunner::Create(this)),
       xml_version_("1.0"),
@@ -1485,19 +1485,6 @@ Element* Document::ScrollingElementNoLayout() {
   return body();
 }
 
-// We use HashMap::set over HashMap::add here as we want to
-// replace the ComputedStyle but not the Node if the Node is
-// already present.
-void Document::AddNonAttachedStyle(const Node& node,
-                                   RefPtr<ComputedStyle> computed_style) {
-  DCHECK(node.IsElementNode() || node.IsTextNode());
-  non_attached_style_.Set(&node, computed_style);
-}
-
-ComputedStyle* Document::GetNonAttachedStyle(const Node& node) const {
-  return non_attached_style_.at(&node);
-}
-
 /*
  * Performs three operations:
  *  1. Convert control characters to spaces
@@ -1734,14 +1721,14 @@ Range* Document::createRange() {
 
 NodeIterator* Document::createNodeIterator(Node* root,
                                            unsigned what_to_show,
-                                           NodeFilter* filter) {
+                                           V8NodeFilterCondition* filter) {
   DCHECK(root);
   return NodeIterator::Create(root, what_to_show, filter);
 }
 
 TreeWalker* Document::createTreeWalker(Node* root,
                                        unsigned what_to_show,
-                                       NodeFilter* filter) {
+                                       V8NodeFilterCondition* filter) {
   DCHECK(root);
   return TreeWalker::Create(root, what_to_show, filter);
 }
@@ -2179,9 +2166,6 @@ void Document::UpdateStyle() {
 
   View()->RecalcOverflowAfterStyleChange();
 
-  // Only retain the HashMap for the duration of StyleRecalc and
-  // LayoutTreeConstruction.
-  non_attached_style_.clear();
   ClearChildNeedsStyleRecalc();
   ClearChildNeedsReattachLayoutTree();
 
@@ -2193,7 +2177,6 @@ void Document::UpdateStyle() {
   DCHECK(!ChildNeedsReattachLayoutTree());
   DCHECK(InStyleRecalc());
   DCHECK_EQ(GetStyleResolver(), &resolver);
-  DCHECK(non_attached_style_.IsEmpty());
   lifecycle_.AdvanceTo(DocumentLifecycle::kStyleClean);
   if (should_record_stats) {
     TRACE_EVENT_END2(
@@ -2830,9 +2813,6 @@ void Document::open() {
 
   if (frame_)
     frame_->Loader().DidExplicitOpen();
-  if (load_event_progress_ != kLoadEventInProgress &&
-      PageDismissalEventBeingDispatched() == kNoDismissal)
-    load_event_progress_ = kLoadEventNotRun;
 }
 
 void Document::DetachParser() {
@@ -2847,12 +2827,11 @@ void Document::CancelParsing() {
   DetachParser();
   SetParsingState(kFinishedParsing);
   SetReadyState(kComplete);
+  SuppressLoadEvent();
 }
 
 DocumentParser* Document::ImplicitOpen(
     ParserSynchronizationPolicy parser_sync_policy) {
-  DetachParser();
-
   RemoveChildren();
   DCHECK(!focused_element_);
 
@@ -2866,11 +2845,16 @@ DocumentParser* Document::ImplicitOpen(
     parser_sync_policy = kForceSynchronousParsing;
   }
 
+  DetachParser();
   parser_sync_policy_ = parser_sync_policy;
   parser_ = CreateParser();
   DocumentParserTiming::From(*this).MarkParserStart();
   SetParsingState(kParsing);
   SetReadyState(kLoading);
+  if (load_event_progress_ != kLoadEventInProgress &&
+      PageDismissalEventBeingDispatched() == kNoDismissal) {
+    load_event_progress_ = kLoadEventNotRun;
+  }
 
   return parser_;
 }
@@ -3012,30 +2996,15 @@ void Document::close() {
       !GetScriptableDocumentParser()->IsParsing())
     return;
 
-  if (DocumentParser* parser = parser_)
-    parser->Finish();
-
-  if (!frame_) {
-    // Because we have no frame, we don't know if all loading has completed,
-    // so we just call implicitClose() immediately. FIXME: This might fire
-    // the load event prematurely
-    // <http://bugs.webkit.org/show_bug.cgi?id=14568>.
-    ImplicitClose();
-    return;
-  }
-
-  frame_->Loader().CheckCompleted();
+  parser_->Finish();
+  if (!parser_ || !parser_->IsParsing())
+    SetReadyState(kComplete);
+  CheckCompleted();
 }
 
 void Document::ImplicitClose() {
   DCHECK(!InStyleRecalc());
-  if (ProcessingLoadEvent() || !parser_)
-    return;
-  if (GetFrame() &&
-      GetFrame()->GetNavigationScheduler().LocationChangePending()) {
-    SuppressLoadEvent();
-    return;
-  }
+  DCHECK(parser_);
 
   load_event_progress_ = kLoadEventInProgress;
 
@@ -3115,6 +3084,69 @@ void Document::ImplicitClose() {
 
   if (SvgExtensions())
     AccessSVGExtensions().StartAnimations();
+}
+
+static bool AllDescendantsAreComplete(Frame* frame) {
+  if (!frame)
+    return true;
+  for (Frame* child = frame->Tree().FirstChild(); child;
+       child = child->Tree().TraverseNext(frame)) {
+    if (child->IsLoading())
+      return false;
+  }
+  return true;
+}
+
+bool Document::ShouldComplete() {
+  return parsing_state_ == kFinishedParsing && HaveImportsLoaded() &&
+         !fetcher_->BlockingRequestCount() && !IsDelayingLoadEvent() &&
+         load_event_progress_ != kLoadEventInProgress &&
+         AllDescendantsAreComplete(frame_);
+}
+
+void Document::CheckCompleted() {
+  if (!ShouldComplete())
+    return;
+
+  if (frame_) {
+    frame_->Client()->RunScriptsAtDocumentIdle();
+
+    // Injected scripts may have disconnected this frame.
+    if (!frame_)
+      return;
+
+    // Check again, because runScriptsAtDocumentIdle() may have delayed the load
+    // event.
+    if (!ShouldComplete())
+      return;
+  }
+
+  // OK, completed. Fire load completion events as needed.
+  SetReadyState(kComplete);
+  if (LoadEventStillNeeded())
+    ImplicitClose();
+
+  // The readystatechanged or load event may have disconnected this frame.
+  if (!frame_ || !frame_->IsAttached())
+    return;
+  frame_->GetNavigationScheduler().StartTimer();
+  View()->HandleLoadCompleted();
+  // The document itself is complete, but if a child frame was restarted due to
+  // an event, this document is still considered to be in progress.
+  if (!AllDescendantsAreComplete(frame_))
+    return;
+
+  // No need to repeat if we've already notified this load as finished.
+  if (!Loader()->SentDidFinishLoad()) {
+    if (frame_->IsMainFrame())
+      ViewportDescription().ReportMobilePageStats(frame_);
+    Loader()->SetSentDidFinishLoad();
+    frame_->Client()->DispatchDidFinishLoad();
+    if (!frame_)
+      return;
+  }
+
+  frame_->Loader().DidFinishNavigation();
 }
 
 bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
@@ -3915,8 +3947,7 @@ void Document::CloneDataFromDocument(const Document& other) {
   SetMimeType(other.contentType());
 }
 
-bool Document::IsSecureContextImpl(
-    const SecureContextCheck privilege_context_check) const {
+bool Document::IsSecureContextImpl() const {
   // There may be exceptions for the secure context check defined for certain
   // schemes. The exceptions are applied only to the special scheme and to
   // sandboxed URLs from those origins, but *not* to any children.
@@ -3952,17 +3983,15 @@ bool Document::IsSecureContextImpl(
           GetSecurityOrigin()->Protocol()))
     return true;
 
-  if (privilege_context_check == kStandardSecureContextCheck) {
-    if (!frame_)
-      return true;
-    Frame* parent = frame_->Tree().Parent();
-    while (parent) {
-      if (!parent->GetSecurityContext()
-               ->GetSecurityOrigin()
-               ->IsPotentiallyTrustworthy())
-        return false;
-      parent = parent->Tree().Parent();
-    }
+  if (!frame_)
+    return true;
+  Frame* parent = frame_->Tree().Parent();
+  while (parent) {
+    if (!parent->GetSecurityContext()
+             ->GetSecurityOrigin()
+             ->IsPotentiallyTrustworthy())
+      return false;
+    parent = parent->Tree().Parent();
   }
   return true;
 }
@@ -5100,12 +5129,7 @@ bool Document::ParseQualifiedName(const AtomicString& qualified_name,
     message.Append("has an empty local name.");
   }
 
-  if (return_value.status == kQNInvalidStartChar ||
-      return_value.status == kQNInvalidChar)
-    exception_state.ThrowDOMException(kInvalidCharacterError,
-                                      message.ToString());
-  else
-    exception_state.ThrowDOMException(kNamespaceError, message.ToString());
+  exception_state.ThrowDOMException(kInvalidCharacterError, message.ToString());
   return false;
 }
 
@@ -6068,8 +6092,8 @@ void Document::DecrementLoadEventDelayCountAndCheckLoadEvent() {
   DCHECK(load_event_delay_count_);
   --load_event_delay_count_;
 
-  if (!load_event_delay_count_ && GetFrame())
-    GetFrame()->Loader().CheckCompleted();
+  if (!load_event_delay_count_)
+    CheckCompleted();
 }
 
 void Document::CheckLoadEventSoon() {
@@ -6091,8 +6115,7 @@ bool Document::IsDelayingLoadEvent() {
 }
 
 void Document::LoadEventDelayTimerFired(TimerBase*) {
-  if (GetFrame())
-    GetFrame()->Loader().CheckCompleted();
+  CheckCompleted();
 }
 
 void Document::LoadPluginsSoon() {
@@ -6546,19 +6569,16 @@ void Document::PlatformColorsChanged() {
   GetStyleEngine().PlatformColorsChanged();
 }
 
-bool Document::IsSecureContext(
-    String& error_message,
-    const SecureContextCheck privilege_context_check) const {
-  if (!IsSecureContext(privilege_context_check)) {
+bool Document::IsSecureContext(String& error_message) const {
+  if (!IsSecureContext()) {
     error_message = SecurityOrigin::IsPotentiallyTrustworthyErrorMessage();
     return false;
   }
   return true;
 }
 
-bool Document::IsSecureContext(
-    const SecureContextCheck privilege_context_check) const {
-  bool is_secure = IsSecureContextImpl(privilege_context_check);
+bool Document::IsSecureContext() const {
+  bool is_secure = IsSecureContextImpl();
   if (GetSandboxFlags() != kSandboxNone) {
     UseCounter::Count(
         *this, is_secure
@@ -6701,7 +6721,6 @@ DEFINE_TRACE(Document) {
   visitor->Trace(snap_coordinator_);
   visitor->Trace(resize_observer_controller_);
   visitor->Trace(property_registry_);
-  visitor->Trace(non_attached_style_);
   visitor->Trace(network_state_observer_);
   Supplementable<Document>::Trace(visitor);
   TreeScope::Trace(visitor);

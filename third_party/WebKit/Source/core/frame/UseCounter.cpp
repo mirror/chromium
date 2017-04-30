@@ -881,12 +881,10 @@ int UseCounter::MapCSSPropertyIdToCSSSampleIdForHistogram(
       return 454;
     case CSSPropertyJustifyItems:
       return 455;
-    case CSSPropertyAliasMotionPath:
-      return 457;
+    // CSSPropertyMotionPath was 457.
     case CSSPropertyAliasMotionOffset:
       return 458;
-    case CSSPropertyAliasMotionRotation:
-      return 459;
+    // CSSPropertyAliasMotionRotation was 459.
     // CSSPropertyMotion was 460.
     case CSSPropertyX:
       return 461;
@@ -1095,11 +1093,11 @@ int UseCounter::MapCSSPropertyIdToCSSSampleIdForHistogram(
     // chromium/src/tools/metrics/histograms to update the UMA histogram names.
 
     case CSSPropertyInvalid:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
       return 0;
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return 0;
 }
 

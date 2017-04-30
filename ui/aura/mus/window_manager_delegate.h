@@ -48,7 +48,7 @@ class AURA_EXPORT WindowManagerClient {
   virtual void SetFrameDecorationValues(
       ui::mojom::FrameDecorationValuesPtr values) = 0;
   virtual void SetNonClientCursor(Window* window,
-                                  ui::mojom::CursorType non_client_cursor) = 0;
+                                  const ui::CursorData& non_client_cursor) = 0;
 
   virtual void AddAccelerators(
       std::vector<ui::mojom::WmAcceleratorPtr> accelerators,
@@ -65,7 +65,9 @@ class AURA_EXPORT WindowManagerClient {
   // this does nothing.
   virtual void RequestClose(Window* window) = 0;
 
-  // Blocks until the initial displays have been received.
+  // Blocks until the initial displays have been received, or if displays are
+  // not automatically created until the connection to mus has been
+  // established.
   virtual bool WaitForInitialDisplays() = 0;
 
   // Used by the window manager to create a new display. This is only useful if

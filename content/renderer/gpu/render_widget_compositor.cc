@@ -339,8 +339,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
       cmd.HasSwitch(cc::switches::kEnableColorCorrectRendering);
   settings.renderer_settings.buffer_to_texture_target_map =
       compositor_deps->GetBufferToTextureTargetMap();
-  settings.image_decode_tasks_enabled =
-      compositor_deps->AreImageDecodeTasksEnabled();
 
   // Build LayerTreeSettings from command line args.
   LayerTreeSettingsFactory::SetBrowserControlsSettings(settings, cmd);
@@ -400,8 +398,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   } else {
     settings.scrollbar_animator = cc::LayerTreeSettings::ANDROID_OVERLAY;
     settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(300);
-    settings.scrollbar_fade_out_resize_delay =
-        base::TimeDelta::FromMilliseconds(2000);
     settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
     settings.solid_color_scrollbar_color = SkColorSetARGB(128, 128, 128, 128);
   }
@@ -447,7 +443,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   if (ui::IsOverlayScrollbarEnabled()) {
     settings.scrollbar_animator = cc::LayerTreeSettings::AURA_OVERLAY;
     settings.scrollbar_fade_delay = ui::kOverlayScrollbarFadeDelay;
-    settings.scrollbar_fade_out_resize_delay = ui::kOverlayScrollbarFadeDelay;
     settings.scrollbar_fade_duration = ui::kOverlayScrollbarFadeDuration;
     settings.scrollbar_thinning_duration =
         ui::kOverlayScrollbarThinningDuration;
@@ -457,8 +452,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     settings.scrollbar_animator = cc::LayerTreeSettings::ANDROID_OVERLAY;
     settings.solid_color_scrollbar_color = SkColorSetARGB(128, 128, 128, 128);
     settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(500);
-    settings.scrollbar_fade_out_resize_delay =
-        base::TimeDelta::FromMilliseconds(500);
     settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
   }
 #endif  // !defined(OS_MACOSX)
@@ -949,6 +942,9 @@ void RenderWidgetCompositor::CompositeAndReadbackAsync(
                                              callback, base::Passed(&result)));
           },
           callback, base::Passed(&main_thread_task_runner)));
+  // Force a redraw to ensure that the copy swap promise isn't cancelled due to
+  // no damage.
+  SetNeedsForcedRedraw();
   layer_tree_host_->QueueSwapPromise(
       delegate_->RequestCopyOfOutputForLayoutTest(std::move(request)));
 

@@ -26,6 +26,7 @@
 #include "build/build_config.h"
 #include "components/crx_file/id_util.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
+#include "components/update_client/component.h"
 #include "components/update_client/configurator.h"
 #include "components/update_client/crx_update_item.h"
 #include "components/update_client/update_client.h"
@@ -94,6 +95,9 @@ std::string GetServicePack() {
 
 }  // namespace
 
+// Builds a protocol message. The protocol versions so far are:
+// * Version 3.1: it changes how the run actions are serialized.
+// * Version 3.0: it is the version implemented by the desktop updaters.
 std::string BuildProtocolRequest(
     const std::string& prod_id,
     const std::string& browser_version,
@@ -106,7 +110,7 @@ std::string BuildProtocolRequest(
     const std::unique_ptr<UpdaterState::Attributes>& updater_state_attributes) {
   std::string request(
       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-      "<request protocol=\"3.0\" ");
+      "<request protocol=\"3.1\" ");
 
   if (!additional_attributes.empty())
     base::StringAppendF(&request, "%s ", additional_attributes.c_str());
@@ -238,8 +242,8 @@ int GetFetchError(const net::URLFetcher& fetcher) {
   }
 }
 
-bool HasDiffUpdate(const CrxUpdateItem* update_item) {
-  return !update_item->crx_diffurls.empty();
+bool HasDiffUpdate(const Component& component) {
+  return !component.crx_diffurls().empty();
 }
 
 bool IsHttpServerError(int status_code) {

@@ -50,8 +50,7 @@ void PictureLayer::PushPropertiesTo(LayerImpl* base_layer) {
   Layer::PushPropertiesTo(base_layer);
   TRACE_EVENT0("cc", "PictureLayer::PushPropertiesTo");
   PictureLayerImpl* layer_impl = static_cast<PictureLayerImpl*>(base_layer);
-  // TODO(danakj): Make mask_type_ a constructor parameter for PictureLayer.
-  DCHECK_EQ(layer_impl->mask_type(), mask_type());
+  layer_impl->SetLayerMaskType(mask_type());
   DropRecordingSourceContentIfInvalid();
 
   layer_impl->SetNearestNeighbor(picture_layer_inputs_.nearest_neighbor);
@@ -83,11 +82,6 @@ void PictureLayer::SetLayerTreeHost(LayerTreeHost* host) {
     recording_source_.reset(new RecordingSource);
   recording_source_->SetSlowdownRasterScaleFactor(
       host->GetDebugState().slow_down_raster_scale_factor);
-  // If we need to enable image decode tasks, then we have to generate the
-  // discardable images metadata.
-  const LayerTreeSettings& settings = layer_tree_host()->GetSettings();
-  recording_source_->SetGenerateDiscardableImagesMetadata(
-      settings.image_decode_tasks_enabled);
 }
 
 void PictureLayer::SetNeedsDisplayRect(const gfx::Rect& layer_rect) {

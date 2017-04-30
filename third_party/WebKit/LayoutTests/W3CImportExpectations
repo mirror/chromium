@@ -276,7 +276,8 @@ external/wpt/geolocation-API [ Skip ]
 ## Owners: dom-dev@chromium.org
 # external/wpt/html-imports [ Pass ]
 external/wpt/html-longdesc [ Skip ]
-external/wpt/html-media-capture [ Skip ]
+## Owners: rijubrata.bhaumik@intel.com,mcasas@chromium.org
+# external/wpt/html-media-capture [ Pass ]
 external/wpt/http [ Skip ]
 ## Owners: none; No tests in the directory.
 # external/wpt/images [ Pass ]
@@ -733,3 +734,8 @@ external/wpt/uievents/order-of-events/mouse-events/click-order-manual.html [ Ski
 external/wpt/uievents/order-of-events/mouse-events/mouseevents-mousemove-manual.htm [ Skip ]
 external/wpt/uievents/order-of-events/mouse-events/mousemove-across-manual.html [ Skip ]
 external/wpt/uievents/order-of-events/mouse-events/mousemove-between-manual.html [ Skip ]
+external/wpt/keyboard-lock/idlharness.https.html [ Skip ]
+external/wpt/keyboard-lock/navigator-cancelKeyLock.https.html [ Skip ]
+external/wpt/keyboard-lock/navigator-requestKeyLock.https.html [ Skip ]
+external/wpt/keyboard-lock/navigator-requestKeyLock-two-parallel-requests.https.html [ Skip ]
+external/wpt/keyboard-lock/navigator-requestKeyLock-two-sequential-requests.https.html [ Skip ]

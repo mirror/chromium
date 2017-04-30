@@ -326,12 +326,13 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
 
   PaintLayerType type = LayerTypeRequired();
   if (type != kNoPaintLayer) {
-    if (!Layer() && LayerCreationAllowedForSubtree()) {
+    if (!Layer()) {
       if (was_floating_before_style_changed && IsFloating())
         SetChildNeedsLayout();
       CreateLayerAfterStyleChange();
       if (Parent() && !NeedsLayout()) {
-        // FIXME: We should call a specialized version of this function.
+        // FIXME: We should call specialized versions of these functions.
+        Layer()->UpdateScrollingAfterLayout();
         Layer()->UpdateLayerPositionsAfterLayout();
       }
     }
@@ -568,7 +569,7 @@ void LayoutBoxModelObject::InvalidateTreeIfNeeded(
   LayoutRect previous_visual_rect = VisualRect();
   LayoutPoint previous_location = paint_invalidator.LocationInBacking();
   PaintInvalidationReason reason =
-      InvalidatePaintIfNeeded(new_paint_invalidation_state);
+      InvalidatePaint(new_paint_invalidation_state);
 
   if (previous_location != paint_invalidator.LocationInBacking()) {
     new_paint_invalidation_state

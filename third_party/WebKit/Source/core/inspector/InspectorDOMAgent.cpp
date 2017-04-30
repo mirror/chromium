@@ -949,10 +949,10 @@ Response InspectorDOMAgent::performSearch(
       optional_include_user_agent_shadow_dom.fromMaybe(false);
 
   unsigned query_length = whitespace_trimmed_query.length();
-  bool start_tag_found = !whitespace_trimmed_query.Find('<');
+  bool start_tag_found = !whitespace_trimmed_query.find('<');
   bool end_tag_found =
       whitespace_trimmed_query.ReverseFind('>') + 1 == query_length;
-  bool start_quote_found = !whitespace_trimmed_query.Find('"');
+  bool start_quote_found = !whitespace_trimmed_query.find('"');
   bool end_quote_found =
       whitespace_trimmed_query.ReverseFind('"') + 1 == query_length;
   bool exact_attribute_match = start_quote_found && end_quote_found;
@@ -1009,14 +1009,13 @@ Response InspectorDOMAgent::performSearch(
           AttributeCollection attributes = element->Attributes();
           for (auto& attribute : attributes) {
             // Add attribute pair
-            if (attribute.LocalName().Find(whitespace_trimmed_query, 0,
-                                           kTextCaseUnicodeInsensitive) !=
-                kNotFound) {
+            if (attribute.LocalName().FindIgnoringCase(whitespace_trimmed_query,
+                                                       0) != kNotFound) {
               result_collector.insert(node);
               break;
             }
-            size_t found_position = attribute.Value().Find(
-                attribute_query, 0, kTextCaseUnicodeInsensitive);
+            size_t found_position =
+                attribute.Value().FindIgnoringCase(attribute_query, 0);
             if (found_position != kNotFound) {
               if (!exact_attribute_match ||
                   (!found_position &&

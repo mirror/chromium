@@ -395,7 +395,6 @@ if (!is_android) {
       "../browser/ui/views/accessibility/navigation_accessibility_uitest_win.cc",
       "../browser/ui/webui/options/language_dictionary_interactive_uitest.cc",
       "../browser/ui/webui/options/language_options_interactive_uitest.cc",
-      "//ui/base/clipboard/clipboard_android_unittest.cc",
       "//ui/base/clipboard/clipboard_unittest.cc",
       "base/always_on_top_window_killer_win.cc",
       "base/always_on_top_window_killer_win.h",
@@ -619,6 +618,8 @@ if (!is_android) {
         "../browser/chromeos/login/screenshot_testing/SkImageDiffer.h",
         "../browser/chromeos/login/screenshot_testing/SkPMetric.cpp",
         "../browser/chromeos/login/screenshot_testing/SkPMetric.h",
+        "../browser/chromeos/login/screenshot_testing/SkPMetricUtil_gen.h",
+        "../browser/chromeos/login/screenshot_testing/login_screen_areas.h",
         "../browser/chromeos/login/screenshot_testing/screenshot_tester.cc",
         "../browser/chromeos/login/screenshot_testing/screenshot_tester.h",
         "../browser/chromeos/login/screenshot_testing/screenshot_testing_mixin.cc",
@@ -973,20 +974,6 @@ if (!is_android) {
       "//testing/scripts/common.py",
       "//testing/xvfb.py",
       "//testing/scripts/run_telemetry_as_googletest.py",
-    ]
-  }
-
-  # TODO(dpranke), TODO(crbug.com/714336): tab_capture_end2end_tests
-  # is really just browser_tests with some different flags. Figure out
-  # what the right way to run this is given the different ways to
-  # configure things in the //testing/buildbot/*.json files, here,
-  # gn_isolate_map.pyl, and mb.py. There's too many knobs and the interaction
-  # is strange and unclear at this point. For now, I *think* this will just
-  # have the effect of disabling the test in analyze. :(.
-  group("tab_capture_end2end_tests") {
-    testonly = true
-    deps = [
-      # ":browser_tests",
     ]
   }
 }
@@ -1638,7 +1625,6 @@ test("browser_tests") {
       "../browser/ui/webui/chrome_url_data_manager_browsertest.cc",
       "../browser/ui/webui/chromeos/bluetooth_pairing_ui_browsertest-inl.h",
       "../browser/ui/webui/constrained_web_dialog_ui_browsertest.cc",
-      "../browser/ui/webui/engagement/site_engagement_ui_browsertest.cc",
       "../browser/ui/webui/extensions/extension_settings_browsertest.cc",
       "../browser/ui/webui/extensions/extension_settings_browsertest.h",
       "../browser/ui/webui/identity_internals_ui_browsertest.cc",
@@ -1867,7 +1853,10 @@ test("browser_tests") {
         "//ppapi/tests/extensions",
       ]
       if (is_chromeos) {
-        sources += [ "//third_party/liblouis/nacl_wrapper/liblouis_wrapper_browsertest.cc" ]
+        sources += [
+          "../browser/ui/views/extensions/request_file_system_dialog_browsertest.cc",
+          "//third_party/liblouis/nacl_wrapper/liblouis_wrapper_browsertest.cc",
+        ]
         deps += [ "//chrome/browser/chromeos" ]
         data_deps += [ "//third_party/liblouis:liblouis_test_data" ]
       } else if (is_linux || is_win) {
@@ -1938,7 +1927,7 @@ test("browser_tests") {
         "../browser/ui/ash/chrome_new_window_client_browsertest.cc",
         "../browser/ui/ash/keyboard_controller_browsertest.cc",
         "../browser/ui/ash/keyboard_end_to_end_browsertest.cc",
-        "../browser/ui/ash/launcher/chrome_launcher_controller_impl_browsertest.cc",
+        "../browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
         "../browser/ui/ash/launcher/launcher_favicon_loader_browsertest.cc",
         "../browser/ui/ash/multi_user/multi_user_window_manager_test.cc",
         "../browser/ui/ash/multi_user/multi_user_window_manager_test.h",
@@ -1958,6 +1947,9 @@ test("browser_tests") {
       if (enable_app_list) {
         deps += [ ":test_support_applist_ash" ]
       }
+    }
+    if (use_aura) {
+      sources += [ "../browser/ui/aura/accessibility/automation_manager_aura_browsertest.cc" ]
     }
     if (use_aura || toolkit_views) {
       deps += [ "//ui/events:test_support" ]
@@ -2048,6 +2040,7 @@ test("browser_tests") {
         "../browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "../browser/chromeos/arc/auth/arc_robot_auth_code_fetcher_browsertest.cc",
         "../browser/chromeos/arc/intent_helper/arc_settings_service_browsertest.cc",
+        "../browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service_browsertest.cc",
         "../browser/chromeos/attestation/attestation_policy_browsertest.cc",
         "../browser/chromeos/customization/customization_document_browsertest.cc",
         "../browser/chromeos/customization/customization_wallpaper_downloader_browsertest.cc",
@@ -2413,8 +2406,8 @@ test("browser_tests") {
     if (is_win) {
       sources += [
         "../browser/extensions/api/networking_private/networking_private_credentials_getter_browsertest.cc",
+        "../browser/ui/views/chrome_cleaner_dialog_browsertest.cc",
         "../browser/ui/views/settings_reset_prompt_dialog_browsertest.cc",
-        "../browser/ui/views/srt_prompt_dialog_browsertest.cc",
       ]
     }
     if (is_mac || is_win) {
@@ -2882,6 +2875,7 @@ test("unit_tests") {
     "../browser/android/data_usage/external_data_use_observer_unittest.cc",
     "../browser/android/data_usage/external_data_use_reporter_unittest.cc",
     "../browser/android/data_usage/tab_data_use_entry_unittest.cc",
+    "../browser/android/digital_asset_links/digital_asset_links_handler_unittest.cc",
     "../browser/android/download/download_manager_service_unittest.cc",
     "../browser/android/history_report/data_observer_unittest.cc",
     "../browser/android/history_report/delta_file_backend_leveldb_unittest.cc",
@@ -4039,7 +4033,7 @@ test("unit_tests") {
       "../browser/ui/ash/accessibility/ax_tree_source_aura_unittest.cc",
       "../browser/ui/ash/chrome_screenshot_grabber_unittest.cc",
       "../browser/ui/ash/launcher/arc_app_shelf_id_unittest.cc",
-      "../browser/ui/ash/launcher/chrome_launcher_controller_impl_unittest.cc",
+      "../browser/ui/ash/launcher/chrome_launcher_controller_unittest.cc",
       "../browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
       "../browser/ui/ash/multi_user/multi_user_context_menu_chromeos_unittest.cc",
       "../browser/ui/ash/multi_user/multi_user_notification_blocker_chromeos_unittest.cc",

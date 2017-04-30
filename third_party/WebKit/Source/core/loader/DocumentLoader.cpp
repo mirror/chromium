@@ -402,23 +402,31 @@ void DocumentLoader::LoadFailed(const ResourceError& error) {
   }
 
   HistoryCommitType history_commit_type = LoadTypeToCommitType(load_type_);
-  FrameLoader& loader = GetFrameLoader();
-  if (state_ < kCommitted) {
-    if (state_ == kNotStarted)
+  switch (state_) {
+    case kNotStarted:
       probe::frameClearedScheduledClientNavigation(frame_);
-    state_ = kSentDidFinishLoad;
-    GetLocalFrameClient().DispatchDidFailProvisionalLoad(error,
-                                                         history_commit_type);
-    if (!frame_)
-      return;
-    loader.DetachProvisionalDocumentLoader(this);
-  } else if (state_ == kCommitted) {
-    if (frame_->GetDocument()->Parser())
-      frame_->GetDocument()->Parser()->StopParsing();
-    state_ = kSentDidFinishLoad;
-    GetLocalFrameClient().DispatchDidFailLoad(error, history_commit_type);
+    // Fall-through
+    case kProvisional:
+      state_ = kSentDidFinishLoad;
+      GetLocalFrameClient().DispatchDidFailProvisionalLoad(error,
+                                                           history_commit_type);
+      if (frame_)
+        GetFrameLoader().DetachProvisionalDocumentLoader(this);
+      break;
+    case kCommitted:
+      if (frame_->GetDocument()->Parser())
+        frame_->GetDocument()->Parser()->StopParsing();
+      state_ = kSentDidFinishLoad;
+      GetLocalFrameClient().DispatchDidFailLoad(error, history_commit_type);
+      if (frame_)
+        frame_->GetDocument()->CheckCompleted();
+      break;
+    case kSentDidFinishLoad:
+      // TODO(japhet): Why do we need to call DidFinishNavigation() again?
+      GetFrameLoader().DidFinishNavigation();
+      break;
   }
-  loader.CheckCompleted();
+  DCHECK_EQ(kSentDidFinishLoad, state_);
 }
 
 void DocumentLoader::FinishedLoading(double finish_time) {
@@ -507,8 +515,8 @@ bool DocumentLoader::ShouldContinueForResponse() const {
     return false;
   }
 
-  if (GetContentDispositionType(response_.HttpHeaderField(
-          HTTPNames::Content_Disposition)) == kContentDispositionAttachment) {
+  if (IsContentDispositionAttachment(
+          response_.HttpHeaderField(HTTPNames::Content_Disposition))) {
     // The server wants us to download instead of replacing the page contents.
     // Downloading is handled by the embedder, but we still get the initial
     // response so that we can ignore it and clean up properly.
@@ -798,8 +806,14 @@ bool DocumentLoader::MaybeCreateArchive() {
   if (!frame_)
     return false;
 
-  // The Document has now been created.
-  frame_->GetDocument()->EnforceSandboxFlags(kSandboxAll);
+  // The MHTML page is loaded in full sandboxing mode with the only
+  // exception to open new top-level windows. Since the MHTML page stays in a
+  // unquie origin with script execution disabled, the risk to navigate to
+  // 'blob:'' and 'filesystem:'' URLs that allow code execution in the page's
+  // "real" origin is mitigated.
+  frame_->GetDocument()->EnforceSandboxFlags(
+      kSandboxAll &
+      ~(kSandboxPopups | kSandboxPropagatesToAuxiliaryBrowsingContexts));
 
   CommitData(main_resource->Data()->Data(), main_resource->Data()->size());
   return true;
@@ -916,7 +930,7 @@ void DocumentLoader::DidInstallNewDocument(Document* document) {
   String header_content_language =
       response_.HttpHeaderField(HTTPNames::Content_Language);
   if (!header_content_language.IsEmpty()) {
-    size_t comma_index = header_content_language.Find(',');
+    size_t comma_index = header_content_language.find(',');
     // kNotFound == -1 == don't truncate
     header_content_language.Truncate(comma_index);
     header_content_language =

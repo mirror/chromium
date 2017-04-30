@@ -38,6 +38,7 @@
 #include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
 #include "content/browser/gpu/compositor_util.h"
+#include "content/browser/loader/navigation_url_loader_network_service.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/renderer_host/input/input_router_impl.h"
 #include "content/browser/renderer_host/input/synthetic_tap_gesture.h"
@@ -71,6 +72,7 @@
 #include "content/test/content_browser_test_utils_internal.h"
 #include "ipc/ipc.mojom.h"
 #include "ipc/ipc_security_test_util.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
@@ -938,38 +940,40 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, TitleAfterCrossSiteIframe) {
 }
 
 // Class to detect incoming GestureScrollEnd acks for bubbling tests.
-class GestureScrollEndObserver
+class InputEventAckWaiter
     : public content::RenderWidgetHost::InputEventObserver {
  public:
-  GestureScrollEndObserver()
+  InputEventAckWaiter(blink::WebInputEvent::Type ack_type_waiting_for)
       : message_loop_runner_(new content::MessageLoopRunner),
-        gesture_scroll_end_ack_received_(false) {}
-  ~GestureScrollEndObserver() override {}
+        ack_type_waiting_for_(ack_type_waiting_for),
+        desired_ack_type_received_(false) {}
+  ~InputEventAckWaiter() override {}
 
   void OnInputEventAck(const blink::WebInputEvent& event) override {
-    if (event.GetType() == blink::WebInputEvent::kGestureScrollEnd) {
-      gesture_scroll_end_ack_received_ = true;
+    if (event.GetType() == ack_type_waiting_for_) {
+      desired_ack_type_received_ = true;
       if (message_loop_runner_->loop_running())
         message_loop_runner_->Quit();
     }
   }
 
   void Wait() {
-    if (!gesture_scroll_end_ack_received_) {
+    if (!desired_ack_type_received_) {
       message_loop_runner_->Run();
     }
   }
 
   void Reset() {
-    gesture_scroll_end_ack_received_ = false;
+    desired_ack_type_received_ = false;
     message_loop_runner_ = new content::MessageLoopRunner;
   }
 
  private:
   scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
-  bool gesture_scroll_end_ack_received_;
+  blink::WebInputEvent::Type ack_type_waiting_for_;
+  bool desired_ack_type_received_;
 
-  DISALLOW_COPY_AND_ASSIGN(GestureScrollEndObserver);
+  DISALLOW_COPY_AND_ASSIGN(InputEventAckWaiter);
 };
 
 // Class to sniff incoming IPCs for FrameHostMsg_FrameRectChanged messages.
@@ -1119,6 +1123,75 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   EXPECT_LT(update_rect.y(), bounds.y() - rwhv_root->GetViewBounds().y());
 }
 
+// This test verifies that scroll bubbling from an OOPIF properly forwards
+// GestureFlingStart events from the child frame to the parent frame. This
+// test times out on failure.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       GestureFlingStartEventsBubble) {
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/cross_site_iframe_factory.html?a(b)"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  ASSERT_EQ(1U, root->child_count());
+
+  FrameTreeNode* child_iframe_node = root->child_at(0);
+
+  std::unique_ptr<InputEventAckWaiter> gesture_fling_start_ack_observer =
+      base::MakeUnique<InputEventAckWaiter>(
+          blink::WebInputEvent::kGestureFlingStart);
+  root->current_frame_host()->GetRenderWidgetHost()->AddInputEventObserver(
+      gesture_fling_start_ack_observer.get());
+
+  RenderWidgetHost* child_rwh =
+      child_iframe_node->current_frame_host()->GetRenderWidgetHost();
+
+  WaitForChildFrameSurfaceReady(child_iframe_node->current_frame_host());
+
+  gesture_fling_start_ack_observer->Reset();
+  // Send a GSB, GSU, GFS sequence and verify that the GFS bubbles.
+  blink::WebGestureEvent gesture_scroll_begin(
+      blink::WebGestureEvent::kGestureScrollBegin,
+      blink::WebInputEvent::kNoModifiers,
+      blink::WebInputEvent::kTimeStampForTesting);
+  gesture_scroll_begin.source_device = blink::kWebGestureDeviceTouchscreen;
+  gesture_scroll_begin.data.scroll_begin.delta_hint_units =
+      blink::WebGestureEvent::ScrollUnits::kPrecisePixels;
+  gesture_scroll_begin.data.scroll_begin.delta_x_hint = 0.f;
+  gesture_scroll_begin.data.scroll_begin.delta_y_hint = 5.f;
+
+  child_rwh->ForwardGestureEvent(gesture_scroll_begin);
+
+  blink::WebGestureEvent gesture_scroll_update(
+      blink::WebGestureEvent::kGestureScrollUpdate,
+      blink::WebInputEvent::kNoModifiers,
+      blink::WebInputEvent::kTimeStampForTesting);
+  gesture_scroll_update.source_device = blink::kWebGestureDeviceTouchscreen;
+  gesture_scroll_update.data.scroll_update.delta_units =
+      blink::WebGestureEvent::ScrollUnits::kPrecisePixels;
+  gesture_scroll_update.data.scroll_update.delta_x = 0.f;
+  gesture_scroll_update.data.scroll_update.delta_y = 5.f;
+  gesture_scroll_update.data.scroll_update.velocity_y = 5.f;
+
+  child_rwh->ForwardGestureEvent(gesture_scroll_update);
+
+  blink::WebGestureEvent gesture_fling_start(
+      blink::WebGestureEvent::kGestureFlingStart,
+      blink::WebInputEvent::kNoModifiers,
+      blink::WebInputEvent::kTimeStampForTesting);
+  gesture_fling_start.source_device = blink::kWebGestureDeviceTouchscreen;
+  gesture_fling_start.data.fling_start.velocity_x = 0.f;
+  gesture_fling_start.data.fling_start.velocity_y = 5.f;
+
+  child_rwh->ForwardGestureEvent(gesture_fling_start);
+
+  // We now wait for the fling start event to be acked by the parent
+  // frame. If the test fails, then the test times out.
+  gesture_fling_start_ack_observer->Wait();
+}
+
 // Test that scrolling a nested out-of-process iframe bubbles unused scroll
 // delta to a parent frame.
 #if defined(OS_ANDROID)
@@ -1149,8 +1222,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   parent_iframe_node->current_frame_host()->GetProcess()->AddFilter(
       filter.get());
 
-  std::unique_ptr<GestureScrollEndObserver> ack_observer =
-      base::MakeUnique<GestureScrollEndObserver>();
+  std::unique_ptr<InputEventAckWaiter> ack_observer =
+      base::MakeUnique<InputEventAckWaiter>(
+          blink::WebInputEvent::kGestureScrollEnd);
   parent_iframe_node->current_frame_host()
       ->GetRenderWidgetHost()
       ->AddInputEventObserver(ack_observer.get());
@@ -2395,6 +2469,40 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, NavigateRemoteAfterError) {
   }
 }
 
+namespace {
+class FailingURLLoaderImpl : public mojom::URLLoader {
+ public:
+  explicit FailingURLLoaderImpl(mojom::URLLoaderClientPtr client) {
+    ResourceRequestCompletionStatus status;
+    status.error_code = net::ERR_NOT_IMPLEMENTED;
+    client->OnComplete(status);
+  }
+
+  void FollowRedirect() override {}
+  void SetPriority(net::RequestPriority priority,
+                   int32_t intra_priority_value) override {}
+};
+
+class FailingLoadFactory : public mojom::URLLoaderFactory {
+ public:
+  FailingLoadFactory() {}
+  ~FailingLoadFactory() override {}
+
+  void CreateLoaderAndStart(mojom::URLLoaderAssociatedRequest loader,
+                            int32_t routing_id,
+                            int32_t request_id,
+                            uint32_t options,
+                            const ResourceRequest& request,
+                            mojom::URLLoaderClientPtr client) override {
+    new FailingURLLoaderImpl(std::move(client));
+  }
+  void SyncLoad(int32_t routing_id,
+                int32_t request_id,
+                const ResourceRequest& request,
+                SyncLoadCallback callback) override {}
+};
+}
+
 // Ensure that a cross-site page ends up in the correct process when it
 // successfully loads after earlier encountering a network error for it.
 // See https://crbug.com/560511.
@@ -2413,7 +2521,18 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ProcessTransferAfterError) {
   // Disable host resolution in the test server and try to navigate the subframe
   // cross-site, which will lead to a committed net error.
   GURL url_b = embedded_test_server()->GetURL("b.com", "/title3.html");
-  host_resolver()->ClearRules();
+  bool network_service = base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnableNetworkService);
+  mojom::URLLoaderFactoryPtr failing_factory;
+  mojo::MakeStrongBinding(base::MakeUnique<FailingLoadFactory>(),
+                          mojo::MakeRequest(&failing_factory));
+  if (network_service) {
+    NavigationURLLoaderNetworkService::OverrideURLLoaderFactoryForTesting(
+        std::move(failing_factory));
+  } else {
+    host_resolver()->ClearRules();
+  }
+
   TestNavigationObserver observer(shell()->web_contents());
   NavigateIframeToURL(shell()->web_contents(), "child-0", url_b);
   EXPECT_FALSE(observer.last_navigation_succeeded());
@@ -2446,7 +2565,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ProcessTransferAfterError) {
   EXPECT_EQ("null", child->current_origin().Serialize());
 
   // Try again after re-enabling host resolution.
-  host_resolver()->AddRule("*", "127.0.0.1");
+  if (!network_service)
+    host_resolver()->AddRule("*", "127.0.0.1");
+
   NavigateIframeToURL(shell()->web_contents(), "child-0", url_b);
   EXPECT_TRUE(observer.last_navigation_succeeded());
   EXPECT_EQ(url_b, observer.last_navigation_url());
@@ -3459,8 +3580,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessEmbedderCSPEnforcementBrowserTest,
 }
 
 // Verify origin replication with an A-embed-B-embed-C-embed-A hierarchy.
-// Disabled due to flake on multiple platforms: https://crbug.com/692864.
-IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, DISABLED_OriginReplication) {
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, OriginReplication) {
   GURL main_url(embedded_test_server()->GetURL(
       "a.com", "/cross_site_iframe_factory.html?a(b(c(a),b), a)"));
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
@@ -9654,7 +9774,6 @@ class RequestDelayingSitePerProcessBrowserTest
 
   // Must be called after any calls to SetDelayedRequestsForPath.
   void SetUpEmbeddedTestServer() {
-    host_resolver()->AddRule("*", "127.0.0.1");
     SetupCrossSiteRedirector(test_server_.get());
     test_server_->RegisterRequestHandler(base::Bind(
         &RequestDelayingSitePerProcessBrowserTest::HandleMockResource,

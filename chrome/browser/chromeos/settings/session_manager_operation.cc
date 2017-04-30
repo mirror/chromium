@@ -13,6 +13,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/stl_util.h"
 #include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chrome/browser/net/nss_context.h"
@@ -23,6 +24,8 @@
 #include "crypto/rsa_private_key.h"
 #include "crypto/signature_creator.h"
 
+using RetrievePolicyResponseType =
+    chromeos::SessionManagerClient::RetrievePolicyResponseType;
 using ownership::OwnerKeyUtil;
 using ownership::PublicKey;
 
@@ -86,9 +89,12 @@ void SessionManagerOperation::ReportResult(
 void SessionManagerOperation::EnsurePublicKey(const base::Closure& callback) {
   if (force_key_load_ || !public_key_ || !public_key_->is_loaded()) {
     scoped_refptr<base::TaskRunner> task_runner =
-        content::BrowserThread::GetBlockingPool()
-            ->GetTaskRunnerWithShutdownBehavior(
-                base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
+        base::CreateTaskRunnerWithTraits(
+            base::TaskTraits()
+                .MayBlock()
+                .WithPriority(base::TaskPriority::BACKGROUND)
+                .WithShutdownBehavior(
+                    base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN));
     base::PostTaskAndReplyWithResult(
         task_runner.get(), FROM_HERE,
         base::Bind(&SessionManagerOperation::LoadPublicKey, owner_key_util_,
@@ -138,12 +144,15 @@ void SessionManagerOperation::RetrieveDeviceSettings() {
 }
 
 void SessionManagerOperation::BlockingRetrieveDeviceSettings() {
-  ValidateDeviceSettings(
-      session_manager_client()->BlockingRetrieveDevicePolicy());
+  std::string policy_blob;
+  RetrievePolicyResponseType response =
+      session_manager_client()->BlockingRetrieveDevicePolicy(&policy_blob);
+  ValidateDeviceSettings(policy_blob, response);
 }
 
 void SessionManagerOperation::ValidateDeviceSettings(
-    const std::string& policy_blob) {
+    const std::string& policy_blob,
+    RetrievePolicyResponseType response_type) {
   std::unique_ptr<em::PolicyFetchResponse> policy(
       new em::PolicyFetchResponse());
   if (policy_blob.empty()) {
@@ -151,8 +160,7 @@ void SessionManagerOperation::ValidateDeviceSettings(
     return;
   }
 
-  if (!policy->ParseFromString(policy_blob) ||
-      !policy->IsInitialized()) {
+  if (!policy->ParseFromString(policy_blob) || !policy->IsInitialized()) {
     ReportResult(DeviceSettingsService::STORE_INVALID_POLICY);
     return;
   }

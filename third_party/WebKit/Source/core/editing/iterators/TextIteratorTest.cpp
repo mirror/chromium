@@ -114,10 +114,10 @@ std::string TextIteratorTest::IterateWithIterator(
     typename Tree::TextIteratorType& iterator) {
   String text_chunks;
   for (; !iterator.AtEnd(); iterator.Advance()) {
-    text_chunks.Append('[');
-    text_chunks.Append(
+    text_chunks.append('[');
+    text_chunks.append(
         iterator.GetText().Substring(0, iterator.GetText().length()));
-    text_chunks.Append(']');
+    text_chunks.append(']');
   }
   return std::string(text_chunks.Utf8().data());
 }
@@ -457,6 +457,34 @@ TEST_F(TextIteratorTest, RangeLengthWithReplacedElements) {
 
   EXPECT_EQ(3, TextIterator::RangeLength(range->StartPosition(),
                                          range->EndPosition()));
+}
+
+TEST_F(TextIteratorTest, RangeLengthInMultilineSpan) {
+  static const char* body_content =
+      "<table style='width:5em'>"
+      "<tbody>"
+      "<tr>"
+      "<td>"
+      "<span id='span1'>one two three four five</span>"
+      "</td>"
+      "</tr>"
+      "</tbody>"
+      "</table>";
+
+  SetBodyContent(body_content);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  Node* span_node = GetDocument().getElementById("span1");
+  Node* text_node = span_node->firstChild();
+
+  // Select the word "two", this is the last word on the line.
+  const Position start = Position(text_node, 4);
+  const Position end = Position(text_node, 7);
+
+  EXPECT_EQ(4, TextIterator::RangeLength(start, end));
+  EXPECT_EQ(3, TextIterator::RangeLength(
+                   start, end,
+                   TextIteratorBehavior::NoTrailingSpaceRangeLengthBehavior()));
 }
 
 TEST_F(TextIteratorTest, WhitespaceCollapseForReplacedElements) {

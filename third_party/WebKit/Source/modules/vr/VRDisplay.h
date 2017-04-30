@@ -140,6 +140,7 @@ class VRDisplay final : public EventTargetWithInlineData,
   void ConnectVSyncProvider();
   void OnVSyncConnectionError();
 
+  bool IsPresentationFocused();
   ScriptedAnimationController& EnsureScriptedAnimationController(Document*);
   void ProcessScheduledAnimations(double timestamp);
   void ProcessScheduledWindowAnimations(double timestamp);
@@ -179,7 +180,7 @@ class VRDisplay final : public EventTargetWithInlineData,
   RefPtr<Image> previous_image_;
 
   Member<ScriptedAnimationController> scripted_animation_controller_;
-  bool pending_raf_ = false;
+  bool pending_vrdisplay_raf_ = false;
   bool pending_vsync_ = false;
   bool in_animation_frame_ = false;
   bool in_display_activate_ = false;

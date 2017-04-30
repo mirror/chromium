@@ -228,6 +228,8 @@ class CORE_EXPORT FrameView final
   void DidUpdateElasticOverscroll();
 
   void ViewportSizeChanged(bool width_changed, bool height_changed);
+  void MarkViewportConstrainedObjectsForLayout(bool width_changed,
+                                               bool height_changed);
 
   AtomicString MediaType() const;
   void SetMediaType(const AtomicString&);
@@ -792,7 +794,7 @@ class CORE_EXPORT FrameView final
 
   // For PaintInvalidator temporarily. TODO(wangxianzhu): Move into
   // PaintInvalidator.
-  void InvalidatePaintIfNeeded(const PaintInvalidationState&);
+  void InvalidatePaint(const PaintInvalidationState&);
 
   // Only for SPv2.
   std::unique_ptr<JSONObject> CompositedLayersAsJSON(LayerTreeFlags);

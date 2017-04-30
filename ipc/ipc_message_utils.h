@@ -37,20 +37,21 @@ class DictionaryValue;
 class FilePath;
 class ListValue;
 class NullableString16;
+class SharedMemoryHandle;
 class Time;
 class TimeDelta;
 class TimeTicks;
 class UnguessableToken;
 struct FileDescriptor;
-
-#if (defined(OS_MACOSX) && !defined(OS_IOS)) || defined(OS_WIN)
-class SharedMemoryHandle;
-#endif  // (defined(OS_MACOSX) && !defined(OS_IOS)) || defined(OS_WIN)
 }
 
 namespace IPC {
 
 struct ChannelHandle;
+
+#if defined(OS_WIN)
+class PlatformFileForTransit;
+#endif
 
 // -----------------------------------------------------------------------------
 // How we send IPC message logs across channels.
@@ -585,7 +586,6 @@ struct IPC_EXPORT ParamTraits<base::FileDescriptor> {
 };
 #endif  // defined(OS_POSIX)
 
-#if (defined(OS_MACOSX) && !defined(OS_IOS)) || defined(OS_WIN)
 template <>
 struct IPC_EXPORT ParamTraits<base::SharedMemoryHandle> {
   typedef base::SharedMemoryHandle param_type;
@@ -596,7 +596,19 @@ struct IPC_EXPORT ParamTraits<base::SharedMemoryHandle> {
                    param_type* r);
   static void Log(const param_type& p, std::string* l);
 };
-#endif  // (defined(OS_MACOSX) && !defined(OS_IOS)) || defined(OS_WIN)
+
+#if defined(OS_WIN)
+template <>
+struct IPC_EXPORT ParamTraits<PlatformFileForTransit> {
+  typedef PlatformFileForTransit param_type;
+  static void GetSize(base::PickleSizer* sizer, const param_type& p);
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+#endif  // defined(OS_WIN)
 
 template <>
 struct IPC_EXPORT ParamTraits<base::FilePath> {

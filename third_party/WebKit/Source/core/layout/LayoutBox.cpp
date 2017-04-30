@@ -746,11 +746,13 @@ FloatRect LayoutBox::LocalBoundingBoxRectForAccessibility() const {
                    frame_rect_.Height().ToFloat());
 }
 
-void LayoutBox::UpdateLayerTransformAfterLayout() {
+void LayoutBox::UpdateAfterLayout() {
   // Transform-origin depends on box size, so we need to update the layer
   // transform after layout.
-  if (HasLayer())
+  if (HasLayer()) {
     Layer()->UpdateTransformationMatrix();
+    Layer()->UpdateScrollingAfterLayout();
+  }
 }
 
 LayoutUnit LayoutBox::LogicalHeightWithVisibleOverflow() const {
@@ -838,8 +840,9 @@ void LayoutBox::SetLocationAndUpdateOverflowControlsIfNeeded(
         PixelSnappedBorderBoxRect().Size();
     SetLocation(location);
     if (PixelSnappedBorderBoxRect().Size() !=
-        old_pixel_snapped_border_rect_size)
-      GetScrollableArea()->UpdateAfterLayout();
+        old_pixel_snapped_border_rect_size) {
+      Layer()->UpdateScrollingAfterLayout();
+    }
     return;
   }
 
@@ -1753,7 +1756,7 @@ void LayoutBox::PaintMask(const PaintInfo& paint_info,
 }
 
 void LayoutBox::ImageChanged(WrappedImagePtr image, const IntRect*) {
-  // TODO(chrishtr): support PaintInvalidationDelayedFull for animated border
+  // TODO(chrishtr): support kPaintInvalidationDelayedFull for animated border
   // images.
   if ((StyleRef().BorderImage().GetImage() &&
        StyleRef().BorderImage().GetImage()->Data() == image) ||
@@ -1875,17 +1878,14 @@ void LayoutBox::EnsureIsReadyForPaintInvalidation() {
     return;
 
   // Do regular full paint invalidation if the object with
-  // PaintInvalidationDelayedFull is onscreen.
-  if (IntersectsVisibleViewport()) {
-    // Conservatively assume the delayed paint invalidation was caused by
-    // background image change.
-    SetBackgroundChangedSinceLastPaintInvalidation();
-    SetShouldDoFullPaintInvalidationWithoutGeometryChange(
-        kPaintInvalidationFull);
-  }
+  // kPaintInvalidationDelayedFull is onscreen.
+  // Conservatively assume the delayed paint invalidation was caused by
+  // background image change.
+  SetBackgroundChangedSinceLastPaintInvalidation();
+  SetShouldDoFullPaintInvalidationWithoutGeometryChange(kPaintInvalidationFull);
 }
 
-PaintInvalidationReason LayoutBox::InvalidatePaintIfNeeded(
+PaintInvalidationReason LayoutBox::InvalidatePaint(
     const PaintInvalidationState& paint_invalidation_state) {
   if (HasBoxDecorationBackground()
       // We also paint overflow controls in background phase.
@@ -1895,13 +1895,12 @@ PaintInvalidationReason LayoutBox::InvalidatePaintIfNeeded(
       layer.SetNeedsPaintPhaseDescendantBlockBackgrounds();
   }
 
-  return LayoutBoxModelObject::InvalidatePaintIfNeeded(
-      paint_invalidation_state);
+  return LayoutBoxModelObject::InvalidatePaint(paint_invalidation_state);
 }
 
-PaintInvalidationReason LayoutBox::InvalidatePaintIfNeeded(
+PaintInvalidationReason LayoutBox::InvalidatePaint(
     const PaintInvalidatorContext& context) const {
-  return BoxPaintInvalidator(*this, context).InvalidatePaintIfNeeded();
+  return BoxPaintInvalidator(*this, context).InvalidatePaint();
 }
 
 LayoutRect LayoutBox::OverflowClipRect(
@@ -3517,8 +3516,8 @@ bool LayoutBox::LogicalHeightComputesAsNone(SizeType size_type) const {
   Length logical_height = size_type == kMinSize ? Style()->LogicalMinHeight()
                                                 : Style()->LogicalMaxHeight();
   Length initial_logical_height = size_type == kMinSize
-                                      ? ComputedStyle::InitialMinSize()
-                                      : ComputedStyle::InitialMaxSize();
+                                      ? ComputedStyle::InitialMinHeight()
+                                      : ComputedStyle::InitialMaxHeight();
 
   if (logical_height == initial_logical_height)
     return true;

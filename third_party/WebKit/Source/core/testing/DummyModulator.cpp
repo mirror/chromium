@@ -5,14 +5,36 @@
 #include "core/testing/DummyModulator.h"
 
 #include "bindings/core/v8/ScriptValue.h"
+#include "core/dom/ScriptModuleResolver.h"
 
 namespace blink {
 
-DummyModulator::DummyModulator() {}
+namespace {
+
+class EmptyScriptModuleResolver final : public ScriptModuleResolver {
+ public:
+  EmptyScriptModuleResolver() {}
+
+  // We ignore RegisterModuleScript() calls caused by
+  // ModuleScript::CreateForTest().
+  void RegisterModuleScript(ModuleScript*) override {}
+
+  ScriptModule Resolve(const String& specifier,
+                       const ScriptModule& referrer,
+                       ExceptionState&) override {
+    NOTREACHED();
+    return ScriptModule();
+  }
+};
+
+}  // namespace
+
+DummyModulator::DummyModulator() : resolver_(new EmptyScriptModuleResolver()) {}
 
 DummyModulator::~DummyModulator() {}
 
 DEFINE_TRACE(DummyModulator) {
+  visitor->Trace(resolver_);
   Modulator::Trace(visitor);
 }
 
@@ -27,8 +49,7 @@ SecurityOrigin* DummyModulator::GetSecurityOrigin() {
 }
 
 ScriptModuleResolver* DummyModulator::GetScriptModuleResolver() {
-  NOTREACHED();
-  return nullptr;
+  return resolver_.Get();
 }
 
 WebTaskRunner* DummyModulator::TaskRunner() {
@@ -51,6 +72,11 @@ void DummyModulator::FetchTreeInternal(const ModuleScriptFetchRequest&,
 void DummyModulator::FetchSingle(const ModuleScriptFetchRequest&,
                                  ModuleGraphLevel,
                                  SingleModuleClient*) {
+  NOTREACHED();
+}
+
+void DummyModulator::FetchDescendantsForInlineScript(ModuleScript*,
+                                                     ModuleTreeClient*) {
   NOTREACHED();
 }
 
@@ -77,9 +103,18 @@ ScriptValue DummyModulator::InstantiateModule(ScriptModule) {
   return ScriptValue();
 }
 
+ScriptValue DummyModulator::GetInstantiationError(const ModuleScript*) {
+  NOTREACHED();
+  return ScriptValue();
+}
+
 Vector<String> DummyModulator::ModuleRequestsFromScriptModule(ScriptModule) {
   NOTREACHED();
   return Vector<String>();
+}
+
+void DummyModulator::ExecuteModule(const ModuleScript*) {
+  NOTREACHED();
 }
 
 }  // namespace blink

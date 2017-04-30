@@ -90,6 +90,7 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
   void SelectClientCertificate(
       content::WebContents* web_contents,
       net::SSLCertRequestInfo* cert_request_info,
+      net::CertificateList client_certs,
       std::unique_ptr<content::ClientCertificateDelegate> delegate) override;
   bool CanCreateWindow(content::RenderFrameHost* opener,
                        const GURL& opener_url,
@@ -131,8 +132,8 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
   content::DevToolsManagerDelegate* GetDevToolsManagerDelegate() override;
   std::unique_ptr<base::Value> GetServiceManifestOverlay(
       base::StringPiece name) override;
-  void RegisterRenderFrameMojoInterfaces(
-      service_manager::InterfaceRegistry* registry,
+  void ExposeInterfacesToFrame(
+      service_manager::BinderRegistry* registry,
       content::RenderFrameHost* render_frame_host) override;
 
  private:

@@ -29,8 +29,8 @@
 #include <memory>
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/layout/CollapsedBorderValue.h"
 #include "core/layout/LayoutBlock.h"
-#include "core/style/CollapsedBorderValue.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -392,6 +392,10 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
     needs_section_recalc_ = true;
     SetNeedsLayoutAndFullPaintInvalidation(
         LayoutInvalidationReason::kTableChanged);
+
+    // Grid structure affects cell adjacence relationships which affect
+    // conflict resolution of collapsed borders.
+    InvalidateCollapsedBorders();
   }
 
   LayoutTableSection* SectionAbove(
@@ -406,8 +410,13 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   LayoutTableCell* CellBefore(const LayoutTableCell*) const;
   LayoutTableCell* CellAfter(const LayoutTableCell*) const;
 
-  typedef Vector<CollapsedBorderValue> CollapsedBorderValues;
+  using CollapsedBorderValues = Vector<CollapsedBorderValue>;
+  const CollapsedBorderValues& CollapsedBorders() const {
+    DCHECK(collapsed_borders_valid_);
+    return collapsed_borders_;
+  }
   void InvalidateCollapsedBorders();
+  void InvalidateCollapsedBordersForAllCellsIfNeeded();
 
   bool HasSections() const { return Header() || Footer() || FirstBody(); }
 
@@ -435,11 +444,6 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
                                     const LayoutPoint&) const final;
 
   void PaintMask(const PaintInfo&, const LayoutPoint&) const final;
-
-  const CollapsedBorderValues& CollapsedBorders() const {
-    DCHECK(collapsed_borders_valid_);
-    return collapsed_borders_;
-  }
 
   void SubtractCaptionRect(LayoutRect&) const;
 
@@ -470,9 +474,9 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   void SimplifiedNormalFlowLayout() override;
   bool RecalcChildOverflowAfterStyleChange() override;
   void EnsureIsReadyForPaintInvalidation() override;
-  PaintInvalidationReason InvalidatePaintIfNeeded(
+  PaintInvalidationReason InvalidatePaint(
       const PaintInvalidationState&) override;
-  PaintInvalidationReason InvalidatePaintIfNeeded(
+  PaintInvalidationReason InvalidatePaint(
       const PaintInvalidatorContext&) const override;
 
  private:
@@ -585,6 +589,7 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   // field.
   CollapsedBorderValues collapsed_borders_;
   bool collapsed_borders_valid_ : 1;
+  bool needs_invalidate_collapsed_borders_for_all_cells_ : 1;
 
   mutable bool has_col_elements_ : 1;
   mutable bool needs_section_recalc_ : 1;

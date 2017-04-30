@@ -135,7 +135,6 @@ class LocalFrame;
 class Location;
 class MediaQueryListListener;
 class MediaQueryMatcher;
-class NodeFilter;
 class NodeIterator;
 class NthIndexCache;
 class OriginAccessEntry;
@@ -169,6 +168,7 @@ class Touch;
 class TouchList;
 class TransformSource;
 class TreeWalker;
+class V8NodeFilterCondition;
 class VisitedLinkState;
 class WebMouseEvent;
 struct AnnotatedRegionValue;
@@ -347,9 +347,6 @@ class CORE_EXPORT Document : public ContainerNode,
   // just for the web IDL implementation.
   Element* ScrollingElementNoLayout();
 
-  void AddNonAttachedStyle(const Node&, RefPtr<ComputedStyle>);
-  ComputedStyle* GetNonAttachedStyle(const Node&) const;
-
   String readyState() const;
 
   AtomicString characterSet() const { return Document::EncodingName(); }
@@ -487,8 +484,10 @@ class CORE_EXPORT Document : public ContainerNode,
 
   NodeIterator* createNodeIterator(Node* root,
                                    unsigned what_to_show,
-                                   NodeFilter*);
-  TreeWalker* createTreeWalker(Node* root, unsigned what_to_show, NodeFilter*);
+                                   V8NodeFilterCondition*);
+  TreeWalker* createTreeWalker(Node* root,
+                               unsigned what_to_show,
+                               V8NodeFilterCondition*);
 
   // Special support for editing
   Text* CreateEditingTextNode(const String&);
@@ -568,8 +567,8 @@ class CORE_EXPORT Document : public ContainerNode,
   void close(ExceptionState&);
   // This is used internally and does not handle exceptions.
   void close();
-  // implicitClose() actually does the work of closing the input stream.
-  void ImplicitClose();
+
+  void CheckCompleted();
 
   bool DispatchBeforeUnloadEvent(ChromeClient&,
                                  bool is_reload,
@@ -682,9 +681,6 @@ class CORE_EXPORT Document : public ContainerNode,
   enum ParsingState { kParsing, kInDOMContentLoaded, kFinishedParsing };
   void SetParsingState(ParsingState);
   bool Parsing() const { return parsing_state_ == kParsing; }
-  bool IsInDOMContentLoaded() const {
-    return parsing_state_ == kInDOMContentLoaded;
-  }
   bool HasFinishedParsing() const { return parsing_state_ == kFinishedParsing; }
 
   bool ShouldScheduleLayout() const;
@@ -1053,9 +1049,6 @@ class CORE_EXPORT Document : public ContainerNode,
   bool LoadEventStillNeeded() const {
     return load_event_progress_ == kLoadEventNotRun;
   }
-  bool ProcessingLoadEvent() const {
-    return load_event_progress_ == kLoadEventInProgress;
-  }
   bool LoadEventFinished() const {
     return load_event_progress_ >= kLoadEventCompleted;
   }
@@ -1173,7 +1166,6 @@ class CORE_EXPORT Document : public ContainerNode,
   }
   HTMLImportLoader* ImportLoader() const;
 
-  bool HaveImportsLoaded() const;
   void DidLoadAllImports();
 
   void AdjustFloatQuadsForScrollAndAbsoluteZoom(Vector<FloatQuad>&,
@@ -1269,11 +1261,8 @@ class CORE_EXPORT Document : public ContainerNode,
 
   NthIndexCache* GetNthIndexCache() const { return nth_index_cache_; }
 
-  bool IsSecureContext(
-      String& error_message,
-      const SecureContextCheck = kStandardSecureContextCheck) const override;
-  bool IsSecureContext(
-      const SecureContextCheck = kStandardSecureContextCheck) const override;
+  bool IsSecureContext(String& error_message) const override;
+  bool IsSecureContext() const override;
 
   ClientHintsPreferences& GetClientHintsPreferences() {
     return client_hints_preferences_;
@@ -1383,6 +1372,10 @@ class CORE_EXPORT Document : public ContainerNode,
   void UpdateStyle();
   void NotifyLayoutTreeOfSubtreeChanges();
 
+  // ImplicitClose() actually does the work of closing the input stream.
+  void ImplicitClose();
+  bool ShouldComplete();
+
   void DetachParser();
 
   void BeginLifecycleUpdatesIfRenderingReady();
@@ -1396,8 +1389,7 @@ class CORE_EXPORT Document : public ContainerNode,
   bool ChildTypeAllowed(NodeType) const final;
   Node* cloneNode(bool deep, ExceptionState&) final;
   void CloneDataFromDocument(const Document&);
-  bool IsSecureContextImpl(
-      const SecureContextCheck privilige_context_check) const;
+  bool IsSecureContextImpl() const;
 
   ShadowCascadeOrder shadow_cascade_order_ = kShadowCascadeNone;
 
@@ -1448,6 +1440,8 @@ class CORE_EXPORT Document : public ContainerNode,
   void RunExecutionContextTask(std::unique_ptr<ExecutionContextTask>,
                                bool instrumenting);
 
+  bool HaveImportsLoaded() const;
+
   DocumentLifecycle lifecycle_;
 
   bool has_nodes_with_placeholder_style_;
@@ -1465,10 +1459,6 @@ class CORE_EXPORT Document : public ContainerNode,
   Member<ResourceFetcher> fetcher_;
   Member<DocumentParser> parser_;
   Member<ContextFeatures> context_features_;
-
-  // This HashMap is used to temporaily store the ComputedStyle generated in the
-  // Style Resolution phase which is used in the Layout Tree construction phase.
-  HeapHashMap<Member<const Node>, RefPtr<ComputedStyle>> non_attached_style_;
 
   bool well_formed_;
 

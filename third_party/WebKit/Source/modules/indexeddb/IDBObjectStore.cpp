@@ -381,6 +381,7 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
   options.blob_info = &blob_info;
   options.write_wasm_to_stream =
       ExecutionContext::From(script_state)->IsSecureContext();
+  options.for_storage = true;
   RefPtr<SerializedScriptValue> serialized_value =
       SerializedScriptValue::Serialize(isolate, value.V8Value(), options,
                                        exception_state);
@@ -505,6 +506,8 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
   Vector<char> wire_bytes;
   serialized_value->ToWireBytes(wire_bytes);
   RefPtr<SharedBuffer> value_buffer = SharedBuffer::AdoptVector(wire_bytes);
+
+  request->StorePutOperationBlobs(serialized_value->BlobDataHandles());
 
   BackendDB()->Put(transaction_->Id(), Id(), WebData(value_buffer), blob_info,
                    key, static_cast<WebIDBPutMode>(put_mode),

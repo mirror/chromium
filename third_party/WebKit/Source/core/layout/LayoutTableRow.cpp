@@ -34,7 +34,6 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/SubtreeLayoutScope.h"
 #include "core/paint/TableRowPainter.h"
-#include "core/style/StyleInheritedData.h"
 
 namespace blink {
 
@@ -172,6 +171,7 @@ void LayoutTableRow::AddChild(LayoutObject* child, LayoutObject* before_child) {
     // neighboring cells.
     LayoutTable* enclosing_table = Table();
     if (enclosing_table && enclosing_table->CollapseBorders()) {
+      enclosing_table->InvalidateCollapsedBorders();
       if (LayoutTableCell* previous_cell = cell->PreviousCell())
         previous_cell->SetNeedsLayoutAndPrefWidthsRecalc(
             LayoutInvalidationReason::kTableChanged);

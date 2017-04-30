@@ -647,13 +647,6 @@ const char kEnableTokenBindingName[] = "Token Binding.";
 
 const char kEnableTokenBindingDescription[] = "Enable Token Binding support.";
 
-const char kGestureRequirementForMediaPlaybackName[] =
-    "Gesture requirement for media playback";
-
-const char kGestureRequirementForMediaPlaybackDescription[] =
-    "User gesture requirement for playing media elements. Disabling this "
-    "will allow autoplay to work.";
-
 const char kPassiveDocumentEventListenersDescription[] =
     "Forces touchstart, and touchmove event listeners on document level "
     "targets (which haven't requested otherwise) to be treated as passive.";
@@ -2581,6 +2574,15 @@ const char kBackgroundVideoTrackOptimizationDescription[] =
     "Disable video tracks when the video is played in the background to "
     "optimize performance.";
 
+//  New remote playback pipeline experiment strings.
+
+const char kNewRemotePlaybackPipelineName[] =
+    "Enable the new remote playback pipeline.";
+
+const char kNewRemotePlaybackPipelineDescription[] =
+    "Enable the new pipeline for playing media element remotely via "
+    "RemotePlayback API or native controls.";
+
 //  Video fullscreen with orientation lock experiment strings.
 
 const char kVideoFullscreenOrientationLockName[] =
@@ -2589,6 +2591,15 @@ const char kVideoFullscreenOrientationLockName[] =
 const char kVideoFullscreenOrientationLockDescription[] =
     "Lock the screen orientation of the device to match video orientation "
     "when a video goes fullscreen. Only on phones.";
+
+//  Video rotate-to-fullscreen experiment strings.
+
+const char kVideoRotateToFullscreenName[] =
+    "Rotate-to-fullscreen gesture for videos.";
+
+const char kVideoRotateToFullscreenDescription[] =
+    "Enter/exit fullscreen when device is rotated to/from the orientation of "
+    "the video. Only on phones.";
 
 //  Expensive background timer throttling flag
 
@@ -2675,14 +2686,6 @@ const char kMediaRemotingDescription[] =
     "When Casting a tab to a remote device, enabling this turns on an "
     "optimization that forwards the content bitstream directly to the "
     "remote device when a video is fullscreened.";
-
-const char kMediaRemotingEncryptedName[] =
-    "Media Remoting during Cast Tab Mirroring: Encrypted content too";
-
-const char kMediaRemotingEncryptedDescription[] =
-    "When Media Remoting is enabled, this flag must be enabled to allow the "
-    "remoting of encrypted content. When disabled, only non-encrypted "
-    "content can be remoted.";
 
 //  Chrome OS component updates chrome://flags strings
 
@@ -2789,11 +2792,9 @@ const char kPauseBackgroundTabsName[] = "Pause background tabs";
 const char kPauseBackgroundTabsDescription[] =
     "Pause timers in background tabs after 5 minutes on desktop.";
 
-const char kAppMenuIconName[] = "App Menu Icon";
-const char kAppMenuIconDescription[] = "Changes the icon in the app menu.";
-const char kAppMenuIconOldBehavior[] = "Old Behavior";
-const char kAppMenuIconPersistentOpenedState[] = "Persistent Opened State";
-const char kAppMenuIconPersistentClosedState[] = "Persistent Closed State";
+const char kEnableNewAppMenuIconName[] = "Enable the New App Menu Icon";
+const char kEnableNewAppMenuIconDescription[] =
+    "Use the new app menu icon with update notification animations.";
 
 #endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
         // defined(OS_WIN)
@@ -3048,5 +3049,13 @@ const char kAutoplayPolicyUserGestureRequired[] = "User gesture is required.";
 
 const char kAutoplayPolicyCrossOriginUserGestureRequired[] =
     "User gesture is required for cross-origin iframes.";
+
+const char kOmniboxDisplayTitleForCurrentUrlName[] =
+    "Include title for the current URL in the omnibox";
+
+const char kOmniboxDisplayTitleForCurrentUrlDescription[] =
+    "In the event that the omnibox provides suggestions on-focus, the URL of "
+    "the current page is provided as the first suggestion without a title. "
+    "Enabling this flag causes the title to be displayed.";
 
 }  // namespace flag_descriptions

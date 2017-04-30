@@ -122,7 +122,7 @@ String FindMagicComment(const String& content, const String& name) {
 
   String disallowed_chars("\"' \t");
   for (unsigned i = 0; i < match.length(); ++i) {
-    if (disallowed_chars.Find(match[i]) != kNotFound)
+    if (disallowed_chars.find(match[i]) != kNotFound)
       return g_empty_string;
   }
 
@@ -274,7 +274,7 @@ void StyleSheetHandler::ObserveProperty(unsigned start_offset,
           .StripWhiteSpace();
   if (property_string.EndsWith(';'))
     property_string = property_string.Left(property_string.length() - 1);
-  size_t colon_index = property_string.Find(':');
+  size_t colon_index = property_string.find(':');
   ASSERT(colon_index != kNotFound);
 
   String name = property_string.Left(colon_index).StripWhiteSpace();
@@ -1382,7 +1382,7 @@ void InspectorStyleSheet::ReplaceText(const SourceRange& range,
   String sheet_text = text_;
   if (old_text)
     *old_text = sheet_text.Substring(range.start, range.length());
-  sheet_text.Replace(range.start, range.length(), text);
+  sheet_text.replace(range.start, range.length(), text);
   if (new_range)
     *new_range = SourceRange(range.start, range.start + text.length());
   InnerSetText(sheet_text, true);
@@ -1481,7 +1481,7 @@ InspectorStyleSheet::SelectorsFromSource(CSSRuleSourceData* source_data,
     int match_length;
     int offset = 0;
     while ((offset = comment.Match(selector, offset, &match_length)) >= 0)
-      selector.Replace(offset, match_length, "");
+      selector.replace(offset, match_length, "");
 
     std::unique_ptr<protocol::CSS::Value> simple_selector =
         protocol::CSS::Value::create()

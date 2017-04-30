@@ -282,9 +282,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   }
   bool MustRefetchDueToIntegrityMetadata(const FetchParameters&) const;
 
-  double CurrentAge() const;
-  double FreshnessLifetime() const;
-
   bool IsAlive() const { return is_alive_; }
 
   void SetCacheIdentifier(const String& cache_identifier) {
@@ -301,11 +298,11 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   void SetEncodedDataLength(int64_t value) {
     response_.SetEncodedDataLength(value);
   }
-  void AddToEncodedBodyLength(int value) {
-    response_.AddToEncodedBodyLength(value);
+  void SetEncodedBodyLength(int value) {
+    response_.SetEncodedBodyLength(value);
   }
-  void AddToDecodedBodyLength(int value) {
-    response_.AddToDecodedBodyLength(value);
+  void SetDecodedBodyLength(int value) {
+    response_.SetDecodedBodyLength(value);
   }
 
   virtual bool CanReuse(const FetchParameters&) const { return true; }

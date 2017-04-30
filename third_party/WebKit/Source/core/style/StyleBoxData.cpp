@@ -35,21 +35,22 @@ static_assert(sizeof(StyleBoxData) == sizeof(SameSizeAsStyleBoxData),
               "StyleBoxData should stay small");
 
 StyleBoxData::StyleBoxData()
-    : min_width_(ComputedStyle::InitialMinSize()),
-      max_width_(ComputedStyle::InitialMaxSize()),
-      min_height_(ComputedStyle::InitialMinSize()),
-      max_height_(ComputedStyle::InitialMaxSize()),
+    : min_width_(ComputedStyle::InitialMinWidth()),
+      max_width_(ComputedStyle::InitialMaxWidth()),
+      min_height_(ComputedStyle::InitialMinHeight()),
+      max_height_(ComputedStyle::InitialMaxHeight()),
       z_index_(0),
       has_auto_z_index_(true),
       box_sizing_(static_cast<unsigned>(ComputedStyle::InitialBoxSizing())),
-      box_decoration_break_(kBoxDecorationBreakSlice) {}
+      box_decoration_break_(
+          static_cast<unsigned>(EBoxDecorationBreak::kSlice)) {}
 
 bool StyleBoxData::operator==(const StyleBoxData& o) const {
   return width_ == o.width_ && height_ == o.height_ &&
          min_width_ == o.min_width_ && max_width_ == o.max_width_ &&
          min_height_ == o.min_height_ && max_height_ == o.max_height_ &&
-         vertical_align_ == o.vertical_align_ && z_index_ == o.z_index_ &&
-         has_auto_z_index_ == o.has_auto_z_index_ &&
+         vertical_align_length_ == o.vertical_align_length_ &&
+         z_index_ == o.z_index_ && has_auto_z_index_ == o.has_auto_z_index_ &&
          box_sizing_ == o.box_sizing_ &&
          box_decoration_break_ == o.box_decoration_break_;
 }

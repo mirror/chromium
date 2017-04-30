@@ -6,6 +6,7 @@
 #include "base/strings/stringprintf.h"
 #include "content/browser/webrtc/webrtc_content_browsertest_base.h"
 #include "content/public/common/content_switches.h"
+#include "media/base/media_switches.h"
 #include "media/base/test_data_util.h"
 
 #if defined(OS_ANDROID)
@@ -62,7 +63,7 @@ class WebRtcCaptureFromElementBrowserTest
 
     // Allow <video>/<audio>.play() when not initiated by user gesture.
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kDisableGestureRequirementForMediaPlayback);
+        switches::kIgnoreAutoplayRestrictionsForTests);
     // Allow experimental canvas features.
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kEnableExperimentalCanvasFeatures);
@@ -78,16 +79,8 @@ IN_PROC_BROWSER_TEST_F(WebRtcCaptureFromElementBrowserTest,
                   kCanvasCaptureColorTestHtmlFile);
 }
 
-#if defined(OS_ANDROID)
-// Remote mojo renderer does not send audio/video frames back to the renderer
-// process and hence does not support capture: https://crbug.com/641559.
-#define MAYBE_VerifyCanvasWebGLCaptureColor \
-  DISABLED_VerifyCanvasWebGLCaptureColor
-#else
-#define MAYBE_VerifyCanvasWebGLCaptureColor VerifyCanvasWebGLCaptureColor
-#endif
 IN_PROC_BROWSER_TEST_F(WebRtcCaptureFromElementBrowserTest,
-                       MAYBE_VerifyCanvasWebGLCaptureColor) {
+                       VerifyCanvasWebGLCaptureColor) {
 #if !defined(OS_MACOSX)
   // TODO(crbug.com/706009): Make this test pass on mac.  Behavior is not buggy
   // (verified manually) on mac, but for some reason this test fails on the mac

@@ -1343,10 +1343,6 @@ interface DetectedText
     getter boundingBox
     getter rawValue
     method constructor
-interface DeviceLightEvent : Event
-    attribute @@toStringTag
-    getter value
-    method constructor
 interface DeviceMotionEvent : Event
     attribute @@toStringTag
     getter acceleration
@@ -3554,7 +3550,6 @@ interface Headers
     method entries
     method forEach
     method get
-    method getAll
     method has
     method keys
     method set
@@ -3799,7 +3794,6 @@ interface ImageData
     getter height
     getter width
     method constructor
-    method createImageData
     method getColorSettings
 interface InputDeviceCapabilities
     attribute @@toStringTag
@@ -4374,6 +4368,7 @@ interface Navigator
     getter vendorSub
     getter webkitPersistentStorage
     getter webkitTemporaryStorage
+    method cancelKeyLock
     method constructor
     method getBattery
     method getGamepads
@@ -4383,6 +4378,7 @@ interface Navigator
     method isProtocolHandlerRegistered
     method javaEnabled
     method registerProtocolHandler
+    method requestKeyLock
     method requestMIDIAccess
     method requestMediaKeySystemAccess
     method sendBeacon
@@ -4451,26 +4447,6 @@ interface Node : EventTarget
     method replaceChild
     setter nodeValue
     setter textContent
-interface NodeFilter
-    attribute @@toStringTag
-    attribute FILTER_ACCEPT
-    attribute FILTER_REJECT
-    attribute FILTER_SKIP
-    attribute SHOW_ALL
-    attribute SHOW_ATTRIBUTE
-    attribute SHOW_CDATA_SECTION
-    attribute SHOW_COMMENT
-    attribute SHOW_DOCUMENT
-    attribute SHOW_DOCUMENT_FRAGMENT
-    attribute SHOW_DOCUMENT_TYPE
-    attribute SHOW_ELEMENT
-    attribute SHOW_ENTITY
-    attribute SHOW_ENTITY_REFERENCE
-    attribute SHOW_NOTATION
-    attribute SHOW_PROCESSING_INSTRUCTION
-    attribute SHOW_TEXT
-    method acceptNode
-    method constructor
 interface NodeIterator
     attribute @@toStringTag
     getter filter
@@ -4724,6 +4700,7 @@ interface PaymentManager
     method setManifest
 interface PaymentRequest : EventTarget
     attribute @@toStringTag
+    getter id
     getter onshippingaddresschange
     getter onshippingoptionchange
     getter shippingAddress
@@ -4746,6 +4723,7 @@ interface PaymentResponse
     getter payerEmail
     getter payerName
     getter payerPhone
+    getter requestId
     getter shippingAddress
     getter shippingOption
     method complete
@@ -8909,7 +8887,6 @@ interface webkitURL
     getter oncontextmenu
     getter oncuechange
     getter ondblclick
-    getter ondevicelight
     getter ondevicemotion
     getter ondeviceorientation
     getter ondeviceorientationabsolute
@@ -9018,6 +8995,7 @@ interface webkitURL
     getter toolbar
     getter visualViewport
     getter webkitStorageInfo
+    method NodeFilter
     method alert
     method atob
     method blur
@@ -9089,7 +9067,6 @@ interface webkitURL
     setter oncontextmenu
     setter oncuechange
     setter ondblclick
-    setter ondevicelight
     setter ondevicemotion
     setter ondeviceorientation
     setter ondeviceorientationabsolute

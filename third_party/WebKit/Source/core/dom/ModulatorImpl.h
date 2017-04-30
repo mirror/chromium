@@ -46,6 +46,8 @@ class ModulatorImpl final : public Modulator {
   SecurityOrigin* GetSecurityOrigin() override;
 
   void FetchTree(const ModuleScriptFetchRequest&, ModuleTreeClient*) override;
+  void FetchDescendantsForInlineScript(ModuleScript*,
+                                       ModuleTreeClient*) override;
   void FetchTreeInternal(const ModuleScriptFetchRequest&,
                          const AncestorList&,
                          ModuleGraphLevel,
@@ -61,7 +63,9 @@ class ModulatorImpl final : public Modulator {
                              const String& url_str,
                              AccessControlStatus) override;
   ScriptValue InstantiateModule(ScriptModule) override;
+  ScriptValue GetInstantiationError(const ModuleScript*) override;
   Vector<String> ModuleRequestsFromScriptModule(ScriptModule) override;
+  void ExecuteModule(const ModuleScript*) override;
 
   ModulatorImpl(RefPtr<ScriptState>, RefPtr<WebTaskRunner>, ResourceFetcher*);
 

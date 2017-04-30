@@ -39,6 +39,7 @@
 #include "core/events/MouseEvent.h"
 #include "core/events/UIEventWithKeyState.h"
 #include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebViewBase.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLFrameElementBase.h"
@@ -54,7 +55,6 @@
 #include "core/page/Page.h"
 #include "core/page/WindowFeatures.h"
 #include "modules/audio_output_devices/HTMLMediaElementAudioOutputDevice.h"
-#include "modules/device_light/DeviceLightController.h"
 #include "modules/device_orientation/DeviceMotionController.h"
 #include "modules/device_orientation/DeviceOrientationAbsoluteController.h"
 #include "modules/device_orientation/DeviceOrientationController.h"
@@ -106,7 +106,6 @@
 #include "web/WebDevToolsFrontendImpl.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebPluginContainerImpl.h"
-#include "web/WebViewImpl.h"
 
 #include <memory>
 
@@ -121,7 +120,7 @@ namespace {
 // TODO(dcheng): Remove duplication between LocalFrameClientImpl and
 // RemoteFrameClientImpl somehow...
 Frame* ToCoreFrame(WebFrame* frame) {
-  return frame ? frame->ToImplBase()->GetFrame() : nullptr;
+  return frame ? WebFrame::ToCoreFrame(*frame) : nullptr;
 }
 
 }  // namespace
@@ -153,8 +152,6 @@ void LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld() {
       DeviceMotionController::From(*document);
       DeviceOrientationController::From(*document);
       DeviceOrientationAbsoluteController::From(*document);
-      if (RuntimeEnabledFeatures::deviceLightEnabled())
-        DeviceLightController::From(*document);
       NavigatorGamepad::From(*document);
       NavigatorServiceWorker::From(*document);
       DOMWindowStorageController::From(*document);
@@ -424,7 +421,7 @@ void LocalFrameClientImpl::DispatchDidChangeThemeColor() {
 }
 
 static bool AllowCreatingBackgroundTabs() {
-  const WebInputEvent* input_event = WebViewImpl::CurrentInputEvent();
+  const WebInputEvent* input_event = WebViewBase::CurrentInputEvent();
   if (!input_event || (input_event->GetType() != WebInputEvent::kMouseUp &&
                        (input_event->GetType() != WebInputEvent::kRawKeyDown &&
                         input_event->GetType() != WebInputEvent::kKeyDown) &&
@@ -587,7 +584,7 @@ void LocalFrameClientImpl::LoadErrorPage(int reason) {
 }
 
 bool LocalFrameClientImpl::NavigateBackForward(int offset) const {
-  WebViewImpl* webview = web_frame_->ViewImpl();
+  WebViewBase* webview = web_frame_->ViewImpl();
   if (!webview->Client())
     return false;
 
@@ -937,7 +934,7 @@ void LocalFrameClientImpl::DispatchDidChangeManifest() {
 }
 
 unsigned LocalFrameClientImpl::BackForwardLength() {
-  WebViewImpl* webview = web_frame_->ViewImpl();
+  WebViewBase* webview = web_frame_->ViewImpl();
   if (!webview || !webview->Client())
     return 0;
   return webview->Client()->HistoryBackListCount() + 1 +

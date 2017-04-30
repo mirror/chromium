@@ -37,7 +37,6 @@
 #include "core/style/LineClampValue.h"
 #include "core/style/NinePieceImage.h"
 #include "core/style/SVGComputedStyle.h"
-#include "core/style/StyleBackgroundData.h"
 #include "core/style/StyleBoxData.h"
 #include "core/style/StyleContentAlignmentData.h"
 #include "core/style/StyleDeprecatedFlexibleBoxData.h"
@@ -186,12 +185,11 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // non-inherited attributes
   DataRef<StyleBoxData> box_data_;
   DataRef<StyleVisualData> visual_data_;
-  DataRef<StyleBackgroundData> background_data_;
   DataRef<StyleRareNonInheritedData> rare_non_inherited_data_;
 
   // inherited attributes
   DataRef<StyleRareInheritedData> rare_inherited_data_;
-  DataRef<StyleInheritedData> style_inherited_data_;
+  DataRef<StyleInheritedData> inherited_data_;
 
   // list of associated pseudo styles
   std::unique_ptr<PseudoStyleCache> cached_pseudo_styles_;
@@ -417,21 +415,21 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // background-color
   static Color InitialBackgroundColor() { return Color::kTransparent; }
   void SetBackgroundColor(const StyleColor& v) {
-    SET_VAR(background_data_, color_, v);
+    SET_VAR(background_data_, background_color_, v);
   }
 
   // background-image
   bool HasBackgroundImage() const {
-    return background_data_->Background().HasImage();
+    return background_data_->background_.HasImage();
   }
   bool HasFixedBackgroundImage() const {
-    return background_data_->Background().HasFixedImage();
+    return background_data_->background_.HasFixedImage();
   }
   bool HasEntirelyFixedBackground() const;
 
   // background-clip
   EFillBox BackgroundClip() const {
-    return static_cast<EFillBox>(background_data_->Background().Clip());
+    return static_cast<EFillBox>(background_data_->background_.Clip());
   }
 
   // Border properties.
@@ -606,7 +604,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // box-sizing (aka -webkit-box-sizing)
   static EBoxSizing InitialBoxSizing() { return EBoxSizing::kContentBox; }
-  EBoxSizing BoxSizing() const { return box_data_->BoxSizing(); }
+  EBoxSizing BoxSizing() const {
+    return static_cast<EBoxSizing>(box_data_->box_sizing_);
+  }
   void SetBoxSizing(EBoxSizing s) {
     SET_VAR(box_data_, box_sizing_, static_cast<unsigned>(s));
   }
@@ -815,13 +815,13 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // -webkit-box-decoration-break
   static EBoxDecorationBreak InitialBoxDecorationBreak() {
-    return kBoxDecorationBreakSlice;
+    return EBoxDecorationBreak::kSlice;
   }
   EBoxDecorationBreak BoxDecorationBreak() const {
-    return box_data_->BoxDecorationBreak();
+    return static_cast<EBoxDecorationBreak>(box_data_->box_decoration_break_);
   }
   void SetBoxDecorationBreak(EBoxDecorationBreak b) {
-    SET_VAR(box_data_, box_decoration_break_, b);
+    SET_VAR(box_data_, box_decoration_break_, static_cast<unsigned>(b));
   }
 
   // -webkit-box-lines
@@ -1013,32 +1013,35 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
 
   // Width/height properties.
-  static Length InitialSize() { return Length(); }
-  static Length InitialMaxSize() { return Length(kMaxSizeNone); }
-  static Length InitialMinSize() { return Length(); }
 
   // width
-  const Length& Width() const { return box_data_->Width(); }
+  static Length InitialWidth() { return Length(); }
+  const Length& Width() const { return box_data_->width_; }
   void SetWidth(const Length& v) { SET_VAR(box_data_, width_, v); }
 
   // height
-  const Length& Height() const { return box_data_->Height(); }
+  static Length InitialHeight() { return Length(); }
+  const Length& Height() const { return box_data_->height_; }
   void SetHeight(const Length& v) { SET_VAR(box_data_, height_, v); }
 
   // max-width
-  const Length& MaxWidth() const { return box_data_->MaxWidth(); }
+  static Length InitialMaxWidth() { return Length(kMaxSizeNone); }
+  const Length& MaxWidth() const { return box_data_->max_width_; }
   void SetMaxWidth(const Length& v) { SET_VAR(box_data_, max_width_, v); }
 
   // max-height
-  const Length& MaxHeight() const { return box_data_->MaxHeight(); }
+  static Length InitialMaxHeight() { return Length(kMaxSizeNone); }
+  const Length& MaxHeight() const { return box_data_->max_height_; }
   void SetMaxHeight(const Length& v) { SET_VAR(box_data_, max_height_, v); }
 
   // min-width
-  const Length& MinWidth() const { return box_data_->MinWidth(); }
+  static Length InitialMinWidth() { return Length(); }
+  const Length& MinWidth() const { return box_data_->min_width_; }
   void SetMinWidth(const Length& v) { SET_VAR(box_data_, min_width_, v); }
 
   // min-height
-  const Length& MinHeight() const { return box_data_->MinHeight(); }
+  static Length InitialMinHeight() { return Length(); }
+  const Length& MinHeight() const { return box_data_->min_height_; }
   void SetMinHeight(const Length& v) { SET_VAR(box_data_, min_height_, v); }
 
   // image-orientation
@@ -1568,12 +1571,12 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
   EVerticalAlign VerticalAlign() const { return VerticalAlignInternal(); }
   const Length& GetVerticalAlignLength() const {
-    return box_data_->VerticalAlign();
+    return box_data_->vertical_align_length_;
   }
   void SetVerticalAlign(EVerticalAlign v) { SetVerticalAlignInternal(v); }
   void SetVerticalAlignLength(const Length& length) {
     SetVerticalAlignInternal(EVerticalAlign::kLength);
-    SET_VAR(box_data_, vertical_align_, length);
+    SET_VAR(box_data_, vertical_align_length_, length);
   }
 
   // will-change
@@ -1604,8 +1607,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
 
   // z-index
-  int ZIndex() const { return box_data_->ZIndex(); }
-  bool HasAutoZIndex() const { return box_data_->HasAutoZIndex(); }
+  int ZIndex() const { return box_data_->z_index_; }
+  bool HasAutoZIndex() const { return box_data_->has_auto_z_index_; }
   void SetZIndex(int v) {
     SET_VAR(box_data_, has_auto_z_index_, false);
     SET_VAR(box_data_, z_index_, v);
@@ -2295,7 +2298,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
 
   float TextAutosizingMultiplier() const {
-    return style_inherited_data_->text_autosizing_multiplier;
+    return inherited_data_->text_autosizing_multiplier_;
   }
   void SetTextAutosizingMultiplier(float);
 
@@ -3365,7 +3368,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return background_data_.Access()->background_;
   }
   const FillLayer& BackgroundLayers() const {
-    return background_data_->Background();
+    return background_data_->background_;
   }
   void AdjustBackgroundLayers() {
     if (BackgroundLayers().Next()) {
@@ -3500,7 +3503,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   StyleColor BorderBottomColor() const {
     return surround_data_->border_.Bottom().GetColor();
   }
-  StyleColor BackgroundColor() const { return background_data_->GetColor(); }
+  StyleColor BackgroundColor() const {
+    return background_data_->background_color_;
+  }
   StyleAutoColor CaretColor() const {
     return rare_inherited_data_->CaretColor();
   }

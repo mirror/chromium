@@ -27,6 +27,7 @@
 #include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/test/test_timeouts.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
@@ -2252,10 +2253,8 @@ class TestClientCertStore : public net::ClientCertStore {
 
   // net::ClientCertStore:
   void GetClientCerts(const net::SSLCertRequestInfo& cert_request_info,
-                      net::CertificateList* selected_certs,
-                      const base::Closure& callback) override {
-    *selected_certs = certs_;
-    callback.Run();
+                      const ClientCertListCallback& callback) override {
+    callback.Run(certs_);
   }
 
  private:
@@ -3261,10 +3260,13 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, HttpPost) {
 // Manager API. The page should be killed.
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, AutosigninInPrerenderer) {
   // Set up a credential in the password store.
-  PasswordStoreFactory::GetInstance()->SetTestingFactory(
-      current_browser()->profile(),
-      password_manager::BuildPasswordStore<
-          content::BrowserContext, password_manager::TestPasswordStore>);
+  {
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
+    PasswordStoreFactory::GetInstance()->SetTestingFactory(
+        current_browser()->profile(),
+        password_manager::BuildPasswordStore<
+            content::BrowserContext, password_manager::TestPasswordStore>);
+  }
   scoped_refptr<password_manager::TestPasswordStore> password_store =
       static_cast<password_manager::TestPasswordStore*>(
           PasswordStoreFactory::GetForProfile(

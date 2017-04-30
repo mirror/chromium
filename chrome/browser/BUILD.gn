@@ -952,6 +952,8 @@ split_static_library("browser") {
     "predictors/autocomplete_action_predictor_factory.h",
     "predictors/autocomplete_action_predictor_table.cc",
     "predictors/autocomplete_action_predictor_table.h",
+    "predictors/glowplug_key_value_table.cc",
+    "predictors/glowplug_key_value_table.h",
     "predictors/predictor_database.cc",
     "predictors/predictor_database.h",
     "predictors/predictor_database_factory.cc",
@@ -1783,6 +1785,8 @@ split_static_library("browser") {
       "renderer_context_menu/context_menu_content_type_platform_app.h",
       "renderer_host/chrome_extension_message_filter.cc",
       "renderer_host/chrome_extension_message_filter.h",
+      "safe_browsing/chrome_cleaner_dialog_controller.cc",
+      "safe_browsing/chrome_cleaner_dialog_controller.h",
       "safe_browsing/settings_reset_prompt/extension_info.cc",
       "safe_browsing/settings_reset_prompt/extension_info.h",
       "safe_browsing/settings_reset_prompt/settings_reset_prompt_config.cc",
@@ -1793,8 +1797,6 @@ split_static_library("browser") {
       "safe_browsing/settings_reset_prompt/settings_reset_prompt_model.h",
       "safe_browsing/settings_reset_prompt/settings_reset_prompt_prefs_manager.cc",
       "safe_browsing/settings_reset_prompt/settings_reset_prompt_prefs_manager.h",
-      "safe_browsing/srt_prompt_controller.cc",
-      "safe_browsing/srt_prompt_controller.h",
       "search/hotword_audio_history_handler.cc",
       "search/hotword_audio_history_handler.h",
       "search/hotword_client.h",
@@ -1959,7 +1961,6 @@ split_static_library("browser") {
       "//chrome/common/extensions/api:api_registration",
       "//chrome/common/extensions/api:extensions_features",
       "//components/drive",
-      "//components/proximity_auth/ble",
       "//extensions/components/javascript_dialog_extensions_client",
       "//media/cast:net",
     ]
@@ -2728,6 +2729,8 @@ split_static_library("browser") {
       "android/contextualsearch/resolved_search_term.h",
       "android/cookies/cookies_fetcher.cc",
       "android/cookies/cookies_fetcher.h",
+      "android/customtabs/origin_verifier.cc",
+      "android/customtabs/origin_verifier.h",
       "android/data_usage/data_use_matcher.cc",
       "android/data_usage/data_use_matcher.h",
       "android/data_usage/data_use_tab_helper.cc",
@@ -2752,6 +2755,8 @@ split_static_library("browser") {
       "android/devtools_manager_delegate_android.h",
       "android/devtools_server.cc",
       "android/devtools_server.h",
+      "android/digital_asset_links/digital_asset_links_handler.cc",
+      "android/digital_asset_links/digital_asset_links_handler.h",
       "android/document/document_web_contents_delegate.cc",
       "android/document/document_web_contents_delegate.h",
       "android/dom_distiller/distiller_ui_handle_android.cc",
@@ -2928,6 +2933,8 @@ split_static_library("browser") {
       "android/preferences/autofill/autofill_profile_bridge.h",
       "android/preferences/browser_prefs_android.cc",
       "android/preferences/browser_prefs_android.h",
+      "android/preferences/clipboard_android.cc",
+      "android/preferences/clipboard_android.h",
       "android/preferences/pref_service_bridge.cc",
       "android/preferences/pref_service_bridge.h",
       "android/preferences/preferences_launcher.cc",
@@ -2984,6 +2991,7 @@ split_static_library("browser") {
       "android/tab_state.h",
       "android/tab_web_contents_delegate_android.cc",
       "android/tab_web_contents_delegate_android.h",
+      "android/thumbnail/scoped_ptr_expiring_cache.h",
       "android/thumbnail/thumbnail.cc",
       "android/thumbnail/thumbnail.h",
       "android/thumbnail/thumbnail_cache.cc",
@@ -3112,6 +3120,8 @@ split_static_library("browser") {
       "payments/android/chrome_payments_jni_registrar.h",
       "payments/android/journey_logger_android.cc",
       "payments/android/journey_logger_android.h",
+      "payments/android/payment_manifest_web_data_service_android.cc",
+      "payments/android/payment_manifest_web_data_service_android.h",
       "payments/android/ssl_validity_checker_android.cc",
       "payments/android/ssl_validity_checker_android.h",
       "permissions/grouped_permission_infobar_delegate_android.cc",
@@ -3680,8 +3690,6 @@ split_static_library("browser") {
     sources += [
       "downgrade/user_data_downgrade.cc",
       "downgrade/user_data_downgrade.h",
-      "first_run/try_chrome_dialog_view.cc",
-      "first_run/try_chrome_dialog_view.h",
       "first_run/upgrade_util.cc",
     ]
     public_deps += [
@@ -3781,6 +3789,13 @@ split_static_library("browser") {
       "web_applications/web_app_linux.cc",
     ]
 
+    if (enable_native_notifications) {
+      sources += [
+        "notifications/notification_platform_bridge_linux.cc",
+        "notifications/notification_platform_bridge_linux.h",
+      ]
+    }
+
     if (use_x11) {
       sources += [
         "fullscreen_aurax11.cc",
@@ -3804,14 +3819,6 @@ split_static_library("browser") {
       ]
       defines += [ "USE_LIBSECRET" ]
       deps += [ "//third_party/libsecret" ]
-    }
-
-    if (enable_native_notifications) {
-      sources += [
-        "notifications/notification_platform_bridge_linux.cc",
-        "notifications/notification_platform_bridge_linux.h",
-      ]
-      deps += [ "//build/linux/libgio" ]
     }
 
     if (use_ozone) {
@@ -4095,6 +4102,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/contextualsearch/CtrSuppression.java",
       "../android/java/src/org/chromium/chrome/browser/cookies/CookiesFetcher.java",
       "../android/java/src/org/chromium/chrome/browser/crash/MinidumpUploadService.java",
+      "../android/java/src/org/chromium/chrome/browser/customtabs/OriginVerifier.java",
       "../android/java/src/org/chromium/chrome/browser/customtabs/ResourcePrefetchPredictor.java",
       "../android/java/src/org/chromium/chrome/browser/database/SQLiteCursor.java",
       "../android/java/src/org/chromium/chrome/browser/datausage/DataUseTabUIManager.java",
@@ -4187,6 +4195,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/password_manager/AutoSigninFirstRunDialog.java",
       "../android/java/src/org/chromium/chrome/browser/password_manager/Credential.java",
       "../android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+      "../android/java/src/org/chromium/chrome/browser/payments/PaymentManifestWebDataService.java",
       "../android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
       "../android/java/src/org/chromium/chrome/browser/payments/SslValidityChecker.java",
       "../android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",

@@ -106,6 +106,8 @@ class ShellPortMash : public ShellPort {
   void CreatePointerWatcherAdapter() override;
   std::unique_ptr<AshWindowTreeHost> CreateAshWindowTreeHost(
       const AshWindowTreeHostInitParams& init_params) override;
+  void OnCreatedRootWindowContainers(
+      RootWindowController* root_window_controller) override;
   void CreatePrimaryHost() override;
   void InitHosts(const ShellInitParams& init_params) override;
   std::unique_ptr<display::NativeDisplayDelegate> CreateNativeDisplayDelegate()
@@ -138,6 +140,7 @@ class ShellPortMash : public ShellPort {
 
   WindowManager* window_manager_;
 
+  // TODO(sky): remove this once mash supports simple display management.
   WmWindow* primary_root_window_;
 
   // Only one of |mash_state_| or |mus_state_| is created, depending upon

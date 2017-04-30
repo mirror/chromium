@@ -308,28 +308,6 @@
             "RoutingPrefix": 123
         } ],
     },
-    "network-with-client-cert-pattern": {
-        "GUID": "guid",
-        "Type": "WiFi",
-        "Name": "name",
-        "WiFi": {
-            "SSID": "ssid",
-            "Security": "WPA-EAP",
-            "EAP": {
-                "Outer": "EAP-TLS",
-                "Identity": "abc ${LOGIN_ID}@my.domain.com",
-                "ClientCertType": "Pattern",
-                "ClientCertPattern": {
-                    "IssuerCARef": [
-                        "{58ac1967-a0e7-49e9-be68-123abc}"
-                    ],
-                    "EnrollmentURI": [
-                        "chrome-extension://delkjfjibodjclmdijflfnimdmgdagfk/generate-cert.html"
-                    ]
-                }
-            }
-        }
-    },
     "ipsec-with-psk-and-cacert": {
       "AuthenticationType": "PSK",
       "IKEVersion": 1,
@@ -405,6 +383,7 @@
       "Type": "Tether",
       "Tether": {
         "Carrier": "Project Fi",
+        "HasConnectedToHost": true,
         "SignalStrength": 75
       }
     },
@@ -415,6 +394,7 @@
       "Tether": {
         "BatteryPercentage": -1,
         "Carrier": "Project Fi",
+        "HasConnectedToHost": true,
         "SignalStrength": 75
       }
     },
@@ -425,6 +405,7 @@
       "Tether": {
         "BatteryPercentage": 101,
         "Carrier": "Project Fi",
+        "HasConnectedToHost": true,
         "SignalStrength": 75
       }
     },
@@ -434,7 +415,18 @@
       "Type": "Tether",
       "Tether": {
         "BatteryPercentage": 85,
+        "HasConnectedToHost": true,
         "SignalStrength": 75
+      }
+    },
+    "tether-missing-has-connected-to-host": {
+      "GUID": "guid",
+      "Name": "name",
+      "Type": "Tether",
+      "Tether": {
+        "BatteryPercentage": 85,
+        "Carrier": "Project Fi",
+        "SignalStrength": 101
       }
     },
     "tether-missing-signal-strength": {
@@ -443,7 +435,8 @@
       "Type": "Tether",
       "Tether": {
         "BatteryPercentage": 85,
-        "Carrier": "Project Fi"
+        "Carrier": "Project Fi",
+        "HasConnectedToHost": true,
       }
     },
     "tether-negative-signal-strength": {
@@ -453,6 +446,7 @@
       "Tether": {
         "BatteryPercentage": 85,
         "Carrier": "Project Fi",
+        "HasConnectedToHost": true,
         "SignalStrength": -1
       }
     },
@@ -463,6 +457,7 @@
       "Tether": {
         "BatteryPercentage": 85,
         "Carrier": "Project Fi",
+        "HasConnectedToHost": true,
         "SignalStrength": 101
       }
     },

@@ -29,10 +29,6 @@ size_t ToPointerTypeIndex(WebPointerProperties::PointerType t) {
   return static_cast<size_t>(t);
 }
 
-bool IsInDocument(EventTarget* n) {
-  return n && n->ToNode() && n->ToNode()->isConnected();
-}
-
 Vector<std::pair<WebTouchPoint, TimeTicks>> GetCoalescedPoints(
     const Vector<WebTouchEvent>& coalesced_events,
     int id) {
@@ -496,10 +492,11 @@ WebInputEventResult PointerEventManager::SendMousePointerEvent(
     EventTarget* mouse_target = effective_target;
     // Event path could be null if pointer event is not dispatched and
     // that happens for example when pointer event feature is not enabled.
-    if (!IsInDocument(mouse_target) && pointer_event->HasEventPath()) {
+    if (!EventHandlingUtil::IsInDocument(mouse_target) &&
+        pointer_event->HasEventPath()) {
       for (const auto& context :
            pointer_event->GetEventPath().NodeEventContexts()) {
-        if (IsInDocument(context.GetNode())) {
+        if (EventHandlingUtil::IsInDocument(context.GetNode())) {
           mouse_target = context.GetNode();
           break;
         }
@@ -523,6 +520,10 @@ WebInputEventResult PointerEventManager::SendMousePointerEvent(
     }
   }
 
+  if (mouse_event.GetType() == WebInputEvent::kMouseLeave &&
+      mouse_event.pointer_type == WebPointerProperties::PointerType::kPen) {
+    pointer_event_factory_.Remove(pointer_event->pointerId());
+  }
   return result;
 }
 

@@ -450,7 +450,6 @@ interface Headers
     method entries
     method forEach
     method get
-    method getAll
     method has
     method keys
     method set
@@ -597,7 +596,6 @@ interface ImageData
     getter height
     getter width
     method constructor
-    method createImageData
     method getColorSettings
 interface InstallEvent : ExtendableEvent
     method constructor

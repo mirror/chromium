@@ -153,7 +153,6 @@ source_set("blink_headers") {
     "platform/WebData.h",
     "platform/WebDataConsumerHandle.h",
     "platform/WebDatabaseObserver.h",
-    "platform/WebDeviceLightListener.h",
     "platform/WebDisplayItemList.h",
     "platform/WebDisplayMode.h",
     "platform/WebDistillability.h",
@@ -431,6 +430,7 @@ source_set("blink_headers") {
     "platform/modules/serviceworker/WebServiceWorkerResponseType.h",
     "platform/modules/serviceworker/WebServiceWorkerSkipWaitingCallbacks.h",
     "platform/modules/serviceworker/WebServiceWorkerState.h",
+    "platform/modules/serviceworker/WebServiceWorkerStreamHandle.h",
     "platform/modules/vr/WebVR.h",
     "platform/modules/webmidi/WebMIDIAccessor.h",
     "platform/modules/webmidi/WebMIDIAccessorClient.h",
@@ -622,6 +622,16 @@ source_set("blink_headers") {
     "web/win/WebFontRendering.h",
   ]
 
+  if (is_android) {
+    # Android uses some Linux sources, put those back.
+    set_sources_assignment_filter([])
+    sources += [
+      "platform/linux/WebFontRenderStyle.h",
+      "web/linux/WebFontRendering.h",
+    ]
+    set_sources_assignment_filter(sources_assignment_filter)
+  }
+
   public_configs = [
     ":blink_headers_config",
 
@@ -700,6 +710,7 @@ mojom("mojo_bindings") {
     "platform/modules/budget_service/budget_service.mojom",
     "platform/modules/fetch/fetch_api_request.mojom",
     "platform/modules/hyphenation/hyphenation.mojom",
+    "platform/modules/keyboard_lock/keyboard_lock.mojom",
     "platform/modules/mediasession/media_session.mojom",
     "platform/modules/notifications/notification.mojom",
     "platform/modules/notifications/notification_service.mojom",

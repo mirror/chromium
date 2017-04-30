@@ -350,6 +350,8 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     private VrShellDelegate(ChromeActivity activity, VrClassesWrapper wrapper) {
         mActivity = activity;
         mVrClassesWrapper = wrapper;
+        // If an activity isn't resumed at the point, it must have been paused.
+        mPaused = ApplicationStatus.getStateForActivity(activity) != ActivityState.RESUMED;
         updateVrSupportLevel();
         mNativeVrShellDelegate = nativeInit();
         Choreographer choreographer = Choreographer.getInstance();
@@ -375,6 +377,8 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
                 break;
             case ActivityState.PAUSED:
                 if (activity == mActivity) pauseVr();
+                // Other activities should only pause while we're paused due to Android lifecycle.
+                assert mPaused;
                 break;
             case ActivityState.RESUMED:
                 assert !mInVr;
@@ -420,10 +424,6 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
      */
     private boolean enterVrAfterDon() {
         if (mNativeVrShellDelegate == 0) return false;
-        if (mListeningForWebVrActivateBeforePause && !mRequestedWebVr) {
-            nativeDisplayActivate(mNativeVrShellDelegate);
-            return true;
-        }
 
         // Normally, if the active page doesn't have a vrdisplayactivate listener, and WebVR was not
         // presenting and VrShell was not enabled, the Daydream Homescreen should show after the DON
@@ -432,6 +432,10 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         if (!mListeningForWebVrActivateBeforePause && !mRequestedWebVr
                 && !canEnterVr(mActivity.getActivityTab())) {
             return false;
+        }
+
+        if (mListeningForWebVrActivateBeforePause && !mRequestedWebVr) {
+            nativeDisplayActivate(mNativeVrShellDelegate);
         }
 
         enterVr();

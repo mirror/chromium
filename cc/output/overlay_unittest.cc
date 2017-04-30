@@ -757,7 +757,7 @@ TEST_F(SingleOverlayOnTopTest, DamageRect) {
       resource_provider_.get(), pass.get(), render_pass_filters,
       render_pass_background_filters, &candidate_list, nullptr, nullptr,
       &damage_rect_, &content_bounds_);
-  DCHECK(damage_rect_.IsEmpty());
+  EXPECT_TRUE(damage_rect_.IsEmpty());
 }
 
 TEST_F(SingleOverlayOnTopTest, NoCandidates) {
@@ -850,11 +850,13 @@ TEST_F(SingleOverlayOnTopTest, AcceptBlending) {
   OverlayCandidateList candidate_list;
   base::flat_map<int, FilterOperations*> render_pass_filters;
   base::flat_map<int, FilterOperations*> render_pass_background_filters;
+  damage_rect_ = quad->rect;
   overlay_processor_->ProcessForOverlays(
       resource_provider_.get(), pass.get(), render_pass_filters,
       render_pass_background_filters, &candidate_list, nullptr, nullptr,
       &damage_rect_, &content_bounds_);
   EXPECT_EQ(1U, candidate_list.size());
+  EXPECT_FALSE(damage_rect_.IsEmpty());
 }
 
 TEST_F(SingleOverlayOnTopTest, RejectBackgroundColor) {
@@ -1006,14 +1008,14 @@ TEST_F(SingleOverlayOnTopTest, AllowPositiveScaleTransform) {
   EXPECT_EQ(1U, candidate_list.size());
 }
 
-TEST_F(SingleOverlayOnTopTest, RejectTransform) {
+TEST_F(SingleOverlayOnTopTest, AcceptMirrorYTransform) {
   gfx::Rect rect = kOverlayRect;
   rect.Offset(0, -rect.height());
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
   CreateCandidateQuadAt(resource_provider_.get(),
                         pass->shared_quad_state_list.back(), pass.get(), rect);
-  pass->shared_quad_state_list.back()
-      ->quad_to_target_transform.RotateAboutZAxis(90.f);
+  pass->shared_quad_state_list.back()->quad_to_target_transform.Scale(1.f,
+                                                                      -1.f);
 
   OverlayCandidateList candidate_list;
   base::flat_map<int, FilterOperations*> render_pass_filters;
@@ -1022,7 +1024,7 @@ TEST_F(SingleOverlayOnTopTest, RejectTransform) {
       resource_provider_.get(), pass.get(), render_pass_filters,
       render_pass_background_filters, &candidate_list, nullptr, nullptr,
       &damage_rect_, &content_bounds_);
-  ASSERT_EQ(0U, candidate_list.size());
+  ASSERT_EQ(1U, candidate_list.size());
 }
 
 TEST_F(UnderlayTest, Allow90DegreeRotation) {
@@ -1396,6 +1398,38 @@ TEST_F(UnderlayTest, DamageNotSubtractedForNonIdenticalConsecutiveUnderlays) {
 
     EXPECT_EQ(overlay_rects[i], damage_rect_);
   }
+}
+
+// Underlay damage can only be subtracted if the previous frame's underlay
+// exists.
+TEST_F(UnderlayTest, DamageNotSubtractedForNonConsecutiveIdenticalUnderlays) {
+  bool has_fullscreen_candidate[] = {true, false, true};
+
+  for (int i = 0; i < 3; ++i) {
+    std::unique_ptr<RenderPass> pass = CreateRenderPass();
+
+    if (has_fullscreen_candidate[i]) {
+      CreateFullscreenCandidateQuad(resource_provider_.get(),
+                                    pass->shared_quad_state_list.back(),
+                                    pass.get());
+    }
+
+    damage_rect_ = kOverlayRect;
+
+    // Add something behind it.
+    CreateFullscreenOpaqueQuad(resource_provider_.get(),
+                               pass->shared_quad_state_list.back(), pass.get());
+
+    OverlayCandidateList candidate_list;
+    base::flat_map<int, FilterOperations*> render_pass_filters;
+    base::flat_map<int, FilterOperations*> render_pass_background_filters;
+    overlay_processor_->ProcessForOverlays(
+        resource_provider_.get(), pass.get(), render_pass_filters,
+        render_pass_background_filters, &candidate_list, nullptr, nullptr,
+        &damage_rect_, &content_bounds_);
+  }
+
+  EXPECT_EQ(kOverlayRect, damage_rect_);
 }
 
 TEST_F(UnderlayTest, DamageNotSubtractedWhenQuadsAboveOverlap) {

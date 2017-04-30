@@ -14,6 +14,7 @@ import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.Linker;
 import org.chromium.base.process_launcher.ChildProcessCreationParams;
 import org.chromium.base.process_launcher.FileDescriptorInfo;
@@ -182,9 +183,6 @@ public class ChildProcessLauncher {
     private static Map<Integer, BaseChildProcessConnection> sServiceMap =
             new ConcurrentHashMap<Integer, BaseChildProcessConnection>();
 
-    // Lock for getBindingManager()
-    private static final Object sBindingManagerLock = new Object();
-
     // These variables are used for the warm up sandboxed connection.
     // |sSpareSandboxedConnection| is non-null when there is a pending connection. Note it's cleared
     // to null again after the connection is used for a real child process.
@@ -204,13 +202,13 @@ public class ChildProcessLauncher {
 
     // Lazy initialize sBindingManager
     // TODO(boliu): This should be internal to content.
+    @SuppressFBWarnings("LI_LAZY_INIT_STATIC") // Method is single thread.
     public static BindingManager getBindingManager() {
-        synchronized (sBindingManagerLock) {
-            if (sBindingManager == null) {
-                sBindingManager = BindingManagerImpl.createBindingManager();
-            }
-            return sBindingManager;
+        assert LauncherThread.runningOnLauncherThread();
+        if (sBindingManager == null) {
+            sBindingManager = BindingManagerImpl.createBindingManager();
         }
+        return sBindingManager;
     }
 
     @VisibleForTesting
@@ -222,16 +220,49 @@ public class ChildProcessLauncher {
      * Called when the renderer commits a navigation. This signals a time at which it is safe to
      * rely on renderer visibility signalled through setInForeground. See http://crbug.com/421041.
      */
-    public static void determinedVisibility(int pid) {
-        getBindingManager().determinedVisibility(pid);
+    public static void determinedVisibility(final int pid) {
+        assert ThreadUtils.runningOnUiThread();
+        LauncherThread.post(new Runnable() {
+            @Override
+            public void run() {
+                getBindingManager().onDeterminedVisibility(pid);
+            }
+        });
     }
 
     /**
      * Called when the embedding application is sent to background.
      */
     public static void onSentToBackground() {
+        assert ThreadUtils.runningOnUiThread();
         sApplicationInForeground = false;
-        getBindingManager().onSentToBackground();
+        LauncherThread.post(new Runnable() {
+            @Override
+            public void run() {
+                getBindingManager().onSentToBackground();
+            }
+        });
+    }
+
+    /**
+     * Called when the embedding application is brought to foreground.
+     */
+    public static void onBroughtToForeground() {
+        assert ThreadUtils.runningOnUiThread();
+        sApplicationInForeground = true;
+        LauncherThread.post(new Runnable() {
+            @Override
+            public void run() {
+                getBindingManager().onBroughtToForeground();
+            }
+        });
+    }
+
+    /**
+     * Returns whether the application is currently in the foreground.
+     */
+    static boolean isApplicationInForeground() {
+        return sApplicationInForeground;
     }
 
     /**
@@ -244,25 +275,16 @@ public class ChildProcessLauncher {
      * binding to a render process when it is created and remove the moderate binding when Chrome is
      * sent to the background.
      */
-    public static void startModerateBindingManagement(Context context) {
-        getBindingManager().startModerateBindingManagement(context,
-                ChildConnectionAllocator.getNumberOfServices(
-                        context, true, context.getPackageName()));
-    }
-
-    /**
-     * Called when the embedding application is brought to foreground.
-     */
-    public static void onBroughtToForeground() {
-        sApplicationInForeground = true;
-        getBindingManager().onBroughtToForeground();
-    }
-
-    /**
-     * Returns whether the application is currently in the foreground.
-     */
-    static boolean isApplicationInForeground() {
-        return sApplicationInForeground;
+    public static void startModerateBindingManagement(final Context context) {
+        assert ThreadUtils.runningOnUiThread();
+        LauncherThread.post(new Runnable() {
+            @Override
+            public void run() {
+                getBindingManager().startModerateBindingManagement(context,
+                        ChildConnectionAllocator.getNumberOfServices(
+                                context, true, context.getPackageName()));
+            }
+        });
     }
 
     /**
@@ -322,15 +344,14 @@ public class ChildProcessLauncher {
     }
 
     /**
-     * Spawns and connects to a child process. May be called on any thread. It will not block, but
-     * will instead callback to {@link #nativeOnChildProcessStarted} when the connection is
-     * established. Note this callback will not necessarily be from the same thread (currently it
-     * always comes from the main thread).
+     * Spawns and connects to a child process. It will not block, but will instead callback to
+     * {@link #LaunchCallback} on the launcher thread when the connection is established on.
      *
      * @param context Context used to obtain the application context.
      * @param paramId Key used to retrieve ChildProcessCreationParams.
      * @param commandLine The child process command line argv.
      * @param filesToBeMapped File IDs, FDs, offsets, and lengths to pass through.
+     * @param launchCallback Callback invoked when the connection is established.
      */
     static void start(Context context, int paramId, final String[] commandLine, int childProcessId,
             FileDescriptorInfo[] filesToBeMapped, LaunchCallback launchCallback) {
@@ -473,6 +494,7 @@ public class ChildProcessLauncher {
                 new BaseChildProcessConnection.ConnectionCallback() {
                     @Override
                     public void onConnected(BaseChildProcessConnection connection) {
+                        assert LauncherThread.runningOnLauncherThread();
                         if (connection != null) {
                             int pid = connection.getPid();
                             Log.d(TAG, "on connect callback, pid=%d", pid);

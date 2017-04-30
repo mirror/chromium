@@ -5,22 +5,16 @@
 #include "printing/image.h"
 
 #include <ApplicationServices/ApplicationServices.h>
-#include <CoreFoundation/CoreFoundation.h>
 #include <stddef.h>
 #include <stdint.h>
 
 #include "base/mac/scoped_cftyperef.h"
-#include "printing/pdf_metafile_cg_mac.h"
+#include "printing/metafile.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace printing {
 
-bool Image::LoadMetafile(const void* metafile_src_buffer,
-                         size_t metafile_src_buffer_size) {
-  PdfMetafileCg metafile;
-  if (!metafile.InitFromData(metafile_src_buffer, metafile_src_buffer_size)) {
-    return false;
-  }
+bool Image::LoadMetafile(const Metafile& metafile) {
   // The printing system uses single-page metafiles (page indexes are 1-based).
   const unsigned int page_number = 1;
   gfx::Rect rect(metafile.GetPageBounds(page_number));
@@ -45,10 +39,12 @@ bool Image::LoadMetafile(const void* metafile_src_buffer,
                             kCGImageAlphaPremultipliedLast));
   DCHECK(bitmap_context.get());
 
-  PdfMetafileCg::RenderPageParams params;
+  struct Metafile::MacRenderPageParams params;
   params.shrink_to_fit = true;
-  CGRect cg_rect = CGRectMake(0, 0, size_.width(), size_.height());
-  return metafile.OnRenderPage(page_number, bitmap_context, cg_rect, params);
+  metafile.RenderPage(page_number, bitmap_context,
+                      CGRectMake(0, 0, size_.width(), size_.height()), params);
+
+  return true;
 }
 
 }  // namespace printing

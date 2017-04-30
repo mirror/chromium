@@ -20,6 +20,8 @@ if (current_cpu == "arm" || current_cpu == "arm64") {
       "animation.h",
       "easing.cc",
       "easing.h",
+      "elbow_model.cc",
+      "elbow_model.h",
       "fps_meter.cc",
       "fps_meter.h",
       "gltf_asset.cc",
@@ -145,6 +147,7 @@ if (enable_vr) {
       "test/data/sample_inline.gltf",
       "test/data/sample_external.gltf",
       "test/data/sample.bin",
+      "test/data/sample.glb",
     ]
   }
 }

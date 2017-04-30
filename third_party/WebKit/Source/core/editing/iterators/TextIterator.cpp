@@ -766,7 +766,7 @@ void TextIteratorAlgorithm<Strategy>::HandleTextBox() {
             SpliceBuffer(kSpaceCharacter, node_, 0, run_start, run_start + 1);
           offset_ = run_start + 1;
         } else {
-          size_t subrun_end = str.Find('\n', run_start);
+          size_t subrun_end = str.find('\n', run_start);
           if (subrun_end == kNotFound || subrun_end > run_end) {
             subrun_end = run_end;
             subrun_end =
@@ -783,6 +783,16 @@ void TextIteratorAlgorithm<Strategy>::HandleTextBox() {
         if (static_cast<unsigned>(text_state_.PositionEndOffset()) <
             text_box_end)
           return;
+
+        if (behavior_.DoesNotEmitSpaceBeyondRangeEnd()) {
+          // If the subrun went to the text box end and this end is also the end
+          // of the range, do not advance to the next text box and do not
+          // generate a space, just stop.
+          if (text_box_end == end) {
+            text_box_ = nullptr;
+            return;
+          }
+        }
 
         // Advance and return
         unsigned next_run_start =
@@ -1341,18 +1351,12 @@ template <typename Strategy>
 int TextIteratorAlgorithm<Strategy>::RangeLength(
     const PositionTemplate<Strategy>& start,
     const PositionTemplate<Strategy>& end,
-    bool for_selection_preservation) {
+    const TextIteratorBehavior& behavior) {
   DCHECK(start.GetDocument());
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       start.GetDocument()->Lifecycle());
 
   int length = 0;
-  const TextIteratorBehavior& behavior =
-      TextIteratorBehavior::Builder()
-          .SetEmitsObjectReplacementCharacter(true)
-          .SetEmitsCharactersBetweenAllVisiblePositions(
-              for_selection_preservation)
-          .Build();
   for (TextIteratorAlgorithm<Strategy> it(start, end, behavior); !it.AtEnd();
        it.Advance())
     length += it.length();

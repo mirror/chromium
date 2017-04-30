@@ -22,6 +22,11 @@ using ::payments::mojom::PaymentInstrument;
 using ::payments::mojom::PaymentInstrumentPtr;
 
 const char kPaymentAppManifestDataKey[] = "PaymentAppManifestData";
+const char kPaymentInstrumentKeyPrefix[] = "PaymentInstrument:";
+
+std::string CreatePaymentInstrumentKey(const std::string& instrument_key) {
+  return kPaymentInstrumentKeyPrefix + instrument_key;
+}
 
 payments::mojom::PaymentAppManifestPtr DeserializePaymentAppManifest(
     const std::string& input) {
@@ -133,6 +138,19 @@ void PaymentAppDatabase::ReadPaymentInstrument(
           &PaymentAppDatabase::DidFindRegistrationToReadPaymentInstrument,
           weak_ptr_factory_.GetWeakPtr(), instrument_key,
           base::Passed(std::move(callback))));
+}
+
+void PaymentAppDatabase::HasPaymentInstrument(
+    const GURL& scope,
+    const std::string& instrument_key,
+    HasPaymentInstrumentCallback callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  service_worker_context_->FindReadyRegistrationForPattern(
+      scope,
+      base::Bind(&PaymentAppDatabase::DidFindRegistrationToHasPaymentInstrument,
+                 weak_ptr_factory_.GetWeakPtr(), instrument_key,
+                 base::Passed(std::move(callback))));
 }
 
 void PaymentAppDatabase::WritePaymentInstrument(
@@ -275,7 +293,7 @@ void PaymentAppDatabase::DidFindRegistrationToDeletePaymentInstrument(
   }
 
   service_worker_context_->GetRegistrationUserData(
-      registration->id(), {instrument_key},
+      registration->id(), {CreatePaymentInstrumentKey(instrument_key)},
       base::Bind(&PaymentAppDatabase::DidFindPaymentInstrument,
                  weak_ptr_factory_.GetWeakPtr(), registration->id(),
                  instrument_key, base::Passed(std::move(callback))));
@@ -294,7 +312,7 @@ void PaymentAppDatabase::DidFindPaymentInstrument(
   }
 
   service_worker_context_->ClearRegistrationUserData(
-      registration_id, {instrument_key},
+      registration_id, {CreatePaymentInstrumentKey(instrument_key)},
       base::Bind(&PaymentAppDatabase::DidDeletePaymentInstrument,
                  weak_ptr_factory_.GetWeakPtr(),
                  base::Passed(std::move(callback))));
@@ -322,7 +340,7 @@ void PaymentAppDatabase::DidFindRegistrationToReadPaymentInstrument(
   }
 
   service_worker_context_->GetRegistrationUserData(
-      registration->id(), {instrument_key},
+      registration->id(), {CreatePaymentInstrumentKey(instrument_key)},
       base::Bind(&PaymentAppDatabase::DidReadPaymentInstrument,
                  weak_ptr_factory_.GetWeakPtr(),
                  base::Passed(std::move(callback))));
@@ -347,6 +365,39 @@ void PaymentAppDatabase::DidReadPaymentInstrument(
   }
 
   std::move(callback).Run(std::move(instrument), PaymentHandlerStatus::SUCCESS);
+}
+
+void PaymentAppDatabase::DidFindRegistrationToHasPaymentInstrument(
+    const std::string& instrument_key,
+    HasPaymentInstrumentCallback callback,
+    ServiceWorkerStatusCode status,
+    scoped_refptr<ServiceWorkerRegistration> registration) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (status != SERVICE_WORKER_OK) {
+    std::move(callback).Run(PaymentHandlerStatus::NO_ACTIVE_WORKER);
+    return;
+  }
+
+  service_worker_context_->GetRegistrationUserData(
+      registration->id(), {CreatePaymentInstrumentKey(instrument_key)},
+      base::Bind(&PaymentAppDatabase::DidHasPaymentInstrument,
+                 weak_ptr_factory_.GetWeakPtr(), registration->id(),
+                 instrument_key, base::Passed(std::move(callback))));
+}
+
+void PaymentAppDatabase::DidHasPaymentInstrument(
+    int64_t registration_id,
+    const std::string& instrument_key,
+    DeletePaymentInstrumentCallback callback,
+    const std::vector<std::string>& data,
+    ServiceWorkerStatusCode status) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (status != SERVICE_WORKER_OK || data.size() != 1) {
+    std::move(callback).Run(PaymentHandlerStatus::NOT_FOUND);
+    return;
+  }
+
+  std::move(callback).Run(PaymentHandlerStatus::SUCCESS);
 }
 
 void PaymentAppDatabase::DidFindRegistrationToWritePaymentInstrument(
@@ -375,7 +426,7 @@ void PaymentAppDatabase::DidFindRegistrationToWritePaymentInstrument(
 
   service_worker_context_->StoreRegistrationUserData(
       registration->id(), registration->pattern().GetOrigin(),
-      {{instrument_key, serialized}},
+      {{CreatePaymentInstrumentKey(instrument_key), serialized}},
       base::Bind(&PaymentAppDatabase::DidWritePaymentInstrument,
                  weak_ptr_factory_.GetWeakPtr(),
                  base::Passed(std::move(callback))));

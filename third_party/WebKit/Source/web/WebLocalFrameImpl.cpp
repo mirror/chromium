@@ -109,6 +109,7 @@
 #include "core/dom/Node.h"
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/shadow/ShadowRoot.h"
+#include "core/editing/CompositionUnderlineVectorBuilder.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
 #include "core/editing/FindInPageCoordinates.h"
@@ -122,6 +123,7 @@
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/exported/WebAssociatedURLLoaderImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebViewBase.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/PageScaleConstraintsSet.h"
@@ -160,7 +162,6 @@
 #include "core/page/PrintContext.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/TransformRecorder.h"
-#include "core/style/StyleInheritedData.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "platform/ScriptForbiddenScope.h"
@@ -222,7 +223,6 @@
 #include "public/web/WebSerializedScriptValue.h"
 #include "public/web/WebTreeScopeType.h"
 #include "skia/ext/platform_canvas.h"
-#include "web/CompositionUnderlineVectorBuilder.h"
 #include "web/RemoteFrameOwner.h"
 #include "web/SharedWorkerRepositoryClientImpl.h"
 #include "web/TextCheckerClientImpl.h"
@@ -231,7 +231,6 @@
 #include "web/WebFrameWidgetImpl.h"
 #include "web/WebPluginContainerImpl.h"
 #include "web/WebRemoteFrameImpl.h"
-#include "web/WebViewImpl.h"
 
 namespace blink {
 
@@ -280,11 +279,11 @@ class ChromePrintContext : public PrintContext {
 
   ~ChromePrintContext() override {}
 
-  virtual void begin(float width, float height) {
+  virtual void BeginPrintMode(float width, float height) {
     DCHECK(!printed_page_width_);
     printed_page_width_ = width;
     printed_page_height_ = height;
-    PrintContext::begin(printed_page_width_, height);
+    PrintContext::BeginPrintMode(printed_page_width_, height);
   }
 
   virtual float GetPageShrink(int page_number) const {
@@ -455,9 +454,9 @@ class ChromePluginPrintContext final : public ChromePrintContext {
     ChromePrintContext::Trace(visitor);
   }
 
-  void begin(float width, float height) override {}
+  void BeginPrintMode(float width, float height) override {}
 
-  void end() override { plugin_->PrintEnd(); }
+  void EndPrintMode() override { plugin_->PrintEnd(); }
 
   float GetPageShrink(int page_number) const override {
     // We don't shrink the page (maybe we should ask the widget ??)
@@ -870,7 +869,7 @@ v8::Local<v8::Context> WebLocalFrameImpl::MainWorldScriptContext() const {
 
 bool WebFrame::ScriptCanAccess(WebFrame* target) {
   return BindingSecurity::ShouldAllowAccessToFrame(
-      CurrentDOMWindow(MainThreadIsolate()), target->ToImplBase()->GetFrame(),
+      CurrentDOMWindow(MainThreadIsolate()), ToCoreFrame(*target),
       BindingSecurity::ErrorReportOption::kDoNotReport);
 }
 
@@ -1055,7 +1054,7 @@ bool WebLocalFrameImpl::ExecuteCommand(const WebString& name) {
   String command = name;
 
   // Make sure the first letter is upper case.
-  command.Replace(0, 1, command.Substring(0, 1).UpperASCII());
+  command.replace(0, 1, command.Substring(0, 1).UpperASCII());
 
   // Remove the trailing ':' if existing.
   if (command[command.length() - 1] == UChar(':'))
@@ -1309,7 +1308,7 @@ bool WebLocalFrameImpl::SetCompositionFromExistingText(
   GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   input_method_controller.SetCompositionFromExistingText(
-      CompositionUnderlineVectorBuilder(underlines), composition_start,
+      CompositionUnderlineVectorBuilder::Build(underlines), composition_start,
       composition_end);
 
   return true;
@@ -1401,7 +1400,7 @@ int WebLocalFrameImpl::PrintBegin(const WebPrintParams& print_params,
   FloatRect rect(0, 0,
                  static_cast<float>(print_params.print_content_area.width),
                  static_cast<float>(print_params.print_content_area.height));
-  print_context_->begin(rect.Width(), rect.Height());
+  print_context_->BeginPrintMode(rect.Width(), rect.Height());
   float page_height;
   // We ignore the overlays calculation for now since they are generated in the
   // browser. pageHeight is actually an output parameter.
@@ -1427,7 +1426,7 @@ float WebLocalFrameImpl::PrintPage(int page, WebCanvas* canvas) {
 
 void WebLocalFrameImpl::PrintEnd() {
   DCHECK(print_context_);
-  print_context_->end();
+  print_context_->EndPrintMode();
   print_context_.Clear();
 }
 
@@ -1550,7 +1549,7 @@ WebLocalFrameImpl* WebLocalFrameImpl::CreateProvisional(
   DCHECK(client);
   WebLocalFrameImpl* web_frame = new WebLocalFrameImpl(
       old_web_frame, client, interface_provider, interface_registry);
-  Frame* old_frame = old_web_frame->ToImplBase()->GetFrame();
+  Frame* old_frame = ToWebRemoteFrameImpl(old_web_frame)->GetFrame();
   web_frame->SetParent(old_web_frame->Parent());
   web_frame->SetOpener(old_web_frame->Opener());
   // Note: this *always* temporarily sets a frame owner, even for main frames!
@@ -1628,7 +1627,6 @@ DEFINE_TRACE(WebLocalFrameImpl) {
   visitor->Trace(context_menu_node_);
   visitor->Trace(text_checker_client_);
   WebFrame::TraceFrames(visitor, this);
-  WebFrameImplBase::Trace(visitor);
 }
 
 void WebLocalFrameImpl::SetCoreFrame(LocalFrame* frame) {
@@ -1738,7 +1736,7 @@ void WebLocalFrameImpl::CreateFrameView() {
   DCHECK(GetFrame());  // If frame() doesn't exist, we probably didn't init
                        // properly.
 
-  WebViewImpl* web_view = ViewImpl();
+  WebViewBase* web_view = ViewImpl();
 
   // Check if we're shutting down.
   if (!web_view->GetPage())
@@ -1787,7 +1785,7 @@ WebLocalFrameImpl* WebLocalFrameImpl::FromFrameOwnerElement(Element* element) {
       ToLocalFrame(ToHTMLFrameOwnerElement(element)->ContentFrame()));
 }
 
-WebViewImpl* WebLocalFrameImpl::ViewImpl() const {
+WebViewBase* WebLocalFrameImpl::ViewImpl() const {
   if (!GetFrame())
     return nullptr;
   return WebViewImpl::FromPage(GetFrame()->GetPage());

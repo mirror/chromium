@@ -242,51 +242,23 @@ void LayerTreeImpl::UpdateScrollbars(int scroll_layer_id, int clip_layer_id) {
     clip_size.Scale(1 / current_page_scale_factor());
   }
 
-  bool scrollbar_needs_animation = false;
-  bool clip_layer_size_did_change = false;
-  bool scroll_layer_size_did_change = false;
   bool y_offset_did_change = false;
   for (auto* scrollbar : ScrollbarsFor(scroll_layer->element_id())) {
     if (scrollbar->orientation() == HORIZONTAL) {
-      scrollbar_needs_animation |= scrollbar->SetCurrentPos(current_offset.x());
-      clip_layer_size_did_change |=
-          scrollbar->SetClipLayerLength(clip_size.width());
-      scroll_layer_size_did_change |=
-          scrollbar->SetScrollLayerLength(scroll_size.width());
+      scrollbar->SetCurrentPos(current_offset.x());
+      scrollbar->SetClipLayerLength(clip_size.width());
+      scrollbar->SetScrollLayerLength(scroll_size.width());
     } else {
-      scrollbar_needs_animation |= y_offset_did_change |=
-          scrollbar->SetCurrentPos(current_offset.y());
-      clip_layer_size_did_change |=
-          scrollbar->SetClipLayerLength(clip_size.height());
-      scroll_layer_size_did_change |=
-          scrollbar->SetScrollLayerLength(scroll_size.height());
+      y_offset_did_change = scrollbar->SetCurrentPos(current_offset.y());
+      scrollbar->SetClipLayerLength(clip_size.height());
+      scrollbar->SetScrollLayerLength(scroll_size.height());
     }
-    scrollbar_needs_animation |=
-        scrollbar->SetVerticalAdjust(clip_layer->ViewportBoundsDelta().y());
+    scrollbar->SetVerticalAdjust(clip_layer->ViewportBoundsDelta().y());
   }
-
-  scrollbar_needs_animation |=
-      (clip_layer_size_did_change || scroll_layer_size_did_change);
 
   if (y_offset_did_change && IsViewportLayerId(scroll_layer_id))
     TRACE_COUNTER_ID1("cc", "scroll_offset_y", scroll_layer->id(),
                       current_offset.y());
-
-  if (scrollbar_needs_animation) {
-    ScrollbarAnimationController* controller =
-        layer_tree_host_impl_->ScrollbarAnimationControllerForElementId(
-            scroll_layer->element_id());
-    if (!controller)
-      return;
-
-    // TODO(chaopeng) clip_layer_size_did_change should call DidResize after
-    // crbug.com/701810 got fixed.
-    if (scroll_layer_size_did_change) {
-      controller->DidResize();
-    } else {
-      controller->DidScrollUpdate();
-    }
-  }
 }
 
 RenderSurfaceImpl* LayerTreeImpl::RootRenderSurface() const {
@@ -379,7 +351,7 @@ gfx::ScrollOffset LayerTreeImpl::TotalMaxScrollOffset() const {
 std::unique_ptr<OwnedLayerImplList> LayerTreeImpl::DetachLayers() {
   root_layer_for_testing_ = nullptr;
   layer_list_.clear();
-  render_surface_layer_list_.clear();
+  render_surface_list_.clear();
   set_needs_update_draw_properties();
   std::unique_ptr<OwnedLayerImplList> ret = std::move(layers_);
   layers_.reset(new OwnedLayerImplList);
@@ -494,10 +466,10 @@ void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
   target_tree->has_ever_been_drawn_ = false;
 
   // Note: this needs to happen after SetPropertyTrees.
-  target_tree->ShowScrollbars();
+  target_tree->HandleScrollbarShowRequestsFromMain();
 }
 
-void LayerTreeImpl::ShowScrollbars() {
+void LayerTreeImpl::HandleScrollbarShowRequestsFromMain() {
   LayerTreeHostCommon::CallFunctionForEveryLayer(this, [this](
                                                            LayerImpl* layer) {
     if (!layer->needs_show_scrollbars())
@@ -930,6 +902,13 @@ void LayerTreeImpl::DidUpdatePageScale() {
 
   set_needs_update_draw_properties();
   DidUpdateScrollState(inner_viewport_scroll_layer_id_);
+
+  if (IsActiveTree() && layer_tree_host_impl_->ViewportMainScrollLayer()) {
+    if (ScrollbarAnimationController* controller =
+            layer_tree_host_impl_->ScrollbarAnimationControllerForElementId(
+                OuterViewportScrollLayer()->element_id()))
+      controller->DidScrollUpdate();
+  }
 }
 
 void LayerTreeImpl::SetDeviceScaleFactor(float device_scale_factor) {
@@ -1036,7 +1015,7 @@ bool LayerTreeImpl::UpdateDrawProperties(bool update_lcd_text) {
 
   // Clear this after the renderer early out, as it should still be
   // possible to hit test even without a renderer.
-  render_surface_layer_list_.clear();
+  render_surface_list_.clear();
 
   if (layer_list_.empty())
     return false;
@@ -1062,7 +1041,7 @@ bool LayerTreeImpl::UpdateDrawProperties(bool update_lcd_text) {
         OverscrollElasticityLayer(), resource_provider()->max_texture_size(),
         can_render_to_separate_surface,
         settings().layer_transforms_should_scale_layer_contents,
-        &render_surface_layer_list_, &property_trees_);
+        &render_surface_list_, &property_trees_);
     LayerTreeHostCommon::CalculateDrawProperties(&inputs);
     if (const char* client_name = GetClientNameForMetrics()) {
       UMA_HISTOGRAM_COUNTS(
@@ -1072,7 +1051,7 @@ bool LayerTreeImpl::UpdateDrawProperties(bool update_lcd_text) {
           timer.Elapsed().InMicroseconds());
       UMA_HISTOGRAM_COUNTS_100(
           base::StringPrintf("Compositing.%s.NumRenderSurfaces", client_name),
-          base::saturated_cast<int>(render_surface_layer_list_.size()));
+          base::saturated_cast<int>(render_surface_list_.size()));
     }
   }
 
@@ -1200,15 +1179,15 @@ void LayerTreeImpl::BuildPropertyTreesForTesting() {
   property_trees_.transform_tree.set_source_to_parent_updates_allowed(false);
 }
 
-const LayerImplList& LayerTreeImpl::RenderSurfaceLayerList() const {
+const RenderSurfaceList& LayerTreeImpl::GetRenderSurfaceList() const {
   // If this assert triggers, then the list is dirty.
   DCHECK(!needs_update_draw_properties_);
-  return render_surface_layer_list_;
+  return render_surface_list_;
 }
 
 const Region& LayerTreeImpl::UnoccludedScreenSpaceRegion() const {
-  // If this assert triggers, then the render_surface_layer_list_ is dirty, so
-  // the unoccluded_screen_space_region_ is not valid anymore.
+  // If this assert triggers, then the render_surface_list_ is dirty, so the
+  // unoccluded_screen_space_region_ is not valid anymore.
   DCHECK(!needs_update_draw_properties_);
   return unoccluded_screen_space_region_;
 }
@@ -1431,15 +1410,13 @@ LayerTreeImpl::CreateScrollbarAnimationController(ElementId scroll_element_id) {
   DCHECK(!settings().scrollbar_fade_delay.is_zero());
   DCHECK(!settings().scrollbar_fade_duration.is_zero());
   base::TimeDelta fade_delay = settings().scrollbar_fade_delay;
-  base::TimeDelta fade_out_resize_delay =
-      settings().scrollbar_fade_out_resize_delay;
   base::TimeDelta fade_duration = settings().scrollbar_fade_duration;
   switch (settings().scrollbar_animator) {
     case LayerTreeSettings::ANDROID_OVERLAY: {
       return ScrollbarAnimationController::
-          CreateScrollbarAnimationControllerAndroid(
-              scroll_element_id, layer_tree_host_impl_, fade_delay,
-              fade_out_resize_delay, fade_duration);
+          CreateScrollbarAnimationControllerAndroid(scroll_element_id,
+                                                    layer_tree_host_impl_,
+                                                    fade_delay, fade_duration);
     }
     case LayerTreeSettings::AURA_OVERLAY: {
       base::TimeDelta thinning_duration =
@@ -1447,7 +1424,7 @@ LayerTreeImpl::CreateScrollbarAnimationController(ElementId scroll_element_id) {
       return ScrollbarAnimationController::
           CreateScrollbarAnimationControllerAuraOverlay(
               scroll_element_id, layer_tree_host_impl_, fade_delay,
-              fade_out_resize_delay, fade_duration, thinning_duration);
+              fade_duration, thinning_duration);
     }
     case LayerTreeSettings::NO_ANIMATOR:
       NOTREACHED();

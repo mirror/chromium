@@ -46,19 +46,6 @@ const char kFunctions[] =
     "     'name': 'int'"
     "   }]"
     "}, {"
-    "  'name': 'stringOptionalIntAndBool',"
-    "  'parameters': [{"
-    "    'type': 'string',"
-    "    'name': 'str'"
-    "   }, {"
-    "     'type': 'integer',"
-    "     'name': 'optionalint',"
-    "     'optional': true"
-    "   }, {"
-    "     'type': 'boolean',"
-    "     'name': 'bool'"
-    "   }]"
-    "}, {"
     "  'name': 'oneObject',"
     "  'parameters': [{"
     "    'type': 'object',"
@@ -69,9 +56,6 @@ const char kFunctions[] =
     "    }"
     "  }]"
     "}, {"
-    "  'name': 'noArgs',"
-    "  'parameters': []"
-    "}, {"
     "  'name': 'intAndCallback',"
     "  'parameters': [{"
     "    'name': 'int',"
@@ -79,39 +63,6 @@ const char kFunctions[] =
     "  }, {"
     "    'name': 'callback',"
     "    'type': 'function'"
-    "  }]"
-    "}, {"
-    "  'name': 'optionalIntAndCallback',"
-    "  'parameters': [{"
-    "    'name': 'int',"
-    "    'type': 'integer',"
-    "    'optional': true"
-    "  }, {"
-    "    'name': 'callback',"
-    "    'type': 'function'"
-    "  }]"
-    "}, {"
-    "  'name': 'optionalCallback',"
-    "  'parameters': [{"
-    "    'name': 'callback',"
-    "    'type': 'function',"
-    "    'optional': true"
-    "  }]"
-    "}, {"
-    "  'name': 'intAnyOptionalObjectOptionalCallback',"
-    "  'parameters': [{"
-    "    'type': 'integer', 'name': 'tabId', 'minimum': 0"
-    "  }, {"
-    "    'type': 'any', 'name': 'message'"
-    "  }, {"
-    "    'type': 'object',"
-    "    'name': 'options',"
-    "    'properties': {"
-    "      'frameId': {'type': 'integer', 'optional': true, 'minimum': 0}"
-    "    },"
-    "    'optional': true"
-    "  }, {"
-    "    'type': 'function', 'name': 'responseCallback', 'optional': true"
     "  }]"
     "}]";
 
@@ -319,9 +270,9 @@ TEST_F(APIBindingUnittest, TestEmptyAPI) {
       binding_object->GetOwnPropertyNames(context).ToLocalChecked()->Length());
 }
 
-TEST_F(APIBindingUnittest, Test) {
-  // TODO(devlin): Move this test to an api_signature_unittest file? It really
-  // only tests parsing.
+// Tests the basic call -> request flow of the API binding (ensuring that
+// functions are set up correctly and correctly enforced).
+TEST_F(APIBindingUnittest, TestBasicAPICalls) {
   SetFunctions(kFunctions);
   InitializeBinding();
 
@@ -331,75 +282,21 @@ TEST_F(APIBindingUnittest, Test) {
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, base::Bind(&AllowAllAPIs));
 
+  // Argument parsing is tested primarily in APISignature and ArgumentSpec
+  // tests, so do a few quick sanity checks...
   ExpectPass(binding_object, "obj.oneString('foo');", "['foo']", false);
-  ExpectPass(binding_object, "obj.oneString('');", "['']", false);
   ExpectFailure(binding_object, "obj.oneString(1);", kError);
-  ExpectFailure(binding_object, "obj.oneString();", kError);
-  ExpectFailure(binding_object, "obj.oneString({});", kError);
-  ExpectFailure(binding_object, "obj.oneString('foo', 'bar');", kError);
+  ExpectPass(binding_object, "obj.stringAndInt('foo', 1)", "['foo',1]", false);
+  ExpectFailure(binding_object, "obj.stringAndInt(1)", kError);
+  ExpectPass(binding_object, "obj.intAndCallback(1, function() {})", "[1]",
+             true);
+  ExpectFailure(binding_object, "obj.intAndCallback(function() {})", kError);
 
-  ExpectPass(binding_object, "obj.stringAndInt('foo', 42);", "['foo',42]",
-             false);
-  ExpectPass(binding_object, "obj.stringAndInt('foo', -1);", "['foo',-1]",
-             false);
-  ExpectFailure(binding_object, "obj.stringAndInt(1);", kError);
-  ExpectFailure(binding_object, "obj.stringAndInt('foo');", kError);
-  ExpectFailure(binding_object, "obj.stringAndInt(1, 'foo');", kError);
-  ExpectFailure(binding_object, "obj.stringAndInt('foo', 'foo');", kError);
-  ExpectFailure(binding_object, "obj.stringAndInt('foo', '1');", kError);
-  ExpectFailure(binding_object, "obj.stringAndInt('foo', 2.3);", kError);
-
-  ExpectPass(binding_object, "obj.stringOptionalIntAndBool('foo', 42, true);",
-             "['foo',42,true]", false);
-  ExpectPass(binding_object, "obj.stringOptionalIntAndBool('foo', true);",
-             "['foo',null,true]", false);
-  ExpectFailure(binding_object,
-                "obj.stringOptionalIntAndBool('foo', 'bar', true);", kError);
-
-  ExpectPass(binding_object, "obj.oneObject({prop1: 'foo'});",
-             "[{'prop1':'foo'}]", false);
+  // ...And an interesting case (throwing an error during parsing).
   ExpectFailure(
       binding_object,
       "obj.oneObject({ get prop1() { throw new Error('Badness'); } });",
       "Uncaught Error: Badness");
-
-  ExpectPass(binding_object, "obj.noArgs()", "[]", false);
-  ExpectFailure(binding_object, "obj.noArgs(0)", kError);
-  ExpectFailure(binding_object, "obj.noArgs('')", kError);
-  ExpectFailure(binding_object, "obj.noArgs(null)", kError);
-  ExpectFailure(binding_object, "obj.noArgs(undefined)", kError);
-
-  ExpectPass(binding_object, "obj.intAndCallback(1, function() {})", "[1]",
-             true);
-  ExpectFailure(binding_object, "obj.intAndCallback(function() {})", kError);
-  ExpectFailure(binding_object, "obj.intAndCallback(1)", kError);
-
-  ExpectPass(binding_object, "obj.optionalIntAndCallback(1, function() {})",
-             "[1]", true);
-  ExpectPass(binding_object, "obj.optionalIntAndCallback(function() {})",
-             "[null]", true);
-  ExpectFailure(binding_object, "obj.optionalIntAndCallback(1)", kError);
-
-  ExpectPass(binding_object, "obj.optionalCallback(function() {})", "[]", true);
-  ExpectPass(binding_object, "obj.optionalCallback()", "[]", false);
-  ExpectPass(binding_object, "obj.optionalCallback(undefined)", "[]", false);
-  ExpectFailure(binding_object, "obj.optionalCallback(0)", kError);
-
-  ExpectPass(binding_object,
-             "obj.intAnyOptionalObjectOptionalCallback(4, {foo: 'bar'}, "
-             "function() {})",
-             "[4,{'foo':'bar'},null]", true);
-  ExpectPass(binding_object,
-             "obj.intAnyOptionalObjectOptionalCallback(4, {foo: 'bar'})",
-             "[4,{'foo':'bar'},null]", false);
-  ExpectPass(binding_object,
-             "obj.intAnyOptionalObjectOptionalCallback(4, {foo: 'bar'}, {})",
-             "[4,{'foo':'bar'},{}]", false);
-  ExpectFailure(binding_object,
-                "obj.intAnyOptionalObjectOptionalCallback(4, function() {})",
-                kError);
-  ExpectFailure(binding_object, "obj.intAnyOptionalObjectOptionalCallback(4)",
-                kError);
 }
 
 // Test that enum values are properly exposed on the binding object.
@@ -457,6 +354,7 @@ TEST_F(APIBindingUnittest, EnumWithEmptyEntry) {
       GetStringPropertyFromObject(binding_object, context, "enumWithEmpty"));
 }
 
+// Test that type references are correctly set up in the API.
 TEST_F(APIBindingUnittest, TypeRefsTest) {
   const char kTypes[] =
       "[{"
@@ -499,14 +397,14 @@ TEST_F(APIBindingUnittest, TypeRefsTest) {
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, base::Bind(&AllowAllAPIs));
 
+  // Parsing in general is tested in APISignature and ArgumentSpec tests, but
+  // we test that the binding a) correctly finds the definitions, and b) accepts
+  // properties from the API object.
   ExpectPass(binding_object, "obj.takesRefObj({prop1: 'foo'})",
              "[{'prop1':'foo'}]", false);
-  ExpectPass(binding_object, "obj.takesRefObj({prop1: 'foo', prop2: 2})",
-             "[{'prop1':'foo','prop2':2}]", false);
   ExpectFailure(binding_object, "obj.takesRefObj({prop1: 'foo', prop2: 'a'})",
                 kError);
   ExpectPass(binding_object, "obj.takesRefEnum('alpha')", "['alpha']", false);
-  ExpectPass(binding_object, "obj.takesRefEnum('beta')", "['beta']", false);
   ExpectPass(binding_object, "obj.takesRefEnum(obj.refEnum.BETA)", "['beta']",
              false);
   ExpectFailure(binding_object, "obj.takesRefEnum('gamma')", kError);
@@ -1186,6 +1084,71 @@ TEST_F(APIBindingUnittest, TestUserGestures) {
   EXPECT_TRUE(last_request()->has_user_gesture);
 
   reset_last_request();
+}
+
+TEST_F(APIBindingUnittest, FilteredEvents) {
+  const char kEvents[] =
+      "[{"
+      "  'name': 'unfilteredOne',"
+      "  'parameters': []"
+      "}, {"
+      "  'name': 'unfilteredTwo',"
+      "  'filters': [],"
+      "  'parameters': []"
+      "}, {"
+      "  'name': 'unfilteredThree',"
+      "  'options': {'supportsFilters': false},"
+      "  'parameters': []"
+      "}, {"
+      "  'name': 'filteredOne',"
+      "  'options': {'supportsFilters': true},"
+      "  'parameters': []"
+      "}, {"
+      "  'name': 'filteredTwo',"
+      "  'filters': ["
+      "    {'name': 'url', 'type': 'array', 'items': {'type': 'any'}}"
+      "  ],"
+      "  'parameters': []"
+      "}]";
+  SetEvents(kEvents);
+  InitializeBinding();
+
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+
+  v8::Local<v8::Object> binding_object =
+      binding()->CreateInstance(context, base::Bind(&AllowAllAPIs));
+
+  const char kAddFilteredListener[] =
+      "(function(evt) {\n"
+      "  evt.addListener(function() {},\n"
+      "                  {url: [{pathContains: 'simple2.html'}]});\n"
+      "})";
+  v8::Local<v8::Function> function =
+      FunctionFromString(context, kAddFilteredListener);
+  ASSERT_FALSE(function.IsEmpty());
+
+  auto check_supports_filters = [context, binding_object, function](
+                                    base::StringPiece name,
+                                    bool expect_supports) {
+    SCOPED_TRACE(name);
+    v8::Local<v8::Value> event =
+        GetPropertyFromObject(binding_object, context, name);
+    v8::Local<v8::Value> args[] = {event};
+    if (expect_supports) {
+      RunFunction(function, context, context->Global(), arraysize(args), args);
+    } else {
+      RunFunctionAndExpectError(
+          function, context, context->Global(), arraysize(args), args,
+          "Uncaught TypeError: This event does not support filters");
+    }
+  };
+
+  check_supports_filters("unfilteredOne", false);
+  check_supports_filters("unfilteredTwo", false);
+  check_supports_filters("unfilteredThree", false);
+  check_supports_filters("filteredOne", true);
+  check_supports_filters("filteredTwo", true);
 }
 
 }  // namespace extensions

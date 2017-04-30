@@ -283,9 +283,10 @@ void ScrollableArea::ScrollOffsetChanged(const ScrollOffset& offset,
   if (Scrollbar* vertical_scrollbar = this->VerticalScrollbar())
     vertical_scrollbar->OffsetDidChange();
 
-  if (GetScrollOffset() != old_offset)
-    GetScrollAnimator().NotifyContentAreaScrolled(GetScrollOffset() -
-                                                  old_offset);
+  if (GetScrollOffset() != old_offset) {
+    GetScrollAnimator().NotifyContentAreaScrolled(
+        GetScrollOffset() - old_offset, scroll_type);
+  }
 
   GetScrollAnimator().SetCurrentOffset(offset);
 }
@@ -435,7 +436,7 @@ void ScrollableArea::RecalculateScrollbarOverlayColorTheme(
   // heuristic.
   double hue, saturation, lightness;
   background_color.GetHSL(hue, saturation, lightness);
-  if (lightness <= .5)
+  if (lightness <= .5 && background_color.Alpha())
     overlay_theme = kScrollbarOverlayColorThemeLight;
 
   if (old_overlay_theme != overlay_theme)

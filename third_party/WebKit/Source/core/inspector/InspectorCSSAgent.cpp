@@ -2222,7 +2222,7 @@ Response InspectorCSSAgent::setEffectivePropertyValueForNode(
                                (force_important ? " !important" : "") + ";";
     if (!style_text.IsEmpty() && !style_text.StripWhiteSpace().EndsWith(';'))
       new_property_text = ";" + new_property_text;
-    style_text.Append(new_property_text);
+    style_text.append(new_property_text);
     change_range.start = body_range.end;
     change_range.end = body_range.end + new_property_text.length();
   } else {
@@ -2237,7 +2237,7 @@ Response InspectorCSSAgent::setEffectivePropertyValueForNode(
     String new_property_text =
         declaration.name + ": " + new_value_text +
         (declaration.important || force_important ? " !important" : "") + ";";
-    style_text.Replace(declaration.range.start - body_range.start,
+    style_text.replace(declaration.range.start - body_range.start,
                        declaration.range.length(), new_property_text);
     change_range.start = declaration.range.start;
     change_range.end = change_range.start + new_property_text.length();

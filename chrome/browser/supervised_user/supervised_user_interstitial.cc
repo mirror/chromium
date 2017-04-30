@@ -157,7 +157,7 @@ bool SupervisedUserInterstitial::Init() {
     // Remove all the infobars which are attached to |web_contents_| and for
     // which ShouldExpire() returns true.
     content::LoadCommittedDetails details;
-    // |details.is_in_page| is default false, and |details.is_main_frame| is
+    // |details.is_same_page| is default false, and |details.is_main_frame| is
     // default true. This results in is_navigation_to_different_page() returning
     // true.
     DCHECK(details.is_navigation_to_different_page());
@@ -271,7 +271,8 @@ void SupervisedUserInterstitial::CommandReceived(const std::string& command) {
     ReportChildAccountFeedback(web_contents_, message, url_);
 #else
     chrome::ShowFeedbackPage(chrome::FindBrowserWithWebContents(web_contents_),
-                             message, std::string());
+                             chrome::kFeedbackSourceSupervisedUserInterstitial,
+                             message, std::string() /* category_tag */);
 #endif
     return;
   }

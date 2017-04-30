@@ -88,7 +88,7 @@ String::String(const char* characters, unsigned length)
                                      length)
                 : nullptr) {}
 
-void String::Append(const StringView& string) {
+void String::append(const StringView& string) {
   if (string.IsEmpty())
     return;
   if (!impl_) {
@@ -159,11 +159,11 @@ inline void String::AppendInternal(CharacterType c) {
   impl_ = new_impl.Release();
 }
 
-void String::Append(LChar c) {
+void String::append(LChar c) {
   AppendInternal(c);
 }
 
-void String::Append(UChar c) {
+void String::append(UChar c) {
   AppendInternal(c);
 }
 
@@ -222,9 +222,9 @@ void String::insert(const StringView& string, unsigned position) {
 
   if (position >= length()) {
     if (string.Is8Bit())
-      Append(string);
+      append(string);
     else
-      Append(string);
+      append(string);
     return;
   }
 
@@ -543,7 +543,7 @@ void String::Split(UChar separator,
 
   unsigned start_pos = 0;
   size_t end_pos;
-  while ((end_pos = Find(separator, start_pos)) != kNotFound) {
+  while ((end_pos = find(separator, start_pos)) != kNotFound) {
     if (allow_empty_entries || start_pos != end_pos)
       result.push_back(Substring(start_pos, end_pos - start_pos));
     start_pos = end_pos + 1;

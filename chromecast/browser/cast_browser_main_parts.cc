@@ -22,11 +22,13 @@
 #include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "chromecast/base/cast_constants.h"
+#include "chromecast/base/cast_features.h"
 #include "chromecast/base/cast_paths.h"
 #include "chromecast/base/cast_sys_info_util.h"
 #include "chromecast/base/chromecast_switches.h"
 #include "chromecast/base/metrics/cast_metrics_helper.h"
 #include "chromecast/base/metrics/grouped_histogram.h"
+#include "chromecast/base/pref_names.h"
 #include "chromecast/base/version.h"
 #include "chromecast/browser/cast_browser_context.h"
 #include "chromecast/browser/cast_browser_process.h"
@@ -216,48 +218,50 @@ struct DefaultCommandLineSwitch {
 
 DefaultCommandLineSwitch g_default_switches[] = {
 #if defined(OS_ANDROID)
-  // Disables Chromecast-specific WiFi-related features on ATV for now.
-  { switches::kNoWifi, "" },
-  { switches::kDisableGestureRequirementForMediaPlayback, ""},
-  { switches::kDisableMediaSuspend, ""},
+    // Disables Chromecast-specific WiFi-related features on ATV for now.
+    {switches::kNoWifi, ""},
+    // TODO(714676): this should probably set the no restrictions autoplay
+    // policy instead.
+    {switches::kIgnoreAutoplayRestrictionsForTests, ""},
+    {switches::kDisableMediaSuspend, ""},
 #else
-  // GPU shader disk cache disabling is largely to conserve disk space.
-  { switches::kDisableGpuShaderDiskCache, "" },
-  // Enable media sessions by default (even on non-Android platforms).
-  { switches::kEnableDefaultMediaSession, "" },
+    // GPU shader disk cache disabling is largely to conserve disk space.
+    {switches::kDisableGpuShaderDiskCache, ""},
+    // Enable media sessions by default (even on non-Android platforms).
+    {switches::kEnableDefaultMediaSession, ""},
 #endif
 #if BUILDFLAG(IS_CAST_AUDIO_ONLY)
 #if defined(OS_ANDROID)
-  { switches::kDisableGLDrawingForTests, "" },
+    {switches::kDisableGLDrawingForTests, ""},
 #else
-  { switches::kDisableGpu, "" },
+    {switches::kDisableGpu, ""},
 #endif  // defined(OS_ANDROID)
 #endif  // BUILDFLAG(IS_CAST_AUDIO_ONLY)
 #if defined(OS_LINUX)
 #if defined(ARCH_CPU_X86_FAMILY)
-  // This is needed for now to enable the x11 Ozone platform to work with
-  // current Linux/NVidia OpenGL drivers.
-  { switches::kIgnoreGpuBlacklist, ""},
+    // This is needed for now to enable the x11 Ozone platform to work with
+    // current Linux/NVidia OpenGL drivers.
+    {switches::kIgnoreGpuBlacklist, ""},
 #elif defined(ARCH_CPU_ARM_FAMILY)
 #if !BUILDFLAG(IS_CAST_AUDIO_ONLY)
-  {switches::kEnableHardwareOverlays, "cast"},
+    {switches::kEnableHardwareOverlays, "cast"},
 #endif
 #endif
 #endif  // defined(OS_LINUX)
-  // Needed so that our call to GpuDataManager::SetGLStrings doesn't race
-  // against GPU process creation (which is otherwise triggered from
-  // BrowserThreadsStarted).  The GPU process will be created as soon as a
-  // renderer needs it, which always happens after main loop starts.
-  { switches::kDisableGpuEarlyInit, "" },
-  // TODO(halliwell): Cast builds don't support ES3. Remove this switch when
-  // support is added (crbug.com/659395)
-  { switches::kDisableES3GLContext, "" },
-  // Enable navigator.connection API.
-  // TODO(derekjchow): Remove this switch when enabled by default.
-  { switches::kEnableNetworkInformation, "" },
-  // TODO(halliwell): Remove after fixing b/35422666.
-  { switches::kEnableUseZoomForDSF, "false" },
-  { NULL, NULL },  // Termination
+    // Needed so that our call to GpuDataManager::SetGLStrings doesn't race
+    // against GPU process creation (which is otherwise triggered from
+    // BrowserThreadsStarted).  The GPU process will be created as soon as a
+    // renderer needs it, which always happens after main loop starts.
+    {switches::kDisableGpuEarlyInit, ""},
+    // TODO(halliwell): Cast builds don't support ES3. Remove this switch when
+    // support is added (crbug.com/659395)
+    {switches::kDisableES3GLContext, ""},
+    // Enable navigator.connection API.
+    // TODO(derekjchow): Remove this switch when enabled by default.
+    {switches::kEnableNetworkInformation, ""},
+    // TODO(halliwell): Remove after fixing b/35422666.
+    {switches::kEnableUseZoomForDSF, "false"},
+    {nullptr, nullptr},  // Termination
 };
 
 void AddDefaultCommandLineSwitches(base::CommandLine* command_line) {
@@ -277,6 +281,7 @@ CastBrowserMainParts::CastBrowserMainParts(
     URLRequestContextFactory* url_request_context_factory)
     : BrowserMainParts(),
       cast_browser_process_(new CastBrowserProcess()),
+      field_trial_list_(nullptr),
       parameters_(parameters),
       url_request_context_factory_(url_request_context_factory),
       net_log_(new CastNetLog()),
@@ -412,6 +417,26 @@ int CastBrowserMainParts::PreCreateThreads() {
   if (!base::CreateDirectory(home_dir))
     return 1;
 
+  scoped_refptr<PrefRegistrySimple> pref_registry(new PrefRegistrySimple());
+  metrics::RegisterPrefs(pref_registry.get());
+  PrefProxyConfigTrackerImpl::RegisterPrefs(pref_registry.get());
+  cast_browser_process_->SetPrefService(
+      PrefServiceHelper::CreatePrefService(pref_registry.get()));
+
+  // As soon as the PrefService is set, initialize the base::FeatureList, so
+  // objects initialized after this point can use features from
+  // base::FeatureList.
+  const auto* features_dict =
+      cast_browser_process_->pref_service()->GetDictionary(
+          prefs::kLatestDCSFeatures);
+  const auto* experiment_ids = cast_browser_process_->pref_service()->GetList(
+      prefs::kActiveDCSExperiments);
+  auto* command_line = base::CommandLine::ForCurrentProcess();
+  InitializeFeatureList(
+      *features_dict, *experiment_ids,
+      command_line->GetSwitchValueASCII(switches::kEnableFeatures),
+      command_line->GetSwitchValueASCII(switches::kDisableFeatures));
+
   // Hook for internal code
   cast_browser_process_->browser_client()->PreCreateThreads();
 
@@ -436,11 +461,6 @@ int CastBrowserMainParts::PreCreateThreads() {
 }
 
 void CastBrowserMainParts::PreMainMessageLoopRun() {
-  scoped_refptr<PrefRegistrySimple> pref_registry(new PrefRegistrySimple());
-  metrics::RegisterPrefs(pref_registry.get());
-  PrefProxyConfigTrackerImpl::RegisterPrefs(pref_registry.get());
-  cast_browser_process_->SetPrefService(
-      PrefServiceHelper::CreatePrefService(pref_registry.get()));
 
 #if !defined(OS_ANDROID)
   memory_pressure_monitor_.reset(new CastMemoryPressureMonitor());

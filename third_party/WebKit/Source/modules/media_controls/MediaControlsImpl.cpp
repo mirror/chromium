@@ -29,6 +29,10 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ClientRect.h"
 #include "core/dom/Fullscreen.h"
+#include "core/dom/MutationCallback.h"
+#include "core/dom/MutationObserver.h"
+#include "core/dom/MutationObserverInit.h"
+#include "core/dom/MutationRecord.h"
 #include "core/dom/ResizeObserver.h"
 #include "core/dom/ResizeObserverCallback.h"
 #include "core/dom/ResizeObserverEntry.h"
@@ -45,6 +49,7 @@
 #include "core/layout/LayoutTheme.h"
 #include "modules/media_controls/MediaControlsMediaEventListener.h"
 #include "modules/media_controls/MediaControlsOrientationLockDelegate.h"
+#include "modules/media_controls/MediaControlsRotateToFullscreenDelegate.h"
 #include "modules/media_controls/MediaControlsWindowEventListener.h"
 #include "modules/media_controls/elements/MediaControlCastButtonElement.h"
 #include "modules/media_controls/elements/MediaControlCurrentTimeDisplayElement.h"
@@ -63,6 +68,8 @@
 #include "modules/media_controls/elements/MediaControlTimelineElement.h"
 #include "modules/media_controls/elements/MediaControlToggleClosedCaptionsButtonElement.h"
 #include "modules/media_controls/elements/MediaControlVolumeSliderElement.h"
+#include "modules/remoteplayback/HTMLMediaElementRemotePlayback.h"
+#include "modules/remoteplayback/RemotePlayback.h"
 #include "platform/EventDispatchForbiddenScope.h"
 
 namespace blink {
@@ -132,7 +139,9 @@ bool ShouldShowCastButton(HTMLMediaElement& media_element) {
     return false;
   }
 
-  return media_element.HasRemoteRoutes();
+  RemotePlayback* remote =
+      HTMLMediaElementRemotePlayback::remote(media_element);
+  return remote && remote->RemotePlaybackAvailable();
 }
 
 bool PreferHiddenVolumeControls(const Document& document) {
@@ -193,6 +202,57 @@ class MediaControlsImpl::MediaControlsResizeObserverCallback final
   Member<MediaControlsImpl> controls_;
 };
 
+// Observes changes to the HTMLMediaElement attributes that affect controls.
+// Currently only observes the disableRemotePlayback attribute.
+class MediaControlsImpl::MediaElementMutationCallback
+    : public MutationCallback {
+ public:
+  explicit MediaElementMutationCallback(MediaControlsImpl* controls)
+      : controls_(controls) {
+    observer_ = MutationObserver::Create(this);
+    Vector<String> filter;
+    filter.push_back(HTMLNames::disableremoteplaybackAttr.ToString());
+    MutationObserverInit init;
+    init.setAttributeOldValue(true);
+    init.setAttributes(true);
+    init.setAttributeFilter(filter);
+    observer_->observe(&controls_->MediaElement(), init, ASSERT_NO_EXCEPTION);
+  }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(controls_);
+    visitor->Trace(observer_);
+    MutationCallback::Trace(visitor);
+  }
+
+  void Disconnect() { observer_->disconnect(); }
+
+ private:
+  void Call(const HeapVector<Member<MutationRecord>>& records,
+            MutationObserver*) override {
+    for (const auto& record : records) {
+      if (record->type() != "attributes")
+        continue;
+
+      const Element& element = *ToElement(record->target());
+      if (record->oldValue() == element.getAttribute(record->attributeName()))
+        continue;
+
+      DCHECK_EQ(HTMLNames::disableremoteplaybackAttr.ToString(),
+                record->attributeName());
+      controls_->RefreshCastButtonVisibility();
+      return;
+    }
+  }
+
+  ExecutionContext* GetExecutionContext() const override {
+    return &controls_->GetDocument();
+  }
+
+  Member<MediaControlsImpl> controls_;
+  Member<MutationObserver> observer_;
+};
+
 MediaControls* MediaControlsImpl::Factory::Create(
     HTMLMediaElement& media_element,
     ShadowRoot& shadow_root) {
@@ -225,6 +285,7 @@ MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
           WTF::Bind(&MediaControlsImpl::HideAllMenus,
                     WrapWeakPersistent(this)))),
       orientation_lock_delegate_(nullptr),
+      rotate_to_fullscreen_delegate_(nullptr),
       hide_media_controls_timer_(
           TaskRunnerHelper::Get(TaskType::kUnspecedTimer,
                                 &media_element.GetDocument()),
@@ -252,9 +313,18 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
   controls->InitializeControls();
   controls->Reset();
 
-  // Initialize the orientation lock when going fullscreen feature.
-  if (RuntimeEnabledFeatures::videoFullscreenOrientationLockEnabled() &&
+  // RotateToFullscreen and FullscreenOrientationLock are not yet compatible
+  // so enabling RotateToFullscreen disables FullscreenOrientationLock.
+  // TODO(johnme): Make it possible to use both features simultaneously.
+  if (RuntimeEnabledFeatures::videoRotateToFullscreenEnabled() &&
       media_element.IsHTMLVideoElement()) {
+    // Initialize the rotate-to-fullscreen feature.
+    controls->rotate_to_fullscreen_delegate_ =
+        new MediaControlsRotateToFullscreenDelegate(
+            toHTMLVideoElement(media_element));
+  } else if (RuntimeEnabledFeatures::videoFullscreenOrientationLockEnabled() &&
+             media_element.IsHTMLVideoElement()) {
+    // Initialize the orientation lock when going fullscreen feature.
     controls->orientation_lock_delegate_ =
         new MediaControlsOrientationLockDelegate(
             toHTMLVideoElement(media_element));
@@ -408,6 +478,8 @@ Node::InsertionNotificationRequest MediaControlsImpl::InsertedInto(
   media_event_listener_->Attach();
   if (orientation_lock_delegate_)
     orientation_lock_delegate_->Attach();
+  if (rotate_to_fullscreen_delegate_)
+    rotate_to_fullscreen_delegate_->Attach();
 
   if (!resize_observer_) {
     resize_observer_ =
@@ -416,6 +488,9 @@ Node::InsertionNotificationRequest MediaControlsImpl::InsertedInto(
     HTMLMediaElement& html_media_element = MediaElement();
     resize_observer_->observe(&html_media_element);
   }
+
+  if (!element_mutation_callback_)
+    element_mutation_callback_ = new MediaElementMutationCallback(this);
 
   return HTMLDivElement::InsertedInto(root);
 }
@@ -430,8 +505,15 @@ void MediaControlsImpl::RemovedFrom(ContainerNode*) {
   media_event_listener_->Detach();
   if (orientation_lock_delegate_)
     orientation_lock_delegate_->Detach();
+  if (rotate_to_fullscreen_delegate_)
+    rotate_to_fullscreen_delegate_->Detach();
 
   resize_observer_.Clear();
+
+  if (element_mutation_callback_) {
+    element_mutation_callback_->Disconnect();
+    element_mutation_callback_.Clear();
+  }
 }
 
 void MediaControlsImpl::Reset() {
@@ -517,11 +599,15 @@ void MediaControlsImpl::MakeTransparent() {
 bool MediaControlsImpl::ShouldHideMediaControls(unsigned behavior_flags) const {
   // Never hide for a media element without visual representation.
   if (!MediaElement().IsHTMLVideoElement() || !MediaElement().HasVideo() ||
-      MediaElement().IsPlayingRemotely() ||
       toHTMLVideoElement(MediaElement()).GetMediaRemotingStatus() ==
           HTMLVideoElement::MediaRemotingStatus::kStarted) {
     return false;
   }
+
+  RemotePlayback* remote =
+      HTMLMediaElementRemotePlayback::remote(MediaElement());
+  if (remote && remote->GetState() != WebRemotePlaybackState::kDisconnected)
+    return false;
 
   // Keep the controls visible as long as the timer is running.
   const bool ignore_wait_for_timer = behavior_flags & kIgnoreWaitForTimer;
@@ -662,8 +748,9 @@ void MediaControlsImpl::RefreshCastButtonVisibilityWithoutUpdate() {
 
 void MediaControlsImpl::ShowOverlayCastButtonIfNeeded() {
   if (MediaElement().ShouldShowControls() ||
-      !ShouldShowCastButton(MediaElement()))
+      !ShouldShowCastButton(MediaElement())) {
     return;
+  }
 
   overlay_cast_button_->TryShowOverlay();
   ResetHideMediaControlsTimer();
@@ -677,14 +764,9 @@ void MediaControlsImpl::ExitFullscreen() {
   Fullscreen::ExitFullscreen(GetDocument());
 }
 
-void MediaControlsImpl::StartedCasting() {
-  cast_button_->SetIsPlayingRemotely(true);
-  overlay_cast_button_->SetIsPlayingRemotely(true);
-}
-
-void MediaControlsImpl::StoppedCasting() {
-  cast_button_->SetIsPlayingRemotely(false);
-  overlay_cast_button_->SetIsPlayingRemotely(false);
+void MediaControlsImpl::RemotePlaybackStateChanged() {
+  cast_button_->UpdateDisplayType();
+  overlay_cast_button_->UpdateDisplayType();
 }
 
 void MediaControlsImpl::DefaultEventHandler(Event* event) {
@@ -1108,6 +1190,7 @@ void MediaControlsImpl::HideAllMenus() {
 }
 
 DEFINE_TRACE(MediaControlsImpl) {
+  visitor->Trace(element_mutation_callback_);
   visitor->Trace(resize_observer_);
   visitor->Trace(panel_);
   visitor->Trace(overlay_play_button_);
@@ -1130,6 +1213,7 @@ DEFINE_TRACE(MediaControlsImpl) {
   visitor->Trace(media_event_listener_);
   visitor->Trace(window_event_listener_);
   visitor->Trace(orientation_lock_delegate_);
+  visitor->Trace(rotate_to_fullscreen_delegate_);
   MediaControls::Trace(visitor);
   HTMLDivElement::Trace(visitor);
 }

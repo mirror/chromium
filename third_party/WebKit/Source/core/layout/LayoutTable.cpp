@@ -45,7 +45,6 @@
 #include "core/paint/PaintLayer.h"
 #include "core/paint/TablePaintInvalidator.h"
 #include "core/paint/TablePainter.h"
-#include "core/style/StyleInheritedData.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
@@ -58,6 +57,7 @@ LayoutTable::LayoutTable(Element* element)
       foot_(nullptr),
       first_body_(nullptr),
       collapsed_borders_valid_(false),
+      needs_invalidate_collapsed_borders_for_all_cells_(false),
       has_col_elements_(false),
       needs_section_recalc_(false),
       column_logical_width_changed_(false),
@@ -102,8 +102,12 @@ void LayoutTable::StyleDidChange(StyleDifference diff,
   if (!old_style)
     return;
 
-  LayoutTableBoxComponent::InvalidateCollapsedBordersOnStyleChange(
-      *this, *this, diff, *old_style);
+  if (old_style->BorderCollapse() != StyleRef().BorderCollapse()) {
+    InvalidateCollapsedBorders();
+  } else {
+    LayoutTableBoxComponent::InvalidateCollapsedBordersOnStyleChange(
+        *this, *this, diff, *old_style);
+  }
 
   if (LayoutTableBoxComponent::DoCellsHaveDirtyWidth(*this, *this, diff,
                                                      *old_style))
@@ -235,7 +239,7 @@ void LayoutTable::RemoveCaption(const LayoutTableCaption* old_caption) {
 
 void LayoutTable::InvalidateCachedColumns() {
   column_layout_objects_valid_ = false;
-  column_layout_objects_.Resize(0);
+  column_layout_objects_.resize(0);
 }
 
 void LayoutTable::AddColumn(const LayoutTableCol*) {
@@ -535,7 +539,7 @@ void LayoutTable::SimplifiedNormalFlowLayout() {
     section->LayoutIfNeeded();
     section->LayoutRows();
     section->ComputeOverflowFromCells();
-    section->UpdateLayerTransformAfterLayout();
+    section->UpdateAfterLayout();
     section->AddVisualEffectOverflow();
   }
 }
@@ -732,7 +736,7 @@ void LayoutTable::UpdateLayout() {
 
       SetLogicalHeight(LogicalHeight() + section->LogicalHeight());
 
-      section->UpdateLayerTransformAfterLayout();
+      section->UpdateAfterLayout();
       section->AddVisualEffectOverflow();
 
       section = SectionBelow(section);
@@ -754,11 +758,6 @@ void LayoutTable::UpdateLayout() {
                              old_logical_height != LogicalHeight();
     LayoutPositionedObjects(dimension_changed);
 
-    UpdateLayerTransformAfterLayout();
-
-    // Layout was changed, so probably borders too.
-    InvalidateCollapsedBorders();
-
     ComputeOverflow(ClientLogicalBottom());
     UpdateAfterLayout();
 
@@ -778,11 +777,31 @@ void LayoutTable::UpdateLayout() {
 
 void LayoutTable::InvalidateCollapsedBorders() {
   collapsed_borders_.clear();
-  if (!CollapseBorders())
-    return;
-
   collapsed_borders_valid_ = false;
+  needs_invalidate_collapsed_borders_for_all_cells_ = true;
   SetMayNeedPaintInvalidation();
+}
+
+void LayoutTable::InvalidateCollapsedBordersForAllCellsIfNeeded() {
+  DCHECK(CollapseBorders());
+
+  if (!needs_invalidate_collapsed_borders_for_all_cells_)
+    return;
+  needs_invalidate_collapsed_borders_for_all_cells_ = false;
+
+  for (LayoutObject* section = FirstChild(); section;
+       section = section->NextSibling()) {
+    if (!section->IsTableSection())
+      continue;
+    for (LayoutTableRow* row = ToLayoutTableSection(section)->FirstRow(); row;
+         row = row->NextRow()) {
+      for (LayoutTableCell* cell = row->FirstCell(); cell;
+           cell = cell->NextCell()) {
+        DCHECK_EQ(cell->Table(), this);
+        cell->InvalidateCollapsedBorderValues();
+      }
+    }
+  }
 }
 
 // Collect all the unique border values that we want to paint in a sorted list.
@@ -803,11 +822,11 @@ void LayoutTable::RecalcCollapsedBordersIfNeeded() {
       for (LayoutTableCell* cell = row->FirstCell(); cell;
            cell = cell->NextCell()) {
         DCHECK_EQ(cell->Table(), this);
-        cell->CollectBorderValues(collapsed_borders_);
+        cell->CollectCollapsedBorderValues(collapsed_borders_);
       }
     }
   }
-  LayoutTableCell::SortBorderValues(collapsed_borders_);
+  LayoutTableCell::SortCollapsedBorderValues(collapsed_borders_);
 }
 
 void LayoutTable::AddOverflowFromChildren() {
@@ -1149,8 +1168,8 @@ void LayoutTable::RecalcSections() const {
     }
   }
 
-  effective_columns_.Resize(max_cols);
-  effective_column_positions_.Resize(max_cols + 1);
+  effective_columns_.resize(max_cols);
+  effective_column_positions_.resize(max_cols + 1);
   no_cell_colspan_at_least_ = CalcNoCellColspanAtLeast();
 
   DCHECK(SelfNeedsLayout());
@@ -1704,18 +1723,18 @@ void LayoutTable::EnsureIsReadyForPaintInvalidation() {
   RecalcCollapsedBordersIfNeeded();
 }
 
-PaintInvalidationReason LayoutTable::InvalidatePaintIfNeeded(
+PaintInvalidationReason LayoutTable::InvalidatePaint(
     const PaintInvalidationState& paint_invalidation_state) {
   if (CollapseBorders() && !collapsed_borders_.IsEmpty())
     paint_invalidation_state.PaintingLayer()
         .SetNeedsPaintPhaseDescendantBlockBackgrounds();
 
-  return LayoutBlock::InvalidatePaintIfNeeded(paint_invalidation_state);
+  return LayoutBlock::InvalidatePaint(paint_invalidation_state);
 }
 
-PaintInvalidationReason LayoutTable::InvalidatePaintIfNeeded(
+PaintInvalidationReason LayoutTable::InvalidatePaint(
     const PaintInvalidatorContext& context) const {
-  return TablePaintInvalidator(*this, context).InvalidatePaintIfNeeded();
+  return TablePaintInvalidator(*this, context).InvalidatePaint();
 }
 
 LayoutUnit LayoutTable::PaddingTop() const {

@@ -29,7 +29,6 @@ class WebString;
 
 namespace media {
 class MediaLog;
-enum VideoRotation;
 }
 
 namespace cc_blink {
@@ -164,6 +163,7 @@ class CONTENT_EXPORT WebMediaPlayerMS
   bool TexImageImpl(TexImageFunctionID functionID,
                     unsigned target,
                     gpu::gles2::GLES2Interface* gl,
+                    unsigned int texture,
                     int level,
                     int internalformat,
                     unsigned format,

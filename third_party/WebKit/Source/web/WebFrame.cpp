@@ -4,8 +4,10 @@
 
 #include "public/web/WebFrame.h"
 
+#include <algorithm>
 #include "bindings/core/v8/WindowProxyManager.h"
 #include "core/HTMLNames.h"
+#include "core/dom/IncrementLoadEventDelayCount.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/RemoteFrame.h"
@@ -22,13 +24,12 @@
 #include "web/RemoteFrameOwner.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebRemoteFrameImpl.h"
-#include <algorithm>
 
 namespace blink {
 
 bool WebFrame::Swap(WebFrame* frame) {
   using std::swap;
-  Frame* old_frame = ToImplBase()->GetFrame();
+  Frame* old_frame = ToCoreFrame(*this);
   if (!old_frame->IsAttached())
     return false;
 
@@ -39,6 +40,16 @@ bool WebFrame::Swap(WebFrame* frame) {
   // written.
   if (!old_frame->PrepareForCommit())
     return false;
+
+  // If there is a local parent, it might incorrectly declare itself complete
+  // during the detach phase of this swap. Suppress its completion until swap is
+  // over, at which point its completion will be correctly dependent on its
+  // newly swapped-in child.
+  std::unique_ptr<IncrementLoadEventDelayCount> delay_parent_load =
+      parent_ && parent_->IsWebLocalFrame()
+          ? IncrementLoadEventDelayCount::Create(
+                *ToWebLocalFrameImpl(parent_)->GetFrame()->GetDocument())
+          : nullptr;
 
   if (parent_) {
     if (parent_->first_child_ == this)
@@ -85,7 +96,7 @@ bool WebFrame::Swap(WebFrame* frame) {
   // increments of connected subframes.
   if (frame->IsWebLocalFrame()) {
     // TODO(dcheng): in an ideal world, both branches would just use
-    // WebFrameImplBase's initializeCoreFrame() helper. However, Blink
+    // WebFrame's initializeCoreFrame() helper. However, Blink
     // currently requires a 'provisional' local frame to serve as a
     // placeholder for loading state when swapping to a local frame.
     // In this case, the core LocalFrame is already initialized, so just
@@ -108,9 +119,9 @@ bool WebFrame::Swap(WebFrame* frame) {
   }
 
   if (parent_ && old_frame->HasReceivedUserGesture())
-    frame->ToImplBase()->GetFrame()->SetDocumentHasReceivedUserGesture();
+    ToCoreFrame(*frame)->SetDocumentHasReceivedUserGesture();
 
-  frame->ToImplBase()->GetFrame()->GetWindowProxyManager()->SetGlobalProxies(
+  ToCoreFrame(*frame)->GetWindowProxyManager()->SetGlobalProxies(
       global_proxies);
 
   parent_ = nullptr;
@@ -119,12 +130,12 @@ bool WebFrame::Swap(WebFrame* frame) {
 }
 
 void WebFrame::Detach() {
-  ToImplBase()->GetFrame()->Detach(FrameDetachType::kRemove);
+  ToCoreFrame(*this)->Detach(FrameDetachType::kRemove);
 }
 
 WebSecurityOrigin WebFrame::GetSecurityOrigin() const {
   return WebSecurityOrigin(
-      ToImplBase()->GetFrame()->GetSecurityContext()->GetSecurityOrigin());
+      ToCoreFrame(*this)->GetSecurityContext()->GetSecurityOrigin());
 }
 
 void WebFrame::SetFrameOwnerPolicy(
@@ -132,29 +143,24 @@ void WebFrame::SetFrameOwnerPolicy(
     const blink::WebParsedFeaturePolicy& container_policy) {
   // At the moment, this is only used to replicate sandbox flags and container
   // policy for frames with a remote owner.
-  RemoteFrameOwner* owner =
-      ToRemoteFrameOwner(ToImplBase()->GetFrame()->Owner());
+  RemoteFrameOwner* owner = ToRemoteFrameOwner(ToCoreFrame(*this)->Owner());
   DCHECK(owner);
   owner->SetSandboxFlags(static_cast<SandboxFlags>(flags));
   owner->SetContainerPolicy(container_policy);
 }
 
 WebInsecureRequestPolicy WebFrame::GetInsecureRequestPolicy() const {
-  return ToImplBase()
-      ->GetFrame()
-      ->GetSecurityContext()
-      ->GetInsecureRequestPolicy();
+  return ToCoreFrame(*this)->GetSecurityContext()->GetInsecureRequestPolicy();
 }
 
 void WebFrame::SetFrameOwnerProperties(
     const WebFrameOwnerProperties& properties) {
   // At the moment, this is only used to replicate frame owner properties
   // for frames with a remote owner.
-  RemoteFrameOwner* owner =
-      ToRemoteFrameOwner(ToImplBase()->GetFrame()->Owner());
+  RemoteFrameOwner* owner = ToRemoteFrameOwner(ToCoreFrame(*this)->Owner());
   DCHECK(owner);
 
-  Frame* frame = ToImplBase()->GetFrame();
+  Frame* frame = ToCoreFrame(*this);
   DCHECK(frame);
 
   if (frame->IsLocalFrame()) {
@@ -209,8 +215,8 @@ void WebFrame::InsertAfter(WebFrame* new_child, WebFrame* previous_sibling) {
     last_child_ = new_child;
   }
 
-  ToImplBase()->GetFrame()->Tree().InvalidateScopedChildCount();
-  ToImplBase()->GetFrame()->GetPage()->IncrementSubframeCount();
+  ToCoreFrame(*this)->Tree().InvalidateScopedChildCount();
+  ToCoreFrame(*this)->GetPage()->IncrementSubframeCount();
 }
 
 void WebFrame::AppendChild(WebFrame* child) {
@@ -234,8 +240,8 @@ void WebFrame::RemoveChild(WebFrame* child) {
 
   child->previous_sibling_ = child->next_sibling_ = 0;
 
-  ToImplBase()->GetFrame()->Tree().InvalidateScopedChildCount();
-  ToImplBase()->GetFrame()->GetPage()->DecrementSubframeCount();
+  ToCoreFrame(*this)->Tree().InvalidateScopedChildCount();
+  ToCoreFrame(*this)->GetPage()->DecrementSubframeCount();
 }
 
 void WebFrame::SetParent(WebFrame* parent) {
@@ -262,7 +268,7 @@ WebFrame* WebFrame::NextSibling() const {
 }
 
 WebFrame* WebFrame::TraverseNext() const {
-  if (Frame* frame = ToImplBase()->GetFrame())
+  if (Frame* frame = ToCoreFrame(*this))
     return FromFrame(frame->Tree().TraverseNext());
   return nullptr;
 }
@@ -276,7 +282,7 @@ WebFrame* WebFrame::FromFrameOwnerElement(const WebElement& web_element) {
 }
 
 bool WebFrame::IsLoading() const {
-  if (Frame* frame = ToImplBase()->GetFrame())
+  if (Frame* frame = ToCoreFrame(*this))
     return frame->IsLoading();
   return false;
 }
@@ -324,6 +330,24 @@ void WebFrame::TraceFrames(Visitor* visitor, WebFrame* frame) {
 
 void WebFrame::Close() {
   opened_frame_tracker_->Dispose();
+}
+
+void WebFrame::InitializeCoreFrame(WebFrame& frame, Page& page) {
+  if (frame.IsWebLocalFrame())
+    ToWebLocalFrameImpl(frame).InitializeCoreFrame(page, 0, g_null_atom);
+  else if (frame.IsWebRemoteFrame())
+    ToWebRemoteFrameImpl(frame).InitializeCoreFrame(page, 0, g_null_atom);
+  else
+    NOTREACHED();
+}
+
+Frame* WebFrame::ToCoreFrame(const WebFrame& frame) {
+  if (frame.IsWebLocalFrame())
+    return ToWebLocalFrameImpl(frame).GetFrame();
+  if (frame.IsWebRemoteFrame())
+    return ToWebRemoteFrameImpl(frame).GetFrame();
+  NOTREACHED();
+  return nullptr;
 }
 
 }  // namespace blink

@@ -1378,7 +1378,7 @@ void FrameView::InvalidateTreeIfNeeded(
   TRACE_EVENT1("blink", "FrameView::invalidateTree", "root",
                root_for_paint_invalidation.DebugName().Ascii());
 
-  InvalidatePaintIfNeeded(paint_invalidation_state);
+  InvalidatePaint(paint_invalidation_state);
   root_for_paint_invalidation.InvalidateTreeIfNeeded(paint_invalidation_state);
 
 #if DCHECK_IS_ON()
@@ -1388,7 +1388,7 @@ void FrameView::InvalidateTreeIfNeeded(
   Lifecycle().AdvanceTo(DocumentLifecycle::kPaintInvalidationClean);
 }
 
-void FrameView::InvalidatePaintIfNeeded(
+void FrameView::InvalidatePaint(
     const PaintInvalidationState& paint_invalidation_state) {
   RELEASE_ASSERT(!GetLayoutViewItem().IsNull());
   if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled())
@@ -1711,7 +1711,13 @@ void FrameView::ViewportSizeChanged(bool width_changed, bool height_changed) {
     }
   }
 
-  if (!HasViewportConstrainedObjects())
+  if (GetFrame().GetDocument() && !IsInPerformLayout())
+    MarkViewportConstrainedObjectsForLayout(width_changed, height_changed);
+}
+
+void FrameView::MarkViewportConstrainedObjectsForLayout(bool width_changed,
+                                                        bool height_changed) {
+  if (!HasViewportConstrainedObjects() || !(width_changed || height_changed))
     return;
 
   for (const auto& viewport_constrained_object :
@@ -1976,7 +1982,8 @@ void FrameView::DidUpdateElasticOverscroll() {
         elastic_overscroll.Width() - HorizontalScrollbar()->ElasticOverscroll();
     if (delta != 0) {
       HorizontalScrollbar()->SetElasticOverscroll(elastic_overscroll.Width());
-      GetScrollAnimator().NotifyContentAreaScrolled(FloatSize(delta, 0));
+      GetScrollAnimator().NotifyContentAreaScrolled(FloatSize(delta, 0),
+                                                    kCompositorScroll);
       SetScrollbarNeedsPaintInvalidation(kHorizontalScrollbar);
     }
   }
@@ -1985,7 +1992,8 @@ void FrameView::DidUpdateElasticOverscroll() {
         elastic_overscroll.Height() - VerticalScrollbar()->ElasticOverscroll();
     if (delta != 0) {
       VerticalScrollbar()->SetElasticOverscroll(elastic_overscroll.Height());
-      GetScrollAnimator().NotifyContentAreaScrolled(FloatSize(0, delta));
+      GetScrollAnimator().NotifyContentAreaScrolled(FloatSize(0, delta),
+                                                    kCompositorScroll);
       SetScrollbarNeedsPaintInvalidation(kVerticalScrollbar);
     }
   }
@@ -3040,7 +3048,7 @@ void FrameView::SetupPrintContext() {
   int width = is_us ? kLetterPortraitPageWidth : kA4PortraitPageWidth;
   int height = is_us ? kLetterPortraitPageHeight : kA4PortraitPageHeight;
   FloatRect page_rect(0, 0, width, height);
-  print_context_->begin(page_rect.Width(), page_rect.Height());
+  print_context_->BeginPrintMode(page_rect.Width(), page_rect.Height());
   float dummy_height;
   print_context_->ComputePageRects(page_rect, 0, 0, 1.0, dummy_height);
   DispatchEventsForPrintingOnAllFrames();
@@ -3049,7 +3057,7 @@ void FrameView::SetupPrintContext() {
 void FrameView::ClearPrintContext() {
   if (!print_context_)
     return;
-  print_context_->end();
+  print_context_->EndPrintMode();
   print_context_.Clear();
 }
 
@@ -4112,7 +4120,7 @@ void FrameView::UpdateScrollOffset(const ScrollOffset& offset,
 
   if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
     // Don't scroll the FrameView!
-    ASSERT_NOT_REACHED();
+    NOTREACHED();
   }
 
   scroll_offset_ = offset;

@@ -105,8 +105,7 @@ public class CustomNotificationBuilder extends NotificationBuilderBase {
         String formattedTime = "";
 
         // Temporarily allowing disk access. TODO: Fix. See http://crbug.com/577185
-        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
-        StrictMode.allowThreadDiskWrites();
+        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
         try {
             long time = SystemClock.elapsedRealtime();
             formattedTime = DateFormat.getTimeFormat(mContext).format(new Date());
@@ -232,6 +231,12 @@ public class CustomNotificationBuilder extends NotificationBuilderBase {
 
     private void configureSettingsButton(RemoteViews bigView) {
         if (mSettingsAction == null) {
+            bigView.setViewVisibility(R.id.origin_settings_icon, View.GONE);
+            int rightPadding =
+                    dpToPx(BUTTON_ICON_PADDING_DP, mContext.getResources().getDisplayMetrics());
+            int leftPadding =
+                    Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ? rightPadding : 0;
+            bigView.setViewPadding(R.id.origin, leftPadding, 0, rightPadding, 0);
             return;
         }
         bigView.setOnClickPendingIntent(R.id.origin, mSettingsAction.intent);

@@ -748,7 +748,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         mCompositorViewHolder.onNativeLibraryReady(getWindowAndroid(), getTabContentManager());
 
         if (isContextualSearchAllowed() && ContextualSearchFieldTrial.isEnabled()) {
-            mContextualSearchManager = new ContextualSearchManager(this, getWindowAndroid(), this);
+            mContextualSearchManager = new ContextualSearchManager(this, this);
         }
 
         if (ReaderModeManager.isEnabled(this)) {
@@ -916,12 +916,14 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     }
 
     /**
+     * Actions that may be run at some point after startup. Place tasks that are not critical to the
+     * startup path here.  This method will be called automatically and should not be called
+     * directly by subclasses.
+     *
      * Overriding methods should queue tasks on the DeferredStartupHandler before or after calling
      * super depending on whether the tasks should run before or after these ones.
      */
-    @Override
     protected void onDeferredStartup() {
-        super.onDeferredStartup();
         initDeferredStartupForActivity();
         DeferredStartupHandler.getInstance().initDeferredStartupForApp();
         DeferredStartupHandler.getInstance().queueDeferredTasksOnIdleHandler();
@@ -2160,4 +2162,12 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * in this call, including showing 2D UI that was hidden.
      */
     public void onExitVr() {}
+
+    /**
+     * Whether this Activity supports moving a {@link Tab} to the
+     * {@link FullscreenWebContentsActivity} when it enters fullscreen.
+     */
+    public boolean supportsFullscreenActivity() {
+        return false;
+    }
 }

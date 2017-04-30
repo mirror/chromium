@@ -412,7 +412,7 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
                        HitTestAction) override;
   void UpdateHitTestResult(HitTestResult&, const LayoutPoint&) override;
 
-  void UpdateAfterLayout();
+  void UpdateAfterLayout() override;
 
   void StyleWillChange(StyleDifference,
                        const ComputedStyle& new_style) override;
@@ -493,9 +493,9 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
   }
 
  protected:
-  PaintInvalidationReason InvalidatePaintIfNeeded(
+  PaintInvalidationReason InvalidatePaint(
       const PaintInvalidationState&) override;
-  PaintInvalidationReason InvalidatePaintIfNeeded(
+  PaintInvalidationReason InvalidatePaint(
       const PaintInvalidatorContext&) const override;
 
   void ClearPreviousVisualRects() override;

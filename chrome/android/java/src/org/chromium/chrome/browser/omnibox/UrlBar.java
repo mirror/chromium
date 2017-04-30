@@ -12,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.text.Editable;
@@ -23,6 +24,7 @@ import android.text.style.ReplacementSpan;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
@@ -39,6 +41,7 @@ import org.chromium.base.Log;
 import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.WindowDelegate;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout.OmniboxLivenessListener;
 import org.chromium.chrome.browser.tab.Tab;
@@ -65,6 +68,9 @@ public class UrlBar extends VerticallyFixedEditText {
     private static final int MAX_DISPLAYABLE_LENGTH = 4000;
     private static final int MAX_DISPLAYABLE_LENGTH_LOW_END = 1000;
 
+    // Unicode "Left-To-Right Mark" (LRM) character.
+    private static final char LRM = '\u200E';
+
     /** The contents of the URL that precede the path/query after being formatted. */
     private String mFormattedUrlLocation;
 
@@ -90,6 +96,9 @@ public class UrlBar extends VerticallyFixedEditText {
      * because the URL bar has custom touch event handling. See: {@link #onTouchEvent}.
      */
     private final GestureDetector mGestureDetector;
+
+    private final KeyboardHideHelper mKeyboardHideHelper;
+
     private boolean mFocused;
     private boolean mAllowFocus = true;
 
@@ -171,6 +180,11 @@ public class UrlBar extends VerticallyFixedEditText {
          * @return Whether the light security theme should be used.
          */
         boolean shouldEmphasizeHttpsScheme();
+
+        /**
+         * Called to notify that back key has been pressed while the URL bar has focus.
+         */
+        void backKeyPressed();
     }
 
     public UrlBar(Context context, AttributeSet attrs) {
@@ -219,9 +233,22 @@ public class UrlBar extends VerticallyFixedEditText {
                     }
                 });
         mGestureDetector.setOnDoubleTapListener(null);
+        mKeyboardHideHelper = new KeyboardHideHelper(this, new Runnable() {
+            @Override
+            public void run() {
+                if (mUrlBarDelegate != null) mUrlBarDelegate.backKeyPressed();
+            }
+        });
 
         mAccessibilityManager =
                 (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+    }
+
+    /**
+     * Initialize the delegate that allows interaction with the Window.
+     */
+    public void setWindowDelegate(WindowDelegate windowDelegate) {
+        mKeyboardHideHelper.setWindowDelegate(windowDelegate);
     }
 
     /**
@@ -266,6 +293,14 @@ public class UrlBar extends VerticallyFixedEditText {
             deEmphasizeUrl();
             emphasizeUrl();
         }
+    }
+
+    @Override
+    public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_BACK == keyCode && event.getAction() == KeyEvent.ACTION_UP) {
+            mKeyboardHideHelper.monitorForKeyboardHidden();
+        }
+        return super.onKeyPreIme(keyCode, event);
     }
 
     /**
@@ -758,6 +793,13 @@ public class UrlBar extends VerticallyFixedEditText {
      */
     public boolean setUrl(String url, String formattedUrl) {
         if (!TextUtils.isEmpty(formattedUrl)) {
+            // Because Android versions 4.2 and before lack proper RTL support,
+            // force the formatted URL to render as LTR using an LRM character.
+            // See: https://www.ietf.org/rfc/rfc3987.txt and crbug.com/709417
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                formattedUrl = LRM + formattedUrl;
+            }
+
             try {
                 URL javaUrl = new URL(url);
                 mFormattedUrlLocation =

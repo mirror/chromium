@@ -197,6 +197,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   void SelectClientCertificate(
       content::WebContents* web_contents,
       net::SSLCertRequestInfo* cert_request_info,
+      net::CertificateList client_certs,
       std::unique_ptr<content::ClientCertificateDelegate> delegate) override;
   content::MediaObserver* GetMediaObserver() override;
   content::PlatformNotificationService* GetPlatformNotificationService()
@@ -286,8 +287,8 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   void ExposeInterfacesToMediaService(
       service_manager::InterfaceRegistry* registry,
       content::RenderFrameHost* render_frame_host) override;
-  void RegisterRenderFrameMojoInterfaces(
-      service_manager::InterfaceRegistry* registry,
+  void ExposeInterfacesToFrame(
+      service_manager::BinderRegistry* registry,
       content::RenderFrameHost* render_frame_host) override;
   void BindInterfaceRequest(
       const service_manager::ServiceInfo& source_info,

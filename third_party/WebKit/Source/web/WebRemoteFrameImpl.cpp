@@ -52,7 +52,6 @@ DEFINE_TRACE(WebRemoteFrameImpl) {
   visitor->Trace(frame_client_);
   visitor->Trace(frame_);
   WebFrame::TraceFrames(visitor, this);
-  WebFrameImplBase::Trace(visitor);
 }
 
 bool WebRemoteFrameImpl::IsWebLocalFrame() const {
@@ -430,6 +429,8 @@ void WebRemoteFrameImpl::SetReplicatedFeaturePolicyHeader(
     if (GetFrame() && GetFrame()->Owner()) {
       container_policy = GetContainerPolicyFromAllowedFeatures(
           GetFrame()->Owner()->AllowedFeatures(),
+          GetFrame()->Owner()->AllowFullscreen(),
+          GetFrame()->Owner()->AllowPaymentRequest(),
           GetFrame()->GetSecurityContext()->GetSecurityOrigin());
     }
     GetFrame()->GetSecurityContext()->InitializeFeaturePolicy(
@@ -487,7 +488,7 @@ void WebRemoteFrameImpl::DidStopLoading() {
   if (Parent() && Parent()->IsWebLocalFrame()) {
     WebLocalFrameImpl* parent_frame =
         ToWebLocalFrameImpl(Parent()->ToWebLocalFrame());
-    parent_frame->GetFrame()->Loader().CheckCompleted();
+    parent_frame->GetFrame()->GetDocument()->CheckCompleted();
   }
 }
 

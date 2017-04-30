@@ -44,6 +44,8 @@ class DummyModulator : public Modulator {
   void FetchSingle(const ModuleScriptFetchRequest&,
                    ModuleGraphLevel,
                    SingleModuleClient*) override;
+  void FetchDescendantsForInlineScript(ModuleScript*,
+                                       ModuleTreeClient*) override;
   ModuleScript* GetFetchedModuleScript(const KURL&) override;
   void FetchNewSingleModule(const ModuleScriptFetchRequest&,
                             ModuleGraphLevel,
@@ -52,7 +54,11 @@ class DummyModulator : public Modulator {
                              const String& url_str,
                              AccessControlStatus) override;
   ScriptValue InstantiateModule(ScriptModule) override;
+  ScriptValue GetInstantiationError(const ModuleScript*) override;
   Vector<String> ModuleRequestsFromScriptModule(ScriptModule) override;
+  void ExecuteModule(const ModuleScript*) override;
+
+  Member<ScriptModuleResolver> resolver_;
 };
 
 }  // namespace blink

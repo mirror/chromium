@@ -116,7 +116,7 @@ static KeyValueMap RetrieveKeyValuePairs(SharedBufferChunkReader* buffer) {
       key = String();
       value.Clear();
     }
-    size_t semi_colon_index = line.Find(':');
+    size_t semi_colon_index = line.find(':');
     if (semi_colon_index == kNotFound) {
       // This is not a key value pair, ignore.
       continue;
@@ -154,7 +154,7 @@ MIMEHeader* MIMEHeader::ParseHeader(SharedBufferChunkReader* buffer) {
       mime_header->end_of_part_boundary_.insert("--", 0);
       mime_header->end_of_document_boundary_ =
           mime_header->end_of_part_boundary_;
-      mime_header->end_of_document_boundary_.Append("--");
+      mime_header->end_of_document_boundary_.append("--");
     }
   }
 

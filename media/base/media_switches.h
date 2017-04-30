@@ -77,6 +77,8 @@ MEDIA_EXPORT extern const char kForceVideoOverlays[];
 MEDIA_EXPORT extern const char kMSEAudioBufferSizeLimit[];
 MEDIA_EXPORT extern const char kMSEVideoBufferSizeLimit[];
 
+MEDIA_EXPORT extern const char kIgnoreAutoplayRestrictionsForTests[];
+
 namespace autoplay {
 
 MEDIA_EXPORT extern const char kCrossOriginUserGestureRequiredPolicy[];
@@ -103,10 +105,12 @@ MEDIA_EXPORT extern const base::Feature kExternalClearKeyForTesting;
 MEDIA_EXPORT extern const base::Feature kBackgroundVideoTrackOptimization;
 MEDIA_EXPORT extern const base::Feature kBackgroundVideoPauseOptimization;
 MEDIA_EXPORT extern const base::Feature kMemoryPressureBasedSourceBufferGC;
+MEDIA_EXPORT extern const base::Feature kNewRemotePlaybackPipeline;
 
 #if defined(OS_ANDROID)
 MEDIA_EXPORT extern const base::Feature kAndroidMediaPlayerRenderer;
 MEDIA_EXPORT extern const base::Feature kVideoFullscreenOrientationLock;
+MEDIA_EXPORT extern const base::Feature kVideoRotateToFullscreen;
 MEDIA_EXPORT extern const base::Feature kMediaDrmPersistentLicense;
 #endif  // defined(OS_ANDROID)
 

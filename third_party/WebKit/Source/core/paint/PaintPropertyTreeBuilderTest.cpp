@@ -14,8 +14,8 @@ namespace blink {
 
 void PaintPropertyTreeBuilderTest::LoadTestData(const char* file_name) {
   String full_path = testing::BlinkRootDir();
-  full_path.Append("/Source/core/paint/test_data/");
-  full_path.Append(file_name);
+  full_path.append("/Source/core/paint/test_data/");
+  full_path.append(file_name);
   RefPtr<SharedBuffer> input_buffer = testing::ReadFromFile(full_path);
   SetBodyInnerHTML(String(input_buffer->Data(), input_buffer->size()));
 }
@@ -3109,9 +3109,9 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformOriginWithAndWithoutMotionPath) {
       "  }"
       "  #motionPath {"
       "    position: absolute;"
-      "    motion-path: path('M0 0 L 200 400');"
-      "    motion-offset: 50%;"
-      "    motion-rotation: 0deg;"
+      "    offset-path: path('M0 0 L 200 400');"
+      "    offset-distance: 50%;"
+      "    offset-rotate: 0deg;"
       "    transform-origin: 50% 50% 0;"
       "  }"
       "  #willChange {"

@@ -269,10 +269,6 @@ void SetMockGamepadProvider(std::unique_ptr<RendererGamepadProvider> provider) {
                                            std::move(provider));
 }
 
-void SetMockDeviceLightData(const double data) {
-  RendererBlinkPlatformImpl::SetMockDeviceLightDataForTesting(data);
-}
-
 void SetMockDeviceMotionData(const MotionData& data) {
   RendererBlinkPlatformImpl::SetMockDeviceMotionDataForTesting(data);
 }
@@ -354,7 +350,7 @@ class LayoutTestDependenciesImpl : public LayoutTestDependencies,
         std::move(compositor_context_provider),
         std::move(worker_context_provider), nullptr /* shared_bitmap_manager */,
         gpu_memory_buffer_manager, settings.renderer_settings, task_runner,
-        synchronous_composite, false /* force_disable_reclaim_resources */);
+        synchronous_composite);
     compositor_frame_sink->SetClient(this);
     compositor_frame_sinks_[routing_id] = compositor_frame_sink.get();
     return std::move(compositor_frame_sink);

@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.ntp.cards;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -38,6 +39,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.DisableHistogramsRule;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
+import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
 import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
@@ -350,17 +352,24 @@ public class SectionListTest {
     @Test
     @Features(@Features.Register(ChromeFeatureList.CHROME_HOME))
     public void testSynchroniseWithSourceWithStaleSection() {
+        final int initialSectionSize = 2;
+        final int updatedSectionSize = 5;
         registerCategory(mSuggestionSource, CATEGORY1, 1);
-        registerCategory(mSuggestionSource, CATEGORY2, 2);
+        registerCategory(mSuggestionSource, CATEGORY2, initialSectionSize);
         when(mUiDelegate.isVisible()).thenReturn(true); // Prevent updates on new suggestions.
         SectionList sectionList = spy(new SectionList(mUiDelegate, mOfflinePageBridge));
         sectionList.refreshSuggestions();
 
+        assertThat(sectionList.getSectionForTesting(CATEGORY2).getSuggestionsCount(),
+                is(initialSectionSize));
+
         // New suggestions are added, which will make CATEGORY2 stale.
         bindViewHolders(sectionList);
-        mSuggestionSource.setSuggestionsForCategory(CATEGORY2,
-                createDummySuggestions(CATEGORY2, 5));
+        mSuggestionSource.setSuggestionsForCategory(
+                CATEGORY2, createDummySuggestions(updatedSectionSize, CATEGORY2));
         assertTrue(sectionList.getSectionForTesting(CATEGORY2).isDataStale());
+        assertThat(sectionList.getSectionForTesting(CATEGORY2).getSuggestionsCount(),
+                is(initialSectionSize));
 
         clearInvocations(mSuggestionSource);
         sectionList.synchroniseWithSource();
@@ -370,6 +379,8 @@ public class SectionListTest {
         inOrder.verify(mSuggestionSource).getSuggestionsForCategory(CATEGORY2);
         // CATEGORY1 doesn't need to be refreshed.
         inOrder.verify(mSuggestionSource, never()).getSuggestionsForCategory(CATEGORY1);
+        assertThat(sectionList.getSectionForTesting(CATEGORY2).getSuggestionsCount(),
+                is(updatedSectionSize));
     }
 
     @Test
@@ -391,5 +402,58 @@ public class SectionListTest {
         // All the data is refreshed, even though CATEGORY1 wasn't touched.
         inOrder.verify(mSuggestionSource).getSuggestionsForCategory(CATEGORY1);
         inOrder.verify(mSuggestionSource).getSuggestionsForCategory(CATEGORY2);
+    }
+
+    @Test
+    public void testCategoryChangeWithSameCategories() {
+        registerCategory(mSuggestionSource, CATEGORY1, 1);
+        registerCategory(mSuggestionSource, CATEGORY2, 1);
+
+        SectionList sectionList = spy(new SectionList(mUiDelegate, mOfflinePageBridge));
+        sectionList.refreshSuggestions();
+
+        assertFalse(sectionList.categoriesChanged(mSuggestionSource.getCategories()));
+    }
+
+    @Test
+    public void testCategoryChangeWithDifferentOrderOrNumberInCategories() {
+        registerCategory(mSuggestionSource, CATEGORY1, 1);
+        registerCategory(mSuggestionSource, CATEGORY2, 1);
+
+        SectionList sectionList = spy(new SectionList(mUiDelegate, mOfflinePageBridge));
+        sectionList.refreshSuggestions();
+
+        // Not using the same categories as present in the source here, change should be detected.
+        assertTrue(sectionList.categoriesChanged(new int[] {CATEGORY2, CATEGORY1}));
+        assertTrue(sectionList.categoriesChanged(new int[] {CATEGORY1}));
+        assertTrue(sectionList.categoriesChanged(new int[] {CATEGORY1, CATEGORY2, CATEGORY2 + 1}));
+    }
+
+    @Test
+    public void testCategoryChangeWithEmptyHiddenCategory() {
+        registerCategory(mSuggestionSource, CATEGORY1, 1);
+        registerCategory(mSuggestionSource, new CategoryInfoBuilder(CATEGORY2).build(), 0);
+
+        SectionList sectionList = spy(new SectionList(mUiDelegate, mOfflinePageBridge));
+        sectionList.refreshSuggestions();
+
+        // The check here ignores |CATEGORY2| which is present during the construction but not shown
+        // because empty. It does not detect changes whether the reference array includes it or not.
+        assertThat(
+                mSuggestionSource.getCategories(), is(equalTo(new int[] {CATEGORY1, CATEGORY2})));
+        assertFalse(sectionList.categoriesChanged(mSuggestionSource.getCategories()));
+        assertFalse(sectionList.categoriesChanged(new int[] {CATEGORY1}));
+
+        mSuggestionSource.setStatusForCategory(CATEGORY2, CategoryStatus.AVAILABLE_LOADING);
+
+        // After notifying of a change for the category, it stops being ignored.
+        assertTrue(sectionList.categoriesChanged(mSuggestionSource.getCategories()));
+        assertFalse(sectionList.categoriesChanged(new int[] {CATEGORY1}));
+
+        sectionList.refreshSuggestions();
+
+        // And after a refresh we start ignoring it again.
+        assertFalse(sectionList.categoriesChanged(mSuggestionSource.getCategories()));
+        assertFalse(sectionList.categoriesChanged(new int[] {CATEGORY1}));
     }
 }

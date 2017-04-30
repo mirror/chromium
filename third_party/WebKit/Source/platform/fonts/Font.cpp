@@ -47,9 +47,6 @@
 #include "platform/wtf/text/Unicode.h"
 #include "third_party/skia/include/core/SkTextBlob.h"
 
-using namespace WTF;
-using namespace Unicode;
-
 namespace blink {
 
 Font::Font() : can_shape_word_by_word_(0), shape_word_by_word_computed_(0) {}
@@ -246,6 +243,27 @@ void Font::DrawEmphasisMarks(PaintCanvas* canvas,
   DrawBlobs(canvas, flags, bloberizer.Blobs(), point);
 }
 
+void Font::DrawEmphasisMarks(PaintCanvas* canvas,
+                             const TextFragmentPaintInfo& text_info,
+                             const AtomicString& mark,
+                             const FloatPoint& point,
+                             float device_scale_factor,
+                             const PaintFlags& flags) const {
+  if (ShouldSkipDrawing())
+    return;
+
+  FontCachePurgePreventer purge_preventer;
+  const auto emphasis_glyph_data = GetEmphasisMarkGlyphData(mark);
+  if (!emphasis_glyph_data.font_data)
+    return;
+
+  ShapeResultBloberizer bloberizer(*this, device_scale_factor);
+  bloberizer.FillTextEmphasisGlyphs(
+      text_info.text, text_info.direction, text_info.from, text_info.to,
+      emphasis_glyph_data, text_info.shape_result);
+  DrawBlobs(canvas, flags, bloberizer.Blobs(), point);
+}
+
 float Font::Width(const TextRun& run,
                   HashSet<const SimpleFontData*>* fallback_fonts,
                   FloatRect* glyph_bounds) const {
@@ -307,7 +325,7 @@ void Font::GetTextIntercepts(const TextRunPaintInfo& run_info,
   if (!num_intervals)
     return;
   DCHECK_EQ(num_intervals % 2, 0);
-  intercepts.Resize(num_intervals / 2);
+  intercepts.resize(num_intervals / 2);
 
   GetInterceptsFromBlobs(blobs, paint, bounds,
                          reinterpret_cast<SkScalar*>(intercepts.data()));

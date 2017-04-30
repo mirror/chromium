@@ -484,8 +484,6 @@ void LayoutBlockFlow::UpdateBlockLayout(bool relayout_children) {
 
   descendants_with_floats_marked_for_layout_ = false;
 
-  UpdateLayerTransformAfterLayout();
-
   UpdateAfterLayout();
 
   if (isHTMLDialogElement(GetNode()) && IsOutOfFlowPositioned())
@@ -689,8 +687,10 @@ void LayoutBlockFlow::MarkDescendantsWithFloatsForLayoutIfNeeded(
   } else if (!child.AvoidsFloats() || child.ShrinkToAvoidFloats()) {
     // If an element might be affected by the presence of floats, then always
     // mark it for layout.
-    if (std::max(previous_float_logical_bottom, LowestFloatLogicalBottom()) >
-        new_logical_top)
+    LayoutUnit lowest_float =
+        std::max(previous_float_logical_bottom, LowestFloatLogicalBottom());
+    lowest_float = std::max(lowest_float, child.LowestFloatLogicalBottom());
+    if (lowest_float > new_logical_top)
       mark_descendants_with_floats = true;
   }
 
@@ -4647,12 +4647,12 @@ void LayoutBlockFlow::AddOutlineRects(
         include_block_overflows);
 }
 
-PaintInvalidationReason LayoutBlockFlow::InvalidatePaintIfNeeded(
+PaintInvalidationReason LayoutBlockFlow::InvalidatePaint(
     const PaintInvalidationState& paint_invalidation_state) {
   if (ContainsFloats())
     paint_invalidation_state.PaintingLayer().SetNeedsPaintPhaseFloat();
 
-  return LayoutBlock::InvalidatePaintIfNeeded(paint_invalidation_state);
+  return LayoutBlock::InvalidatePaint(paint_invalidation_state);
 }
 
 void LayoutBlockFlow::InvalidateDisplayItemClients(

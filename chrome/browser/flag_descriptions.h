@@ -709,12 +709,6 @@ extern const char kEnableTokenBindingName[];
 // 'Token Binding'.
 extern const char kEnableTokenBindingDescription[];
 
-// Title for the flag for gesture requiment for media playback
-extern const char kGestureRequirementForMediaPlaybackName[];
-
-// Description for the flag for gesture requiment for media playback
-extern const char kGestureRequirementForMediaPlaybackDescription[];
-
 // Description for the flag to adjust the default behaviour for document level
 // passive touch listeners.
 extern const char kPassiveDocumentEventListenersDescription[];
@@ -2803,6 +2797,14 @@ extern const char kBackgroundVideoTrackOptimizationName[];
 // Description of the flag for enabling optimizing background video playback.
 extern const char kBackgroundVideoTrackOptimizationDescription[];
 
+//  New remote playback pipeline experiment strings.
+
+// Name of the flag for enabling the new remote playback pipeline.
+extern const char kNewRemotePlaybackPipelineName[];
+
+// Description of the flag for enabling the new remote playback pipeline.
+extern const char kNewRemotePlaybackPipelineDescription[];
+
 //  Video fullscreen with orientation lock experiment strings.
 
 // Name of the flag for enabling orientation lock for fullscreen video playback.
@@ -2811,6 +2813,14 @@ extern const char kVideoFullscreenOrientationLockName[];
 // Description of the flag for enabling orientation lock for fullscreen video
 // playback.
 extern const char kVideoFullscreenOrientationLockDescription[];
+
+//  Video rotate-to-fullscreen experiment strings.
+
+// Name of the flag for enabling rotate-to-fullscreen for video playback.
+extern const char kVideoRotateToFullscreenName[];
+
+// Description of the flag for enabling rotate-to-fullscreen for video playback.
+extern const char kVideoRotateToFullscreenDescription[];
 
 //  Expensive background timer throttling flag
 
@@ -2900,12 +2910,6 @@ extern const char kMediaRemotingName[];
 
 // Desciption for the flag to enable Media Remoting
 extern const char kMediaRemotingDescription[];
-
-// Name for the flag to enable Media Remoting of encrypted content
-extern const char kMediaRemotingEncryptedName[];
-
-// Desciption for the flag to enable Media Remoting of encrypted content
-extern const char kMediaRemotingEncryptedDescription[];
 
 //  Chrome OS component updates chrome://flags strings
 
@@ -3020,20 +3024,11 @@ extern const char kOmniboxEntitySuggestionsDescription[];
 extern const char kPauseBackgroundTabsName[];
 extern const char kPauseBackgroundTabsDescription[];
 
-// Name of the flag to change the app menu icon.
-extern const char kAppMenuIconName[];
+// Name of the flag to enable the new app menu icon.
+extern const char kEnableNewAppMenuIconName[];
 
-// Description of the flag to change the app menu icon.
-extern const char kAppMenuIconDescription[];
-
-// Description of the app menu icon's old appearance.
-extern const char kAppMenuIconOldBehavior[];
-
-// Description of the app menu animated icon's persistent opened state.
-extern const char kAppMenuIconPersistentOpenedState[];
-
-// Description of the app menu animated icon's persistent closed state.
-extern const char kAppMenuIconPersistentClosedState[];
+// Description of the flag to enable the new app menu icon.
+extern const char kEnableNewAppMenuIconDescription[];
 
 #endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
         // defined(OS_WIN)
@@ -3319,6 +3314,14 @@ extern const char kAutoplayPolicyNoUserGestureRequired[];
 
 // Description of the autoplay policy that requires a user gesture.
 extern const char kAutoplayPolicyUserGestureRequired[];
+
+// Name of the about: flag for displaying the title of the omnibox match for
+// current URL.
+extern const char kOmniboxDisplayTitleForCurrentUrlName[];
+
+// Description of the about: flag for displaying the title of the omnibox match
+// for current URL.
+extern const char kOmniboxDisplayTitleForCurrentUrlDescription[];
 
 }  // namespace flag_descriptions
 

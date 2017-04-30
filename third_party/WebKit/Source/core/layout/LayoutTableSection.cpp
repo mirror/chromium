@@ -335,7 +335,7 @@ void LayoutTableSection::PopulateSpanningRowsHeightFromCell(
   spanning_rows_height.spanning_cell_height_ignoring_border_spacing =
       cell->LogicalHeightForRowSizing();
 
-  spanning_rows_height.row_height.Resize(row_span);
+  spanning_rows_height.row_height.resize(row_span);
   spanning_rows_height.total_rows_height = 0;
   for (unsigned row = 0; row < row_span; row++) {
     unsigned actual_row = row + row_index;
@@ -841,7 +841,7 @@ int LayoutTableSection::CalcRowLogicalHeight() {
   // layout state.
   LayoutState state(*this);
 
-  row_pos_.Resize(grid_.size() + 1);
+  row_pos_.resize(grid_.size() + 1);
 
   // We ignore the border-spacing on any non-top section as it is already
   // included in the previous section's last row position.
@@ -1167,7 +1167,7 @@ void LayoutTableSection::LayoutRows() {
           row_logical_height -= next_row_object->PaginationStrut();
       }
       row_layout_object->SetLogicalHeight(row_logical_height);
-      row_layout_object->UpdateLayerTransformAfterLayout();
+      row_layout_object->UpdateAfterLayout();
     }
   }
 
@@ -1807,7 +1807,7 @@ void LayoutTableSection::AppendEffectiveColumn(unsigned pos) {
   DCHECK(!needs_cell_recalc_);
 
   for (unsigned row = 0; row < grid_.size(); ++row)
-    grid_[row].row.Resize(pos + 1);
+    grid_[row].row.resize(pos + 1);
 }
 
 void LayoutTableSection::SplitEffectiveColumn(unsigned pos, unsigned first) {
@@ -2066,7 +2066,7 @@ void LayoutTableSection::AdjustRowForPagination(LayoutTableRow& row_object,
   if (!pagination_strut) {
     LayoutUnit page_logical_height =
         PageLogicalHeightForOffset(row_object.LogicalTop());
-    if (page_logical_height && Table()->Header() &&
+    if (page_logical_height && Table()->Header() && Table()->Header() != this &&
         Table()->RowOffsetFromRepeatingHeader()) {
       offset_from_top_of_page =
           page_logical_height -

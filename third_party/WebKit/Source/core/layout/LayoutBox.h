@@ -497,7 +497,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void ClearLayoutOverflow();
   void ClearAllOverflows() { overflow_.reset(); }
 
-  void UpdateLayerTransformAfterLayout();
+  virtual void UpdateAfterLayout();
 
   DISABLE_CFI_PERF LayoutUnit ContentWidth() const {
     // We're dealing with LayoutUnit and saturated arithmetic here, so we need
@@ -1469,9 +1469,9 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void ComputeSelfHitTestRects(Vector<LayoutRect>&,
                                const LayoutPoint& layer_offset) const override;
 
-  PaintInvalidationReason InvalidatePaintIfNeeded(
+  PaintInvalidationReason InvalidatePaint(
       const PaintInvalidationState&) override;
-  PaintInvalidationReason InvalidatePaintIfNeeded(
+  PaintInvalidationReason InvalidatePaint(
       const PaintInvalidatorContext&) const override;
 
   bool ColumnFlexItemHasStretchAlignment() const;

@@ -155,7 +155,6 @@
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
 #include "web/AnimationWorkletProxyClientImpl.h"
-#include "web/CompositionUnderlineVectorBuilder.h"
 #include "web/CompositorMutatorImpl.h"
 #include "web/CompositorWorkerProxyClientImpl.h"
 #include "web/ContextMenuAllowedScope.h"
@@ -284,6 +283,10 @@ WebViewImpl* WebViewImpl::Create(WebViewClient* client,
   return AdoptRef(new WebViewImpl(client, visibility_state)).LeakRef();
 }
 
+const WebInputEvent* WebViewBase::CurrentInputEvent() {
+  return WebViewImpl::CurrentInputEvent();
+}
+
 void WebView::SetUseExternalPopupMenus(bool use_external_popup_menus) {
   g_should_use_external_popup_menus = use_external_popup_menus;
 }
@@ -306,7 +309,7 @@ void WebView::DidExitModalLoop() {
 }
 
 void WebViewImpl::SetMainFrame(WebFrame* frame) {
-  frame->ToImplBase()->InitializeCoreFrame(*GetPage(), 0, g_null_atom);
+  WebFrame::InitializeCoreFrame(*frame, *GetPage());
 }
 
 void WebViewImpl::SetCredentialManagerClient(
@@ -1658,6 +1661,11 @@ WebInputEventResult WebViewImpl::SendContextMenuEvent(
         .SendContextMenuEventForKey(nullptr);
   }
 }
+#else
+WebInputEventResult WebViewImpl::SendContextMenuEvent(
+    const WebKeyboardEvent& event) {
+  return WebInputEventResult::kNotHandled;
+}
 #endif
 
 void WebViewImpl::ShowContextMenuAtPoint(float x,
@@ -2680,7 +2688,7 @@ void WebViewImpl::FocusDocumentView(WebFrame* frame) {
   // duplicate frameFocused updates from FocusController to the browser
   // process, which already knows the latest focused frame.
   GetPage()->GetFocusController().FocusDocumentView(
-      frame->ToImplBase()->GetFrame(), false /* notifyEmbedder */);
+      WebFrame::ToCoreFrame(*frame), false /* notifyEmbedder */);
 }
 
 void WebViewImpl::SetInitialFocus(bool reverse) {

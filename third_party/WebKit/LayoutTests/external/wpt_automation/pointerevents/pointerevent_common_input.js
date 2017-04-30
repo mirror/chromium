@@ -97,10 +97,13 @@ function mouseChordedButtonPress(targetSelector) {
   });
 }
 
-function mouseClickInTarget(targetSelector, targetFrame) {
+function mouseClickInTarget(targetSelector, targetFrame, button) {
   var targetDocument = document;
   var frameLeft = 0;
   var frameTop = 0;
+  if (button === undefined) {
+    button = 'left';
+  }
   if (targetFrame !== undefined) {
     targetDocument = targetFrame.contentDocument;
     var frameRect = targetFrame.getBoundingClientRect();
@@ -119,8 +122,8 @@ function mouseClickInTarget(targetSelector, targetFrame) {
             source: 'mouse',
             actions: [
               {name: 'pointerMove', x: xPosition, y: yPosition},
-              {name: 'pointerDown', x: xPosition, y: yPosition},
-              {name: 'pointerUp'}
+              {name: 'pointerDown', x: xPosition, y: yPosition, button: button},
+              {name: 'pointerUp', button: button}
             ]
           }],
           resolve);
@@ -130,9 +133,12 @@ function mouseClickInTarget(targetSelector, targetFrame) {
   });
 }
 
-function mouseDragInTargets(targetSelectorList) {
+function mouseDragInTargets(targetSelectorList, button) {
   return new Promise(function(resolve, reject) {
     if (window.chrome && chrome.gpuBenchmarking) {
+      if (button === undefined) {
+        button = 'left';
+      }
       scrollPageIfNeeded(targetSelectorList[0], document);
       var target = document.querySelector(targetSelectorList[0]);
       var targetRect = target.getBoundingClientRect();
@@ -142,7 +148,7 @@ function mouseDragInTargets(targetSelectorList) {
       var pointerAction = pointerActions[0];
       pointerAction.actions = [];
       pointerAction.actions.push(
-          {name: 'pointerDown', x: xPosition, y: yPosition});
+          {name: 'pointerDown', x: xPosition, y: yPosition, button: button});
       for (var i = 1; i < targetSelectorList.length; i++) {
         scrollPageIfNeeded(targetSelectorList[i], document);
         target = document.querySelector(targetSelectorList[i]);
@@ -150,9 +156,9 @@ function mouseDragInTargets(targetSelectorList) {
         xPosition = targetRect.left + boundaryOffset;
         yPosition = targetRect.top + boundaryOffset;
         pointerAction.actions.push(
-            {name: 'pointerMove', x: xPosition, y: yPosition});
+            {name: 'pointerMove', x: xPosition, y: yPosition, button: button});
       }
-      pointerAction.actions.push({name: 'pointerUp'});
+      pointerAction.actions.push({name: 'pointerUp', button: button});
       chrome.gpuBenchmarking.pointerActionSequence(pointerActions, resolve);
     } else {
       reject();

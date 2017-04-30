@@ -1707,7 +1707,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   virtual LayoutRect ViewRect() const;
 
   // New version to replace the above old version.
-  virtual PaintInvalidationReason InvalidatePaintIfNeeded(
+  virtual PaintInvalidationReason InvalidatePaint(
       const PaintInvalidatorContext&) const;
 
   // When this object is invalidated for paint, this method is called to
@@ -1810,7 +1810,9 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     // The following non-const functions for ObjectPaintProperties should only
     // be called from PaintPropertyTreeBuilder.
     ObjectPaintProperties& EnsurePaintProperties() {
-      return layout_object_.EnsureRarePaintData().EnsurePaintProperties();
+      return layout_object_.EnsureRarePaintData()
+          .EnsureFragment()
+          .EnsurePaintProperties();
     }
     ObjectPaintProperties* PaintProperties() {
       if (auto* paint_data = layout_object_.GetRarePaintData())
@@ -1818,8 +1820,10 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
       return nullptr;
     }
     void ClearPaintProperties() {
-      if (auto* paint_data = layout_object_.GetRarePaintData())
-        paint_data->ClearPaintProperties();
+      if (auto* paint_data = layout_object_.GetRarePaintData()) {
+        if (auto* fragment = paint_data->Fragment())
+          fragment->ClearPaintProperties();
+      }
     }
 
     // The following non-const functions for local border box properties should
@@ -1995,8 +1999,6 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   };
   virtual bool IsOfType(LayoutObjectType type) const { return false; }
 
-  inline bool LayerCreationAllowedForSubtree() const;
-
   // Overrides should call the superclass at the end. m_style will be 0 the
   // first time this function will be called.
   virtual void StyleWillChange(StyleDifference, const ComputedStyle& new_style);
@@ -2081,7 +2083,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // This function generates the invalidation for this object only.
   // It doesn't recurse into other object, as this is handled by
   // invalidatePaintOfSubtreesIfNeeded.
-  virtual PaintInvalidationReason InvalidatePaintIfNeeded(
+  virtual PaintInvalidationReason InvalidatePaint(
       const PaintInvalidationState&);
 
   void SetIsBackgroundAttachmentFixedObject(bool);
@@ -2734,17 +2736,6 @@ inline bool LayoutObject::PreservesNewline() const {
     return false;
 
   return Style()->PreserveNewline();
-}
-
-inline bool LayoutObject::LayerCreationAllowedForSubtree() const {
-  LayoutObject* parent_layout_object = Parent();
-  while (parent_layout_object) {
-    if (parent_layout_object->IsSVGHiddenContainer())
-      return false;
-    parent_layout_object = parent_layout_object->Parent();
-  }
-
-  return true;
 }
 
 inline void LayoutObject::SetSelectionStateIfNeeded(SelectionState state) {

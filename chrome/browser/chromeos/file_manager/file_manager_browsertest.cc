@@ -6,6 +6,7 @@
 
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_restrictions.h"
 #include "chrome/browser/chromeos/drive/file_system_util.h"
 #include "chrome/browser/chromeos/file_manager/file_manager_browsertest_base.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -129,22 +130,15 @@ WRAPPED_INSTANTIATE_TEST_CASE_P(
                       TestParameter(NOT_IN_GUEST_MODE, "imageOpenDownloads"),
                       TestParameter(NOT_IN_GUEST_MODE, "imageOpenDrive")));
 
-#if defined(DISABLE_SLOW_FILESAPP_TESTS) || defined(OFFICIAL_BUILD)
-#define MAYBE_CreateNewFolder DISABLED_CreateNewFolder
-#else
-#define MAYBE_CreateNewFolder CreateNewFolder
-#endif
+// Flaky: crbug.com/715963
 WRAPPED_INSTANTIATE_TEST_CASE_P(
-    MAYBE_CreateNewFolder,
+    DISABLED_CreateNewFolder,
     FileManagerBrowserTest,
-    ::testing::Values(TestParameter(NOT_IN_GUEST_MODE,
-                                    "createNewFolderAfterSelectFile"),
-                      TestParameter(IN_GUEST_MODE,
-                                    "createNewFolderDownloads"),
-                      TestParameter(NOT_IN_GUEST_MODE,
-                                    "createNewFolderDownloads"),
-                      TestParameter(NOT_IN_GUEST_MODE,
-                                    "createNewFolderDrive")));
+    ::testing::Values(
+        TestParameter(NOT_IN_GUEST_MODE, "createNewFolderAfterSelectFile"),
+        TestParameter(IN_GUEST_MODE, "createNewFolderDownloads"),
+        TestParameter(NOT_IN_GUEST_MODE, "createNewFolderDownloads"),
+        TestParameter(NOT_IN_GUEST_MODE, "createNewFolderDrive")));
 
 // Fails on official build. http://crbug.com/429294
 #if defined(DISABLE_SLOW_FILESAPP_TESTS) || defined(OFFICIAL_BUILD)
@@ -631,6 +625,7 @@ class MultiProfileFileManagerBrowserTest : public FileManagerBrowserTestBase {
 
   // Adds a new user for testing to the current session.
   void AddUser(const TestAccountInfo& info, bool log_in) {
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     const AccountId account_id(AccountId::FromUserEmail(info.email));
     if (log_in) {
       session_manager::SessionManager::Get()->CreateSession(account_id,
@@ -677,19 +672,20 @@ IN_PROC_BROWSER_TEST_F(MultiProfileFileManagerBrowserTest,
   StartTest();
 }
 
-// Fails on official build. http://crbug.com/429294
-#if defined(DISABLE_SLOW_FILESAPP_TESTS) || defined(OFFICIAL_BUILD)
-#define MAYBE_PRE_BasicDrive DISABLED_PRE_BasicDrive
-#define MAYBE_BasicDrive DISABLED_BasicDrive
-#else
-#define MAYBE_PRE_BasicDrive PRE_BasicDrive
-#define MAYBE_BasicDrive BasicDrive
-#endif
+// Flaky: crbug.com/715961.
+// Previously it was disabled via DISABLE_SLOW_FILESAPP_TESTS and in
+// OFFICIAL_BUILD, see http://crbug.com/429294.
 IN_PROC_BROWSER_TEST_F(MultiProfileFileManagerBrowserTest,
-                       MAYBE_PRE_BasicDrive) {
+                       DISABLED_PRE_BasicDrive) {
   AddAllUsers();
 }
 
+// Fails on official build. http://crbug.com/429294
+#if defined(DISABLE_SLOW_FILESAPP_TESTS) || defined(OFFICIAL_BUILD)
+#define MAYBE_BasicDrive DISABLED_BasicDrive
+#else
+#define MAYBE_BasicDrive BasicDrive
+#endif
 IN_PROC_BROWSER_TEST_F(MultiProfileFileManagerBrowserTest, MAYBE_BasicDrive) {
   AddAllUsers();
 

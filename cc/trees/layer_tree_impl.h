@@ -293,7 +293,7 @@ class CC_EXPORT LayerTreeImpl {
 
   void set_ui_resource_request_queue(UIResourceRequestQueue queue);
 
-  const LayerImplList& RenderSurfaceLayerList() const;
+  const RenderSurfaceList& GetRenderSurfaceList() const;
   const Region& UnoccludedScreenSpaceRegion() const;
 
   // These return the size of the root scrollable area and the size of
@@ -464,6 +464,7 @@ class CC_EXPORT LayerTreeImpl {
   void ClearLayerList();
 
   void BuildLayerListForTesting();
+  void HandleScrollbarShowRequestsFromMain();
 
   void InvalidateRegionForImages(const ImageIdFlatSet& images_to_invalidate);
 
@@ -476,7 +477,6 @@ class CC_EXPORT LayerTreeImpl {
                                 float max_page_scale_factor);
   bool IsViewportLayerId(int id) const;
   void UpdateScrollbars(int scroll_layer_id, int clip_layer_id);
-  void ShowScrollbars();
   void DidUpdatePageScale();
   void PushBrowserControls(const float* top_controls_shown_ratio);
   bool ClampBrowserControlsShownRatio();
@@ -542,9 +542,9 @@ class CC_EXPORT LayerTreeImpl {
   std::vector<PictureLayerImpl*> picture_layers_;
   LayerImplList surface_layers_;
 
-  // List of visible layers for the most recently prepared frame.
-  LayerImplList render_surface_layer_list_;
-  // After drawing the |render_surface_layer_list_| the areas in this region
+  // List of render surfaces for the most recently prepared frame.
+  RenderSurfaceList render_surface_list_;
+  // After drawing the |render_surface_list_| the areas in this region
   // would not be fully covered by opaque content.
   Region unoccluded_screen_space_region_;
 

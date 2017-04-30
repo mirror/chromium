@@ -51,7 +51,6 @@ class CC_EXPORT LayerTreeSettings {
   };
   ScrollbarAnimator scrollbar_animator = NO_ANIMATOR;
   base::TimeDelta scrollbar_fade_delay;
-  base::TimeDelta scrollbar_fade_out_resize_delay;
   base::TimeDelta scrollbar_fade_duration;
   base::TimeDelta scrollbar_thinning_duration;
   SkColor solid_color_scrollbar_color = SK_ColorWHITE;
@@ -80,11 +79,6 @@ class CC_EXPORT LayerTreeSettings {
   bool ignore_root_layer_flings = false;
   size_t scheduled_raster_task_limit = 32;
   bool use_occlusion_for_tile_prioritization = false;
-
-  // TODO(khushalsagar): Enable for all client and remove this flag if possible.
-  // See crbug/com/696864.
-  bool image_decode_tasks_enabled = false;
-
   bool use_layer_lists = false;
   int max_staging_buffer_usage_in_bytes = 32 * 1024 * 1024;
   ManagedMemoryPolicy gpu_memory_policy;

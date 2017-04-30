@@ -129,6 +129,7 @@ Polymer({
       value: {
         CELLULAR: CrOnc.Type.CELLULAR,
         ETHERNET: CrOnc.Type.ETHERNET,
+        TETHER: CrOnc.Type.TETHER,
         VPN: CrOnc.Type.VPN,
         WIFI: CrOnc.Type.WI_FI,
         WIMAX: CrOnc.Type.WI_MAX,
@@ -143,6 +144,9 @@ Polymer({
    * @private
    */
   networksChangedListener_: null,
+
+  /** @private {boolean} */
+  didSetFocus_: false,
 
   /**
    * settings.RouteObserverBehavior
@@ -180,6 +184,7 @@ Polymer({
       ConnectionState: CrOnc.ConnectionState.NOT_CONNECTED,
       Name: {Active: name},
     };
+    this.didSetFocus_ = false;
     this.getNetworkDetails_();
   },
 
@@ -216,6 +221,16 @@ Polymer({
 
     // Update the detail page title.
     this.parentNode.pageTitle = CrOnc.getNetworkName(this.networkProperties);
+
+    // Focus a button once the initial state is set.
+    if (!this.didSetFocus_) {
+      this.didSetFocus_ = true;
+      var button = this.$$('#buttonDiv .primary-button:not([hidden])');
+      if (!button)
+        button = this.$$('#buttonDiv .secondary-button:not([hidden])');
+      assert(button);  // At least one button will always be visible.
+      button.focus();
+    }
   },
 
   /** @private */
@@ -549,7 +564,8 @@ Polymer({
     this.networkingPrivate.startActivate(this.guid);
   },
 
-  /** @const {string} */ CR_EXPAND_BUTTON_TAG: 'CR-EXPAND-BUTTON',
+  /** @const {string} */
+  CR_EXPAND_BUTTON_TAG: 'CR-EXPAND-BUTTON',
 
   /**
    * @param {Event} event
@@ -786,6 +802,10 @@ Polymer({
       fields.push(
           'Cellular.ActivationState', 'Cellular.RoamingState',
           'RestrictedConnectivity', 'Cellular.ServingOperator.Name');
+    } else if (type == CrOnc.Type.TETHER && !!this.networkProperties.Tether) {
+      fields.push(
+          'Tether.BatteryPercentage', 'Tether.SignalStrength',
+          'Tether.Carrier');
     } else if (type == CrOnc.Type.VPN && !!this.networkProperties.VPN) {
       var vpnType = CrOnc.getActiveValue(this.networkProperties.VPN.Type);
       if (vpnType == 'ThirdPartyVPN') {

@@ -163,7 +163,7 @@ DEFINE_SCOPED_UMA_HISTOGRAM_TIMER(PendingTreeDurationHistogramTimer,
                                   "Scheduling.%s.PendingTreeDuration");
 
 LayerTreeHostImpl::FrameData::FrameData()
-    : render_surface_layer_list(nullptr),
+    : render_surface_list(nullptr),
       has_no_damage(false),
       may_contain_video(false) {}
 
@@ -324,15 +324,6 @@ void LayerTreeHostImpl::BeginMainFrameAborted(
 void LayerTreeHostImpl::BeginCommit() {
   TRACE_EVENT0("cc", "LayerTreeHostImpl::BeginCommit");
 
-  // Ensure all textures are returned so partial texture updates can happen
-  // during the commit.
-  // TODO(ericrk): We should not need to ForceReclaimResources when using
-  // Impl-side-painting as it doesn't upload during commits. However,
-  // Display::Draw currently relies on resource being reclaimed to block drawing
-  // between BeginCommit / Swap. See crbug.com/489515.
-  if (compositor_frame_sink_)
-    compositor_frame_sink_->ForceReclaimResources();
-
   if (!CommitToActiveTree())
     CreatePendingTree();
 }
@@ -349,6 +340,8 @@ void LayerTreeHostImpl::UpdateSyncTreeAfterCommitOrImplSideInvalidation() {
       tile_manager_.TakeImagesToInvalidateOnSyncTree());
 
   if (CommitToActiveTree()) {
+    active_tree_->HandleScrollbarShowRequestsFromMain();
+
     // We have to activate animations here or "IsActive()" is true on the layers
     // but the animations aren't activated yet so they get ignored by
     // UpdateDrawProperties.
@@ -789,7 +782,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   // the root damage rect. The root damage rect is then used to scissor each
   // surface.
   DamageTracker::UpdateDamageTracking(active_tree_.get(),
-                                      active_tree_->RenderSurfaceLayerList());
+                                      active_tree_->GetRenderSurfaceList());
 
   // If the root render surface has no visible damage, then don't generate a
   // frame at all.
@@ -797,11 +790,11 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   bool root_surface_has_no_visible_damage =
       !root_surface->GetDamageRect().Intersects(root_surface->content_rect());
   bool root_surface_has_contributing_layers =
-      !root_surface->layer_list().empty();
+      !!root_surface->num_contributors();
   bool hud_wants_to_draw_ = active_tree_->hud_layer() &&
                             active_tree_->hud_layer()->IsAnimatingHUDContents();
-  bool resources_must_be_resent =
-      compositor_frame_sink_->capabilities().can_force_reclaim_resources;
+  bool must_always_swap =
+      compositor_frame_sink_->capabilities().must_always_swap;
   // When touch handle visibility changes there is no visible damage
   // because touch handles are composited in the browser. However we
   // still want the browser to be notified that the handles changed
@@ -812,8 +805,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   if (root_surface_has_contributing_layers &&
       root_surface_has_no_visible_damage &&
       !active_tree_->property_trees()->effect_tree.HasCopyRequests() &&
-      !resources_must_be_resent && !hud_wants_to_draw_ &&
-      !handle_visibility_changed) {
+      !must_always_swap && !hud_wants_to_draw_ && !handle_visibility_changed) {
     TRACE_EVENT0("cc",
                  "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
     frame->has_no_damage = true;
@@ -821,25 +813,22 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
     return DRAW_SUCCESS;
   }
 
-  TRACE_EVENT_BEGIN2(
-      "cc", "LayerTreeHostImpl::CalculateRenderPasses",
-      "render_surface_layer_list.size()",
-      static_cast<uint64_t>(frame->render_surface_layer_list->size()),
-      "RequiresHighResToDraw", RequiresHighResToDraw());
+  TRACE_EVENT_BEGIN2("cc", "LayerTreeHostImpl::CalculateRenderPasses",
+                     "render_surface_list.size()",
+                     static_cast<uint64_t>(frame->render_surface_list->size()),
+                     "RequiresHighResToDraw", RequiresHighResToDraw());
 
   // Create the render passes in dependency order.
-  size_t render_surface_layer_list_size =
-      frame->render_surface_layer_list->size();
-  for (size_t i = 0; i < render_surface_layer_list_size; ++i) {
-    size_t surface_index = render_surface_layer_list_size - 1 - i;
-    LayerImpl* render_surface_layer =
-        (*frame->render_surface_layer_list)[surface_index];
+  size_t render_surface_list_size = frame->render_surface_list->size();
+  for (size_t i = 0; i < render_surface_list_size; ++i) {
+    size_t surface_index = render_surface_list_size - 1 - i;
     RenderSurfaceImpl* render_surface =
-        render_surface_layer->GetRenderSurface();
+        (*frame->render_surface_list)[surface_index];
 
+    bool is_root_surface =
+        render_surface->EffectTreeIndex() == EffectTree::kContentsRootNodeId;
     bool should_draw_into_render_pass =
-        active_tree_->IsRootLayer(render_surface_layer) ||
-        render_surface->contributes_to_drawn_surface() ||
+        is_root_surface || render_surface->contributes_to_drawn_surface() ||
         render_surface->HasCopyRequest();
     if (should_draw_into_render_pass)
       frame->render_passes.push_back(render_surface->CreateRenderPass());
@@ -1123,7 +1112,7 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
   // they appear as part of the current frame being drawn.
   tile_manager_.Flush();
 
-  frame->render_surface_layer_list = &active_tree_->RenderSurfaceLayerList();
+  frame->render_surface_list = &active_tree_->GetRenderSurfaceList();
   frame->render_passes.clear();
   frame->will_draw_layers.clear();
   frame->has_no_damage = false;
@@ -1669,8 +1658,8 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
 
   if (debug_state_.ShowHudRects()) {
     debug_rect_history_->SaveDebugRectsForCurrentFrame(
-        active_tree(), active_tree_->hud_layer(),
-        *frame->render_surface_layer_list, debug_state_);
+        active_tree(), active_tree_->hud_layer(), *frame->render_surface_list,
+        debug_state_);
   }
 
   bool is_new_trace;
@@ -1754,8 +1743,8 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
   // are noted as they occur.
   // TODO(boliu): If we did a temporary software renderer frame, propogate the
   // damage forward to the next frame.
-  for (size_t i = 0; i < frame->render_surface_layer_list->size(); i++) {
-    auto* surface = (*frame->render_surface_layer_list)[i]->GetRenderSurface();
+  for (size_t i = 0; i < frame->render_surface_list->size(); i++) {
+    auto* surface = (*frame->render_surface_list)[i];
     surface->damage_tracker()->DidDrawDamagedArea();
   }
   active_tree_->ResetAllChangeTracking();
@@ -3293,8 +3282,9 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
 
   DistributeScrollDelta(scroll_state);
 
-  active_tree_->SetCurrentlyScrollingNode(
-      scroll_state->current_native_scrolling_node());
+  ScrollNode* current_scrolling_node =
+      scroll_state->current_native_scrolling_node();
+  active_tree_->SetCurrentlyScrollingNode(current_scrolling_node);
   did_lock_scrolling_layer_ =
       scroll_state->delta_consumed_for_scroll_sequence();
 
@@ -3302,6 +3292,8 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
   bool did_scroll_y = scroll_state->caused_scroll_y();
   bool did_scroll_content = did_scroll_x || did_scroll_y;
   if (did_scroll_content) {
+    ShowScrollbarsForImplScroll(current_scrolling_node->element_id);
+
     // If we are scrolling with an active scroll handler, forward latency
     // tracking information to the main thread so the delay introduced by the
     // handler is accounted for.
@@ -3362,6 +3354,7 @@ void LayerTreeHostImpl::SetSynchronousInputHandlerRootScrollOffset(
   if (!changed)
     return;
 
+  ShowScrollbarsForImplScroll(OuterViewportScrollLayer()->element_id());
   client_->SetNeedsCommitOnImplThread();
   // After applying the synchronous input handler's scroll offset, tell it what
   // we ended up with.
@@ -4163,6 +4156,7 @@ void LayerTreeHostImpl::SetElementScrollOffsetMutated(
     const gfx::ScrollOffset& scroll_offset) {
   if (list_type == ElementListType::ACTIVE) {
     SetTreeLayerScrollOffsetMutated(element_id, active_tree(), scroll_offset);
+    ShowScrollbarsForImplScroll(element_id);
   } else {
     SetTreeLayerScrollOffsetMutated(element_id, pending_tree(), scroll_offset);
     SetTreeLayerScrollOffsetMutated(element_id, recycle_tree(), scroll_offset);
@@ -4313,6 +4307,14 @@ void LayerTreeHostImpl::UpdateScrollSourceInfo(bool is_wheel_scroll) {
     has_scrolled_by_wheel_ = true;
   else
     has_scrolled_by_touch_ = true;
+}
+
+void LayerTreeHostImpl::ShowScrollbarsForImplScroll(ElementId element_id) {
+  if (!element_id)
+    return;
+  if (ScrollbarAnimationController* animation_controller =
+          ScrollbarAnimationControllerForElementId(element_id))
+    animation_controller->DidScrollUpdate();
 }
 
 }  // namespace cc

@@ -163,6 +163,7 @@
           './main_window_component.js',
           './volume_manager_wrapper.js',
           './web_store_utils.js',
+          './webui_command_extender.js',
           './metadata/byte_reader.js',
         ],
         'externs': [
@@ -178,6 +179,7 @@
           '../../../externs/chrome_echo_private.js',
           '../../../externs/chrome_test.js',
           '../../../externs/chrome_webstore_widget_private.js',
+          '../../../externs/command_handler_deps.js',
           '../../../externs/connection.js',
           '../../../externs/css_rule.js',
           '../../../externs/directory_change_event.js',

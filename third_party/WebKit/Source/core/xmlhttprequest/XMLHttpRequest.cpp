@@ -117,7 +117,7 @@ void ReplaceCharsetInMediaType(String& media_type,
   // Found at least one existing charset, replace all occurrences with new
   // charset.
   while (len) {
-    media_type.Replace(pos, len, charset_value);
+    media_type.replace(pos, len, charset_value);
     unsigned start = pos + charset_value.length();
     FindCharsetInMediaType(media_type, pos, len, start);
   }
@@ -916,10 +916,10 @@ void XMLHttpRequest::ThrowForLoadFailureIfNeeded(
 
   String message = "Failed to load '" + url_.ElidedString() + "'";
   if (reason.IsNull()) {
-    message.Append('.');
+    message.append('.');
   } else {
-    message.Append(": ");
-    message.Append(reason);
+    message.append(": ");
+    message.append(reason);
   }
 
   exception_state.ThrowDOMException(exception_code_, message);
@@ -1638,7 +1638,7 @@ void XMLHttpRequest::NotifyParserStopped() {
 
   ClearVariablesForLoading();
 
-  response_document_->ImplicitClose();
+  response_document_->CheckCompleted();
 
   if (!response_document_->WellFormed())
     response_document_ = nullptr;

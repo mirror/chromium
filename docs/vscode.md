@@ -191,6 +191,17 @@ Remember to replace `<full_path_to_your_home>`!
     "out*/**": true
   },
 
+  "files.watcherExclude": {
+    // Don't watch out*/ and third_party/ for changes to fix an issue
+    // where vscode doesn't notice that files have changed.
+    // https://github.com/Microsoft/vscode/issues/3998
+    // There is currently another issue that requires a leading **/ for
+    // watcherExlude. Beware that this pattern might affect other out* folders
+    // like src/cc/output/.
+    "**/out*/**": true,
+    "**/third_party/**": true
+  },
+
   // Wider author column for annotator extension.
   "annotator.annotationColumnWidth": "24em",
 

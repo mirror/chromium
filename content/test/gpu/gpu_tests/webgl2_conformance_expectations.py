@@ -43,6 +43,7 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     # All platforms.
     self.Flaky('conformance2/query/occlusion-query.html', bug=603168)
     self.Fail('conformance2/glsl3/tricky-loop-conditions.html', bug=483282)
+    self.Fail('conformance2/textures/misc/tex-srgb-mipmap.html', bug=712096)
 
     # canvas.commit() promise synchronization isn't fully reliable yet.
     self.Fail('conformance/offscreencanvas/offscreencanvas-resize.html',
@@ -64,6 +65,8 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     # Windows only.
     self.Fail('conformance2/rendering/blitframebuffer-outside-readbuffer.html',
         ['win', 'd3d11'], bug=644740)
+    self.Fail('conformance2/textures/misc/tex-base-level-bug.html',
+        ['win', 'd3d11'], bug=705865)
     self.Fail('deqp/functional/gles3/sync.html', ['win', 'd3d11'], bug=676848)
 
     # Win / NVidia
@@ -107,8 +110,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('conformance2/rendering/framebuffer-texture-level1.html',
         ['win', 'nvidia', 'opengl'], bug=693090)
     self.Fail('conformance2/glsl3/vector-dynamic-indexing-nv-driver-bug.html',
-        ['win', 'nvidia', 'opengl'], bug=693090)
-    self.Fail('conformance2/textures/misc/tex-srgb-mipmap.html',
         ['win', 'nvidia', 'opengl'], bug=693090)
     self.Fail('conformance2/glsl3/' +
         'vector-dynamic-indexing-swizzled-lvalue.html',
@@ -217,6 +218,12 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
 
     # Mac only.
 
+    # Regressions in 10.12.4.
+    self.Fail('conformance2/textures/misc/tex-base-level-bug.html',
+        ['sierra'], bug=705865)
+    self.Fail('conformance2/textures/misc/tex-mipmap-levels.html',
+        ['sierra'], bug=705865)
+
     # Fails on all GPU types.
     self.Flaky('conformance/context/context-release-upon-reload.html',
         ['mac'], bug=713829)
@@ -249,8 +256,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['mac'], bug=1832) # khronos WebGL issue
 
     # Mac Retina NVIDIA
-    self.Fail('conformance/textures/misc/cube-map-uploads-out-of-order.html',
-        ['mac', ('nvidia', 0xfe9)], bug=473739)
     self.Fail('deqp/functional/gles3/fbomultisample*',
         ['mac', ('nvidia', 0xfe9)], bug=641209)
     self.Fail('deqp/functional/gles3/framebufferblit/' +
@@ -277,6 +282,8 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         'no-over-optimization-on-uniform-array-12.html',
         ['mac', ('nvidia', 0xfe9)], bug=684903)
 
+    self.Fail('deqp/functional/gles3/draw/random.html',
+        ['sierra', ('nvidia', 0xfe9)], bug=716652)
     self.Fail('deqp/functional/gles3/framebufferblit/conversion_04.html',
         ['mac', ('nvidia', 0xfe9)], bug=483282)
     self.Fail('deqp/functional/gles3/framebufferblit/conversion_07.html',
@@ -707,9 +714,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'amd', 'intel'], bug=662644) # WebGL 2.0.1
 
     # Linux NVIDIA
-    self.Fail('conformance2/textures/canvas_sub_rectangle/' +
-        'tex-2d-r32f-red-float.html',
-        ['linux', 'nvidia'], bug=713127)
     # Explicitly specifying GT 610 to avoid conflict with Quadro P400 rule
     self.Flaky('deqp/functional/gles3/multisample.html',
         ['linux', ('nvidia', 0x104a)], bug=714207)
@@ -722,15 +726,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'nvidia'], bug=672380)
     self.Fail('conformance2/glsl3/vector-dynamic-indexing-swizzled-lvalue.html',
         ['linux', 'nvidia'], bug=709351)
-    self.Fail('conformance2/textures/canvas_sub_rectangle/' +
-        'tex-2d-r11f_g11f_b10f-rgb-half_float.html',
-        ['linux', 'nvidia'], bug=694359)
-    self.Fail('conformance2/textures/canvas_sub_rectangle/' +
-        'tex-2d-rgb16f-rgb-half_float.html',
-        ['linux', 'nvidia'], bug=694359)
-    self.Flaky('conformance2/textures/canvas_sub_rectangle/' +
-        'tex-2d-rgb565-rgb-unsigned_byte.html',
-        ['linux', 'nvidia'], bug=694359)
     self.Fail('conformance2/textures/image_bitmap_from_canvas/' +
         'tex-3d-srgb8_alpha8-rgba-unsigned_byte.html',
         ['linux', 'nvidia'], bug=679677)
@@ -830,6 +825,15 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('conformance2/glsl3/' +
         'vector-dynamic-indexing-swizzled-lvalue.html',
         ['linux', 'intel'], bug=709874)
+
+    self.Fail('deqp/functional/gles3/texturefiltering/3d_formats_04.html',
+        ['linux', 'intel'], bug=715881)
+    self.Fail('deqp/functional/gles3/texturefiltering/3d_formats_05.html',
+        ['linux', 'intel'], bug=715881)
+    self.Fail('deqp/functional/gles3/texturefiltering/3d_formats_08.html',
+        ['linux', 'intel'], bug=715881)
+    self.Fail('deqp/functional/gles3/texturefiltering/3d_formats_09.html',
+        ['linux', 'intel'], bug=715881)
 
     # Linux AMD only.
     # It looks like AMD shader compiler rejects many valid ES3 semantics.

@@ -561,20 +561,6 @@ const FeatureEntry::Choice kAshForceTabletModeChoices[] = {
 };
 #endif  // OS_CHROMEOS
 
-#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
-    defined(OS_WIN)
-const FeatureEntry::Choice kAppMenuIconChoices[] = {
-    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kAppMenuIconOldBehavior, switches::kAppMenuIcon,
-     switches::kAppMenuIconOldBehavior},
-    {flag_descriptions::kAppMenuIconPersistentOpenedState,
-     switches::kAppMenuIcon, switches::kAppMenuIconPersistentOpenedState},
-    {flag_descriptions::kAppMenuIconPersistentClosedState,
-     switches::kAppMenuIcon, switches::kAppMenuIconPersistentClosedState},
-};
-#endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
-        // defined(OS_WIN)
-
 #if defined(OS_ANDROID)
 const FeatureEntry::FeatureParam
     kContentSuggestionsCategoryOrderFeatureVariationGeneral[] = {
@@ -1447,11 +1433,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"default-tile-height", flag_descriptions::kDefaultTileHeightName,
      flag_descriptions::kDefaultTileHeightDescription, kOsAll,
      MULTI_VALUE_TYPE(kDefaultTileHeightChoices)},
-    {"disable-gesture-requirement-for-media-playback",
-     flag_descriptions::kGestureRequirementForMediaPlaybackName,
-     flag_descriptions::kGestureRequirementForMediaPlaybackDescription, kOsAll,
-     SINGLE_DISABLE_VALUE_TYPE(
-         switches::kDisableGestureRequirementForMediaPlayback)},
 #if defined(OS_CHROMEOS)
     {"enable-virtual-keyboard", flag_descriptions::kVirtualKeyboardName,
      flag_descriptions::kVirtualKeyboardDescription, kOsCrOS,
@@ -2401,6 +2382,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kBackgroundVideoTrackOptimizationName,
      flag_descriptions::kBackgroundVideoTrackOptimizationDescription, kOsAll,
      FEATURE_VALUE_TYPE(media::kBackgroundVideoTrackOptimization)},
+    {"enable-new-remote-playback-pipeline",
+     flag_descriptions::kNewRemotePlaybackPipelineName,
+     flag_descriptions::kNewRemotePlaybackPipelineDescription, kOsAll,
+     FEATURE_VALUE_TYPE(media::kNewRemotePlaybackPipeline)},
 #if defined(OS_CHROMEOS)
     {"quick-unlock-pin", flag_descriptions::kQuickUnlockPin,
      flag_descriptions::kQuickUnlockPinDescription, kOsCrOS,
@@ -2505,15 +2490,16 @@ const FeatureEntry kFeatureEntries[] = {
     {"media-remoting", flag_descriptions::kMediaRemotingName,
      flag_descriptions::kMediaRemotingDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kMediaRemoting)},
-    {"media-remoting-encrypted", flag_descriptions::kMediaRemotingEncryptedName,
-     flag_descriptions::kMediaRemotingEncryptedDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(features::kMediaRemotingEncrypted)},
 #endif
 #if defined(OS_ANDROID)
     {"video-fullscreen-orientation-lock",
      flag_descriptions::kVideoFullscreenOrientationLockName,
      flag_descriptions::kVideoFullscreenOrientationLockDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(media::kVideoFullscreenOrientationLock)},
+    {"video-rotate-to-fullscreen",
+     flag_descriptions::kVideoRotateToFullscreenName,
+     flag_descriptions::kVideoRotateToFullscreenDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(media::kVideoRotateToFullscreen)},
 #endif
     {"enable-nostate-prefetch", flag_descriptions::kNostatePrefetch,
      flag_descriptions::kNostatePrefetchDescription, kOsAll,
@@ -2630,8 +2616,8 @@ const FeatureEntry kFeatureEntries[] = {
 
     {"enable-zero-suggest-redirect-to-chrome",
      flag_descriptions::kEnableZeroSuggestRedirectToChromeName,
-     flag_descriptions::kEnableZeroSuggestRedirectToChromeDescription,
-     kOsDesktop, FEATURE_VALUE_TYPE(omnibox::kZeroSuggestRedirectToChrome)},
+     flag_descriptions::kEnableZeroSuggestRedirectToChromeDescription, kOsAll,
+     FEATURE_VALUE_TYPE(omnibox::kZeroSuggestRedirectToChrome)},
     {"new-omnibox-answer-types", flag_descriptions::kNewOmniboxAnswerTypesName,
      flag_descriptions::kNewOmniboxAnswerTypesDescription, kOsAll,
      FEATURE_VALUE_TYPE(omnibox::kNewOmniboxAnswerTypes)},
@@ -2642,9 +2628,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kOmniboxEntitySuggestionsName,
      flag_descriptions::kOmniboxEntitySuggestionsDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(omnibox::kOmniboxEntitySuggestions)},
-    {"app-menu-icon", flag_descriptions::kAppMenuIconName,
-     flag_descriptions::kAppMenuIconDescription, kOsDesktop,
-     MULTI_VALUE_TYPE(kAppMenuIconChoices)},
+    {"enable-new-app-menu-icon", flag_descriptions::kEnableNewAppMenuIconName,
+     flag_descriptions::kEnableNewAppMenuIconDescription, kOsDesktop,
+     SINGLE_VALUE_TYPE(switches::kEnableNewAppMenuIcon)},
 #endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
         // defined(OS_WIN)
 
@@ -2734,6 +2720,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableCopylessPasteDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kCopylessPaste)},
 #endif
+
+    {"omnibox-display-title-for-current-url",
+     flag_descriptions::kOmniboxDisplayTitleForCurrentUrlName,
+     flag_descriptions::kOmniboxDisplayTitleForCurrentUrlDescription,
+     kOsDesktop, FEATURE_VALUE_TYPE(omnibox::kDisplayTitleForCurrentUrl)},
 
     {"enable-color-correct-rendering",
      flag_descriptions::kColorCorrectRenderingName,

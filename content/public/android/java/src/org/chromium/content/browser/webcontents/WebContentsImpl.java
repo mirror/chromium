@@ -20,6 +20,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.AppWebMessagePort;
 import org.chromium.content.browser.MediaSessionImpl;
+import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content.browser.framehost.RenderFrameHostDelegate;
 import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
 import org.chromium.content_public.browser.AccessibilitySnapshotNode;
@@ -33,7 +34,6 @@ import org.chromium.content_public.browser.SmartClipCallback;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.ui.OverscrollRefreshHandler;
-import org.chromium.ui.accessibility.AXTextStyle;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
 
@@ -106,7 +106,32 @@ import java.util.UUID;
     // the same life time as native MediaSession.
     private MediaSessionImpl mMediaSession;
 
-    private SmartClipCallback mSmartClipCallback;
+    class SmartClipCallbackImpl implements SmartClipCallback {
+        public SmartClipCallbackImpl(final Handler smartClipHandler) {
+            mHandler = smartClipHandler;
+        }
+        public void storeRequestRect(Rect rect) {
+            mRect = rect;
+        }
+
+        @Override
+        public void onSmartClipDataExtracted(String text, String html) {
+            Bundle bundle = new Bundle();
+            bundle.putString("url", getVisibleUrl());
+            bundle.putString("title", getTitle());
+            bundle.putString("text", text);
+            bundle.putString("html", html);
+            bundle.putParcelable("rect", mRect);
+
+            Message msg = Message.obtain(mHandler, 0);
+            msg.setData(bundle);
+            msg.sendToTarget();
+        }
+
+        Rect mRect;
+        final Handler mHandler;
+    }
+    private SmartClipCallbackImpl mSmartClipCallback;
 
     private EventForwarder mEventForwarder;
 
@@ -400,10 +425,14 @@ import java.util.UUID;
     }
 
     @Override
-    public void requestSmartClipExtract(int x, int y, int width, int height) {
+    public void requestSmartClipExtract(
+            int x, int y, int width, int height, RenderCoordinates coordinateSpace) {
         if (mSmartClipCallback == null) return;
-        nativeRequestSmartClipExtract(
-                mNativeWebContentsAndroid, mSmartClipCallback, x, y, width, height);
+        mSmartClipCallback.storeRequestRect(new Rect(x, y, x + width, y + height));
+        float dpi = coordinateSpace.getDeviceScaleFactor();
+        y -= coordinateSpace.getContentOffsetYPix();
+        nativeRequestSmartClipExtract(mNativeWebContentsAndroid, mSmartClipCallback,
+                (int) (x / dpi), (int) (y / dpi), (int) (width / dpi), (int) (height / dpi));
     }
 
     @Override
@@ -412,20 +441,7 @@ import java.util.UUID;
             mSmartClipCallback = null;
             return;
         }
-        mSmartClipCallback = new SmartClipCallback() {
-            @Override
-            public void onSmartClipDataExtracted(String text, String html) {
-                Bundle bundle = new Bundle();
-                bundle.putString("url", getVisibleUrl());
-                bundle.putString("title", getTitle());
-                bundle.putString("text", text);
-                bundle.putString("html", html);
-
-                Message msg = Message.obtain(smartClipHandler, 0);
-                msg.setData(bundle);
-                msg.sendToTarget();
-            }
-        };
+        mSmartClipCallback = new SmartClipCallbackImpl(smartClipHandler);
     }
 
     @CalledByNative
@@ -463,15 +479,12 @@ import java.util.UUID;
     @CalledByNative
     private static AccessibilitySnapshotNode createAccessibilitySnapshotNode(int parentRelativeLeft,
             int parentRelativeTop, int width, int height, boolean isRootNode, String text,
-            int color, int bgcolor, float size, int textStyle, String className) {
+            int color, int bgcolor, float size, boolean bold, boolean italic, boolean underline,
+            boolean lineThrough, String className) {
         AccessibilitySnapshotNode node = new AccessibilitySnapshotNode(text, className);
 
         // if size is smaller than 0, then style information does not exist.
         if (size >= 0.0) {
-            boolean bold = (textStyle & AXTextStyle.text_style_bold) > 0;
-            boolean italic = (textStyle & AXTextStyle.text_style_italic) > 0;
-            boolean underline = (textStyle & AXTextStyle.text_style_underline) > 0;
-            boolean lineThrough = (textStyle & AXTextStyle.text_style_line_through) > 0;
             node.setStyle(color, bgcolor, size, bold, italic, underline, lineThrough);
         }
         node.setLocationInfo(parentRelativeLeft, parentRelativeTop, width, height, isRootNode);

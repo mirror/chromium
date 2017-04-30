@@ -328,24 +328,6 @@ void LayoutObject::AddChild(LayoutObject* new_child,
   if (new_child->IsText() &&
       new_child->Style()->TextTransform() == ETextTransform::kCapitalize)
     ToLayoutText(new_child)->TransformText();
-
-  // SVG creates layoutObjects for <g display="none">, as SVG requires children
-  // of hidden <g>s to have layoutObjects - at least that's how our
-  // implementation works.
-  // Consider:
-  // <g display="none"><foreignObject><body style="position: relative">FOO...
-  // - layerTypeRequired() would return true for the <body>, creating a new
-  //   Layer
-  // - when the document is painted, both layers are painted. The <body> layer
-  //   doesn't know that it's inside a "hidden SVG subtree", and thus paints,
-  //   even if it shouldn't.
-  // To avoid the problem altogether, detect early if we're inside a hidden SVG
-  // subtree and stop creating layers at all for these cases - they're not used
-  // anyways.
-  if (new_child->HasLayer() && !LayerCreationAllowedForSubtree())
-    ToLayoutBoxModelObject(new_child)
-        ->Layer()
-        ->RemoveOnlyThisLayerAfterStyleChange();
 }
 
 void LayoutObject::RemoveChild(LayoutObject* old_child) {
@@ -1172,7 +1154,7 @@ void LayoutObject::InvalidateTreeIfNeeded(
   }
 
   PaintInvalidationReason reason =
-      InvalidatePaintIfNeeded(new_paint_invalidation_state);
+      InvalidatePaint(new_paint_invalidation_state);
   new_paint_invalidation_state.UpdateForChildren(reason);
   InvalidatePaintOfSubtreesIfNeeded(new_paint_invalidation_state);
 
@@ -1195,7 +1177,7 @@ LayoutRect LayoutObject::SelectionRectInViewCoordinates() const {
   return selection_rect;
 }
 
-PaintInvalidationReason LayoutObject::InvalidatePaintIfNeeded(
+PaintInvalidationReason LayoutObject::InvalidatePaint(
     const PaintInvalidationState& paint_invalidation_state) {
   DCHECK_EQ(&paint_invalidation_state.CurrentObject(), this);
 
@@ -1235,14 +1217,13 @@ PaintInvalidationReason LayoutObject::InvalidatePaintIfNeeded(
     return kPaintInvalidationNone;
   }
 
-  return InvalidatePaintIfNeeded(context);
+  return InvalidatePaint(context);
 }
 
 DISABLE_CFI_PERF
-PaintInvalidationReason LayoutObject::InvalidatePaintIfNeeded(
+PaintInvalidationReason LayoutObject::InvalidatePaint(
     const PaintInvalidatorContext& context) const {
-  return ObjectPaintInvalidatorWithContext(*this, context)
-      .InvalidatePaintIfNeeded();
+  return ObjectPaintInvalidatorWithContext(*this, context).InvalidatePaint();
 }
 
 void LayoutObject::AdjustVisualRectForCompositedScrolling(

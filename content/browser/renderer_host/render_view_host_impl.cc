@@ -440,8 +440,7 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
   // is disabled with a command-line switch or the equivalent field trial is
   // is set to "Enabled".
   prefs.user_gesture_required_for_media_playback =
-      !command_line.HasSwitch(
-          switches::kDisableGestureRequirementForMediaPlayback) &&
+      !command_line.HasSwitch(switches::kIgnoreAutoplayRestrictionsForTests) &&
       command_line.GetSwitchValueASCII(switches::kAutoplayPolicy) !=
           switches::autoplay::kNoUserGestureRequiredPolicy;
 
@@ -476,6 +475,9 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
 #if defined(OS_ANDROID)
   prefs.video_fullscreen_orientation_lock_enabled =
       base::FeatureList::IsEnabled(media::kVideoFullscreenOrientationLock) &&
+      ui::GetDeviceFormFactor() == ui::DEVICE_FORM_FACTOR_PHONE;
+  prefs.video_rotate_to_fullscreen_enabled =
+      base::FeatureList::IsEnabled(media::kVideoRotateToFullscreen) &&
       ui::GetDeviceFormFactor() == ui::DEVICE_FORM_FACTOR_PHONE;
 #endif
 

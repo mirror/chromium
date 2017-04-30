@@ -130,13 +130,13 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
-  void UpdateController();
-  void HandleControllerInput(const gfx::Vector3dF& forward_vector);
+  void UpdateController(const gfx::Vector3dF& head_direction);
+  void HandleControllerInput(const gfx::Vector3dF& head_direction);
   void HandleControllerAppButtonActivity(
       const gfx::Vector3dF& controller_direction);
-  void SendEventsToTarget(InputTarget input_target, int pixel_x, int pixel_y);
-  void SendGesture(InputTarget input_target,
-                   std::unique_ptr<blink::WebInputEvent> event);
+  void SendInputToContent(InputTarget input_target, int pixel_x, int pixel_y);
+  void SendInputToUiElements(UiElement* target_element);
+  void SendGestureToContent(std::unique_ptr<blink::WebInputEvent> event);
   void CreateUiSurface();
   void OnContentFrameAvailable();
   void OnWebVRFrameAvailable();
@@ -190,10 +190,17 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   vr::Quatf controller_quat_;
 
   gfx::Point3F target_point_;
-  const UiElement* target_element_ = nullptr;
+
+  // Input targeting for non-content elements.
+  UiElement* target_element_ = nullptr;
+  UiElement* previous_target_element_ = nullptr;
+  UiElement* click_target_element_ = nullptr;
+
+  // Input targeting for the content element.
   InputTarget current_input_target_ = InputTarget::NONE;
   InputTarget current_scroll_target_ = InputTarget::NONE;
   InputTarget current_fling_target_ = InputTarget::NONE;
+
   int content_tex_css_width_ = 0;
   int content_tex_css_height_ = 0;
   gfx::Size content_tex_physical_size_ = {0, 0};
@@ -231,6 +238,8 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   gfx::Vector3dF controller_start_direction_;
 
   std::unique_ptr<FPSMeter> fps_meter_;
+
+  gfx::Point3F pointer_start_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 

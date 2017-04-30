@@ -2850,7 +2850,6 @@ interface Headers
     method entries
     method forEach
     method get
-    method getAll
     method has
     method keys
     method set
@@ -3081,6 +3080,14 @@ interface InputDeviceCapabilities
     attribute @@toStringTag
     getter firesTouchEvents
     method constructor
+interface InputEvent : UIEvent
+    attribute @@toStringTag
+    getter data
+    getter dataTransfer
+    getter inputType
+    getter isComposing
+    method constructor
+    method getTargetRanges
 interface IntersectionObserver
     attribute @@toStringTag
     getter root
@@ -3602,26 +3609,6 @@ interface Node : EventTarget
     method replaceChild
     setter nodeValue
     setter textContent
-interface NodeFilter
-    attribute @@toStringTag
-    attribute FILTER_ACCEPT
-    attribute FILTER_REJECT
-    attribute FILTER_SKIP
-    attribute SHOW_ALL
-    attribute SHOW_ATTRIBUTE
-    attribute SHOW_CDATA_SECTION
-    attribute SHOW_COMMENT
-    attribute SHOW_DOCUMENT
-    attribute SHOW_DOCUMENT_FRAGMENT
-    attribute SHOW_DOCUMENT_TYPE
-    attribute SHOW_ELEMENT
-    attribute SHOW_ENTITY
-    attribute SHOW_ENTITY_REFERENCE
-    attribute SHOW_NOTATION
-    attribute SHOW_PROCESSING_INSTRUCTION
-    attribute SHOW_TEXT
-    method acceptNode
-    method constructor
 interface NodeIterator
     attribute @@toStringTag
     getter filter
@@ -5532,6 +5519,14 @@ interface SpeechSynthesisUtterance : EventTarget
     setter text
     setter voice
     setter volume
+interface StaticRange
+    attribute @@toStringTag
+    getter collapsed
+    getter endContainer
+    getter endOffset
+    getter startContainer
+    getter startOffset
+    method constructor
 interface StereoPannerNode : AudioNode
     attribute @@toStringTag
     getter pan
@@ -7665,6 +7660,7 @@ interface webkitURL
     getter styleMedia
     getter toolbar
     getter webkitStorageInfo
+    method NodeFilter
     method alert
     method atob
     method blur

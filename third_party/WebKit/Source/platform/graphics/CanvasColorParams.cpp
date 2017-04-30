@@ -14,14 +14,34 @@ CanvasColorParams::CanvasColorParams(CanvasColorSpace color_space,
                                      CanvasPixelFormat pixel_format)
     : color_space_(color_space), pixel_format_(pixel_format) {}
 
+void CanvasColorParams::SetCanvasColorSpace(CanvasColorSpace color_space) {
+  color_space_ = color_space;
+}
+
+void CanvasColorParams::SetCanvasPixelFormat(CanvasPixelFormat pixel_format) {
+  pixel_format_ = pixel_format;
+}
+
 bool CanvasColorParams::UsesOutputSpaceBlending() const {
   return color_space_ == kLegacyCanvasColorSpace;
 }
 
 sk_sp<SkColorSpace> CanvasColorParams::GetSkColorSpaceForSkSurfaces() const {
-  if (color_space_ == kLegacyCanvasColorSpace)
-    return nullptr;
-  return GetGfxColorSpace().ToSkColorSpace();
+  switch (color_space_) {
+    case kLegacyCanvasColorSpace:
+      return nullptr;
+    case kSRGBCanvasColorSpace:
+      if (pixel_format_ == kF16CanvasPixelFormat)
+        return SkColorSpace::MakeSRGBLinear();
+      return SkColorSpace::MakeSRGB();
+    case kRec2020CanvasColorSpace:
+      return SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                   SkColorSpace::kRec2020_Gamut);
+    case kP3CanvasColorSpace:
+      return SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                   SkColorSpace::kDCIP3_D65_Gamut);
+  }
+  return nullptr;
 }
 
 SkColorType CanvasColorParams::GetSkColorType() const {

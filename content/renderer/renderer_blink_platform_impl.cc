@@ -47,7 +47,6 @@
 #include "content/public/renderer/media_stream_utils.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/cache_storage/webserviceworkercachestorage_impl.h"
-#include "content/renderer/device_sensors/device_light_event_pump.h"
 #include "content/renderer/device_sensors/device_motion_event_pump.h"
 #include "content/renderer/device_sensors/device_orientation_event_pump.h"
 #include "content/renderer/dom_storage/local_storage_cached_areas.h"
@@ -89,7 +88,6 @@
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebAudioLatencyHint.h"
 #include "third_party/WebKit/public/platform/WebBlobRegistry.h"
-#include "third_party/WebKit/public/platform/WebDeviceLightListener.h"
 #include "third_party/WebKit/public/platform/WebFileInfo.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamCenter.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamCenterClient.h"
@@ -171,7 +169,6 @@ namespace content {
 namespace {
 
 bool g_sandbox_enabled = true;
-double g_test_device_light_data = -1;
 base::LazyInstance<device::MotionData>::Leaky g_test_device_motion_data =
     LAZY_INSTANCE_INITIALIZER;
 base::LazyInstance<device::OrientationData>::Leaky
@@ -549,8 +546,7 @@ bool RendererBlinkPlatformImpl::SandboxSupport::LoadFont(NSFont* src_font,
     return false;
   }
 
-  if (font_data_size == 0 || font_data == base::SharedMemory::NULLHandle() ||
-      *font_id == 0) {
+  if (font_data_size == 0 || !font_data.IsValid() || *font_id == 0) {
     LOG(ERROR) << "Bad response from RenderProcessHostMsg_LoadFont() for " <<
         src_font_descriptor.font_name;
     *out = NULL;
@@ -1117,13 +1113,6 @@ void RendererBlinkPlatformImpl::RecordRapporURL(const char* metric,
 //------------------------------------------------------------------------------
 
 // static
-void RendererBlinkPlatformImpl::SetMockDeviceLightDataForTesting(double data) {
-  g_test_device_light_data = data;
-}
-
-//------------------------------------------------------------------------------
-
-// static
 void RendererBlinkPlatformImpl::SetMockDeviceMotionDataForTesting(
     const device::MotionData& data) {
   g_test_device_motion_data.Get() = data;
@@ -1158,8 +1147,6 @@ RendererBlinkPlatformImpl::CreatePlatformEventObserverFromType(
       return base::MakeUnique<DeviceOrientationEventPump>(thread);
     case blink::kWebPlatformEventTypeDeviceOrientationAbsolute:
       return base::MakeUnique<DeviceOrientationAbsoluteEventPump>(thread);
-    case blink::kWebPlatformEventTypeDeviceLight:
-      return base::MakeUnique<DeviceLightEventPump>(thread);
     case blink::kWebPlatformEventTypeGamepad:
       return base::MakeUnique<GamepadSharedMemoryReader>(thread);
     default:
@@ -1203,7 +1190,7 @@ void RendererBlinkPlatformImpl::StartListening(
   }
   observer->Start(listener);
 
-  // Device events (motion, orientation and light) expect to get an event fired
+  // Device events (motion and orientation) expect to get an event fired
   // as soon as a listener is registered if a fake data was passed before.
   // TODO(mlamouri,timvolodine): make those send mock values directly instead of
   // using this broken pattern.
@@ -1211,8 +1198,7 @@ void RendererBlinkPlatformImpl::StartListening(
       RenderThreadImpl::current()->layout_test_mode() &&
       (type == blink::kWebPlatformEventTypeDeviceMotion ||
        type == blink::kWebPlatformEventTypeDeviceOrientation ||
-       type == blink::kWebPlatformEventTypeDeviceOrientationAbsolute ||
-       type == blink::kWebPlatformEventTypeDeviceLight)) {
+       type == blink::kWebPlatformEventTypeDeviceOrientationAbsolute)) {
     SendFakeDeviceEventDataForTesting(type);
   }
 }
@@ -1233,10 +1219,6 @@ void RendererBlinkPlatformImpl::SendFakeDeviceEventDataForTesting(
     case blink::kWebPlatformEventTypeDeviceOrientationAbsolute:
       if (!(g_test_device_orientation_data == 0))
         data = &g_test_device_orientation_data.Get();
-      break;
-    case blink::kWebPlatformEventTypeDeviceLight:
-      if (g_test_device_light_data >= 0)
-        data = &g_test_device_light_data;
       break;
     default:
       NOTREACHED();

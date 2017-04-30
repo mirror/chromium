@@ -5,6 +5,7 @@
 #ifndef DocumentMarkerListEditor_h
 #define DocumentMarkerListEditor_h
 
+#include "core/editing/markers/DocumentMarkerList.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -16,12 +17,14 @@ class DocumentMarkerListEditor {
  public:
   using MarkerList = HeapVector<Member<RenderedDocumentMarker>>;
 
-  static void AddMarker(MarkerList*, const DocumentMarker*);
+  static void AddMarkerAndMergeOverlapping(MarkerList*, const DocumentMarker*);
+  static void AddMarkerWithoutMergingOverlapping(MarkerList*,
+                                                 const DocumentMarker*);
 
   // Returns true if a marker was moved, false otherwise.
   static bool MoveMarkers(MarkerList* src_list,
                           int length,
-                          MarkerList* dst_list);
+                          DocumentMarkerList* dst_list);
 
   // Returns true if a marker was removed, false otherwise.
   static bool RemoveMarkers(MarkerList*, unsigned start_offset, int length);
@@ -36,9 +39,6 @@ class DocumentMarkerListEditor {
                            unsigned offset,
                            unsigned old_length,
                            unsigned new_length);
-
- private:
-  static void MergeOverlapping(MarkerList*, RenderedDocumentMarker* to_insert);
 };
 
 }  // namespace blink

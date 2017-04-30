@@ -469,8 +469,55 @@ component("platform") {
     "audio/ffmpeg/FFTFrameFFMPEG.cpp",
     "audio/ipp/FFTFrameIPP.cpp",
     "audio/mac/FFTFrameMac.cpp",
+    "bindings/ActiveScriptWrappable.cpp",
+    "bindings/ActiveScriptWrappable.h",
+    "bindings/ConditionalFeatures.cpp",
+    "bindings/ConditionalFeatures.h",
+    "bindings/DOMDataStore.h",
+    "bindings/DOMWrapperMap.h",
+    "bindings/DOMWrapperWorld.cpp",
+    "bindings/DOMWrapperWorld.h",
     "bindings/Microtask.cpp",
     "bindings/Microtask.h",
+    "bindings/ScopedPersistent.h",
+    "bindings/ScriptPromiseProperties.h",
+    "bindings/ScriptState.cpp",
+    "bindings/ScriptState.h",
+    "bindings/ScriptWrappable.cpp",
+    "bindings/ScriptWrappable.h",
+    "bindings/ScriptWrappableVisitor.cpp",
+    "bindings/ScriptWrappableVisitor.h",
+    "bindings/ScriptWrappableVisitorVerifier.h",
+    "bindings/SharedPersistent.h",
+    "bindings/StringResource.cpp",
+    "bindings/StringResource.h",
+    "bindings/ToV8.h",
+    "bindings/TraceWrapperMember.h",
+    "bindings/TraceWrapperV8Reference.h",
+    "bindings/V0CustomElementBinding.cpp",
+    "bindings/V0CustomElementBinding.h",
+    "bindings/V8Binding.cpp",
+    "bindings/V8Binding.h",
+    "bindings/V8BindingMacros.h",
+    "bindings/V8DOMWrapper.cpp",
+    "bindings/V8DOMWrapper.h",
+    "bindings/V8GlobalValueMap.h",
+    "bindings/V8ObjectConstructor.cpp",
+    "bindings/V8ObjectConstructor.h",
+    "bindings/V8PerContextData.cpp",
+    "bindings/V8PerContextData.h",
+    "bindings/V8PerIsolateData.cpp",
+    "bindings/V8PerIsolateData.h",
+    "bindings/V8PrivateProperty.cpp",
+    "bindings/V8PrivateProperty.h",
+    "bindings/V8ThrowException.cpp",
+    "bindings/V8ThrowException.h",
+    "bindings/V8ValueCache.cpp",
+    "bindings/V8ValueCache.h",
+    "bindings/WrapperCreationSecurityCheck.cpp",
+    "bindings/WrapperCreationSecurityCheck.h",
+    "bindings/WrapperTypeInfo.cpp",
+    "bindings/WrapperTypeInfo.h",
     "blob/BlobData.cpp",
     "blob/BlobData.h",
     "blob/BlobRegistry.cpp",
@@ -1239,6 +1286,7 @@ component("platform") {
     "scheduler/base/work_queue_sets.cc",
     "scheduler/base/work_queue_sets.h",
     "scheduler/child/compositor_worker_scheduler.cc",
+    "scheduler/child/compositor_worker_scheduler.h",
     "scheduler/child/idle_canceled_delayed_task_sweeper.cc",
     "scheduler/child/idle_canceled_delayed_task_sweeper.h",
     "scheduler/child/idle_helper.cc",
@@ -1255,9 +1303,11 @@ component("platform") {
     "scheduler/child/web_task_runner_impl.h",
     "scheduler/child/webthread_base.cc",
     "scheduler/child/webthread_impl_for_worker_scheduler.cc",
+    "scheduler/child/webthread_impl_for_worker_scheduler.h",
     "scheduler/child/worker_global_scope_scheduler.cc",
     "scheduler/child/worker_global_scope_scheduler.h",
     "scheduler/child/worker_scheduler.cc",
+    "scheduler/child/worker_scheduler.h",
     "scheduler/child/worker_scheduler_impl.cc",
     "scheduler/child/worker_scheduler_impl.h",
     "scheduler/renderer/auto_advancing_virtual_time_domain.cc",
@@ -1291,6 +1341,7 @@ component("platform") {
     "scheduler/renderer/webthread_impl_for_renderer_scheduler.cc",
     "scheduler/renderer/webthread_impl_for_renderer_scheduler.h",
     "scheduler/utility/webthread_impl_for_utility_thread.cc",
+    "scheduler/utility/webthread_impl_for_utility_thread.h",
     "scroll/MainThreadScrollingReason.h",
     "scroll/ProgrammaticScrollAnimator.cpp",
     "scroll/ProgrammaticScrollAnimator.h",
@@ -1439,11 +1490,6 @@ component("platform") {
     "weborigin/URLSecurityOriginMap.h",
   ]
 
-  if (is_android) {
-    set_sources_assignment_filter([])
-    sources += [ "exported/linux/WebFontRenderStyle.cpp" ]
-  }
-
   sources -= blink_platform_neon_files
   sources -= blink_platform_msa_files
   sources -= blink_platform_sse_files
@@ -1502,6 +1548,7 @@ component("platform") {
     "//cc/surfaces:surfaces",
     "//components/mime_util:mime_util",
     "//device/base/synchronization",
+    "//gin",
     "//mojo/public/cpp/bindings",
     "//mojo/public/cpp/bindings:wtf_support",
     "//services/service_manager/public/cpp",
@@ -1565,6 +1612,7 @@ component("platform") {
     # Add in some Linux files also shared with Android.
     set_sources_assignment_filter([])
     sources += [
+      "exported/linux/WebFontRenderStyle.cpp",
       "fonts/linux/FontPlatformDataLinux.cpp",
       "fonts/linux/FontRenderStyle.cpp",
       "fonts/linux/FontRenderStyle.h",
@@ -2162,6 +2210,11 @@ source_set("unit_tests") {
 
     # TODO(toyoshim): Remove Platform dependency and move to loader/BUILD.gn
     "loader/fetch/ResourceResponseTest.cpp",
+
+    # TODO(hongchan): Platform::Current()->CreateThread() returns nullptr
+    # without adding the test file into this section. Remove platform dependency
+    # when creating a valid thread becomes possible in the Blink unit test.
+    "audio/PushPullFIFOMultithreadTest.cpp",
   ]
 
   configs += [

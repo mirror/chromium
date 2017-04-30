@@ -1935,8 +1935,10 @@ int IndexForVisiblePosition(const VisiblePosition& visible_position,
 
   EphemeralRange range(Position::FirstPositionInNode(scope),
                        p.ParentAnchoredEquivalent());
-  return TextIterator::RangeLength(range.StartPosition(), range.EndPosition(),
-                                   true);
+
+  return TextIterator::RangeLength(
+      range.StartPosition(), range.EndPosition(),
+      TextIteratorBehavior::AllVisiblePositionsRangeLengthBehavior());
 }
 
 EphemeralRange MakeRange(const VisiblePosition& start,
@@ -2110,7 +2112,7 @@ const StaticRangeVector* TargetRangesForInputEvent(const Node& node) {
       FirstEphemeralRangeOf(node.GetDocument()
                                 .GetFrame()
                                 ->Selection()
-                                .ComputeVisibleSelectionInDOMTreeDeprecated());
+                                .ComputeVisibleSelectionInDOMTree());
   if (range.IsNull())
     return nullptr;
   return new StaticRangeVector(1, StaticRange::Create(range));

@@ -15,6 +15,7 @@
 #include "base/compiler_specific.h"
 #include "base/debug/alias.h"
 #include "base/debug/crash_logging.h"
+#include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/i18n/rtl.h"
 #include "base/json/json_writer.h"
@@ -1050,6 +1051,8 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
 
   WebRuntimeFeatures::EnableVideoFullscreenOrientationLock(
       prefs.video_fullscreen_orientation_lock_enabled);
+  WebRuntimeFeatures::EnableVideoRotateToFullscreen(
+      prefs.video_rotate_to_fullscreen_enabled);
   WebRuntimeFeatures::EnableVideoFullscreenDetection(
       prefs.video_fullscreen_detection_enabled);
   settings->SetEmbeddedMediaExperienceEnabled(
@@ -1081,6 +1084,8 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   settings->SetHideDownloadUI(prefs.hide_download_ui);
   WebRuntimeFeatures::EnableBackgroundVideoTrackOptimization(
       prefs.background_video_track_optimization_enabled);
+  WebRuntimeFeatures::EnableNewRemotePlaybackPipeline(
+      base::FeatureList::IsEnabled(media::kNewRemotePlaybackPipeline));
 
   settings->SetPresentationReceiver(prefs.presentation_receiver);
 
@@ -1252,6 +1257,7 @@ bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(PageMsg_SetHistoryOffsetAndLength,
                         OnSetHistoryOffsetAndLength)
     IPC_MESSAGE_HANDLER(PageMsg_AudioStateChanged, OnAudioStateChanged)
+    IPC_MESSAGE_HANDLER(PageMsg_UpdateScreenInfo, OnUpdateScreenInfo)
 
 #if defined(OS_ANDROID)
     IPC_MESSAGE_HANDLER(ViewMsg_UpdateBrowserControlsState,
@@ -2133,11 +2139,6 @@ void RenderViewImpl::OnMediaPlayerActionAt(const gfx::Point& location,
     webview()->PerformMediaPlayerAction(action, location);
 }
 
-void RenderViewImpl::OnOrientationChange() {
-  if (webview() && webview()->MainFrame()->IsWebLocalFrame())
-    webview()->MainFrame()->ToWebLocalFrame()->SendOrientationChangeEvent();
-}
-
 void RenderViewImpl::OnPluginActionAt(const gfx::Point& location,
                                       const WebPluginAction& action) {
   if (webview())
@@ -2276,6 +2277,14 @@ void RenderViewImpl::OnPageWasShown() {
                              : blink::kWebPageVisibilityStateVisible;
     webview()->SetVisibilityState(visibilityState, false);
   }
+}
+
+void RenderViewImpl::OnUpdateScreenInfo(const ScreenInfo& screen_info) {
+  // This IPC only updates the screen info on RenderViews that have a remote
+  // main frame. For local main frames, the ScreenInfo is updated in
+  // ViewMsg_Resize.
+  if (!main_render_frame_)
+    screen_info_ = screen_info;
 }
 
 GURL RenderViewImpl::GetURLForGraphicsContext3D() {

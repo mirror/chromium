@@ -121,7 +121,12 @@ size_t ProcessMemoryDump::CountResidentBytes(void* start_address,
     // HANDLE_EINTR tries for 100 times. So following the same pattern.
     do {
       result =
+#if defined(OS_AIX)
+          mincore(reinterpret_cast<char*>(chunk_start), chunk_size,
+                  reinterpret_cast<char*>(vec.get()));
+#else
           mincore(reinterpret_cast<void*>(chunk_start), chunk_size, vec.get());
+#endif
     } while (result == -1 && errno == EAGAIN && error_counter++ < 100);
     failure = !!result;
 
@@ -239,8 +244,9 @@ MemoryAllocatorDump* ProcessMemoryDump::GetSharedGlobalAllocatorDump(
 }
 
 void ProcessMemoryDump::DumpHeapUsage(
-    const base::hash_map<base::trace_event::AllocationContext,
-        base::trace_event::AllocationMetrics>& metrics_by_context,
+    const std::unordered_map<base::trace_event::AllocationContext,
+                             base::trace_event::AllocationMetrics>&
+        metrics_by_context,
     base::trace_event::TraceEventMemoryOverhead& overhead,
     const char* allocator_name) {
   if (!metrics_by_context.empty()) {

@@ -21,7 +21,6 @@
 #include "ash/mus/window_properties.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_types.h"
-#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_pin_type.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
@@ -76,9 +75,11 @@ struct WindowManager::DragState {
 
 // TODO: need to register OSExchangeDataProviderMus. http://crbug.com/665077.
 WindowManager::WindowManager(service_manager::Connector* connector,
-                             Config config)
+                             Config config,
+                             bool show_primary_host_on_connect)
     : connector_(connector),
       config_(config),
+      show_primary_host_on_connect_(show_primary_host_on_connect),
       wm_state_(base::MakeUnique<::wm::WMState>()),
       property_converter_(base::MakeUnique<aura::PropertyConverter>()) {
   property_converter_->RegisterProperty(
@@ -123,12 +124,14 @@ void WindowManager::Init(
   DCHECK_EQ(nullptr, ash::Shell::window_tree_client());
   ash::Shell::set_window_tree_client(window_tree_client_.get());
 
-  // |connector_| will be null in some tests.
-  if (connector_)
-    connector_->BindInterface(ui::mojom::kServiceName, &display_controller_);
-
-  screen_ = base::MakeUnique<ScreenMus>(display_controller_.get());
-  display::Screen::SetScreenInstance(screen_.get());
+  // TODO(sky): remove and use MUS code.
+  if (config_ == Config::MASH) {
+    // |connector_| is null in some tests.
+    if (connector_)
+      connector_->BindInterface(ui::mojom::kServiceName, &display_controller_);
+    screen_ = base::MakeUnique<ScreenMus>(display_controller_.get());
+    display::Screen::SetScreenInstance(screen_.get());
+  }
 
   pointer_watcher_event_router_ =
       base::MakeUnique<views::PointerWatcherEventRouter>(
@@ -154,6 +157,10 @@ void WindowManager::Init(
 
   if (shell_delegate)
     shell_delegate_ = std::move(shell_delegate);
+}
+
+void WindowManager::SetLostConnectionCallback(base::OnceClosure closure) {
+  lost_connection_callback_ = std::move(closure);
 }
 
 bool WindowManager::WaitForInitialDisplays() {
@@ -226,10 +233,10 @@ void WindowManager::CreateShell(
   DCHECK(!created_shell_);
   created_shell_ = true;
   ShellInitParams init_params;
-  ShellPortMash* shell_port =
-      new ShellPortMash(WmWindow::Get(window_tree_host->window()), this,
-                        pointer_watcher_event_router_.get(),
-                        create_session_state_delegate_stub_for_test_);
+  ShellPortMash* shell_port = new ShellPortMash(
+      window_tree_host ? WmWindow::Get(window_tree_host->window()) : nullptr,
+      this, pointer_watcher_event_router_.get(),
+      create_session_state_delegate_stub_for_test_);
   // Shell::CreateInstance() takes ownership of ShellDelegate.
   init_params.delegate = shell_delegate_ ? shell_delegate_.release()
                                          : new ShellDelegateMus(connector_);
@@ -249,13 +256,6 @@ void WindowManager::CreateAndRegisterRootWindowController(
   std::unique_ptr<RootWindowController> root_window_controller(
       new RootWindowController(nullptr, window_tree_host.release()));
   root_window_controller->Init(root_window_type);
-  // TODO: To avoid lots of IPC AddActivationParent() should take an array.
-  // http://crbug.com/682048.
-  aura::Window* root_window = root_window_controller->GetRootWindow();
-  for (size_t i = 0; i < kNumActivatableShellWindowIds; ++i) {
-    window_manager_client_->AddActivationParent(
-        root_window->GetChildById(kActivatableShellWindowIds[i]));
-  }
   root_window_controllers_.insert(std::move(root_window_controller));
 }
 
@@ -317,6 +317,10 @@ void WindowManager::OnEmbedRootDestroyed(
 
 void WindowManager::OnLostConnection(aura::WindowTreeClient* client) {
   DCHECK_EQ(client, window_tree_client_.get());
+  if (!lost_connection_callback_.is_null()) {
+    base::ResetAndReturn(&lost_connection_callback_).Run();
+    return;
+  }
   Shutdown();
   // TODO(sky): this case should trigger shutting down WindowManagerApplication
   // too.
@@ -336,7 +340,14 @@ void WindowManager::SetWindowManagerClient(aura::WindowManagerClient* client) {
   ash::Shell::set_window_manager_client(client);
 }
 
-void WindowManager::OnWmConnected() {}
+void WindowManager::OnWmConnected() {
+  if (config_ != Config::MUS)
+    return;
+
+  CreateShell(nullptr);
+  if (show_primary_host_on_connect_)
+    Shell::GetPrimaryRootWindow()->GetHost()->Show();
+}
 
 void WindowManager::OnWmSetBounds(aura::Window* window,
                                   const gfx::Rect& bounds) {

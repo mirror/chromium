@@ -855,6 +855,11 @@ void PaintLayer::UpdateLayerPosition() {
 #endif
 }
 
+void PaintLayer::UpdateScrollingAfterLayout() {
+  if (GetLayoutObject().HasOverflowClip())
+    scrollable_area_->UpdateAfterLayout();
+}
+
 TransformationMatrix PaintLayer::PerspectiveTransform() const {
   if (!GetLayoutObject().HasTransformRelatedProperty())
     return TransformationMatrix();
@@ -1303,18 +1308,19 @@ PaintLayer* PaintLayer::RemoveChild(PaintLayer* old_child) {
   if (last_ == old_child)
     last_ = old_child->PreviousSibling();
 
-  if (Compositor()) {
-    if (!old_child->StackingNode()->IsStacked() &&
-        !GetLayoutObject().DocumentBeingDestroyed())
-      Compositor()->SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
-  }
+  if (!GetLayoutObject().DocumentBeingDestroyed()) {
+    if (Compositor()) {
+      if (!old_child->StackingNode()->IsStacked())
+        Compositor()->SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
+    }
 
-  if (old_child->StackingNode()->IsStacked() || old_child->FirstChild()) {
-    // Dirty the z-order list in which we are contained.  When called via the
-    // reattachment process in removeOnlyThisLayer, the layer may already be
-    // disconnected from the main layer tree, so we need to null-check the
-    // |stackingContext| value.
-    old_child->StackingNode()->DirtyStackingContextZOrderLists();
+    if (old_child->StackingNode()->IsStacked() || old_child->FirstChild()) {
+      // Dirty the z-order list in which we are contained.  When called via the
+      // reattachment process in removeOnlyThisLayer, the layer may already be
+      // disconnected from the main layer tree, so we need to null-check the
+      // |stackingContext| value.
+      old_child->StackingNode()->DirtyStackingContextZOrderLists();
+    }
   }
 
   if (GetLayoutObject().Style()->Visibility() != EVisibility::kVisible)
@@ -1800,7 +1806,7 @@ Node* PaintLayer::EnclosingNode() const {
     if (Node* e = r->GetNode())
       return e;
   }
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return 0;
 }
 

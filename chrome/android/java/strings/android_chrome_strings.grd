@@ -296,6 +296,12 @@ CHAR-LIMIT guidelines:
       <message name="IDS_SEARCH_ENGINE_RECENTLY_VISITED" desc="Header for the list of recently visited search engines.">
         Recently visited
       </message>
+      <message name="IDS_SEARCH_ENGINE_DIALOG_TITLE" desc="Title shown in the dialog to change search engines">
+        Choose your search engine
+      </message>
+      <message name="IDS_SEARCH_ENGINE_DIALOG_FOOTER" desc="Title shown in the dialog to change search engines">
+        You can change this later in Settings
+      </message>
 
       <!-- Autofill and Payments preferences -->
       <message name="IDS_PREFS_AUTOFILL_AND_PAYMENTS" desc="Title of Autofill and payments settings prefrences. [CHAR-LIMIT=32]">
@@ -972,6 +978,11 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
       <message name="IDS_WEBSITE_SETTINGS_USB_NO_DEVICES" desc="Empty list text for a list of USB devices that sites have been granted access to.">
         No USB devices here
+      </message>
+
+      <!-- IPH Strings -->
+      <message name="IDS_IPH_DATA_SAVER_PREVIEW_TEXT" desc="In-product help for when a data saver preview page and infobar are shown.">
+          Chrome is using less data to show you this page
       </message>
 
       <!-- Data Saver -->
@@ -2003,7 +2014,7 @@ To obtain new licenses, connect to the internet and play your downloaded content
         <ph name="gigabytes">%1$3.2f<ex>0.3</ex></ph> GB downloaded
       </message>
       <message name="IDS_DOWNLOAD_MANAGER_UI_ALL_DOWNLOADS" desc="Indicates that clicking on this button shows all of your downloads.">
-        All downloads
+        All
       </message>
       <message name="IDS_DOWNLOAD_MANAGER_UI_PAGES" desc="Indicates that clicking on this button shows only offline pages.">
         Pages
@@ -2803,6 +2814,11 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       </message>
       <message name="IDS_USB_CHOOSER_DIALOG_FOOTNOTE_TEXT" desc="This text is shown at the bottom of the USB chooser dialog with a link to part of its text.">
         <ph name="BEGIN_LINK">&lt;link&gt;</ph>Get help<ph name="END_LINK">&lt;/link&gt;</ph>
+      </message>
+
+      <!-- Photo Picker strings -->
+      <message name="IDS_DECODER_DESCRIPTION" desc="The title for the image decoder utility service.">
+        Image decoder
       </message>
 
       <!-- Migration strings -->

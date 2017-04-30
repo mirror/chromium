@@ -67,13 +67,13 @@ PasswordStore::CheckReuseRequest::~CheckReuseRequest() {}
 
 void PasswordStore::CheckReuseRequest::OnReuseFound(
     const base::string16& password,
-    const std::string& saved_domain,
+    const std::string& legitimate_domain,
     int saved_passwords,
     int number_matches) {
   origin_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&PasswordReuseDetectorConsumer::OnReuseFound, consumer_weak_,
-                 password, saved_domain, saved_passwords, number_matches));
+                 password, legitimate_domain, saved_passwords, number_matches));
 }
 #endif
 
@@ -317,6 +317,11 @@ void PasswordStore::CheckReuse(const base::string16& input,
   ScheduleTask(base::Bind(&PasswordStore::CheckReuseImpl, this,
                           base::Passed(&check_reuse_request), input, domain));
 }
+
+void PasswordStore::SaveSyncPasswordHash(const base::string16& password) {
+  ScheduleTask(
+      base::Bind(&PasswordStore::SaveSyncPasswordHashImpl, this, password));
+}
 #endif
 
 PasswordStore::~PasswordStore() {
@@ -398,6 +403,11 @@ void PasswordStore::CheckReuseImpl(std::unique_ptr<CheckReuseRequest> request,
                                    const std::string& domain) {
   if (reuse_detector_)
     reuse_detector_->CheckReuse(input, domain, request.get());
+}
+
+void PasswordStore::SaveSyncPasswordHashImpl(const base::string16& password) {
+  if (reuse_detector_)
+    reuse_detector_->SaveSyncPasswordHash(password);
 }
 #endif
 
