@@ -2,7 +2,7 @@
     <script>
     if (self.internals)
         internals.runtimeFlags.overlayScrollbarsEnabled = true;
-	
+
     function startTest() {
         if (!window.testRunner)
             return;

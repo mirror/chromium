@@ -37,13 +37,11 @@
 #include "core/layout/api/LayoutPartItem.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
-#include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/page/Page.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/ViewPaintInvalidator.h"
 #include "core/paint/ViewPainter.h"
 #include "core/svg/SVGDocumentExtensions.h"
-#include "core/svg/SVGSVGElement.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/geometry/FloatQuad.h"
@@ -280,31 +278,6 @@ void LayoutView::UpdateLayout() {
       !ShouldUsePrintingLayout() &&
       (!frame_view_ || LogicalWidth() != ViewLogicalWidthForBoxSizing() ||
        LogicalHeight() != ViewLogicalHeightForBoxSizing());
-
-  // For a pure SVG doc, the svg root will have percentage height, which will be
-  // resolved against the LayoutView's logical height, which comes from the
-  // FrameView's visible content height.  If the FrameView was resized during
-  // the previous layout, then the LayoutView's logical height would have
-  // changed *after* the svg root finished layout, so the logical height of
-  // the svg root would have been computed based on a stale container height.
-  // Check here whether the svg root's logical height matches what we would
-  // expect based on the LayoutView's now-up-to-date logical height.
-  if (!relayout_children && GetDocument().IsSVGDocument()) {
-    if (auto* svg_element = GetDocument().AccessSVGExtensions().rootElement()) {
-      LayoutSVGRoot* svg_root = ToLayoutSVGRoot(svg_element->GetLayoutObject());
-      const Length& svg_root_height = svg_root->Style()->LogicalHeight();
-      if (svg_root_height.IsPercentOrCalc() &&
-          svg_root->LogicalHeight() !=
-              ValueForLength(
-                  svg_root_height,
-                  AvailableLogicalHeightUsing(svg_root_height,
-                                              kExcludeMarginBorderPadding))) {
-        relayout_children = true;
-        layout_scope.SetChildNeedsLayout(svg_root);
-      }
-    }
-  }
-
   if (relayout_children) {
     layout_scope.SetChildNeedsLayout(this);
     for (LayoutObject* child = FirstChild(); child;

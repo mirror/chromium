@@ -26,6 +26,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
+#include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutPartItem.h"
 #include "core/layout/svg/LayoutSVGText.h"
 #include "core/layout/svg/SVGLayoutSupport.h"
@@ -134,6 +135,14 @@ LayoutUnit LayoutSVGRoot::ComputeReplacedLogicalHeight(
     return ContainingBlock()->AvailableLogicalHeight(
         kIncludeMarginBorderPadding);
 
+  const Length& logical_height = Style()->LogicalHeight();
+  if (IsDocumentElement() && logical_height.IsPercentOrCalc()) {
+    return ValueForLength(
+        logical_height,
+        GetDocument().GetLayoutView()->AvailableLogicalHeightUsing(
+            logical_height, kExcludeMarginBorderPadding));
+  }
+
   return LayoutReplaced::ComputeReplacedLogicalHeight(estimated_used_width);
 }
 
@@ -187,6 +196,10 @@ void LayoutSVGRoot::UpdateLayout() {
   // (hence no one is interested in viewport size changes).
   is_layout_size_changed_ =
       viewport_may_have_changed && svg->HasRelativeLengths();
+
+  SubtreeLayoutScope scope(*this);
+  if (is_layout_size_changed_ && IsDocumentElement())
+    svg->InvalidateRelativeLengthClients(&scope);
 
   SVGLayoutSupport::LayoutChildren(FirstChild(), false,
                                    did_screen_scale_factor_change_,
