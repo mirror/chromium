@@ -139,8 +139,7 @@ LayoutUnit LayoutSVGRoot::ComputeReplacedLogicalHeight(
   if (IsDocumentElement() && logical_height.IsPercentOrCalc()) {
     return ValueForLength(
         logical_height,
-        GetDocument().GetLayoutView()->AvailableLogicalHeightUsing(
-            logical_height, kExcludeMarginBorderPadding));
+        GetDocument().GetLayoutView()->ViewLogicalHeightForPercentages());
   }
 
   return LayoutReplaced::ComputeReplacedLogicalHeight(estimated_used_width);
