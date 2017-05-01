@@ -218,22 +218,28 @@ class WTF_EXPORT String {
 
   UChar32 CharacterStartingAt(unsigned) const;
 
-  bool StartsWith(
-      const StringView& prefix,
-      TextCaseSensitivity case_sensitivity = kTextCaseSensitive) const {
-    return impl_
-               ? DISPATCH_CASE_OP(case_sensitivity, impl_->StartsWith, (prefix))
-               : prefix.IsEmpty();
+  bool StartsWith(const StringView& prefix) const {
+    return impl_ ? impl_->StartsWith(prefix) : prefix.IsEmpty();
+  }
+  bool StartsWithIgnoringCase(const StringView& prefix) const {
+    return impl_ ? impl_->StartsWithIgnoringCase(prefix) : prefix.IsEmpty();
+  }
+  bool StartsWithIgnoringASCIICase(const StringView& prefix) const {
+    return impl_ ? impl_->StartsWithIgnoringASCIICase(prefix)
+                 : prefix.IsEmpty();
   }
   bool StartsWith(UChar character) const {
     return impl_ ? impl_->StartsWith(character) : false;
   }
 
-  bool EndsWith(
-      const StringView& suffix,
-      TextCaseSensitivity case_sensitivity = kTextCaseSensitive) const {
-    return impl_ ? DISPATCH_CASE_OP(case_sensitivity, impl_->EndsWith, (suffix))
-                 : suffix.IsEmpty();
+  bool EndsWith(const StringView& suffix) const {
+    return impl_ ? impl_->EndsWith(suffix) : suffix.IsEmpty();
+  }
+  bool EndsWithIgnoringCase(const StringView& prefix) const {
+    return impl_ ? impl_->EndsWithIgnoringCase(prefix) : prefix.IsEmpty();
+  }
+  bool EndsWithIgnoringASCIICase(const StringView& prefix) const {
+    return impl_ ? impl_->EndsWithIgnoringASCIICase(prefix) : prefix.IsEmpty();
   }
   bool EndsWith(UChar character) const {
     return impl_ ? impl_->EndsWith(character) : false;
