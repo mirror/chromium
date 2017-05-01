@@ -968,63 +968,6 @@ TEST_F(HostContentSettingsMapTest, PrefExceptionsOperation) {
   EXPECT_EQ(SETTING_SOURCE_POLICY, tester.GetSettingSourceForURL(kUrl3));
 }
 
-// For a single Unicode encoded pattern, check if it gets converted to punycode
-// and old pattern gets deleted.
-TEST_F(HostContentSettingsMapTest, CanonicalizeExceptionsUnicodeOnly) {
-  TestingProfile profile;
-  PrefService* prefs = profile.GetPrefs();
-
-  // Set utf-8 data.
-  {
-    DictionaryPrefUpdate update(prefs,
-                                GetPrefName(CONTENT_SETTINGS_TYPE_COOKIES));
-    base::DictionaryValue* all_settings_dictionary = update.Get();
-    ASSERT_TRUE(NULL != all_settings_dictionary);
-
-    auto dummy_payload = base::MakeUnique<base::DictionaryValue>();
-    dummy_payload->SetInteger("setting", CONTENT_SETTING_ALLOW);
-    all_settings_dictionary->SetWithoutPathExpansion("[*.]\xC4\x87ira.com,*",
-                                                     std::move(dummy_payload));
-  }
-
-  HostContentSettingsMapFactory::GetForProfile(&profile);
-
-  const base::DictionaryValue* all_settings_dictionary =
-      prefs->GetDictionary(GetPrefName(CONTENT_SETTINGS_TYPE_COOKIES));
-  const base::DictionaryValue* result = NULL;
-  EXPECT_FALSE(all_settings_dictionary->GetDictionaryWithoutPathExpansion(
-      "[*.]\xC4\x87ira.com,*", &result));
-  EXPECT_TRUE(all_settings_dictionary->GetDictionaryWithoutPathExpansion(
-      "[*.]xn--ira-ppa.com,*", &result));
-}
-
-// If both Unicode and its punycode pattern exist, make sure we don't touch the
-// settings for the punycode, and that Unicode pattern gets deleted.
-TEST_F(HostContentSettingsMapTest, CanonicalizeExceptionsUnicodeAndPunycode) {
-  TestingProfile profile;
-
-  std::unique_ptr<base::Value> value =
-      base::JSONReader::Read("{\"[*.]\\xC4\\x87ira.com,*\":{\"setting\":1}}");
-  profile.GetPrefs()->Set(GetPrefName(CONTENT_SETTINGS_TYPE_COOKIES), *value);
-
-  // Set punycode equivalent, with different setting.
-  std::unique_ptr<base::Value> puny_value =
-      base::JSONReader::Read("{\"[*.]xn--ira-ppa.com,*\":{\"setting\":2}}");
-  profile.GetPrefs()->Set(GetPrefName(CONTENT_SETTINGS_TYPE_COOKIES),
-                          *puny_value);
-
-  // Initialize the content map.
-  HostContentSettingsMapFactory::GetForProfile(&profile);
-
-  const base::DictionaryValue& content_setting_prefs =
-      *profile.GetPrefs()->GetDictionary(
-          GetPrefName(CONTENT_SETTINGS_TYPE_COOKIES));
-  std::string prefs_as_json;
-  base::JSONWriter::Write(content_setting_prefs, &prefs_as_json);
-  EXPECT_STREQ("{\"[*.]xn--ira-ppa.com,*\":{\"setting\":2}}",
-               prefs_as_json.c_str());
-}
-
 // If a default-content-setting is managed, the managed value should be used
 // instead of the default value.
 TEST_F(HostContentSettingsMapTest, ManagedDefaultContentSetting) {
