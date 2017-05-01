@@ -147,19 +147,21 @@ class WTF_EXPORT AtomicString {
     return string_.ReverseFind(value, start);
   }
 
-  bool StartsWith(
-      const StringView& prefix,
-      TextCaseSensitivity case_sensitivity = kTextCaseSensitive) const {
-    return string_.StartsWith(prefix, case_sensitivity);
+  bool StartsWith(const StringView& prefix) const {
+    return string_.StartsWith(prefix);
+  }
+  bool StartsWithIgnoringCase(const StringView& prefix) const {
+    return string_.StartsWithIgnoringCase(prefix);
+  }
+  bool StartsWithIgnoringASCIICase(const StringView& prefix) const {
+    return string_.StartsWithIgnoringASCIICase(prefix);
   }
   bool StartsWith(UChar character) const {
     return string_.StartsWith(character);
   }
 
-  bool EndsWith(
-      const StringView& suffix,
-      TextCaseSensitivity case_sensitivity = kTextCaseSensitive) const {
-    return string_.EndsWith(suffix, case_sensitivity);
+  bool EndsWith(const StringView& suffix) const {
+    return string_.EndsWith(suffix);
   }
   bool EndsWith(UChar character) const { return string_.EndsWith(character); }
 
