@@ -22,6 +22,30 @@
       "revId": "8a34aa4b5fce8137ad00b7eb82db16e45ac61334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "782f7ec2_2de73df0",
+        "filename": "tools/perf/core/benchmark_sharding_map.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-05-01T22:38:47Z",
+      "side": 1,
+      "message": "Switched to this.",
+      "parentUuid": "20b9e96a_e1005b91",
+      "range": {
+        "startLine": 3,
+        "startChar": 19,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "8a34aa4b5fce8137ad00b7eb82db16e45ac61334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
