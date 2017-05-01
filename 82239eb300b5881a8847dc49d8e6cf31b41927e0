@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed243a28_96b2696f",
+        "filename": "third_party/WebKit/Source/modules/nfc/NFC.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-01T10:37:32Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure why this originally ignored full Unicode case, while the JSON mime type check below only ignored ASCII case. For consistency (and since the comments seem to indicate that ignoring Unicode case should be relatively rare), I\u0027ve changed this to ignore ASCII case.",
+      "range": {
+        "startLine": 363,
+        "startChar": 26,
+        "endLine": 363,
+        "endChar": 53
+      },
+      "revId": "82239eb300b5881a8847dc49d8e6cf31b41927e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515edef8_ff5cfa9e",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/AtomicString.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-01T10:37:32Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me what the current status of Unicode vs ASCII case-insensitivity is. It seems like there\u0027s a general preference for ASCII-case insensitivity rather than full Unicode case insensitivity. Should that be encoded in the comments here as well (basically copying the comments for EqualIgnoringCase)?",
+      "range": {
+        "startLine": 153,
+        "startChar": 7,
+        "endLine": 153,
+        "endChar": 29
+      },
+      "revId": "82239eb300b5881a8847dc49d8e6cf31b41927e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
