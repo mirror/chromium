@@ -360,8 +360,7 @@ bool IsValidTextRecord(const NFCRecord& record) {
     return false;
 
   if (record.hasMediaType() &&
-      !record.mediaType().StartsWith(kPlainTextMimePrefix,
-                                     kTextCaseUnicodeInsensitive))
+      !record.mediaType().StartsWithIgnoringASCIICase(kPlainTextMimePrefix))
     return false;
 
   return true;
@@ -383,8 +382,8 @@ bool IsValidJSONRecord(const NFCRecord& record) {
   if (!value->IsObject() || value->IsArrayBuffer())
     return false;
 
-  if (record.hasMediaType() && !record.mediaType().StartsWith(
-                                   kJsonMimePrefix, kTextCaseASCIIInsensitive))
+  if (record.hasMediaType() &&
+      !record.mediaType().StartsWithIgnoringASCIICase(kJsonMimePrefix))
     return false;
 
   return true;
