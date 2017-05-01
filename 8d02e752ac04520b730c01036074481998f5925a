@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05e12d43_b1db38c0",
+        "filename": "tools/licenses.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-01T15:07:57Z",
+      "side": 1,
+      "message": "Are the names unique? The old key was both the name and the content, and it\u0027s not a dictionary - maybe the new key should just be len(content), name, content, to extend the old version?",
+      "range": {
+        "startLine": 608,
+        "startChar": 66,
+        "endLine": 608,
+        "endChar": 70
+      },
+      "revId": "8d02e752ac04520b730c01036074481998f5925a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
