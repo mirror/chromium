@@ -3351,7 +3351,7 @@ bool WebContentsImpl::WasRecentlyAudible() {
 }
 
 void WebContentsImpl::GetManifest(const GetManifestCallback& callback) {
-  manifest_manager_host_->GetManifest(GetMainFrame(), callback);
+  manifest_manager_host_->GetManifest(callback);
 }
 
 void WebContentsImpl::ExitFullscreen(bool will_cause_resize) {
