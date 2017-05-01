@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 import unittest
+import mock
 
 from core import perf_data_generator
 from core.perf_data_generator import BenchmarkMetadata
@@ -32,9 +33,9 @@ class PerfDataGeneratorTest(unittest.TestCase):
         }
     }
     benchmarks = {
-        'benchmark_name_1': BenchmarkMetadata(None, None),
-        'benchmark_name_2': BenchmarkMetadata(None, None),
-        'benchmark_name_3': BenchmarkMetadata(None, None)
+        'benchmark_name_1': BenchmarkMetadata(None, None, False),
+        'benchmark_name_2': BenchmarkMetadata(None, None, False),
+        'benchmark_name_3': BenchmarkMetadata(None, None, False)
     }
 
     perf_data_generator.verify_all_tests_in_benchmark_csv(tests, benchmarks)
@@ -50,8 +51,8 @@ class PerfDataGeneratorTest(unittest.TestCase):
         }
     }
     benchmarks = {
-        'benchmark_name_2': BenchmarkMetadata(None, None),
-        'benchmark_name_3': BenchmarkMetadata(None, None),
+        'benchmark_name_2': BenchmarkMetadata(None, None, False),
+        'benchmark_name_3': BenchmarkMetadata(None, None, False),
     }
 
     with self.assertRaises(AssertionError) as context:
@@ -64,7 +65,7 @@ class PerfDataGeneratorTest(unittest.TestCase):
   def testVerifyAllTestsInBenchmarkCsvFindsFakeTest(self):
     tests = {'Random fake test': {}}
     benchmarks = {
-        'benchmark_name_1': BenchmarkMetadata(None, None)
+        'benchmark_name_1': BenchmarkMetadata(None, None, False)
     }
 
     with self.assertRaises(AssertionError) as context:
@@ -140,3 +141,53 @@ class PerfDataGeneratorTest(unittest.TestCase):
     self.assertEquals(
         generated_test_names,
         {'blacklisted', 'not_blacklisted', 'not_blacklisted.reference'})
+
+  @mock.patch('telemetry.decorators.GetDisabledAttributes')
+  @mock.patch('telemetry.decorators.GetEnabledAttributes')
+  def testShouldBenchmarkBeScheduledNormal(self, enabled_f, disabled_f):
+    disabled_f.return_value = []
+    enabled_f.return_value = []
+    self.assertEqual(
+        perf_data_generator.ShouldBenchmarkBeScheduled(None, 'win'),
+        True)
+
+  @mock.patch('telemetry.decorators.GetDisabledAttributes')
+  @mock.patch('telemetry.decorators.GetEnabledAttributes')
+  def testShouldBenchmarkBeScheduledDisabledAll(self, enabled_f, disabled_f):
+    disabled_f.return_value = ['all']
+    enabled_f.return_value = []
+    self.assertEqual(
+        perf_data_generator.ShouldBenchmarkBeScheduled(None, 'win'),
+        False)
+
+  @mock.patch('telemetry.decorators.GetDisabledAttributes')
+  @mock.patch('telemetry.decorators.GetEnabledAttributes')
+  def testShouldBenchmarkBeScheduledOnDesktopMobileTest(
+      self, enabled_f, disabled_f):
+    disabled_f.return_value = []
+    enabled_f.return_value = ['android']
+    self.assertEqual(
+        perf_data_generator.ShouldBenchmarkBeScheduled(None, 'win'),
+        False)
+
+  @mock.patch('telemetry.decorators.GetDisabledAttributes')
+  @mock.patch('telemetry.decorators.GetEnabledAttributes')
+  def testShouldBenchmarkBeScheduledOnMobileMobileTest(
+      self, enabled_f, disabled_f):
+    disabled_f.return_value = []
+    enabled_f.return_value = ['android']
+    self.assertEqual(
+        perf_data_generator.ShouldBenchmarkBeScheduled(None, 'android'),
+        True)
+
+  @mock.patch('telemetry.decorators.GetDisabledAttributes')
+  @mock.patch('telemetry.decorators.GetEnabledAttributes')
+  def testShouldBenchmarkBeScheduledOnMobileMobileTestDisabled(
+      self, enabled_f, disabled_f):
+    disabled_f.return_value = ['android']
+    enabled_f.return_value = []
+    self.assertEqual(
+        perf_data_generator.ShouldBenchmarkBeScheduled(None, 'android'),
+        False)
+
+
