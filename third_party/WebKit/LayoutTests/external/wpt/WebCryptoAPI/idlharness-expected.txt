@@ -1,9 +1,9 @@
 This is a testharness.js-based test.
-Found 64 tests; 33 PASS, 31 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 64 tests; 36 PASS, 28 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS Crypto interface: existence and properties of interface object 
 PASS Crypto interface object length 
 PASS Crypto interface object name 
-FAIL Crypto interface: existence and properties of interface prototype object assert_equals: class string of Crypto.prototype expected "[object CryptoPrototype]" but got "[object Crypto]"
+PASS Crypto interface: existence and properties of interface prototype object 
 PASS Crypto interface: existence and properties of interface prototype object's "constructor" property 
 FAIL Crypto interface: attribute subtle assert_true: The prototype object must have a property "subtle" expected true got false
 PASS Crypto interface: operation getRandomValues(ArrayBufferView) 
@@ -15,7 +15,7 @@ PASS Crypto interface: calling getRandomValues(ArrayBufferView) on crypto with t
 PASS CryptoKey interface: existence and properties of interface object 
 PASS CryptoKey interface object length 
 PASS CryptoKey interface object name 
-FAIL CryptoKey interface: existence and properties of interface prototype object assert_equals: class string of CryptoKey.prototype expected "[object CryptoKeyPrototype]" but got "[object CryptoKey]"
+PASS CryptoKey interface: existence and properties of interface prototype object 
 PASS CryptoKey interface: existence and properties of interface prototype object's "constructor" property 
 PASS CryptoKey interface: attribute type 
 PASS CryptoKey interface: attribute extractable 
@@ -24,7 +24,7 @@ PASS CryptoKey interface: attribute usages
 PASS SubtleCrypto interface: existence and properties of interface object 
 PASS SubtleCrypto interface object length 
 PASS SubtleCrypto interface object name 
-FAIL SubtleCrypto interface: existence and properties of interface prototype object assert_equals: class string of SubtleCrypto.prototype expected "[object SubtleCryptoPrototype]" but got "[object SubtleCrypto]"
+PASS SubtleCrypto interface: existence and properties of interface prototype object 
 PASS SubtleCrypto interface: existence and properties of interface prototype object's "constructor" property 
 PASS SubtleCrypto interface: operation encrypt(AlgorithmIdentifier,CryptoKey,BufferSource) 
 PASS SubtleCrypto interface: operation decrypt(AlgorithmIdentifier,CryptoKey,BufferSource) 
