@@ -536,11 +536,18 @@ IntRect PaintLayerScrollableArea::VisibleContentRect(
             : 0;
   }
 
+  IntSize border_size =
+      PixelSnappedIntSize(LayoutSize(Box().BorderLeft() + Box().BorderRight(),
+                                     Box().BorderTop() + Box().BorderBottom()),
+                          Box().Location());
+
   // TODO(szager): Handle fractional scroll offsets correctly.
   return IntRect(
       FlooredIntPoint(ScrollPosition()),
-      IntSize(max(0, Layer()->size().Width() - vertical_scrollbar_width),
-              max(0, Layer()->size().Height() - horizontal_scrollbar_height)));
+      IntSize(max(0, Layer()->size().Width() - vertical_scrollbar_width -
+                         border_size.Width()),
+              max(0, Layer()->size().Height() - horizontal_scrollbar_height -
+                         border_size.Height())));
 }
 
 void PaintLayerScrollableArea::VisibleSizeChanged() {
@@ -548,11 +555,15 @@ void PaintLayerScrollableArea::VisibleSizeChanged() {
 }
 
 int PaintLayerScrollableArea::VisibleHeight() const {
-  return Layer()->size().Height();
+  int border_size = SnapSizeToPixel(Box().BorderTop() + Box().BorderBottom(),
+                                    Box().Location().Y());
+  return Layer()->size().Height() - border_size;
 }
 
 int PaintLayerScrollableArea::VisibleWidth() const {
-  return Layer()->size().Width();
+  int border_size = SnapSizeToPixel(Box().BorderLeft() + Box().BorderRight(),
+                                    Box().Location().X());
+  return Layer()->size().Width() - border_size;
 }
 
 LayoutSize PaintLayerScrollableArea::ClientSize() const {
