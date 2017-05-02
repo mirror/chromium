@@ -78,13 +78,15 @@ bool UnacceleratedImageBufferSurface::WritePixels(const SkImageInfo& orig_info,
                                                   size_t row_bytes,
                                                   int x,
                                                   int y) {
+  if (!surface_)
+    return false;
   return surface_->getCanvas()->writePixels(orig_info, pixels, row_bytes, x, y);
 }
 
 sk_sp<SkImage> UnacceleratedImageBufferSurface::NewImageSnapshot(
     AccelerationHint,
     SnapshotReason) {
-  return surface_->makeImageSnapshot();
+  return surface_ ? surface_->makeImageSnapshot() : nullptr;
 }
 
 }  // namespace blink

@@ -97,6 +97,10 @@ void RecordingImageBufferSurface::FallBackToRasterCanvas(
       size(), GetOpacityMode(), kInitializeImagePixels, color_params()));
   fallback_surface_->SetImageBuffer(image_buffer_);
 
+  // If the fallback surface fails to be created, then early out.
+  if (!fallback_surface_.IsValid())
+    return;
+
   if (previous_frame_) {
     fallback_surface_->Canvas()->PlaybackPaintRecord(previous_frame_);
     previous_frame_.reset();
