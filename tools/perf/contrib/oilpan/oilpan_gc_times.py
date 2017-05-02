@@ -147,6 +147,7 @@ class _OilpanGCTimesBase(legacy_page_test.LegacyPageTest):
   def ValidateAndMeasurePage(self, page, tab, results):
     del page  # unused
     timeline_data = tab.browser.platform.tracing_controller.StopTracing()
+    print timeline_data
     timeline_model = TimelineModel(timeline_data)
     threads = timeline_model.GetAllThreads()
     for thread in threads:
@@ -179,7 +180,7 @@ class OilpanGCTimesForBlinkPerf(_OilpanGCTimesBase):
 
   def __init__(self):
     super(OilpanGCTimesForBlinkPerf, self).__init__()
-    with open(os.path.join(os.path.dirname(__file__), '..', 'benchmarks',
+    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'benchmarks',
                            'blink_perf.js'), 'r') as f:
       self._blink_perf_js = f.read()
 
