@@ -1905,7 +1905,13 @@ void WebViewImpl::ResizeViewWhileAnchored(float browser_controls_height,
     // Avoids unnecessary invalidations while various bits of state in
     // TextAutosizer are updated.
     TextAutosizer::DeferUpdatePageInfo defer_update_page_info(GetPage());
+    FrameView* frame_view = MainFrameImpl()->GetFrameView();
+    IntRect old_rect = frame_view->FrameRect();
     UpdateICBAndResizeViewport();
+    IntRect new_rect = frame_view->FrameRect();
+    frame_view->MarkViewportConstrainedObjectsForLayout(
+        old_rect.Width() != new_rect.Width(),
+        old_rect.Height() != new_rect.Height());
   }
 
   fullscreen_controller_->UpdateSize();
@@ -3166,14 +3172,6 @@ void WebViewImpl::RefreshPageScaleFactorAfterLayout() {
   SetPageScaleFactor(new_page_scale_factor);
 
   UpdateLayerTreeViewport();
-
-  // Changes to page-scale during layout may require an additional frame.
-  // We can't update the lifecycle here because we may be in the middle of
-  // layout in the caller of this method.
-  // TODO(chrishtr): clean all this up. All layout should happen in one
-  // lifecycle run (crbug.com/578239).
-  if (MainFrameImpl()->GetFrameView()->NeedsLayout())
-    MainFrameImpl()->FrameWidget()->ScheduleAnimation();
 }
 
 void WebViewImpl::UpdatePageDefinedViewportConstraints(
@@ -3662,11 +3660,8 @@ void WebViewImpl::DidCommitLoad(bool is_new_navigation,
 }
 
 void WebViewImpl::ResizeFrameView(WebLocalFrameImpl* webframe) {
-  FrameView* view = webframe->GetFrame()->View();
   if (webframe == MainFrame())
     resize_viewport_anchor_->ResizeFrameView(MainFrameSize());
-  else
-    view->Resize(webframe->GetFrameView()->Size());
 }
 
 void WebViewImpl::ResizeAfterLayout(WebLocalFrameImpl* webframe) {
@@ -3691,16 +3686,13 @@ void WebViewImpl::ResizeAfterLayout(WebLocalFrameImpl* webframe) {
   if (GetPageScaleConstraintsSet().ConstraintsDirty())
     RefreshPageScaleFactorAfterLayout();
 
-  UpdateICBAndResizeViewport();
+  ResizeFrameView(webframe);
 }
 
 void WebViewImpl::LayoutUpdated(WebLocalFrameImpl* webframe) {
   LocalFrame* frame = webframe->GetFrame();
-  if (!client_ || !client_->CanUpdateLayout() || !frame->IsMainFrame())
+  if (!client_ || !frame->IsLocalRoot())
     return;
-
-  ResizeAfterLayout(webframe);
-
   // Relayout immediately to avoid violating the rule that needsLayout()
   // isn't set at the end of a layout.
   FrameView* view = frame->View();
