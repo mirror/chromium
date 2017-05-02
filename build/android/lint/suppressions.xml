@@ -437,10 +437,6 @@ Still reading?
     <!-- TODO(crbug.com/635567): Fix this properly. -->
     <ignore regexp="content/shell/android/shell_apk/res/values/strings.xml"/>
   </issue>
-  <!-- TODO(crbug.com/669629): Remove this when the Chromecast dependency on old layout code is removed. -->
-  <issue id="UseCompoundDrawables">
-    <ignore regexp="chromecast/internal/android/prebuilt/settings/res/layout-v17/setup_activity_progress.xml"/>
-  </issue>
   <issue id="UselessParent">
     <ignore regexp="android_webview/tools/system_webview_shell/apk/res/layout/activity_webview_browser.xml"/>
     <ignore regexp="chrome/android/java/res/layout/data_usage_breakdown.xml"/>
