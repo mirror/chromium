@@ -105,6 +105,7 @@
 #include "media/media_features.h"
 #include "media/mojo/interfaces/media_service.mojom.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
+#include "media/mojo/services/media_interface_provider.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
@@ -974,14 +975,16 @@ bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
   params->previous_sibling_routing_id = previous_sibling_routing_id;
   params->replication_state = frame_tree_node()->current_replication_state();
 
-  // Normally, the replication state contains effective sandbox flags,
-  // excluding flags that were updated but have not taken effect.  However, a
-  // new RenderFrame should use the pending sandbox flags, since it is being
-  // created as part of the navigation that will commit these flags. (I.e., the
-  // RenderFrame needs to know the flags to use when initializing the new
-  // document once it commits).
+  // Normally, the replication state contains effective frame policy, excluding
+  // sandbox flags and feature policy attributes that were updated but have not
+  // taken effect. However, a new RenderFrame should use the pending frame
+  // policy, since it is being created as part of the navigation that will
+  // commit it. (I.e., the RenderFrame needs to know the policy to use when
+  // initializing the new document once it commits).
   params->replication_state.sandbox_flags =
       frame_tree_node()->pending_sandbox_flags();
+  params->replication_state.container_policy =
+      frame_tree_node()->pending_container_policy();
 
   params->frame_owner_properties =
       FrameOwnerProperties(frame_tree_node()->frame_owner_properties());
@@ -1684,15 +1687,6 @@ void RenderFrameHostImpl::OnSwappedOut() {
 
 void RenderFrameHostImpl::DisableSwapOutTimerForTesting() {
   swapout_event_monitor_timeout_.reset();
-}
-
-void RenderFrameHostImpl::OnRendererConnect(
-    const service_manager::ServiceInfo& local_info,
-    const service_manager::ServiceInfo& remote_info) {
-  if (remote_info.identity.name() != mojom::kRendererServiceName)
-    return;
-  browser_info_ = local_info;
-  renderer_info_ = remote_info;
 }
 
 void RenderFrameHostImpl::OnContextMenu(const ContextMenuParams& params) {
@@ -3084,17 +3078,6 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   static_cast<AssociatedInterfaceRegistry*>(associated_registry_.get())
       ->AddInterface(base::Bind(make_binding, base::Unretained(this)));
 
-  ServiceManagerConnection* service_manager_connection =
-      BrowserContext::GetServiceManagerConnectionFor(
-          GetProcess()->GetBrowserContext());
-  // |service_manager_connection| may not be set in unit tests using
-  // TestBrowserContext.
-  if (service_manager_connection) {
-    on_connect_handler_id_ = service_manager_connection->AddOnConnectHandler(
-        base::Bind(&RenderFrameHostImpl::OnRendererConnect,
-        weak_ptr_factory_.GetWeakPtr()));
-  }
-
   RegisterMojoInterfaces();
   mojom::FrameFactoryPtr frame_factory;
   BindInterface(GetProcess(), &frame_factory);
@@ -3112,15 +3095,6 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
 
 void RenderFrameHostImpl::InvalidateMojoConnection() {
   interface_registry_.reset();
-
-  ServiceManagerConnection* service_manager_connection =
-      BrowserContext::GetServiceManagerConnectionFor(
-          GetProcess()->GetBrowserContext());
-  // |service_manager_connection| may be null in tests using TestBrowserContext.
-  if (service_manager_connection) {
-    service_manager_connection->RemoveOnConnectHandler(on_connect_handler_id_);
-    on_connect_handler_id_ = 0;
-  }
 
   frame_.reset();
   frame_host_interface_broker_binding_.Close();
@@ -3826,23 +3800,40 @@ void RenderFrameHostImpl::BeforeUnloadTimeout() {
 }
 
 #if defined(OS_ANDROID)
+
+class RenderFrameHostImpl::JavaInterfaceProvider
+    : public service_manager::mojom::InterfaceProvider {
+ public:
+  JavaInterfaceProvider(
+      const service_manager::BinderRegistry::Binder& bind_callback,
+      service_manager::mojom::InterfaceProviderRequest request)
+      : bind_callback_(bind_callback), binding_(this, std::move(request)) {}
+  ~JavaInterfaceProvider() override = default;
+
+ private:
+  // service_manager::mojom::INterfaceProvider:
+  void GetInterface(const std::string& interface_name,
+                    mojo::ScopedMessagePipeHandle handle) override {
+    bind_callback_.Run(interface_name, std::move(handle));
+  }
+
+  service_manager::BinderRegistry::Binder bind_callback_;
+  mojo::Binding<service_manager::mojom::InterfaceProvider> binding_;
+
+  DISALLOW_COPY_AND_ASSIGN(JavaInterfaceProvider);
+};
+
 base::android::ScopedJavaLocalRef<jobject>
 RenderFrameHostImpl::GetJavaRenderFrameHost() {
   RenderFrameHostAndroid* render_frame_host_android =
       static_cast<RenderFrameHostAndroid*>(
           GetUserData(kRenderFrameHostAndroidKey));
   if (!render_frame_host_android) {
-    java_interface_registry_ =
-        base::MakeUnique<service_manager::InterfaceRegistry>(
-            "RenderFrameHost Java");
     service_manager::mojom::InterfaceProviderPtr interface_provider_ptr;
-    java_interface_registry_->set_default_binder(
+    java_interface_registry_ = base::MakeUnique<JavaInterfaceProvider>(
         base::Bind(&RenderFrameHostImpl::ForwardGetInterfaceToRenderFrame,
-                   weak_ptr_factory_.GetWeakPtr()));
-    java_interface_registry_->Bind(
-        mojo::MakeRequest(&interface_provider_ptr), service_manager::Identity(),
-        service_manager::InterfaceProviderSpec(), service_manager::Identity(),
-        service_manager::InterfaceProviderSpec());
+                   weak_ptr_factory_.GetWeakPtr()),
+        mojo::MakeRequest(&interface_provider_ptr));
     render_frame_host_android =
         new RenderFrameHostAndroid(this, std::move(interface_provider_ptr));
     SetUserData(kRenderFrameHostAndroidKey, render_frame_host_android);

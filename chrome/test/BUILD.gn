@@ -1512,7 +1512,7 @@ test("browser_tests") {
       "../browser/renderer_context_menu/spelling_menu_observer_browsertest.cc",
       "../browser/renderer_host/render_process_host_chrome_browsertest.cc",
       "../browser/repost_form_warning_browsertest.cc",
-      "../browser/safe_browsing/srt_fetcher_browsertest_win.cc",
+      "../browser/safe_browsing/chrome_cleaner/srt_fetcher_browsertest_win.cc",
       "../browser/safe_json_parser_browsertest.cc",
       "../browser/search/hotword_installer_browsertest.cc",
       "../browser/search/suggestions/image_fetcher_impl_browsertest.cc",
@@ -1903,6 +1903,7 @@ test("browser_tests") {
         "../browser/extensions/extension_with_management_policy_apitest.h",
         "../browser/extensions/updater/extension_cache_fake.cc",
         "../browser/extensions/updater/extension_cache_fake.h",
+        "../browser/safe_browsing/settings_reset_prompt/default_settings_fetcher_browsertest.cc",
         "../browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model_browsertest_win.cc",
         "../browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_test_utils.cc",
         "../browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_test_utils.h",
@@ -3506,6 +3507,7 @@ test("unit_tests") {
       "../browser/ui/browser_command_controller_unittest.cc",
       "../browser/ui/browser_instant_controller_unittest.cc",
       "../browser/ui/browser_unittest.cc",
+      "../browser/ui/browser_window_state_unittest.cc",
       "../browser/ui/chrome_bubble_manager_unittest.cc",
       "../browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
       "../browser/ui/content_settings/content_setting_image_model_unittest.cc",
@@ -3615,7 +3617,9 @@ test("unit_tests") {
       "../browser/download/download_dir_policy_handler_unittest.cc",
       "../browser/lifetime/keep_alive_registry_unittest.cc",
       "../browser/media/router/discovery/dial/device_description_fetcher_unittest.cc",
+      "../browser/media/router/discovery/dial/device_description_service_unittest.cc",
       "../browser/media/router/discovery/dial/dial_device_data_unittest.cc",
+      "../browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
       "../browser/media/router/discovery/dial/dial_registry_unittest.cc",
       "../browser/media/router/discovery/dial/dial_service_unittest.cc",
 
@@ -4969,7 +4973,6 @@ if (is_chromeos && enable_package_mash_services) {
   catalog("mash_browser_tests_catalog") {
     testonly = true
     embedded_services = [ ":mash_browser_tests_manifest" ]
-    standalone_services = [ "//services/tracing:manifest" ]
     catalog_deps = [ "//chrome/app/mash:catalog" ]
   }
 
@@ -5006,7 +5009,6 @@ if (is_chromeos && enable_package_mash_services) {
   catalog("mus_browser_tests_catalog") {
     testonly = true
     embedded_services = [ ":mus_browser_tests_manifest" ]
-    standalone_services = [ "//services/tracing:manifest" ]
     catalog_deps = [ "//chrome/app/mash:catalog_mus" ]
   }
 

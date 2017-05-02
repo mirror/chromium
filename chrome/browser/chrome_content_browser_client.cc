@@ -37,6 +37,7 @@
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/budget_service/budget_service_impl.h"
+#include "chrome/browser/cache_stats_recorder.h"
 #include "chrome/browser/chrome_content_browser_client_parts.h"
 #include "chrome/browser/chrome_quota_permission_context.h"
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
@@ -204,7 +205,6 @@
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-#include "services/service_manager/public/cpp/interface_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "third_party/WebKit/public/platform/modules/installedapp/installed_app_provider.mojom.h"
@@ -528,7 +528,7 @@ class ChromeServiceChromeOS
   }
 
   // service_manager::Service:
-  void OnBindInterface(const service_manager::ServiceInfo& remote_info,
+  void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
                        const std::string& name,
                        mojo::ScopedMessagePipeHandle handle) override {
     interfaces_.BindInterface(remote_info.identity, name, std::move(handle));
@@ -3087,7 +3087,16 @@ bool ChromeContentBrowserClient::PreSpawnRenderer(
 
 void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
     service_manager::BinderRegistry* registry,
+    content::AssociatedInterfaceRegistry* associated_registry,
     content::RenderProcessHost* render_process_host) {
+  // The CacheStatsRecorder is an associated binding, instead of a
+  // non-associated one, because the sender (in the renderer process) posts the
+  // message after a time delay, in order to rate limit. The association
+  // protects against the render process host ID being recycled in that time
+  // gap between the preparation and the execution of that IPC.
+  associated_registry->AddInterface(
+      base::Bind(&CacheStatsRecorder::Create, render_process_host->GetID()));
+
   scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner =
       content::BrowserThread::GetTaskRunnerForThread(
           content::BrowserThread::UI);
@@ -3139,7 +3148,7 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
 }
 
 void ChromeContentBrowserClient::ExposeInterfacesToMediaService(
-    service_manager::InterfaceRegistry* registry,
+    service_manager::BinderRegistry* registry,
     content::RenderFrameHost* render_frame_host) {
 // TODO(xhwang): Only register this when ENABLE_MOJO_MEDIA.
 #if defined(OS_CHROMEOS)
@@ -3235,7 +3244,7 @@ void ChromeContentBrowserClient::ExposeInterfacesToFrame(
 }
 
 void ChromeContentBrowserClient::BindInterfaceRequest(
-    const service_manager::ServiceInfo& source_info,
+    const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle* interface_pipe) {
   if (source_info.identity.name() == content::mojom::kGpuServiceName &&

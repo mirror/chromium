@@ -239,11 +239,11 @@ const base::Feature kOfflinePageDownloadSuggestionsFeature{
 const base::Feature kPermissionsBlacklist{
     "PermissionsBlacklist", base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Enables PostScript generation instead of EMF when printing to PostScript
-// capable printers.
+// Disables PostScript generation when printing to PostScript capable printers
+// and instead sends Emf files.
 #if defined(OS_WIN)
-const base::Feature kPostScriptPrinting{"PostScriptPrinting",
-                                        base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kDisablePostScriptPrinting{
+    "DisablePostScriptPrinting", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -308,6 +308,11 @@ const base::Feature kSyzyasanDeferredFree{"SyzyasanDeferredFree",
 // multiple permission requests.
 const base::Feature kUseGroupedPermissionInfobars{
     "UseGroupedPermissionInfobars", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Feature to use the PermissionManager to show prompts for WebRTC permission
+// requests.
+const base::Feature kUsePermissionManagerForMediaRequests{
+    "UsePermissionManagerForMediaRequests", base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_CHROMEOS)
 // Enables or disables the opt-in IME menu in the language settings page.

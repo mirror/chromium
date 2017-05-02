@@ -11,6 +11,7 @@
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/MainThreadDebugger.h"
+#include "core/probe/CoreProbes.h"
 
 namespace blink {
 
@@ -65,15 +66,8 @@ void MainThreadWorkletGlobalScope::FetchAndInvokeScript(
   script_loader->FetchScript(module_url_record);
 }
 
-void MainThreadWorkletGlobalScope::EvaluateScript(
-    const ScriptSourceCode& script_source_code) {
-  // This should be called only for threaded worklets that still use classic
-  // script loading.
-  NOTREACHED();
-}
-
 // TODO(nhiroki): Add tests for termination.
-void MainThreadWorkletGlobalScope::TerminateWorkletGlobalScope() {
+void MainThreadWorkletGlobalScope::Terminate() {
   for (auto it = loader_map_.begin(); it != loader_map_.end();) {
     WorkletScriptLoader* script_loader = it->key;
     // Cancel() eventually calls NotifyWorkletScriptLoadingFinished() and
@@ -122,6 +116,10 @@ void MainThreadWorkletGlobalScope::AddConsoleMessage(
 
 void MainThreadWorkletGlobalScope::ExceptionThrown(ErrorEvent* event) {
   MainThreadDebugger::Instance()->ExceptionThrown(this, event);
+}
+
+CoreProbeSink* MainThreadWorkletGlobalScope::GetProbeSink() {
+  return probe::ToCoreProbeSink(GetFrame());
 }
 
 DEFINE_TRACE(MainThreadWorkletGlobalScope) {

@@ -6,6 +6,7 @@
 #define WebViewBase_h
 
 #include "platform/transforms/TransformationMatrix.h"
+#include "platform/wtf/RefCounted.h"
 #include "public/platform/WebDisplayMode.h"
 #include "public/platform/WebInputEventResult.h"
 #include "public/web/WebElement.h"
@@ -13,14 +14,25 @@
 
 namespace blink {
 
+class AnimationWorkletProxyClient;
+class ChromeClient;
+class CompositorAnimationHost;
+class CompositorWorkerProxyClient;
 class CompositorAnimationTimeline;
 class ContextMenuProvider;
 class DevToolsEmulator;
 class Frame;
+class GraphicsLayer;
+class HitTestResult;
 class Page;
+class PaintLayerCompositor;
+class PagePopup;
+class PagePopupClient;
 class PageScaleConstraintsSet;
 class WebInputEvent;
+class WebInputMethodControllerImpl;
 class WebKeyboardEvent;
+class WebLayer;
 class WebLocalFrameImpl;
 class WebLayerTreeView;
 class WebPagePopupImpl;
@@ -34,8 +46,10 @@ struct WebRect;
 //
 // Once WebViewImpl is moved from web to core/exported then this class should be
 // removed and clients can once again depend on WebViewImpl.
-class WebViewBase : public WebView {
+class WebViewBase : public WebView, public RefCounted<WebViewBase> {
  public:
+  virtual ~WebViewBase() {}
+
   virtual void SetBaseBackgroundColor(WebColor) = 0;
   virtual void SetBaseBackgroundColorOverride(WebColor) = 0;
   virtual void ClearBaseBackgroundColorOverride() = 0;
@@ -48,6 +62,9 @@ class WebViewBase : public WebView {
 
   virtual Page* GetPage() const = 0;
   virtual Frame* FocusedCoreFrame() const = 0;
+
+  static WebViewBase* FromPage(Page*);
+  static HashSet<WebViewBase*>& AllInstances();
 
   // Returns the main frame associated with this view. This may be null when
   // the page is shutting down, but will be valid at all other times.
@@ -105,7 +122,63 @@ class WebViewBase : public WebView {
 
   virtual WebSettingsImpl* SettingsImpl() = 0;
 
+  using WebWidget::GetPagePopup;
+  virtual PagePopup* OpenPagePopup(PagePopupClient*) = 0;
+  virtual void ClosePagePopup(PagePopup*) = 0;
+  virtual void CleanupPagePopup() = 0;
+  virtual LocalDOMWindow* PagePopupWindow() const = 0;
+
+  virtual void InvalidateRect(const IntRect&) = 0;
+  // Indicates two things:
+  //   1) This view may have a new layout now.
+  //   2) Calling updateAllLifecyclePhases() is a no-op.
+  // After calling WebWidget::updateAllLifecyclePhases(), expect to get this
+  // notification unless the view did not need a layout.
+  virtual void LayoutUpdated(WebLocalFrameImpl*) = 0;
+  virtual void ResizeAfterLayout(WebLocalFrameImpl*) = 0;
+
+  virtual void UpdatePageDefinedViewportConstraints(
+      const ViewportDescription&) = 0;
+
+  virtual void EnterFullscreen(LocalFrame&) = 0;
+  virtual void ExitFullscreen(LocalFrame&) = 0;
+  virtual void FullscreenElementChanged(Element*, Element*) = 0;
+
+  virtual bool HasOpenedPopup() const = 0;
+
+  // Returns true if popup menus should be rendered by the browser, false if
+  // they should be rendered by WebKit (which is the default).
+  static bool UseExternalPopupMenus();
+
+  virtual GraphicsLayer* RootGraphicsLayer() = 0;
+  virtual void RegisterViewportLayersWithCompositor() = 0;
+  virtual PaintLayerCompositor* Compositor() const = 0;
+
+  virtual void DidUpdateBrowserControls() = 0;
+  virtual FloatSize ElasticOverscroll() const = 0;
+  virtual double LastFrameTimeMonotonic() const = 0;
+
   static const WebInputEvent* CurrentInputEvent();
+
+  virtual void SetCompositorVisibility(bool) = 0;
+  using WebWidget::SetSuppressFrameRequestsWorkaroundFor704763Only;
+  using WebWidget::RecordWheelAndTouchScrollingCount;
+  using WebWidget::GetCompositionCharacterBounds;
+  // Returns the currently active WebInputMethodController which is the one
+  // corresponding to the focused frame. It will return nullptr if there is no
+  // focused frame, or if there is one but it belongs to a different local
+  // root.
+  virtual WebInputMethodControllerImpl* GetActiveWebInputMethodController()
+      const = 0;
+  virtual void ScheduleAnimationForWidget() = 0;
+  virtual CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient() = 0;
+  virtual AnimationWorkletProxyClient* CreateAnimationWorkletProxyClient() = 0;
+  virtual void SetRootGraphicsLayer(GraphicsLayer*) = 0;
+  virtual void SetRootLayer(WebLayer*) = 0;
+  virtual CompositorAnimationHost* AnimationHost() const = 0;
+  virtual HitTestResult CoreHitTestResultAt(const WebPoint&) = 0;
+
+  virtual class ChromeClient& ChromeClient() const = 0;
 };
 }
 

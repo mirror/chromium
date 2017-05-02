@@ -796,31 +796,26 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     int request_id =
         version_->StartRequest(ServiceWorkerMetrics::EventType::INSTALL,
                                CreateReceiver(BrowserThread::UI, done, result));
-    version_
-        ->RegisterRequestCallback<ServiceWorkerHostMsg_InstallEventFinished>(
-            request_id, base::Bind(&self::ReceiveInstallEventOnIOThread,
-                                   base::Unretained(this), done, result));
-    version_->DispatchEvent({request_id},
-                            ServiceWorkerMsg_InstallEvent(request_id));
+    mojom::ServiceWorkerInstallEventMethodsAssociatedPtrInfo ptr_info;
+    mojo::MakeRequest(&ptr_info);
+    version_->event_dispatcher()->DispatchInstallEvent(
+        std::move(ptr_info),
+        base::Bind(&self::ReceiveInstallEventOnIOThread, base::Unretained(this),
+                   done, result, request_id));
   }
 
   void ReceiveInstallEventOnIOThread(const base::Closure& done,
                                      ServiceWorkerStatusCode* out_result,
                                      int request_id,
-                                     blink::WebServiceWorkerEventResult result,
+                                     ServiceWorkerStatusCode status,
                                      bool has_fetch_handler,
                                      base::Time dispatch_event_time) {
-    version_->FinishRequest(
-        request_id, result == blink::kWebServiceWorkerEventResultCompleted,
-        dispatch_event_time);
+    version_->FinishRequest(request_id, status == SERVICE_WORKER_OK,
+                            dispatch_event_time);
     version_->set_fetch_handler_existence(
         has_fetch_handler
             ? ServiceWorkerVersion::FetchHandlerExistence::EXISTS
             : ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST);
-
-    ServiceWorkerStatusCode status = SERVICE_WORKER_OK;
-    if (result == blink::kWebServiceWorkerEventResultRejected)
-      status = SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED;
 
     *out_result = status;
     if (!done.is_null())
@@ -1230,8 +1225,8 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest, FetchEvent_Response) {
   EXPECT_EQ(301, response.status_code);
   EXPECT_EQ("Moved Permanently", response.status_text);
   ServiceWorkerHeaderMap expected_headers;
-  expected_headers["Content-Language"] = "fi";
-  expected_headers["Content-Type"] = "text/html; charset=UTF-8";
+  expected_headers["content-language"] = "fi";
+  expected_headers["content-type"] = "text/html; charset=UTF-8";
   EXPECT_EQ(expected_headers, response.headers);
 
   std::string body;

@@ -20,6 +20,7 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/property_tree_builder.h"
 #include "cc/trees/scroll_node.h"
+#include "cc/trees/transform_node.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
 #include "ui/gfx/transform.h"
@@ -183,21 +184,21 @@ ScrollAndScaleSet::ScrollAndScaleSet()
 
 ScrollAndScaleSet::~ScrollAndScaleSet() {}
 
-static inline void SetMaskLayersAreDrawnRenderSurfaceLayerListMembers(
+static inline void SetMaskLayersContributeToDrawnRenderSurface(
     RenderSurfaceImpl* surface,
     PropertyTrees* property_trees) {
   LayerImpl* mask_layer = surface->MaskLayer();
   if (mask_layer) {
-    mask_layer->set_is_drawn_render_surface_layer_list_member(true);
+    mask_layer->set_contributes_to_drawn_render_surface(true);
     draw_property_utils::ComputeMaskDrawProperties(mask_layer, property_trees);
   }
 }
 
-static inline void ClearMaskLayersAreDrawnRenderSurfaceLayerListMembers(
+static inline void ClearMaskLayersContributeToDrawnRenderSurface(
     RenderSurfaceImpl* surface) {
   LayerImpl* mask_layer = surface->MaskLayer();
   if (mask_layer)
-    mask_layer->set_is_drawn_render_surface_layer_list_member(false);
+    mask_layer->set_contributes_to_drawn_render_surface(false);
 }
 
 static bool CdpPerfTracingEnabled() {
@@ -332,7 +333,7 @@ static void ComputeInitialRenderSurfaceList(
     if (RenderSurfaceImpl* render_surface = effect_tree.GetRenderSurface(i)) {
       render_surface->set_is_render_surface_list_member(false);
       render_surface->reset_num_contributors();
-      ClearMaskLayersAreDrawnRenderSurfaceLayerListMembers(render_surface);
+      ClearMaskLayersContributeToDrawnRenderSurface(render_surface);
     }
   }
 
@@ -345,12 +346,23 @@ static void ComputeInitialRenderSurfaceList(
   // it's not already been added, and add their content rect to the target
   // surface's accumulated content rect.
   for (LayerImpl* layer : *layer_tree_impl) {
-    layer->set_is_drawn_render_surface_layer_list_member(false);
+    layer->set_contributes_to_drawn_render_surface(false);
 
     bool is_root = layer_tree_impl->IsRootLayer(layer);
-    bool skip_layer = !is_root && draw_property_utils::LayerShouldBeSkipped(
-                                      layer, property_trees->transform_tree,
-                                      property_trees->effect_tree);
+
+    bool skip_draw_properties_computation =
+        draw_property_utils::LayerShouldBeSkippedForDrawPropertiesComputation(
+            layer, property_trees->transform_tree, property_trees->effect_tree);
+
+    const TransformNode* transform_node =
+        property_trees->transform_tree.Node(layer->transform_tree_index());
+    bool skip_for_invertibility = !transform_node->ancestors_are_invertible;
+
+    bool skip_layer = !is_root && (skip_draw_properties_computation ||
+                                   skip_for_invertibility);
+
+    layer->set_raster_even_if_not_in_rsll(skip_for_invertibility &&
+                                          !skip_draw_properties_computation);
     if (skip_layer)
       continue;
 
@@ -367,7 +379,7 @@ static void ComputeInitialRenderSurfaceList(
                                     property_trees);
     }
 
-    layer->set_is_drawn_render_surface_layer_list_member(true);
+    layer->set_contributes_to_drawn_render_surface(true);
 
     // The layer contributes its drawable content rect to its render target.
     render_target->AccumulateContentRectFromContributingLayer(layer);
@@ -425,15 +437,15 @@ static void ComputeListOfNonEmptySurfaces(
       target_surface->decrement_num_contributors();
       continue;
     }
-    SetMaskLayersAreDrawnRenderSurfaceLayerListMembers(surface, property_trees);
+    SetMaskLayersContributeToDrawnRenderSurface(surface, property_trees);
     final_surface_list->push_back(surface);
   }
   if (removed_surface) {
     for (LayerImpl* layer : *layer_tree_impl) {
-      if (layer->is_drawn_render_surface_layer_list_member()) {
+      if (layer->contributes_to_drawn_render_surface()) {
         RenderSurfaceImpl* render_target = layer->render_target();
         if (!render_target->is_render_surface_list_member()) {
-          layer->set_is_drawn_render_surface_layer_list_member(false);
+          layer->set_contributes_to_drawn_render_surface(false);
           render_target->decrement_num_contributors();
         }
       }

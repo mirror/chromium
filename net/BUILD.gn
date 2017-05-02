@@ -41,7 +41,7 @@ enable_built_in_dns = !is_ios && !is_proto_quic
 # in addition to use_openssl_certs or use_nss_certs, in that case byte certs
 # are used internally but OpenSSL or NSS are used for certificate verification.
 # TODO(mattm): crbug.com/671420: Implement and enable this for all platforms.
-use_byte_certs = is_mac
+use_byte_certs = is_mac || is_android
 
 buildflag_header("features") {
   header = "net_features.h"
@@ -1583,7 +1583,6 @@ component("net") {
       "spdy/core/hpack/hpack_static_table.h",
       "spdy/core/http2_frame_decoder_adapter.cc",
       "spdy/core/http2_frame_decoder_adapter.h",
-      "spdy/core/lifo_write_scheduler.h",
       "spdy/core/priority_write_scheduler.h",
       "spdy/core/spdy_alt_svc_wire_format.cc",
       "spdy/core/spdy_alt_svc_wire_format.h",
@@ -4606,9 +4605,12 @@ test("net_unittests") {
     "quic/platform/api/quic_lru_cache_test.cc",
     "quic/platform/api/quic_reference_counted_test.cc",
     "quic/platform/api/quic_str_cat_test.cc",
+    "quic/platform/api/quic_test.h",
     "quic/platform/api/quic_text_utils_test.cc",
     "quic/platform/api/quic_url_test.cc",
     "quic/platform/impl/quic_chromium_clock_test.cc",
+    "quic/platform/impl/quic_test_impl.cc",
+    "quic/platform/impl/quic_test_impl.h",
     "quic/quartc/quartc_alarm_factory_test.cc",
     "quic/quartc/quartc_session_test.cc",
     "quic/quartc/quartc_stream_test.cc",
@@ -4768,7 +4770,6 @@ test("net_unittests") {
     "spdy/core/hpack/hpack_output_stream_test.cc",
     "spdy/core/hpack/hpack_round_trip_test.cc",
     "spdy/core/hpack/hpack_static_table_test.cc",
-    "spdy/core/lifo_write_scheduler_test.cc",
     "spdy/core/mock_spdy_framer_visitor.cc",
     "spdy/core/mock_spdy_framer_visitor.h",
     "spdy/core/priority_write_scheduler_test.cc",

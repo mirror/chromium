@@ -331,8 +331,7 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
         SetChildNeedsLayout();
       CreateLayerAfterStyleChange();
       if (Parent() && !NeedsLayout()) {
-        // FIXME: We should call specialized versions of these functions.
-        Layer()->UpdateScrollingAfterLayout();
+        // FIXME: We should call a specialized versions of this function.
         Layer()->UpdateLayerPositionsAfterLayout();
       }
     }
@@ -550,7 +549,7 @@ void LayoutBoxModelObject::AddLayerHitTestRects(
 }
 
 DISABLE_CFI_PERF
-void LayoutBoxModelObject::InvalidateTreeIfNeeded(
+void LayoutBoxModelObject::DeprecatedInvalidateTree(
     const PaintInvalidationState& paint_invalidation_state) {
   DCHECK(!RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled());
   EnsureIsReadyForPaintInvalidation();
@@ -569,7 +568,7 @@ void LayoutBoxModelObject::InvalidateTreeIfNeeded(
   LayoutRect previous_visual_rect = VisualRect();
   LayoutPoint previous_location = paint_invalidator.LocationInBacking();
   PaintInvalidationReason reason =
-      InvalidatePaint(new_paint_invalidation_state);
+      DeprecatedInvalidatePaint(new_paint_invalidation_state);
 
   if (previous_location != paint_invalidator.LocationInBacking()) {
     new_paint_invalidation_state
@@ -589,7 +588,7 @@ void LayoutBoxModelObject::InvalidateTreeIfNeeded(
   }
 
   new_paint_invalidation_state.UpdateForChildren(reason);
-  InvalidatePaintOfSubtreesIfNeeded(new_paint_invalidation_state);
+  DeprecatedInvalidatePaintOfSubtrees(new_paint_invalidation_state);
 
   ClearPaintInvalidationFlags();
 }

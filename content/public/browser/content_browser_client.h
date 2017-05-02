@@ -19,6 +19,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/certificate_request_result_type.h"
 #include "content/public/browser/navigation_throttle.h"
+#include "content/public/common/associated_interface_registry.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/media_stream_request.h"
 #include "content/public/common/resource_type.h"
@@ -66,9 +67,8 @@ class CdmFactory;
 
 namespace service_manager {
 class BinderRegistry;
-class InterfaceRegistry;
 class Service;
-struct ServiceInfo;
+struct BindSourceInfo;
 }
 
 namespace net {
@@ -665,12 +665,13 @@ class CONTENT_EXPORT ContentBrowserClient {
   // task runner is provided.
   virtual void ExposeInterfacesToRenderer(
       service_manager::BinderRegistry* registry,
+      AssociatedInterfaceRegistry* associated_registry,
       RenderProcessHost* render_process_host) {}
 
   // Called when RenderFrameHostImpl connects to the Media service. Expose
   // interfaces to the service using |registry|.
   virtual void ExposeInterfacesToMediaService(
-      service_manager::InterfaceRegistry* registry,
+      service_manager::BinderRegistry* registry,
       RenderFrameHost* render_frame_host) {}
 
   // Allows to register browser Mojo interfaces exposed through the
@@ -684,7 +685,7 @@ class CONTENT_EXPORT ContentBrowserClient {
   // received from |source_info.identity|. If the request is bound,
   // |interface_pipe| will become invalid (taken by the client).
   virtual void BindInterfaceRequest(
-      const service_manager::ServiceInfo& source_info,
+      const service_manager::BindSourceInfo& source_info,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) {}
 

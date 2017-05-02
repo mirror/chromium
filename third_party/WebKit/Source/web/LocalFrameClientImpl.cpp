@@ -38,6 +38,7 @@
 #include "core/events/MessageEvent.h"
 #include "core/events/MouseEvent.h"
 #include "core/events/UIEventWithKeyState.h"
+#include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/FrameView.h"
@@ -101,7 +102,6 @@
 #include "public/web/WebViewClient.h"
 #include "v8/include/v8.h"
 #include "web/DevToolsEmulator.h"
-#include "web/SharedWorkerRepositoryClientImpl.h"
 #include "web/WebDevToolsAgentImpl.h"
 #include "web/WebDevToolsFrontendImpl.h"
 #include "web/WebLocalFrameImpl.h"
@@ -907,7 +907,7 @@ std::unique_ptr<WebServiceWorkerProvider>
 LocalFrameClientImpl::CreateServiceWorkerProvider() {
   if (!web_frame_->Client())
     return nullptr;
-  return WTF::WrapUnique(web_frame_->Client()->CreateServiceWorkerProvider());
+  return web_frame_->Client()->CreateServiceWorkerProvider();
 }
 
 ContentSettingsClient& LocalFrameClientImpl::GetContentSettingsClient() {
@@ -924,8 +924,7 @@ LocalFrameClientImpl::CreateApplicationCacheHost(
     WebApplicationCacheHostClient* client) {
   if (!web_frame_->Client())
     return nullptr;
-  return WTF::WrapUnique(
-      web_frame_->Client()->CreateApplicationCacheHost(client));
+  return web_frame_->Client()->CreateApplicationCacheHost(client);
 }
 
 void LocalFrameClientImpl::DispatchDidChangeManifest() {

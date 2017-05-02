@@ -205,6 +205,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
     return scale;
   }
   virtual void MainFrameScrollOffsetChanged() const {}
+  virtual void ResizeAfterLayout(LocalFrame*) const {}
   virtual void LayoutUpdated(LocalFrame*) const {}
 
   void MouseDidMoveOverElement(LocalFrame&, const HitTestResult&);
@@ -326,6 +327,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
 
   virtual void RegisterPopupOpeningObserver(PopupOpeningObserver*) = 0;
   virtual void UnregisterPopupOpeningObserver(PopupOpeningObserver*) = 0;
+  virtual void NotifyPopupOpeningObservers() const = 0;
 
   virtual CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient(
       LocalFrame*) = 0;
@@ -368,7 +370,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void PrintDelegate(LocalFrame*) = 0;
 
  private:
-  bool CanOpenModalIfDuringPageDismissal(Frame* main_frame,
+  bool CanOpenModalIfDuringPageDismissal(Frame& main_frame,
                                          DialogType,
                                          const String& message);
   void SetToolTip(LocalFrame&, const HitTestResult&);

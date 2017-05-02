@@ -183,7 +183,7 @@ static bool WithinHTMLDateLimits(int year,
 }
 
 bool DateComponents::AddDay(int day_diff) {
-  ASSERT(month_day_);
+  DCHECK(month_day_);
 
   int day = month_day_ + day_diff;
   if (day > MaxDayOfMonth(year_, month_)) {
@@ -664,7 +664,7 @@ double DateComponents::MillisecondsSinceEpoch() const {
     case kInvalid:
       break;
   }
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return InvalidMilliseconds();
 }
 
@@ -683,7 +683,7 @@ String DateComponents::ToStringForTime(SecondFormat format) const {
 
   switch (effective_format) {
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
     // Fallback to None.
     case kNone:
       return String::Format("%02d:%02d", hour_, minute_);
@@ -714,7 +714,7 @@ String DateComponents::ToString(SecondFormat format) const {
     case kInvalid:
       break;
   }
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return String("(Invalid DateComponents)");
 }
 

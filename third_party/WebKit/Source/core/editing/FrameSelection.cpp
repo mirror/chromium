@@ -658,6 +658,11 @@ void FrameSelection::SelectAll() {
     if (select_start_target->DispatchEvent(Event::CreateCancelableBubble(
             EventTypeNames::selectstart)) != DispatchEventResult::kNotCanceled)
       return;
+    // The frame may be detached due to selectstart event.
+    if (!IsAvailable()) {
+      // Reached by editing/selection/selectstart_detach_frame.html
+      return;
+    }
     // |root| may be detached due to selectstart event.
     if (!root->isConnected() || expected_document != root->GetDocument())
       return;
@@ -1048,7 +1053,7 @@ DEFINE_TRACE(FrameSelection) {
 
 void FrameSelection::ScheduleVisualUpdate() const {
   if (Page* page = frame_->GetPage())
-    page->Animator().ScheduleVisualUpdate(frame_->LocalFrameRoot());
+    page->Animator().ScheduleVisualUpdate(&frame_->LocalFrameRoot());
 }
 
 void FrameSelection::ScheduleVisualUpdateForPaintInvalidationIfNeeded() const {

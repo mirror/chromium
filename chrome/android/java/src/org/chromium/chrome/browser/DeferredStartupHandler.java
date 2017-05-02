@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -28,7 +29,6 @@ import org.chromium.chrome.browser.bookmarkswidget.BookmarkWidgetProvider;
 import org.chromium.chrome.browser.crash.LogcatExtractionRunnable;
 import org.chromium.chrome.browser.crash.MinidumpUploadService;
 import org.chromium.chrome.browser.init.ProcessInitializationHandler;
-import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.media.MediaCaptureNotificationService;
 import org.chromium.chrome.browser.metrics.LaunchMetrics;
 import org.chromium.chrome.browser.metrics.UmaUtils;
@@ -38,7 +38,6 @@ import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksShim;
 import org.chromium.chrome.browser.partnercustomizations.HomepageManager;
 import org.chromium.chrome.browser.partnercustomizations.PartnerBrowserCustomizations;
-import org.chromium.chrome.browser.physicalweb.PhysicalWeb;
 import org.chromium.chrome.browser.precache.PrecacheLauncher;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.share.ShareHelper;
@@ -69,6 +68,7 @@ public class DeferredStartupHandler {
     private static final String SNAPSHOT_DATABASE_NAME = "snapshots.db";
 
     private static class Holder {
+        @SuppressLint("StaticFieldLeak")
         private static final DeferredStartupHandler INSTANCE = new DeferredStartupHandler();
     }
 
@@ -93,6 +93,7 @@ public class DeferredStartupHandler {
         sDeferredStartupHandler = handler;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private static DeferredStartupHandler sDeferredStartupHandler;
 
     protected DeferredStartupHandler() {
@@ -217,37 +218,6 @@ public class DeferredStartupHandler {
                 startModerateBindingManagementIfNeeded();
 
                 recordKeyboardLocaleUma();
-            }
-        });
-
-        mDeferredTasks.add(new Runnable() {
-            @Override
-            public void run() {
-                // Start or stop Physical Web
-                PhysicalWeb.onChromeStart();
-            }
-        });
-
-        mDeferredTasks.add(new Runnable() {
-            @Override
-            public void run() {
-                LocaleManager.getInstance().recordStartupMetrics();
-            }
-        });
-
-        mDeferredTasks.add(new Runnable() {
-            @Override
-            public void run() {
-                // Starts syncing with GSA.
-                AppHooks.get().createGsaHelper().startSync();
-            }
-        });
-
-        mDeferredTasks.add(new Runnable() {
-            @Override
-            public void run() {
-                // Record the saved restore state in a histogram
-                ChromeBackupAgent.recordRestoreHistogram();
             }
         });
 

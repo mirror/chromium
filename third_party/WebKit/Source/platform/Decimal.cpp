@@ -107,7 +107,7 @@ SpecialValueHandler::HandleResult SpecialValueHandler::Handle() {
   if (rhs_class == Decimal::EncodedData::kClassInfinity)
     return kRHSIsInfinity;
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return kBothFinite;
 }
 
@@ -119,7 +119,7 @@ Decimal SpecialValueHandler::Value() const {
       return rhs_;
     case kResultIsUnknown:
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
       return lhs_;
   }
 }
@@ -156,7 +156,7 @@ class UInt128 {
 };
 
 UInt128& UInt128::operator/=(const uint32_t divisor) {
-  ASSERT(divisor);
+  DCHECK(divisor);
 
   if (!high_) {
     low_ /= divisor;
@@ -426,7 +426,7 @@ Decimal Decimal::operator*(const Decimal& rhs) const {
       return lhs.IsZero() ? Nan() : Infinity(result_sign);
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return Nan();
 }
 
@@ -454,8 +454,8 @@ Decimal Decimal::operator/(const Decimal& rhs) const {
       return Zero(result_sign);
   }
 
-  ASSERT(lhs.IsFinite());
-  ASSERT(rhs.IsFinite());
+  DCHECK(lhs.IsFinite());
+  DCHECK(rhs.IsFinite());
 
   if (rhs.IsZero())
     return lhs.IsZero() ? Nan() : Infinity(result_sign);
@@ -544,8 +544,8 @@ Decimal Decimal::Abs() const {
 
 Decimal::AlignedOperands Decimal::AlignOperands(const Decimal& lhs,
                                                 const Decimal& rhs) {
-  ASSERT(lhs.IsFinite());
-  ASSERT(rhs.IsFinite());
+  DCHECK(lhs.IsFinite());
+  DCHECK(rhs.IsFinite());
 
   const int lhs_exponent = lhs.Exponent();
   const int rhs_exponent = rhs.Exponent();
@@ -628,7 +628,7 @@ Decimal Decimal::CompareTo(const Decimal& rhs) const {
       return Zero(kPositive);
 
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
       return Nan();
   }
 }
@@ -829,7 +829,7 @@ Decimal Decimal::FromString(const String& str) {
         return Nan();
 
       default:
-        ASSERT_NOT_REACHED();
+        NOTREACHED();
         return Nan();
     }
   }
@@ -922,7 +922,7 @@ String Decimal::ToString() const {
       break;
 
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
       return "";
   }
 

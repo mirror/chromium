@@ -188,10 +188,6 @@
       status: "test",
     },
     {
-      name: "CredentialManager",
-      status: "stable",
-    },
-    {
       name: "CSS3Text",
       status: "experimental",
     },
@@ -260,14 +256,6 @@
     {
       name: "CSSOffsetPositionAnchor",
       status: "experimental",
-    },
-    {
-      name: "CSSOffsetRotate",
-      status: "stable",
-    },
-    {
-      name: "CSSOffsetRotation",
-      status: "stable",
     },
     {
       name: "CSSOMSmoothScroll",
@@ -638,7 +626,7 @@
     },
     {
       name: "ModuleScripts",
-      status: "test",
+      status: "experimental",
     },
     {
       name: "MojoJS",

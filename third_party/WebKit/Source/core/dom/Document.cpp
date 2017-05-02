@@ -29,11 +29,9 @@
 
 #include "core/dom/Document.h"
 
-#include "bindings/core/v8/DOMDataStore.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/HTMLScriptElementOrSVGScriptElement.h"
-#include "bindings/core/v8/Microtask.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/StringOrDictionary.h"
@@ -231,6 +229,8 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/ScriptForbiddenScope.h"
 #include "platform/WebFrameScheduler.h"
+#include "platform/bindings/DOMDataStore.h"
+#include "platform/bindings/Microtask.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
@@ -4912,12 +4912,12 @@ const KURL Document::FirstPartyForCookies() const {
 
   // TODO(mkwst): This doesn't correctly handle sandboxed documents; we want to
   // look at their URL, but we can't because we don't know what it is.
-  Frame* top = GetFrame()->Tree().Top();
+  Frame& top = GetFrame()->Tree().Top();
   KURL top_document_url =
-      top->IsLocalFrame()
-          ? ToLocalFrame(top)->GetDocument()->Url()
+      top.IsLocalFrame()
+          ? ToLocalFrame(top).GetDocument()->Url()
           : KURL(KURL(),
-                 top->GetSecurityContext()->GetSecurityOrigin()->ToString());
+                 top.GetSecurityContext()->GetSecurityOrigin()->ToString());
   if (SchemeRegistry::ShouldTreatURLSchemeAsFirstPartyWhenTopLevel(
           top_document_url.Protocol()))
     return top_document_url;
@@ -4926,8 +4926,8 @@ const KURL Document::FirstPartyForCookies() const {
   // document's SecurityOrigin.  Sandboxing a document into a unique origin
   // shouldn't effect first-/third-party status for cookies and site data.
   const OriginAccessEntry& access_entry =
-      top->IsLocalFrame()
-          ? ToLocalFrame(top)->GetDocument()->AccessEntryFromURL()
+      top.IsLocalFrame()
+          ? ToLocalFrame(top).GetDocument()->AccessEntryFromURL()
           : OriginAccessEntry(top_document_url.Protocol(),
                               top_document_url.Host(),
                               OriginAccessEntry::kAllowRegisterableDomains);
@@ -6664,6 +6664,13 @@ void Document::DecrementPasswordCount() {
   if (IsSecureContext() || password_count_ > 0)
     return;
   SendSensitiveInputVisibility();
+}
+
+CoreProbeSink* Document::GetProbeSink() {
+  LocalFrame* frame = GetFrame();
+  if (!frame && TemplateDocumentHost())
+    frame = TemplateDocumentHost()->GetFrame();
+  return probe::ToCoreProbeSink(frame);
 }
 
 DEFINE_TRACE(Document) {

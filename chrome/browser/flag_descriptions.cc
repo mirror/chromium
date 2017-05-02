@@ -929,12 +929,6 @@ const char kPinchScaleName[] = "Pinch scale";
 const char kPinchScaleDescription[] =
     "Enables experimental support for scale using pinch.";
 
-const char kCredentialManagerApiName[] = "Experimental Credential Manager API";
-
-const char kCredentialManagerApiDescription[] =
-    "Enables an experimental implementation of the Credential Manager API. "
-    "Don't enable this unless you know what you're doing.";
-
 const char kReducedReferrerGranularityName[] =
     "Reduce default 'referer' header granularity.";
 
@@ -1575,6 +1569,16 @@ const char kEnableAppcontainerDescription[] =
     "security.";
 
 #endif  // defined(OS_WIN)
+
+#if defined(TOOLKIT_VIEWS) || (defined(OS_MACOSX) && !defined(OS_IOS))
+
+const char kShowCertLinkOnPageInfoName[] = "Show certificate link";
+
+const char kShowCertLinkOnPageInfoDescription[] =
+    "Add a link from the Page Info bubble to the certificate viewer for HTTPS "
+    "sites.";
+
+#endif  // defined(TOOLKIT_VIEWS) || (defined(OS_MACOSX) && !defined(OS_IOS))
 
 #if defined(TOOLKIT_VIEWS) || defined(OS_ANDROID)
 
@@ -2732,11 +2736,11 @@ const char kWindows10CustomTitlebarDescription[] =
 
 #if defined(OS_WIN)
 
-const char kPostscriptPrinting[] = "PostScript Printing";
+const char kDisablePostscriptPrinting[] = "Disable PostScript Printing";
 
-const char kPostscriptPrintingDescription[] =
-    "Enable postscript generation in place of emf generation when printing "
-    "to postscript capable printers.";
+const char kDisablePostscriptPrintingDescription[] =
+    "Disables PostScript generation when printing to PostScript capable "
+    "printers, and uses EMF generation in its place.";
 
 #endif  // defined(OS_WIN)
 
@@ -3057,5 +3061,15 @@ const char kOmniboxDisplayTitleForCurrentUrlDescription[] =
     "In the event that the omnibox provides suggestions on-focus, the URL of "
     "the current page is provided as the first suggestion without a title. "
     "Enabling this flag causes the title to be displayed.";
+
+const char kEnableHeapProfilingName[] = "Heap profiling";
+
+const char kEnableHeapProfilingDescription[] = "Enables heap profiling.";
+
+const char kEnableHeapProfilingModePseudo[] = "Enabled (pseudo mode)";
+
+const char kEnableHeapProfilingModeNative[] = "Enabled (native mode)";
+
+const char kEnableHeapProfilingTaskProfiler[] = "Enabled (task mode)";
 
 }  // namespace flag_descriptions

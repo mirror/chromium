@@ -121,7 +121,7 @@ bool Scrollbar::IsLeftSideVerticalScrollbar() const {
 }
 
 void Scrollbar::OffsetDidChange() {
-  ASSERT(scrollable_area_);
+  DCHECK(scrollable_area_);
 
   float position = ScrollableAreaCurrentPos();
   if (position == current_pos_)
@@ -362,7 +362,7 @@ bool Scrollbar::GestureEvent(const WebGestureEvent& evt,
           scroll_pos_ = pressed_pos_;
           return true;
         default:
-          ASSERT_NOT_REACHED();
+          NOTREACHED();
           return true;
       }
       break;
@@ -388,7 +388,7 @@ bool Scrollbar::GestureEvent(const WebGestureEvent& evt,
           MoveThumb(scroll_pos_, false);
           return true;
         default:
-          ASSERT_NOT_REACHED();
+          NOTREACHED();
           return true;
       }
       break;

@@ -11,6 +11,17 @@
 
 namespace mojo {
 
+static_assert(
+    static_cast<int>(
+        ui::mojom::LatencyComponentType::LATENCY_COMPONENT_TYPE_LAST) ==
+        static_cast<int>(ui::LATENCY_COMPONENT_TYPE_LAST),
+    "Enum size mismatch");
+
+static_assert(
+    static_cast<int>(ui::mojom::SourceEventType::SOURCE_EVENT_TYPE_LAST) ==
+        static_cast<int>(ui::SOURCE_EVENT_TYPE_LAST),
+    "Enum size mismatch");
+
 template <>
 struct ArrayTraits<ui::LatencyInfo::LatencyMap> {
   using Element = ui::LatencyInfo::LatencyMap::value_type;
@@ -86,6 +97,8 @@ struct StructTraits<ui::mojom::LatencyInfoDataView, ui::LatencyInfo> {
   static int64_t trace_id(const ui::LatencyInfo& info);
   static bool coalesced(const ui::LatencyInfo& info);
   static bool terminated(const ui::LatencyInfo& info);
+  static ui::mojom::SourceEventType source_event_type(
+      const ui::LatencyInfo& info);
   static bool Read(ui::mojom::LatencyInfoDataView data, ui::LatencyInfo* out);
 };
 

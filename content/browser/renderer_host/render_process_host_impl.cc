@@ -183,6 +183,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
 #include "services/resource_coordinator/memory/coordinator/coordinator_impl.h"
+#include "services/service_manager/embedder/switches.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -403,7 +404,7 @@ class RendererSandboxedProcessLauncherDelegate
   }
 
 #elif defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
-  ZygoteHandle* GetZygote() override {
+  ZygoteHandle GetZygote() override {
     const base::CommandLine& browser_command_line =
         *base::CommandLine::ForCurrentProcess();
     base::CommandLine::StringType renderer_prefix =
@@ -583,7 +584,7 @@ class RenderProcessHostImpl::ConnectionFilterImpl : public ConnectionFilter {
 
  private:
   // ConnectionFilter:
-  void OnBindInterface(const service_manager::ServiceInfo& source_info,
+  void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle* interface_pipe,
                        service_manager::Connector* connector) override {
@@ -1358,8 +1359,12 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
           base::Unretained(
               memory_instrumentation::CoordinatorImpl::GetInstance())));
 
-  GetContentClient()->browser()->ExposeInterfacesToRenderer(registry.get(),
-                                                            this);
+  associated_interfaces_.reset(new AssociatedInterfaceRegistryImpl());
+  GetContentClient()->browser()->ExposeInterfacesToRenderer(
+      registry.get(), associated_interfaces_.get(), this);
+  static_cast<AssociatedInterfaceRegistry*>(associated_interfaces_.get())
+      ->AddInterface(base::Bind(&RenderProcessHostImpl::BindRouteProvider,
+                                base::Unretained(this)));
 
   ServiceManagerConnection* service_manager_connection =
       BrowserContext::GetServiceManagerConnectionFor(browser_context_);
@@ -1369,6 +1374,13 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   connection_filter_controller_ = connection_filter->controller();
   connection_filter_id_ = service_manager_connection->AddConnectionFilter(
       std::move(connection_filter));
+}
+
+void RenderProcessHostImpl::BindRouteProvider(
+    mojom::RouteProviderAssociatedRequest request) {
+  if (route_provider_binding_.is_bound())
+    return;
+  route_provider_binding_.Bind(std::move(request));
 }
 
 void RenderProcessHostImpl::GetRoute(
@@ -1724,6 +1736,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
   // Propagate the following switches to the renderer command line (along
   // with any associated values) if present in the browser command line.
   static const char* const kSwitchNames[] = {
+    service_manager::switches::kDisableInProcessStackTraces,
     switches::kAgcStartupMinVolume,
     switches::kAecRefinedAdaptiveFilter,
     switches::kAllowLoopbackInPeerConnection,
@@ -2120,12 +2133,9 @@ bool RenderProcessHostImpl::OnMessageReceived(const IPC::Message& msg) {
 void RenderProcessHostImpl::OnAssociatedInterfaceRequest(
     const std::string& interface_name,
     mojo::ScopedInterfaceEndpointHandle handle) {
-  if (interface_name == mojom::RouteProvider::Name_) {
-    if (route_provider_binding_.is_bound())
-      return;
-    mojom::RouteProviderAssociatedRequest request;
-    request.Bind(std::move(handle));
-    route_provider_binding_.Bind(std::move(request));
+  if (associated_interfaces_ &&
+      associated_interfaces_->CanBindRequest(interface_name)) {
+    associated_interfaces_->BindRequest(interface_name, std::move(handle));
   } else {
     LOG(ERROR) << "Request for unknown Channel-associated interface: "
                << interface_name;
@@ -2785,6 +2795,7 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   is_dead_ = true;
   if (route_provider_binding_.is_bound())
     route_provider_binding_.Close();
+  associated_interfaces_.reset();
   ResetChannelProxy();
 
   UpdateProcessPriority();

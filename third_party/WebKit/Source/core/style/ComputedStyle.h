@@ -37,6 +37,7 @@
 #include "core/style/LineClampValue.h"
 #include "core/style/NinePieceImage.h"
 #include "core/style/SVGComputedStyle.h"
+#include "core/style/StyleBackgroundData.h"
 #include "core/style/StyleBoxData.h"
 #include "core/style/StyleContentAlignmentData.h"
 #include "core/style/StyleDeprecatedFlexibleBoxData.h"
@@ -185,6 +186,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // non-inherited attributes
   DataRef<StyleBoxData> box_data_;
   DataRef<StyleVisualData> visual_data_;
+  DataRef<StyleBackgroundData> background_data_;
   DataRef<StyleRareNonInheritedData> rare_non_inherited_data_;
 
   // inherited attributes
@@ -415,21 +417,21 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // background-color
   static Color InitialBackgroundColor() { return Color::kTransparent; }
   void SetBackgroundColor(const StyleColor& v) {
-    SET_VAR(background_data_, background_color_, v);
+    SET_VAR(background_data_, color_, v);
   }
 
   // background-image
   bool HasBackgroundImage() const {
-    return background_data_->background_.HasImage();
+    return background_data_->Background().HasImage();
   }
   bool HasFixedBackgroundImage() const {
-    return background_data_->background_.HasFixedImage();
+    return background_data_->Background().HasFixedImage();
   }
   bool HasEntirelyFixedBackground() const;
 
   // background-clip
   EFillBox BackgroundClip() const {
-    return static_cast<EFillBox>(background_data_->background_.Clip());
+    return static_cast<EFillBox>(background_data_->Background().Clip());
   }
 
   // Border properties.
@@ -1171,23 +1173,14 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // offset-rotate
   static StyleOffsetRotation InitialOffsetRotate() {
-    return InitialOffsetRotation();
-  }
-  const StyleOffsetRotation& OffsetRotate() const { return OffsetRotation(); }
-  void SetOffsetRotate(const StyleOffsetRotation& offset_rotate) {
-    SetOffsetRotation(offset_rotate);
-  }
-
-  // offset-rotation
-  static StyleOffsetRotation InitialOffsetRotation() {
     return StyleOffsetRotation(0, kOffsetRotationAuto);
   }
-  const StyleOffsetRotation& OffsetRotation() const {
+  const StyleOffsetRotation& OffsetRotate() const {
     return rare_non_inherited_data_->transform_->motion_.rotation_;
   }
-  void SetOffsetRotation(const StyleOffsetRotation& offset_rotation) {
+  void SetOffsetRotate(const StyleOffsetRotation& offset_rotate) {
     SET_NESTED_VAR(rare_non_inherited_data_, transform_, motion_.rotation_,
-                   offset_rotation);
+                   offset_rotate);
   }
 
   // opacity (aka -webkit-opacity)
@@ -3368,7 +3361,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return background_data_.Access()->background_;
   }
   const FillLayer& BackgroundLayers() const {
-    return background_data_->background_;
+    return background_data_->Background();
   }
   void AdjustBackgroundLayers() {
     if (BackgroundLayers().Next()) {
@@ -3503,9 +3496,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   StyleColor BorderBottomColor() const {
     return surround_data_->border_.Bottom().GetColor();
   }
-  StyleColor BackgroundColor() const {
-    return background_data_->background_color_;
-  }
+  StyleColor BackgroundColor() const { return background_data_->GetColor(); }
   StyleAutoColor CaretColor() const {
     return rare_inherited_data_->CaretColor();
   }

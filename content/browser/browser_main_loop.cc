@@ -68,6 +68,7 @@
 #include "content/browser/loader_delegate_impl.h"
 #include "content/browser/media/media_internals.h"
 #include "content/browser/memory/memory_coordinator_impl.h"
+#include "content/browser/memory/swap_metrics_observer.h"
 #include "content/browser/net/browser_online_state_observer.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
@@ -229,12 +230,12 @@ void SetupSandbox(const base::CommandLine& parsed_command_line) {
 
   // Tickle the zygote host so it forks now.
   ZygoteHostImpl::GetInstance()->Init(parsed_command_line);
-  *GetGenericZygote() = CreateZygote();
+  ZygoteHandle generic_zygote = CreateGenericZygote();
   // TODO(kerrnel): Investigate doing this without the ZygoteHostImpl as a
   // proxy. It is currently done this way due to concerns about race
   // conditions.
   ZygoteHostImpl::GetInstance()->SetRendererSandboxStatus(
-      (*GetGenericZygote())->GetSandboxStatus());
+      generic_zygote->GetSandboxStatus());
 }
 #endif
 
@@ -1599,6 +1600,10 @@ void BrowserMainLoop::InitializeMemoryManagementComponent() {
                      base::Unretained(coordinator)));
     }
   }
+
+  auto* swap_metrics_observer = SwapMetricsObserver::GetInstance();
+  if (swap_metrics_observer)
+    swap_metrics_observer->Start();
 }
 
 bool BrowserMainLoop::InitializeToolkit() {

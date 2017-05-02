@@ -1134,7 +1134,7 @@ LayoutRect LayoutObject::InvalidatePaintRectangle(
       dirty_rect, display_item_client);
 }
 
-void LayoutObject::InvalidateTreeIfNeeded(
+void LayoutObject::DeprecatedInvalidateTree(
     const PaintInvalidationState& paint_invalidation_state) {
   DCHECK(!RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled());
   EnsureIsReadyForPaintInvalidation();
@@ -1154,20 +1154,20 @@ void LayoutObject::InvalidateTreeIfNeeded(
   }
 
   PaintInvalidationReason reason =
-      InvalidatePaint(new_paint_invalidation_state);
+      DeprecatedInvalidatePaint(new_paint_invalidation_state);
   new_paint_invalidation_state.UpdateForChildren(reason);
-  InvalidatePaintOfSubtreesIfNeeded(new_paint_invalidation_state);
+  DeprecatedInvalidatePaintOfSubtrees(new_paint_invalidation_state);
 
   ClearPaintInvalidationFlags();
 }
 
 DISABLE_CFI_PERF
-void LayoutObject::InvalidatePaintOfSubtreesIfNeeded(
+void LayoutObject::DeprecatedInvalidatePaintOfSubtrees(
     const PaintInvalidationState& child_paint_invalidation_state) {
   DCHECK(!RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled());
 
   for (auto* child = SlowFirstChild(); child; child = child->NextSibling())
-    child->InvalidateTreeIfNeeded(child_paint_invalidation_state);
+    child->DeprecatedInvalidateTree(child_paint_invalidation_state);
 }
 
 LayoutRect LayoutObject::SelectionRectInViewCoordinates() const {
@@ -1177,7 +1177,7 @@ LayoutRect LayoutObject::SelectionRectInViewCoordinates() const {
   return selection_rect;
 }
 
-PaintInvalidationReason LayoutObject::InvalidatePaint(
+PaintInvalidationReason LayoutObject::DeprecatedInvalidatePaint(
     const PaintInvalidationState& paint_invalidation_state) {
   DCHECK_EQ(&paint_invalidation_state.CurrentObject(), this);
 
@@ -1926,7 +1926,7 @@ void LayoutObject::StyleDidChange(StyleDifference diff,
       // frame if there are no RemoteFrame ancestors in the frame tree. Use of
       // localFrameRoot() is discouraged but will change when cursor update
       // scheduling is moved from EventHandler to PageEventHandler.
-      frame->LocalFrameRoot()->GetEventHandler().ScheduleCursorUpdate();
+      frame->LocalFrameRoot().GetEventHandler().ScheduleCursorUpdate();
     }
   }
 
@@ -3580,6 +3580,16 @@ LayoutRect LayoutObject::DebugRect() const {
     block->AdjustChildDebugRect(rect);
 
   return rect;
+}
+
+FragmentData* LayoutObject::MutableForPainting::FirstFragment() {
+  if (auto* paint_data = layout_object_.GetRarePaintData())
+    return paint_data->Fragment();
+  return nullptr;
+}
+
+FragmentData& LayoutObject::MutableForPainting::EnsureFirstFragment() {
+  return layout_object_.EnsureRarePaintData().EnsureFragment();
 }
 
 void LayoutObject::InvalidatePaintForSelection() {

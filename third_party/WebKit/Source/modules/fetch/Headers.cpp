@@ -6,7 +6,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8IteratorResultValue.h"
-#include "bindings/modules/v8/ByteStringSequenceSequenceOrByteStringByteStringRecordOrHeaders.h"
+#include "bindings/modules/v8/ByteStringSequenceSequenceOrByteStringByteStringRecord.h"
 #include "core/dom/Iterator.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/wtf/text/WTFString.h"
@@ -52,23 +52,13 @@ Headers* Headers::Create(ExceptionState&) {
   return new Headers;
 }
 
-Headers* Headers::Create(
-    const ByteStringSequenceSequenceOrByteStringByteStringRecordOrHeaders& init,
-    ExceptionState& exception_state) {
+Headers* Headers::Create(const HeadersInit& init,
+                         ExceptionState& exception_state) {
   // "The Headers(|init|) constructor, when invoked, must run these steps:"
   // "1. Let |headers| be a new Headers object whose guard is "none".
   Headers* headers = Create(exception_state);
   // "2. If |init| is given, fill headers with |init|. Rethrow any exception."
-  if (init.isByteStringSequenceSequence()) {
-    headers->FillWith(init.getAsByteStringSequenceSequence(), exception_state);
-  } else if (init.isByteStringByteStringRecord()) {
-    headers->FillWith(init.getAsByteStringByteStringRecord(), exception_state);
-  } else if (init.isHeaders()) {
-    // This branch will not be necessary once http://crbug.com/690428 is fixed.
-    headers->FillWith(init.getAsHeaders(), exception_state);
-  } else {
-    NOTREACHED();
-  }
+  headers->FillWith(init, exception_state);
   // "3. Return |headers|."
   return headers;
 }
@@ -216,15 +206,27 @@ void Headers::set(const String& name,
   header_list_->Set(name, value);
 }
 
+// This overload is not called directly by Web APIs, but rather by other C++
+// classes. For example, when initializing a Request object it is possible that
+// a Request's Headers must be filled with an existing Headers object.
 void Headers::FillWith(const Headers* object, ExceptionState& exception_state) {
   DCHECK(header_list_->size() == 0);
-  // There used to be specific steps describing filling a Headers object with
-  // another Headers object, but it has since been removed because it should be
-  // handled like a sequence (http://crbug.com/690428).
   for (const auto& header : object->header_list_->List()) {
     append(header.first, header.second, exception_state);
     if (exception_state.HadException())
       return;
+  }
+}
+
+void Headers::FillWith(const HeadersInit& init,
+                       ExceptionState& exception_state) {
+  DCHECK_EQ(header_list_->size(), 0U);
+  if (init.isByteStringSequenceSequence()) {
+    FillWith(init.getAsByteStringSequenceSequence(), exception_state);
+  } else if (init.isByteStringByteStringRecord()) {
+    FillWith(init.getAsByteStringByteStringRecord(), exception_state);
+  } else {
+    NOTREACHED();
   }
 }
 

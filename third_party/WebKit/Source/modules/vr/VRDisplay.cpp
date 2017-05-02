@@ -9,7 +9,6 @@
 #include "core/dom/FrameRequestCallback.h"
 #include "core/dom/ScriptedAnimationController.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/frame/Frame.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/ImageBitmap.h"
 #include "core/frame/UseCounter.h"
@@ -105,36 +104,8 @@ void VRDisplay::Update(const device::mojom::blink::VRDisplayInfoPtr& display) {
   }
 }
 
-bool VRDisplay::IsPresentationFocused() {
-  if (!navigator_vr_)
-    return false;
-
-  if (navigator_vr_->IsFocused())
-    return true;
-
-  auto doc = navigator_vr_->GetDocument();
-  if (!doc)
-    return false;
-
-  // Check if this is an embedded iframe without focus. If a local parent is
-  // focused, continue presenting.
-
-  Frame* frame = doc->GetFrame();
-  for (; frame; frame = frame->Tree().Parent()) {
-    if (!frame->IsLocalFrame())
-      break;
-    auto frame_doc = ToLocalFrame(frame)->GetDocument();
-    if (frame_doc && frame_doc->hasFocus()) {
-      DVLOG(3) << __FUNCTION__ << ": a parent frame is focused";
-      return true;
-    }
-  }
-
-  return false;
-}
-
 bool VRDisplay::getFrameData(VRFrameData* frame_data) {
-  if (!IsPresentationFocused() || !frame_pose_ || display_blurred_)
+  if (!navigator_vr_->IsFocused() || !frame_pose_ || display_blurred_)
     return false;
 
   if (!frame_data)
@@ -240,7 +211,7 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
   // If the VRDisplay is already presenting, however, repeated calls are
   // allowed outside a user gesture so that the presented content may be
   // updated.
-  if (first_present && !UserGestureIndicator::UtilizeUserGesture() &&
+  if (first_present && !UserGestureIndicator::ProcessingUserGesture() &&
       !in_display_activate_) {
     DOMException* exception = DOMException::Create(
         kInvalidStateError, "API can only be initiated by a user gesture.");
@@ -329,6 +300,7 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
         submit_frame_client_binding_.CreateInterfacePtrAndBind(),
         ConvertToBaseCallback(
             WTF::Bind(&VRDisplay::OnPresentComplete, WrapPersistent(this))));
+    pending_present_request_ = true;
   } else {
     UpdateLayerBounds();
     resolver->Resolve();
@@ -339,6 +311,7 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
 }
 
 void VRDisplay::OnPresentComplete(bool success) {
+  pending_present_request_ = false;
   if (success) {
     this->BeginPresent();
   } else {
@@ -707,10 +680,12 @@ void VRDisplay::StopPresenting() {
   pending_previous_frame_render_ = false;
 }
 
-void VRDisplay::OnActivate(device::mojom::blink::VRDisplayEventReason reason) {
+void VRDisplay::OnActivate(device::mojom::blink::VRDisplayEventReason reason,
+                           const OnActivateCallback& on_handled) {
   AutoReset<bool> activating(&in_display_activate_, true);
   navigator_vr_->DispatchVREvent(VRDisplayEvent::Create(
       EventTypeNames::vrdisplayactivate, true, false, this, reason));
+  on_handled.Run(pending_present_request_);
 }
 
 void VRDisplay::OnDeactivate(
@@ -819,11 +794,7 @@ void VRDisplay::OnVSync(device::mojom::blink::VRPosePtr pose,
 }
 
 void VRDisplay::ConnectVSyncProvider() {
-  DVLOG(1) << __FUNCTION__
-           << ": IsPresentationFocused()=" << IsPresentationFocused()
-           << " vr_v_sync_provider_.is_bound()="
-           << vr_v_sync_provider_.is_bound();
-  if (!IsPresentationFocused() || vr_v_sync_provider_.is_bound())
+  if (!navigator_vr_->IsFocused() || vr_v_sync_provider_.is_bound())
     return;
   display_->GetVRVSyncProvider(mojo::MakeRequest(&vr_v_sync_provider_));
   vr_v_sync_provider_.set_connection_error_handler(ConvertToBaseCallback(

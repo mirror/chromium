@@ -179,7 +179,7 @@ static CSSValue* ValueForFillSourceType(EMaskSourceType type) {
       return CSSIdentifierValue::Create(CSSValueLuminance);
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
 
   return nullptr;
 }
@@ -284,7 +284,7 @@ static CSSValue* ValueForPositionOffset(const ComputedStyle& style,
                      (layout_box->OffsetHeight() + client_offset.Height());
           break;
         default:
-          ASSERT_NOT_REACHED();
+          NOTREACHED();
       }
       return ZoomAdjustedPixelValue(position, style);
     }
@@ -3437,13 +3437,12 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyOffsetDistance:
       return ZoomAdjustedPixelValueForLength(style.OffsetDistance(), style);
 
-    case CSSPropertyOffsetRotate:
-    case CSSPropertyOffsetRotation: {
+    case CSSPropertyOffsetRotate: {
       CSSValueList* list = CSSValueList::CreateSpaceSeparated();
-      if (style.OffsetRotation().type == kOffsetRotationAuto)
+      if (style.OffsetRotate().type == kOffsetRotationAuto)
         list->Append(*CSSIdentifierValue::Create(CSSValueAuto));
       list->Append(*CSSPrimitiveValue::Create(
-          style.OffsetRotation().angle, CSSPrimitiveValue::UnitType::kDegrees));
+          style.OffsetRotate().angle, CSSPrimitiveValue::UnitType::kDegrees));
       return list;
     }
 

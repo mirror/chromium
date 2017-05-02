@@ -237,13 +237,13 @@ static bool ShouldRepaintSubsequence(
         paint_layer.Clipper(PaintLayer::kDoNotUseGeometryMapper)
             .PaintingClipRects(painting_info.root_layer, respect_overflow_clip,
                                subpixel_accumulation);
-    ClipRects* previous_clip_rects = paint_layer.PreviousPaintingClipRects();
+    ClipRects* previous_clip_rects = paint_layer.PreviousClipRects();
     if (&clip_rects != previous_clip_rects &&
         (!previous_clip_rects || clip_rects != *previous_clip_rects)) {
       needs_repaint = true;
       should_clear_empty_paint_phase_flags = true;
     }
-    paint_layer.SetPreviousPaintingClipRects(clip_rects);
+    paint_layer.SetPreviousClipRects(clip_rects);
   }
 
   // Repaint if previously the layer might be clipped by paintDirtyRect and
@@ -835,10 +835,18 @@ PaintResult PaintLayerPainter::PaintFragmentByApplyingTransform(
   delta.MoveBy(fragment_translation);
   TransformationMatrix transform(
       paint_layer_.RenderableTransform(painting_info.GetGlobalPaintFlags()));
-  IntPoint rounded_delta = RoundedIntPoint(delta);
-  transform.PostTranslate(rounded_delta.X(), rounded_delta.Y());
-  LayoutSize adjusted_sub_pixel_accumulation =
-      painting_info.sub_pixel_accumulation + (delta - rounded_delta);
+  LayoutSize adjusted_sub_pixel_accumulation;
+  if (transform.IsIdentityOrTranslation()) {
+    IntPoint rounded_delta = RoundedIntPoint(delta);
+    transform.PostTranslate(rounded_delta.X(), rounded_delta.Y());
+    adjusted_sub_pixel_accumulation =
+        painting_info.sub_pixel_accumulation + (delta - rounded_delta);
+  } else {
+    // We can't pass subpixel offsets through a non-translation transform.
+    // Bake the offsets into the transform instead.
+    delta += painting_info.sub_pixel_accumulation;
+    transform.PostTranslate(delta.X().ToDouble(), delta.Y().ToDouble());
+  }
 
   // TODO(jbroman): Put the real transform origin here, instead of using a
   // matrix with the origin baked in.

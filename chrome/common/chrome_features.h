@@ -134,7 +134,7 @@ extern const base::Feature kOfflinePageDownloadSuggestionsFeature;
 extern const base::Feature kPermissionsBlacklist;
 
 #if defined(OS_WIN)
-extern const base::Feature kPostScriptPrinting;
+extern const base::Feature kDisablePostScriptPrinting;
 #endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -170,6 +170,8 @@ extern const base::Feature kSyzyasanDeferredFree;
 #endif
 
 extern const base::Feature kUseGroupedPermissionInfobars;
+
+extern const base::Feature kUsePermissionManagerForMediaRequests;
 
 #if defined(OS_CHROMEOS)
 extern const base::Feature kOptInImeMenu;

@@ -913,6 +913,16 @@ const FeatureEntry::FeatureVariation kDataReductionMainMenuFeatureVariations[] =
       arraysize(kPersistentMenuItemEnabled), nullptr}};
 #endif  // OS_ANDROID
 
+const FeatureEntry::Choice kEnableHeapProfilingChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDisabled, "", ""},
+    {flag_descriptions::kEnableHeapProfilingModePseudo,
+     switches::kEnableHeapProfiling, switches::kEnableHeapProfilingModePseudo},
+    {flag_descriptions::kEnableHeapProfilingModeNative,
+     switches::kEnableHeapProfiling, switches::kEnableHeapProfilingModeNative},
+    {flag_descriptions::kEnableHeapProfilingTaskProfiler,
+     switches::kEnableHeapProfiling,
+     switches::kEnableHeapProfilingTaskProfiler}};
+
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
 // The first line of the entry is the internal name.
@@ -1722,10 +1732,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-tab-audio-muting", flag_descriptions::kTabAudioMutingName,
      flag_descriptions::kTabAudioMutingDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kEnableTabAudioMuting)},
-    {"enable-credential-manager-api",
-     flag_descriptions::kCredentialManagerApiName,
-     flag_descriptions::kCredentialManagerApiDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kCredentialManagementAPI)},
     {"reduced-referrer-granularity",
      flag_descriptions::kReducedReferrerGranularityName,
      flag_descriptions::kReducedReferrerGranularityDescription, kOsAll,
@@ -2571,9 +2577,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"gdi-text-printing", flag_descriptions::kGdiTextPrinting,
      flag_descriptions::kGdiTextPrintingDescription, kOsWin,
      FEATURE_VALUE_TYPE(features::kGdiTextPrinting)},
-    {"postscript-printing", flag_descriptions::kPostscriptPrinting,
-     flag_descriptions::kPostscriptPrintingDescription, kOsWin,
-     FEATURE_VALUE_TYPE(features::kPostScriptPrinting)},
+    {"postscript-printing", flag_descriptions::kDisablePostscriptPrinting,
+     flag_descriptions::kDisablePostscriptPrintingDescription, kOsWin,
+     FEATURE_VALUE_TYPE(features::kDisablePostScriptPrinting)},
 #endif  // defined(OS_WIN)
 
 #if defined(OS_CHROMEOS)
@@ -2758,6 +2764,16 @@ const FeatureEntry kFeatureEntries[] = {
     {"autoplay-policy", flag_descriptions::kAutoplayPolicyName,
      flag_descriptions::kAutoplayPolicyDescription, kOsAll,
      MULTI_VALUE_TYPE(kAutoplayPolicyChoices)},
+
+    {"enable-heap-profiling", flag_descriptions::kEnableHeapProfilingName,
+     flag_descriptions::kEnableHeapProfilingDescription, kOsAll,
+     MULTI_VALUE_TYPE(kEnableHeapProfilingChoices)},
+
+#if defined(TOOLKIT_VIEWS) || (defined(OS_MACOSX) && !defined(OS_IOS))
+    {"show-cert-link", flag_descriptions::kShowCertLinkOnPageInfoName,
+     flag_descriptions::kShowCertLinkOnPageInfoDescription, kOsDesktop,
+     SINGLE_VALUE_TYPE(switches::kShowCertLink)},
+#endif
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms.xml. See note in

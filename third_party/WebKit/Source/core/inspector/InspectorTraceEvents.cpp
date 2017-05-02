@@ -315,7 +315,7 @@ const char* PseudoTypeToString(CSSSelector::PseudoType pseudo_type) {
 #undef DEFINE_STRING_MAPPING
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return "";
 }
 
@@ -568,7 +568,7 @@ std::unique_ptr<TracedValue> InspectorLayoutEvent::EndData(
     CreateQuad(value.get(), "root", quads[0]);
     SetGeneratingNodeInfo(value.get(), root_for_this_layout, "rootNode");
   } else {
-    ASSERT_NOT_REACHED();
+    NOTREACHED();
   }
   return value;
 }
@@ -942,7 +942,7 @@ std::unique_ptr<TracedValue> FrameEventData(LocalFrame* frame) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
   bool is_main_frame = frame && frame->IsMainFrame();
   value->SetBoolean("isMainFrame", is_main_frame);
-  value->SetString("page", ToHexString(frame->LocalFrameRoot()));
+  value->SetString("page", ToHexString(&frame->LocalFrameRoot()));
   return value;
 }
 
@@ -1147,7 +1147,7 @@ std::unique_ptr<TracedValue> InspectorTracingStartedInFrame::Data(
     LocalFrame* frame) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
   value->SetString("sessionId", session_id);
-  value->SetString("page", ToHexString(frame->LocalFrameRoot()));
+  value->SetString("page", ToHexString(&frame->LocalFrameRoot()));
   value->BeginArray("frames");
   for (Frame* f = frame; f; f = f->Tree().TraverseNext(frame)) {
     if (!f->IsLocalFrame())

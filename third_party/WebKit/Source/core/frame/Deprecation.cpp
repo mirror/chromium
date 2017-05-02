@@ -15,7 +15,6 @@
 namespace {
 
 enum Milestone {
-  M58,
   M59,
   M60,
   M61,
@@ -27,8 +26,6 @@ const char* milestoneString(Milestone milestone) {
   // https://www.chromium.org/developers/calendar
 
   switch (milestone) {
-    case M58:
-      return "M58, around April 2017";
     case M59:
       return "M59, around June 2017";
     case M60:
@@ -117,17 +114,10 @@ void Deprecation::WarnOnDeprecatedProperties(
 }
 
 String Deprecation::DeprecationMessage(CSSPropertyID unresolved_property) {
-  switch (unresolved_property) {
-    case CSSPropertyAliasMotionOffset:
-      return replacedWillBeRemoved("motion-offset", "offset-distance", M58,
-                                   "6390764217040896");
-    case CSSPropertyOffsetRotation:
-      return replacedWillBeRemoved("offset-rotation", "offset-rotate", M58,
-                                   "6390764217040896");
-
-    default:
-      return g_empty_string;
-  }
+  // TODO: Add a switch here when there are properties that we intend to
+  // deprecate.
+  // Returning an empty string for now.
+  return g_empty_string;
 }
 
 void Deprecation::CountDeprecation(const LocalFrame* frame,
@@ -171,9 +161,9 @@ void Deprecation::CountDeprecationCrossOriginIframe(
   // Check to see if the frame can script into the top level document.
   SecurityOrigin* security_origin =
       frame->GetSecurityContext()->GetSecurityOrigin();
-  Frame* top = frame->Tree().Top();
-  if (top && !security_origin->CanAccess(
-                 top->GetSecurityContext()->GetSecurityOrigin()))
+  Frame& top = frame->Tree().Top();
+  if (!security_origin->CanAccess(
+          top.GetSecurityContext()->GetSecurityOrigin()))
     CountDeprecation(frame, feature);
 }
 

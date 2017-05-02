@@ -607,8 +607,8 @@ CompositorAnimationHost* FrameView::GetCompositorAnimationHost() const {
   if (animation_host_)
     return animation_host_.get();
 
-  if (frame_->LocalFrameRoot() != frame_)
-    return frame_->LocalFrameRoot()->View()->GetCompositorAnimationHost();
+  if (&frame_->LocalFrameRoot() != frame_)
+    return frame_->LocalFrameRoot().View()->GetCompositorAnimationHost();
 
   if (!frame_->IsMainFrame())
     return nullptr;
@@ -621,8 +621,8 @@ CompositorAnimationTimeline* FrameView::GetCompositorAnimationTimeline() const {
   if (animation_timeline_)
     return animation_timeline_.get();
 
-  if (frame_->LocalFrameRoot() != frame_)
-    return frame_->LocalFrameRoot()->View()->GetCompositorAnimationTimeline();
+  if (&frame_->LocalFrameRoot() != frame_)
+    return frame_->LocalFrameRoot().View()->GetCompositorAnimationTimeline();
 
   if (!frame_->IsMainFrame())
     return nullptr;
@@ -1362,7 +1362,7 @@ void FrameView::UpdateLayout() {
   CheckDoesNotNeedLayout();
 }
 
-void FrameView::InvalidateTreeIfNeeded(
+void FrameView::DeprecatedInvalidateTree(
     const PaintInvalidationState& paint_invalidation_state) {
   DCHECK(!RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled());
 
@@ -1379,7 +1379,8 @@ void FrameView::InvalidateTreeIfNeeded(
                root_for_paint_invalidation.DebugName().Ascii());
 
   InvalidatePaint(paint_invalidation_state);
-  root_for_paint_invalidation.InvalidateTreeIfNeeded(paint_invalidation_state);
+  root_for_paint_invalidation.DeprecatedInvalidateTree(
+      paint_invalidation_state);
 
 #if DCHECK_IS_ON()
   GetLayoutView()->AssertSubtreeClearedPaintInvalidationFlags();
@@ -2129,7 +2130,7 @@ void FrameView::UpdateCompositedSelectionIfNeeded() {
       // first check that the composited selection has been cleared even
       // though no frame has focus yet. If this is not desired, then the
       // expectation needs to be removed from the test.
-      local_frame = frame_->LocalFrameRoot();
+      local_frame = &frame_->LocalFrameRoot();
     }
 
     if (local_frame)
@@ -2568,7 +2569,7 @@ void FrameView::PerformPostLayoutTasks() {
   // if there are no RemoteFrame ancestors in the frame tree. Use of
   // localFrameRoot() is discouraged but will change when cursor update
   // scheduling is moved from EventHandler to PageEventHandler.
-  GetFrame().LocalFrameRoot()->GetEventHandler().ScheduleCursorUpdate();
+  GetFrame().LocalFrameRoot().GetEventHandler().ScheduleCursorUpdate();
 
   UpdateGeometries();
 
@@ -2951,7 +2952,7 @@ void FrameView::UpdateGeometriesIfNeeded() {
 }
 
 void FrameView::UpdateAllLifecyclePhases() {
-  GetFrame().LocalFrameRoot()->View()->UpdateLifecyclePhasesInternal(
+  GetFrame().LocalFrameRoot().View()->UpdateLifecyclePhasesInternal(
       DocumentLifecycle::kPaintClean);
 }
 
@@ -2960,7 +2961,7 @@ void FrameView::UpdateLifecycleToCompositingCleanPlusScrolling() {
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     UpdateAllLifecyclePhasesExceptPaint();
   } else {
-    GetFrame().LocalFrameRoot()->View()->UpdateLifecyclePhasesInternal(
+    GetFrame().LocalFrameRoot().View()->UpdateLifecyclePhasesInternal(
         DocumentLifecycle::kCompositingClean);
   }
 }
@@ -2969,28 +2970,28 @@ void FrameView::UpdateLifecycleToCompositingInputsClean() {
   // When SPv2 is enabled, the standard compositing lifecycle steps do not
   // exist; compositing is done after paint instead.
   DCHECK(!RuntimeEnabledFeatures::slimmingPaintV2Enabled());
-  GetFrame().LocalFrameRoot()->View()->UpdateLifecyclePhasesInternal(
+  GetFrame().LocalFrameRoot().View()->UpdateLifecyclePhasesInternal(
       DocumentLifecycle::kCompositingInputsClean);
 }
 
 void FrameView::UpdateAllLifecyclePhasesExceptPaint() {
-  GetFrame().LocalFrameRoot()->View()->UpdateLifecyclePhasesInternal(
+  GetFrame().LocalFrameRoot().View()->UpdateLifecyclePhasesInternal(
       DocumentLifecycle::kPrePaintClean);
 }
 
 void FrameView::UpdateLifecycleToLayoutClean() {
-  GetFrame().LocalFrameRoot()->View()->UpdateLifecyclePhasesInternal(
+  GetFrame().LocalFrameRoot().View()->UpdateLifecyclePhasesInternal(
       DocumentLifecycle::kLayoutClean);
 }
 
 void FrameView::ScheduleVisualUpdateForPaintInvalidationIfNeeded() {
-  LocalFrame* local_frame_root = GetFrame().LocalFrameRoot();
-  if (local_frame_root->View()->current_update_lifecycle_phases_target_state_ <
+  LocalFrame& local_frame_root = GetFrame().LocalFrameRoot();
+  if (local_frame_root.View()->current_update_lifecycle_phases_target_state_ <
           DocumentLifecycle::kPaintInvalidationClean ||
       Lifecycle().GetState() >= DocumentLifecycle::kPrePaintClean) {
     // Schedule visual update to process the paint invalidation in the next
     // cycle.
-    local_frame_root->ScheduleVisualUpdateUnlessThrottled();
+    local_frame_root.ScheduleVisualUpdateUnlessThrottled();
   }
   // Otherwise the paint invalidation will be handled in paint invalidation
   // phase of this cycle.
@@ -3149,23 +3150,21 @@ void FrameView::UpdateLifecyclePhasesInternal(
 
       if (target_state >= DocumentLifecycle::kPrePaintClean) {
         if (!RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
-          InvalidateTreeIfNeededRecursive();
+          DeprecatedInvalidateTreeRecursive();
 
         if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
           if (view.Compositor()->InCompositingMode())
             GetScrollingCoordinator()->UpdateAfterCompositingChangeIfNeeded();
         }
 
-        if (LocalFrame* local_frame = frame_->LocalFrameRoot()) {
-          // This is needed since, at present, the ScrollingCoordinator doesn't
-          // send rects for oopif sub-frames.
-          // TODO(wjmaclean): Remove this pathway when ScrollingCoordinator
-          // operates on a per-frame basis. https://crbug.com/680606
-          GetFrame()
-              .GetPage()
-              ->GetChromeClient()
-              .UpdateEventRectsForSubframeIfNecessary(local_frame);
-        }
+        // This is needed since, at present, the ScrollingCoordinator doesn't
+        // send rects for oopif sub-frames.
+        // TODO(wjmaclean): Remove this pathway when ScrollingCoordinator
+        // operates on a per-frame basis. https://crbug.com/680606
+        GetFrame()
+            .GetPage()
+            ->GetChromeClient()
+            .UpdateEventRectsForSubframeIfNecessary(&frame_->LocalFrameRoot());
         UpdateCompositedSelectionIfNeeded();
       }
 
@@ -3359,7 +3358,7 @@ std::unique_ptr<JSONObject> FrameView::CompositedLayersAsJSON(
     LayerTreeFlags flags) {
   return GetFrame()
       .LocalFrameRoot()
-      ->View()
+      .View()
       ->paint_artifact_compositor_->LayersAsJSON(flags);
 }
 
@@ -3442,16 +3441,16 @@ void FrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
   GetFrame().GetPage()->GetDragCaret().UpdateStyleAndLayoutIfNeeded();
 }
 
-void FrameView::InvalidateTreeIfNeededRecursive() {
+void FrameView::DeprecatedInvalidateTreeRecursive() {
   SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.PaintInvalidation.UpdateTime");
   {
     // For comparison to SlimmingPaintInvalidation.
     SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.PrePaint.UpdateTime");
-    InvalidateTreeIfNeededRecursiveInternal();
+    DeprecatedInvalidateTreeRecursiveInternal();
   }
 }
 
-void FrameView::InvalidateTreeIfNeededRecursiveInternal() {
+void FrameView::DeprecatedInvalidateTreeRecursiveInternal() {
   DCHECK(!RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled());
   CHECK(GetLayoutView());
 
@@ -3466,9 +3465,9 @@ void FrameView::InvalidateTreeIfNeededRecursiveInternal() {
       *GetLayoutView(), pending_delayed_paint_invalidations);
 
   if (Lifecycle().GetState() < DocumentLifecycle::kPaintInvalidationClean)
-    InvalidateTreeIfNeeded(root_paint_invalidation_state);
+    DeprecatedInvalidateTree(root_paint_invalidation_state);
 
-  // Some frames may be not reached during the above invalidateTreeIfNeeded
+  // Some frames may be not reached during the above DeprecatedInvalidateTree
   // because
   // - the frame is a detached frame; or
   // - it didn't need paint invalidation.
@@ -3483,7 +3482,7 @@ void FrameView::InvalidateTreeIfNeededRecursiveInternal() {
       // invalidation onto them here.
       if (!child_frame_view.GetLayoutView())
         continue;
-      child_frame_view.InvalidateTreeIfNeededRecursiveInternal();
+      child_frame_view.DeprecatedInvalidateTreeRecursiveInternal();
     }
   }
 
@@ -3738,7 +3737,7 @@ void FrameView::SetTracksPaintInvalidations(bool track_paint_invalidations) {
   if (track_paint_invalidations == IsTrackingPaintInvalidations())
     return;
 
-  for (Frame* frame = frame_->Tree().Top(); frame;
+  for (Frame* frame = &frame_->Tree().Top(); frame;
        frame = frame->Tree().TraverseNext()) {
     if (!frame->IsLocalFrame())
       continue;
@@ -3780,7 +3779,7 @@ std::unique_ptr<JSONArray> FrameView::TrackedObjectPaintInvalidationsAsJSON()
     return nullptr;
 
   std::unique_ptr<JSONArray> result = JSONArray::Create();
-  for (Frame* frame = frame_->Tree().Top(); frame;
+  for (Frame* frame = &frame_->Tree().Top(); frame;
        frame = frame->Tree().TraverseNext()) {
     if (!frame->IsLocalFrame())
       continue;
@@ -5280,7 +5279,7 @@ MainThreadScrollingReasons FrameView::GetMainThreadScrollingReasons() const {
   // the main frame can't be used in the calculation, since they use
   // different compositors with unrelated state, which breaks some of the
   // calculations below.
-  if (frame_->LocalFrameRoot() != GetPage()->MainFrame())
+  if (&frame_->LocalFrameRoot() != GetPage()->MainFrame())
     return reasons;
 
   // Walk the tree to the root. Use the gathered reasons to determine
@@ -5357,7 +5356,7 @@ void FrameView::MapQuadToAncestorFrameIncludingScrollOffset(
        ancestor->GetFrame()->LocalFrameRoot() == GetFrame().LocalFrameRoot())) {
     FrameView* ancestor_view =
         (ancestor ? ancestor->GetFrameView()
-                  : ToLocalFrame(GetFrame().Tree().Top())->View());
+                  : ToLocalFrame(GetFrame().Tree().Top()).View());
     LayoutSize scroll_position = LayoutSize(ancestor_view->GetScrollOffset());
     rect.Move(-scroll_position);
   }

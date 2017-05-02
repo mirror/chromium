@@ -1027,12 +1027,6 @@ extern const char kPinchScaleName[];
 // Description of the flag to turn on experiental pinch to scale.
 extern const char kPinchScaleDescription[];
 
-// Name for the flag to enable 'navigator.credentials'.
-extern const char kCredentialManagerApiName[];
-
-// Description for the flag to enable 'navigator.credentials'.
-extern const char kCredentialManagerApiDescription[];
-
 // Name for the flag to reduce referer granularity.
 extern const char kReducedReferrerGranularityName[];
 
@@ -1738,6 +1732,17 @@ extern const char kEnableAppcontainerName[];
 extern const char kEnableAppcontainerDescription[];
 
 #endif  // defined(OS_WIN)
+
+#if defined(TOOLKIT_VIEWS) || (defined(OS_MACOSX) && !defined(OS_IOS))
+
+// Name of the flag to add the Certificate Viewer link to the Page Info UI.
+extern const char kShowCertLinkOnPageInfoName[];
+
+// Description of the flag to add the Certificate Viewer link to the Page
+// Info UI.
+extern const char kShowCertLinkOnPageInfoDescription[];
+
+#endif  // defined(TOOLKIT_VIEWS) || (defined(OS_MACOSX) && !defined(OS_IOS))
 
 #if defined(TOOLKIT_VIEWS) || defined(OS_ANDROID)
 
@@ -2958,11 +2963,11 @@ extern const char kWindows10CustomTitlebarDescription[];
 
 #if defined(OS_WIN)
 
-// Name of the flag that enables postscript printing.
-extern const char kPostscriptPrinting[];
+// Name of the flag that disables postscript printing.
+extern const char kDisablePostscriptPrinting[];
 
-// Description of the flag that enables postscript printing.
-extern const char kPostscriptPrintingDescription[];
+// Description of the flag that disables postscript printing.
+extern const char kDisablePostscriptPrintingDescription[];
 
 #endif  // defined(OS_WIN)
 
@@ -3322,6 +3327,15 @@ extern const char kOmniboxDisplayTitleForCurrentUrlName[];
 // Description of the about: flag for displaying the title of the omnibox match
 // for current URL.
 extern const char kOmniboxDisplayTitleForCurrentUrlDescription[];
+
+// Name & description for the heap profiling flag.
+extern const char kEnableHeapProfilingName[];
+extern const char kEnableHeapProfilingDescription[];
+
+// Descriptions of the different heap profiling modes.
+extern const char kEnableHeapProfilingModePseudo[];
+extern const char kEnableHeapProfilingModeNative[];
+extern const char kEnableHeapProfilingTaskProfiler[];
 
 }  // namespace flag_descriptions
 

@@ -105,10 +105,9 @@ class WebKitFinder(object):
             self._chromium_base = self._filesystem.dirname(self._filesystem.dirname(self.webkit_base()))
         return self._chromium_base
 
-    # TODO(tkent): Make this private. We should use functions for
-    # sub-directories in order to make the code robust against directory
-    # structure changes.
-    def path_from_webkit_base(self, *comps):
+    # Do not expose this function in order to make the code robust against
+    # directory structure changes.
+    def _path_from_webkit_base(self, *comps):
         return self._filesystem.join(self.webkit_base(), *comps)
 
     def path_from_chromium_base(self, *comps):
@@ -117,23 +116,17 @@ class WebKitFinder(object):
     def path_from_blink_source(self, *comps):
         return self._filesystem.join(self._filesystem.join(self.webkit_base(), 'Source'), *comps)
 
-    def path_to_script(self, script_name):
-        """Returns the relative path to the script from the top of the WebKit tree."""
-        # This is intentionally relative in order to force callers to consider what
-        # their current working directory is (and change to the top of the tree if necessary).
-        return self._filesystem.join('Tools', 'Scripts', script_name)
-
     def path_from_tools_scripts(self, *comps):
         return self._filesystem.join(self._filesystem.join(self.webkit_base(), 'Tools', 'Scripts'), *comps)
 
     def layout_tests_dir(self):
-        return self.path_from_webkit_base('LayoutTests')
+        return self._path_from_webkit_base('LayoutTests')
 
     def path_from_layout_tests(self, *comps):
         return self._filesystem.join(self.layout_tests_dir(), *comps)
 
     def perf_tests_dir(self):
-        return self.path_from_webkit_base('PerformanceTests')
+        return self._path_from_webkit_base('PerformanceTests')
 
     def layout_test_name(self, file_path):
         """Returns a layout test name, given the path from the repo root.

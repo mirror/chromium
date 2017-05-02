@@ -49,6 +49,7 @@
 #include "core/layout/line/InlineIterator.h"
 #include "core/layout/line/InlineTextBox.h"
 #include "core/layout/line/LineWidth.h"
+#include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/shapes/ShapeOutsideInfo.h"
 #include "core/paint/BlockFlowPaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
@@ -256,7 +257,9 @@ LayoutBlockFlow::LayoutBlockFlow(ContainerNode* node) : LayoutBlock(node) {
 LayoutBlockFlow::~LayoutBlockFlow() {}
 
 LayoutBlockFlow* LayoutBlockFlow::CreateAnonymous(Document* document) {
-  LayoutBlockFlow* layout_block_flow = new LayoutBlockFlow(nullptr);
+  LayoutBlockFlow* layout_block_flow = RuntimeEnabledFeatures::layoutNGEnabled()
+                                           ? new LayoutNGBlockFlow(nullptr)
+                                           : new LayoutBlockFlow(nullptr);
   layout_block_flow->SetDocumentForAnonymous(document);
   return layout_block_flow;
 }
@@ -689,7 +692,6 @@ void LayoutBlockFlow::MarkDescendantsWithFloatsForLayoutIfNeeded(
     // mark it for layout.
     LayoutUnit lowest_float =
         std::max(previous_float_logical_bottom, LowestFloatLogicalBottom());
-    lowest_float = std::max(lowest_float, child.LowestFloatLogicalBottom());
     if (lowest_float > new_logical_top)
       mark_descendants_with_floats = true;
   }
@@ -3715,6 +3717,7 @@ LayoutUnit LayoutBlockFlow::PositionAndLayoutFloat(
     }
   }
 
+  LayoutUnit old_logical_top = child.LogicalTop();
   if (child.NeedsLayout()) {
     if (is_paginated) {
       // Before we can lay out the float, we need to estimate a position for
@@ -3763,6 +3766,17 @@ LayoutUnit LayoutBlockFlow::PositionAndLayoutFloat(
   // fragmented, in order to remove pagination struts inside the child.
   MarkChildForPaginationRelayoutIfNeeded(child, layout_scope);
   child.LayoutIfNeeded();
+
+  // If negative margin pushes the child completely out of its old position
+  // mark for layout siblings that may have it in its float lists.
+  if (child.LogicalBottom() <= old_logical_top) {
+    LayoutObject* next = child.NextSibling();
+    if (next && next->IsLayoutBlockFlow()) {
+      LayoutBlockFlow* nextBlock = ToLayoutBlockFlow(next);
+      if (!nextBlock->AvoidsFloats() || nextBlock->ShrinkToAvoidFloats())
+        nextBlock->MarkAllDescendantsWithFloatsForLayout();
+    }
+  }
 
   if (is_paginated) {
     PaginatedContentWasLaidOut(child.LogicalBottom());
@@ -4647,12 +4661,12 @@ void LayoutBlockFlow::AddOutlineRects(
         include_block_overflows);
 }
 
-PaintInvalidationReason LayoutBlockFlow::InvalidatePaint(
+PaintInvalidationReason LayoutBlockFlow::DeprecatedInvalidatePaint(
     const PaintInvalidationState& paint_invalidation_state) {
   if (ContainsFloats())
     paint_invalidation_state.PaintingLayer().SetNeedsPaintPhaseFloat();
 
-  return LayoutBlock::InvalidatePaint(paint_invalidation_state);
+  return LayoutBlock::DeprecatedInvalidatePaint(paint_invalidation_state);
 }
 
 void LayoutBlockFlow::InvalidateDisplayItemClients(

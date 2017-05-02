@@ -92,7 +92,6 @@
 #include <utility>
 
 #include "bindings/core/v8/BindingSecurity.h"
-#include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
@@ -121,6 +120,7 @@
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
+#include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebAssociatedURLLoaderImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
 #include "core/exported/WebViewBase.h"
@@ -167,6 +167,7 @@
 #include "platform/ScriptForbiddenScope.h"
 #include "platform/UserGestureIndicator.h"
 #include "platform/WebFrameScheduler.h"
+#include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/clipboard/ClipboardUtilities.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/graphics/Color.h"
@@ -224,7 +225,6 @@
 #include "public/web/WebTreeScopeType.h"
 #include "skia/ext/platform_canvas.h"
 #include "web/RemoteFrameOwner.h"
-#include "web/SharedWorkerRepositoryClientImpl.h"
 #include "web/TextCheckerClientImpl.h"
 #include "web/TextFinder.h"
 #include "web/WebDevToolsAgentImpl.h"
@@ -1788,7 +1788,7 @@ WebLocalFrameImpl* WebLocalFrameImpl::FromFrameOwnerElement(Element* element) {
 WebViewBase* WebLocalFrameImpl::ViewImpl() const {
   if (!GetFrame())
     return nullptr;
-  return WebViewImpl::FromPage(GetFrame()->GetPage());
+  return WebViewBase::FromPage(GetFrame()->GetPage());
 }
 
 WebDataSourceImpl* WebLocalFrameImpl::DataSourceImpl() const {

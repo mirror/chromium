@@ -1318,7 +1318,7 @@ void RenderFrameImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   // TODO(beng): We should be getting this info from the frame factory request.
-  service_manager::ServiceInfo browser_info =
+  service_manager::BindSourceInfo browser_info =
       ChildThreadImpl::current()->GetBrowserServiceInfo();
   interface_registry_->BindInterface(browser_info.identity, interface_name,
                                      std::move(interface_pipe));
@@ -2740,7 +2740,7 @@ void RenderFrameImpl::SetEngagementLevel(const url::Origin& origin,
 void RenderFrameImpl::GetInterfaceProvider(
     service_manager::mojom::InterfaceProviderRequest request) {
   // TODO(beng): We should be getting this info from the frame factory request.
-  service_manager::ServiceInfo browser_info =
+  service_manager::BindSourceInfo browser_info =
       ChildThreadImpl::current()->GetBrowserServiceInfo();
   service_manager::Connector* connector = ChildThread::Get()->GetConnector();
   connector->FilterInterfaces(
@@ -3001,10 +3001,11 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
   return media_player;
 }
 
-blink::WebApplicationCacheHost* RenderFrameImpl::CreateApplicationCacheHost(
+std::unique_ptr<blink::WebApplicationCacheHost>
+RenderFrameImpl::CreateApplicationCacheHost(
     blink::WebApplicationCacheHostClient* client) {
   if (!frame_ || !frame_->View())
-    return NULL;
+    return nullptr;
 
   DocumentState* document_state =
       frame_->ProvisionalDataSource()
@@ -3014,7 +3015,7 @@ blink::WebApplicationCacheHost* RenderFrameImpl::CreateApplicationCacheHost(
   NavigationStateImpl* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
 
-  return new RendererWebApplicationCacheHostImpl(
+  return base::MakeUnique<RendererWebApplicationCacheHostImpl>(
       RenderViewImpl::FromWebView(frame_->View()), client,
       RenderThreadImpl::current()->appcache_dispatcher()->backend_proxy(),
       navigation_state->request_params().appcache_host_id);
@@ -3087,7 +3088,7 @@ blink::BlameContext* RenderFrameImpl::GetFrameBlameContext() {
   return blame_context_.get();
 }
 
-blink::WebServiceWorkerProvider*
+std::unique_ptr<blink::WebServiceWorkerProvider>
 RenderFrameImpl::CreateServiceWorkerProvider() {
   // At this point we should have non-null data source.
   DCHECK(frame_->DataSource());
@@ -3100,7 +3101,7 @@ RenderFrameImpl::CreateServiceWorkerProvider() {
     // The context can be null when the frame is sandboxed.
     return nullptr;
   }
-  return new WebServiceWorkerProviderImpl(
+  return base::MakeUnique<WebServiceWorkerProviderImpl>(
       ChildThreadImpl::current()->thread_safe_sender(), provider->context());
 }
 

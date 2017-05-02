@@ -43,7 +43,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     # All platforms.
     self.Flaky('conformance2/query/occlusion-query.html', bug=603168)
     self.Fail('conformance2/glsl3/tricky-loop-conditions.html', bug=483282)
-    self.Fail('conformance2/textures/misc/tex-srgb-mipmap.html', bug=712096)
 
     # canvas.commit() promise synchronization isn't fully reliable yet.
     self.Fail('conformance/offscreencanvas/offscreencanvas-resize.html',
@@ -110,6 +109,8 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('conformance2/rendering/framebuffer-texture-level1.html',
         ['win', 'nvidia', 'opengl'], bug=693090)
     self.Fail('conformance2/glsl3/vector-dynamic-indexing-nv-driver-bug.html',
+        ['win', 'nvidia', 'opengl'], bug=693090)
+    self.Fail('conformance2/textures/misc/tex-srgb-mipmap.html',
         ['win', 'nvidia', 'opengl'], bug=693090)
     self.Fail('conformance2/glsl3/' +
         'vector-dynamic-indexing-swizzled-lvalue.html',
@@ -718,6 +719,12 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Flaky('deqp/functional/gles3/multisample.html',
         ['linux', ('nvidia', 0x104a)], bug=714207)
 
+    # Any of these tests become flaky if they follow
+    # conformance2/samplers/samplers.html and if virtualized GL
+    # contexts are being used.
+    self.Flaky('conformance2/textures/canvas_sub_rectangle/*',
+        ['linux', 'nvidia'], bug=694359)
+
     # This test is flaky both with and without ANGLE.
     self.Flaky('deqp/functional/gles3/texturespecification/' +
         'random_teximage2d_2d.html',
@@ -1030,6 +1037,12 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'amd'], bug=633022)
     self.Fail('conformance2/rendering/blitframebuffer-filter-outofbounds.html',
         ['linux', 'amd'], bug=655147)
+
+    self.Fail('conformance2/textures/misc/tex-base-level-bug.html',
+        ['linux', 'amd'], bug=705865)
+    self.Fail('conformance2/textures/image/' +
+        'tex-2d-r11f_g11f_b10f-rgb-float.html',
+        ['linux', 'amd'], bug=705865)
 
     # Uniform buffer related failures
     self.Fail('deqp/functional/gles3/uniformbuffers/single_struct_array.html',

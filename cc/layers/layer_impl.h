@@ -381,16 +381,16 @@ class CC_EXPORT LayerImpl {
   void SetDebugInfo(
       std::unique_ptr<base::trace_event::ConvertableToTraceFormat> debug_info);
 
-  void set_is_drawn_render_surface_layer_list_member(bool is_member) {
-    is_drawn_render_surface_layer_list_member_ = is_member;
+  void set_contributes_to_drawn_render_surface(bool is_member) {
+    contributes_to_drawn_render_surface_ = is_member;
   }
 
-  bool is_drawn_render_surface_layer_list_member() const {
-    return is_drawn_render_surface_layer_list_member_;
+  bool contributes_to_drawn_render_surface() const {
+    return contributes_to_drawn_render_surface_;
   }
 
   bool IsDrawnScrollbar() {
-    return ToScrollbarLayer() && is_drawn_render_surface_layer_list_member_;
+    return ToScrollbarLayer() && contributes_to_drawn_render_surface_;
   }
 
   void set_may_contain_video(bool yes) { may_contain_video_ = yes; }
@@ -434,6 +434,13 @@ class CC_EXPORT LayerImpl {
 
   void set_needs_show_scrollbars(bool yes) { needs_show_scrollbars_ = yes; }
   bool needs_show_scrollbars() { return needs_show_scrollbars_; }
+
+  void set_raster_even_if_not_in_rsll(bool yes) {
+    raster_even_if_not_in_rsll_ = yes;
+  }
+  bool raster_even_if_not_in_rsll() const {
+    return raster_even_if_not_in_rsll_;
+  }
 
  protected:
   LayerImpl(LayerTreeImpl* layer_impl,
@@ -494,7 +501,7 @@ class CC_EXPORT LayerImpl {
   bool use_local_transform_for_backface_visibility_ : 1;
   bool should_check_backface_visibility_ : 1;
   bool draws_content_ : 1;
-  bool is_drawn_render_surface_layer_list_member_ : 1;
+  bool contributes_to_drawn_render_surface_ : 1;
 
   // This is true if and only if the layer was ever ready since it last animated
   // (all content was complete).
@@ -553,6 +560,8 @@ class CC_EXPORT LayerImpl {
   // the overlay scrollbars. It's set on the scroll layer (not the scrollbar
   // layers) and consumed by LayerTreeImpl::PushPropertiesTo during activation.
   bool needs_show_scrollbars_ : 1;
+
+  bool raster_even_if_not_in_rsll_ : 1;
 
   DISALLOW_COPY_AND_ASSIGN(LayerImpl);
 };
