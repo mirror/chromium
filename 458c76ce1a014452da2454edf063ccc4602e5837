@@ -22,6 +22,30 @@
       "revId": "458c76ce1a014452da2454edf063ccc4602e5837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593c203b_869e2f82",
+        "filename": "chrome/test/base/mojo_test_connector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-03T06:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "636e8fba_436afdd3",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "458c76ce1a014452da2454edf063ccc4602e5837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
