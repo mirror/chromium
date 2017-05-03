@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "636e8fba_436afdd3",
+        "filename": "chrome/test/base/mojo_test_connector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-03T03:12:36Z",
+      "side": 1,
+      "message": "optional:  use OnceClosure.",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "458c76ce1a014452da2454edf063ccc4602e5837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
