@@ -145,9 +145,6 @@ std::unique_ptr<PlatformSharedBufferMapping> PlatformSharedBuffer::MapNoCheck(
     handle = base::SharedMemory::DuplicateHandle(shared_memory_->handle());
   }
 
-  // TODO(crbug.com/706689): Remove this when the bug is sorted out.
-  CHECK(handle.IsValid());
-
   if (!handle.IsValid())
     return nullptr;
 
@@ -204,13 +201,11 @@ PlatformSharedBuffer* PlatformSharedBuffer::CreateReadOnlyDuplicate() {
   }
 
   base::SharedMemoryHandle handle;
-  bool success;
   {
     base::AutoLock locker(lock_);
-    success = shared_memory_->ShareReadOnlyToProcess(
-        base::GetCurrentProcessHandle(), &handle);
+    handle = shared_memory_->GetReadOnlyHandle();
   }
-  if (!success || !handle.IsValid())
+  if (!handle.IsValid())
     return nullptr;
 
   return CreateFromSharedMemoryHandle(num_bytes_, true, handle);
@@ -317,18 +312,7 @@ bool PlatformSharedBufferMapping::Map() {
 
   bool result =
       shared_memory_.MapAt(static_cast<off_t>(real_offset), real_length);
-
-  // TODO(crbug.com/706689): Remove this when the bug is sorted out.
-  size_t offset = offset_;
-  size_t length = length_;
-  base::debug::Alias(&offset);
-  base::debug::Alias(&length);
-  base::debug::Alias(&page_size);
-  base::debug::Alias(&offset_rounding);
-  base::debug::Alias(&real_offset);
-  base::debug::Alias(&real_length);
-  CHECK(result);
-
+  DCHECK(result);
   base_ = static_cast<char*>(shared_memory_.memory()) + offset_rounding;
   return true;
 }

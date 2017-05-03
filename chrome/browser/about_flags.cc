@@ -528,10 +528,18 @@ const FeatureEntry::Choice kCrosRegionsModeChoices[] = {
 
 const FeatureEntry::Choice kForceUIDirectionChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kForceUiDirectionLtr, switches::kForceUIDirection,
-     switches::kForceUIDirectionLTR},
-    {flag_descriptions::kForceUiDirectionRtl, switches::kForceUIDirection,
-     switches::kForceUIDirectionRTL},
+    {flag_descriptions::kForceDirectionLtr, switches::kForceUIDirection,
+     switches::kForceDirectionLTR},
+    {flag_descriptions::kForceDirectionRtl, switches::kForceUIDirection,
+     switches::kForceDirectionRTL},
+};
+
+const FeatureEntry::Choice kForceTextDirectionChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kForceDirectionLtr, switches::kForceTextDirection,
+     switches::kForceDirectionLTR},
+    {flag_descriptions::kForceDirectionRtl, switches::kForceTextDirection,
+     switches::kForceDirectionRTL},
 };
 
 #if defined(OS_ANDROID)
@@ -1271,6 +1279,9 @@ const FeatureEntry kFeatureEntries[] = {
         SINGLE_DISABLE_VALUE_TYPE(
             ash::switches::kAshDisableScreenOrientationLock),
     },
+    {"enable-tether", flag_descriptions::kTetherName,
+     flag_descriptions::kTetherDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(chromeos::switches::kEnableTether)},
 #endif  // OS_CHROMEOS
     {
         "disable-accelerated-video-decode",
@@ -1632,6 +1643,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-chrome-home", flag_descriptions::kChromeHomeName,
      flag_descriptions::kChromeHomeDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeFeature)},
+    {"enable-chrome-home-expand-button",
+     flag_descriptions::kChromeHomeExpandButtonName,
+     flag_descriptions::kChromeHomeExpandButtonDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kChromeHomeExpandButton)},
 #endif  // OS_ANDROID
 #if defined(OS_ANDROID)
     {"enable-iph-demo-mode", flag_descriptions::kEnableIphDemoMode,
@@ -2078,6 +2093,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"force-ui-direction", flag_descriptions::kForceUiDirectionName,
      flag_descriptions::kForceUiDirectionDescription, kOsAll,
      MULTI_VALUE_TYPE(kForceUIDirectionChoices)},
+    {"force-text-direction", flag_descriptions::kForceTextDirectionName,
+     flag_descriptions::kForceTextDirectionDescription, kOsAll,
+     MULTI_VALUE_TYPE(kForceTextDirectionChoices)},
 #if BUILDFLAG(ENABLE_EXTENSIONS)
     {"enable-md-extensions",
      flag_descriptions::kEnableMaterialDesignExtensionsName,
@@ -2322,7 +2340,7 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::kImportantSitesInCBD)},
     {"tabs-in-cbd", flag_descriptions::kTabsInCbdName,
      flag_descriptions::kTabsInCbdDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kTabsInCBD)},
+     FEATURE_VALUE_TYPE(features::kTabsInCbd)},
 #endif  // OS_ANDROID
     {"enable-pointer-events", flag_descriptions::kExperimentalPointerEventName,
      flag_descriptions::kExperimentalPointerEventDescription, kOsAll,
@@ -2432,10 +2450,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kArcBootCompletedDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(arc::kBootCompletedBroadcastFeature)},
 #endif  // OS_CHROMEOS
-    {"saveas-menu-text-experiment",
-     flag_descriptions::kSaveasMenuLabelExperimentName,
-     flag_descriptions::kSaveasMenuLabelExperimentDescription, kOsDesktop,
-     SINGLE_VALUE_TYPE(switches::kEnableSaveAsMenuLabelExperiment)},
     {"enable-generic-sensor", flag_descriptions::kEnableGenericSensorName,
      flag_descriptions::kEnableGenericSensorDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kGenericSensor)},

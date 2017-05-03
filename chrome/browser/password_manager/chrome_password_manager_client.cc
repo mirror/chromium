@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/singleton.h"
 #include "base/metrics/field_trial.h"
@@ -65,7 +66,7 @@
 #include "net/base/url_util.h"
 #include "third_party/re2/src/re2/re2.h"
 
-#if defined(SAFE_BROWSING_DB_LOCAL) || defined(SAFE_BROWSING_DB_REMOTE)
+#if defined(SAFE_BROWSING_DB_LOCAL)
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "components/safe_browsing/password_protection/password_protection_service.h"
@@ -149,9 +150,9 @@ void ChromePasswordManagerClient::CreateForWebContentsWithAutofillClient(
   if (FromWebContents(contents))
     return;
 
-  contents->SetUserData(
-      UserDataKey(),
-      new ChromePasswordManagerClient(contents, autofill_client));
+  contents->SetUserData(UserDataKey(),
+                        base::WrapUnique(new ChromePasswordManagerClient(
+                            contents, autofill_client)));
 }
 
 ChromePasswordManagerClient::ChromePasswordManagerClient(
@@ -409,6 +410,17 @@ ChromePasswordManagerClient::GetPasswordProtectionService() const {
         ->GetPasswordProtectionService(profile_);
   }
   return nullptr;
+}
+
+void ChromePasswordManagerClient::CheckSafeBrowsingReputation(
+    const GURL& form_action,
+    const GURL& frame_url) {
+  safe_browsing::PasswordProtectionService* pps =
+      GetPasswordProtectionService();
+  if (pps) {
+    pps->MaybeStartLowReputationRequest(GetMainFrameURL(), form_action,
+                                        frame_url);
+  }
 }
 #endif
 

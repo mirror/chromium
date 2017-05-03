@@ -422,7 +422,7 @@ std::string LocalNtpSource::GetContentSecurityPolicyScriptSrc() const {
          GetIntegritySha256Value(
              GetConfigData(default_search_provider_is_google_io_thread_)) +
          "' "
-         "'sha256-ROPmcormZEipZzy3Ff+o345FFrhHWsAZjBpGIyZzCYY=';";
+         "'sha256-yAvSu2Dl9rlQTpQn8P1hcE5GUFQVGbuCMHypwtN6uDg=';";
 }
 
 std::string LocalNtpSource::GetContentSecurityPolicyChildSrc() const {
@@ -431,11 +431,8 @@ std::string LocalNtpSource::GetContentSecurityPolicyChildSrc() const {
   if (one_google_bar_service_) {
     // Allow embedding of the most visited iframe, as well as the account
     // switcher and the notifications dropdown from the One Google Bar.
-    // TODO(treib): Figure out a way to also allow staging instances.
-    return base::StringPrintf(
-        "child-src %s https://accounts.google.com/ https://docs.google.com "
-        "https://notifications.google.com;",
-        chrome::kChromeSearchMostVisitedUrl);
+    return base::StringPrintf("child-src %s https://*.google.com/;",
+                              chrome::kChromeSearchMostVisitedUrl);
   }
   // Allow embedding of the most visited iframe.
   return base::StringPrintf("child-src %s;",

@@ -1060,6 +1060,12 @@ extern const char kBootAnimation[];
 // Description for the flag for wallpaper boot animation (except for OOBE).
 extern const char kBootAnimationDescription[];
 
+// Name for the flag for enabling Instant Tethering.
+extern const char kTetherName[];
+
+// Description for the flag for enabling Instant Tethering.
+extern const char kTetherDescription[];
+
 #endif  // defined(OS_CHROMEOS)
 
 // Name of the flag for accelerated video decode where available.
@@ -1760,11 +1766,17 @@ extern const char kForceUiDirectionName[];
 // Description for the flag to force a specific UI direction.
 extern const char kForceUiDirectionDescription[];
 
-// Name for the option to force left-to-right UI direction mode.
-extern const char kForceUiDirectionLtr[];
+// Name for the flag to force a specific text rendering direction.
+extern const char kForceTextDirectionName[];
 
-// Name for the option to force right-to-left UI direction mode.
-extern const char kForceUiDirectionRtl[];
+// Description for the flag to force a specific text rendering direction.
+extern const char kForceTextDirectionDescription[];
+
+// Name for the option to force left-to-right UI or text direction mode.
+extern const char kForceDirectionLtr[];
+
+// Name for the option to force right-to-left UI or text direction mode.
+extern const char kForceDirectionRtl[];
 
 #if defined(OS_WIN) || defined(OS_LINUX)
 
@@ -2182,6 +2194,12 @@ extern const char kChromeHomeName[];
 
 // Description of the Chrome Home experiment in about:flags.
 extern const char kChromeHomeDescription[];
+
+// The name of the Chrome Home expand button experiment in about:flags.
+extern const char kChromeHomeExpandButtonName[];
+
+// Description of the Chrome Home expand button experiment in about:flags.
+extern const char kChromeHomeExpandButtonDescription[];
 
 #endif  // defined(OS_ANDROID)
 

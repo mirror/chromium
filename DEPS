@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'd271ba268876d3feca13e02d0a92ecaf79b6ddfc',
+  'skia_revision': '24b2063a48ef692e5fae12d215766c125cd9f077',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '54c14a4818c13e169d66dcf5dd61b9ac745bc571',
+  'v8_revision': '328f65756a94f8cd673169a477a5300d32f5819b',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -64,7 +64,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '40baddef7fda756c29b813dc1fd67b28d745aa8c',
+  'pdfium_revision': 'cadb4711bdc9cb99113aad2acdbc47711f065626',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '01ea3803d6f50394b0940079c1e4cf4969861e1f',
+  'catapult_revision': '15b8a2e9d5204ac4fba8081eba4d52566008e442',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -235,7 +235,7 @@ deps = {
     Var('chromium_git') + '/native_client/src/third_party/scons-2.0.1.git' + '@' + '1c1550e17fc26355d08627fbdec13d8291227067',
 
   'src/third_party/webrtc':
-    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + '5515dcd0567c4df4f3cdd9487f4f1556e558dfc3', # commit position 17923
+    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + '86a678777ef0132fd7d579e564ed9b55248562e3', # commit position 17981
 
   'src/third_party/openmax_dl':
     Var('chromium_git') + '/external/webrtc/deps/third_party/openmax.git' + '@' +  Var('openmax_dl_revision'),

@@ -72,8 +72,7 @@ bool CheckFundamentalBounds(T value,
 
 }  // namespace
 
-ArgumentSpec::ArgumentSpec(const base::Value& value)
-    : type_(ArgumentType::INTEGER), optional_(false) {
+ArgumentSpec::ArgumentSpec(const base::Value& value) {
   const base::DictionaryValue* dict = nullptr;
   CHECK(value.GetAsDictionary(&dict));
   dict->GetBoolean("optional", &optional_);
@@ -82,7 +81,7 @@ ArgumentSpec::ArgumentSpec(const base::Value& value)
   InitializeType(dict);
 }
 
-ArgumentSpec::ArgumentSpec(ArgumentType type) : type_(type), optional_(false) {}
+ArgumentSpec::ArgumentSpec(ArgumentType type) : type_(type) {}
 
 void ArgumentSpec::InitializeType(const base::DictionaryValue* dict) {
   std::string ref_string;
@@ -194,6 +193,12 @@ void ArgumentSpec::InitializeType(const base::DictionaryValue* dict) {
       }
     }
   }
+
+  // Check if we should preserve null in objects. Right now, this is only used
+  // on arguments of type object and any (in fact, it's only used in the storage
+  // API), but it could potentially make sense for lists or functions as well.
+  if (type_ == ArgumentType::OBJECT || type_ == ArgumentType::ANY)
+    dict->GetBoolean("preserveNull", &preserve_null_);
 }
 
 ArgumentSpec::~ArgumentSpec() {}
@@ -401,11 +406,17 @@ bool ArgumentSpec::ParseArgumentToObject(
 
     ArgumentSpec* property_spec = nullptr;
     auto iter = properties_.find(*utf8_key);
+    bool allow_unserializable = false;
     if (iter != properties_.end()) {
       property_spec = iter->second.get();
       seen_properties.insert(property_spec);
     } else if (additional_properties_) {
       property_spec = additional_properties_.get();
+      // additionalProperties: {type: any} is often used to allow anything
+      // through, including things that would normally break serialization like
+      // functions, or even NaN. If the additional properties are of
+      // ArgumentType::ANY, allow anything, even if it doesn't serialize.
+      allow_unserializable = property_spec->type_ == ArgumentType::ANY;
     } else {
       *error = api_errors::UnexpectedProperty(*utf8_key);
       return false;
@@ -425,12 +436,18 @@ bool ArgumentSpec::ParseArgumentToObject(
       return false;
     }
 
-    // Note: We don't serialize undefined or null values.
-    // TODO(devlin): This matches current behavior, but it is correct?
+    // Note: We don't serialize undefined, and only serialize null if it's part
+    // of the spec.
+    // TODO(devlin): This matches current behavior, but it is correct? And
+    // we treat undefined and null the same?
     if (prop_value->IsUndefined() || prop_value->IsNull()) {
       if (!property_spec->optional_) {
         *error = api_errors::MissingRequiredProperty(*utf8_key);
         return false;
+      }
+      if (preserve_null_ && prop_value->IsNull() && result) {
+        result->SetWithoutPathExpansion(*utf8_key,
+                                        base::MakeUnique<base::Value>());
       }
       continue;
     }
@@ -439,6 +456,8 @@ bool ArgumentSpec::ParseArgumentToObject(
     if (!property_spec->ParseArgument(context, prop_value, refs,
                                       result ? &property : nullptr,
                                       &property_error)) {
+      if (allow_unserializable)
+        continue;
       *error = api_errors::PropertyError(*utf8_key, property_error);
       return false;
     }
@@ -550,6 +569,7 @@ bool ArgumentSpec::ParseArgumentToAny(v8::Local<v8::Context> context,
   if (out_value) {
     std::unique_ptr<content::V8ValueConverter> converter(
         content::V8ValueConverter::create());
+    converter->SetStripNullFromObjects(!preserve_null_);
     std::unique_ptr<base::Value> converted(
         converter->FromV8Value(value, context));
     if (!converted) {

@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/gtest_prod_util.h"
 #include "base/id_map.h"
@@ -23,8 +24,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "base/process/process_handle.h"
 #include "base/single_thread_task_runner.h"
+#include "base/unguessable_token.h"
 #include "build/build_config.h"
 #include "content/common/accessibility_mode.h"
 #include "content/common/associated_interface_registry_impl.h"
@@ -34,6 +37,7 @@
 #include "content/common/frame_message_enums.h"
 #include "content/common/host_zoom.mojom.h"
 #include "content/common/renderer.mojom.h"
+#include "content/common/url_loader_factory.mojom.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "content/public/common/previews_state.h"
@@ -47,6 +51,7 @@
 #include "content/renderer/unique_name_helper.h"
 #include "ipc/ipc_message.h"
 #include "ipc/ipc_platform_file.h"
+#include "media/base/routing_token_callback.h"
 #include "media/blink/webmediaplayer_delegate.h"
 #include "media/blink/webmediaplayer_params.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
@@ -86,6 +91,7 @@
 #include "content/renderer/media/android/renderer_media_player_manager.h"
 #endif
 
+struct FrameMsg_CommitDataNetworkService_Params;
 struct FrameMsg_MixedContentFound_Params;
 struct FrameMsg_PostMessage_Params;
 struct FrameMsg_SerializeAsMHTML_Params;
@@ -547,6 +553,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebVector<blink::WebString>& stopped_matching_selectors)
       override;
   void SetHasReceivedUserGesture() override;
+  void SetDevToolsFrameId(const blink::WebString& devtools_frame_id) override;
   bool ShouldReportDetailedMessageForSource(
       const blink::WebString& source) override;
   void DidAddMessageToConsole(const blink::WebConsoleMessage& message,
@@ -581,7 +588,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidReceiveTitle(const blink::WebString& title,
                        blink::WebTextDirection direction) override;
   void DidChangeIcon(blink::WebIconURL::Type icon_type) override;
-  void DidFinishDocumentLoad(blink::WebLocalFrame* frame) override;
+  void DidFinishDocumentLoad() override;
   void RunScriptsAtDocumentReady(bool document_is_empty) override;
   void RunScriptsAtDocumentIdle() override;
   void DidHandleOnloadEvents() override;
@@ -628,8 +635,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidChangePerformanceTiming() override;
   void DidObserveLoadingBehavior(
       blink::WebLoadingBehaviorFlag behavior) override;
-  void DidCreateScriptContext(blink::WebLocalFrame* frame,
-                              v8::Local<v8::Context> context,
+  void DidCreateScriptContext(v8::Local<v8::Context> context,
                               int world_id) override;
   void WillReleaseScriptContext(v8::Local<v8::Context> context,
                                 int world_id) override;
@@ -690,7 +696,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void BindEngagement(blink::mojom::EngagementClientAssociatedRequest request);
 
   // Binds to the FrameHost in the browser.
-  void BindFrame(mojom::FrameRequest request,
+  void BindFrame(const service_manager::BindSourceInfo& browser_info,
+                 mojom::FrameRequest request,
                  mojom::FrameHostInterfaceBrokerPtr frame_host);
 
   // Virtual so the test render frame can flush the interface.
@@ -754,6 +761,10 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnSetPepperVolume(int32_t pp_instance, double volume);
 #endif  // ENABLE_PLUGINS
 
+  mojom::URLLoaderFactory* GetURLLoaderFactory() {
+    return url_loader_factory_.get();
+  }
+
  protected:
   explicit RenderFrameImpl(const CreateParams& params);
 
@@ -769,6 +780,10 @@ class CONTENT_EXPORT RenderFrameImpl
   FRIEND_TEST_ALL_PREFIXES(RenderAccessibilityImplTest,
                            AccessibilityMessagesQueueWhileSwappedOut);
   FRIEND_TEST_ALL_PREFIXES(RenderFrameImplTest, ZoomLimit);
+  FRIEND_TEST_ALL_PREFIXES(RenderFrameImplTest,
+                           TestOverlayRoutingTokenSendsLater);
+  FRIEND_TEST_ALL_PREFIXES(RenderFrameImplTest,
+                           TestOverlayRoutingTokenSendsNow);
 
   // A wrapper class used as the callback for JavaScript executed
   // in an isolated world.
@@ -900,11 +915,12 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnTextTrackSettingsChanged(
       const FrameMsg_TextTrackSettings_Params& params);
   void OnPostMessageEvent(const FrameMsg_PostMessage_Params& params);
-  void OnCommitNavigation(const ResourceResponseHead& response,
-                          const GURL& stream_url,
-                          mojo::DataPipeConsumerHandle handle,
-                          const CommonNavigationParams& common_params,
-                          const RequestNavigationParams& request_params);
+  void OnCommitNavigation(
+      const ResourceResponseHead& response,
+      const GURL& stream_url,
+      const FrameMsg_CommitDataNetworkService_Params& commit_data,
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params);
   void OnFailedNavigation(const CommonNavigationParams& common_params,
                           const RequestNavigationParams& request_params,
                           bool has_stale_copy_in_cache,
@@ -933,6 +949,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnGetNearestFindResult(int request_id, float x, float y);
   void OnFindMatchRects(int current_version);
 #endif
+  void OnSetOverlayRoutingToken(const base::UnguessableToken& token);
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 #if defined(OS_MACOSX)
@@ -1130,6 +1147,13 @@ class CONTENT_EXPORT RenderFrameImpl
   // service_manager::mojom::InterfaceProvider:
   void GetInterface(const std::string& interface_name,
                     mojo::ScopedMessagePipeHandle interface_pipe) override;
+
+  // Send |callback| our AndroidOverlay routing token when it arrives.  We may
+  // call |callback| before returning.
+  void RequestOverlayRoutingToken(const media::RoutingTokenCallback& callback);
+
+  // Ask the host to send our AndroidOverlay routing token to us.
+  void RequestOverlayRoutingTokenFromHost();
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToWebFrame is called, and it is null after
@@ -1435,8 +1459,18 @@ class CONTENT_EXPORT RenderFrameImpl
   // is used and released in didStartProvisionalLoad().
   std::unique_ptr<PendingNavigationInfo> pending_navigation_info_;
 
+  service_manager::BindSourceInfo browser_info_;
+
   mojo::BindingSet<service_manager::mojom::InterfaceProvider>
       interface_provider_bindings_;
+
+  mojom::URLLoaderFactoryPtr url_loader_factory_;
+
+  // AndroidOverlay routing token from the browser, if we have one yet.
+  base::Optional<base::UnguessableToken> overlay_routing_token_;
+
+  // Callbacks that we should call when we get a routing token.
+  std::vector<media::RoutingTokenCallback> pending_routing_token_callbacks_;
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 

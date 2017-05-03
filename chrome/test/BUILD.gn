@@ -3604,7 +3604,6 @@ test("unit_tests") {
     sources -=
         [ "../browser/download/download_request_infobar_delegate_unittest.cc" ]
     deps += [
-      "//device/battery:mojo_bindings",
       "//ipc",
       "//third_party/libaddressinput",
     ]
@@ -3659,6 +3658,10 @@ test("unit_tests") {
       "$root_out_dir/test_data/chrome/renderer/resources/extensions/",
       "$root_out_dir/test_data/ui/webui/",
     ]
+  }
+
+  if (is_desktop_linux && enable_native_notifications) {
+    sources += [ "../browser/notifications/notification_platform_bridge_linux_unittest.cc" ]
   }
 
   if (is_linux || is_win) {

@@ -182,12 +182,6 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
     });
 
     test('ResolutionFails', function() {
-      if (!cr.isChromeOS) {
-        // Capabilities failure logs a console error for non-CrOS printers.
-        // TODO(crbug.com/708739): Handle this gracefully and activate test.
-        return;
-      }
-
       var destId = "001122DEADBEEF";
 
       var resolver = mockSetupCall(destId, nativeLayer_);
@@ -196,7 +190,6 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
     });
 
     test('ReceiveSuccessfulSetup', function() {
-
       var destId = "00112233DEADBEEF";
 
       var waiter = waitForEvent(
@@ -216,24 +209,21 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
       });
     });
 
-    test('ReceiveFailedSetup', function() {
-      var destId = '00112233DEADBEEF';
+    if (cr.isChromeOS) {
+      // The 'ResolutionFails' test covers this case for non-CrOS.
+      test('ReceiveFailedSetup', function() {
+        var destId = '00112233DEADBEEF';
 
-      var resolver = mockSetupCall(destId, nativeLayer_);
-      requestSetup(destId, destinationSearch_);
+        var resolver = mockSetupCall(destId, nativeLayer_);
+        requestSetup(destId, destinationSearch_);
 
-      // Force resolution to fail.
-      resolveSetup(resolver, destId, false, null);
+        // Force resolution to fail.
+        resolveSetup(resolver, destId, false, null);
 
-      if (cr.isChromeOS) {
         // Selection should not change on ChromeOS.
         assertEquals(null, destinationStore_.selectedDestination);
-      } else {
-        // Other code expects selection to be present so it still occurs
-        // for non-CrOS.
-        assertEquals(destId, destinationStore_.selectedDestination.id);
-      }
-    });
+      });
+    }
   });
 
   mocha.run();

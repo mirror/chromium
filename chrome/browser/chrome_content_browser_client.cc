@@ -249,7 +249,6 @@
 #include "chromeos/chromeos_switches.h"
 #include "components/user_manager/user_manager.h"
 #include "mash/public/interfaces/launchable.mojom.h"
-#include "services/service_manager/public/cpp/interface_factory.h"
 #include "services/service_manager/public/interfaces/interface_provider_spec.mojom.h"
 #elif defined(OS_LINUX)
 #include "chrome/browser/chrome_browser_main_linux.h"
@@ -506,13 +505,12 @@ const char kChromeServiceName[] = "chrome";
 // Packaged service implementation used to expose miscellaneous application
 // control features. This is a singleton service which runs on the main thread
 // and never stops.
-class ChromeServiceChromeOS
-    : public service_manager::Service,
-      public mash::mojom::Launchable,
-      public service_manager::InterfaceFactory<mash::mojom::Launchable> {
+class ChromeServiceChromeOS : public service_manager::Service,
+                              public mash::mojom::Launchable {
  public:
   ChromeServiceChromeOS() {
-    interfaces_.AddInterface<mash::mojom::Launchable>(this);
+    interfaces_.AddInterface<mash::mojom::Launchable>(
+        base::Bind(&ChromeServiceChromeOS::Create, base::Unretained(this)));
   }
   ~ChromeServiceChromeOS() override {}
 
@@ -531,7 +529,7 @@ class ChromeServiceChromeOS
   void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
                        const std::string& name,
                        mojo::ScopedMessagePipeHandle handle) override {
-    interfaces_.BindInterface(remote_info.identity, name, std::move(handle));
+    interfaces_.BindInterface(remote_info, name, std::move(handle));
   }
 
   // mash::mojom::Launchable:
@@ -552,9 +550,8 @@ class ChromeServiceChromeOS
     }
   }
 
-  // mojo::InterfaceFactory<mash::mojom::Launchable>:
-  void Create(const service_manager::Identity& remote_identity,
-              mash::mojom::LaunchableRequest request) override {
+  void Create(const service_manager::BindSourceInfo& source_info,
+              mash::mojom::LaunchableRequest request) {
     bindings_.AddBinding(this, std::move(request));
   }
 
@@ -1215,9 +1212,10 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
       new WebRtcLoggingHandlerHost(id, profile,
                                    g_browser_process->webrtc_log_uploader());
   host->AddFilter(webrtc_logging_handler_host);
-  host->SetUserData(WebRtcLoggingHandlerHost::kWebRtcLoggingHandlerHostKey,
-                    new base::UserDataAdapter<WebRtcLoggingHandlerHost>(
-                        webrtc_logging_handler_host));
+  host->SetUserData(
+      WebRtcLoggingHandlerHost::kWebRtcLoggingHandlerHostKey,
+      base::MakeUnique<base::UserDataAdapter<WebRtcLoggingHandlerHost>>(
+          webrtc_logging_handler_host));
 
   // The audio manager outlives the host, so it's safe to hand a raw pointer to
   // it to the AudioDebugRecordingsHandler, which is owned by the host.
@@ -1225,7 +1223,7 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
       new AudioDebugRecordingsHandler(profile, media::AudioManager::Get());
   host->SetUserData(
       AudioDebugRecordingsHandler::kAudioDebugRecordingsHandlerKey,
-      new base::UserDataAdapter<AudioDebugRecordingsHandler>(
+      base::MakeUnique<base::UserDataAdapter<AudioDebugRecordingsHandler>>(
           audio_debug_recordings_handler));
 
 #endif
@@ -1611,15 +1609,6 @@ bool IsAutoReloadVisibleOnlyEnabled() {
   return true;
 }
 
-#if !defined(OS_ANDROID)
-bool AreExperimentalWebPlatformFeaturesEnabled() {
-  const base::CommandLine& browser_command_line =
-      *base::CommandLine::ForCurrentProcess();
-  return browser_command_line.HasSwitch(
-      switches::kEnableExperimentalWebPlatformFeatures);
-}
-#endif
-
 void MaybeAppendBlinkSettingsSwitchForFieldTrial(
     const base::CommandLine& browser_command_line,
     base::CommandLine* command_line) {
@@ -1634,9 +1623,6 @@ void MaybeAppendBlinkSettingsSwitchForFieldTrial(
 
       // Keys: doHtmlPreloadScanning
       "HtmlPreloadScanning",
-
-      // Keys: lowPriorityIframes
-      "LowPriorityIFrames",
 
       // Keys: disallowFetchForDocWrittenScriptsInMainFrame
       //       disallowFetchForDocWrittenScriptsInMainFrameOnSlowConnections
@@ -1904,7 +1890,6 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       extensions::switches::kEnableEmbeddedExtensionOptions,
       extensions::switches::kEnableExperimentalExtensionApis,
       extensions::switches::kExtensionsOnChromeURLs,
-      extensions::switches::kIsolateExtensions,
       extensions::switches::kNativeCrxBindings,
       extensions::switches::kWhitelistedExtensionID,
       extensions::switches::kYieldBetweenContentScriptRuns,
@@ -3225,8 +3210,7 @@ void ChromeContentBrowserClient::ExposeInterfacesToFrame(
                    web_contents->GetJavaInterfaces()->GetWeakPtr()));
   }
 #else
-  if (AreExperimentalWebPlatformFeaturesEnabled() &&
-      base::FeatureList::IsEnabled(features::kWebPayments)) {
+  if (base::FeatureList::IsEnabled(features::kWebPayments)) {
     content::WebContents* web_contents =
         content::WebContents::FromRenderFrameHost(render_frame_host);
     if (web_contents) {
@@ -3249,7 +3233,7 @@ void ChromeContentBrowserClient::BindInterfaceRequest(
     mojo::ScopedMessagePipeHandle* interface_pipe) {
   if (source_info.identity.name() == content::mojom::kGpuServiceName &&
       gpu_binder_registry_.CanBindInterface(interface_name)) {
-    gpu_binder_registry_.BindInterface(source_info.identity, interface_name,
+    gpu_binder_registry_.BindInterface(source_info, interface_name,
                                        std::move(*interface_pipe));
   }
 }

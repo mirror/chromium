@@ -48,6 +48,7 @@
 #include "content/public/common/three_d_api_types.h"
 #include "ipc/ipc_message_macros.h"
 #include "ipc/ipc_platform_file.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 #include "ppapi/features/features.h"
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
@@ -626,6 +627,11 @@ IPC_STRUCT_BEGIN(FrameMsg_MixedContentFound_Params)
   IPC_STRUCT_MEMBER(content::SourceLocation, source_location)
 IPC_STRUCT_END()
 
+IPC_STRUCT_BEGIN(FrameMsg_CommitDataNetworkService_Params)
+  IPC_STRUCT_MEMBER(mojo::DataPipeConsumerHandle, handle)
+  IPC_STRUCT_MEMBER(mojo::MessagePipeHandle, url_loader_factory)
+IPC_STRUCT_END()
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 // This message is used for supporting popup menus on Mac OS X and Android using
 // native controls. See the FrameHostMsg_ShowPopup message.
@@ -913,11 +919,13 @@ IPC_MESSAGE_ROUTED2(FrameMsg_SelectPopupMenuItems,
 // Tells the renderer that a navigation is ready to commit.  The renderer should
 // request |stream_url| to get access to the stream containing the body of the
 // response. When --enable-network-service is in effect, |stream_url| is not
-// used, and instead the data is passed to the renderer in |handle|.
+// used, and instead the data is passed to the renderer in |commit_data.handle|.
+// When --enable-network-service, a URLLoaderFactory is optionally passed in
+// |commit_data| too.
 IPC_MESSAGE_ROUTED5(FrameMsg_CommitNavigation,
-                    content::ResourceResponseHead,   /* response */
-                    GURL,                            /* stream_url */
-                    mojo::DataPipeConsumerHandle,    /* handle */
+                    content::ResourceResponseHead,            /* response */
+                    GURL,                                     /* stream_url */
+                    FrameMsg_CommitDataNetworkService_Params, /* commit_data */
                     content::CommonNavigationParams, /* common_params */
                     content::RequestNavigationParams /* request_params */)
 
@@ -990,6 +998,10 @@ IPC_MESSAGE_ROUTED2(FrameMsg_CopyImageAt,
 IPC_MESSAGE_ROUTED2(FrameMsg_SaveImageAt,
                     int /* x */,
                     int /* y */)
+
+// Notify the renderer of our overlay routing token.
+IPC_MESSAGE_ROUTED1(FrameMsg_SetOverlayRoutingToken,
+                    base::UnguessableToken /* routing_token */)
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 // Notifies the renderer of updates to the Plugin Power Saver origin whitelist.
@@ -1418,6 +1430,10 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_VisibilityChanged, bool /* visible */)
 // propagated to any remote frames.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_SetHasReceivedUserGesture)
 
+// Used to tell the browser what the DevTools FrameId is. Needed by Headless
+// Chrome.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_SetDevToolsFrameId, std::string)
+
 // Used to tell the parent that the user right clicked on an area of the
 // content area, and a context menu should be shown for it. The params
 // object contains information about the node(s) that were selected when the
@@ -1615,6 +1631,10 @@ IPC_MESSAGE_ROUTED5(FrameHostMsg_Find_Reply,
 
 // Sends hittesting data needed to perform hittesting on the browser process.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_HittestData, FrameHostMsg_HittestData_Params)
+
+// Request that the host send its overlay routing token for this render frame
+// via SetOverlayRoutingToken.
+IPC_MESSAGE_ROUTED0(FrameHostMsg_RequestOverlayRoutingToken)
 
 // Asks the browser to display the file chooser.  The result is returned in a
 // FrameMsg_RunFileChooserResponse message.

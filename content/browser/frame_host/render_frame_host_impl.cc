@@ -165,6 +165,12 @@ typedef base::hash_map<RenderFrameHostID, RenderFrameHostImpl*>
 base::LazyInstance<RoutingIDFrameMap>::DestructorAtExit g_routing_id_frame_map =
     LAZY_INSTANCE_INITIALIZER;
 
+using TokenFrameMap = base::hash_map<base::UnguessableToken,
+                                     RenderFrameHostImpl*,
+                                     base::UnguessableTokenHash>;
+base::LazyInstance<TokenFrameMap>::Leaky g_token_frame_map =
+    LAZY_INSTANCE_INITIALIZER;
+
 // Translate a WebKit text direction into a base::i18n one.
 base::i18n::TextDirection WebTextDirectionToChromeTextDirection(
     blink::WebTextDirection dir) {
@@ -360,6 +366,14 @@ RenderFrameHostImpl* RenderFrameHostImpl::FromAXTreeID(
   return RenderFrameHostImpl::FromID(frame_id.first, frame_id.second);
 }
 
+// static
+RenderFrameHostImpl* RenderFrameHostImpl::FromOverlayRoutingToken(
+    const base::UnguessableToken& token) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto it = g_token_frame_map.Get().find(token);
+  return it == g_token_frame_map.Get().end() ? nullptr : it->second;
+}
+
 RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
                                          RenderViewHostImpl* render_view_host,
                                          RenderFrameHostDelegate* delegate,
@@ -465,6 +479,10 @@ RenderFrameHostImpl::~RenderFrameHostImpl() {
   GetProcess()->RemoveRoute(routing_id_);
   g_routing_id_frame_map.Get().erase(
       RenderFrameHostID(GetProcess()->GetID(), routing_id_));
+
+  if (overlay_routing_token_)
+    g_token_frame_map.Get().erase(*overlay_routing_token_);
+
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::Bind(&NotifyRenderFrameDetachedOnIO,
                                      GetProcess()->GetID(), routing_id_));
@@ -516,6 +534,15 @@ int RenderFrameHostImpl::GetRoutingID() {
 ui::AXTreeIDRegistry::AXTreeID RenderFrameHostImpl::GetAXTreeID() {
   return ui::AXTreeIDRegistry::GetInstance()->GetOrCreateAXTreeID(
       GetProcess()->GetID(), routing_id_);
+}
+
+const base::UnguessableToken& RenderFrameHostImpl::GetOverlayRoutingToken() {
+  if (!overlay_routing_token_) {
+    overlay_routing_token_ = base::UnguessableToken::Create();
+    g_token_frame_map.Get().emplace(*overlay_routing_token_, this);
+  }
+
+  return *overlay_routing_token_;
 }
 
 SiteInstanceImpl* RenderFrameHostImpl::GetSiteInstance() {
@@ -814,6 +841,7 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_FocusedNodeChanged, OnFocusedNodeChanged)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SetHasReceivedUserGesture,
                         OnSetHasReceivedUserGesture)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_SetDevToolsFrameId, OnSetDevToolsFrameId)
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ShowPopup, OnShowPopup)
     IPC_MESSAGE_HANDLER(FrameHostMsg_HidePopup, OnHidePopup)
@@ -822,6 +850,8 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_NavigationHandledByEmbedder,
                         OnNavigationHandledByEmbedder)
 #endif
+    IPC_MESSAGE_HANDLER(FrameHostMsg_RequestOverlayRoutingToken,
+                        OnRequestOverlayRoutingToken)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ShowCreatedWindow, OnShowCreatedWindow)
   IPC_END_MESSAGE_MAP()
 
@@ -2438,6 +2468,11 @@ void RenderFrameHostImpl::OnSetHasReceivedUserGesture() {
   frame_tree_node_->OnSetHasReceivedUserGesture();
 }
 
+void RenderFrameHostImpl::OnSetDevToolsFrameId(
+    const std::string& devtools_frame_id) {
+  untrusted_devtools_frame_id_ = devtools_frame_id;
+}
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 void RenderFrameHostImpl::OnShowPopup(
     const FrameHostMsg_ShowPopup_Params& params) {
@@ -2473,6 +2508,14 @@ void RenderFrameHostImpl::OnNavigationHandledByEmbedder() {
   OnDidStopLoading();
 }
 #endif
+
+void RenderFrameHostImpl::OnRequestOverlayRoutingToken() {
+  // Make sure that we have a token.
+  GetOverlayRoutingToken();
+
+  Send(new FrameMsg_SetOverlayRoutingToken(routing_id_,
+                                           *overlay_routing_token_));
+}
 
 void RenderFrameHostImpl::OnShowCreatedWindow(int pending_widget_routing_id,
                                               WindowOpenDisposition disposition,
@@ -2663,7 +2706,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       base::IgnoreResult(&RenderFrameHostImpl::CreateWebBluetoothService),
       base::Unretained(this)));
 
-  GetInterfaceRegistry()->AddInterface<media::mojom::InterfaceFactory>(this);
+  GetInterfaceRegistry()->AddInterface<media::mojom::InterfaceFactory>(
+      base::Bind(&RenderFrameHostImpl::BindMediaInterfaceFactoryRequest,
+                 base::Unretained(this)));
 
   // This is to support usage of WebSockets in cases in which there is an
   // associated RenderFrame. This is important for showing the correct security
@@ -3011,9 +3056,12 @@ void RenderFrameHostImpl::CommitNavigation(
   const GURL body_url = body.get() ? body->GetURL() : GURL();
   const ResourceResponseHead head = response ?
       response->head : ResourceResponseHead();
-  Send(new FrameMsg_CommitNavigation(routing_id_, head, body_url,
-                                     handle.release(), common_params,
-                                     request_params));
+  FrameMsg_CommitDataNetworkService_Params commit_data;
+  commit_data.handle = handle.release();
+  // TODO(scottmg): Pass a factory for SW, etc. once we have one.
+  commit_data.url_loader_factory = mojo::MessagePipeHandle();
+  Send(new FrameMsg_CommitNavigation(routing_id_, head, body_url, commit_data,
+                                     common_params, request_params));
 
   // If a network request was made, update the Previews state.
   if (ShouldMakeNetworkRequestForURL(common_params.url) &&
@@ -3665,8 +3713,8 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
       parent_policy, container_policy, last_committed_origin_);
 }
 
-void RenderFrameHostImpl::Create(
-    const service_manager::Identity& remote_identity,
+void RenderFrameHostImpl::BindMediaInterfaceFactoryRequest(
+    const service_manager::BindSourceInfo& source_info,
     media::mojom::InterfaceFactoryRequest request) {
   DCHECK(!media_interface_proxy_);
   media_interface_proxy_.reset(new MediaInterfaceProxy(
@@ -3684,8 +3732,9 @@ void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   if (interface_registry_.get()) {
-    interface_registry_->BindInterface(GetProcess()->GetChildIdentity(),
-                                       interface_name,
+    service_manager::BindSourceInfo source_info(
+        GetProcess()->GetChildIdentity(), service_manager::CapabilitySet());
+    interface_registry_->BindInterface(source_info, interface_name,
                                        std::move(interface_pipe));
   }
 }
@@ -3836,7 +3885,8 @@ RenderFrameHostImpl::GetJavaRenderFrameHost() {
         mojo::MakeRequest(&interface_provider_ptr));
     render_frame_host_android =
         new RenderFrameHostAndroid(this, std::move(interface_provider_ptr));
-    SetUserData(kRenderFrameHostAndroidKey, render_frame_host_android);
+    SetUserData(kRenderFrameHostAndroidKey,
+                base::WrapUnique(render_frame_host_android));
   }
   return render_frame_host_android->GetJavaObject();
 }

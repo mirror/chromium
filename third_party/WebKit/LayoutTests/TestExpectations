@@ -2305,10 +2305,6 @@ crbug.com/635909 inspector/sources/debugger-frameworks/frameworks-dom-xhr-event-
 crbug.com/636424 [ Win7 Debug ] editing/selection/modify_move/move-by-word-visually-crash-test-5.html [ Pass Timeout ]
 crbug.com/638618 inspector/editor/text-editor-search-switch-editor.html [ Skip ]
 
-crbug.com/714680 virtual/gpu-rasterization/images/color-profile-background-image-cross-fade-png.html [ NeedsManualRebaseline ]
-crbug.com/714680 virtual/gpu-rasterization/images/color-profile-background-image-cross-fade.html [ NeedsManualRebaseline ]
-crbug.com/714680 virtual/gpu-rasterization/images/color-profile-mask-image-svg.html [ NeedsManualRebaseline ]
-
 # These tests have test harness errors and PASS lines that have a
 # non-deterministic order.
 crbug.com/705125 fast/mediacapturefromelement/CanvasCaptureMediaStream-capture-out-of-DOM-element.html [ Failure ]
@@ -3385,5 +3381,12 @@ crbug.com/716569 [ Android ] tables/mozilla_expected_failures/bugs/bug2479-5.htm
 # Sheriff flake 2017-05-01
 crbug.com/716729 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-OAEP.https.html [ Pass Timeout ]
 
-# Sheriff failure 2017-05-02
+# Sheriff failures 2017-05-02
 crbug.com/693065 [ Mac ] fast/text/variable-fonts/variable-gpos-m2b.html [ Failure ]
+crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Crash ]
+crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-path-context-clip.html [ Crash ]
+crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Timeout ]
+crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-path-context-clip.html [ Timeout ]
+
+crbug.com/717914 virtual/stable/webexposed/element-instance-property-listing.html [ Failure ]
+crbug.com/717914 virtual/stable/webexposed/global-interface-listing.html [ Failure ]

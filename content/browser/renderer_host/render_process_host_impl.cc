@@ -377,7 +377,7 @@ SiteProcessMap* GetSiteProcessMapForBrowserContext(BrowserContext* context) {
       context->GetUserData(kSiteProcessMapKeyName));
   if (!map) {
     map = new SiteProcessMap();
-    context->SetUserData(kSiteProcessMapKeyName, map);
+    context->SetUserData(kSiteProcessMapKeyName, base::WrapUnique(map));
   }
   return map;
 }
@@ -601,7 +601,7 @@ class RenderProcessHostImpl::ConnectionFilterImpl : public ConnectionFilter {
       return;
 
     if (registry_->CanBindInterface(interface_name)) {
-      registry_->BindInterface(source_info.identity, interface_name,
+      registry_->BindInterface(source_info, interface_name,
                                std::move(*interface_pipe));
     }
   }
@@ -2747,8 +2747,8 @@ void RenderProcessHostImpl::CreateSharedRendererHistogramAllocator() {
         std::move(shm), GetID(), "RendererMetrics", /*readonly=*/false));
   }
 
-  base::SharedMemoryHandle shm_handle;
-  metrics_allocator_->shared_memory()->ShareToProcess(destination, &shm_handle);
+  base::SharedMemoryHandle shm_handle =
+      metrics_allocator_->shared_memory()->handle().Duplicate();
   Send(new ChildProcessMsg_SetHistogramMemory(
       shm_handle, metrics_allocator_->shared_memory()->mapped_size()));
 }
@@ -2862,7 +2862,7 @@ void RenderProcessHostImpl::ReleaseOnCloseACK(
       host->GetUserData(kSessionStorageHolderKey));
   if (!holder) {
     holder = new SessionStorageHolder();
-    host->SetUserData(kSessionStorageHolderKey, holder);
+    host->SetUserData(kSessionStorageHolderKey, base::WrapUnique(holder));
   }
   holder->Hold(sessions, view_route_id);
 }

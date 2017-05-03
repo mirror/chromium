@@ -45,12 +45,12 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
-import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.Invalidator;
 import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
+import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.fullscreen.BrowserStateBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
 import org.chromium.chrome.browser.ntp.NewTabPage;
@@ -222,7 +222,7 @@ public class ToolbarPhone extends ToolbarLayout
     private float mLocationBarNtpOffsetRight;
 
     private final Rect mNtpSearchBoxBounds = new Rect();
-    private final Point mNtpSearchBoxTranslation = new Point();
+    protected final Point mNtpSearchBoxTranslation = new Point();
 
     private final int mToolbarSidePadding;
     private final int mLocationBarBackgroundCornerRadius;
@@ -636,7 +636,7 @@ public class ToolbarPhone extends ToolbarLayout
         }
     }
 
-    private int getBoundsAfterAccountingForLeftButton() {
+    protected int getBoundsAfterAccountingForLeftButton() {
         int padding = mToolbarSidePadding;
         if (mHomeButton.getVisibility() != GONE) padding = mHomeButton.getMeasuredWidth();
         return padding;
@@ -1455,7 +1455,7 @@ public class ToolbarPhone extends ToolbarLayout
     }
 
     // TODO(dtrainor): This is always true when in the tab switcher (crbug.com/710750).
-    private boolean isTabSwitcherAnimationRunning() {
+    protected boolean isTabSwitcherAnimationRunning() {
         return mTabSwitcherState == ENTERING_TAB_SWITCHER
                 || mTabSwitcherState == EXITING_TAB_SWITCHER;
     }
@@ -1534,7 +1534,7 @@ public class ToolbarPhone extends ToolbarLayout
         mAnimateNormalToolbar = showToolbar;
         if (mTabSwitcherModeAnimation != null) mTabSwitcherModeAnimation.start();
 
-        if (SysUtils.isLowEndDevice()) finishAnimations();
+        if (DeviceClassManager.enableAccessibilityLayout()) finishAnimations();
 
         postInvalidateOnAnimation();
     }
