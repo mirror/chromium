@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2f56258_a9420917",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-03T06:58:52Z",
+      "side": 0,
+      "message": "Add a comment along the lines of:\n\nUntil we have a distinction between owned and unowned prefs, we always have default values for all prefs locally. Since we already have the defaults it would be wasteful to request them from the service by connecting to the DEFAULT_STORE.\n// TODO(sammc): Once we have this distinction, connect to the default pref store here.",
+      "revId": "6c14f269fb196627c72a810205488d694b63a7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
