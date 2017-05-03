@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a592ab9b_197ee16a",
+        "filename": "tools/clang/scripts/apply_edits.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-03T20:52:03Z",
+      "side": 1,
+      "message": "Would you be OK with defaulting to \u0027.\u0027, like ninja and ClangTool essentially do?",
+      "parentUuid": "cc3c6144_ce5d725b",
+      "range": {
+        "startLine": 206,
+        "startChar": 16,
+        "endLine": 206,
+        "endChar": 20
+      },
+      "revId": "e921ed32c8ca27854798c4b2a63c388da4df9069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b29aafd_f3a9b2c1",
         "filename": "tools/clang/scripts/run_tool.py",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-03T20:45:24Z",
       "side": 1,
       "message": "why?",
+      "range": {
+        "startLine": 191,
+        "startChar": 23,
+        "endLine": 191,
+        "endChar": 25
+      },
+      "revId": "e921ed32c8ca27854798c4b2a63c388da4df9069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ce8c20_aa854631",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-03T20:52:03Z",
+      "side": 1,
+      "message": "Because I keep forgetting if it\u0027s tool name first and then compile db path or the other way around. It\u0027s also more consistent with --tool-args\u003d",
+      "parentUuid": "8b29aafd_f3a9b2c1",
       "range": {
         "startLine": 191,
         "startChar": 23,
