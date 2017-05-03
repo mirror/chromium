@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e04045be_1be26984",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-03T20:48:59Z",
+      "side": 0,
+      "message": "It\u0027s not clear to me why we can remove this?\n\nI just tested a cyrillic hostname, which was converted to punycode in the UI, and the setting was correctly applied on the site. Therefore without this functionality, it would not have been correctly applied.\n\nThough I also discovered that changing content settings on that website through OIB in Incognito did not work - likely because there is no pref reading in incognito, just the map in memory.\n\nSeems like we need the canonicalization in HostContentSettingsMap::SetWebsiteSetting* for it to work properly. I suggest leaving this in, and we (Raymes and I) should address this separately.",
+      "range": {
+        "startLine": 973,
+        "startChar": 35,
+        "endLine": 973,
+        "endChar": 68
+      },
+      "revId": "122567d1513706ae5da9871a802c1042e81d2fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
