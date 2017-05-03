@@ -37,7 +37,6 @@
 #include "core/style/LineClampValue.h"
 #include "core/style/NinePieceImage.h"
 #include "core/style/SVGComputedStyle.h"
-#include "core/style/StyleBackgroundData.h"
 #include "core/style/StyleBoxData.h"
 #include "core/style/StyleContentAlignmentData.h"
 #include "core/style/StyleDeprecatedFlexibleBoxData.h"
@@ -181,6 +180,35 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   friend class StyleBuilderConverter;
   friend class StyleResolverState;
   friend class StyleResolver;
+
+ private:
+  class StyleBackgroundData : public RefCountedCopyable<StyleBackgroundData> {
+   public:
+    static PassRefPtr<StyleBackgroundData> Create() {
+      return AdoptRef(new StyleBackgroundData);
+    }
+    PassRefPtr<StyleBackgroundData> Copy() const {
+      return AdoptRef(new StyleBackgroundData(*this));
+    }
+
+    bool operator==(const StyleBackgroundData& other) const {
+      return background_ == other.background_ &&
+             background_color_ == other.background_color_;
+    }
+    bool operator!=(const StyleBackgroundData& other) const {
+      return !(*this == other);
+    }
+
+    FillLayer background_;
+    StyleColor background_color_;
+
+   private:
+    StyleBackgroundData()
+        : background_(FillLayer(kBackgroundFillLayer, true)),
+          background_color_(Color::kTransparent) {}
+
+    StyleBackgroundData(const StyleBackgroundData&) = default;
+  };
 
  protected:
   // non-inherited attributes
@@ -417,21 +445,21 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // background-color
   static Color InitialBackgroundColor() { return Color::kTransparent; }
   void SetBackgroundColor(const StyleColor& v) {
-    SET_VAR(background_data_, color_, v);
+    SET_VAR(background_data_, background_color_, v);
   }
 
   // background-image
   bool HasBackgroundImage() const {
-    return background_data_->Background().HasImage();
+    return background_data_->background_.HasImage();
   }
   bool HasFixedBackgroundImage() const {
-    return background_data_->Background().HasFixedImage();
+    return background_data_->background_.HasFixedImage();
   }
   bool HasEntirelyFixedBackground() const;
 
   // background-clip
   EFillBox BackgroundClip() const {
-    return static_cast<EFillBox>(background_data_->Background().Clip());
+    return static_cast<EFillBox>(background_data_->background_.Clip());
   }
 
   // Border properties.
@@ -558,43 +586,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // border-bottom-color
   void SetBorderBottomColor(const StyleColor& v) {
     SET_BORDERVALUE_COLOR(surround_data_, border_.bottom_, v);
-  }
-
-  // Border radius properties.
-  static LengthSize InitialBorderRadius() {
-    return LengthSize(Length(0, kFixed), Length(0, kFixed));
-  }
-
-  // border-top-left-radius (aka -webkit-border-top-left-radius)
-  const LengthSize& BorderTopLeftRadius() const {
-    return surround_data_->border_.TopLeft();
-  }
-  void SetBorderTopLeftRadius(const LengthSize& s) {
-    SET_VAR(surround_data_, border_.top_left_, s);
-  }
-
-  // border-top-right-radius (aka -webkit-border-top-right-radius)
-  const LengthSize& BorderTopRightRadius() const {
-    return surround_data_->border_.TopRight();
-  }
-  void SetBorderTopRightRadius(const LengthSize& s) {
-    SET_VAR(surround_data_, border_.top_right_, s);
-  }
-
-  // border-bottom-left-radius (aka -webkit-border-bottom-left-radius)
-  const LengthSize& BorderBottomLeftRadius() const {
-    return surround_data_->border_.BottomLeft();
-  }
-  void SetBorderBottomLeftRadius(const LengthSize& s) {
-    SET_VAR(surround_data_, border_.bottom_left_, s);
-  }
-
-  // border-bottom-right-radius (aka -webkit-border-bottom-right-radius)
-  const LengthSize& BorderBottomRightRadius() const {
-    return surround_data_->border_.BottomRight();
-  }
-  void SetBorderBottomRightRadius(const LengthSize& s) {
-    SET_VAR(surround_data_, border_.bottom_right_, s);
   }
 
   // box-shadow (aka -webkit-box-shadow)
@@ -2885,9 +2876,26 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   bool HasBorderFill() const { return Border().HasBorderFill(); }
   bool HasBorder() const { return Border().HasBorder(); }
   bool HasBorderDecoration() const { return HasBorder() || HasBorderFill(); }
-  bool HasBorderRadius() const { return Border().HasBorderRadius(); }
+  bool HasBorderRadius() const {
+    if (!BorderTopLeftRadius().Width().IsZero())
+      return true;
+    if (!BorderTopRightRadius().Width().IsZero())
+      return true;
+    if (!BorderBottomLeftRadius().Width().IsZero())
+      return true;
+    if (!BorderBottomRightRadius().Width().IsZero())
+      return true;
+    return false;
+  }
   bool HasBorderColorReferencingCurrentColor() const {
     return Border().HasBorderColorReferencingCurrentColor();
+  }
+
+  bool RadiiEqual(const ComputedStyle& o) const {
+    return BorderTopLeftRadius() == o.BorderTopLeftRadius() &&
+           BorderTopRightRadius() == o.BorderTopRightRadius() &&
+           BorderBottomLeftRadius() == o.BorderBottomLeftRadius() &&
+           BorderBottomRightRadius() == o.BorderBottomRightRadius();
   }
 
   void ResetBorder() {
@@ -2915,18 +2923,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
   void ResetBorderImage() {
     SET_VAR(surround_data_, border_.image_, NinePieceImage());
-  }
-  void ResetBorderTopLeftRadius() {
-    SET_VAR(surround_data_, border_.top_left_, InitialBorderRadius());
-  }
-  void ResetBorderTopRightRadius() {
-    SET_VAR(surround_data_, border_.top_right_, InitialBorderRadius());
-  }
-  void ResetBorderBottomLeftRadius() {
-    SET_VAR(surround_data_, border_.bottom_left_, InitialBorderRadius());
-  }
-  void ResetBorderBottomRightRadius() {
-    SET_VAR(surround_data_, border_.bottom_right_, InitialBorderRadius());
   }
 
   void SetBorderRadius(const LengthSize& s) {
@@ -3361,7 +3357,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return background_data_.Access()->background_;
   }
   const FillLayer& BackgroundLayers() const {
-    return background_data_->Background();
+    return background_data_->background_;
   }
   void AdjustBackgroundLayers() {
     if (BackgroundLayers().Next()) {
@@ -3496,7 +3492,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   StyleColor BorderBottomColor() const {
     return surround_data_->border_.Bottom().GetColor();
   }
-  StyleColor BackgroundColor() const { return background_data_->GetColor(); }
+  StyleColor BackgroundColor() const {
+    return background_data_->background_color_;
+  }
   StyleAutoColor CaretColor() const {
     return rare_inherited_data_->CaretColor();
   }

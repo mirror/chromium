@@ -112,6 +112,24 @@
             ]
         }
     ],
+    "AutoDismissingDialogs": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "AutoDismissingDialogs"
+                    ]
+                }
+            ]
+        }
+    ],
     "AutodetectEncoding": [
         {
             "platforms": [
@@ -363,7 +381,11 @@
             ],
             "experiments": [
                 {
-                    "name": "Default",
+                    "//1": "Enable on-by-default redirections with default",
+                    "//2": "client-side init params (ref.",
+                    "//3": "GetDefaultTaskSchedulerInitParams() in",
+                    "//4": "browser_main_loop.cc).",
+                    "name": "RedirectWithDefaultInitParams",
                     "params": {
                         "RedirectSequencedWorkerPools": "true"
                     }
@@ -1251,21 +1273,6 @@
             "experiments": [
                 {
                     "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "LowPriorityIFrames": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "params": {
-                        "lowPriorityIframes": "true"
-                    }
                 }
             ]
         }
@@ -2751,21 +2758,6 @@
             "experiments": [
                 {
                     "name": "ExperimentYes"
-                }
-            ]
-        }
-    ],
-    "SiteIsolationExtensions": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
                 }
             ]
         }

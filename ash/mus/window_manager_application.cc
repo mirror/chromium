@@ -25,7 +25,6 @@
 #include "device/bluetooth/dbus/bluez_dbus_manager.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/service_context.h"
-#include "services/tracing/public/cpp/provider.h"
 #include "services/ui/common/accelerator_util.h"
 #include "ui/aura/env.h"
 #include "ui/aura/mus/window_tree_client.h"
@@ -137,8 +136,6 @@ void WindowManagerApplication::OnStart() {
   window_manager_ = base::MakeUnique<WindowManager>(
       context()->connector(), ash_config_, show_primary_host_on_connect_);
 
-  tracing_.Initialize(context()->connector(), context()->identity().name());
-
   std::unique_ptr<aura::WindowTreeClient> window_tree_client =
       base::MakeUnique<aura::WindowTreeClient>(
           context()->connector(), window_manager_.get(), window_manager_.get());
@@ -160,7 +157,7 @@ void WindowManagerApplication::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(source_info.identity, interface_name,
+  registry_.BindInterface(source_info, interface_name,
                           std::move(interface_pipe));
 }
 

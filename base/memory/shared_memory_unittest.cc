@@ -316,7 +316,7 @@ TEST(SharedMemoryTest, AnonymousPrivate) {
   }
 }
 
-TEST(SharedMemoryTest, ShareReadOnly) {
+TEST(SharedMemoryTest, GetReadOnlyHandle) {
   StringPiece contents = "Hello World";
 
   SharedMemory writable_shmem;
@@ -332,9 +332,8 @@ TEST(SharedMemoryTest, ShareReadOnly) {
   memcpy(writable_shmem.memory(), contents.data(), contents.size());
   EXPECT_TRUE(writable_shmem.Unmap());
 
-  SharedMemoryHandle readonly_handle;
-  ASSERT_TRUE(writable_shmem.ShareReadOnlyToProcess(GetCurrentProcessHandle(),
-                                                    &readonly_handle));
+  SharedMemoryHandle readonly_handle = writable_shmem.GetReadOnlyHandle();
+  ASSERT_TRUE(readonly_handle.IsValid());
   SharedMemory readonly_shmem(readonly_handle, /*readonly=*/true);
 
   ASSERT_TRUE(readonly_shmem.Map(contents.size()));
@@ -411,8 +410,8 @@ TEST(SharedMemoryTest, ShareToSelf) {
   memcpy(shmem.memory(), contents.data(), contents.size());
   EXPECT_TRUE(shmem.Unmap());
 
-  SharedMemoryHandle shared_handle;
-  ASSERT_TRUE(shmem.ShareToProcess(GetCurrentProcessHandle(), &shared_handle));
+  SharedMemoryHandle shared_handle = shmem.handle().Duplicate();
+  ASSERT_TRUE(shared_handle.IsValid());
 #if defined(OS_WIN)
   ASSERT_TRUE(shared_handle.OwnershipPassesToIPC());
 #endif
@@ -423,8 +422,8 @@ TEST(SharedMemoryTest, ShareToSelf) {
       contents,
       StringPiece(static_cast<const char*>(shared.memory()), contents.size()));
 
-  shared_handle = SharedMemoryHandle();
-  ASSERT_TRUE(shmem.ShareToProcess(GetCurrentProcessHandle(), &shared_handle));
+  shared_handle = shmem.handle().Duplicate();
+  ASSERT_TRUE(shared_handle.IsValid());
 #if defined(OS_WIN)
   ASSERT_TRUE(shared_handle.OwnershipPassesToIPC());
 #endif

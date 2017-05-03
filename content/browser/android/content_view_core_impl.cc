@@ -13,6 +13,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/string_util.h"
@@ -325,7 +326,7 @@ void ContentViewCoreImpl::InitWebContents() {
           SetContentViewCore(this);
   DCHECK(!web_contents_->GetUserData(kContentViewUserDataKey));
   web_contents_->SetUserData(kContentViewUserDataKey,
-                             new ContentViewUserData(this));
+                             base::MakeUnique<ContentViewUserData>(this));
 }
 
 void ContentViewCoreImpl::RenderViewReady() {
@@ -594,11 +595,15 @@ bool ContentViewCoreImpl::ShowPastePopup(const ContextMenuParams& params) {
   ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
   if (obj.is_null())
     return false;
+
   const bool can_select_all =
       !!(params.edit_flags & WebContextMenuData::kCanSelectAll);
+  const bool can_edit_richly =
+      !!(params.edit_flags & blink::WebContextMenuData::kCanEditRichly);
+
   Java_ContentViewCore_showPastePopup(env, obj, params.selection_start.x(),
                                       params.selection_start.y(),
-                                      can_select_all);
+                                      can_select_all, can_edit_richly);
   return true;
 }
 

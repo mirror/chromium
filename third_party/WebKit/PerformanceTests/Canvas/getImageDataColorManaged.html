@@ -48,26 +48,26 @@ function writeArray(array, accessLocations, arrayName) {
 }
 
 function ImageData_data_AccessTime() {
-    imageData = ctx.createImageData(dataU8, 1000, 1000, {colorSpace: "srgb"});
+    imageDataU8 = ctx.createImageData(dataU8, 1000, 1000, {colorSpace: "srgb"});
     readArray(imageData.data, accessLocations);
     writeArray(imageData.data, accessLocations);
 }
 
 function ImageData_dataUnionU8_AccessTime() {
-    imageDataU8 = ctx.createImageData(dataU8, 1000, 1000, {colorSpace: "srgb"});
+    imageDataU8 = ctx.createImageData(dataU8, 1000, 1000, {colorSpace: "srgb", pixelFormat: "uint8"});
     readArray(imageDataU8.dataUnion, accessLocations);
     writeArray(imageDataU8.dataUnion, accessLocations);
 
 }
 
 function ImageData_dataUnionU16_AccessTime() {
-    imageDataU16 = ctx.createImageData(dataU16, 1000, 1000, {colorSpace: "srgb"});
+    imageDataU16 = ctx.createImageData(dataU16, 1000, 1000, {colorSpace: "srgb", pixelFormat: "uint16"});
     readArray(imageDataU16.dataUnion, accessLocations);
     writeArray(imageDataU16.dataUnion, accessLocations);
 }
 
 function ImageData_dataUnionF32_AccessTime() {
-    imageDataF32 = ctx.createImageData(dataF32, 1000, 1000, {colorSpace: "srgb"});
+    imageDataF32 = ctx.createImageData(dataF32, 1000, 1000, {colorSpace: "srgb", pixelFormat: "float32"});
     readArray(imageDataF32.dataUnion, accessLocations, "imageDataF32.dataUnion");
     writeArray(imageDataF32.dataUnion, accessLocations, "imageDataF32.dataUnion");
 }

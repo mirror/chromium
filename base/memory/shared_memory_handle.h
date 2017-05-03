@@ -56,6 +56,11 @@ class BASE_EXPORT SharedMemoryHandle {
   // Whether the underlying OS resource is valid.
   bool IsValid() const;
 
+  // Duplicates the underlying OS resource. Using the return value as a
+  // parameter to an IPC message will cause the IPC subsystem to consume the OS
+  // resource.
+  SharedMemoryHandle Duplicate() const;
+
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   enum Type {
     // The SharedMemoryHandle is backed by a POSIX fd.
@@ -82,9 +87,6 @@ class BASE_EXPORT SharedMemoryHandle {
   SharedMemoryHandle(mach_port_t memory_object,
                      mach_vm_size_t size,
                      base::ProcessId pid);
-
-  // Duplicates the underlying OS resources.
-  SharedMemoryHandle Duplicate() const;
 
   // Exposed so that the SharedMemoryHandle can be transported between
   // processes.
@@ -131,9 +133,6 @@ class BASE_EXPORT SharedMemoryHandle {
   // Invalidates [but doesn't close] the underlying OS resource. This will leak
   // unless the caller is careful.
   int Release();
-
-  // Duplicates the underlying OS resource.
-  SharedMemoryHandle Duplicate() const;
 #endif
 
  private:

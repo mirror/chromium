@@ -15,7 +15,8 @@ namespace content {
 const char kTestServiceUrl[] = "system:content_test_service";
 
 TestService::TestService() : service_binding_(this) {
-  registry_.AddInterface<mojom::TestService>(this);
+  registry_.AddInterface<mojom::TestService>(
+      base::Bind(&TestService::Create, base::Unretained(this)));
 }
 
 TestService::~TestService() {
@@ -26,11 +27,11 @@ void TestService::OnBindInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   requestor_name_ = source_info.identity.name();
-  registry_.BindInterface(source_info.identity, interface_name,
+  registry_.BindInterface(source_info, interface_name,
                           std::move(interface_pipe));
 }
 
-void TestService::Create(const service_manager::Identity& remote_identity,
+void TestService::Create(const service_manager::BindSourceInfo& source_info,
                          mojom::TestServiceRequest request) {
   DCHECK(!service_binding_.is_bound());
   service_binding_.Bind(std::move(request));

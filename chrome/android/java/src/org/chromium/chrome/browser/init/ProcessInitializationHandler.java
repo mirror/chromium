@@ -7,6 +7,9 @@ package org.chromium.chrome.browser.init;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.view.inputmethod.InputMethodInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodSubtype;
 
 import com.google.ipc.invalidation.external.client.android.service.AndroidLogger;
 
@@ -14,7 +17,9 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.SysUtils;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeActivitySessionTracker;
@@ -31,6 +36,7 @@ import org.chromium.chrome.browser.identity.UniqueIdentificationGeneratorFactory
 import org.chromium.chrome.browser.identity.UuidBasedUniqueIdentificationGenerator;
 import org.chromium.chrome.browser.invalidation.UniqueIdInvalidationClientNameGenerator;
 import org.chromium.chrome.browser.locale.LocaleManager;
+import org.chromium.chrome.browser.media.MediaCaptureNotificationService;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.photo_picker.PhotoPickerDialog;
@@ -42,12 +48,17 @@ import org.chromium.chrome.browser.services.AccountsChangedReceiver;
 import org.chromium.chrome.browser.services.GoogleServicesManager;
 import org.chromium.chrome.browser.sync.SyncController;
 import org.chromium.components.signin.AccountManagerHelper;
+import org.chromium.content.browser.ChildProcessLauncher;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.device.geolocation.LocationProviderFactory;
 import org.chromium.printing.PrintDocumentAdapterWrapper;
 import org.chromium.printing.PrintingControllerImpl;
 import org.chromium.ui.PhotoPickerListener;
 import org.chromium.ui.UiUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Handles the initialization dependences of the browser process.  This is meant to handle the
@@ -70,7 +81,7 @@ public class ProcessInitializationHandler {
      * @return The ProcessInitializationHandler for use during the lifetime of the browser process.
      */
     public static ProcessInitializationHandler getInstance() {
-        ThreadUtils.assertOnUiThread();
+        ThreadUtils.checkUiThread();
         if (sInstance == null) {
             sInstance = AppHooks.get().createProcessInitializationHandler();
         }
@@ -86,10 +97,10 @@ public class ProcessInitializationHandler {
      * startup.
      */
     public final void initializePreNative() {
-        ThreadUtils.assertOnUiThread();
+        ThreadUtils.checkUiThread();
         if (mInitializedPreNative) return;
-        mInitializedPreNative = true;
         handlePreNativeInitialization();
+        mInitializedPreNative = true;
     }
 
     /**
@@ -144,10 +155,10 @@ public class ProcessInitializationHandler {
      * Initializes any dependencies that must occur after the native library has been loaded.
      */
     public final void initializePostNative() {
-        ThreadUtils.assertOnUiThread();
+        ThreadUtils.checkUiThread();
         if (mInitializedPostNative) return;
-        mInitializedPostNative = true;
         handlePostNativeInitialization();
+        mInitializedPostNative = true;
     }
 
     /**
@@ -192,10 +203,10 @@ public class ProcessInitializationHandler {
      * lifetime.
      */
     public final void initializeDeferredStartupTasks() {
-        ThreadUtils.assertOnUiThread();
+        ThreadUtils.checkUiThread();
         if (mInitializedDeferredStartupTasks) return;
-        mInitializedDeferredStartupTasks = true;
         handleDeferredStartupTasksInitialization();
+        mInitializedDeferredStartupTasks = true;
     }
 
     /**
@@ -205,6 +216,18 @@ public class ProcessInitializationHandler {
         final ChromeApplication application =
                 (ChromeApplication) ContextUtils.getApplicationContext();
         DeferredStartupHandler deferredStartupHandler = DeferredStartupHandler.getInstance();
+
+        deferredStartupHandler.addDeferredTask(new Runnable() {
+            @Override
+            public void run() {
+                // Clear any media notifications that existed when Chrome was last killed.
+                MediaCaptureNotificationService.clearMediaNotifications(application);
+
+                startModerateBindingManagementIfNeeded(application);
+
+                recordKeyboardLocaleUma(application);
+            }
+        });
 
         deferredStartupHandler.addDeferredTask(new Runnable() {
             @Override
@@ -291,5 +314,40 @@ public class ProcessInitializationHandler {
                 }
             }
         });
+    }
+
+    private void startModerateBindingManagementIfNeeded(Context context) {
+        // Moderate binding doesn't apply to low end devices.
+        if (SysUtils.isLowEndDevice()) return;
+        ChildProcessLauncher.startModerateBindingManagement(context);
+    }
+
+    @SuppressWarnings("deprecation") // InputMethodSubtype.getLocale() deprecated in API 24
+    private void recordKeyboardLocaleUma(Context context) {
+        InputMethodManager imm =
+                (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        List<InputMethodInfo> ims = imm.getEnabledInputMethodList();
+        ArrayList<String> uniqueLanguages = new ArrayList<>();
+        for (InputMethodInfo method : ims) {
+            List<InputMethodSubtype> submethods =
+                    imm.getEnabledInputMethodSubtypeList(method, true);
+            for (InputMethodSubtype submethod : submethods) {
+                if (submethod.getMode().equals("keyboard")) {
+                    String language = submethod.getLocale().split("_")[0];
+                    if (!uniqueLanguages.contains(language)) {
+                        uniqueLanguages.add(language);
+                    }
+                }
+            }
+        }
+        RecordHistogram.recordCountHistogram("InputMethod.ActiveCount", uniqueLanguages.size());
+
+        InputMethodSubtype currentSubtype = imm.getCurrentInputMethodSubtype();
+        Locale systemLocale = Locale.getDefault();
+        if (currentSubtype != null && currentSubtype.getLocale() != null && systemLocale != null) {
+            String keyboardLanguage = currentSubtype.getLocale().split("_")[0];
+            boolean match = systemLocale.getLanguage().equalsIgnoreCase(keyboardLanguage);
+            RecordHistogram.recordBooleanHistogram("InputMethod.MatchesSystemLanguage", match);
+        }
     }
 }

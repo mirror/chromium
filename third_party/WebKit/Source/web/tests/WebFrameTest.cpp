@@ -4466,12 +4466,10 @@ class ContextLifetimeTestWebFrameClient
   Vector<std::unique_ptr<Notification>>& create_notifications_;
   Vector<std::unique_ptr<Notification>>& release_notifications_;
 
-  void DidCreateScriptContext(WebLocalFrame* frame,
-                              v8::Local<v8::Context> context,
+  void DidCreateScriptContext(v8::Local<v8::Context> context,
                               int world_id) override {
-    ASSERT_EQ(Frame(), frame);
     create_notifications_.push_back(
-        WTF::MakeUnique<Notification>(frame, context, world_id));
+        WTF::MakeUnique<Notification>(Frame(), context, world_id));
   }
 
   void WillReleaseScriptContext(v8::Local<v8::Context> context,
@@ -4813,10 +4811,9 @@ TEST_P(ParameterizedWebFrameTest, GetFullHtmlOfPage) {
 class TestExecuteScriptDuringDidCreateScriptContext
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  void DidCreateScriptContext(WebLocalFrame* frame,
-                              v8::Local<v8::Context> context,
+  void DidCreateScriptContext(v8::Local<v8::Context> context,
                               int world_id) override {
-    frame->ExecuteScript(WebScriptSource("window.history = 'replaced';"));
+    Frame()->ExecuteScript(WebScriptSource("window.history = 'replaced';"));
   }
 };
 
@@ -10393,9 +10390,7 @@ class CallbackOrderingWebFrameClient
                                 WebHistoryCommitType) override {
     EXPECT_EQ(2, callback_count_++);
   }
-  void DidFinishDocumentLoad(WebLocalFrame*) override {
-    EXPECT_EQ(3, callback_count_++);
-  }
+  void DidFinishDocumentLoad() override { EXPECT_EQ(3, callback_count_++); }
   void DidHandleOnloadEvents() override { EXPECT_EQ(4, callback_count_++); }
   void DidFinishLoad() override { EXPECT_EQ(5, callback_count_++); }
   void DidStopLoading() override {
@@ -11753,7 +11748,7 @@ TEST_F(WebFrameTest, NoLoadingCompletionCallbacksInDetach) {
       EXPECT_TRUE(false) << "The load should not have failed.";
     }
 
-    void DidFinishDocumentLoad(WebLocalFrame*) override {
+    void DidFinishDocumentLoad() override {
       // TODO(dcheng): Investigate not calling this as well during frame detach.
       did_call_did_finish_document_load_ = true;
     }

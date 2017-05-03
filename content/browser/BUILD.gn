@@ -264,6 +264,8 @@ source_set("browser") {
     "android/content_video_view.cc",
     "android/content_video_view.h",
     "android/devtools_auth.cc",
+    "android/dialog_overlay_impl.cc",
+    "android/dialog_overlay_impl.h",
     "android/gpu_process_callback.cc",
     "android/gpu_process_callback.h",
     "android/java_interfaces_impl.cc",
@@ -471,6 +473,7 @@ source_set("browser") {
     # needed on all platforms.
     "compositor/frame_sink_manager_host.cc",
     "compositor/frame_sink_manager_host.h",
+    "compositor/frame_sink_observer.h",
     "compositor/surface_utils.cc",
     "compositor/surface_utils.h",
     "devtools/browser_devtools_agent_host.cc",

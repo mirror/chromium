@@ -185,18 +185,7 @@ size_t SharedMemory::GetHandleLimit() {
 // static
 SharedMemoryHandle SharedMemory::DuplicateHandle(
     const SharedMemoryHandle& handle) {
-  DCHECK(handle.BelongsToCurrentProcess());
-  HANDLE duped_handle;
-  ProcessHandle process = GetCurrentProcess();
-  BOOL success =
-      ::DuplicateHandle(process, handle.GetHandle(), process, &duped_handle, 0,
-                        FALSE, DUPLICATE_SAME_ACCESS);
-  if (success) {
-    base::SharedMemoryHandle handle(duped_handle, GetCurrentProcId());
-    handle.SetOwnershipPassesToIPC(true);
-    return handle;
-  }
-  return SharedMemoryHandle();
+  return handle.Duplicate();
 }
 
 bool SharedMemory::CreateAndMapAnonymous(size_t size) {
@@ -338,39 +327,18 @@ bool SharedMemory::Unmap() {
   return true;
 }
 
-bool SharedMemory::ShareToProcessCommon(ProcessHandle process,
-                                        SharedMemoryHandle* new_handle,
-                                        bool close_self,
-                                        ShareMode share_mode) {
-  *new_handle = SharedMemoryHandle();
-  DWORD access = FILE_MAP_READ | SECTION_QUERY;
-  DWORD options = 0;
-  HANDLE mapped_file = mapped_file_.Get();
+SharedMemoryHandle SharedMemory::GetReadOnlyHandle() {
   HANDLE result;
-  if (share_mode == SHARE_CURRENT_MODE && !read_only_)
-    access |= FILE_MAP_WRITE;
-  if (close_self) {
-    // DUPLICATE_CLOSE_SOURCE causes DuplicateHandle to close mapped_file.
-    options = DUPLICATE_CLOSE_SOURCE;
-    HANDLE detached_handle = mapped_file_.Take();
-    DCHECK_EQ(detached_handle, mapped_file);
-    Unmap();
+  ProcessHandle process = GetCurrentProcess();
+  if (!::DuplicateHandle(process, mapped_file_.Get(), process, &result,
+                         FILE_MAP_READ | SECTION_QUERY, FALSE, 0)) {
+    return SharedMemoryHandle();
   }
-
-  if (process == GetCurrentProcess() && close_self) {
-    *new_handle = SharedMemoryHandle(mapped_file, base::GetCurrentProcId());
-    return true;
-  }
-
-  if (!::DuplicateHandle(GetCurrentProcess(), mapped_file, process, &result,
-                         access, FALSE, options)) {
-    return false;
-  }
-  *new_handle = SharedMemoryHandle(result, base::GetProcId(process));
-  new_handle->SetOwnershipPassesToIPC(true);
-  return true;
+  SharedMemoryHandle handle =
+      SharedMemoryHandle(result, base::GetProcId(process));
+  handle.SetOwnershipPassesToIPC(true);
+  return handle;
 }
-
 
 void SharedMemory::Close() {
   mapped_file_.Close();

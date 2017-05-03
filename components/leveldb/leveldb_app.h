@@ -11,15 +11,11 @@
 #include "components/leveldb/public/interfaces/leveldb.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
-#include "services/service_manager/public/cpp/interface_factory.h"
 #include "services/service_manager/public/cpp/service.h"
-#include "services/tracing/public/cpp/provider.h"
 
 namespace leveldb {
 
-class LevelDBApp
-    : public service_manager::Service,
-      public service_manager::InterfaceFactory<mojom::LevelDBService> {
+class LevelDBApp : public service_manager::Service {
  public:
   LevelDBApp();
   ~LevelDBApp() override;
@@ -31,11 +27,9 @@ class LevelDBApp
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
 
-  // |InterfaceFactory<mojom::LevelDBService>| implementation:
-  void Create(const service_manager::Identity& remote_identity,
-              leveldb::mojom::LevelDBServiceRequest request) override;
+  void Create(const service_manager::BindSourceInfo& source_info,
+              leveldb::mojom::LevelDBServiceRequest request);
 
-  tracing::Provider tracing_;
   std::unique_ptr<mojom::LevelDBService> service_;
   service_manager::BinderRegistry registry_;
   mojo::BindingSet<mojom::LevelDBService> bindings_;

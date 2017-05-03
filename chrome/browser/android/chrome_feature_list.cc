@@ -44,6 +44,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &features::kSimplifiedFullscreenUI,
     &features::kVrShell,
     &features::kWebPayments,
+    &features::kTabsInCbd,
     &kAndroidPayIntegrationV1,
     &kAndroidPayIntegrationV2,
     &kAndroidPaymentApps,
@@ -51,6 +52,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kCCTExternalLinkHandling,
     &kCCTPostMessageAPI,
     &kChromeHomeFeature,
+    &kChromeHomeExpandButton,
     &kContentSuggestionsSettings,
     &kContextualSearchSingleActions,
     &kContextualSearchUrlActions,
@@ -74,7 +76,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kSearchEnginePromoNewDevice,
     &kSpecialLocaleFeature,
     &kSpecialLocaleWrapper,
-    &kTabsInCBD,
     &kTabReparenting,
     &kVideoPersistence,
     &kWebPaymentsModifiers,
@@ -124,6 +125,9 @@ const base::Feature kCCTPostMessageAPI{"CCTPostMessageAPI",
 
 const base::Feature kChromeHomeFeature{"ChromeHome",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kChromeHomeExpandButton{"ChromeHomeExpandButton",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kContentSuggestionsSettings{
     "ContentSuggestionsSettings", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -192,8 +196,6 @@ const base::Feature kSpecialLocaleFeature{"SpecialLocale",
 
 const base::Feature kSpecialLocaleWrapper{"SpecialLocaleWrapper",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
-
-const base::Feature kTabsInCBD{"TabsInCBD", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kTabReparenting{"TabReparenting",
                                     base::FEATURE_ENABLED_BY_DEFAULT};
