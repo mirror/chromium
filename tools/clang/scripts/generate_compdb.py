@@ -24,13 +24,12 @@ from clang import compile_db
 def main(argv):
   parser = argparse.ArgumentParser()
   parser.add_argument(
-      'build_path',
-      nargs='?',
+      '-p',
       help='Path to build directory',
       default='out/Debug')
   args = parser.parse_args()
 
-  compile_db.GenerateWithNinja(args.build_path)
+  print compile_db.GenerateWithNinja(args.p)
 
 
 if __name__ == '__main__':
