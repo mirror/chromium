@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c84059a_71b0e09f",
+        "filename": "base/android/java/src/org/chromium/base/BuildInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-03T22:40:53Z",
+      "side": 1,
+      "message": "Not really. Changing this to only \u003e\u003d 26 for now.",
+      "parentUuid": "dbc42391_f3c03c6a",
+      "revId": "f347994194be52da9df2b5d9d3b9860173b7dedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e0564fe_694abfb5",
         "filename": "base/android/java/src/org/chromium/base/BuildInfo.java",
         "patchSetId": 1
@@ -54,6 +72,30 @@
       "side": 1,
       "message": "For the final version, no, we shouldn\u0027t. This should just be targetSdkVersion \u003e\u003d 26; we want this to return true even if the phone isn\u0027t running O. The isAtLeastO check was required to tell if CUR_DEVELOPMENT actually refers to O or not (otherwise an app running on an old N preview build and targeting N would return true here).\n\nHowever, the CL as is stands here is inconsistent: isAtLeastO is now checking for either the final O SDK level or the development codename, but this function is now checking just for the final O SDK level.\n\nWe should either have both places just check for \u003e\u003d26, or we should have both places continue to fall back to the previous check on non-release versions; not a mixture.",
       "parentUuid": "2e0564fe_694abfb5",
+      "range": {
+        "startLine": 183,
+        "startChar": 15,
+        "endLine": 183,
+        "endChar": 27
+      },
+      "revId": "f347994194be52da9df2b5d9d3b9860173b7dedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b10a4d2_8d374b4d",
+        "filename": "base/android/java/src/org/chromium/base/BuildInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-03T22:40:53Z",
+      "side": 1,
+      "message": "OK. Removed codename check and updated here as well to use \u003e\u003d 26.",
+      "parentUuid": "03f31ec3_1bca23c5",
       "range": {
         "startLine": 183,
         "startChar": 15,
