@@ -814,7 +814,6 @@ std::set<PrefValueStore::PrefStoreType> ExpectedPrefStores() {
 
 std::set<PrefValueStore::PrefStoreType> InProcessPrefStores() {
   auto pref_stores = ExpectedPrefStores();
-  pref_stores.erase(PrefValueStore::DEFAULT_STORE);
   pref_stores.erase(PrefValueStore::USER_STORE);
   return pref_stores;
 }
