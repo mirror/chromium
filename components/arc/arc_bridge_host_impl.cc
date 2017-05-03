@@ -136,6 +136,10 @@ void ArcBridgeHostImpl::OnFileSystemInstanceReady(
                   std::move(file_system_ptr));
 }
 
+void ArcBridgeHostImpl::OnGnssInstanceReady(mojom::GnssInstancePtr gnss_ptr) {
+  OnInstanceReady(arc_bridge_service_->gnss(), std::move(gnss_ptr));
+}
+
 void ArcBridgeHostImpl::OnImeInstanceReady(mojom::ImeInstancePtr ime_ptr) {
   OnInstanceReady(arc_bridge_service_->ime(), std::move(ime_ptr));
 }

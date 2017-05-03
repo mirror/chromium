@@ -44,6 +44,7 @@
 #include "components/arc/bluetooth/arc_bluetooth_bridge.h"
 #include "components/arc/clipboard/arc_clipboard_bridge.h"
 #include "components/arc/crash_collector/arc_crash_collector_bridge.h"
+#include "components/arc/gnss/arc_gnss_bridge.h"
 #include "components/arc/ime/arc_ime_service.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/arc/kiosk/arc_kiosk_bridge.h"
@@ -117,6 +118,8 @@ void ArcServiceLauncher::Initialize() {
       base::MakeUnique<ArcEnterpriseReportingService>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcFileSystemMounter>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcGnssBridge>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcImeService>(arc_bridge_service));
   arc_service_manager_->AddService(base::MakeUnique<ArcIntentHelperBridge>(

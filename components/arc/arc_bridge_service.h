@@ -24,6 +24,7 @@ class ClipboardInstance;
 class CrashCollectorInstance;
 class EnterpriseReportingInstance;
 class FileSystemInstance;
+class GnssInstance;
 class ImeInstance;
 class IntentHelperInstance;
 class KioskInstance;
@@ -72,6 +73,7 @@ class ArcBridgeService {
   InstanceHolder<mojom::FileSystemInstance>* file_system() {
     return &file_system_;
   }
+  InstanceHolder<mojom::GnssInstance>* gnss() { return &gnss_; }
   InstanceHolder<mojom::ImeInstance>* ime() { return &ime_; }
   InstanceHolder<mojom::IntentHelperInstance>* intent_helper() {
     return &intent_helper_;
@@ -116,6 +118,7 @@ class ArcBridgeService {
   InstanceHolder<mojom::CrashCollectorInstance> crash_collector_;
   InstanceHolder<mojom::EnterpriseReportingInstance> enterprise_reporting_;
   InstanceHolder<mojom::FileSystemInstance> file_system_;
+  InstanceHolder<mojom::GnssInstance> gnss_;
   InstanceHolder<mojom::ImeInstance> ime_;
   InstanceHolder<mojom::IntentHelperInstance> intent_helper_;
   InstanceHolder<mojom::KioskInstance> kiosk_;

@@ -14,6 +14,7 @@ import "clipboard.mojom";
 import "crash_collector.mojom";
 import "enterprise_reporting.mojom";
 import "file_system.mojom";
+import "gnss.mojom";
 import "ime.mojom";
 import "intent_helper.mojom";
 import "kiosk.mojom";
@@ -33,9 +34,9 @@ import "voice_interaction_arc_home.mojom";
 import "voice_interaction_framework.mojom";
 import "wallpaper.mojom";
 
-// Next MinVersion: 25
+// Next MinVersion: 26
 // Deprecated method IDs: 101, 105
-// Next method ID: 131
+// Next method ID: 132
 interface ArcBridgeHost {
   // Keep the entries alphabetical. In order to do so without breaking
   // compatibility with the ARC instance, explicitly assign each interface a
@@ -75,6 +76,9 @@ interface ArcBridgeHost {
   // Notifies Chrome that the FileSystemInstance interface is ready.
   [MinVersion=13] OnFileSystemInstanceReady@119(
       FileSystemInstance instance_ptr);
+
+  // Notifies Chrome that the GnssInstance interface is ready.
+  [MinVersion=25] OnGnssInstanceReady@131(GnssInstance instance_ptr);
 
   // Notifies Chrome that the ImeInstance interface is ready.
   [MinVersion=3] OnImeInstanceReady@110(ImeInstance instance_ptr);

@@ -55,6 +55,7 @@ class ArcBridgeHostImpl : public mojom::ArcBridgeHost {
       mojom::EnterpriseReportingInstancePtr enterprise_reporting_ptr) override;
   void OnFileSystemInstanceReady(
       mojom::FileSystemInstancePtr file_system_ptr) override;
+  void OnGnssInstanceReady(mojom::GnssInstancePtr gnss_ptr) override;
   void OnImeInstanceReady(mojom::ImeInstancePtr ime_ptr) override;
   void OnIntentHelperInstanceReady(
       mojom::IntentHelperInstancePtr intent_helper_ptr) override;
