@@ -751,7 +751,7 @@ void LayoutBox::UpdateAfterLayout() {
   // transform after layout.
   if (HasLayer()) {
     Layer()->UpdateTransformationMatrix();
-    Layer()->UpdateScrollingAfterLayout();
+    Layer()->UpdateSizeAndScrollingAfterLayout();
   }
 }
 
@@ -841,7 +841,7 @@ void LayoutBox::SetLocationAndUpdateOverflowControlsIfNeeded(
     SetLocation(location);
     if (PixelSnappedBorderBoxRect().Size() !=
         old_pixel_snapped_border_rect_size) {
-      Layer()->UpdateScrollingAfterLayout();
+      Layer()->UpdateSizeAndScrollingAfterLayout();
     }
     return;
   }
