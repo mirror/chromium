@@ -113,6 +113,7 @@ void CastWebView::DelayedCloseContents() {
   // We want to delete the surface before we start the next app because
   // the next app could be an external one whose Start() function would
   // destroy the primary gfx plane.
+  window_.reset();  // Window destructor requires live web_contents on Android.
   web_contents_.reset();
   delegate_->OnPageStopped(net::OK);
 }
