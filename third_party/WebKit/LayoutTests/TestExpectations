@@ -2925,6 +2925,7 @@ crbug.com/626703 external/wpt/fullscreen/api/element-request-fullscreen-two-ifra
 crbug.com/666703 external/wpt/html/browsers/sandboxing/sandbox-disallow-same-origin.html [ Timeout ]
 crbug.com/626703 external/wpt/html/dom/documents/dom-tree-accessors/Document.currentScript.html [ Timeout ]
 crbug.com/626703 external/wpt/html/browsers/history/the-location-interface/location-protocol-setter-non-broken.html [ Failure Pass ]
+crbug.com/626703 external/wpt/shadow-dom/slots-fallback-in-document.html [ Failure ]
 
 crbug.com/655458 external/wpt/workers/constructors/SharedWorker/undefined-arguments.html [ Failure ]
 crbug.com/655458 external/wpt/workers/baseurl/alpha/worker.html [ Failure ]
@@ -3378,13 +3379,9 @@ crbug.com/716569 [ Android ] tables/mozilla/core/bloomberg.html [ Failure ]
 crbug.com/716569 [ Android ] tables/mozilla_expected_failures/bugs/bug1055-2.html [ Failure ]
 crbug.com/716569 [ Android ] tables/mozilla_expected_failures/bugs/bug2479-5.html [ Failure ]
 
-# Sheriff flake 2017-05-01
-crbug.com/716729 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-OAEP.https.html [ Pass Timeout ]
-
 # Sheriff failures 2017-05-02
 crbug.com/693065 [ Mac ] fast/text/variable-fonts/variable-gpos-m2b.html [ Failure ]
 crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Crash ]
 crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-path-context-clip.html [ Crash ]
 crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Timeout ]
 crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-path-context-clip.html [ Timeout ]
-
