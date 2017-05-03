@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dbc42391_f3c03c6a",
+        "filename": "base/android/java/src/org/chromium/base/BuildInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-03T22:20:39Z",
+      "side": 1,
+      "message": "I think we should remove the codename checks entirely here, and purely check if version \u003e\u003d26. That\u0027s what the original version of this function in the internal compat library has been updated to do.\n\nIs there a reason why we can\u0027t do that now?",
+      "revId": "f347994194be52da9df2b5d9d3b9860173b7dedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e0564fe_694abfb5",
         "filename": "base/android/java/src/org/chromium/base/BuildInfo.java",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-05-03T22:07:55Z",
       "side": 1,
       "message": "torne: Do we really need to check isAtLeastO() here?",
+      "range": {
+        "startLine": 183,
+        "startChar": 15,
+        "endLine": 183,
+        "endChar": 27
+      },
+      "revId": "f347994194be52da9df2b5d9d3b9860173b7dedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f31ec3_1bca23c5",
+        "filename": "base/android/java/src/org/chromium/base/BuildInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-03T22:20:39Z",
+      "side": 1,
+      "message": "For the final version, no, we shouldn\u0027t. This should just be targetSdkVersion \u003e\u003d 26; we want this to return true even if the phone isn\u0027t running O. The isAtLeastO check was required to tell if CUR_DEVELOPMENT actually refers to O or not (otherwise an app running on an old N preview build and targeting N would return true here).\n\nHowever, the CL as is stands here is inconsistent: isAtLeastO is now checking for either the final O SDK level or the development codename, but this function is now checking just for the final O SDK level.\n\nWe should either have both places just check for \u003e\u003d26, or we should have both places continue to fall back to the previous check on non-release versions; not a mixture.",
+      "parentUuid": "2e0564fe_694abfb5",
       "range": {
         "startLine": 183,
         "startChar": 15,
