@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dcf3194_bee106c2",
+        "filename": "third_party/WebKit/Source/platform/graphics/RecordingImageBufferSurface.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-05-03T14:08:52Z",
+      "side": 1,
+      "message": "The IsValid check should go before this line IMHO",
+      "range": {
+        "startLine": 98,
+        "startChar": 21,
+        "endLine": 98,
+        "endChar": 35
+      },
+      "revId": "79a0334af65c165098446ad77f91716d5df272f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7f2d47_42bf84b9",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedImageBufferSurface.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-05-03T14:08:52Z",
+      "side": 1,
+      "message": "This should never happen.  When an ImageBufferSurface is created, we are supposed to discard it if it is not valid.  The IsValid check you added should be enough to make this check unnecessary.  I would rather this code crash if  surface_ is NULL, so that we catch that there was a coding error.  Perhaps make it a CHECK()?",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 15
+      },
+      "revId": "79a0334af65c165098446ad77f91716d5df272f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5e7db5_3b184d81",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedImageBufferSurface.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-05-03T14:08:52Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "79a0334af65c165098446ad77f91716d5df272f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
