@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0ffa0c3_0f3caf9c",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-03T13:32:41Z",
+      "side": 1,
+      "message": "We can kill this now. I will send you a separate CL for this",
+      "revId": "4164208f877a62e65304d58f6782305231128ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cea2f6f_bcc022b1",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-03T13:32:41Z",
+      "side": 1,
+      "message": "This method is probably better moved to shard_benchmarks",
+      "revId": "4164208f877a62e65304d58f6782305231128ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e959493b_84231fa8",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-03T13:32:41Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t add much, I think",
+      "revId": "4164208f877a62e65304d58f6782305231128ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70929d45_e46920e8",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-03T13:32:41Z",
+      "side": 1,
+      "message": "This assignment seems unnecessary?",
+      "range": {
+        "startLine": 780,
+        "startChar": 43,
+        "endLine": 780,
+        "endChar": 0
+      },
+      "revId": "4164208f877a62e65304d58f6782305231128ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a80001_776e017d",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-03T13:32:41Z",
+      "side": 1,
+      "message": "style nit: top level block are usually separated by 2 blank lines.",
+      "revId": "4164208f877a62e65304d58f6782305231128ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffe8716_86d4eeae",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-03T13:32:41Z",
+      "side": 1,
+      "message": "this should be replaced by path_util.GetChromiumSrcDir()",
+      "revId": "4164208f877a62e65304d58f6782305231128ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
