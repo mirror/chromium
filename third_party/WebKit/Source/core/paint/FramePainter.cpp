@@ -241,10 +241,8 @@ void FramePainter::PaintScrollCorner(GraphicsContext& context,
     NOTREACHED();
   }
 
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-    theme->PaintScrollCorner(context, *GetFrameView().GetLayoutView(),
-                             corner_rect);
-  }
+  theme->PaintScrollCorner(context, *GetFrameView().GetLayoutView(),
+                           corner_rect);
 }
 
 void FramePainter::PaintScrollbar(GraphicsContext& context,
