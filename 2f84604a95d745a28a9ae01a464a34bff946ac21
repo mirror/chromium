@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbab00d7_a114c4ff",
+        "filename": "tools/perf/generate_perf_sharding",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-04T21:51:17Z",
+      "side": 1,
+      "message": "import module only, not method. So you need to import sharding_map_generator \u0026 reference to sharding_map_generator.main()\n\nThis is somewhere in Python style guide, IIRC",
+      "range": {
+        "startLine": 18,
+        "startChar": 44,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "2f84604a95d745a28a9ae01a464a34bff946ac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658323bb_bf895215",
+        "filename": "tools/perf/generate_perf_sharding",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-04T21:51:17Z",
+      "side": 1,
+      "message": "nits: usually this should be defined in the sharding_map_generator module because the logic of which options are supported as also there.",
+      "revId": "2f84604a95d745a28a9ae01a464a34bff946ac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
