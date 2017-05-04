@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90a2aee0_dc4278f4",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-04T10:47:59Z",
+      "side": 1,
+      "message": "another blank line here",
+      "revId": "40e9b03b43caa3a657e3abc916264fbb3002c8e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19736a0f_8aa78b85",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-04T10:47:59Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "40e9b03b43caa3a657e3abc916264fbb3002c8e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
