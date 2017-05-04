@@ -214,6 +214,9 @@ void FramePainter::PaintScrollbars(GraphicsContext& context,
 
 void FramePainter::PaintScrollCorner(GraphicsContext& context,
                                      const IntRect& corner_rect) {
+  if (corner_rect.IsEmpty())
+    return;
+
   if (GetFrameView().ScrollCorner()) {
     bool needs_background = GetFrameView().GetFrame().IsMainFrame();
     if (needs_background &&
