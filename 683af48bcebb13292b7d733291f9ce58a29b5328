@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682b7bb6_1b53f8dd",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-04T21:22:38Z",
+      "side": 1,
+      "message": "nits: s/device /device_id/g",
+      "range": {
+        "startLine": 583,
+        "startChar": 73,
+        "endLine": 583,
+        "endChar": 0
+      },
+      "revId": "683af48bcebb13292b7d733291f9ce58a29b5328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8d1d02_e90891a0",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-04T21:22:38Z",
+      "side": 1,
+      "message": "Given that the map nows list out which benchmark matches to which device, we can kill device_affinity now?",
+      "revId": "683af48bcebb13292b7d733291f9ce58a29b5328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6bd6d3_df719816",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-04T21:22:38Z",
+      "side": 1,
+      "message": "nits: trailing space",
+      "revId": "683af48bcebb13292b7d733291f9ce58a29b5328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
