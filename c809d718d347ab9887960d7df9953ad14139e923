@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e3254ae_5431b8f1",
+        "filename": "net/http/transport_security_state_static.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1204649
+      },
+      "writtenOn": "2017-05-04T00:44:37Z",
+      "side": 1,
+      "message": "Oh wait, this line has duplicate \"force-https\" settings",
+      "revId": "c809d718d347ab9887960d7df9953ad14139e923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
