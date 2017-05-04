@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "652239ae_1542fb5b",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-04T21:24:20Z",
+      "side": 1,
+      "message": "I hope we can kill code path soon. A new benchmark without runtime is a bug :-)",
+      "revId": "683af48bcebb13292b7d733291f9ce58a29b5328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f6bd6d3_df719816",
         "filename": "tools/perf/core/sharding_map_generator.py",
         "patchSetId": 17
