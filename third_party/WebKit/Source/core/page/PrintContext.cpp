@@ -20,6 +20,8 @@
 
 #include "core/page/PrintContext.h"
 
+#include <utility>
+
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/layout/LayoutView.h"
@@ -29,19 +31,6 @@
 namespace blink {
 
 namespace {
-
-// By shrinking to a width of 75% (1.333f) we will render the correct physical
-// dimensions in paged media (i.e. cm, pt,). The shrinkage used
-// to be 80% (1.25f) to match other browsers - they have since moved on.
-// Wide pages will be scaled down more than this.
-const float kPrintingMinimumShrinkFactor = 1.33333333f;
-
-// This number determines how small we are willing to reduce the page content
-// in order to accommodate the widest line. If the page would have to be
-// reduced smaller to make the widest line fit, we just clip instead (this
-// behavior matches MacIE and Mozilla, at least).
-// TODO(rhogan): Decide if this quirk is still required.
-const float kPrintingMaximumShrinkFactor = 2;
 
 LayoutBoxModelObject* EnclosingBoxModelObject(LayoutObject* object) {
   while (object && !object->IsBoxModelObject())
@@ -129,37 +118,21 @@ void PrintContext::ComputePageRectsWithPageSizeInternal(
   int page_logical_height = is_horizontal ? page_height : page_width;
   int page_logical_width = is_horizontal ? page_width : page_height;
 
-  int inline_direction_start;
-  int inline_direction_end;
-  int block_direction_start;
-  int block_direction_end;
-  if (is_horizontal) {
-    if (view.Style()->IsFlippedBlocksWritingMode()) {
-      block_direction_start = doc_rect.MaxY();
-      block_direction_end = doc_rect.Y();
-    } else {
-      block_direction_start = doc_rect.Y();
-      block_direction_end = doc_rect.MaxY();
-    }
-    inline_direction_start =
-        view.Style()->IsLeftToRightDirection() ? doc_rect.X() : doc_rect.MaxX();
-    inline_direction_end =
-        view.Style()->IsLeftToRightDirection() ? doc_rect.MaxX() : doc_rect.X();
-  } else {
-    if (view.Style()->IsFlippedBlocksWritingMode()) {
-      block_direction_start = doc_rect.MaxX();
-      block_direction_end = doc_rect.X();
-    } else {
-      block_direction_start = doc_rect.X();
-      block_direction_end = doc_rect.MaxX();
-    }
-    inline_direction_start =
-        view.Style()->IsLeftToRightDirection() ? doc_rect.Y() : doc_rect.MaxY();
-    inline_direction_end =
-        view.Style()->IsLeftToRightDirection() ? doc_rect.MaxY() : doc_rect.Y();
+  int inline_direction_start = doc_rect.X();
+  int inline_direction_end = doc_rect.MaxX();
+  int block_direction_start = doc_rect.Y();
+  int block_direction_end = doc_rect.MaxY();
+  if (!is_horizontal) {
+    std::swap(block_direction_start, inline_direction_start);
+    std::swap(block_direction_end, inline_direction_end);
   }
+  if (!view.Style()->IsLeftToRightDirection())
+    std::swap(inline_direction_start, inline_direction_end);
+  if (view.Style()->IsFlippedBlocksWritingMode())
+    std::swap(block_direction_start, block_direction_end);
 
-  unsigned page_count = ceilf((float)doc_logical_height / page_logical_height);
+  unsigned page_count =
+      ceilf(static_cast<float>(doc_logical_height) / page_logical_height);
   for (unsigned i = 0; i < page_count; ++i) {
     int page_logical_top =
         block_direction_end > block_direction_start
@@ -271,8 +244,8 @@ void PrintContext::OutputLinkedDestinations(GraphicsContext& context,
     if (!layout_object || !layout_object->GetFrameView())
       continue;
     IntRect bounding_box = layout_object->AbsoluteBoundingBoxRect();
-    // TODO(bokan): boundingBox looks to be in content coordinates but
-    // convertToRootFrame doesn't apply scroll offsets when converting up to
+    // TODO(bokan): |bounding_box| looks to be in content coordinates but
+    // ConvertToRootFrame() doesn't apply scroll offsets when converting up to
     // the root frame.
     IntPoint point = layout_object->GetFrameView()->ConvertToRootFrame(
         bounding_box.Location());

@@ -5087,13 +5087,13 @@ TEST_F(LayerTreeHostCommonTest, OpacityAnimatingOnPendingTree) {
   inputs.can_adjust_raster_scales = true;
   LayerTreeHostCommon::CalculateDrawPropertiesForTesting(&inputs);
 
-  // We should have one render surface and two layers. The child
-  // layer should be included even though it is transparent.
+  // We should have one render surface and one layer. The child
+  // layer should not be included as its transparent.
   ASSERT_EQ(1u, render_surface_list.size());
-  ASSERT_EQ(2, root_layer->GetRenderSurface()->num_contributors());
+  ASSERT_EQ(1, root_layer->GetRenderSurface()->num_contributors());
 
-  // If the root itself is hidden, the child should not be drawn even if it has
-  // an animating opacity.
+  // If the root itself is hidden, the child should not be drawn and should not
+  // raster even if it has an animating opacity.
   root_layer->test_properties()->opacity = 0.0f;
   root_layer->layer_tree_impl()->property_trees()->needs_rebuild = true;
   RenderSurfaceList render_surface_list2;
@@ -5103,13 +5103,11 @@ TEST_F(LayerTreeHostCommonTest, OpacityAnimatingOnPendingTree) {
   LayerTreeHostCommon::CalculateDrawPropertiesForTesting(&inputs2);
 
   LayerImpl* child_ptr = root_layer->layer_tree_impl()->LayerById(2);
-  EffectTree& tree =
-      root_layer->layer_tree_impl()->property_trees()->effect_tree;
-  EffectNode* node = tree.Node(child_ptr->effect_tree_index());
-  EXPECT_FALSE(node->is_drawn);
+  EXPECT_FALSE(child_ptr->contributes_to_drawn_render_surface());
+  EXPECT_FALSE(child_ptr->raster_even_if_not_in_rsll());
 
-  // A layer should be drawn and it should contribute to drawn surface when
-  // it has animating opacity even if it has opacity 0.
+  // The child layer should not be drawn as its transparent but should raster
+  // as its opacity is animating.
   root_layer->test_properties()->opacity = 1.0f;
   child_ptr->test_properties()->opacity = 0.0f;
   root_layer->layer_tree_impl()->property_trees()->needs_rebuild = true;
@@ -5120,27 +5118,19 @@ TEST_F(LayerTreeHostCommonTest, OpacityAnimatingOnPendingTree) {
   LayerTreeHostCommon::CalculateDrawPropertiesForTesting(&inputs3);
 
   child_ptr = root_layer->layer_tree_impl()->LayerById(2);
-  tree = root_layer->layer_tree_impl()->property_trees()->effect_tree;
-  node = tree.Node(child_ptr->effect_tree_index());
-  EXPECT_TRUE(node->is_drawn);
-  EXPECT_TRUE(tree.ContributesToDrawnSurface(child_ptr->effect_tree_index()));
+  EXPECT_FALSE(child_ptr->contributes_to_drawn_render_surface());
+  EXPECT_TRUE(child_ptr->raster_even_if_not_in_rsll());
 
-  // But if the opacity of the layer remains 0 after activation, it should not
-  // be drawn.
+  // The child layer should not be drawn as its transparent but should raster
+  // as its opacity is animating even after activation.
   host_impl.ActivateSyncTree();
   LayerImpl* active_root = host_impl.active_tree()->LayerById(root_layer->id());
   LayerImpl* active_child = host_impl.active_tree()->LayerById(child_ptr->id());
 
-  EffectTree& active_effect_tree =
-      host_impl.active_tree()->property_trees()->effect_tree;
-  EXPECT_TRUE(active_effect_tree.needs_update());
-
   ExecuteCalculateDrawProperties(active_root);
 
-  node = active_effect_tree.Node(active_child->effect_tree_index());
-  EXPECT_FALSE(node->is_drawn);
-  EXPECT_FALSE(active_effect_tree.ContributesToDrawnSurface(
-      active_child->effect_tree_index()));
+  EXPECT_FALSE(active_child->contributes_to_drawn_render_surface());
+  EXPECT_TRUE(active_child->raster_even_if_not_in_rsll());
 }
 
 using LCDTextTestParam = std::tr1::tuple<bool, bool, bool>;
@@ -5647,6 +5637,50 @@ TEST_F(LayerTreeHostCommonTest, ClippedOutCopyRequest) {
   // other layers are clipped away.
   ASSERT_EQ(2, root_layer->GetRenderSurface()->num_contributors());
   EXPECT_TRUE(root_layer->contributes_to_drawn_render_surface());
+}
+
+TEST_F(LayerTreeHostCommonTest, SingularTransformAndCopyRequests) {
+  LayerImpl* root = root_layer_for_testing();
+  root->SetBounds(gfx::Size(50, 50));
+  root->SetDrawsContent(true);
+
+  LayerImpl* singular_transform_layer = AddChild<LayerImpl>(root);
+  singular_transform_layer->SetBounds(gfx::Size(100, 100));
+  singular_transform_layer->SetDrawsContent(true);
+  gfx::Transform singular;
+  singular.Scale3d(6.f, 6.f, 0.f);
+  singular_transform_layer->test_properties()->transform = singular;
+
+  LayerImpl* copy_layer = AddChild<LayerImpl>(singular_transform_layer);
+  copy_layer->SetBounds(gfx::Size(100, 100));
+  copy_layer->SetDrawsContent(true);
+  copy_layer->test_properties()->copy_requests.push_back(
+      CopyOutputRequest::CreateRequest(base::Bind(&EmptyCopyOutputCallback)));
+
+  LayerImpl* copy_child = AddChild<LayerImpl>(copy_layer);
+  copy_child->SetBounds(gfx::Size(100, 100));
+  copy_child->SetDrawsContent(true);
+
+  LayerImpl* copy_grand_child = AddChild<LayerImpl>(copy_child);
+  copy_grand_child->SetBounds(gfx::Size(100, 100));
+  copy_grand_child->SetDrawsContent(true);
+  copy_grand_child->test_properties()->transform = singular;
+
+  DCHECK(!copy_layer->test_properties()->copy_requests.empty());
+  ExecuteCalculateDrawProperties(root);
+  DCHECK(copy_layer->test_properties()->copy_requests.empty());
+
+  // A layer with singular transform should not contribute to drawn render
+  // surface.
+  EXPECT_FALSE(singular_transform_layer->contributes_to_drawn_render_surface());
+  // Even though copy_layer and copy_child have singular screen space transform,
+  // they still contribute to drawn render surface as their transform to the
+  // closest ancestor with copy request is not singular.
+  EXPECT_TRUE(copy_layer->contributes_to_drawn_render_surface());
+  EXPECT_TRUE(copy_child->contributes_to_drawn_render_surface());
+  // copy_grand_child's transform to its closest ancestor with copy request is
+  // also singular. So, it doesn't contribute to drawn render surface.
+  EXPECT_FALSE(copy_grand_child->contributes_to_drawn_render_surface());
 }
 
 TEST_F(LayerTreeHostCommonTest, VisibleRectInNonRootCopyRequest) {

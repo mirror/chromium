@@ -218,7 +218,7 @@ NGLayoutInputNode* NGBlockNode::NextSibling() {
   return next_sibling_;
 }
 
-LayoutObject* NGBlockNode::GetLayoutObject() {
+LayoutObject* NGBlockNode::GetLayoutObject() const {
   return layout_box_;
 }
 
@@ -264,7 +264,7 @@ DEFINE_TRACE(NGBlockNode) {
   NGLayoutInputNode::Trace(visitor);
 }
 
-bool NGBlockNode::CanUseNewLayout() {
+bool NGBlockNode::CanUseNewLayout() const {
   // [Multicol]: for the 1st phase of LayoutNG's multicol implementation we want
   // to utilize the existing ColumnBalancer class. That's why a multicol block
   // should be processed by Legacy Layout engine.
@@ -274,6 +274,11 @@ bool NGBlockNode::CanUseNewLayout() {
   if (!layout_box_->IsLayoutBlockFlow())
     return false;
   return RuntimeEnabledFeatures::layoutNGEnabled();
+}
+
+String NGBlockNode::ToString() const {
+  return String::Format("NGBlockNode: '%s'",
+                        GetLayoutObject()->DebugName().Ascii().data());
 }
 
 void NGBlockNode::CopyFragmentDataToLayoutBox(

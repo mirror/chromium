@@ -12,7 +12,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/worker_pool.h"
 #include "crypto/nss_util.h"
 #include "crypto/scoped_nss_types.h"
 #include "net/cert/nss_cert_database.h"
@@ -208,10 +207,7 @@ void CertLoader::CertificatesLoaded(
   crypto::ScopedPK11Slot system_slot = database_->GetSystemSlot();
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE,
-      base::TaskTraits()
-          .WithShutdownBehavior(
-              base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN)
-          .MayBlock(),
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::BindOnce(&FilterSystemTokenCertificates,
                      base::Unretained(all_certs.get()), std::move(system_slot)),
       base::BindOnce(&CertLoader::UpdateCertificates,

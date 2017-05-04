@@ -29,6 +29,7 @@ QuicChromiumClientStream::QuicChromiumClientStream(
       net_log_(net_log),
       delegate_(nullptr),
       headers_delivered_(false),
+      initial_headers_sent_(false),
       session_(session),
       can_migrate_(true),
       weak_factory_(this) {}
@@ -115,8 +116,8 @@ void QuicChromiumClientStream::OnClose() {
 void QuicChromiumClientStream::OnCanWrite() {
   QuicStream::OnCanWrite();
 
-  if (!HasBufferedData() && !callback_.is_null()) {
-    base::ResetAndReturn(&callback_).Run(OK);
+  if (!HasBufferedData() && !write_callback_.is_null()) {
+    base::ResetAndReturn(&write_callback_).Run(OK);
   }
 }
 
@@ -133,15 +134,15 @@ size_t QuicChromiumClientStream::WriteHeaders(
       NetLogEventType::QUIC_CHROMIUM_CLIENT_STREAM_SEND_REQUEST_HEADERS,
       base::Bind(&QuicRequestNetLogCallback, id(), &header_block,
                  QuicSpdyStream::priority()));
-  return QuicSpdyStream::WriteHeaders(std::move(header_block), fin,
-                                      std::move(ack_listener));
+  size_t len = QuicSpdyStream::WriteHeaders(std::move(header_block), fin,
+                                            std::move(ack_listener));
+  initial_headers_sent_ = true;
+  return len;
 }
 
 SpdyPriority QuicChromiumClientStream::priority() const {
-  if (delegate_ && delegate_->HasSendHeadersComplete()) {
-    return QuicSpdyStream::priority();
-  }
-  return net::kV3HighestPriority;
+  return initial_headers_sent_ ? QuicSpdyStream::priority()
+                               : kV3HighestPriority;
 }
 
 int QuicChromiumClientStream::WriteStreamData(
@@ -156,7 +157,7 @@ int QuicChromiumClientStream::WriteStreamData(
     return OK;
   }
 
-  callback_ = callback;
+  write_callback_ = callback;
   return ERR_IO_PENDING;
 }
 
@@ -177,7 +178,7 @@ int QuicChromiumClientStream::WritevStreamData(
     return OK;
   }
 
-  callback_ = callback;
+  write_callback_ = callback;
   return ERR_IO_PENDING;
 }
 
@@ -216,21 +217,9 @@ int QuicChromiumClientStream::Read(IOBuffer* buf, int buf_len) {
   iov.iov_base = buf->data();
   iov.iov_len = buf_len;
   size_t bytes_read = Readv(&iov, 1);
-  // If no more body bytes and trailers are to be delivered, return
-  // ERR_IO_PENDING now because onDataAvailable() will be called after trailers.
-  if (bytes_read == 0 && !FinishedReadingTrailers())
-    return ERR_IO_PENDING;
+  // Since HasBytesToRead is true, Readv() must of read some data.
+  DCHECK_NE(0u, bytes_read);
   return bytes_read;
-}
-
-bool QuicChromiumClientStream::CanWrite(const CompletionCallback& callback) {
-  bool can_write = session()->connection()->CanWrite(HAS_RETRANSMITTABLE_DATA);
-  if (!can_write) {
-    session()->MarkConnectionLevelWriteBlocked(id());
-    DCHECK(callback_.is_null());
-    callback_ = callback;
-  }
-  return can_write;
 }
 
 void QuicChromiumClientStream::NotifyDelegateOfHeadersCompleteLater(

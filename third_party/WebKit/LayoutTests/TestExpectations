@@ -273,8 +273,8 @@ crbug.com/711807 external/wpt/css/CSS2/normal-flow/width-inherit-001.xht [ Skip 
 # LayoutNG - is a new layout system for Blink.
 
 ### external/wpt/css/CSS2/floats-clear
-#### Passed: 52 29%
-#### Skipped: 139
+#### Passed: 53 28%
+#### Skipped: 138
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/adjacent-floats-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-002.xht [ Skip ]
@@ -289,7 +289,6 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-appl
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-008.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-009.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-012.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-013.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-015.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-float-002.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-float-003.xht [ Skip ]
@@ -2330,7 +2329,6 @@ crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/modu
 crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/errorhandling.html [ Failure ]
 crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/imports.html [ Failure ]
 crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/execorder.html [ Pass Timeout ]
-crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-1.html [ Failure Crash ]
 
 # This test has a failure console message with specific performance
 # numbers so a consistent baseline cannot be added. This test could be
@@ -2925,6 +2923,7 @@ crbug.com/626703 external/wpt/fullscreen/api/element-request-fullscreen-two-ifra
 crbug.com/666703 external/wpt/html/browsers/sandboxing/sandbox-disallow-same-origin.html [ Timeout ]
 crbug.com/626703 external/wpt/html/dom/documents/dom-tree-accessors/Document.currentScript.html [ Timeout ]
 crbug.com/626703 external/wpt/html/browsers/history/the-location-interface/location-protocol-setter-non-broken.html [ Failure Pass ]
+crbug.com/626703 external/wpt/shadow-dom/slots-fallback-in-document.html [ Failure ]
 
 crbug.com/655458 external/wpt/workers/constructors/SharedWorker/undefined-arguments.html [ Failure ]
 crbug.com/655458 external/wpt/workers/baseurl/alpha/worker.html [ Failure ]
@@ -2980,10 +2979,51 @@ crbug.com/658997 external/wpt/service-workers/service-worker/fetch-event-respond
 crbug.com/658997 external/wpt/service-workers/service-worker/fetch-request-css-base-url.https.html [ Skip ]
 crbug.com/658997 external/wpt/service-workers/service-worker/fetch-request-xhr.https.html [ Skip ]
 crbug.com/658997 external/wpt/service-workers/service-worker/fetch-response-xhr.https.html [ Skip ]
-crbug.com/658997 external/wpt/service-workers/service-worker/getregistrations.https.html [ Skip ]
+crbug.com/658997 external/wpt/service-workers/service-worker/getregistrations.https.html [ Pass Timeout ]
 crbug.com/658997 external/wpt/service-workers/service-worker/invalid-blobtype.https.html [ Skip ]
 crbug.com/658997 external/wpt/service-workers/service-worker/invalid-header.https.html [ Skip ]
 crbug.com/658997 external/wpt/service-workers/service-worker/referer.https.html [ Skip ]
+
+# Added May 3 2017 for wpt import by jeffcarp
+crbug.com/655458 external/wpt/css/css-transforms-2/backface-visibility-hidden-001.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/rotate_x_45deg.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/rotate_y_45deg.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform-3d-rotateY-stair-below-001.xht [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-image-scale-001.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-image-scale-002.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-matrix3d-001.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-perspective-003.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-perspective-004.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-perspective-005.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-preserve3d-010.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-preserve3d-013.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-rotatex-perspective-003.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-scale-005.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-scale-006.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-sorting-002.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-sorting-004.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-sorting-006.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/ttwf-css-3d-polygon-cycle-mismatch.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/ttwf-css-3d-polygon-cycle.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_audio-manual.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_fallback_file_upload-manual.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_image_environment-manual.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_image_invalid-manual.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_image_missing-manual.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_video_invalid-manual.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_video_environment-manual.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_image_user-manual.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_video_missing-manual.html [ Skip ]
+crbug.com/655458 external/wpt/html-media-capture/capture_video_user-manual.html [ Skip ]
+crbug.com/655458 external/wpt/mediacapture-image/idlharness.html [ Skip ]
+crbug.com/655458 external/wpt/html/semantics/tabular-data/processing-model-1/span-limits.html [ Skip ]
+crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-scale-007.html [ Skip ]
+crbug.com/655458 external/wpt/WebCryptoAPI/derive_bits_keys/test_pbkdf2.html [ Skip ]
+crbug.com/655458 external/wpt/WebCryptoAPI/idlharness.html [ Skip ]
+crbug.com/655458 external/wpt/WebCryptoAPI/idlharness.https.html [ Skip ]
+crbug.com/655458 external/wpt/WebCryptoAPI/derive_bits_keys/test_hkdf.html [ Skip ]
+crbug.com/655458 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-OAEP.https.html [ Skip ]
+crbug.com/655458 external/wpt/web-animations/interfaces/AnimationTimeline/document-timeline.html [ Skip ]
 
 crbug.com/435547 http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
 crbug.com/435547 virtual/mojo-loading/http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
@@ -3260,6 +3300,8 @@ crbug.com/689781 virtual/sharedarraybuffer/http/tests/media/media-source/mediaso
 
 crbug.com/701445 external/wpt/dom/events/EventListener-invoke-legacy.html [ Timeout Pass ]
 
+crbug.com/718394 virtual/enable_asmjs/http/tests/asmjs/asm-warnings.html [ NeedsManualRebaseline ]
+
 # When WebAssembly is exposed in V8 (soon), this test has the wrong number of expected Object.getOwnPropertyNames() for global object.
 
 crbug.com/681468 fast/forms/suggestion-picker/date-suggestion-picker-appearance-zoom125.html [ Failure Pass ]
@@ -3269,16 +3311,6 @@ crbug.com/683800 [ Win7 Debug ] external/wpt/selection/ [ Failure Pass ]
 
 # CQ and Rebaseline-cl for crrev.com/2626973005 does not include this
 crbug.com/680407 [ Mac ] fast/forms/select/menulist-appearance-basic.html [ NeedsManualRebaseline ]
-
-# No mock Mojo interface for services yet
-crbug.com/659139 [ Mac ] http/tests/shapedetection/shapedetection-cross-origin.html [ Skip ]
-crbug.com/659139 [ Mac ] virtual/mojo-loading/http/tests/shapedetection/shapedetection-cross-origin.html [ Skip ]
-#crbug.com/659139 [ Mac ] shapedetection/detection-HTMLCanvasElement.html [ Skip ]
-crbug.com/659139 [ Mac ] shapedetection/detection-HTMLImageElement.html [ Skip ]
-crbug.com/659139 [ Mac ] shapedetection/detection-HTMLVideoElement.html [ Skip ]
-crbug.com/659139 [ Mac ] shapedetection/detection-ImageBitmap.html [ Skip ]
-crbug.com/659139 [ Mac ] shapedetection/detection-ImageData.html [ Skip ]
-crbug.com/659139 [ Mac ] shapedetection/detection-options.html [ Skip ]
 
 # Importing 'fetch' tests from WPT.
 crbug.com/705490 external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
@@ -3321,7 +3353,6 @@ crbug.com/700374 [ Win ] http/tests/inspector/workers-on-navigation.html [ Failu
 crbug.com/703503 inspector/tracing/timeline-js/timeline-runtime-stats.html [ Failure Pass ]
 crbug.com/703518 inspector/tracing/worker-js-frames.html [ Failure Pass ]
 crbug.com/703518 virtual/threaded/inspector/tracing/worker-js-frames.html [ Failure Pass ]
-crbug.com/703533 [ Mac ] shapedetection/detection-security-test.html  [ Crash Failure Pass Timeout ]
 crbug.com/674720 http/tests/loading/preload-img-test.html [ Pass Failure ]
 crbug.com/674720 virtual/mojo-loading/http/tests/loading/preload-img-test.html [ Pass Failure ]
 
@@ -3329,11 +3360,6 @@ crbug.com/708499 fast/compositor-wheel-scroll-latching/touchpad-scroll-impl-to-m
 crbug.com/708499 virtual/wheelscrolllatching/fast/compositor-wheel-scroll-latching/touchpad-scroll-impl-to-main.html [ Pass Timeout ]
 
 crbug.com/706091 [ Linux ] virtual/wheelscrolllatching/fast/events/wheel/wheel-scroll-latching-on-scrollbar.html [ Failure Pass ]
-
-# Sheriff failures 2017-04-03
-# Should be [ Crash Pass ], but this has a commented out [ Skip ] expectation
-# for Mac earlier in the file, so just skip it everywhere.
-crbug.com/707689 shapedetection/detection-HTMLCanvasElement.html [ Skip ]
 
 # Sheriff failures 2017-04-19
 crbug.com/713094 [ Win ] virtual/sharedarraybuffer/fast/css/fontfaceset-check-platform-fonts.html [ Failure Pass ]
@@ -3377,9 +3403,6 @@ crbug.com/716569 [ Android ] tables/mozilla/bugs/bug2479-4.html [ Failure ]
 crbug.com/716569 [ Android ] tables/mozilla/core/bloomberg.html [ Failure ]
 crbug.com/716569 [ Android ] tables/mozilla_expected_failures/bugs/bug1055-2.html [ Failure ]
 crbug.com/716569 [ Android ] tables/mozilla_expected_failures/bugs/bug2479-5.html [ Failure ]
-
-# Sheriff flake 2017-05-01
-crbug.com/716729 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-OAEP.https.html [ Pass Timeout ]
 
 # Sheriff failures 2017-05-02
 crbug.com/693065 [ Mac ] fast/text/variable-fonts/variable-gpos-m2b.html [ Failure ]

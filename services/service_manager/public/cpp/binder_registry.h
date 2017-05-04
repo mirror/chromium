@@ -13,7 +13,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "mojo/public/cpp/system/message_pipe.h"
-#include "services/service_manager/public/cpp/lib/callback_binder.h"
+#include "services/service_manager/public/cpp/interface_binder.h"
 
 namespace service_manager {
 
@@ -28,17 +28,6 @@ class BinderRegistry {
   BinderRegistry();
   ~BinderRegistry();
 
-  // Provide a callback to be run when a request to bind |Interface| is received
-  // by this registry.
-  template <typename Interface>
-  void AddInterface(
-      const base::Callback<void(mojo::InterfaceRequest<Interface>)>& callback,
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner =
-          nullptr) {
-    SetInterfaceBinder(Interface::Name_,
-                       base::MakeUnique<internal::CallbackBinder<Interface>>(
-                           callback, task_runner));
-  }
   template <typename Interface>
   void AddInterface(
       const base::Callback<void(const BindSourceInfo&,
@@ -47,8 +36,7 @@ class BinderRegistry {
           nullptr) {
     SetInterfaceBinder(
         Interface::Name_,
-        base::MakeUnique<internal::CallbackBinderWithSourceInfo<Interface>>(
-            callback, task_runner));
+        base::MakeUnique<CallbackBinder<Interface>>(callback, task_runner));
   }
   void AddInterface(
       const std::string& interface_name,

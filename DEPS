@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '24b2063a48ef692e5fae12d215766c125cd9f077',
+  'skia_revision': 'b59a9da7eba4ea5f3101b87deae3d67395c58a7e',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '328f65756a94f8cd673169a477a5300d32f5819b',
+  'v8_revision': '342edbefa092eefb40999c7a14211b951b7c3798',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -52,7 +52,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': 'd262799c3784050fd21b02717273829eff1231cf',
+  'angle_revision': 'ba29fa47aafa95330fe054eee02e36d11ce6d8bf',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
@@ -60,11 +60,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
-  'swiftshader_revision': '35e0ba7753cab88905b428b65577669620798507',
+  'swiftshader_revision': '5f7269351ff27a3aa5488617b739c257b4e286a9',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': 'cadb4711bdc9cb99113aad2acdbc47711f065626',
+  'pdfium_revision': '28b44b03c133055ba82dc54bbde49b9627f9c3d9',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '15b8a2e9d5204ac4fba8081eba4d52566008e442',
+  'catapult_revision': '18b10cbe616e114d9eae4e7a0dd07c8d81a7ef39',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -235,7 +235,7 @@ deps = {
     Var('chromium_git') + '/native_client/src/third_party/scons-2.0.1.git' + '@' + '1c1550e17fc26355d08627fbdec13d8291227067',
 
   'src/third_party/webrtc':
-    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + '86a678777ef0132fd7d579e564ed9b55248562e3', # commit position 17981
+    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + '075011de8950652184fdf32dcd60a6ce888166aa', # commit position 18004
 
   'src/third_party/openmax_dl':
     Var('chromium_git') + '/external/webrtc/deps/third_party/openmax.git' + '@' +  Var('openmax_dl_revision'),
@@ -244,7 +244,7 @@ deps = {
     Var('chromium_git') + '/external/github.com/open-source-parsers/jsoncpp.git' + '@' + 'f572e8e42e22cfcf5ab0aea26574f408943edfa4', # from svn 248
 
   'src/third_party/libyuv':
-    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + '3b583396bf138334e90e06ad901f73589a929474',  # from r1652
+    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + '945ea1b7463004581502ebbcfc5a0b2f54ff6867',  # from r1655
 
   'src/third_party/smhasher/src':
     Var('chromium_git') + '/external/smhasher.git' + '@' + 'e87738e57558e0ec472b2fc3a643b838e5b6e88f',
@@ -410,7 +410,7 @@ deps_os = {
 
     # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
     'src/third_party/chromite':
-      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + '8dbd2c59b33e12575b4d8e808d440863060c2fc7',
+      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + '06cfd5621cb29f15c1c67873e5c83bc808f6644b',
 
     # Dependency of chromite.git and skia.
     'src/third_party/pyelftools':
@@ -1023,7 +1023,7 @@ hooks = [
     'action': ['python',
                'src/build/get_syzygy_binaries.py',
                '--output-dir=src/third_party/syzygy/binaries',
-               '--revision=b8aa6a6d09dadd385a1afed5e71c3bb3514a4c0f',
+               '--revision=0d286578ad6231aa26298963182119a8f7d6d9af',
                '--overwrite',
                '--copy-dia-binaries',
     ],

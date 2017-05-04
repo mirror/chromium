@@ -21,7 +21,8 @@ FakeBluetooth::FakeBluetooth()
 FakeBluetooth::~FakeBluetooth() {}
 
 // static
-void FakeBluetooth::Create(mojom::FakeBluetoothRequest request) {
+void FakeBluetooth::Create(const service_manager::BindSourceInfo& source_info,
+                           mojom::FakeBluetoothRequest request) {
   mojo::MakeStrongBinding(base::MakeUnique<FakeBluetooth>(),
                           std::move(request));
 }
@@ -30,6 +31,15 @@ void FakeBluetooth::SetLESupported(bool supported,
                                    const SetLESupportedCallback& callback) {
   global_factory_values_->SetLESupported(supported);
   callback.Run();
+}
+
+void FakeBluetooth::SimulateCentral(mojom::CentralState state,
+                                    const SimulateCentralCallback& callback) {
+  mojom::FakeCentralPtr fake_central_ptr;
+  fake_central_ = base::MakeShared<FakeCentral>(
+      state, mojo::MakeRequest(&fake_central_ptr));
+  device::BluetoothAdapterFactory::SetAdapterForTesting(fake_central_);
+  callback.Run(std::move(fake_central_ptr));
 }
 
 }  // namespace bluetooth

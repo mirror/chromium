@@ -144,11 +144,6 @@ class PageInfoUI {
   // Returns the UI string for the given permission |type|.
   static base::string16 PermissionTypeToUIString(ContentSettingsType type);
 
-  // Returns the UI string for the given permission |value|, used in the
-  // permission-changing menu. Generally this will be a verb in the imperative
-  // form, e.g. "ask", "allow", "block".
-  static base::string16 PermissionValueToUIString(ContentSetting value);
-
   // Returns the UI string describing the action taken for a permission,
   // including why that action was taken. E.g. "Allowed by you",
   // "Blocked by default". If |setting| is default, specify the actual default
@@ -186,20 +181,13 @@ class PageInfoUI {
   static const gfx::Image& GetChosenObjectIcon(const ChosenObjectInfo& info,
                                                bool deleted);
 
+#if defined(OS_ANDROID)
   // Returns the identity icon ID for the given identity |status|.
   static int GetIdentityIconID(PageInfo::SiteIdentityStatus status);
 
-  // Returns the identity icon for the given identity |status|.
-  static const gfx::Image& GetIdentityIcon(PageInfo::SiteIdentityStatus status);
-
   // Returns the connection icon ID for the given connection |status|.
   static int GetConnectionIconID(PageInfo::SiteConnectionStatus status);
-
-  // Returns the connection icon for the given connection |status|.
-  static const gfx::Image& GetConnectionIcon(
-      PageInfo::SiteConnectionStatus status);
-
-#if !defined(OS_ANDROID)
+#else
   // Returns the icon for the Certificate area.
   static const gfx::ImageSkia GetCertificateIcon();
 #endif
