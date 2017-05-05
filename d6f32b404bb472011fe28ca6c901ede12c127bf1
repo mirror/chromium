@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b75c687_f52ac28c",
+        "filename": "services/catalog/instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-05T18:03:24Z",
+      "side": 1,
+      "message": "Actually as of last week, this stupid capability is no longer used anywhere. You can just delete it.",
+      "revId": "d6f32b404bb472011fe28ca6c901ede12c127bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9beea7_c0c6da10",
+        "filename": "services/service_manager/public/interfaces/resolver.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-05T18:03:24Z",
+      "side": 1,
+      "message": "and then this can just be a string",
+      "revId": "d6f32b404bb472011fe28ca6c901ede12c127bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
