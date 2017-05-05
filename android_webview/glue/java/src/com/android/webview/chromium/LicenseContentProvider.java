@@ -14,6 +14,11 @@ import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
+import org.chromium.base.ThreadUtils;
+import org.chromium.base.library_loader.ProcessInitException;
+import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
+import org.chromium.components.aboutui.CreditUtils;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -47,15 +52,34 @@ public class LicenseContentProvider
     @Override
     public void writeDataToPipe(
             ParcelFileDescriptor output, Uri uri, String mimeType, Bundle opts, String filename) {
-        try (InputStream in = getContext().getAssets().open(filename);
-                OutputStream out = new FileOutputStream(output.getFileDescriptor());) {
-            byte[] buf = new byte[8192];
-            int size = -1;
-            while ((size = in.read(buf)) != -1) {
-                out.write(buf, 0, size);
+        try (InputStream in = getContext().getAssets().open(filename)) {
+            try (OutputStream out = new FileOutputStream(output.getFileDescriptor())) {
+                byte[] buf = new byte[8192];
+                int size = -1;
+                while ((size = in.read(buf)) != -1) {
+                    out.write(buf, 0, size);
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to write the license file", e);
             }
-        } catch (IOException e) {
-            Log.e(TAG, "Failed to read the license file", e);
+        } catch (IOException e1) {
+            try (OutputStream out = new FileOutputStream(output.getFileDescriptor())) {
+                ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            ChromeBrowserInitializer.getInstance(getContext())
+                                    .handleSynchronousStartup();
+                        } catch (ProcessInitException pie) {
+                            Log.e(TAG, "Unable to load native libraries.", pie);
+                        }
+                    }
+                });
+                String in = CreditUtils.nativeGetJavaWrapperCredits();
+                out.write(in.getBytes());
+            } catch (IOException e2) {
+                Log.e(TAG, "Failed to write the license file", e2);
+            }
         }
     }
 
