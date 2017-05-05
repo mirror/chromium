@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53ca0b79_555c4270",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-05-05T23:41:20Z",
+      "side": 1,
+      "message": "Are you planning to convert all usage of the following parameters and delete them? That would be nice.",
+      "range": {
+        "startLine": 172,
+        "startChar": 16,
+        "endLine": 172,
+        "endChar": 39
+      },
+      "revId": "6a42a0da6d587b8d4ca4372f03061b4901d981cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ce2397_cceec668",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-05-05T23:41:20Z",
+      "side": 1,
+      "message": "This helper doesn\u0027t seems to save a lot of typing, but it seems to add learning cost (two templates now, with slightly different parameter names).",
+      "range": {
+        "startLine": 812,
+        "startChar": 10,
+        "endLine": 812,
+        "endChar": 25
+      },
+      "revId": "6a42a0da6d587b8d4ca4372f03061b4901d981cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
