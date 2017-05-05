@@ -556,13 +556,18 @@ void CastBrowserMainParts::PostMainMessageLoopRun() {
 
   cast_browser_process_->cast_service()->Finalize();
   cast_browser_process_->metrics_service_client()->Finalize();
-  cast_browser_process_.reset();
+  cast_browser_process_->ClearBrowserContext();
 
   DeregisterKillOnAlarm();
 #endif
 }
 
 void CastBrowserMainParts::PostDestroyThreads() {
+  // Destroy cast_browser_process_ here to avoid lifetime issues with ref
+  // counted members, since by this time all other threads have been torn down,
+  // so all remaining refs should be on this thread.
+  cast_browser_process_.reset();
+
 #if !defined(OS_ANDROID)
   media_resource_tracker_->FinalizeAndDestroy();
   media_resource_tracker_ = nullptr;
