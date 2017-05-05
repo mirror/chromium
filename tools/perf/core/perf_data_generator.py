@@ -705,7 +705,8 @@ BENCHMARK_NAME_BLACKLIST = [
 # Overrides the default 2 hour timeout for swarming tasks.
 BENCHMARK_SWARMING_TIMEOUTS = {
     'loading.mobile': 14400, # 4 hours
-    'system_health.memory_mobile': 10800, # 4 hours
+    'system_health.memory_mobile': 10800, # 3 hours
+    'system_health.memory_desktop': 10800, # 3 hours
 }
 
 
