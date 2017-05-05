@@ -445,8 +445,18 @@ v8::Maybe<uint32_t> V8ScriptValueSerializer::GetSharedArrayBufferId(
 v8::Maybe<uint32_t> V8ScriptValueSerializer::GetWasmModuleTransferId(
     v8::Isolate* isolate,
     v8::Local<v8::WasmCompiledModule> module) {
-  if (inline_wasm_)
+  if (inline_wasm_) {
     return v8::Nothing<uint32_t>();
+  }
+  if (for_storage_) {
+    ExceptionState exception_state(isolate, exception_state_->Context(),
+                                   exception_state_->InterfaceName(),
+                                   exception_state_->PropertyName());
+    exception_state.ThrowDOMException(
+        kDataCloneError,
+        "Serializing WebAssembly modules in insecure contexts is not allowed.");
+    return v8::Nothing<uint32_t>();
+  }
 
   // We don't expect scenarios with numerous wasm modules being transferred
   // around. Most likely, we'll have one module. The vector approach is simple
