@@ -57,6 +57,11 @@ void CastBrowserProcess::SetBrowserContext(
   browser_context_.swap(browser_context);
 }
 
+void CastBrowserProcess::ClearBrowserContext() {
+  DCHECK(browser_context_);
+  browser_context_.reset();
+}
+
 void CastBrowserProcess::SetCastContentBrowserClient(
     CastContentBrowserClient* cast_content_browser_client) {
   DCHECK(!cast_content_browser_client_);
