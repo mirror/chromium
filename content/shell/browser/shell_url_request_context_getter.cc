@@ -134,7 +134,7 @@ std::unique_ptr<net::ProxyService>
 ShellURLRequestContextGetter::GetProxyService() {
   // TODO(jam): use v8 if possible, look at chrome code.
   return net::ProxyService::CreateUsingSystemProxyResolver(
-      std::move(proxy_config_service_), 0, url_request_context_->net_log());
+      std::move(proxy_config_service_), url_request_context_->net_log());
 }
 
 net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
@@ -258,11 +258,8 @@ net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
         url::kFileScheme,
         base::MakeUnique<net::FileProtocolHandler>(
             base::CreateTaskRunnerWithTraits(
-                base::TaskTraits()
-                    .MayBlock()
-                    .WithPriority(base::TaskPriority::USER_VISIBLE)
-                    .WithShutdownBehavior(
-                        base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN))));
+                {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+                 base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})));
     DCHECK(set_protocol);
 #endif
 

@@ -154,15 +154,25 @@ class LinuxPort(base.Port):
     def _start_xvfb(self):
         display = self._find_display()
         if not display:
-            _log.warn('Failed to find a free display to start Xvfb.')
+            _log.critical('Failed to find a free display to start Xvfb.')
             return
 
-        _log.info('Starting Xvfb with display "%s".', display)
+        # Parts of Xvfb use a hard-coded "/tmp" for its temporary directory.
+        # This can cause a failure when those parts expect to hardlink against
+        # files that were created in "TEMPDIR" / "TMPDIR".
+        #
+        # See: https://crbug.com/715848
+        env = self.host.environ.copy()
+        if env.get('TMPDIR') and env['TMPDIR'] != '/tmp':
+            _log.info('Overriding TMPDIR to "/tmp" for Xvfb, was: %s', env['TMPDIR'])
+            env['TMPDIR'] = '/tmp'
+
+        _log.debug('Starting Xvfb with display "%s".', display)
         self._xvfb_stdout = tempfile.NamedTemporaryFile(delete=False)
         self._xvfb_stderr = tempfile.NamedTemporaryFile(delete=False)
         self._xvfb_process = self.host.executive.popen(
             ['Xvfb', display, '-screen', '0', '1280x800x24', '-ac', '-dpi', '96'],
-            stdout=self._xvfb_stdout, stderr=self._xvfb_stderr)
+            stdout=self._xvfb_stdout, stderr=self._xvfb_stderr, env=env)
 
         # By setting DISPLAY here, the individual worker processes will
         # get the right DISPLAY. Note, if this environment could be passed
@@ -170,14 +180,11 @@ class LinuxPort(base.Port):
         self._original_display = self.host.environ.get('DISPLAY')
         self.host.environ['DISPLAY'] = display
 
-        # The poll() method will return None if the process has not terminated:
+        # Check that xvfb has started correctly via probing using xdpyinfo.
+        # While xvfb is running, the poll() method will return None;
         # https://docs.python.org/2/library/subprocess.html#subprocess.Popen.poll
-        if self._xvfb_process.poll() is not None:
-            _log.warn('Failed to start Xvfb on display "%s."', display)
-            self._stop_xvfb()
-
         start_time = self.host.time()
-        while self.host.time() - start_time < self.XVFB_START_TIMEOUT:
+        while self.host.time() - start_time < self.XVFB_START_TIMEOUT or self._xvfb_process.poll() is not None:
             # We don't explicitly set the display, as we want to check the
             # environment value.
             exit_code = self.host.executive.run_command(
@@ -187,8 +194,10 @@ class LinuxPort(base.Port):
                 return
             _log.warn('xdpyinfo check failed with exit code %s while starting Xvfb on "%s".', exit_code, display)
             self.host.sleep(0.1)
-        _log.fatal('Failed to start Xvfb on display "%s" (xdpyinfo check failed).', display)
+
+        retcode = self._xvfb_process.poll()
         self._stop_xvfb()
+        _log.critical('Failed to start Xvfb on display "%s" (xvfb retcode: %r).', display, retcode)
 
     def _find_display(self):
         """Tries to find a free X display, looping if necessary."""

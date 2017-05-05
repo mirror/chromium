@@ -28,8 +28,6 @@
 #include <memory>
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ScriptWrappableVisitor.h"
-#include "bindings/core/v8/V8BindingMacros.h"
 #include "bindings/modules/v8/HTMLCanvasElementOrOffscreenCanvas.h"
 #include "bindings/modules/v8/WebGLAny.h"
 #include "core/dom/ArrayBufferViewHelpers.h"
@@ -93,6 +91,8 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WaitableEvent.h"
+#include "platform/bindings/ScriptWrappableVisitor.h"
+#include "platform/bindings/V8BindingMacros.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
@@ -592,10 +592,10 @@ static void CreateContextProviderOnMainThread(
     ContextProviderCreationInfo* creation_info,
     WaitableEvent* waitable_event) {
   ASSERT(IsMainThread());
-  creation_info->created_context_provider = WTF::WrapUnique(
+  creation_info->created_context_provider =
       Platform::Current()->CreateOffscreenGraphicsContext3DProvider(
           creation_info->context_attributes, creation_info->url, 0,
-          creation_info->gl_info));
+          creation_info->gl_info);
   waitable_event->Signal();
 }
 
@@ -659,9 +659,9 @@ WebGLRenderingContextBase::CreateContextProviderInternal(
   const auto& url = canvas ? canvas->GetDocument().TopDocument().Url()
                            : ExecutionContext::From(script_state)->Url();
   if (IsMainThread()) {
-    context_provider = WTF::WrapUnique(
+    context_provider =
         Platform::Current()->CreateOffscreenGraphicsContext3DProvider(
-            context_attributes, url, 0, &gl_info));
+            context_attributes, url, 0, &gl_info);
   } else {
     context_provider =
         CreateContextProviderOnWorkerThread(context_attributes, &gl_info, url);
@@ -1500,15 +1500,17 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
   canvas()->ClearCopiedImage();
   marked_canvas_dirty_ = false;
 
-  if (!canvas()->Buffer())
+  if (!canvas()->GetOrCreateImageBuffer())
     return false;
 
   ScopedTexture2DRestorer restorer(this);
   ScopedFramebufferRestorer fbo_restorer(this);
 
   GetDrawingBuffer()->ResolveAndBindForReadAndDraw();
-  if (!canvas()->Buffer()->CopyRenderingResultsFromDrawingBuffer(
-          GetDrawingBuffer(), source_buffer)) {
+  if (!canvas()
+           ->GetOrCreateImageBuffer()
+           ->CopyRenderingResultsFromDrawingBuffer(GetDrawingBuffer(),
+                                                   source_buffer)) {
     // Currently, copyRenderingResultsFromDrawingBuffer is expected to always
     // succeed because cases where canvas()-buffer() is not accelerated are
     // handle before reaching this point.  If that assumption ever stops holding
@@ -4965,7 +4967,7 @@ void WebGLRenderingContextBase::TexImageCanvasByGPU(
     GLint yoffset,
     const IntRect& source_sub_rectangle) {
   if (!canvas->Is3d()) {
-    ImageBuffer* buffer = canvas->Buffer();
+    ImageBuffer* buffer = canvas->GetOrCreateImageBuffer();
     if (buffer &&
         !buffer->CopyToPlatformTexture(
             FunctionIDToSnapshotReason(function_id), ContextGL(), target,
@@ -7500,9 +7502,9 @@ void WebGLRenderingContextBase::MaybeRestoreContext(TimerBase*) {
   const auto& url = host()->GetExecutionContextUrl();
 
   if (IsMainThread()) {
-    context_provider = WTF::WrapUnique(
+    context_provider =
         Platform::Current()->CreateOffscreenGraphicsContext3DProvider(
-            attributes, url, 0, &gl_info));
+            attributes, url, 0, &gl_info);
   } else {
     context_provider =
         CreateContextProviderOnWorkerThread(attributes, &gl_info, url);

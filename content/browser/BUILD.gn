@@ -11,6 +11,12 @@ import("//printing/features/features.gni")
 import("//third_party/WebKit/public/public_features.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
 
+declare_args() {
+  # Include code in the build that is only needed when using the video
+  # capture Mojo service, which is currently experimental.
+  enable_mojo_video_capture = false
+}
+
 source_set("browser") {
   # Only the public target should depend on this. All other targets (even
   # internal content ones) should depend on the public one.
@@ -43,6 +49,7 @@ source_set("browser") {
     "//components/filesystem:lib",
     "//components/leveldb:lib",
     "//components/link_header_util",
+    "//components/metrics",
     "//components/mime_util",
     "//components/payments/mojom:mojom_payment_app",
     "//components/rappor",
@@ -264,6 +271,8 @@ source_set("browser") {
     "android/content_video_view.cc",
     "android/content_video_view.h",
     "android/devtools_auth.cc",
+    "android/dialog_overlay_impl.cc",
+    "android/dialog_overlay_impl.h",
     "android/gpu_process_callback.cc",
     "android/gpu_process_callback.h",
     "android/java_interfaces_impl.cc",
@@ -309,6 +318,8 @@ source_set("browser") {
     "appcache/appcache_policy.h",
     "appcache/appcache_quota_client.cc",
     "appcache/appcache_quota_client.h",
+    "appcache/appcache_request.cc",
+    "appcache/appcache_request.h",
     "appcache/appcache_request_handler.cc",
     "appcache/appcache_request_handler.h",
     "appcache/appcache_response.cc",
@@ -321,6 +332,10 @@ source_set("browser") {
     "appcache/appcache_storage_impl.h",
     "appcache/appcache_update_job.cc",
     "appcache/appcache_update_job.h",
+    "appcache/appcache_url_loader_request.cc",
+    "appcache/appcache_url_loader_request.h",
+    "appcache/appcache_url_request.cc",
+    "appcache/appcache_url_request.h",
     "appcache/appcache_url_request_job.cc",
     "appcache/appcache_url_request_job.h",
     "appcache/appcache_working_set.cc",
@@ -471,6 +486,7 @@ source_set("browser") {
     # needed on all platforms.
     "compositor/frame_sink_manager_host.cc",
     "compositor/frame_sink_manager_host.h",
+    "compositor/frame_sink_observer.h",
     "compositor/surface_utils.cc",
     "compositor/surface_utils.h",
     "devtools/browser_devtools_agent_host.cc",
@@ -1277,6 +1293,8 @@ source_set("browser") {
     "resource_context_impl.h",
     "screen_orientation/screen_orientation_provider.cc",
     "screen_orientation/screen_orientation_provider.h",
+    "service_manager/common_browser_interfaces.cc",
+    "service_manager/common_browser_interfaces.h",
     "service_manager/merge_dictionary.cc",
     "service_manager/merge_dictionary.h",
     "service_manager/service_manager_context.cc",
@@ -1585,6 +1603,22 @@ source_set("browser") {
       "//third_party/webrtc/media:rtc_media_base",
       "//third_party/webrtc/modules/desktop_capture:primitives",
       "//third_party/webrtc_overrides:init_webrtc",
+    ]
+  }
+
+  if (enable_mojo_video_capture) {
+    sources += [
+      "renderer_host/media/service_launched_video_capture_device.cc",
+      "renderer_host/media/service_launched_video_capture_device.h",
+      "renderer_host/media/service_video_capture_device_launcher.cc",
+      "renderer_host/media/service_video_capture_device_launcher.h",
+      "renderer_host/media/service_video_capture_provider.cc",
+      "renderer_host/media/service_video_capture_provider.h",
+    ]
+
+    deps += [
+      "//services/video_capture/public/cpp",
+      "//services/video_capture/public/interfaces:constants",
     ]
   }
 

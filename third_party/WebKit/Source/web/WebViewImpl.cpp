@@ -161,7 +161,6 @@
 #include "web/DedicatedWorkerMessagingProxyProviderImpl.h"
 #include "web/DevToolsEmulator.h"
 #include "web/FullscreenController.h"
-#include "web/InspectorOverlayAgent.h"
 #include "web/LinkHighlightImpl.h"
 #include "web/PageOverlay.h"
 #include "web/PrerendererClientImpl.h"
@@ -273,11 +272,10 @@ class ColorOverlay final : public PageOverlay::Delegate {
 
 WebView* WebView::Create(WebViewClient* client,
                          WebPageVisibilityState visibility_state) {
-  // Pass the WebViewImpl's self-reference to the caller.
   return WebViewImpl::Create(client, visibility_state);
 }
 
-WebViewImpl* WebViewImpl::Create(WebViewClient* client,
+WebViewBase* WebViewImpl::Create(WebViewClient* client,
                                  WebPageVisibilityState visibility_state) {
   // Pass the WebViewImpl's self-reference to the caller.
   return AdoptRef(new WebViewImpl(client, visibility_state)).LeakRef();
@@ -433,12 +431,6 @@ WebViewImpl::~WebViewImpl() {
 WebDevToolsAgentImpl* WebViewImpl::MainFrameDevToolsAgentImpl() {
   WebLocalFrameImpl* main_frame = MainFrameImpl();
   return main_frame ? main_frame->DevToolsAgentImpl() : nullptr;
-}
-
-InspectorOverlayAgent* WebViewImpl::GetInspectorOverlay() {
-  if (WebDevToolsAgentImpl* devtools = MainFrameDevToolsAgentImpl())
-    return devtools->OverlayAgent();
-  return nullptr;
 }
 
 WebLocalFrameImpl* WebViewImpl::MainFrameImpl() const {
@@ -700,11 +692,11 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
       fling_source_device_ = event.source_device;
       DCHECK_NE(fling_source_device_, kWebGestureDeviceUninitialized);
       std::unique_ptr<WebGestureCurve> fling_curve =
-          WTF::WrapUnique(Platform::Current()->CreateFlingAnimationCurve(
+          Platform::Current()->CreateFlingAnimationCurve(
               event.source_device,
               WebFloatPoint(event.data.fling_start.velocity_x,
                             event.data.fling_start.velocity_y),
-              WebSize()));
+              WebSize());
       DCHECK(fling_curve);
       gesture_animation_ = WebActiveGestureAnimation::CreateAtAnimationStart(
           std::move(fling_curve), this);
@@ -1012,9 +1004,9 @@ void WebViewImpl::TransferActiveWheelFlingAnimation(
   global_position_on_fling_start_ = parameters.global_point;
   fling_modifier_ = parameters.modifiers;
   std::unique_ptr<WebGestureCurve> curve =
-      WTF::WrapUnique(Platform::Current()->CreateFlingAnimationCurve(
+      Platform::Current()->CreateFlingAnimationCurve(
           parameters.source_device, WebFloatPoint(parameters.delta),
-          parameters.cumulative_scroll));
+          parameters.cumulative_scroll);
   DCHECK(curve);
   gesture_animation_ = WebActiveGestureAnimation::CreateWithTimeOffset(
       std::move(curve), this, parameters.start_time);
@@ -1774,8 +1766,8 @@ WebViewBase* WebViewBase::FromPage(Page* page) {
   return WebViewImpl::FromPage(page);
 }
 
-WebViewImpl* WebViewImpl::FromPage(Page* page) {
-  return page ? static_cast<WebViewImpl*>(page->GetChromeClient().WebView())
+WebViewBase* WebViewImpl::FromPage(Page* page) {
+  return page ? static_cast<WebViewBase*>(page->GetChromeClient().WebView())
               : nullptr;
 }
 
@@ -2038,13 +2030,8 @@ void WebViewImpl::UpdateAllLifecyclePhases() {
   PageWidgetDelegate::UpdateAllLifecyclePhases(*page_,
                                                *MainFrameImpl()->GetFrame());
 
-  if (InspectorOverlayAgent* overlay = GetInspectorOverlay()) {
-    overlay->UpdateAllLifecyclePhases();
-    // TODO(chrishtr): integrate paint into the overlay's lifecycle.
-    if (overlay->GetPageOverlay() &&
-        overlay->GetPageOverlay()->GetGraphicsLayer())
-      overlay->GetPageOverlay()->GetGraphicsLayer()->Paint(nullptr);
-  }
+  if (WebDevToolsAgentImpl* devtools = MainFrameDevToolsAgentImpl())
+    devtools->PaintOverlay();
   if (page_color_overlay_)
     page_color_overlay_->GetGraphicsLayer()->Paint(nullptr);
 
@@ -2181,8 +2168,8 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
   if (dev_tools_emulator_->HandleInputEvent(input_event))
     return WebInputEventResult::kHandledSuppressed;
 
-  if (InspectorOverlayAgent* overlay = GetInspectorOverlay()) {
-    if (overlay->HandleInputEvent(input_event))
+  if (WebDevToolsAgentImpl* devtools = MainFrameDevToolsAgentImpl()) {
+    if (devtools->HandleInputEvent(input_event))
       return WebInputEventResult::kHandledSuppressed;
   }
 
@@ -3691,7 +3678,7 @@ void WebViewImpl::ResizeAfterLayout(WebLocalFrameImpl* webframe) {
   if (GetPageScaleConstraintsSet().ConstraintsDirty())
     RefreshPageScaleFactorAfterLayout();
 
-  UpdateICBAndResizeViewport();
+  ResizeFrameView(webframe);
 }
 
 void WebViewImpl::LayoutUpdated(WebLocalFrameImpl* webframe) {
@@ -3998,8 +3985,13 @@ void WebViewImpl::InitializeLayerTreeView() {
     dev_tools->LayerTreeViewChanged(layer_tree_view_);
 
   page_->GetSettings().SetAcceleratedCompositingEnabled(layer_tree_view_);
-  if (layer_tree_view_)
+  if (layer_tree_view_) {
     page_->LayerTreeViewInitialized(*layer_tree_view_, nullptr);
+    // We don't yet have a page loaded at this point of the initialization of
+    // WebViewImpl, so don't allow cc to commit any frames Blink might
+    // try to create in the meantime.
+    layer_tree_view_->SetDeferCommits(true);
+  }
 
   // FIXME: only unittests, click to play, Android printing, and printing (for
   // headers and footers) make this assert necessary. We should make them not
@@ -4155,11 +4147,8 @@ AnimationWorkletProxyClient* WebViewImpl::CreateAnimationWorkletProxyClient() {
 void WebViewImpl::UpdatePageOverlays() {
   if (page_color_overlay_)
     page_color_overlay_->Update();
-  if (InspectorOverlayAgent* overlay = GetInspectorOverlay()) {
-    PageOverlay* inspector_page_overlay = overlay->GetPageOverlay();
-    if (inspector_page_overlay)
-      inspector_page_overlay->Update();
-  }
+  if (WebDevToolsAgentImpl* devtools = MainFrameDevToolsAgentImpl())
+    devtools->LayoutOverlay();
 }
 
 float WebViewImpl::DeviceScaleFactor() const {

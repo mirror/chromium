@@ -23,7 +23,6 @@
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "base/threading/worker_pool.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
@@ -962,7 +961,7 @@ void WallpaperManager::OnDeviceWallpaperExists(const AccountId& account_id,
                                                bool exist) {
   if (exist) {
     base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, base::TaskTraits().MayBlock(),
+        FROM_HERE, {base::MayBlock()},
         base::Bind(&CheckDeviceWallpaperMatchHash, GetDeviceWallpaperFilePath(),
                    hash),
         base::Bind(&WallpaperManager::OnCheckDeviceWallpaperMatchHash,
@@ -990,7 +989,7 @@ void WallpaperManager::OnDeviceWallpaperDownloaded(const AccountId& account_id,
   }
 
   base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE, base::TaskTraits().MayBlock(),
+      FROM_HERE, {base::MayBlock()},
       base::Bind(&CheckDeviceWallpaperMatchHash, GetDeviceWallpaperFilePath(),
                  hash),
       base::Bind(&WallpaperManager::OnCheckDeviceWallpaperMatchHash,
@@ -1286,7 +1285,7 @@ bool WallpaperManager::SetDeviceWallpaperIfApplicable(
     // Check if the device wallpaper exists and matches the hash. If so, use it
     // directly. Otherwise download it first.
     base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, base::TaskTraits().MayBlock(),
+        FROM_HERE, {base::MayBlock()},
         base::Bind(&base::PathExists, GetDeviceWallpaperFilePath()),
         base::Bind(&WallpaperManager::OnDeviceWallpaperExists,
                    weak_factory_.GetWeakPtr(), account_id, url, hash));

@@ -328,10 +328,10 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 #if defined(OS_ANDROID)
   if (command_line.HasSwitch(switches::kDisableMediaSessionAPI))
     WebRuntimeFeatures::EnableMediaSession(false);
+#endif
 
   WebRuntimeFeatures::EnablePaymentRequest(
       base::FeatureList::IsEnabled(features::kWebPayments));
-#endif
 
   WebRuntimeFeatures::EnableServiceWorkerNavigationPreload(
       base::FeatureList::IsEnabled(features::kServiceWorkerNavigationPreload));
@@ -352,12 +352,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   if (base::FeatureList::IsEnabled(features::kGenericSensor))
     WebRuntimeFeatures::EnableGenericSensor(true);
-
-  // Enable features which VrShell depends on.
-  if (base::FeatureList::IsEnabled(features::kVrShell)) {
-    WebRuntimeFeatures::EnableGamepadExtensions(true);
-    WebRuntimeFeatures::EnableWebVR(true);
-  }
 
   if (base::FeatureList::IsEnabled(features::kLoadingWithMojo))
     WebRuntimeFeatures::EnableLoadingWithMojo(true);

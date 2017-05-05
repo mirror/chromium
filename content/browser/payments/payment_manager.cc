@@ -66,6 +66,32 @@ void PaymentManager::DeletePaymentInstrument(
       scope_, instrument_key, callback);
 }
 
+void PaymentManager::GetPaymentInstrument(
+    const std::string& instrument_key,
+    const PaymentManager::GetPaymentInstrumentCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  payment_app_context_->payment_app_database()->ReadPaymentInstrument(
+      scope_, instrument_key, callback);
+}
+
+void PaymentManager::KeysOfPaymentInstruments(
+    const PaymentManager::KeysOfPaymentInstrumentsCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  payment_app_context_->payment_app_database()->KeysOfPaymentInstruments(
+      scope_, callback);
+}
+
+void PaymentManager::HasPaymentInstrument(
+    const std::string& instrument_key,
+    const PaymentManager::HasPaymentInstrumentCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  payment_app_context_->payment_app_database()->HasPaymentInstrument(
+      scope_, instrument_key, callback);
+}
+
 void PaymentManager::SetPaymentInstrument(
     const std::string& instrument_key,
     payments::mojom::PaymentInstrumentPtr details,
@@ -76,22 +102,12 @@ void PaymentManager::SetPaymentInstrument(
       scope_, instrument_key, std::move(details), callback);
 }
 
-void PaymentManager::HasPaymentInstrument(
-    const std::string& instrument_key,
-    const HasPaymentInstrumentCallback& callback) {
+void PaymentManager::ClearPaymentInstruments(
+    const ClearPaymentInstrumentsCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  payment_app_context_->payment_app_database()->HasPaymentInstrument(
-      scope_, instrument_key, callback);
-}
-
-void PaymentManager::GetPaymentInstrument(
-    const std::string& instrument_key,
-    const PaymentManager::GetPaymentInstrumentCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  payment_app_context_->payment_app_database()->ReadPaymentInstrument(
-      scope_, instrument_key, callback);
+  payment_app_context_->payment_app_database()->ClearPaymentInstruments(
+      scope_, callback);
 }
 
 void PaymentManager::OnConnectionError() {

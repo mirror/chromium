@@ -31,8 +31,11 @@ class TestPaymentRequestDelegate : public PaymentRequestDelegate {
           result_delegate) override;
   AddressNormalizer* GetAddressNormalizer() override;
   autofill::RegionDataLoader* GetRegionDataLoader() override;
+  ukm::UkmService* GetUkmService() override;
 
-  TestAddressNormalizer* GetTestAddressNormalizer();
+  TestAddressNormalizer* test_address_normalizer();
+  void DelayFullCardRequestCompletion();
+  void CompleteFullCardRequest();
 
  private:
   autofill::PersonalDataManager* personal_data_manager_;
@@ -40,6 +43,7 @@ class TestPaymentRequestDelegate : public PaymentRequestDelegate {
   const GURL last_committed_url_;
   TestAddressNormalizer address_normalizer_;
 
+  bool instantaneous_full_card_request_result_ = true;
   autofill::CreditCard full_card_request_card_;
   base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
       full_card_result_delegate_;

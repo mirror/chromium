@@ -5,9 +5,16 @@
 #include "chrome/browser/notifications/notification_platform_bridge_linux.h"
 
 #include <algorithm>
+#include <memory>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <utility>
+#include <vector>
 
 #include "base/barrier_closure.h"
 #include "base/files/file_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -35,7 +42,21 @@ const char kFreedesktopNotificationsPath[] = "/org/freedesktop/Notifications";
 const char kDefaultButtonId[] = "default";
 const char kSettingsButtonId[] = "settings";
 
+// The values in this enumeration correspond to those of the
+// Linux.NotificationPlatformBridge.InitializationStatus histogram, so
+// the ordering should not be changed.  New error codes should be
+// added at the end, before NUM_ITEMS.
+enum class ConnectionInitializationStatusCode {
+  SUCCESS = 0,
+  NATIVE_NOTIFICATIONS_NOT_SUPPORTED = 1,
+  MISSING_REQUIRED_CAPABILITIES = 2,
+  COULD_NOT_CONNECT_TO_SIGNALS = 3,
+  NUM_ITEMS
+};
+
 gfx::Image DeepCopyImage(const gfx::Image& image) {
+  if (image.IsEmpty())
+    return gfx::Image();
   std::unique_ptr<gfx::ImageSkia> image_skia(image.CopyImageSkia());
   return gfx::Image(*image_skia);
 }
@@ -72,12 +93,11 @@ void ProfileLoadedCallback(NotificationCommon::Operation operation,
   if (!profile)
     return;
 
-  NotificationDisplayService* display_service =
-      NotificationDisplayServiceFactory::GetForProfile(profile);
-
-  static_cast<NativeNotificationDisplayService*>(display_service)
-      ->ProcessNotificationOperation(operation, notification_type, origin,
-                                     notification_id, action_index, reply);
+  auto* display_service = static_cast<NativeNotificationDisplayService*>(
+      NotificationDisplayServiceFactory::GetForProfile(profile));
+  display_service->ProcessNotificationOperation(operation, notification_type,
+                                                origin, notification_id,
+                                                action_index, reply);
 }
 
 void ForwardNotificationOperationOnUiThread(
@@ -89,30 +109,45 @@ void ForwardNotificationOperationOnUiThread(
     const std::string& profile_id,
     bool is_incognito) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  ProfileManager* profile_manager = g_browser_process->profile_manager();
-
-  profile_manager->LoadProfile(
+  g_browser_process->profile_manager()->LoadProfile(
       profile_id, is_incognito,
       base::Bind(&ProfileLoadedCallback, operation, notification_type, origin,
                  notification_id, action_index, base::NullableString16()));
 }
 
-// Writes |data| to a new temporary file and returns its path.
-// Returns base::FilePath() on failure.
-base::FilePath WriteDataToTmpFile(
+class ResourceFile {
+ public:
+  explicit ResourceFile(const base::FilePath& file_path)
+      : file_path_(file_path) {
+    DCHECK(!file_path.empty());
+  }
+  ~ResourceFile() { base::DeleteFile(file_path_, false); }
+
+  const base::FilePath& file_path() const { return file_path_; }
+
+ private:
+  const base::FilePath file_path_;
+
+  DISALLOW_COPY_AND_ASSIGN(ResourceFile);
+};
+
+// Writes |data| to a new temporary file and returns the ResourceFile
+// that holds it.
+std::unique_ptr<ResourceFile> WriteDataToTmpFile(
     const scoped_refptr<base::RefCountedMemory>& data) {
   int data_len = data->size();
   if (data_len == 0)
-    return base::FilePath();
+    return nullptr;
   base::FilePath file_path;
   if (!base::CreateTemporaryFile(&file_path))
-    return base::FilePath();
+    return nullptr;
+
+  auto resource_file = base::MakeUnique<ResourceFile>(file_path);
   if (base::WriteFile(file_path, data->front_as<char>(), data_len) !=
       data_len) {
-    base::DeleteFile(file_path, false);
-    return base::FilePath();
+    resource_file.reset();
   }
-  return file_path;
+  return resource_file;
 }
 
 }  // namespace
@@ -127,14 +162,24 @@ class NotificationPlatformBridgeLinuxImpl
       public content::NotificationObserver,
       public base::RefCountedThreadSafe<NotificationPlatformBridgeLinuxImpl> {
  public:
-  NotificationPlatformBridgeLinuxImpl()
-      : task_runner_(base::CreateSingleThreadTaskRunnerWithTraits(
-            base::TaskTraits().MayBlock().WithPriority(
-                base::TaskPriority::USER_BLOCKING))) {
+  explicit NotificationPlatformBridgeLinuxImpl(scoped_refptr<dbus::Bus> bus)
+      : bus_(bus) {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+    task_runner_ = base::CreateSingleThreadTaskRunnerWithTraits(
+        {base::MayBlock(), base::TaskPriority::USER_BLOCKING});
     registrar_.Add(this, chrome::NOTIFICATION_APP_TERMINATING,
                    content::NotificationService::AllSources());
-    PostTaskToTaskRunnerThread(
-        base::BindOnce(&NotificationPlatformBridgeLinuxImpl::Init, this));
+  }
+
+  // InitOnTaskRunner() cannot be posted from within the constructor
+  // because of a race condition.  The reference count for |this|
+  // starts out as 0.  Posting the Init task would increment the count
+  // to 1.  If the task finishes before the constructor returns, the
+  // count will go to 0 and the object would be prematurely
+  // destructed.
+  void Init() {
+    PostTaskToTaskRunnerThread(base::BindOnce(
+        &NotificationPlatformBridgeLinuxImpl::InitOnTaskRunner, this));
   }
 
   void Display(NotificationCommon::Type notification_type,
@@ -188,15 +233,14 @@ class NotificationPlatformBridgeLinuxImpl
     }
   }
 
+  void CleanUp() {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+    PostTaskToTaskRunnerThread(base::BindOnce(
+        &NotificationPlatformBridgeLinuxImpl::CleanUpOnTaskRunner, this));
+  }
+
  private:
   friend class base::RefCountedThreadSafe<NotificationPlatformBridgeLinuxImpl>;
-
-  struct ResourceFile {
-    explicit ResourceFile(const base::FilePath& file_path)
-        : file_path(file_path) {}
-    ~ResourceFile() { base::DeleteFile(file_path, false); }
-    const base::FilePath file_path;
-  };
 
   struct NotificationData {
     NotificationData(NotificationCommon::Type notification_type,
@@ -239,6 +283,7 @@ class NotificationPlatformBridgeLinuxImpl
 
   ~NotificationPlatformBridgeLinuxImpl() override {
     DCHECK(!bus_);
+    DCHECK(!notification_proxy_);
     DCHECK(notifications_.empty());
   }
 
@@ -267,26 +312,45 @@ class NotificationPlatformBridgeLinuxImpl
   }
 
   // Sets up the D-Bus connection.
-  void Init() {
+  void InitOnTaskRunner() {
     DCHECK(task_runner_->RunsTasksOnCurrentThread());
-    dbus::Bus::Options bus_options;
-    bus_options.bus_type = dbus::Bus::SESSION;
-    bus_options.connection_type = dbus::Bus::PRIVATE;
-    bus_options.dbus_task_runner = task_runner_;
-    bus_ = make_scoped_refptr(new dbus::Bus(bus_options));
+    // |bus_| may be non-null in unit testing where a fake bus is used.
+    if (!bus_) {
+      dbus::Bus::Options bus_options;
+      bus_options.bus_type = dbus::Bus::SESSION;
+      bus_options.connection_type = dbus::Bus::PRIVATE;
+      bus_options.dbus_task_runner = task_runner_;
+      bus_ = make_scoped_refptr(new dbus::Bus(bus_options));
+    }
 
     notification_proxy_ =
         bus_->GetObjectProxy(kFreedesktopNotificationsName,
                              dbus::ObjectPath(kFreedesktopNotificationsPath));
     if (!notification_proxy_) {
-      OnConnectionInitializationFinishedOnTaskRunner(false);
+      OnConnectionInitializationFinishedOnTaskRunner(
+          ConnectionInitializationStatusCode::
+              NATIVE_NOTIFICATIONS_NOT_SUPPORTED);
       return;
     }
+
+    dbus::MethodCall get_capabilities_call(kFreedesktopNotificationsName,
+                                           "GetCapabilities");
+    std::unique_ptr<dbus::Response> capabilities_response =
+        notification_proxy_->CallMethodAndBlock(
+            &get_capabilities_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT);
+    if (capabilities_response) {
+      dbus::MessageReader reader(capabilities_response.get());
+      std::vector<std::string> capabilities;
+      reader.PopArrayOfStrings(&capabilities);
+      for (const std::string& capability : capabilities)
+        capabilities_.insert(capability);
+    }
+    RecordMetricsForCapabilities();
 
     connected_signals_barrier_ = base::BarrierClosure(
         2, base::Bind(&NotificationPlatformBridgeLinuxImpl::
                           OnConnectionInitializationFinishedOnTaskRunner,
-                      this, true));
+                      this, ConnectionInitializationStatusCode::SUCCESS));
     notification_proxy_->ConnectToSignal(
         kFreedesktopNotificationsName, "ActionInvoked",
         base::Bind(&NotificationPlatformBridgeLinuxImpl::OnActionInvoked, this),
@@ -300,18 +364,10 @@ class NotificationPlatformBridgeLinuxImpl
                    this));
   }
 
-  void CleanUp() {
-    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-    if (cleanup_posted_)
-      return;
-    PostTaskToTaskRunnerThread(base::BindOnce(
-        &NotificationPlatformBridgeLinuxImpl::CleanUpOnTaskRunner, this));
-    cleanup_posted_ = true;
-  }
-
   void CleanUpOnTaskRunner() {
     DCHECK(task_runner_->RunsTasksOnCurrentThread());
-    bus_->ShutdownAndBlock();
+    if (bus_)
+      bus_->ShutdownAndBlock();
     bus_ = nullptr;
     notification_proxy_ = nullptr;
     notifications_.clear();
@@ -399,15 +455,15 @@ class NotificationPlatformBridgeLinuxImpl
     desktop_entry_writer.AppendVariantOfString(desktop_file.value());
     hints_writer.CloseContainer(&desktop_entry_writer);
 
-    base::FilePath icon_file =
+    std::unique_ptr<ResourceFile> icon_file =
         WriteDataToTmpFile(notification->icon().As1xPNGBytes());
-    if (!icon_file.empty()) {
+    if (icon_file) {
       dbus::MessageWriter image_path_writer(nullptr);
       hints_writer.OpenDictEntry(&image_path_writer);
       image_path_writer.AppendString("image-path");
-      image_path_writer.AppendVariantOfString(icon_file.value());
+      image_path_writer.AppendVariantOfString(icon_file->file_path().value());
       hints_writer.CloseContainer(&image_path_writer);
-      data->resource_files.push_back(base::MakeUnique<ResourceFile>(icon_file));
+      data->resource_files.push_back(std::move(icon_file));
     }
 
     writer.CloseContainer(&hints_writer);
@@ -443,6 +499,7 @@ class NotificationPlatformBridgeLinuxImpl
         writer.AppendUint32(data->dbus_id);
         notification_proxy_->CallMethodAndBlock(
             &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT);
+        to_erase.push_back(data);
       }
     }
     for (NotificationData* data : to_erase)
@@ -454,10 +511,13 @@ class NotificationPlatformBridgeLinuxImpl
       bool incognito,
       const GetDisplayedNotificationsCallback& callback) const {
     DCHECK(task_runner_->RunsTasksOnCurrentThread());
-    // TODO(thomasanderson): Implement.
-    PostTaskToUiThread(base::BindOnce(
-        callback, base::Passed(base::MakeUnique<std::set<std::string>>()),
-        false));
+    auto displayed = base::MakeUnique<std::set<std::string>>();
+    for (const auto& pair : notifications_) {
+      NotificationData* data = pair.first;
+      if (data->profile_id == profile_id && data->is_incognito == incognito)
+        displayed->insert(data->notification_id);
+    }
+    PostTaskToUiThread(base::BindOnce(callback, std::move(displayed), true));
   }
 
   NotificationData* FindNotificationData(const std::string& notification_id,
@@ -476,8 +536,9 @@ class NotificationPlatformBridgeLinuxImpl
     return nullptr;
   }
 
-  NotificationData* FindNotificationData(uint32_t dbus_id) {
+  NotificationData* FindNotificationDataWithDBusId(uint32_t dbus_id) {
     DCHECK(task_runner_->RunsTasksOnCurrentThread());
+    DCHECK(dbus_id);
     for (const auto& pair : notifications_) {
       NotificationData* data = pair.first;
       if (data->dbus_id == dbus_id)
@@ -501,13 +562,13 @@ class NotificationPlatformBridgeLinuxImpl
     DCHECK(task_runner_->RunsTasksOnCurrentThread());
     dbus::MessageReader reader(signal);
     uint32_t dbus_id;
-    if (!reader.PopUint32(&dbus_id))
+    if (!reader.PopUint32(&dbus_id) || !dbus_id)
       return;
     std::string action;
     if (!reader.PopString(&action))
       return;
 
-    NotificationData* data = FindNotificationData(dbus_id);
+    NotificationData* data = FindNotificationDataWithDBusId(dbus_id);
     if (!data)
       return;
 
@@ -532,10 +593,10 @@ class NotificationPlatformBridgeLinuxImpl
     DCHECK(task_runner_->RunsTasksOnCurrentThread());
     dbus::MessageReader reader(signal);
     uint32_t dbus_id;
-    if (!reader.PopUint32(&dbus_id))
+    if (!reader.PopUint32(&dbus_id) || !dbus_id)
       return;
 
-    NotificationData* data = FindNotificationData(dbus_id);
+    NotificationData* data = FindNotificationDataWithDBusId(dbus_id);
     if (!data)
       return;
 
@@ -555,12 +616,17 @@ class NotificationPlatformBridgeLinuxImpl
       CleanUp();
   }
 
-  void OnConnectionInitializationFinishedOnTaskRunner(bool success) {
+  void OnConnectionInitializationFinishedOnTaskRunner(
+      ConnectionInitializationStatusCode status) {
     DCHECK(task_runner_->RunsTasksOnCurrentThread());
-    PostTaskToUiThread(
-        base::BindOnce(&NotificationPlatformBridgeLinuxImpl::
-                           OnConnectionInitializationFinishedOnUiThread,
-                       this, success));
+    UMA_HISTOGRAM_ENUMERATION(
+        "Notifications.Linux.BridgeInitializationStatus",
+        static_cast<int>(status),
+        static_cast<int>(ConnectionInitializationStatusCode::NUM_ITEMS));
+    PostTaskToUiThread(base::BindOnce(
+        &NotificationPlatformBridgeLinuxImpl::
+            OnConnectionInitializationFinishedOnUiThread,
+        this, status == ConnectionInitializationStatusCode::SUCCESS));
   }
 
   void OnSignalConnected(const std::string& interface_name,
@@ -568,10 +634,37 @@ class NotificationPlatformBridgeLinuxImpl
                          bool success) {
     DCHECK(task_runner_->RunsTasksOnCurrentThread());
     if (!success) {
-      OnConnectionInitializationFinishedOnTaskRunner(false);
+      OnConnectionInitializationFinishedOnTaskRunner(
+          ConnectionInitializationStatusCode::COULD_NOT_CONNECT_TO_SIGNALS);
       return;
     }
     connected_signals_barrier_.Run();
+  }
+
+  void RecordMetricsForCapabilities() {
+    // Histogram macros must be called with the same name for each
+    // callsite, so we can't roll the below into a nice loop.
+    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.ActionIcons",
+                          capabilities_.count("action-icons"));
+    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.Actions",
+                          capabilities_.count("actions"));
+    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.Body",
+                          capabilities_.count("body"));
+    UMA_HISTOGRAM_BOOLEAN(
+        "Notifications.Freedesktop.Capabilities.BodyHyperlinks",
+        capabilities_.count("body-hyperlinks"));
+    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.BodyImages",
+                          capabilities_.count("body-images"));
+    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.BodyMarkup",
+                          capabilities_.count("body-markup"));
+    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.IconMulti",
+                          capabilities_.count("icon-multi"));
+    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.IconStatic",
+                          capabilities_.count("icon-static"));
+    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.Persistence",
+                          capabilities_.count("persistence"));
+    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.Sound",
+                          capabilities_.count("sound"));
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -586,14 +679,14 @@ class NotificationPlatformBridgeLinuxImpl
   base::Optional<bool> connected_;
   std::vector<NotificationBridgeReadyCallback> on_connected_callbacks_;
 
-  bool cleanup_posted_ = false;
-
   //////////////////////////////////////////////////////////////////////////////
   // Members used only on the task runner thread.
 
   scoped_refptr<dbus::Bus> bus_;
 
   dbus::ObjectProxy* notification_proxy_ = nullptr;
+
+  std::unordered_set<std::string> capabilities_;
 
   base::Closure connected_signals_barrier_;
 
@@ -609,7 +702,13 @@ class NotificationPlatformBridgeLinuxImpl
 };
 
 NotificationPlatformBridgeLinux::NotificationPlatformBridgeLinux()
-    : impl_(new NotificationPlatformBridgeLinuxImpl()) {}
+    : NotificationPlatformBridgeLinux(nullptr) {}
+
+NotificationPlatformBridgeLinux::NotificationPlatformBridgeLinux(
+    scoped_refptr<dbus::Bus> bus)
+    : impl_(new NotificationPlatformBridgeLinuxImpl(bus)) {
+  impl_->Init();
+}
 
 NotificationPlatformBridgeLinux::~NotificationPlatformBridgeLinux() = default;
 
@@ -639,4 +738,8 @@ void NotificationPlatformBridgeLinux::GetDisplayed(
 void NotificationPlatformBridgeLinux::SetReadyCallback(
     NotificationBridgeReadyCallback callback) {
   impl_->SetReadyCallback(std::move(callback));
+}
+
+void NotificationPlatformBridgeLinux::CleanUp() {
+  impl_->CleanUp();
 }

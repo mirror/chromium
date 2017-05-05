@@ -696,6 +696,7 @@
     },
     {
       name: "OverlayScrollbars",
+      settable_from_internals: true,
     },
     {
       name: "PagePopup",
@@ -854,6 +855,10 @@
     },
     {
       name: "Sensor",
+      status: "experimental",
+    },
+    {
+      name: "ServerTiming",
       status: "experimental",
     },
     {

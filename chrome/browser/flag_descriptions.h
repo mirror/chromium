@@ -1060,6 +1060,18 @@ extern const char kBootAnimation[];
 // Description for the flag for wallpaper boot animation (except for OOBE).
 extern const char kBootAnimationDescription[];
 
+// Name for the flag for enabling Instant Tethering.
+extern const char kTetherName[];
+
+// Description for the flag for enabling Instant Tethering.
+extern const char kTetherDescription[];
+
+// Name for the flag for CrOS Component.
+extern const char kCrOSComponentName[];
+
+// Description for the flag for CrOS Component.
+extern const char kCrOSComponentDescription[];
+
 #endif  // defined(OS_CHROMEOS)
 
 // Name of the flag for accelerated video decode where available.
@@ -1483,6 +1495,12 @@ extern const char kPullToRefreshEffectName[];
 // Description of the flag for the pull-to-refresh effect.
 extern const char kPullToRefreshEffectDescription[];
 
+// Name of the flag for the translate compact infobar.
+extern const char kTranslateCompactUIName[];
+
+// Description of the flag for translate compact infobar.
+extern const char kTranslateCompactUIDescription[];
+
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_MACOSX)
@@ -1760,11 +1778,17 @@ extern const char kForceUiDirectionName[];
 // Description for the flag to force a specific UI direction.
 extern const char kForceUiDirectionDescription[];
 
-// Name for the option to force left-to-right UI direction mode.
-extern const char kForceUiDirectionLtr[];
+// Name for the flag to force a specific text rendering direction.
+extern const char kForceTextDirectionName[];
 
-// Name for the option to force right-to-left UI direction mode.
-extern const char kForceUiDirectionRtl[];
+// Description for the flag to force a specific text rendering direction.
+extern const char kForceTextDirectionDescription[];
+
+// Name for the option to force left-to-right UI or text direction mode.
+extern const char kForceDirectionLtr[];
+
+// Name for the option to force right-to-left UI or text direction mode.
+extern const char kForceDirectionRtl[];
 
 #if defined(OS_WIN) || defined(OS_LINUX)
 
@@ -2182,6 +2206,12 @@ extern const char kChromeHomeName[];
 
 // Description of the Chrome Home experiment in about:flags.
 extern const char kChromeHomeDescription[];
+
+// The name of the Chrome Home expand button experiment in about:flags.
+extern const char kChromeHomeExpandButtonName[];
+
+// Description of the Chrome Home expand button experiment in about:flags.
+extern const char kChromeHomeExpandButtonDescription[];
 
 #endif  // defined(OS_ANDROID)
 
@@ -3328,6 +3358,23 @@ extern const char kOmniboxDisplayTitleForCurrentUrlName[];
 // for current URL.
 extern const char kOmniboxDisplayTitleForCurrentUrlDescription[];
 
+// Name of the flag that forces Network Quality Estimator (NQE) to always
+// return the specified effective connection type.
+extern const char kForceEffectiveConnectionTypeName[];
+
+// Description of the flag that forces Network Quality Estimator (NQE) to always
+// return the specified effective connection type.
+extern const char kForceEffectiveConnectionTypeDescription[];
+
+// Description of the various effective connection type choices that can be
+// set using kForceEffectiveConnectionTypeName flag.
+extern const char kEffectiveConnectionTypeUnknownDescription[];
+extern const char kEffectiveConnectionTypeOfflineDescription[];
+extern const char kEffectiveConnectionTypeSlow2GDescription[];
+extern const char kEffectiveConnectionType2GDescription[];
+extern const char kEffectiveConnectionType3GDescription[];
+extern const char kEffectiveConnectionType4GDescription[];
+
 // Name & description for the heap profiling flag.
 extern const char kEnableHeapProfilingName[];
 extern const char kEnableHeapProfilingDescription[];
@@ -3336,6 +3383,11 @@ extern const char kEnableHeapProfilingDescription[];
 extern const char kEnableHeapProfilingModePseudo[];
 extern const char kEnableHeapProfilingModeNative[];
 extern const char kEnableHeapProfilingTaskProfiler[];
+
+// Name and description of the flag allowing the usage of a small set of
+// server-side suggestions in NTP tiles.
+extern const char kUseSuggestionsEvenIfFewFeatureName[];
+extern const char kUseSuggestionsEvenIfFewFeatureDescription[];
 
 }  // namespace flag_descriptions
 

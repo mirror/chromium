@@ -105,6 +105,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/ssl/client_cert_store.h"
 #include "net/ssl/ssl_cert_request_info.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_job_factory.h"
@@ -126,6 +127,35 @@ using SyncLoadResultCallback =
     content::ResourceDispatcherHostImpl::SyncLoadResultCallback;
 
 // ----------------------------------------------------------------------------
+
+namespace {
+
+constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("resource_dispather_host", R"(
+        semantics {
+          sender: "Resource Dispatcher Host"
+          description:
+            "Navigation-initiated request or renderer process initiated "
+            "request, which includes all resources for normal page loads, "
+            "chrome URLs, resources for installed extensions, as well as "
+            "downloads."
+          trigger:
+            "Navigating to a URL or downloading a file.  A webpage, "
+            "ServiceWorker, chrome:// page, or extension may also initiate "
+            "requests in the background."
+          data: "Anything the initiator wants to send."
+          destination: OTHER
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user or per-app cookie store"
+          setting: "These requests cannot be disabled."
+          policy_exception_justification:
+            "Not implemented. Without these requests, Chrome will be unable to "
+            "load any webpage."
+        })");
+
+}  // namespace
 
 namespace content {
 
@@ -524,8 +554,8 @@ ResourceDispatcherHostImpl::MaybeInterceptAsStream(
   StreamContext* stream_context =
       GetStreamContextForResourceContext(info->GetContext());
 
-  std::unique_ptr<StreamResourceHandler> handler(
-      new StreamResourceHandler(request, stream_context->registry(), origin));
+  std::unique_ptr<StreamResourceHandler> handler(new StreamResourceHandler(
+      request, stream_context->registry(), origin, false));
 
   info->set_is_stream(true);
   std::unique_ptr<StreamInfo> stream_info(new StreamInfo);
@@ -1207,7 +1237,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   std::unique_ptr<net::URLRequest> new_request = request_context->CreateRequest(
       is_navigation_stream_request ? request_data.resource_body_stream_url
                                    : request_data.url,
-      request_data.priority, nullptr);
+      request_data.priority, nullptr, kTrafficAnnotation);
 
   // Log that this request is a service worker navigation preload request here,
   // since navigation preload machinery has no access to netlog.
@@ -1239,7 +1269,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
 
   if (request_data.originated_from_service_worker) {
     new_request->SetUserData(URLRequestServiceWorkerData::kUserDataKey,
-                             new URLRequestServiceWorkerData());
+                             base::MakeUnique<URLRequestServiceWorkerData>());
   }
 
   // If the request is a MAIN_FRAME request, the first-party URL gets updated on
@@ -1477,7 +1507,7 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
                              request_data.fetch_request_context_type,
                              request_data.fetch_mixed_content_context_type,
                              requester_info->appcache_service(), child_id,
-                             route_id, std::move(handler));
+                             route_id, std::move(handler), nullptr, nullptr);
 }
 
 std::unique_ptr<ResourceHandler>
@@ -1490,7 +1520,9 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
     AppCacheService* appcache_service,
     int child_id,
     int route_id,
-    std::unique_ptr<ResourceHandler> handler) {
+    std::unique_ptr<ResourceHandler> handler,
+    NavigationURLLoaderImplCore* navigation_loader_core,
+    std::unique_ptr<StreamHandle> stream_handle) {
   // The InterceptingResourceHandler will replace its next handler with an
   // appropriate one based on the MIME type of the response if needed. It
   // should be placed at the end of the chain, just before |handler|.
@@ -1502,7 +1534,7 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
 
   // Add a NavigationResourceThrottle for navigations.
   // PlzNavigate: the throttle is unnecessary as communication with the UI
-  // thread is handled by the NavigationURLloader.
+  // thread is handled by the NavigationResourceHandler below.
   if (!IsBrowserSideNavigationEnabled() && IsResourceTypeFrame(resource_type)) {
     throttles.push_back(base::MakeUnique<NavigationResourceThrottle>(
         request, delegate_, fetch_request_context_type,
@@ -1545,6 +1577,19 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
   // Add the post mime sniffing throttles.
   handler.reset(new ThrottlingResourceHandler(
       std::move(handler), request, std::move(post_mime_sniffing_throttles)));
+
+  if (IsBrowserSideNavigationEnabled() && IsResourceTypeFrame(resource_type)) {
+    DCHECK(navigation_loader_core);
+    DCHECK(stream_handle);
+    // PlzNavigate
+    // Add a NavigationResourceHandler that will control the flow of navigation.
+    handler.reset(new NavigationResourceHandler(
+        request, std::move(handler), navigation_loader_core, delegate(),
+        std::move(stream_handle)));
+  } else {
+    DCHECK(!navigation_loader_core);
+    DCHECK(!stream_handle);
+  }
 
   PluginService* plugin_service = nullptr;
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -1972,7 +2017,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
 
   std::unique_ptr<net::URLRequest> new_request;
   new_request = request_context->CreateRequest(
-      info.common_params.url, net::HIGHEST, nullptr);
+      info.common_params.url, net::HIGHEST, nullptr, kTrafficAnnotation);
 
   new_request->set_method(info.common_params.method);
   new_request->set_first_party_for_cookies(
@@ -2073,8 +2118,19 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
         new_request.get(), appcache_handle_core->host(), resource_type, false);
   }
 
+  StreamContext* stream_context =
+      GetStreamContextForResourceContext(resource_context);
+  // Note: the stream should be created with immediate mode set to true to
+  // ensure that data read will be flushed to the reader as soon as it's
+  // available. Otherwise, we risk delaying transmitting the body of the
+  // resource to the renderer, which will delay parsing accordingly.
   std::unique_ptr<ResourceHandler> handler(
-      new NavigationResourceHandler(new_request.get(), loader, delegate()));
+      new StreamResourceHandler(new_request.get(), stream_context->registry(),
+                                new_request->url().GetOrigin(), true));
+  std::unique_ptr<StreamHandle> stream_handle =
+      static_cast<StreamResourceHandler*>(handler.get())
+          ->stream()
+          ->CreateHandle();
 
   // TODO(davidben): Fix the dependency on child_id/route_id. Those are used
   // by the ResourceScheduler. currently it's a no-op.
@@ -2086,7 +2142,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
                            : nullptr,
       -1,  // child_id
       -1,  // route_id
-      std::move(handler));
+      std::move(handler), loader, std::move(stream_handle));
 
   BeginRequestInternal(std::move(new_request), std::move(handler));
 }

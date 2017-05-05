@@ -30,6 +30,9 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
+import org.chromium.chrome.browser.locale.DefaultSearchEngineDialogHelperUtils;
+import org.chromium.chrome.browser.locale.LocaleManager;
+import org.chromium.chrome.browser.locale.LocaleManager.SearchEnginePromoType;
 import org.chromium.chrome.browser.searchwidget.SearchActivity;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.MultiActivityTestRule;
@@ -231,7 +234,27 @@ public class FirstRunIntegrationTest {
 
     @Test
     @MediumTest
-    public void testClickThroughFirstRun() throws Exception {
+    public void testDefaultSearchEngine_DontShow() throws Exception {
+        runSearchEnginePromptTest(LocaleManager.SEARCH_ENGINE_PROMO_DONT_SHOW);
+    }
+
+    @Test
+    @MediumTest
+    public void testDefaultSearchEngine_ShowExisting() throws Exception {
+        runSearchEnginePromptTest(LocaleManager.SEARCH_ENGINE_PROMO_SHOW_EXISTING);
+    }
+
+    private void runSearchEnginePromptTest(@SearchEnginePromoType final int searchPromoType)
+            throws Exception {
+        // Force the LocaleManager into a specific state.
+        LocaleManager mockManager = new LocaleManager() {
+            @Override
+            public int getSearchEnginePromoShowType() {
+                return searchPromoType;
+            }
+        };
+        LocaleManager.setInstanceForTest(mockManager);
+
         final ActivityMonitor freMonitor =
                 new ActivityMonitor(FirstRunActivity.class.getName(), null, false);
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
@@ -260,16 +283,31 @@ public class FirstRunIntegrationTest {
         // Accept the ToS.
         if (freProperties.getBoolean(FirstRunActivity.SHOW_WELCOME_PAGE)) {
             clickButton(mActivity, R.id.terms_accept, "Failed to accept ToS");
-            mTestObserver.acceptTermsOfServiceCallback.waitForCallback(
-                    "Failed to accept the ToS", 0);
             mTestObserver.jumpToPageCallback.waitForCallback(
                     "Failed to try moving to the next screen", 0);
+            mTestObserver.acceptTermsOfServiceCallback.waitForCallback(
+                    "Failed to accept the ToS", 0);
         }
 
         // Acknowledge that Data Saver will be enabled.
         if (freProperties.getBoolean(FirstRunActivity.SHOW_DATA_REDUCTION_PAGE)) {
             int jumpCallCount = mTestObserver.jumpToPageCallback.getCallCount();
             clickButton(mActivity, R.id.next_button, "Failed to skip data saver");
+            mTestObserver.jumpToPageCallback.waitForCallback(
+                    "Failed to try moving to next screen", jumpCallCount);
+        }
+
+        // Select a default search engine.
+        if (searchPromoType == LocaleManager.SEARCH_ENGINE_PROMO_DONT_SHOW) {
+            Assert.assertFalse("Search engine page was shown.",
+                    freProperties.getBoolean(FirstRunActivity.SHOW_SEARCH_ENGINE_PAGE));
+        } else {
+            Assert.assertTrue("Search engine page wasn't shown.",
+                    freProperties.getBoolean(FirstRunActivity.SHOW_SEARCH_ENGINE_PAGE));
+            int jumpCallCount = mTestObserver.jumpToPageCallback.getCallCount();
+            DefaultSearchEngineDialogHelperUtils.clickOnFirstEngine(
+                    mActivity.findViewById(android.R.id.content));
+
             mTestObserver.jumpToPageCallback.waitForCallback(
                     "Failed to try moving to next screen", jumpCallCount);
         }

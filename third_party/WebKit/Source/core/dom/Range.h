@@ -27,9 +27,9 @@
 #define Range_h
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 #include "core/dom/RangeBoundaryPoint.h"
+#include "platform/bindings/ScriptWrappable.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/heap/Handle.h"
@@ -143,7 +143,7 @@ class CORE_EXPORT Range final : public GarbageCollected<Range>,
   IntRect BoundingBox() const;
 
   // Transform-friendly
-  void TextQuads(Vector<FloatQuad>&, bool use_selection_height = false) const;
+  void TextQuads(Vector<FloatQuad>&) const;
   void GetBorderAndTextQuads(Vector<FloatQuad>&) const;
   FloatRect BoundingRect() const;
 

@@ -1514,6 +1514,7 @@ void LocalDOMWindow::DispatchLoadEvent() {
     DocumentLoadTiming& timing = document_loader->GetTiming();
     timing.MarkLoadEventStart();
     DispatchEvent(load_event, document());
+    SetHasLoadEventFired();
     timing.MarkLoadEventEnd();
     DCHECK(document_loader->Fetcher());
     // If fetcher->countPreloads() is not empty here, it's full of link
@@ -1609,7 +1610,8 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
                                 const AtomicString& frame_name,
                                 const String& window_features_string,
                                 LocalDOMWindow* calling_window,
-                                LocalDOMWindow* entered_window) {
+                                LocalDOMWindow* entered_window,
+                                ExceptionState& exception_state) {
   if (!IsCurrentlyDisplayedInFrame())
     return nullptr;
   if (!calling_window->GetFrame())
@@ -1667,7 +1669,7 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
   WindowFeatures features(window_features_string);
   DOMWindow* new_window =
       CreateWindow(url_string, frame_name, features, *calling_window,
-                   *first_frame, *GetFrame());
+                   *first_frame, *GetFrame(), exception_state);
   return features.noopener ? nullptr : new_window;
 }
 

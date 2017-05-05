@@ -514,18 +514,8 @@ void QuicHttpStream::OnError(int error) {
     DoCallback(GetResponseStatus());
 }
 
-bool QuicHttpStream::HasSendHeadersComplete() {
-  return next_state_ > STATE_SEND_HEADERS_COMPLETE;
-}
-
 void QuicHttpStream::OnCryptoHandshakeConfirmed() {
   was_handshake_confirmed_ = true;
-  if (next_state_ == STATE_WAIT_FOR_CONFIRMATION_COMPLETE) {
-    // Post a task to avoid reentrant calls into the session.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&QuicHttpStream::OnIOComplete,
-                              weak_factory_.GetWeakPtr(), OK));
-  }
 }
 
 void QuicHttpStream::OnSuccessfulVersionNegotiation(
@@ -586,13 +576,6 @@ int QuicHttpStream::DoLoop(int rv) {
         CHECK_EQ(OK, rv);
         rv = DoSetRequestPriority();
         break;
-      case STATE_WAIT_FOR_CONFIRMATION:
-        CHECK_EQ(OK, rv);
-        rv = DoWaitForConfirmation();
-        break;
-      case STATE_WAIT_FOR_CONFIRMATION_COMPLETE:
-        rv = DoWaitForConfirmationComplete(rv);
-        break;
       case STATE_SEND_HEADERS:
         CHECK_EQ(OK, rv);
         rv = DoSendHeaders();
@@ -629,7 +612,8 @@ int QuicHttpStream::DoLoop(int rv) {
 
 int QuicHttpStream::DoRequestStream() {
   next_state_ = STATE_REQUEST_STREAM_COMPLETE;
-  stream_request_ = session_->CreateStreamRequest();
+  stream_request_ =
+      session_->CreateStreamRequest(request_info_->method == "POST");
   return stream_request_->StartRequest(
       base::Bind(&QuicHttpStream::OnIOComplete, weak_factory_.GetWeakPtr()));
 }
@@ -665,23 +649,6 @@ int QuicHttpStream::DoSetRequestPriority() {
   DCHECK(response_info_);
   SpdyPriority priority = ConvertRequestPriorityToQuicPriority(priority_);
   stream_->SetPriority(priority);
-  next_state_ = STATE_WAIT_FOR_CONFIRMATION;
-  return OK;
-}
-
-int QuicHttpStream::DoWaitForConfirmation() {
-  next_state_ = STATE_WAIT_FOR_CONFIRMATION_COMPLETE;
-  if (!session_->IsCryptoHandshakeConfirmed() &&
-      request_info_->method == "POST") {
-    return ERR_IO_PENDING;
-  }
-  return OK;
-}
-
-int QuicHttpStream::DoWaitForConfirmationComplete(int rv) {
-  if (rv < 0)
-    return rv;
-
   next_state_ = STATE_SEND_HEADERS;
   return OK;
 }

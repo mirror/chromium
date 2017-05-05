@@ -89,9 +89,20 @@ ScriptPromise PaymentInstruments::get(ScriptState* script_state,
   return promise;
 }
 
-ScriptPromise PaymentInstruments::keys() {
-  NOTIMPLEMENTED();
-  return ScriptPromise();
+ScriptPromise PaymentInstruments::keys(ScriptState* script_state) {
+  if (!manager_.is_bound()) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kInvalidStateError, kPaymentManagerUnavailable));
+  }
+
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  manager_->KeysOfPaymentInstruments(ConvertToBaseCallback(
+      WTF::Bind(&PaymentInstruments::onKeysOfPaymentInstruments,
+                WrapPersistent(this), WrapPersistent(resolver))));
+  return promise;
 }
 
 ScriptPromise PaymentInstruments::has(ScriptState* script_state,
@@ -154,6 +165,22 @@ ScriptPromise PaymentInstruments::set(ScriptState* script_state,
   return promise;
 }
 
+ScriptPromise PaymentInstruments::clear(ScriptState* script_state) {
+  if (!manager_.is_bound()) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kInvalidStateError, kPaymentManagerUnavailable));
+  }
+
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  manager_->ClearPaymentInstruments(ConvertToBaseCallback(
+      WTF::Bind(&PaymentInstruments::onClearPaymentInstruments,
+                WrapPersistent(this), WrapPersistent(resolver))));
+  return promise;
+}
+
 DEFINE_TRACE(PaymentInstruments) {}
 
 void PaymentInstruments::onDeletePaymentInstrument(
@@ -197,6 +224,16 @@ void PaymentInstruments::onGetPaymentInstrument(
   resolver->Resolve(instrument);
 }
 
+void PaymentInstruments::onKeysOfPaymentInstruments(
+    ScriptPromiseResolver* resolver,
+    const Vector<String>& keys,
+    payments::mojom::blink::PaymentHandlerStatus status) {
+  DCHECK(resolver);
+  if (rejectError(resolver, status))
+    return;
+  resolver->Resolve(keys);
+}
+
 void PaymentInstruments::onHasPaymentInstrument(
     ScriptPromiseResolver* resolver,
     payments::mojom::blink::PaymentHandlerStatus status) {
@@ -206,6 +243,15 @@ void PaymentInstruments::onHasPaymentInstrument(
 }
 
 void PaymentInstruments::onSetPaymentInstrument(
+    ScriptPromiseResolver* resolver,
+    payments::mojom::blink::PaymentHandlerStatus status) {
+  DCHECK(resolver);
+  if (rejectError(resolver, status))
+    return;
+  resolver->Resolve();
+}
+
+void PaymentInstruments::onClearPaymentInstruments(
     ScriptPromiseResolver* resolver,
     payments::mojom::blink::PaymentHandlerStatus status) {
   DCHECK(resolver);

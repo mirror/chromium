@@ -41,6 +41,7 @@
 #include "net/quic/test_tools/mock_clock.h"
 #include "net/quic/test_tools/mock_random.h"
 #include "net/quic/test_tools/quic_connection_peer.h"
+#include "net/quic/test_tools/quic_spdy_session_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/socket/socket_test_util.h"
 #include "net/test/gtest_util.h"
@@ -356,7 +357,7 @@ class BidirectionalStreamQuicImplTest
       : crypto_config_(crypto_test_utils::ProofVerifierForTesting()),
         read_buffer_(new IOBufferWithSize(4096)),
         connection_id_(2),
-        stream_id_(kClientDataStreamId1),
+        stream_id_(GetNthClientInitiatedStreamId(0)),
         client_maker_(GetParam(),
                       connection_id_,
                       &clock_,
@@ -680,6 +681,10 @@ class BidirectionalStreamQuicImplTest
 
   QuicChromiumClientSession* session() const { return session_.get(); }
 
+  QuicStreamId GetNthClientInitiatedStreamId(int n) {
+    return test::GetNthClientInitiatedStreamId(GetParam(), n);
+  }
+
  protected:
   BoundTestNetLog net_log_;
   scoped_refptr<TestTaskRunner> runner_;
@@ -717,7 +722,7 @@ TEST_P(BidirectionalStreamQuicImplTest, GetRequest) {
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, kFin, DEFAULT_PRIORITY,
+      1, GetNthClientInitiatedStreamId(0), kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
   AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
   AddWrite(ConstructClientAckPacket(3, 3, 1, 1));
@@ -814,11 +819,13 @@ TEST_P(BidirectionalStreamQuicImplTest, LoadTimingTwoRequests) {
   SetRequest("GET", "/", DEFAULT_PRIORITY);
   QuicStreamOffset offset = 0;
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, kFin, DEFAULT_PRIORITY, nullptr, &offset));
+      1, GetNthClientInitiatedStreamId(0), kFin, DEFAULT_PRIORITY, nullptr,
+      &offset));
   // SetRequest() again for second request as |request_headers_| was moved.
   SetRequest("GET", "/", DEFAULT_PRIORITY);
   AddWrite(ConstructRequestHeadersPacketInner(
-      2, kClientDataStreamId2, kFin, DEFAULT_PRIORITY, nullptr, &offset));
+      2, GetNthClientInitiatedStreamId(1), kFin, DEFAULT_PRIORITY, nullptr,
+      &offset));
   AddWrite(ConstructInitialSettingsPacket(3, &offset));
   AddWrite(ConstructClientAckPacket(4, 3, 1, 1));
   Initialize();
@@ -851,12 +858,12 @@ TEST_P(BidirectionalStreamQuicImplTest, LoadTimingTwoRequests) {
   // Server sends the response headers.
   offset = 0;
   ProcessPacket(ConstructResponseHeadersPacketInner(
-      2, kClientDataStreamId1, kFin, ConstructResponseHeaders("200"), nullptr,
-      &offset));
+      2, GetNthClientInitiatedStreamId(0), kFin,
+      ConstructResponseHeaders("200"), nullptr, &offset));
 
   ProcessPacket(ConstructResponseHeadersPacketInner(
-      3, kClientDataStreamId2, kFin, ConstructResponseHeaders("200"), nullptr,
-      &offset));
+      3, GetNthClientInitiatedStreamId(1), kFin,
+      ConstructResponseHeaders("200"), nullptr, &offset));
 
   delegate->WaitUntilNextCallback();   // OnHeadersReceived
   delegate2->WaitUntilNextCallback();  // OnHeadersReceived
@@ -886,7 +893,7 @@ TEST_P(BidirectionalStreamQuicImplTest, CoalesceDataBuffersNotHeadersFrame) {
   const char kBody2[] = "data keep coming";
   std::vector<std::string> two_writes = {kBody1, kBody2};
   AddWrite(ConstructRequestHeadersPacketInner(
-      2, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
+      2, GetNthClientInitiatedStreamId(0), !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
   AddWrite(ConstructClientMultipleDataFramesPacket(3, kIncludeVersion, !kFin, 0,
                                                    {kBody1, kBody2}));
@@ -915,6 +922,7 @@ TEST_P(BidirectionalStreamQuicImplTest, CoalesceDataBuffersNotHeadersFrame) {
   EXPECT_FALSE(delegate->is_ready());
   ConfirmHandshake();
   delegate->WaitUntilNextCallback();  // OnStreamReady
+  EXPECT_TRUE(delegate->is_ready());
 
   // Sends request headers separately, which causes them to be sent in a
   // separate packet.
@@ -1191,10 +1199,10 @@ TEST_P(BidirectionalStreamQuicImplTest, PostRequest) {
   SetRequest("POST", "/", DEFAULT_PRIORITY);
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
+  AddWrite(ConstructInitialSettingsPacket(1, &header_stream_offset));
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
+      2, GetNthClientInitiatedStreamId(0), !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
   AddWrite(ConstructDataPacket(3, kIncludeVersion, kFin, 0, kUploadData,
                                &client_maker_));
   AddWrite(ConstructClientAckPacket(4, 3, 1, 1));
@@ -1349,11 +1357,10 @@ TEST_P(BidirectionalStreamQuicImplTest, InterleaveReadDataAndSendData) {
   SetRequest("POST", "/", DEFAULT_PRIORITY);
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
+  AddWrite(ConstructInitialSettingsPacket(1, &header_stream_offset));
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
+      2, GetNthClientInitiatedStreamId(0), !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
   AddWrite(ConstructAckAndDataPacket(3, !kIncludeVersion, 2, 1, 1, !kFin, 0,
                                      kUploadData, &client_maker_));
   AddWrite(ConstructAckAndDataPacket(4, !kIncludeVersion, 3, 3, 3, kFin,
@@ -1439,7 +1446,7 @@ TEST_P(BidirectionalStreamQuicImplTest, ServerSendsRstAfterHeaders) {
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, kFin, DEFAULT_PRIORITY,
+      1, GetNthClientInitiatedStreamId(0), kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
   AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
   Initialize();
@@ -1480,7 +1487,7 @@ TEST_P(BidirectionalStreamQuicImplTest, ServerSendsRstAfterReadData) {
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, kFin, DEFAULT_PRIORITY,
+      1, GetNthClientInitiatedStreamId(0), kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
   AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
   // Why does QUIC ack Rst? Is this expected?
@@ -1540,10 +1547,10 @@ TEST_P(BidirectionalStreamQuicImplTest, SessionClosedBeforeReadData) {
   SetRequest("POST", "/", DEFAULT_PRIORITY);
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
+  AddWrite(ConstructInitialSettingsPacket(1, &header_stream_offset));
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
+      2, GetNthClientInitiatedStreamId(0), !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
   Initialize();
 
   BidirectionalStreamRequestInfo request;
@@ -1600,10 +1607,10 @@ TEST_P(BidirectionalStreamQuicImplTest, DeleteStreamAfterReadData) {
   SetRequest("POST", "/", DEFAULT_PRIORITY);
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
+  AddWrite(ConstructInitialSettingsPacket(1, &header_stream_offset));
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
+      2, GetNthClientInitiatedStreamId(0), !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
   AddWrite(ConstructClientAckAndRstStreamPacket(3, 2, 1, 1));
 
   Initialize();
@@ -1654,10 +1661,10 @@ TEST_P(BidirectionalStreamQuicImplTest, DeleteStreamDuringOnHeadersReceived) {
   SetRequest("POST", "/", DEFAULT_PRIORITY);
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
+  AddWrite(ConstructInitialSettingsPacket(1, &header_stream_offset));
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
+      2, GetNthClientInitiatedStreamId(0), !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
   AddWrite(ConstructClientAckAndRstStreamPacket(3, 2, 1, 1));
 
   Initialize();
@@ -1700,10 +1707,10 @@ TEST_P(BidirectionalStreamQuicImplTest, DeleteStreamDuringOnDataRead) {
   SetRequest("POST", "/", DEFAULT_PRIORITY);
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
+  AddWrite(ConstructInitialSettingsPacket(1, &header_stream_offset));
   AddWrite(ConstructRequestHeadersPacketInner(
-      1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
+      2, GetNthClientInitiatedStreamId(0), !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
   AddWrite(ConstructClientAckPacket(3, 3, 1, 1));
   AddWrite(ConstructClientRstStreamPacket(4));
 

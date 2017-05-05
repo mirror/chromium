@@ -12,6 +12,7 @@
 #include <string>
 
 #include "base/compiler_specific.h"
+#include "base/debug/stack_trace.h"
 #include "base/files/file_path.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
@@ -20,6 +21,7 @@
 #include "net/base/chunked_upload_data_stream.h"
 #include "net/base/host_port_pair.h"
 #include "net/http/http_request_headers.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context_getter_observer.h"
@@ -47,7 +49,8 @@ class URLFetcherCore : public base::RefCountedThreadSafe<URLFetcherCore>,
   URLFetcherCore(URLFetcher* fetcher,
                  const GURL& original_url,
                  URLFetcher::RequestType request_type,
-                 URLFetcherDelegate* d);
+                 URLFetcherDelegate* d,
+                 net::NetworkTrafficAnnotationTag traffic_annotation);
 
   // Starts the load. It's important that this not happen in the constructor
   // because it causes the IO thread to begin AddRef()ing and Release()ing
@@ -228,6 +231,10 @@ class URLFetcherCore : public base::RefCountedThreadSafe<URLFetcherCore>,
   // Check if any upload data is set or not.
   void AssertHasNoUploadData() const;
 
+  // Calls base::debug::DumpWithoutCrashing().
+  // TODO(xunjieli): Temporary to investigate crbug.com/711721.
+  void DumpWithoutCrashing() const;
+
   URLFetcher* fetcher_;              // Corresponding fetcher object
   GURL original_url_;                // The URL we were asked to fetch
   GURL url_;                         // The URL we eventually wound up at
@@ -345,6 +352,12 @@ class URLFetcherCore : public base::RefCountedThreadSafe<URLFetcherCore>,
   int64_t current_response_bytes_;
   // Total expected bytes to receive (-1 if it cannot be determined).
   int64_t total_response_bytes_;
+
+  const net::NetworkTrafficAnnotationTag traffic_annotation_;
+
+  // TODO(xunjieli): Temporary to investigate crbug.com/711721.
+  std::unique_ptr<base::debug::StackTrace> stack_trace_on_start_;
+  void const* stack_identifier_;
 
   static base::LazyInstance<Registry>::DestructorAtExit g_registry;
 

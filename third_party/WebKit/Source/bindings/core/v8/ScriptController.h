@@ -31,10 +31,10 @@
 #ifndef ScriptController_h
 #define ScriptController_h
 
-#include "bindings/core/v8/SharedPersistent.h"
 #include "bindings/core/v8/WindowProxyManager.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExecutionContext.h"
+#include "platform/bindings/SharedPersistent.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/loader/fetch/CrossOriginAccessControl.h"
@@ -50,7 +50,6 @@ class DOMWrapperWorld;
 class Element;
 class KURL;
 class LocalFrame;
-class PluginView;
 class ScriptSourceCode;
 class SecurityOrigin;
 
@@ -116,8 +115,6 @@ class CORE_EXPORT ScriptController final
   // Security Policy. In this case, the policy of the main world should be
   // ignored when evaluating resources injected into the DOM.
   bool ShouldBypassMainWorldCSP();
-
-  PassRefPtr<SharedPersistent<v8::Object>> CreatePluginWrapper(PluginView&);
 
   void EnableEval();
   void DisableEval(const String& error_message);

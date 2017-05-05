@@ -37,9 +37,14 @@ class CONTENT_EXPORT PaymentAppDatabase {
   using ReadPaymentInstrumentCallback =
       base::OnceCallback<void(payments::mojom::PaymentInstrumentPtr,
                               payments::mojom::PaymentHandlerStatus)>;
+  using KeysOfPaymentInstrumentsCallback =
+      base::OnceCallback<void(const std::vector<std::string>&,
+                              payments::mojom::PaymentHandlerStatus)>;
   using HasPaymentInstrumentCallback =
       base::OnceCallback<void(payments::mojom::PaymentHandlerStatus)>;
   using WritePaymentInstrumentCallback =
+      base::OnceCallback<void(payments::mojom::PaymentHandlerStatus)>;
+  using ClearPaymentInstrumentsCallback =
       base::OnceCallback<void(payments::mojom::PaymentHandlerStatus)>;
 
   explicit PaymentAppDatabase(
@@ -57,6 +62,8 @@ class CONTENT_EXPORT PaymentAppDatabase {
   void ReadPaymentInstrument(const GURL& scope,
                              const std::string& instrument_key,
                              ReadPaymentInstrumentCallback callback);
+  void KeysOfPaymentInstruments(const GURL& scope,
+                                KeysOfPaymentInstrumentsCallback callback);
   void HasPaymentInstrument(const GURL& scope,
                             const std::string& instrument_key,
                             HasPaymentInstrumentCallback callback);
@@ -64,6 +71,8 @@ class CONTENT_EXPORT PaymentAppDatabase {
                               const std::string& instrument_key,
                               payments::mojom::PaymentInstrumentPtr instrument,
                               WritePaymentInstrumentCallback callback);
+  void ClearPaymentInstruments(const GURL& scope,
+                               ClearPaymentInstrumentsCallback callback);
 
  private:
   // WriteManifest callbacks
@@ -114,6 +123,15 @@ class CONTENT_EXPORT PaymentAppDatabase {
                                 const std::vector<std::string>& data,
                                 ServiceWorkerStatusCode status);
 
+  // KeysOfPaymentInstruments callbacks
+  void DidFindRegistrationToGetKeys(
+      KeysOfPaymentInstrumentsCallback callback,
+      ServiceWorkerStatusCode status,
+      scoped_refptr<ServiceWorkerRegistration> registration);
+  void DidGetKeysOfPaymentInstruments(KeysOfPaymentInstrumentsCallback callback,
+                                      const std::vector<std::string>& data,
+                                      ServiceWorkerStatusCode status);
+
   // HasPaymentInstrument callbacks
   void DidFindRegistrationToHasPaymentInstrument(
       const std::string& instrument_key,
@@ -135,6 +153,20 @@ class CONTENT_EXPORT PaymentAppDatabase {
       scoped_refptr<ServiceWorkerRegistration> registration);
   void DidWritePaymentInstrument(WritePaymentInstrumentCallback callback,
                                  ServiceWorkerStatusCode status);
+
+  // ClearPaymentInstruments callbacks
+  void DidFindRegistrationToClearPaymentInstruments(
+      const GURL& scope,
+      ClearPaymentInstrumentsCallback callback,
+      ServiceWorkerStatusCode status,
+      scoped_refptr<ServiceWorkerRegistration> registration);
+  void DidGetKeysToClearPaymentInstruments(
+      int64_t registration_id,
+      ClearPaymentInstrumentsCallback callback,
+      const std::vector<std::string>& keys,
+      payments::mojom::PaymentHandlerStatus status);
+  void DidClearPaymentInstruments(ClearPaymentInstrumentsCallback callback,
+                                  ServiceWorkerStatusCode status);
 
   scoped_refptr<ServiceWorkerContextWrapper> service_worker_context_;
   base::WeakPtrFactory<PaymentAppDatabase> weak_ptr_factory_;

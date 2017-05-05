@@ -10,7 +10,8 @@
 #include "services/service_manager/public/cpp/connector.h"
 
 ActiveProfilePrefService::ActiveProfilePrefService() {
-  registry_.AddInterface<prefs::mojom::PrefStoreConnector>(this);
+  registry_.AddInterface<prefs::mojom::PrefStoreConnector>(
+      base::Bind(&ActiveProfilePrefService::Create, base::Unretained(this)));
 }
 
 ActiveProfilePrefService::~ActiveProfilePrefService() = default;
@@ -29,7 +30,7 @@ void ActiveProfilePrefService::Connect(
 }
 
 void ActiveProfilePrefService::Create(
-    const service_manager::Identity& remote_identity,
+    const service_manager::BindSourceInfo& source_info,
     prefs::mojom::PrefStoreConnectorRequest request) {
   connector_bindings_.AddBinding(this, std::move(request));
 }
@@ -51,7 +52,7 @@ void ActiveProfilePrefService::OnBindInterface(
                  << " from connecting to the active profile's pref service.";
     return;
   }
-  registry_.BindInterface(source_info.identity, interface_name,
+  registry_.BindInterface(source_info, interface_name,
                           std::move(interface_pipe));
 }
 

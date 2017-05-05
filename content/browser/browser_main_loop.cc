@@ -406,6 +406,7 @@ GetDefaultTaskSchedulerInitParams() {
   using StandbyThreadPolicy =
       base::SchedulerWorkerPoolParams::StandbyThreadPolicy;
 #if defined(OS_ANDROID)
+  // Mobile config, for iOS see ios/web/app/web_main_loop.cc.
   return base::MakeUnique<base::TaskScheduler::InitParams>(
       base::SchedulerWorkerPoolParams(
           StandbyThreadPolicy::ONE,
@@ -422,8 +423,9 @@ GetDefaultTaskSchedulerInitParams() {
       base::SchedulerWorkerPoolParams(
           StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.3, 0),
-          base::TimeDelta::FromSeconds(30)));
+          base::TimeDelta::FromSeconds(60)));
 #else
+  // Desktop config.
   return base::MakeUnique<base::TaskScheduler::InitParams>(
       base::SchedulerWorkerPoolParams(
           StandbyThreadPolicy::ONE,
@@ -432,7 +434,7 @@ GetDefaultTaskSchedulerInitParams() {
       base::SchedulerWorkerPoolParams(
           StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.1, 0),
-          base::TimeDelta::FromSeconds(30)),
+          base::TimeDelta::FromSeconds(40)),
       base::SchedulerWorkerPoolParams(
           StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(8, 32, 0.3, 0),
@@ -443,7 +445,7 @@ GetDefaultTaskSchedulerInitParams() {
       base::SchedulerWorkerPoolParams(
           StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(8, 32, 0.3, 0),
-          base::TimeDelta::FromSeconds(30),
+          base::TimeDelta::FromSeconds(60),
           base::SchedulerBackwardCompatibility::INIT_COM_STA));
 #endif
 }
@@ -1007,8 +1009,19 @@ int BrowserMainLoop::CreateThreads() {
     // |non_ui_non_io_task_runner_traits| (which can be augmented below).
     // TODO(gab): Existing non-UI/non-IO BrowserThreads allow sync primitives so
     // the initial redirection will as well but they probably don't need to.
-    base::TaskTraits non_ui_non_io_task_runner_traits =
-        base::TaskTraits().MayBlock().WithBaseSyncPrimitives();
+    base::TaskTraits non_ui_non_io_task_runner_traits;
+
+    // Note: if you're copying these TaskTraits elsewhere, you most likely don't
+    // need and shouldn't use base::WithBaseSyncPrimitives() -- see its
+    // documentation.
+    constexpr base::TaskTraits kUserVisibleTraits = {
+        base::MayBlock(), base::WithBaseSyncPrimitives(),
+        base::TaskPriority::USER_VISIBLE,
+        base::TaskShutdownBehavior::BLOCK_SHUTDOWN};
+    constexpr base::TaskTraits kUserBlockingTraits = {
+        base::MayBlock(), base::WithBaseSyncPrimitives(),
+        base::TaskPriority::USER_BLOCKING,
+        base::TaskShutdownBehavior::BLOCK_SHUTDOWN};
 
     switch (thread_id) {
       case BrowserThread::DB:
@@ -1016,9 +1029,7 @@ int BrowserMainLoop::CreateThreads() {
             "BrowserMainLoop::CreateThreads:start",
             "Thread", "BrowserThread::DB");
         if (redirect_thread) {
-          non_ui_non_io_task_runner_traits
-              .WithPriority(base::TaskPriority::USER_VISIBLE)
-              .WithShutdownBehavior(base::TaskShutdownBehavior::BLOCK_SHUTDOWN);
+          non_ui_non_io_task_runner_traits = kUserVisibleTraits;
         } else {
           thread_to_start = &db_thread_;
           options.timer_slack = base::TIMER_SLACK_MAXIMUM;
@@ -1029,9 +1040,7 @@ int BrowserMainLoop::CreateThreads() {
             "BrowserMainLoop::CreateThreads:start",
             "Thread", "BrowserThread::FILE_USER_BLOCKING");
         if (redirect_thread) {
-          non_ui_non_io_task_runner_traits
-              .WithPriority(base::TaskPriority::USER_BLOCKING)
-              .WithShutdownBehavior(base::TaskShutdownBehavior::BLOCK_SHUTDOWN);
+          non_ui_non_io_task_runner_traits = kUserBlockingTraits;
         } else {
           thread_to_start = &file_user_blocking_thread_;
         }
@@ -1052,9 +1061,7 @@ int BrowserMainLoop::CreateThreads() {
         options.timer_slack = base::TIMER_SLACK_MAXIMUM;
 #else
         if (redirect_thread) {
-          non_ui_non_io_task_runner_traits
-              .WithPriority(base::TaskPriority::USER_VISIBLE)
-              .WithShutdownBehavior(base::TaskShutdownBehavior::BLOCK_SHUTDOWN);
+          non_ui_non_io_task_runner_traits = kUserVisibleTraits;
         } else {
           thread_to_start = &file_thread_;
           options = io_message_loop_options;
@@ -1075,9 +1082,7 @@ int BrowserMainLoop::CreateThreads() {
         DCHECK(message_loop);
 #endif
         if (redirect_thread) {
-          non_ui_non_io_task_runner_traits
-              .WithPriority(base::TaskPriority::USER_BLOCKING)
-              .WithShutdownBehavior(base::TaskShutdownBehavior::BLOCK_SHUTDOWN);
+          non_ui_non_io_task_runner_traits = kUserBlockingTraits;
         } else {
           thread_to_start = &process_launcher_thread_;
           options.timer_slack = base::TIMER_SLACK_MAXIMUM;
@@ -1098,9 +1103,7 @@ int BrowserMainLoop::CreateThreads() {
         options.timer_slack = base::TIMER_SLACK_MAXIMUM;
 #else  // OS_WIN
         if (redirect_thread) {
-          non_ui_non_io_task_runner_traits
-              .WithPriority(base::TaskPriority::USER_BLOCKING)
-              .WithShutdownBehavior(base::TaskShutdownBehavior::BLOCK_SHUTDOWN);
+          non_ui_non_io_task_runner_traits = kUserBlockingTraits;
         } else {
           thread_to_start = &cache_thread_;
           options.timer_slack = base::TIMER_SLACK_MAXIMUM;
@@ -1259,86 +1262,88 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
   service_manager_context_.reset();
   mojo_ipc_support_.reset();
 
-  // Must be size_t so we can subtract from it.
-  for (size_t thread_id = BrowserThread::ID_COUNT - 1;
-       thread_id >= (BrowserThread::UI + 1);
-       --thread_id) {
-    // Find the thread object we want to stop. Looping over all valid
-    // BrowserThread IDs and DCHECKing on a missing case in the switch
-    // statement helps avoid a mismatch between this code and the
-    // BrowserThread::ID enumeration.
-    //
-    // The destruction order is the reverse order of occurrence in the
-    // BrowserThread::ID list. The rationale for the order is as
-    // follows (need to be filled in a bit):
-    //
-    //
-    // - The IO thread is the only user of the CACHE thread.
-    //
-    // - The PROCESS_LAUNCHER thread must be stopped after IO in case
-    //   the IO thread posted a task to terminate a process on the
-    //   process launcher thread.
-    //
-    // - (Not sure why DB stops last.)
-    switch (thread_id) {
-      case BrowserThread::DB: {
-        TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:DBThread");
-        ResetThread_DB(std::move(db_thread_));
-        break;
-      }
-      case BrowserThread::FILE: {
-        TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:FileThread");
-        // Clean up state that lives on or uses the FILE thread before it goes
-        // away.
-        save_file_manager_->Shutdown();
-        ResetThread_FILE(std::move(file_thread_));
-        break;
-      }
-      case BrowserThread::FILE_USER_BLOCKING: {
-        TRACE_EVENT0("shutdown",
-                      "BrowserMainLoop::Subsystem:FileUserBlockingThread");
-        ResetThread_FILE_USER_BLOCKING(std::move(file_user_blocking_thread_));
-        break;
-      }
-      case BrowserThread::PROCESS_LAUNCHER: {
-        TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:LauncherThread");
-        ResetThread_PROCESS_LAUNCHER(std::move(process_launcher_thread_));
-        break;
-      }
-      case BrowserThread::CACHE: {
-        TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:CacheThread");
-        ResetThread_CACHE(std::move(cache_thread_));
-        break;
-      }
-      case BrowserThread::IO: {
-        TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:IOThread");
-        ResetThread_IO(std::move(io_thread_));
-        break;
-      }
-      case BrowserThread::UI:
-      case BrowserThread::ID_COUNT:
-        NOTREACHED();
-        break;
-    }
-  }
   {
-    TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:IndexedDBThread");
-    ResetThread_IndexedDb(std::move(indexed_db_thread_));
-  }
+    base::ThreadRestrictions::ScopedAllowWait allow_wait_for_join;
 
-  // Close the blocking I/O pool after the other threads. Other threads such
-  // as the I/O thread may need to schedule work like closing files or flushing
-  // data during shutdown, so the blocking pool needs to be available. There
-  // may also be slow operations pending that will blcok shutdown, so closing
-  // it here (which will block until required operations are complete) gives
-  // more head start for those operations to finish.
-  {
-    TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:ThreadPool");
-    BrowserThreadImpl::ShutdownThreadPool();
-  }
-  {
-    TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:TaskScheduler");
-    base::TaskScheduler::GetInstance()->Shutdown();
+    // Must be size_t so we can subtract from it.
+    for (size_t thread_id = BrowserThread::ID_COUNT - 1;
+         thread_id >= (BrowserThread::UI + 1); --thread_id) {
+      // Find the thread object we want to stop. Looping over all valid
+      // BrowserThread IDs and DCHECKing on a missing case in the switch
+      // statement helps avoid a mismatch between this code and the
+      // BrowserThread::ID enumeration.
+      //
+      // The destruction order is the reverse order of occurrence in the
+      // BrowserThread::ID list. The rationale for the order is as follows (need
+      // to be filled in a bit):
+      //
+      // - The IO thread is the only user of the CACHE thread.
+      //
+      // - The PROCESS_LAUNCHER thread must be stopped after IO in case
+      //   the IO thread posted a task to terminate a process on the
+      //   process launcher thread.
+      //
+      // - (Not sure why DB stops last.)
+      switch (thread_id) {
+        case BrowserThread::DB: {
+          TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:DBThread");
+          ResetThread_DB(std::move(db_thread_));
+          break;
+        }
+        case BrowserThread::FILE: {
+          TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:FileThread");
+          // Clean up state that lives on or uses the FILE thread before it goes
+          // away.
+          save_file_manager_->Shutdown();
+          ResetThread_FILE(std::move(file_thread_));
+          break;
+        }
+        case BrowserThread::FILE_USER_BLOCKING: {
+          TRACE_EVENT0("shutdown",
+                       "BrowserMainLoop::Subsystem:FileUserBlockingThread");
+          ResetThread_FILE_USER_BLOCKING(std::move(file_user_blocking_thread_));
+          break;
+        }
+        case BrowserThread::PROCESS_LAUNCHER: {
+          TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:LauncherThread");
+          ResetThread_PROCESS_LAUNCHER(std::move(process_launcher_thread_));
+          break;
+        }
+        case BrowserThread::CACHE: {
+          TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:CacheThread");
+          ResetThread_CACHE(std::move(cache_thread_));
+          break;
+        }
+        case BrowserThread::IO: {
+          TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:IOThread");
+          ResetThread_IO(std::move(io_thread_));
+          break;
+        }
+        case BrowserThread::UI:
+        case BrowserThread::ID_COUNT:
+          NOTREACHED();
+          break;
+      }
+    }
+    {
+      TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:IndexedDBThread");
+      ResetThread_IndexedDb(std::move(indexed_db_thread_));
+    }
+
+    // Close the blocking I/O pool after the other threads. Other threads such
+    // as the I/O thread may need to schedule work like closing files or
+    // flushing data during shutdown, so the blocking pool needs to be
+    // available. There may also be slow operations pending that will blcok
+    // shutdown, so closing it here (which will block until required operations
+    // are complete) gives more head start for those operations to finish.
+    {
+      TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:ThreadPool");
+      BrowserThreadImpl::ShutdownThreadPool();
+    }
+    {
+      TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:TaskScheduler");
+      base::TaskScheduler::GetInstance()->Shutdown();
+    }
   }
 
   // Must happen after the IO thread is shutdown since this may be accessed from

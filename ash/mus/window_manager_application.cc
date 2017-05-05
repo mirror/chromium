@@ -25,7 +25,6 @@
 #include "device/bluetooth/dbus/bluez_dbus_manager.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/service_context.h"
-#include "services/tracing/public/cpp/provider.h"
 #include "services/ui/common/accelerator_util.h"
 #include "ui/aura/env.h"
 #include "ui/aura/mus/window_tree_client.h"
@@ -96,16 +95,21 @@ void WindowManagerApplication::InitializeComponents(bool init_network_handler) {
   message_center::MessageCenter::Initialize();
 
   // Must occur after mojo::ApplicationRunner has initialized AtExitManager, but
-  // before WindowManager::Init().
-  chromeos::DBusThreadManager::Initialize(
-      chromeos::DBusThreadManager::PROCESS_ASH);
+  // before WindowManager::Init(). Tests might initialize their own instance.
+  if (!chromeos::DBusThreadManager::IsInitialized()) {
+    chromeos::DBusThreadManager::Initialize(
+        chromeos::DBusThreadManager::PROCESS_ASH);
+    dbus_thread_manager_initialized_ = true;
+  }
 
   // See ChromeBrowserMainPartsChromeos for ordering details.
   bluez::BluezDBusManager::Initialize(
       chromeos::DBusThreadManager::Get()->GetSystemBus(),
       chromeos::DBusThreadManager::Get()->IsUsingFakes());
-  if (init_network_handler)
+  if (init_network_handler && !chromeos::NetworkHandler::IsInitialized()) {
     chromeos::NetworkHandler::Initialize();
+    network_handler_initialized_ = true;
+  }
   network_connect_delegate_.reset(new NetworkConnectDelegateMus());
   chromeos::NetworkConnect::Initialize(network_connect_delegate_.get());
   // TODO(jamescook): Initialize real audio handler.
@@ -118,11 +122,12 @@ void WindowManagerApplication::ShutdownComponents() {
   chromeos::NetworkConnect::Shutdown();
   network_connect_delegate_.reset();
   // We may not have started the NetworkHandler.
-  if (chromeos::NetworkHandler::IsInitialized())
+  if (network_handler_initialized_)
     chromeos::NetworkHandler::Shutdown();
   device::BluetoothAdapterFactory::Shutdown();
   bluez::BluezDBusManager::Shutdown();
-  chromeos::DBusThreadManager::Shutdown();
+  if (dbus_thread_manager_initialized_)
+    chromeos::DBusThreadManager::Shutdown();
   message_center::MessageCenter::Shutdown();
 }
 
@@ -136,8 +141,6 @@ void WindowManagerApplication::OnStart() {
       views::AuraInit::Mode::AURA_MUS_WINDOW_MANAGER);
   window_manager_ = base::MakeUnique<WindowManager>(
       context()->connector(), ash_config_, show_primary_host_on_connect_);
-
-  tracing_.Initialize(context()->connector(), context()->identity().name());
 
   std::unique_ptr<aura::WindowTreeClient> window_tree_client =
       base::MakeUnique<aura::WindowTreeClient>(
@@ -160,7 +163,7 @@ void WindowManagerApplication::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(source_info.identity, interface_name,
+  registry_.BindInterface(source_info, interface_name,
                           std::move(interface_pipe));
 }
 

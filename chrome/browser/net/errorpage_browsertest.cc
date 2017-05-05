@@ -95,8 +95,8 @@ namespace {
 bool WARN_UNUSED_RESULT IsDisplayingText(Browser* browser,
                                          const std::string& text) {
   std::string command = base::StringPrintf(
-      "var textContent = document.body.innerText;"
-      "var hasText = textContent.indexOf('%s') >= 0;"
+      "var textContent = document.body.innerText.toLowerCase();"
+      "var hasText = textContent.indexOf('%s'.toLowerCase()) >= 0;"
       "domAutomationController.send(hasText);",
       text.c_str());
   bool result = false;
@@ -251,11 +251,8 @@ class LinkDoctorInterceptor : public net::URLRequestInterceptor {
         request, network_delegate,
         root_http.AppendASCII("mock-link-doctor.json"),
         base::CreateTaskRunnerWithTraits(
-            base::TaskTraits()
-                .MayBlock()
-                .WithPriority(base::TaskPriority::BACKGROUND)
-                .WithShutdownBehavior(
-                    base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN)));
+            {base::MayBlock(), base::TaskPriority::BACKGROUND,
+             base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
   }
 
   void WaitForRequests(int requests_to_wait_for) {

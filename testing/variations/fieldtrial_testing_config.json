@@ -363,8 +363,13 @@
             ],
             "experiments": [
                 {
-                    "name": "Default",
+                    "//1": "Enable on-by-default redirections with default",
+                    "//2": "client-side init params (ref.",
+                    "//3": "GetDefaultTaskSchedulerInitParams() in",
+                    "//4": "browser_main_loop.cc).",
+                    "name": "RedirectWithDefaultInitParams",
                     "params": {
+                        "RedirectNonUINonIOBrowserThreads": "true",
                         "RedirectSequencedWorkerPools": "true"
                     }
                 },
@@ -690,6 +695,71 @@
                     },
                     "enable_features": [
                         "DelayNavigation"
+                    ]
+                }
+            ]
+        }
+    ],
+    "DesktopIOSPromotion": [
+        {
+            "platforms": [
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "SavePasswordsBubblePromotionV1",
+                    "params": {
+                        "body_text_id": "0",
+                        "entry_point": "SavePasswordsBubblePromotion",
+                        "max_views": "3",
+                        "promo_variation_id": "1",
+                        "sms_id": "19001508",
+                        "title_text_id": "0"
+                    },
+                    "enable_features": [
+                        "DesktopIOSPromotion"
+                    ]
+                },
+                {
+                    "name": "SavePasswordsBubblePromotionV2",
+                    "params": {
+                        "body_text_id": "0",
+                        "entry_point": "SavePasswordsBubblePromotion",
+                        "max_views": "3",
+                        "promo_variation_id": "2",
+                        "sms_id": "19001509",
+                        "title_text_id": "1"
+                    },
+                    "enable_features": [
+                        "DesktopIOSPromotion"
+                    ]
+                },
+                {
+                    "name": "SavePasswordsBubblePromotionV3",
+                    "params": {
+                        "body_text_id": "0",
+                        "entry_point": "SavePasswordsBubblePromotion",
+                        "max_views": "3",
+                        "promo_variation_id": "3",
+                        "sms_id": "19001510",
+                        "title_text_id": "2"
+                    },
+                    "enable_features": [
+                        "DesktopIOSPromotion"
+                    ]
+                },
+                {
+                    "name": "SavePasswordsBubblePromotion50Beta",
+                    "params": {
+                        "body_text_id": "0",
+                        "entry_point": "SavePasswordsBubblePromotion",
+                        "max_views": "3",
+                        "promo_variation_id": "1",
+                        "sms_id": "19001507",
+                        "title_text_id": "0"
+                    },
+                    "enable_features": [
+                        "DesktopIOSPromotion"
                     ]
                 }
             ]
@@ -1255,21 +1325,6 @@
             ]
         }
     ],
-    "LowPriorityIFrames": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "params": {
-                        "lowPriorityIframes": "true"
-                    }
-                }
-            ]
-        }
-    ],
     "MacAllowBackgroundingProcesses": [
         {
             "platforms": [
@@ -1356,6 +1411,24 @@
                     "name": "Enabled",
                     "enable_features": [
                         "MediaFoundationH264Encoding"
+                    ]
+                }
+            ]
+        }
+    ],
+    "MetricsServiceUrl": [
+        {
+            "platforms": [
+                "chromeos",
+                "mac",
+                "win",
+                "linux"
+            ],
+            "experiments": [
+                {
+                    "name": "NewURL",
+                    "enable_features": [
+                        "NewMetricsUrl"
                     ]
                 }
             ]
@@ -1528,24 +1601,6 @@
                     },
                     "enable_features": [
                         "NTPForeignSessionsSuggestions"
-                    ]
-                }
-            ]
-        }
-    ],
-    "NTPTilesInInstantService": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "NTPTilesInInstantService"
                     ]
                 }
             ]
@@ -2755,21 +2810,6 @@
             ]
         }
     ],
-    "SiteIsolationExtensions": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
     "SpeculativeLaunchServiceWorker": [
         {
             "platforms": [
@@ -2788,6 +2828,24 @@
                 },
                 {
                     "name": "Disabled"
+                }
+            ]
+        }
+    ],
+    "SpeculativeResourcePrefetchingValidation": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Prefetching",
+                    "params": {
+                        "mode": "prefetching"
+                    },
+                    "enable_features": [
+                        "SpeculativeResourcePrefetching"
+                    ]
                 }
             ]
         }
@@ -3059,25 +3117,6 @@
                     "enable_features": [
                         "Ukm"
                     ]
-                }
-            ]
-        }
-    ],
-    "UMA_EnableCellularLogUpload": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled_wo_sampling",
-                    "params": {
-                        "Enabled": "true",
-                        "Optimize": "true",
-                        "Sample_Probability": "100",
-                        "Uma_Quota": "204800",
-                        "Uma_Ratio": "0.05"
-                    }
                 }
             ]
         }

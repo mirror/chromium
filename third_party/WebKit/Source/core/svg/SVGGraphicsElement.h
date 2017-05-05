@@ -41,17 +41,13 @@ class CORE_EXPORT SVGGraphicsElement : public SVGElement, public SVGTests {
  public:
   ~SVGGraphicsElement() override;
 
-  enum StyleUpdateStrategy { kAllowStyleUpdate, kDisallowStyleUpdate };
-
-  AffineTransform GetCTM(StyleUpdateStrategy = kAllowStyleUpdate);
-  AffineTransform GetScreenCTM(StyleUpdateStrategy = kAllowStyleUpdate);
-  SVGMatrixTearOff* getCTMFromJavascript();
-  SVGMatrixTearOff* getScreenCTMFromJavascript();
+  SVGMatrixTearOff* getCTM();
+  SVGMatrixTearOff* getScreenCTM();
 
   SVGElement* nearestViewportElement() const;
   SVGElement* farthestViewportElement() const;
 
-  AffineTransform LocalCoordinateSpaceTransform() const override {
+  AffineTransform LocalCoordinateSpaceTransform(CTMScope) const override {
     return CalculateTransform(kIncludeMotionTransform);
   }
   AffineTransform* AnimateMotionTransform() override;
@@ -64,8 +60,7 @@ class CORE_EXPORT SVGGraphicsElement : public SVGElement, public SVGTests {
   SVGAnimatedTransformList* transform() { return transform_.Get(); }
   const SVGAnimatedTransformList* transform() const { return transform_.Get(); }
 
-  AffineTransform ComputeCTM(SVGElement::CTMScope mode,
-                             SVGGraphicsElement::StyleUpdateStrategy,
+  AffineTransform ComputeCTM(CTMScope mode,
                              const SVGGraphicsElement* ancestor = 0) const;
 
   DECLARE_VIRTUAL_TRACE();

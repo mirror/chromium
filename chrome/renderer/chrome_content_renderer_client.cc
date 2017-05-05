@@ -1268,10 +1268,10 @@ bool ChromeContentRendererClient::IsExtensionOrSharedModuleWhitelisted(
 }
 #endif
 
-blink::WebSpeechSynthesizer*
+std::unique_ptr<blink::WebSpeechSynthesizer>
 ChromeContentRendererClient::OverrideSpeechSynthesizer(
     blink::WebSpeechSynthesizerClient* client) {
-  return new TtsDispatcher(client);
+  return base::MakeUnique<TtsDispatcher>(client);
 }
 
 bool ChromeContentRendererClient::AllowPepperMediaStreamAPI(
@@ -1317,8 +1317,7 @@ bool ChromeContentRendererClient::ShouldGatherSiteIsolationStats() const {
   // too; we would need to check the extension's manifest to know which sites
   // it's allowed to access.
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  return !command_line->HasSwitch(extensions::switches::kExtensionProcess);
+  return !IsStandaloneExtensionProcess();
 #else
   return true;
 #endif

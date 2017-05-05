@@ -54,7 +54,6 @@ enum UiAction {
   HISTORY_BACK = 0,
   HISTORY_FORWARD,
   RELOAD,
-  SET_CONTENT_PAUSED,
   SHOW_TAB,
   OPEN_NEW_TAB,
   EXIT_PRESENT,
@@ -92,6 +91,8 @@ class VrShell : public device::PresentingGvrDelegate,
   void SetWebVrMode(JNIEnv* env,
                     const base::android::JavaParamRef<jobject>& obj,
                     bool enabled);
+  bool GetWebVrMode(JNIEnv* env,
+                    const base::android::JavaParamRef<jobject>& obj);
   void OnLoadProgressChanged(JNIEnv* env,
                              const base::android::JavaParamRef<jobject>& obj,
                              double progress);
@@ -108,6 +109,7 @@ class VrShell : public device::PresentingGvrDelegate,
                     const base::android::JavaParamRef<jobject>& obj,
                     jboolean incognito,
                     jint id);
+  void OnContentPaused(bool paused);
   base::android::ScopedJavaGlobalRef<jobject> TakeContentSurface(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
@@ -127,7 +129,6 @@ class VrShell : public device::PresentingGvrDelegate,
   void ContentSurfaceChanged(jobject surface);
   void GvrDelegateReady();
   void AppButtonGesturePerformed(UiInterface::Direction direction);
-  void AppButtonPressed();
 
   void ContentPhysicalBoundsChanged(
       JNIEnv* env,
@@ -156,7 +157,6 @@ class VrShell : public device::PresentingGvrDelegate,
  private:
   ~VrShell() override;
   void PostToGlThreadWhenReady(const base::Closure& task);
-  void SetContentPaused(bool paused);
   void SetUiState();
 
   // device::GvrDelegate implementation.

@@ -24,8 +24,6 @@
 #include "extensions/common/features/simple_feature.h"
 #include "extensions/common/manifest_handlers/plugins_handler.h"
 
-using extensions::UnloadedExtensionInfo;
-
 namespace content_settings {
 
 namespace {
@@ -152,7 +150,7 @@ void InternalExtensionProvider::OnExtensionLoaded(
 void InternalExtensionProvider::OnExtensionUnloaded(
     content::BrowserContext* browser_context,
     const extensions::Extension* extension,
-    extensions::UnloadedExtensionInfo::Reason reason) {
+    extensions::UnloadedExtensionReason reason) {
   ApplyPluginContentSettingsForExtension(extension, CONTENT_SETTING_DEFAULT);
 }
 
@@ -211,8 +209,9 @@ void InternalExtensionProvider::SetContentSettingForExtensionAndResource(
                              CONTENT_SETTINGS_TYPE_PLUGINS,
                              resource);
     } else {
+      // Do not set a timestamp for extension settings.
       value_map_.SetValue(primary_pattern, secondary_pattern,
-                          CONTENT_SETTINGS_TYPE_PLUGINS, resource,
+                          CONTENT_SETTINGS_TYPE_PLUGINS, resource, base::Time(),
                           new base::Value(setting));
     }
   }

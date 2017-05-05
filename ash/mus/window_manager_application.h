@@ -18,7 +18,6 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
-#include "services/tracing/public/cpp/provider.h"
 #include "services/ui/common/types.h"
 
 namespace aura {
@@ -90,8 +89,6 @@ class WindowManagerApplication : public service_manager::Service {
 
   const bool show_primary_host_on_connect_;
 
-  tracing::Provider tracing_;
-
   std::unique_ptr<views::AuraInit> aura_init_;
 
   std::unique_ptr<WindowManager> window_manager_;
@@ -108,6 +105,12 @@ class WindowManagerApplication : public service_manager::Service {
   std::unique_ptr<ShellDelegate> shell_delegate_;
 
   const Config ash_config_;
+
+  // Whether this class initialized NetworkHandler and needs to clean it up.
+  bool network_handler_initialized_ = false;
+
+  // Whether this class initialized DBusThreadManager and needs to clean it up.
+  bool dbus_thread_manager_initialized_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(WindowManagerApplication);
 };

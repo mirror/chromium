@@ -12,7 +12,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/worker_pool.h"
 #include "ios/web/public/browser_state.h"
 #include "ios/web/public/certificate_policy_cache.h"
 #include "ios/web/public/web_thread.h"
@@ -195,9 +194,7 @@ decideLoadPolicyForRejectedTrustResult:(SecTrustResultType)trustResult
   // SecTrustEvaluate performs trust evaluation synchronously, possibly making
   // network requests. The UI thread should not be blocked by that operation.
   base::PostTaskWithTraits(
-      FROM_HERE,
-      base::TaskTraits().WithShutdownBehavior(
-          base::TaskShutdownBehavior::BLOCK_SHUTDOWN),
+      FROM_HERE, {base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
       base::BindBlockArc(^{
         SecTrustResultType trustResult = kSecTrustResultInvalid;
         if (SecTrustEvaluate(trust.get(), &trustResult) != errSecSuccess) {

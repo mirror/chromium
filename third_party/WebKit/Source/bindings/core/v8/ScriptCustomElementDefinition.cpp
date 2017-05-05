@@ -4,9 +4,7 @@
 
 #include "bindings/core/v8/ScriptCustomElementDefinition.h"
 
-#include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
-#include "bindings/core/v8/V8BindingMacros.h"
 #include "bindings/core/v8/V8CustomElementRegistry.h"
 #include "bindings/core/v8/V8Element.h"
 #include "bindings/core/v8/V8ErrorHandler.h"
@@ -19,6 +17,8 @@
 #include "core/events/ErrorEvent.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/imports/HTMLImportsController.h"
+#include "platform/bindings/ScriptState.h"
+#include "platform/bindings/V8BindingMacros.h"
 #include "platform/wtf/Allocator.h"
 #include "v8.h"
 

@@ -10,7 +10,6 @@
 #include "base/callback.h"
 #include "base/debug/task_annotator.h"
 #include "base/json/json_writer.h"
-#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequence_token.h"
@@ -215,7 +214,7 @@ void TaskTracker::Shutdown() {
 
 void TaskTracker::Flush() {
   AutoSchedulerLock auto_lock(flush_lock_);
-  while (subtle::NoBarrier_Load(&num_pending_undelayed_tasks_) != 0 &&
+  while (subtle::Acquire_Load(&num_pending_undelayed_tasks_) != 0 &&
          !IsShutdownComplete()) {
     flush_cv_->Wait();
   }
@@ -383,6 +382,12 @@ void TaskTracker::PerformShutdown() {
   }
 }
 
+#if DCHECK_IS_ON()
+bool TaskTracker::IsPostingBlockShutdownTaskAfterShutdownAllowed() {
+  return false;
+}
+#endif
+
 bool TaskTracker::BeforePostTask(TaskShutdownBehavior shutdown_behavior) {
   if (shutdown_behavior == TaskShutdownBehavior::BLOCK_SHUTDOWN) {
     // BLOCK_SHUTDOWN tasks block shutdown between the moment they are posted
@@ -395,7 +400,17 @@ bool TaskTracker::BeforePostTask(TaskShutdownBehavior shutdown_behavior) {
       // A BLOCK_SHUTDOWN task posted after shutdown has completed is an
       // ordering bug. This aims to catch those early.
       DCHECK(shutdown_event_);
-      DCHECK(!shutdown_event_->IsSignaled());
+      if (shutdown_event_->IsSignaled()) {
+        // TODO(robliao): http://crbug.com/698140. Since the service thread
+        // doesn't stop processing its own tasks at shutdown, we may still
+        // attempt to post a BLOCK_SHUTDOWN task in response to a
+        // FileDescriptorWatcher.
+#if DCHECK_IS_ON()
+        DCHECK(IsPostingBlockShutdownTaskAfterShutdownAllowed());
+#endif
+        state_->DecrementNumTasksBlockingShutdown();
+        return false;
+      }
 
       ++num_block_shutdown_tasks_posted_during_shutdown_;
 
@@ -484,7 +499,7 @@ void TaskTracker::OnBlockingShutdownTasksComplete() {
 
 void TaskTracker::DecrementNumPendingUndelayedTasks() {
   const auto new_num_pending_undelayed_tasks =
-      subtle::NoBarrier_AtomicIncrement(&num_pending_undelayed_tasks_, -1);
+      subtle::Barrier_AtomicIncrement(&num_pending_undelayed_tasks_, -1);
   DCHECK_GE(new_num_pending_undelayed_tasks, 0);
   if (new_num_pending_undelayed_tasks == 0) {
     AutoSchedulerLock auto_lock(flush_lock_);

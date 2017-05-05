@@ -25,7 +25,6 @@
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_runner.h"
-#include "services/tracing/public/cpp/provider.h"
 #include "ui/aura/window.h"
 #include "ui/base/models/menu_model.h"
 #include "ui/gfx/canvas.h"
@@ -856,7 +855,8 @@ class UI : public views::WidgetDelegateView,
 };
 
 Browser::Browser() {
-  registry_.AddInterface<mojom::Launchable>(this);
+  registry_.AddInterface<mojom::Launchable>(
+      base::Bind(&Browser::Create, base::Unretained(this)));
 }
 Browser::~Browser() {}
 
@@ -880,8 +880,6 @@ std::unique_ptr<navigation::View> Browser::CreateView() {
 }
 
 void Browser::OnStart() {
-  tracing_.Initialize(context()->connector(), context()->identity().name());
-
   aura_init_ = base::MakeUnique<views::AuraInit>(
       context()->connector(), context()->identity(), "views_mus_resources.pak",
       std::string(), nullptr, views::AuraInit::Mode::AURA_MUS);
@@ -891,7 +889,7 @@ void Browser::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(source_info.identity, interface_name,
+  registry_.BindInterface(source_info, interface_name,
                           std::move(interface_pipe));
 }
 
@@ -911,7 +909,7 @@ void Browser::Launch(uint32_t what, mojom::LaunchMode how) {
   AddWindow(window);
 }
 
-void Browser::Create(const service_manager::Identity& remote_identity,
+void Browser::Create(const service_manager::BindSourceInfo& source_info,
                      mojom::LaunchableRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }

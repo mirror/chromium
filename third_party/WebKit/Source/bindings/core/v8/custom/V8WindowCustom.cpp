@@ -35,14 +35,14 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
-#include "bindings/core/v8/SerializedScriptValue.h"
-#include "bindings/core/v8/SerializedScriptValueFactory.h"
-#include "bindings/core/v8/Transferables.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8EventListener.h"
 #include "bindings/core/v8/V8HTMLCollection.h"
 #include "bindings/core/v8/V8Node.h"
 #include "bindings/core/v8/V8PrivateProperty.h"
+#include "bindings/core/v8/serialization/SerializedScriptValue.h"
+#include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
+#include "bindings/core/v8/serialization/Transferables.h"
 #include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/MessagePort.h"
 #include "core/frame/Deprecation.h"
@@ -287,7 +287,11 @@ void V8Window::openMethodCustom(
   // passed the BindingSecurity check above.
   DOMWindow* opened_window = ToLocalDOMWindow(impl)->open(
       url_string, frame_name, window_features_string,
-      CurrentDOMWindow(info.GetIsolate()), EnteredDOMWindow(info.GetIsolate()));
+      CurrentDOMWindow(info.GetIsolate()), EnteredDOMWindow(info.GetIsolate()),
+      exception_state);
+  if (exception_state.HadException()) {
+    return;
+  }
   if (!opened_window) {
     V8SetReturnValueNull(info);
     return;

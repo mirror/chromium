@@ -214,9 +214,13 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   WebEffectiveConnectionType GetEffectiveConnectionType() override;
 
+  bool ShouldUseClientLoFiForRequest(const ResourceRequest&) override;
+
   KURL OverrideFlashEmbedWithHTML(const KURL&) override;
 
   void SetHasReceivedUserGesture(bool received_previously) override;
+
+  void SetDevToolsFrameId(const String& devtools_frame_id) override;
 
   void AbortClientNavigation() override;
 

@@ -74,8 +74,7 @@ class CONTENT_EXPORT BrowserThread {
     // DEPRECATED: prefer base/task_scheduler/post_task.h for new classes
     // requiring a background file I/O task runner, i.e.:
     //   base::CreateSequencedTaskRunnerWithTraits(
-    //       base::TaskTraits().MayBlock()
-    //           .WithPriority(base::TaskPriority::BACKGROUND))
+    //       {base::MayBlock(), base::TaskPriority::BACKGROUND})
     //   Note: You can use base::TaskPriority::USER_VISIBLE instead of
     //         base::TaskPriority::BACKGROUND if the latency of this operation
     //         is visible but non-blocking to the user.
@@ -86,8 +85,7 @@ class CONTENT_EXPORT BrowserThread {
     // DEPRECATED: prefer base/task_scheduler/post_task.h for new classes
     // requiring a user-blocking file I/O task runner, i.e.:
     //   base::CreateSequencedTaskRunnerWithTraits(
-    //       base::TaskTraits().MayBlock()
-    //           .WithPriority(base::TaskPriority::USER_BLOCKING))
+    //       {base::MayBlock(), base::TaskPriority::USER_BLOCKING})
     FILE_USER_BLOCKING,
 
     // Used to launch and terminate Chrome processes.
@@ -142,12 +140,30 @@ class CONTENT_EXPORT BrowserThread {
   static bool PostTaskAndReplyWithResult(
       ID identifier,
       const tracked_objects::Location& from_here,
-      base::Callback<ReturnType()> task,
-      base::Callback<void(ReplyArgType)> reply) {
+      base::OnceCallback<ReturnType()> task,
+      base::OnceCallback<void(ReplyArgType)> reply) {
     scoped_refptr<base::SingleThreadTaskRunner> task_runner =
         GetTaskRunnerForThread(identifier);
     return base::PostTaskAndReplyWithResult(task_runner.get(), from_here,
                                             std::move(task), std::move(reply));
+  }
+
+  // Callback version of PostTaskAndReplyWithResult above.
+  // Though RepeatingCallback is convertible to OnceCallback, we need this since
+  // we cannot use template deduction and object conversion at once on the
+  // overload resolution.
+  // TODO(crbug.com/714018): Update all callers of the Callback version to use
+  // OnceCallback.
+  template <typename ReturnType, typename ReplyArgType>
+  static bool PostTaskAndReplyWithResult(
+      ID identifier,
+      const tracked_objects::Location& from_here,
+      base::Callback<ReturnType()> task,
+      base::Callback<void(ReplyArgType)> reply) {
+    return PostTaskAndReplyWithResult(
+        identifier, from_here,
+        base::OnceCallback<ReturnType()>(std::move(task)),
+        base::OnceCallback<void(ReplyArgType)>(std::move(reply)));
   }
 
   template <class T>
@@ -164,26 +180,15 @@ class CONTENT_EXPORT BrowserThread {
     return GetTaskRunnerForThread(identifier)->ReleaseSoon(from_here, object);
   }
 
-  // Simplified wrappers for posting to the blocking thread pool. Use this
-  // for doing things like blocking I/O.
-  //
   // DEPRECATED: use base/task_scheduler/post_task.h instead.
-  //   * BrowserThread::PostBlockingPoolTask(AndReply)(...) =>
-  //         base::PostTaskWithTraits(AndReply)(
-  //             FROM_HERE, base::TaskTraits().MayBlock()...)
   //   * BrowserThread::PostBlockingPoolSequencedTask =>
   //         Share a single SequencedTaskRunner created via
   //         base::CreateSequencedTaskRunnerWithTraits() instead of sharing a
   //         SequenceToken (ping base/task_scheduler/OWNERS if you find a use
   //         case where that's not possible).
   //
-  // The first variant will run the task in the pool with no sequencing
-  // semantics, so may get run in parallel with other posted tasks. The second
-  // variant will all post a task with no sequencing semantics, and will post a
-  // reply task to the origin TaskRunner upon completion.  The third variant
-  // provides sequencing between tasks with the same sequence token name.
-  //
-  // These tasks are guaranteed to run before shutdown.
+  // Posts a task to the blocking pool. The task is guaranteed to run before
+  // shutdown. Tasks posted with the same sequence token name are sequenced.
   //
   // If you need to provide different shutdown semantics (like you have
   // something slow and noncritical that doesn't need to block shutdown),
@@ -191,16 +196,6 @@ class CONTENT_EXPORT BrowserThread {
   // lookup and is guaranteed unique without you having to come up with a
   // unique string), you can access the sequenced worker pool directly via
   // GetBlockingPool().
-  //
-  // If you need to PostTaskAndReplyWithResult, use
-  // base::PostTaskAndReplyWithResult() with GetBlockingPool() as the task
-  // runner.
-  static bool PostBlockingPoolTask(const tracked_objects::Location& from_here,
-                                   base::OnceClosure task);
-  static bool PostBlockingPoolTaskAndReply(
-      const tracked_objects::Location& from_here,
-      base::OnceClosure task,
-      base::OnceClosure reply);
   static bool PostBlockingPoolSequencedTask(
       const std::string& sequence_token_name,
       const tracked_objects::Location& from_here,
@@ -227,7 +222,7 @@ class CONTENT_EXPORT BrowserThread {
   //       base::SequencedWorkerPool::GetSequenceToken())
   //  =>
   //   base::CreateSequencedTaskRunnerWithTraits(
-  //       base::TaskTraits().MayBlock()...).
+  //       {base::MayBlock()}).
   static base::SequencedWorkerPool* GetBlockingPool() WARN_UNUSED_RESULT;
 
   // Callable on any thread.  Returns whether the given well-known thread is

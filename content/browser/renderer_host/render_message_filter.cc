@@ -19,7 +19,6 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread.h"
-#include "base/threading/worker_pool.h"
 #include "build/build_config.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/browser_main_loop.h"
@@ -240,7 +239,9 @@ void RenderMessageFilter::SendLoadFontReply(IPC::Message* reply,
     result->font_data_size = 0;
     result->font_id = 0;
   } else {
-    result->font_data.GiveToProcess(base::GetCurrentProcessHandle(), &handle);
+    handle = result->font_data.handle().Duplicate();
+    result->font_data.Unmap();
+    result->font_data.Close();
   }
   RenderProcessHostMsg_LoadFont::WriteReplyParams(
       reply, result->font_data_size, handle, result->font_id);

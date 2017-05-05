@@ -101,11 +101,8 @@ net::URLRequestJob* ExtensionProtocolTestHandler(
   return new net::URLRequestFileJob(
       request, network_delegate, resource_path,
       base::CreateTaskRunnerWithTraits(
-          base::TaskTraits()
-              .MayBlock()
-              .WithPriority(base::TaskPriority::BACKGROUND)
-              .WithShutdownBehavior(
-                  base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN)));
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
 }
 
 }  // namespace
@@ -515,7 +512,7 @@ void ExtensionBrowserTest::UnloadExtension(const std::string& extension_id) {
   ExtensionService* service = extensions::ExtensionSystem::Get(
       profile())->extension_service();
   service->UnloadExtension(extension_id,
-                           extensions::UnloadedExtensionInfo::REASON_DISABLE);
+                           extensions::UnloadedExtensionReason::DISABLE);
 }
 
 void ExtensionBrowserTest::UninstallExtension(const std::string& extension_id) {

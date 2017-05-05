@@ -237,9 +237,14 @@ typedef NS_ENUM(NSInteger, ItemType) {
   if (on != switchView.isOn) {
     [switchView setOn:on animated:YES];
   }
+  // Also update the switch item.
+  CollectionViewSwitchItem* switchItem =
+      base::mac::ObjCCastStrict<CollectionViewSwitchItem>(
+          [self.collectionViewModel itemAtIndexPath:switchPath]);
+  switchItem.enabled = enabled;
+  switchItem.on = on;
 
-  [self reconfigureCellsForItems:modifiedItems
-         inSectionWithIdentifier:SectionIdentifierLanguages];
+  [self reconfigureCellsForItems:modifiedItems];
 }
 
 - (BOOL)currentLanguageSupportsTTS {

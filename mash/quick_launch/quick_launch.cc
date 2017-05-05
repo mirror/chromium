@@ -18,7 +18,6 @@
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_runner.h"
-#include "services/tracing/public/cpp/provider.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/views/background.h"
@@ -153,7 +152,8 @@ class QuickLaunchUI : public views::WidgetDelegateView,
 };
 
 QuickLaunch::QuickLaunch() {
-  registry_.AddInterface<::mash::mojom::Launchable>(this);
+  registry_.AddInterface<::mash::mojom::Launchable>(
+      base::Bind(&QuickLaunch::Create, base::Unretained(this)));
 }
 
 QuickLaunch::~QuickLaunch() {
@@ -170,8 +170,6 @@ void QuickLaunch::RemoveWindow(views::Widget* window) {
 }
 
 void QuickLaunch::OnStart() {
-  tracing_.Initialize(context()->connector(), context()->identity().name());
-
   aura_init_ = base::MakeUnique<views::AuraInit>(
       context()->connector(), context()->identity(), "views_mus_resources.pak",
       std::string(), nullptr, views::AuraInit::Mode::AURA_MUS);
@@ -183,7 +181,7 @@ void QuickLaunch::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(source_info.identity, interface_name,
+  registry_.BindInterface(source_info, interface_name,
                           std::move(interface_pipe));
 }
 
@@ -205,7 +203,7 @@ void QuickLaunch::Launch(uint32_t what, mojom::LaunchMode how) {
   windows_.push_back(window);
 }
 
-void QuickLaunch::Create(const service_manager::Identity& remote_identity,
+void QuickLaunch::Create(const service_manager::BindSourceInfo& source_info,
                          ::mash::mojom::LaunchableRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }

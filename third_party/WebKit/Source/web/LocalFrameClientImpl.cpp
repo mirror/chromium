@@ -202,7 +202,7 @@ void LocalFrameClientImpl::DidCreateScriptContext(
     v8::Local<v8::Context> context,
     int world_id) {
   if (web_frame_->Client())
-    web_frame_->Client()->DidCreateScriptContext(web_frame_, context, world_id);
+    web_frame_->Client()->DidCreateScriptContext(context, world_id);
 }
 
 void LocalFrameClientImpl::WillReleaseScriptContext(
@@ -317,7 +317,7 @@ void LocalFrameClientImpl::DispatchDidFinishDocumentLoad() {
   // destroy the fake WebLocalFrame that they create, which means that you
   // should not put any code touching `this` after the two lines below.
   if (web_frame_->Client())
-    web_frame_->Client()->DidFinishDocumentLoad(web_frame_);
+    web_frame_->Client()->DidFinishDocumentLoad();
 }
 
 void LocalFrameClientImpl::DispatchDidLoadResourceFromMemoryCache(
@@ -967,6 +967,15 @@ WebEffectiveConnectionType LocalFrameClientImpl::GetEffectiveConnectionType() {
   return WebEffectiveConnectionType::kTypeUnknown;
 }
 
+bool LocalFrameClientImpl::ShouldUseClientLoFiForRequest(
+    const ResourceRequest& request) {
+  if (web_frame_->Client()) {
+    return web_frame_->Client()->ShouldUseClientLoFiForRequest(
+        WrappedResourceRequest(request));
+  }
+  return false;
+}
+
 WebDevToolsAgentImpl* LocalFrameClientImpl::DevToolsAgent() {
   return WebLocalFrameImpl::FromFrame(web_frame_->GetFrame()->LocalFrameRoot())
       ->DevToolsAgentImpl();
@@ -986,6 +995,11 @@ void LocalFrameClientImpl::SetHasReceivedUserGesture(bool received_previously) {
   // event in a child frame.
   if (WebAutofillClient* autofill_client = web_frame_->AutofillClient())
     autofill_client->UserGestureObserved();
+}
+
+void LocalFrameClientImpl::SetDevToolsFrameId(const String& devtools_frame_id) {
+  if (web_frame_->Client())
+    web_frame_->Client()->SetDevToolsFrameId(devtools_frame_id);
 }
 
 void LocalFrameClientImpl::AbortClientNavigation() {

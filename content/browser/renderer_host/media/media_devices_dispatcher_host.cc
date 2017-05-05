@@ -98,6 +98,7 @@ void MediaDevicesDispatcherHost::Create(
     int render_frame_id,
     const std::string& device_id_salt,
     MediaStreamManager* media_stream_manager,
+    const service_manager::BindSourceInfo& source_info,
     ::mojom::MediaDevicesDispatcherHostRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   mojo::MakeStrongBinding(base::MakeUnique<MediaDevicesDispatcherHost>(
@@ -179,6 +180,13 @@ void MediaDevicesDispatcherHost::GetVideoInputCapabilities(
     const url::Origin& security_origin,
     GetVideoInputCapabilitiesCallback client_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  // Return no capabilities for unique origins, but do not crash the renderer.
+  if (security_origin.unique()) {
+    std::move(client_callback)
+        .Run(std::vector<::mojom::VideoInputDeviceCapabilitiesPtr>());
+    return;
+  }
+
   if (!MediaStreamManager::IsOriginAllowed(render_process_id_,
                                            security_origin)) {
     bad_message::ReceivedBadMessage(render_process_id_,
@@ -199,6 +207,10 @@ void MediaDevicesDispatcherHost::SubscribeDeviceChangeNotifications(
     const url::Origin& security_origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
+  // Ignore requests from unique origins, but do not crash the renderer.
+  if (security_origin.unique())
+    return;
+
   if (!MediaStreamManager::IsOriginAllowed(render_process_id_,
                                            security_origin)) {
     bad_message::ReceivedBadMessage(render_process_id_,
@@ -238,11 +250,9 @@ void MediaDevicesDispatcherHost::UnsubscribeDeviceChangeNotifications(
                            return info.subscription_id == subscription_id;
                          });
 
-  if (it == device_change_subscriptions_[type].end()) {
-    bad_message::ReceivedBadMessage(
-        render_process_id_, bad_message::MDDH_INVALID_UNSUBSCRIPTION_REQUEST);
+  // Ignore invalid unsubscription requests.
+  if (it == device_change_subscriptions_[type].end())
     return;
-  }
 
   device_change_subscriptions_[type].erase(it);
   if (device_change_subscriptions_[type].empty()) {

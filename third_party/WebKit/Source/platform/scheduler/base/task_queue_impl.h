@@ -167,7 +167,8 @@ class PLATFORM_EXPORT TaskQueueImpl final : public TaskQueue {
   // Must only be called from the thread this task queue was created on.
   void ReloadImmediateWorkQueueIfEmpty();
 
-  void AsValueInto(base::trace_event::TracedValue* state) const;
+  void AsValueInto(base::TimeTicks now,
+                   base::trace_event::TracedValue* state) const;
 
   bool GetQuiescenceMonitored() const { return should_monitor_quiescence_; }
   bool GetShouldNotifyObservers() const { return should_notify_observers_; }
@@ -319,16 +320,23 @@ class PLATFORM_EXPORT TaskQueueImpl final : public TaskQueue {
       EnqueueOrder sequence_number,
       bool nestable);
 
+  // We reserve an inline capacity of 8 tasks to try and reduce the load on
+  // PartitionAlloc.
+  using TaskDeque = WTF::Deque<Task, 8>;
+
   // Extracts all the tasks from the immediate incoming queue and clears it.
   // Can be called from any thread.
-  WTF::Deque<TaskQueueImpl::Task> TakeImmediateIncomingQueue();
+  TaskDeque TakeImmediateIncomingQueue();
 
   void TraceQueueSize() const;
-  static void QueueAsValueInto(const WTF::Deque<Task>& queue,
+  static void QueueAsValueInto(const TaskDeque& queue,
+                               base::TimeTicks now,
                                base::trace_event::TracedValue* state);
   static void QueueAsValueInto(const std::priority_queue<Task>& queue,
+                               base::TimeTicks now,
                                base::trace_event::TracedValue* state);
   static void TaskAsValueInto(const Task& task,
+                              base::TimeTicks now,
                               base::trace_event::TracedValue* state);
 
   void RemoveQueueEnabledVoter(const QueueEnabledVoterImpl* voter);
@@ -368,12 +376,12 @@ class PLATFORM_EXPORT TaskQueueImpl final : public TaskQueue {
   }
 
   mutable base::Lock immediate_incoming_queue_lock_;
-  WTF::Deque<Task> immediate_incoming_queue_;
-  WTF::Deque<Task>& immediate_incoming_queue() {
+  TaskDeque immediate_incoming_queue_;
+  TaskDeque& immediate_incoming_queue() {
     immediate_incoming_queue_lock_.AssertAcquired();
     return immediate_incoming_queue_;
   }
-  const WTF::Deque<Task>& immediate_incoming_queue() const {
+  const TaskDeque& immediate_incoming_queue() const {
     immediate_incoming_queue_lock_.AssertAcquired();
     return immediate_incoming_queue_;
   }

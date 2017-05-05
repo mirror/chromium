@@ -260,7 +260,8 @@ void LayerImpl::AppendDebugBorderQuad(RenderPass* render_pass,
 }
 
 void LayerImpl::GetContentsResourceId(ResourceId* resource_id,
-                                      gfx::Size* resource_size) const {
+                                      gfx::Size* resource_size,
+                                      gfx::SizeF* resource_uv_size) const {
   NOTREACHED();
   *resource_id = 0;
 }
@@ -930,14 +931,6 @@ gfx::Rect LayerImpl::GetScaledEnclosingRectInTargetSpace(float scale) const {
   gfx::Size scaled_bounds = gfx::ScaleToCeiledSize(bounds(), scale);
   return MathUtil::MapEnclosingClippedRect(scaled_draw_transform,
                                            gfx::Rect(scaled_bounds));
-}
-
-RenderSurfaceImpl* LayerImpl::GetRenderSurface() const {
-  DCHECK(effect_tree_index_ != EffectTree::kInvalidNodeId);
-  EffectNode* effect_node = GetEffectTree().Node(effect_tree_index_);
-  if (effect_node->owning_layer_id == id())
-    return GetEffectTree().GetRenderSurface(effect_tree_index_);
-  return nullptr;
 }
 
 RenderSurfaceImpl* LayerImpl::render_target() {

@@ -34,10 +34,10 @@
 #include "bindings/core/v8/ScriptFunction.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
-#include "bindings/core/v8/SerializedScriptValue.h"
-#include "bindings/core/v8/SerializedScriptValueFactory.h"
 #include "bindings/core/v8/V8IteratorResultValue.h"
 #include "bindings/core/v8/V8ThrowException.h"
+#include "bindings/core/v8/serialization/SerializedScriptValue.h"
+#include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
 #include "core/HTMLNames.h"
 #include "core/SVGNames.h"
 #include "core/animation/DocumentTimeline.h"
@@ -2846,8 +2846,7 @@ void Internals::resetTypeAheadSession(HTMLSelectElement* select) {
 
 bool Internals::loseSharedGraphicsContext3D() {
   std::unique_ptr<WebGraphicsContext3DProvider> shared_provider =
-      WTF::WrapUnique(Platform::Current()
-                          ->CreateSharedOffscreenGraphicsContext3DProvider());
+      Platform::Current()->CreateSharedOffscreenGraphicsContext3DProvider();
   if (!shared_provider)
     return false;
   gpu::gles2::GLES2Interface* shared_gl = shared_provider->ContextGL();

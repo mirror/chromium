@@ -261,8 +261,9 @@ void LayerTreeImpl::UpdateScrollbars(int scroll_layer_id, int clip_layer_id) {
                       current_offset.y());
 }
 
-RenderSurfaceImpl* LayerTreeImpl::RootRenderSurface() const {
-  return layer_list_.empty() ? nullptr : layer_list_[0]->GetRenderSurface();
+const RenderSurfaceImpl* LayerTreeImpl::RootRenderSurface() const {
+  return property_trees_.effect_tree.GetRenderSurface(
+      EffectTree::kContentsRootNodeId);
 }
 
 bool LayerTreeImpl::LayerListIsEmpty() const {
@@ -371,11 +372,6 @@ void LayerTreeImpl::SetPropertyTrees(PropertyTrees* property_trees) {
   property_trees_.is_main_thread = false;
   property_trees_.is_active = IsActiveTree();
   property_trees_.transform_tree.set_source_to_parent_updates_allowed(false);
-  // The value of some effect node properties (like is_drawn) depends on
-  // whether we are on the active tree or not. So, we need to update the
-  // effect tree.
-  if (IsActiveTree())
-    property_trees_.effect_tree.set_needs_update(true);
 }
 
 void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
@@ -1059,8 +1055,7 @@ bool LayerTreeImpl::UpdateDrawProperties(bool update_lcd_text) {
     TRACE_EVENT2("cc", "LayerTreeImpl::UpdateDrawProperties::Occlusion",
                  "IsActive", IsActiveTree(), "SourceFrameNumber",
                  source_frame_number_);
-    OcclusionTracker occlusion_tracker(
-        layer_list_[0]->GetRenderSurface()->content_rect());
+    OcclusionTracker occlusion_tracker(RootRenderSurface()->content_rect());
     occlusion_tracker.set_minimum_tracking_size(
         settings().minimum_occlusion_tracking_size);
 
@@ -1708,6 +1703,8 @@ void LayerTreeImpl::RegisterScrollLayer(LayerImpl* layer) {
       std::pair<int, int>(layer->scroll_clip_layer_id(), layer->id()));
 
   DidUpdateScrollState(layer->id());
+
+  layer->set_needs_show_scrollbars(true);
 }
 
 void LayerTreeImpl::UnregisterScrollLayer(LayerImpl* layer) {
@@ -1797,20 +1794,6 @@ static bool PointHitsRegion(const gfx::PointF& screen_space_point,
       gfx::ToRoundedPoint(hit_test_point_in_layer_space));
 }
 
-static const gfx::Transform SurfaceScreenSpaceTransform(
-    const LayerImpl* layer) {
-  const PropertyTrees* property_trees =
-      layer->layer_tree_impl()->property_trees();
-  RenderSurfaceImpl* render_surface = layer->GetRenderSurface();
-  DCHECK(render_surface);
-  return layer->contributes_to_drawn_render_surface()
-             ? render_surface->screen_space_transform()
-             : property_trees
-                   ->ToScreenSpaceTransformWithoutSurfaceContentsScale(
-                       render_surface->TransformTreeIndex(),
-                       render_surface->EffectTreeIndex());
-}
-
 static bool PointIsClippedByAncestorClipNode(
     const gfx::PointF& screen_space_point,
     const LayerImpl* layer) {
@@ -1843,15 +1826,6 @@ static bool PointIsClippedByAncestorClipNode(
                          NULL)) {
         return true;
       }
-    }
-    const LayerImpl* clip_node_owner =
-        layer->layer_tree_impl()->LayerById(clip_node->owning_layer_id);
-    RenderSurfaceImpl* render_surface = clip_node_owner->GetRenderSurface();
-    if (render_surface &&
-        !PointHitsRect(screen_space_point,
-                       SurfaceScreenSpaceTransform(clip_node_owner),
-                       render_surface->content_rect(), NULL)) {
-      return true;
     }
   }
   return false;

@@ -22,6 +22,7 @@
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_view_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "third_party/WebKit/public/web/WebInputElement.h"
 
 namespace blink {
@@ -44,7 +45,8 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   explicit PasswordAutofillAgent(content::RenderFrame* render_frame);
   ~PasswordAutofillAgent() override;
 
-  void BindRequest(mojom::PasswordAutofillAgentRequest request);
+  void BindRequest(const service_manager::BindSourceInfo& source_info,
+                   mojom::PasswordAutofillAgentRequest request);
 
   void SetAutofillAgent(AutofillAgent* autofill_agent);
 
@@ -88,9 +90,13 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   bool DidClearAutofillSelection(
       const blink::WebFormControlElement& control_element);
 
-  // If the form is non-secure, show the "Not Secure" warning on username and
-  // password input fields.
+  // Returns whether a "Login not secure" warning should be shown on the input
+  // field. This is true if the feature is enabled and if the form is
+  // non-secure.
   bool ShouldShowNotSecureWarning(const blink::WebInputElement& element);
+
+  // Returns whether the element is a username or password textfield.
+  bool IsUsernameOrPasswordField(const blink::WebInputElement& element);
 
   // Shows an Autofill popup with username suggestions for |element|. If
   // |show_all| is |true|, will show all possible suggestions for that element,
@@ -285,6 +291,9 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
 
   // True indicates that a request for credentials has been sent to the store.
   bool sent_request_to_store_;
+
+  // True indicates that a safe browsing reputation check has been triggered.
+  bool checked_safe_browsing_reputation_;
 
   // Records the username typed before suggestions preview.
   base::string16 username_query_prefix_;
