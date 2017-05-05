@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb022d24_27f75309",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/wasm/wasm_indexeddb_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-05T19:59:05Z",
+      "side": 1,
+      "message": "We should assert the specific type of exception i.e. assert_equals(error.name, \u0027DataCloneError\u0027)",
+      "range": {
+        "startLine": 76,
+        "startChar": 37,
+        "endLine": 76,
+        "endChar": 47
+      },
+      "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b21d90_bc6ac205",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-05T19:59:05Z",
+      "side": 1,
+      "message": "Why introduce {} here? (not required for single-line bodies, last I checked?)",
+      "range": {
+        "startLine": 448,
+        "startChar": 20,
+        "endLine": 448,
+        "endChar": 21
+      },
+      "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffb10f7_86a79d4f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-05T19:59:05Z",
+      "side": 1,
+      "message": "My initial reaction: \"Where is the check for secure context???\"\n\nCan you add a comment that \"inline_wasm_\" implies a secure context, therefore (!inline_wasm_ \u0026\u0026 for_storage_) is not secure (and thus we have chrome-specific behavior for now, link to tracking crbug etc)\n\n(What do you think about renaming write_wasm_to_stream and inline_wasm_ to for_secure_context, or is it going to be used in other ways? it looks like that\u0027s the only use of it now.)",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 18
+      },
+      "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69592e7b_501807b4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-05T19:59:05Z",
+      "side": 1,
+      "message": "The security team prefers \"non-secure contexts\" (\"insecure\" has an alternate meaning in English)",
+      "range": {
+        "startLine": 457,
+        "startChar": 44,
+        "endLine": 457,
+        "endChar": 52
+      },
+      "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
