@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a731e2ef_e3b0d862",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/IPHInfoBarSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-05T04:08:28Z",
+      "side": 1,
+      "message": "dtrainor: Does this require also dismissing the tracker too?",
+      "range": {
+        "startLine": 114,
+        "startChar": 12,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "e3653623224eda7d87771b0816383865bbd3b239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261abaf8_d1c98ca4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/IPHInfoBarSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-05T04:08:28Z",
+      "side": 1,
+      "message": "dtrainor: Will this always hold, or should only this or the one above hold?",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 36
+      },
+      "revId": "e3653623224eda7d87771b0816383865bbd3b239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
