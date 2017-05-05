@@ -50,9 +50,6 @@ class NET_EXPORT_PRIVATE QuicChromiumClientStream : public QuicSpdyStream {
     // Called when the stream is closed because of an error.
     virtual void OnError(int error) = 0;
 
-    // Returns true if sending of headers has completed.
-    virtual bool HasSendHeadersComplete() = 0;
-
    protected:
     virtual ~Delegate() {}
 
@@ -108,12 +105,6 @@ class NET_EXPORT_PRIVATE QuicChromiumClientStream : public QuicSpdyStream {
   // Reads at most |buf_len| bytes into |buf|. Returns the number of bytes read.
   int Read(IOBuffer* buf, int buf_len);
 
-  // Returns true if the stream can possible write data.  (The socket may
-  // turn out to be write blocked, of course).  If the stream can not write,
-  // this method returns false, and |callback| will be invoked when
-  // it becomes writable.
-  bool CanWrite(const CompletionCallback& callback);
-
   const NetLogWithSource& net_log() const { return net_log_; }
 
   // Prevents this stream from migrating to a new network. May cause other
@@ -142,7 +133,12 @@ class NET_EXPORT_PRIVATE QuicChromiumClientStream : public QuicSpdyStream {
 
   bool headers_delivered_;
 
-  CompletionCallback callback_;
+  // True when initial headers have been sent.
+  bool initial_headers_sent_;
+
+  // Callback to be invoked when WriteStreamData or WritevStreamData completes
+  // asynchronously.
+  CompletionCallback write_callback_;
 
   QuicClientSessionBase* session_;
 

@@ -915,7 +915,24 @@ RenderFrameHostImpl* WebContentsImpl::GetFocusedFrame() {
 }
 
 RenderFrameHostImpl* WebContentsImpl::FindFrameByFrameTreeNodeId(
+    int frame_tree_node_id,
+    int process_id) {
+  FrameTreeNode* frame = frame_tree_.FindByID(frame_tree_node_id);
+
+  // Sanity check that this is in the caller's expected process. Otherwise a
+  // recent cross-process navigation may have led to a privilege change that the
+  // caller is not expecting.
+  if (!frame ||
+      frame->current_frame_host()->GetProcess()->GetID() != process_id)
+    return nullptr;
+
+  return frame->current_frame_host();
+}
+
+RenderFrameHostImpl* WebContentsImpl::UnsafeFindFrameByFrameTreeNodeId(
     int frame_tree_node_id) {
+  // Beware using this! The RenderFrameHost may have changed since the caller
+  // obtained frame_tree_node_id.
   FrameTreeNode* frame = frame_tree_.FindByID(frame_tree_node_id);
   return frame ? frame->current_frame_host() : nullptr;
 }
@@ -4363,9 +4380,6 @@ void WebContentsImpl::RunJavaScriptDialog(RenderFrameHost* render_frame_host,
                    render_frame_host->GetRoutingID(), reply_msg,
                    true, false, base::string16());
   }
-
-  // OnDialogClosed (two lines up) may have caused deletion of this object (see
-  // http://crbug.com/288961 ). The only safe thing to do here is return.
 }
 
 void WebContentsImpl::RunBeforeUnloadConfirm(
@@ -4383,7 +4397,7 @@ void WebContentsImpl::RunBeforeUnloadConfirm(
       delegate_->ShouldSuppressDialogs(this) ||
       !delegate_->GetJavaScriptDialogManager(this);
   if (suppress_this_message) {
-    rfhi->JavaScriptDialogClosed(reply_msg, true, base::string16(), true);
+    rfhi->JavaScriptDialogClosed(reply_msg, true, base::string16());
     return;
   }
 
@@ -5194,7 +5208,7 @@ WebContentsAndroid* WebContentsImpl::GetWebContentsAndroid() {
       static_cast<WebContentsAndroid*>(GetUserData(kWebContentsAndroidKey));
   if (!web_contents_android) {
     web_contents_android = new WebContentsAndroid(this);
-    SetUserData(kWebContentsAndroidKey, web_contents_android);
+    SetUserData(kWebContentsAndroidKey, base::WrapUnique(web_contents_android));
   }
   return web_contents_android;
 }
@@ -5269,8 +5283,7 @@ void WebContentsImpl::OnDialogClosed(int render_process_id,
   }
 
   if (rfh) {
-    rfh->JavaScriptDialogClosed(reply_msg, success, user_input,
-                                dialog_was_suppressed);
+    rfh->JavaScriptDialogClosed(reply_msg, success, user_input);
   } else {
     // Don't leak the sync IPC reply if the RFH or process is gone.
     delete reply_msg;

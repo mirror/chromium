@@ -139,8 +139,8 @@ bool IsTCPFastOpenUserEnabled() {
 void CheckSupportAndMaybeEnableTCPFastOpen(bool user_enabled) {
 #if defined(OS_LINUX) || defined(OS_ANDROID)
   base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE, base::TaskTraits().MayBlock().WithShutdownBehavior(
-                     base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN),
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(SystemSupportsTCPFastOpen),
       base::Bind(RegisterTCPFastOpenIntentAndSupport, user_enabled));
 #endif
@@ -175,7 +175,7 @@ int TCPSocketPosix::Open(AddressFamily family) {
   return rv;
 }
 
-int TCPSocketPosix::AdoptConnectedSocket(int socket_fd,
+int TCPSocketPosix::AdoptConnectedSocket(SocketDescriptor socket,
                                          const IPEndPoint& peer_address) {
   DCHECK(!socket_);
 
@@ -187,7 +187,17 @@ int TCPSocketPosix::AdoptConnectedSocket(int socket_fd,
   }
 
   socket_.reset(new SocketPosix);
-  int rv = socket_->AdoptConnectedSocket(socket_fd, storage);
+  int rv = socket_->AdoptConnectedSocket(socket, storage);
+  if (rv != OK)
+    socket_.reset();
+  return rv;
+}
+
+int TCPSocketPosix::AdoptUnconnectedSocket(SocketDescriptor socket) {
+  DCHECK(!socket_);
+
+  socket_.reset(new SocketPosix);
+  int rv = socket_->AdoptUnconnectedSocket(socket);
   if (rv != OK)
     socket_.reset();
   return rv;
@@ -483,6 +493,12 @@ void TCPSocketPosix::EndLoggingMultipleConnectAttempts(int net_error) {
   } else {
     NOTREACHED();
   }
+}
+
+SocketDescriptor TCPSocketPosix::ReleaseSocketDescriptorForTesting() {
+  SocketDescriptor socket_descriptor = socket_->ReleaseConnectedSocket();
+  socket_.reset();
+  return socket_descriptor;
 }
 
 void TCPSocketPosix::AcceptCompleted(

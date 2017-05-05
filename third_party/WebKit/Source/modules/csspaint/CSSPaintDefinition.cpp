@@ -4,16 +4,16 @@
 
 #include "modules/csspaint/CSSPaintDefinition.h"
 
-#include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
-#include "bindings/core/v8/V8BindingMacros.h"
-#include "bindings/core/v8/V8ObjectConstructor.h"
 #include "core/css/CSSComputedStyleDeclaration.h"
 #include "core/css/cssom/FilteredComputedStylePropertyMap.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/layout/LayoutObject.h"
 #include "modules/csspaint/PaintRenderingContext2D.h"
 #include "modules/csspaint/PaintSize.h"
+#include "platform/bindings/ScriptState.h"
+#include "platform/bindings/V8BindingMacros.h"
+#include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/PaintGeneratedImage.h"
 #include "platform/graphics/RecordingImageBufferSurface.h"
@@ -69,10 +69,10 @@ CSSPaintDefinition::~CSSPaintDefinition() {}
 PassRefPtr<Image> CSSPaintDefinition::Paint(
     const LayoutObject& layout_object,
     const IntSize& size,
-    float zoom,
     const CSSStyleValueVector* paint_arguments) {
   DCHECK(paint_arguments);
 
+  float zoom = layout_object.StyleRef().EffectiveZoom();
   const IntSize specified_size = GetSpecifiedSize(size, zoom);
 
   ScriptState::Scope scope(script_state_.Get());

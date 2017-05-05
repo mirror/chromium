@@ -11,7 +11,7 @@
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/payments/core/address_normalizer.h"
-#include "components/payments/core/payment_request_delegate.h"
+#include "components/payments/core/test_payment_request_delegate.h"
 #include "components/strings/grit/components_strings.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -124,6 +124,8 @@ class FakePaymentRequestDelegate : public PaymentRequestDelegate {
   }
 
   autofill::RegionDataLoader* GetRegionDataLoader() override { return nullptr; }
+
+  ukm::UkmService* GetUkmService() override { return nullptr; }
 
  private:
   std::string locale_;
@@ -283,7 +285,9 @@ TEST_F(AutofillPaymentInstrumentTest, IsValidForCanMakePayment_NoNumber) {
 // the billing address has been normalized and the card has been unmasked.
 TEST_F(AutofillPaymentInstrumentTest,
        InvokePaymentApp_NormalizationBeforeUnmask) {
-  FakePaymentRequestDelegate delegate;
+  TestPaymentRequestDelegate delegate(/*personal_data_manager=*/nullptr);
+  delegate.DelayFullCardRequestCompletion();
+  delegate.test_address_normalizer()->DelayNormalization();
 
   autofill::CreditCard& card = local_credit_card();
   card.SetNumber(base::ASCIIToUTF16(""));
@@ -296,7 +300,7 @@ TEST_F(AutofillPaymentInstrumentTest,
   EXPECT_FALSE(instrument_delegate.WasOnInstrumentDetailsReadyCalled());
   EXPECT_FALSE(instrument_delegate.WasOnInstrumentDetailsErrorCalled());
 
-  delegate.GetTestAddressNormalizer()->CompleteAddressNormalization();
+  delegate.test_address_normalizer()->CompleteAddressNormalization();
   EXPECT_FALSE(instrument_delegate.WasOnInstrumentDetailsReadyCalled());
   EXPECT_FALSE(instrument_delegate.WasOnInstrumentDetailsErrorCalled());
 
@@ -309,7 +313,9 @@ TEST_F(AutofillPaymentInstrumentTest,
 // the billing address has been normalized and the card has been unmasked.
 TEST_F(AutofillPaymentInstrumentTest,
        InvokePaymentApp_UnmaskBeforeNormalization) {
-  FakePaymentRequestDelegate delegate;
+  TestPaymentRequestDelegate delegate(/*personal_data_manager=*/nullptr);
+  delegate.DelayFullCardRequestCompletion();
+  delegate.test_address_normalizer()->DelayNormalization();
 
   autofill::CreditCard& card = local_credit_card();
   card.SetNumber(base::ASCIIToUTF16(""));
@@ -326,7 +332,7 @@ TEST_F(AutofillPaymentInstrumentTest,
   EXPECT_FALSE(instrument_delegate.WasOnInstrumentDetailsReadyCalled());
   EXPECT_FALSE(instrument_delegate.WasOnInstrumentDetailsErrorCalled());
 
-  delegate.GetTestAddressNormalizer()->CompleteAddressNormalization();
+  delegate.test_address_normalizer()->CompleteAddressNormalization();
   EXPECT_TRUE(instrument_delegate.WasOnInstrumentDetailsReadyCalled());
   EXPECT_FALSE(instrument_delegate.WasOnInstrumentDetailsErrorCalled());
 }

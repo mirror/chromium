@@ -64,7 +64,6 @@ class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
   void OnDataAvailable() override;
   void OnClose() override;
   void OnError(int error) override;
-  bool HasSendHeadersComplete() override;
 
   // QuicChromiumClientSession::Observer implementation:
   void OnCryptoHandshakeConfirmed() override;
@@ -128,10 +127,6 @@ class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
   // until next SendData/SendvData, during which QUIC will try to combine header
   // frame with data frame in the same packet if possible.
   bool send_request_headers_automatically_;
-
-  // True of this stream is waiting for the QUIC handshake to be confirmed
-  // before sending headers.
-  bool waiting_for_confirmation_;
 
   base::WeakPtrFactory<BidirectionalStreamQuicImpl> weak_factory_;
 

@@ -61,6 +61,8 @@
 #include "core/page/FrameTree.h"
 #include "core/page/Page.h"
 #include "core/probe/CoreProbes.h"
+#include "core/timing/DOMWindowPerformance.h"
+#include "core/timing/Performance.h"
 #include "platform/HTTPNames.h"
 #include "platform/UserGestureIndicator.h"
 #include "platform/feature_policy/FeaturePolicy.h"
@@ -128,8 +130,8 @@ LocalFrameClient& DocumentLoader::GetLocalFrameClient() const {
   DCHECK(frame_);
   LocalFrameClient* client = frame_->Client();
   // LocalFrame clears its |m_client| only after detaching all DocumentLoaders
-  // (i.e. calls detachFromFrame() which clears |m_frame|) owned by the
-  // LocalFrame's FrameLoader. So, if |m_frame| is non nullptr, |client| is
+  // (i.e. calls detachFromFrame() which clears |frame_|) owned by the
+  // LocalFrame's FrameLoader. So, if |frame_| is non nullptr, |client| is
   // also non nullptr.
   DCHECK(client);
   return *client;
@@ -186,10 +188,8 @@ Resource* DocumentLoader::StartPreload(Resource::Type type,
   Resource* resource = nullptr;
   switch (type) {
     case Resource::kImage:
-      if (frame_ && frame_->GetSettings() &&
-          frame_->GetSettings()->GetFetchImagePlaceholders()) {
-        params.SetAllowImagePlaceholder();
-      }
+      if (frame_)
+        frame_->MaybeAllowImagePlaceholder(params);
       resource = ImageResource::Fetch(params, Fetcher());
       break;
     case Resource::kScript:
@@ -217,11 +217,6 @@ Resource* DocumentLoader::StartPreload(Resource::Type type,
       NOTREACHED();
   }
 
-  // CSP layout tests verify that preloads are subject to access checks by
-  // seeing if they are in the `preload started` list. Therefore do not add
-  // them to the list if the load is immediately denied.
-  if (resource && !resource->GetResourceError().IsAccessCheck())
-    Fetcher()->PreloadStarted(resource);
   return resource;
 }
 
@@ -242,9 +237,10 @@ std::unique_ptr<SourceLocation> DocumentLoader::CopySourceLocation() const {
 void DocumentLoader::DispatchLinkHeaderPreloads(
     ViewportDescriptionWrapper* viewport,
     LinkLoader::MediaPreloadPolicy media_policy) {
+  DCHECK_GE(state_, kCommitted);
   LinkLoader::LoadLinksFromHeader(
       GetResponse().HttpHeaderField(HTTPNames::Link), GetResponse().Url(),
-      frame_->GetDocument(), NetworkHintsInterfaceImpl(),
+      *frame_, frame_->GetDocument(), NetworkHintsInterfaceImpl(),
       LinkLoader::kOnlyLoadResources, media_policy, viewport);
 }
 
@@ -948,6 +944,13 @@ void DocumentLoader::DidInstallNewDocument(Document* document) {
     document->ParseAndSetReferrerPolicy(referrer_policy_header);
   }
 
+  if (RuntimeEnabledFeatures::serverTimingEnabled() &&
+      frame_->GetDocument()->domWindow()) {
+    DOMWindowPerformance::performance(*(frame_->GetDocument()->domWindow()))
+        ->AddServerTiming(response_,
+                          PerformanceBase::ShouldAddToBuffer::Always);
+  }
+
   GetLocalFrameClient().DidCreateNewDocument();
 }
 
@@ -1058,7 +1061,7 @@ void DocumentLoader::InstallNewDocument(
     // that the name would be nulled and if the name is accessed after we will
     // fire a UseCounter. If we decide to move forward with this change, we'd
     // actually clean the name here.
-    // m_frame->tree().setName(nullAtom);
+    // frame_->tree().setName(nullAtom);
     frame_->Tree().ExperimentalSetNulledName();
   }
 

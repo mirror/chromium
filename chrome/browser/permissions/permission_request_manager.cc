@@ -113,7 +113,7 @@ void PermissionRequestManager::AddRequest(PermissionRequest* request) {
   // any other renderer-side nav initiations?). Double-check this for
   // correct behavior on interstitials -- we probably want to basically queue
   // any request for which GetVisibleURL != GetLastCommittedURL.
-  request_url_ = web_contents()->GetLastCommittedURL();
+  const GURL& request_url_ = web_contents()->GetLastCommittedURL();
   bool is_main_frame = url::Origin(request_url_)
                            .IsSameOriginWith(url::Origin(request->GetOrigin()));
 
@@ -341,6 +341,7 @@ void PermissionRequestManager::Accept() {
 }
 
 void PermissionRequestManager::Deny() {
+  DCHECK_EQ(1u, requests_.size());
   PermissionUmaUtil::PermissionPromptDenied(requests_);
 
   std::vector<PermissionRequest*>::iterator requests_iter;
@@ -419,8 +420,6 @@ void PermissionRequestManager::FinalizeBubble() {
   accept_states_.clear();
   if (queued_requests_.size() || queued_frame_requests_.size())
     TriggerShowBubble();
-  else
-    request_url_ = GURL();
 }
 
 void PermissionRequestManager::CancelPendingQueues() {
@@ -524,7 +523,14 @@ void PermissionRequestManager::DoAutoResponseForTesting() {
       Accept();
       break;
     case DENY_ALL:
-      Deny();
+      // Deny() assumes there is only 1 request.
+      if (accept_states_.size() == 1) {
+        Deny();
+      } else {
+        for (size_t i = 0; i < accept_states_.size(); ++i)
+          accept_states_[i] = false;
+        Accept();
+      }
       break;
     case DISMISS:
       Closing();

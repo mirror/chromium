@@ -682,6 +682,9 @@ interface CSSScale : CSSTransformComponent
     getter y
     getter z
     method constructor
+    setter x
+    setter y
+    setter z
 interface CSSSimpleLength : CSSLengthValue
     attribute @@toStringTag
     getter type
@@ -4361,7 +4364,7 @@ interface Navigator
     getter vendorSub
     getter webkitPersistentStorage
     getter webkitTemporaryStorage
-    method cancelKeyLock
+    method cancelKeyboardLock
     method constructor
     method getBattery
     method getGamepads
@@ -4371,7 +4374,7 @@ interface Navigator
     method isProtocolHandlerRegistered
     method javaEnabled
     method registerProtocolHandler
-    method requestKeyLock
+    method requestKeyboardLock
     method requestMIDIAccess
     method requestMediaKeySystemAccess
     method sendBeacon
@@ -4819,6 +4822,11 @@ interface PerformanceResourceTiming : PerformanceEntry
     getter secureConnectionStart
     getter transferSize
     getter workerStart
+    method constructor
+interface PerformanceServerTiming : PerformanceEntry
+    attribute @@toStringTag
+    getter description
+    getter metric
     method constructor
 interface PerformanceTiming
     attribute @@toStringTag

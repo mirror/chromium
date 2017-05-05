@@ -35,14 +35,16 @@ namespace tether {
 class ActiveHost;
 class ActiveHostNetworkStateUpdater;
 class BleConnectionManager;
+class NetworkConnectionHandlerTetherDelegate;
 class DeviceIdTetherNetworkGuidMap;
+class HostScanCache;
 class HostScanner;
 class HostScanDevicePrioritizer;
 class LocalDeviceDataProvider;
 class NetworkConfigurationRemover;
 class NotificationPresenter;
 class TetherConnector;
-class TetherDeviceStateManager;
+class TetherDisconnector;
 class TetherHostFetcher;
 class TetherHostResponseRecorder;
 class TetherNetworkDisconnectionHandler;
@@ -107,7 +109,6 @@ class Initializer : public OAuth2TokenService::Observer {
   // Declare new objects in the order that they will be created during
   // initialization to ensure that they are destroyed in the correct order. This
   // order will be enforced by InitializerTest.TestCreateAndDestroy.
-  std::unique_ptr<TetherDeviceStateManager> tether_device_state_manager_;
   std::unique_ptr<TetherHostFetcher> tether_host_fetcher_;
   std::unique_ptr<LocalDeviceDataProvider> local_device_data_provider_;
   std::unique_ptr<cryptauth::RemoteBeaconSeedFetcher>
@@ -122,9 +123,13 @@ class Initializer : public OAuth2TokenService::Observer {
   std::unique_ptr<DeviceIdTetherNetworkGuidMap>
       device_id_tether_network_guid_map_;
   std::unique_ptr<TetherConnector> tether_connector_;
+  std::unique_ptr<TetherDisconnector> tether_disconnector_;
   std::unique_ptr<NetworkConfigurationRemover> network_configuration_remover_;
+  std::unique_ptr<NetworkConnectionHandlerTetherDelegate>
+      network_connection_handler_tether_delegate_;
   std::unique_ptr<TetherNetworkDisconnectionHandler>
       tether_network_disconnection_handler_;
+  std::unique_ptr<HostScanCache> host_scan_cache_;
   std::unique_ptr<HostScanner> host_scanner_;
 
   base::WeakPtrFactory<Initializer> weak_ptr_factory_;

@@ -165,6 +165,12 @@ typedef base::hash_map<RenderFrameHostID, RenderFrameHostImpl*>
 base::LazyInstance<RoutingIDFrameMap>::DestructorAtExit g_routing_id_frame_map =
     LAZY_INSTANCE_INITIALIZER;
 
+using TokenFrameMap = base::hash_map<base::UnguessableToken,
+                                     RenderFrameHostImpl*,
+                                     base::UnguessableTokenHash>;
+base::LazyInstance<TokenFrameMap>::Leaky g_token_frame_map =
+    LAZY_INSTANCE_INITIALIZER;
+
 // Translate a WebKit text direction into a base::i18n one.
 base::i18n::TextDirection WebTextDirectionToChromeTextDirection(
     blink::WebTextDirection dir) {
@@ -229,7 +235,9 @@ class RemoterFactoryImpl final : public media::mojom::RemoterFactory {
   RemoterFactoryImpl(int process_id, int routing_id)
       : process_id_(process_id), routing_id_(routing_id) {}
 
-  static void Bind(int process_id, int routing_id,
+  static void Bind(int process_id,
+                   int routing_id,
+                   const service_manager::BindSourceInfo& source_info,
                    media::mojom::RemoterFactoryRequest request) {
     mojo::MakeStrongBinding(
         base::MakeUnique<RemoterFactoryImpl>(process_id, routing_id),
@@ -253,7 +261,8 @@ class RemoterFactoryImpl final : public media::mojom::RemoterFactory {
 #endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
 
 template <typename Interface>
-void IgnoreInterfaceRequest(mojo::InterfaceRequest<Interface> request) {
+void IgnoreInterfaceRequest(const service_manager::BindSourceInfo& source_info,
+                            mojo::InterfaceRequest<Interface> request) {
   // Intentionally ignore the interface request.
 }
 
@@ -317,7 +326,8 @@ void RenderFrameHost::AllowInjectingJavaScriptForAndroidWebView() {
 
 void CreateMediaPlayerRenderer(
     content::RenderFrameHost* render_frame_host,
-    mojo::InterfaceRequest<media::mojom::Renderer> request) {
+    const service_manager::BindSourceInfo& source_info,
+    media::mojom::RendererRequest request) {
   std::unique_ptr<MediaPlayerRenderer> renderer =
       base::MakeUnique<MediaPlayerRenderer>(render_frame_host);
 
@@ -358,6 +368,14 @@ RenderFrameHostImpl* RenderFrameHostImpl::FromAXTreeID(
   ui::AXTreeIDRegistry::FrameID frame_id =
       ui::AXTreeIDRegistry::GetInstance()->GetFrameID(ax_tree_id);
   return RenderFrameHostImpl::FromID(frame_id.first, frame_id.second);
+}
+
+// static
+RenderFrameHostImpl* RenderFrameHostImpl::FromOverlayRoutingToken(
+    const base::UnguessableToken& token) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto it = g_token_frame_map.Get().find(token);
+  return it == g_token_frame_map.Get().end() ? nullptr : it->second;
 }
 
 RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
@@ -465,6 +483,10 @@ RenderFrameHostImpl::~RenderFrameHostImpl() {
   GetProcess()->RemoveRoute(routing_id_);
   g_routing_id_frame_map.Get().erase(
       RenderFrameHostID(GetProcess()->GetID(), routing_id_));
+
+  if (overlay_routing_token_)
+    g_token_frame_map.Get().erase(*overlay_routing_token_);
+
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::Bind(&NotifyRenderFrameDetachedOnIO,
                                      GetProcess()->GetID(), routing_id_));
@@ -516,6 +538,15 @@ int RenderFrameHostImpl::GetRoutingID() {
 ui::AXTreeIDRegistry::AXTreeID RenderFrameHostImpl::GetAXTreeID() {
   return ui::AXTreeIDRegistry::GetInstance()->GetOrCreateAXTreeID(
       GetProcess()->GetID(), routing_id_);
+}
+
+const base::UnguessableToken& RenderFrameHostImpl::GetOverlayRoutingToken() {
+  if (!overlay_routing_token_) {
+    overlay_routing_token_ = base::UnguessableToken::Create();
+    g_token_frame_map.Get().emplace(*overlay_routing_token_, this);
+  }
+
+  return *overlay_routing_token_;
 }
 
 SiteInstanceImpl* RenderFrameHostImpl::GetSiteInstance() {
@@ -814,6 +845,7 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_FocusedNodeChanged, OnFocusedNodeChanged)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SetHasReceivedUserGesture,
                         OnSetHasReceivedUserGesture)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_SetDevToolsFrameId, OnSetDevToolsFrameId)
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ShowPopup, OnShowPopup)
     IPC_MESSAGE_HANDLER(FrameHostMsg_HidePopup, OnHidePopup)
@@ -822,6 +854,8 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_NavigationHandledByEmbedder,
                         OnNavigationHandledByEmbedder)
 #endif
+    IPC_MESSAGE_HANDLER(FrameHostMsg_RequestOverlayRoutingToken,
+                        OnRequestOverlayRoutingToken)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ShowCreatedWindow, OnShowCreatedWindow)
   IPC_END_MESSAGE_MAP()
 
@@ -2438,6 +2472,11 @@ void RenderFrameHostImpl::OnSetHasReceivedUserGesture() {
   frame_tree_node_->OnSetHasReceivedUserGesture();
 }
 
+void RenderFrameHostImpl::OnSetDevToolsFrameId(
+    const std::string& devtools_frame_id) {
+  untrusted_devtools_frame_id_ = devtools_frame_id;
+}
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 void RenderFrameHostImpl::OnShowPopup(
     const FrameHostMsg_ShowPopup_Params& params) {
@@ -2473,6 +2512,14 @@ void RenderFrameHostImpl::OnNavigationHandledByEmbedder() {
   OnDidStopLoading();
 }
 #endif
+
+void RenderFrameHostImpl::OnRequestOverlayRoutingToken() {
+  // Make sure that we have a token.
+  GetOverlayRoutingToken();
+
+  Send(new FrameMsg_SetOverlayRoutingToken(routing_id_,
+                                           *overlay_routing_token_));
+}
 
 void RenderFrameHostImpl::OnShowCreatedWindow(int pending_widget_routing_id,
                                               WindowOpenDisposition disposition,
@@ -2629,16 +2676,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
                    base::Unretained(geolocation_service_context)));
   }
 
-  device::mojom::WakeLockContext* wake_lock_service_context =
-      delegate_ ? delegate_->GetWakeLockServiceContext() : nullptr;
-  if (wake_lock_service_context) {
-    // WakeLockServiceContext is owned by WebContentsImpl so it will outlive
-    // this RenderFrameHostImpl, hence a raw pointer can be bound to service
-    // factory callback.
-    GetInterfaceRegistry()->AddInterface<device::mojom::WakeLockService>(
-        base::Bind(&device::mojom::WakeLockContext::GetWakeLock,
-                   base::Unretained(wake_lock_service_context)));
-  }
+  GetInterfaceRegistry()->AddInterface<device::mojom::WakeLockService>(
+      base::Bind(&RenderFrameHostImpl::BindWakeLockServiceRequest,
+                 base::Unretained(this)));
 
   if (!permission_service_context_)
     permission_service_context_.reset(new PermissionServiceContext(this));
@@ -2663,7 +2703,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       base::IgnoreResult(&RenderFrameHostImpl::CreateWebBluetoothService),
       base::Unretained(this)));
 
-  GetInterfaceRegistry()->AddInterface<media::mojom::InterfaceFactory>(this);
+  GetInterfaceRegistry()->AddInterface<media::mojom::InterfaceFactory>(
+      base::Bind(&RenderFrameHostImpl::BindMediaInterfaceFactoryRequest,
+                 base::Unretained(this)));
 
   // This is to support usage of WebSockets in cases in which there is an
   // associated RenderFrame. This is important for showing the correct security
@@ -2943,8 +2985,7 @@ void RenderFrameHostImpl::DeleteSurroundingTextInCodePoints(int before,
 void RenderFrameHostImpl::JavaScriptDialogClosed(
     IPC::Message* reply_msg,
     bool success,
-    const base::string16& user_input,
-    bool dialog_was_suppressed) {
+    const base::string16& user_input) {
   GetProcess()->SetIgnoreInputEvents(false);
 
   SendJavaScriptDialogReply(reply_msg, success, user_input);
@@ -2953,17 +2994,10 @@ void RenderFrameHostImpl::JavaScriptDialogClosed(
   // timers stopped in this frame or a frame up in the frame hierarchy. Restart
   // any timers that were stopped in OnRunBeforeUnloadConfirm().
   for (RenderFrameHostImpl* frame = this; frame; frame = frame->GetParent()) {
-    if (frame->is_waiting_for_beforeunload_ack_) {
-      // If we are waiting for a beforeunload ack and the user has suppressed
-      // messages, kill the tab immediately. A page that's spamming is
-      // presumably malicious, so there's no point in continuing to run its
-      // script and dragging out the process.
-      if (dialog_was_suppressed) {
-        frame->SimulateBeforeUnloadAck();
-      } else if (frame->beforeunload_timeout_) {
-        frame->beforeunload_timeout_->Start(
-            TimeDelta::FromMilliseconds(RenderViewHostImpl::kUnloadTimeoutMS));
-      }
+    if (frame->is_waiting_for_beforeunload_ack_ &&
+        frame->beforeunload_timeout_) {
+      frame->beforeunload_timeout_->Start(
+          TimeDelta::FromMilliseconds(RenderViewHostImpl::kUnloadTimeoutMS));
     }
   }
 }
@@ -3011,9 +3045,12 @@ void RenderFrameHostImpl::CommitNavigation(
   const GURL body_url = body.get() ? body->GetURL() : GURL();
   const ResourceResponseHead head = response ?
       response->head : ResourceResponseHead();
-  Send(new FrameMsg_CommitNavigation(routing_id_, head, body_url,
-                                     handle.release(), common_params,
-                                     request_params));
+  FrameMsg_CommitDataNetworkService_Params commit_data;
+  commit_data.handle = handle.release();
+  // TODO(scottmg): Pass a factory for SW, etc. once we have one.
+  commit_data.url_loader_factory = mojo::MessagePipeHandle();
+  Send(new FrameMsg_CommitNavigation(routing_id_, head, body_url, commit_data,
+                                     common_params, request_params));
 
   // If a network request was made, update the Previews state.
   if (ShouldMakeNetworkRequestForURL(common_params.url) &&
@@ -3630,6 +3667,7 @@ void RenderFrameHostImpl::AXContentTreeDataToAXTreeData(
 }
 
 WebBluetoothServiceImpl* RenderFrameHostImpl::CreateWebBluetoothService(
+    const service_manager::BindSourceInfo& source_info,
     blink::mojom::WebBluetoothServiceRequest request) {
   // RFHI owns |web_bluetooth_services_| and |web_bluetooth_service| owns the
   // |binding_| which may run the error handler. |binding_| can't run the error
@@ -3665,8 +3703,8 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
       parent_policy, container_policy, last_committed_origin_);
 }
 
-void RenderFrameHostImpl::Create(
-    const service_manager::Identity& remote_identity,
+void RenderFrameHostImpl::BindMediaInterfaceFactoryRequest(
+    const service_manager::BindSourceInfo& source_info,
     media::mojom::InterfaceFactoryRequest request) {
   DCHECK(!media_interface_proxy_);
   media_interface_proxy_.reset(new MediaInterfaceProxy(
@@ -3680,12 +3718,22 @@ void RenderFrameHostImpl::OnMediaInterfaceFactoryConnectionError() {
   media_interface_proxy_.reset();
 }
 
+void RenderFrameHostImpl::BindWakeLockServiceRequest(
+    const service_manager::BindSourceInfo& source_info,
+    device::mojom::WakeLockServiceRequest request) {
+  device::mojom::WakeLockContext* wake_lock_service_context =
+      delegate_ ? delegate_->GetWakeLockServiceContext() : nullptr;
+  if (wake_lock_service_context)
+    wake_lock_service_context->GetWakeLock(std::move(request));
+}
+
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   if (interface_registry_.get()) {
-    interface_registry_->BindInterface(GetProcess()->GetChildIdentity(),
-                                       interface_name,
+    service_manager::BindSourceInfo source_info(
+        GetProcess()->GetChildIdentity(), service_manager::CapabilitySet());
+    interface_registry_->BindInterface(source_info, interface_name,
                                        std::move(interface_pipe));
   }
 }
@@ -3836,7 +3884,8 @@ RenderFrameHostImpl::GetJavaRenderFrameHost() {
         mojo::MakeRequest(&interface_provider_ptr));
     render_frame_host_android =
         new RenderFrameHostAndroid(this, std::move(interface_provider_ptr));
-    SetUserData(kRenderFrameHostAndroidKey, render_frame_host_android);
+    SetUserData(kRenderFrameHostAndroidKey,
+                base::WrapUnique(render_frame_host_android));
   }
   return render_frame_host_android->GetJavaObject();
 }

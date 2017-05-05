@@ -145,7 +145,15 @@ class _BlinkPerfMeasurement(legacy_page_test.LegacyPageTest):
     options.AppendExtraBrowserArgs([
         '--js-flags=--expose_gc',
         '--enable-experimental-web-platform-features',
+        # Note that both this flag:
         '--ignore-autoplay-restrictions',
+        # and this flag:
+        '--disable-gesture-requirement-for-media-playback',
+        # should be used until every build from
+        # ToT to Stable switches over to one flag or another. This is to support
+        # reference builds.
+        # --disable-gesture-requirement-for-media-playback is the old one and
+        # can be removed after M60 goes to stable.
         '--enable-experimental-canvas-features',
         # TODO(qinmin): After fixing crbug.com/592017, remove this command line.
         '--reduce-security-for-testing'
@@ -329,6 +337,10 @@ class BlinkPerfCanvas(_BlinkPerfBenchmark):
       page.skipped_gpus = []
     return story_set
 
+  def SetExtraBrowserOptions(self, options):
+    options.AppendExtraBrowserArgs([
+        '--enable-color-correct-rendering',
+    ])
 
 @benchmark.Owner(emails=['yukishiino@chromium.org',
                          'bashi@chromium.org',

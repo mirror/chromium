@@ -52,17 +52,17 @@ from v8_utilities import (cpp_name_or_partial, cpp_name, has_extended_attribute_
 INTERFACE_H_INCLUDES = frozenset([
     'bindings/core/v8/GeneratedCodeHelper.h',
     'bindings/core/v8/NativeValueTraits.h',
-    'bindings/core/v8/ScriptWrappable.h',
+    'platform/bindings/ScriptWrappable.h',
     'bindings/core/v8/ToV8ForCore.h',
     'bindings/core/v8/V8BindingForCore.h',
-    'bindings/core/v8/V8DOMWrapper.h',
+    'platform/bindings/V8DOMWrapper.h',
     'bindings/core/v8/WrapperTypeInfo.h',
     'platform/heap/Handle.h',
 ])
 INTERFACE_CPP_INCLUDES = frozenset([
     'bindings/core/v8/ExceptionState.h',
     'bindings/core/v8/V8DOMConfiguration.h',
-    'bindings/core/v8/V8ObjectConstructor.h',
+    'platform/bindings/V8ObjectConstructor.h',
     'core/dom/ExecutionContext.h',
     'platform/wtf/GetPtr.h',
     'platform/wtf/RefPtr.h',
@@ -138,7 +138,7 @@ def origin_trial_features(interface, constants, attributes, methods):
         feature['needs_instance'] = reduce(or_, (member.get('on_instance', False) for member in members))
 
     if features:
-        includes.add('bindings/core/v8/ScriptState.h')
+        includes.add('platform/bindings/ScriptState.h')
         includes.add('core/origin_trials/OriginTrials.h')
     return sorted(features)
 
@@ -300,7 +300,7 @@ def interface_context(interface, interfaces):
         if named_constructor:
             includes.add('bindings/core/v8/V8PrivateProperty.h')
 
-        includes.add('bindings/core/v8/V8ObjectConstructor.h')
+        includes.add('platform/bindings/V8ObjectConstructor.h')
         includes.add('core/frame/LocalDOMWindow.h')
     elif 'Measure' in extended_attributes or 'MeasureAs' in extended_attributes:
         if not interface.is_partial:

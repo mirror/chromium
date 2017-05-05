@@ -190,7 +190,7 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
 
     if (flags & ENABLE_PALETTE) {
       base::CommandLine::ForCurrentProcess()->AppendSwitch(
-          ash::switches::kAshForceEnablePalette);
+          ash::switches::kAshForceEnableStylusTools);
     }
 
     // TODO(derat): Sigh, something in ArcAppTest appears to be re-enabling ARC.
@@ -260,7 +260,7 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
     extensions::ExtensionSystem::Get(profile)
         ->extension_service()
         ->UnloadExtension(extension->id(),
-                          extensions::UnloadedExtensionInfo::REASON_UNINSTALL);
+                          extensions::UnloadedExtensionReason::UNINSTALL);
   }
 
   // BrowserWithTestWindowTest:

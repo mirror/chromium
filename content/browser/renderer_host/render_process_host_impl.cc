@@ -52,7 +52,7 @@
 #include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "cc/output/buffer_to_texture_target_map.h"
-#include "components/discardable_memory/service/discardable_shared_memory_manager.h"
+#include "components/metrics/single_sample_metrics.h"
 #include "components/tracing/common/tracing_switches.h"
 #include "content/browser/appcache/appcache_dispatcher_host.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
@@ -182,7 +182,6 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
-#include "services/resource_coordinator/memory/coordinator/coordinator_impl.h"
 #include "services/service_manager/embedder/switches.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -377,7 +376,7 @@ SiteProcessMap* GetSiteProcessMapForBrowserContext(BrowserContext* context) {
       context->GetUserData(kSiteProcessMapKeyName));
   if (!map) {
     map = new SiteProcessMap();
-    context->SetUserData(kSiteProcessMapKeyName, map);
+    context->SetUserData(kSiteProcessMapKeyName, base::WrapUnique(map));
   }
   return map;
 }
@@ -451,6 +450,7 @@ class SessionStorageHolder : public base::SupportsUserData::Data {
 
 void CreateMemoryCoordinatorHandle(
     int render_process_id,
+    const service_manager::BindSourceInfo& source_info,
     mojom::MemoryCoordinatorHandleRequest request) {
   MemoryCoordinatorImpl::GetInstance()->CreateHandle(render_process_id,
                                                      std::move(request));
@@ -459,7 +459,9 @@ void CreateMemoryCoordinatorHandle(
 // Forwards service requests to Service Manager since the renderer cannot launch
 // out-of-process services on is own.
 template <typename R>
-void ForwardShapeDetectionRequest(R request) {
+void ForwardShapeDetectionRequest(const service_manager::BindSourceInfo&,
+                                  R request) {
+  // TODO(beng): This should really be using the per-profile connector.
   service_manager::Connector* connector =
       ServiceManagerConnection::GetForProcess()->GetConnector();
   connector->BindInterface(shape_detection::mojom::kServiceName,
@@ -473,6 +475,7 @@ class WorkerURLLoaderFactoryProviderImpl
       int render_process_id,
       scoped_refptr<ResourceMessageFilter> resource_message_filter,
       scoped_refptr<ServiceWorkerContextWrapper> service_worker_context,
+      const service_manager::BindSourceInfo& source_info,
       mojom::WorkerURLLoaderFactoryProviderRequest request) {
     DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
     mojo::MakeStrongBinding(
@@ -601,7 +604,7 @@ class RenderProcessHostImpl::ConnectionFilterImpl : public ConnectionFilter {
       return;
 
     if (registry_->CanBindInterface(interface_name)) {
-      registry_->BindInterface(source_info.identity, interface_name,
+      registry_->BindInterface(source_info, interface_name,
                                std::move(*interface_pipe));
     }
   }
@@ -1229,15 +1232,12 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       registry.get(), GetGlobalJavaInterfaces()
                           ->CreateInterfaceFactory<
                               shape_detection::mojom::FaceDetectionProvider>());
-  AddUIThreadInterface(
-      registry.get(),
-      GetGlobalJavaInterfaces()
-          ->CreateInterfaceFactory<shape_detection::mojom::BarcodeDetection>());
-  AddUIThreadInterface(
-      registry.get(),
-      GetGlobalJavaInterfaces()
-          ->CreateInterfaceFactory<shape_detection::mojom::TextDetection>());
 #else
+  AddUIThreadInterface(
+      registry.get(),
+      base::Bind(&ForwardShapeDetectionRequest<
+                 shape_detection::mojom::FaceDetectionProviderRequest>));
+#endif
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&ForwardShapeDetectionRequest<
@@ -1245,12 +1245,8 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&ForwardShapeDetectionRequest<
-                 shape_detection::mojom::FaceDetectionProviderRequest>));
-  AddUIThreadInterface(
-      registry.get(),
-      base::Bind(&ForwardShapeDetectionRequest<
                  shape_detection::mojom::TextDetectionRequest>));
-#endif
+
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&PermissionServiceContext::CreateService,
@@ -1325,6 +1321,9 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&VideoCaptureHost::Create,
                  BrowserMainLoop::GetInstance()->media_stream_manager()));
 
+  registry->AddInterface(
+      base::Bind(&metrics::CreateSingleSampleMetricsProvider));
+
   if (base::FeatureList::IsEnabled(features::kOffMainThreadFetch)) {
     scoped_refptr<ServiceWorkerContextWrapper> service_worker_context(
         static_cast<ServiceWorkerContextWrapper*>(
@@ -1336,28 +1335,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   // This is to support usage of WebSockets in cases in which there is no
   // associated RenderFrame (e.g., Shared Workers).
-  AddUIThreadInterface(
-      registry.get(), base::Bind(&WebSocketManager::CreateWebSocket, GetID(),
-                                 MSG_ROUTING_NONE));
-
-  // Chrome browser process only provides DiscardableSharedMemory service when
-  // Chrome is not running in mus+ash.
-  if (!service_manager::ServiceManagerIsRemote()) {
-    discardable_memory::DiscardableSharedMemoryManager* manager =
-        BrowserMainLoop::GetInstance()->discardable_shared_memory_manager();
-    registry->AddInterface(
-        base::Bind(&discardable_memory::DiscardableSharedMemoryManager::Bind,
-                   base::Unretained(manager)));
-  }
+  AddUIThreadInterface(registry.get(),
+                       base::Bind(&WebSocketManager::CreateWebSocket, GetID(),
+                                  MSG_ROUTING_NONE));
 
   AddUIThreadInterface(registry.get(), base::Bind(&FieldTrialRecorder::Create));
-
-  AddUIThreadInterface(
-      registry.get(),
-      base::Bind(
-          &memory_instrumentation::CoordinatorImpl::BindCoordinatorRequest,
-          base::Unretained(
-              memory_instrumentation::CoordinatorImpl::GetInstance())));
 
   associated_interfaces_.reset(new AssociatedInterfaceRegistryImpl());
   GetContentClient()->browser()->ExposeInterfacesToRenderer(
@@ -1401,7 +1383,9 @@ void RenderProcessHostImpl::GetAssociatedInterface(
     listener->OnAssociatedInterfaceRequest(name, request.PassHandle());
 }
 
-void RenderProcessHostImpl::CreateMusGpuRequest(ui::mojom::GpuRequest request) {
+void RenderProcessHostImpl::CreateMusGpuRequest(
+    const service_manager::BindSourceInfo& source_info,
+    ui::mojom::GpuRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!gpu_client_)
     gpu_client_.reset(new GpuClient(GetID()));
@@ -1409,6 +1393,7 @@ void RenderProcessHostImpl::CreateMusGpuRequest(ui::mojom::GpuRequest request) {
 }
 
 void RenderProcessHostImpl::CreateOffscreenCanvasProvider(
+    const service_manager::BindSourceInfo& source_info,
     blink::mojom::OffscreenCanvasProviderRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!offscreen_canvas_provider_) {
@@ -1421,12 +1406,14 @@ void RenderProcessHostImpl::CreateOffscreenCanvasProvider(
 }
 
 void RenderProcessHostImpl::BindFrameSinkProvider(
+    const service_manager::BindSourceInfo& source_info,
     mojom::FrameSinkProviderRequest request) {
   frame_sink_provider_.Bind(std::move(request));
 }
 
 void RenderProcessHostImpl::CreateStoragePartitionService(
-    mojo::InterfaceRequest<mojom::StoragePartitionService> request) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::StoragePartitionServiceRequest request) {
   // DO NOT REMOVE THIS COMMAND LINE CHECK WITHOUT SECURITY REVIEW!
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kMojoLocalStorage)) {
@@ -2747,8 +2734,8 @@ void RenderProcessHostImpl::CreateSharedRendererHistogramAllocator() {
         std::move(shm), GetID(), "RendererMetrics", /*readonly=*/false));
   }
 
-  base::SharedMemoryHandle shm_handle;
-  metrics_allocator_->shared_memory()->ShareToProcess(destination, &shm_handle);
+  base::SharedMemoryHandle shm_handle =
+      metrics_allocator_->shared_memory()->handle().Duplicate();
   Send(new ChildProcessMsg_SetHistogramMemory(
       shm_handle, metrics_allocator_->shared_memory()->mapped_size()));
 }
@@ -2862,7 +2849,7 @@ void RenderProcessHostImpl::ReleaseOnCloseACK(
       host->GetUserData(kSessionStorageHolderKey));
   if (!holder) {
     holder = new SessionStorageHolder();
-    host->SetUserData(kSessionStorageHolderKey, holder);
+    host->SetUserData(kSessionStorageHolderKey, base::WrapUnique(holder));
   }
   holder->Hold(sessions, view_route_id);
 }

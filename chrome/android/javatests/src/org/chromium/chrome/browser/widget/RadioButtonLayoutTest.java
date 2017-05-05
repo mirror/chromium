@@ -6,9 +6,9 @@ package org.chromium.chrome.browser.widget;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.annotation.UiThreadTest;
 import android.support.test.filters.SmallTest;
 import android.support.test.rule.UiThreadTestRule;
-import android.test.UiThreadTest;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.RadioButton;
@@ -126,7 +126,7 @@ public class RadioButtonLayoutTest {
     @SmallTest
     @UiThreadTest
     public void testSelection() {
-        RadioButtonLayout layout = new RadioButtonLayout(mContext);
+        final RadioButtonLayout layout = new RadioButtonLayout(mContext);
 
         // Add one set of options.
         List<CharSequence> messages = new ArrayList<CharSequence>();

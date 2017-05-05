@@ -58,6 +58,8 @@ static_library("test_support") {
     "../public/test/browsing_data_remover_test_util.h",
     "../public/test/cache_test_util.cc",
     "../public/test/cache_test_util.h",
+    "../public/test/cancelling_navigation_throttle.cc",
+    "../public/test/cancelling_navigation_throttle.h",
     "../public/test/content_test_suite_base.cc",
     "../public/test/content_test_suite_base.h",
     "../public/test/download_test_observer.cc",
@@ -226,6 +228,8 @@ static_library("test_support") {
     "//content/public/browser",
     "//content/public/common",
     "//ipc",
+    "//media/mojo/clients",
+    "//media/mojo/interfaces",
     "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:test_support",
   ]

@@ -37,13 +37,15 @@ enum class DialogViewID : int {
   PAYMENT_SHEET_SHIPPING_ADDRESS_SECTION_BUTTON,
   PAYMENT_SHEET_SHIPPING_OPTION_SECTION_BUTTON,
 
-  // The following are Label objects.
+  // The following are StyledLabel objects.
   ORDER_SUMMARY_TOTAL_AMOUNT_LABEL,
   ORDER_SUMMARY_LINE_ITEM_1,
   ORDER_SUMMARY_LINE_ITEM_2,
   ORDER_SUMMARY_LINE_ITEM_3,
+  // The following are Label objects.
   SHIPPING_OPTION_DESCRIPTION,
   SHIPPING_OPTION_AMOUNT,
+  SHIPPING_ADDRESS_OPTION_ERROR,
 
   // Used in profile labels to annotate each line of the grouping.
   PROFILE_LABEL_LINE_1,
@@ -66,6 +68,12 @@ enum class DialogViewID : int {
 
   // The CVC text field in the unmask sheet.
   CVC_PROMPT_TEXT_FIELD,
+
+  // The following are the ids for the individual sheets.
+  CONTACT_INFO_EDITOR_SHEET,
+  CREDIT_CARD_EDITOR_SHEET,
+  CVC_UNMASK_SHEET,
+  SHIPPING_ADDRESS_EDITOR_SHEET,
 };
 
 }  // namespace payments

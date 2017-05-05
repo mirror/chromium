@@ -498,7 +498,7 @@ Sources.JavaScriptSourceFrame = class extends SourceFrame.UISourceCodeFrame {
 
     if (UI.KeyboardShortcut.eventHasCtrlOrMeta(event) && this._executionLocation) {
       this._controlDown = true;
-      if (event.key === UI.KeyboardShortcut.Keys.CtrlOrMeta.name) {
+      if (event.key === (Host.isMac() ? 'Meta' : 'Control')) {
         this._controlTimeout = setTimeout(() => {
           if (this._executionLocation && this._controlDown)
             this._showContinueToLocations();
@@ -1247,13 +1247,15 @@ Sources.JavaScriptSourceFrame = class extends SourceFrame.UISourceCodeFrame {
    * @param {boolean} show
    */
   _showSourceMapInfobar(show) {
-    if (this._sourceMapInfobar) {
-      if (!show) {
+    if (!show) {
+      if (this._sourceMapInfobar) {
         this._sourceMapInfobar.dispose();
         delete this._sourceMapInfobar;
       }
       return;
     }
+    if (this._sourceMapInfobar)
+      return;
     this._sourceMapInfobar = UI.Infobar.create(
         UI.Infobar.Type.Info, Common.UIString('Source Map detected.'),
         Common.settings.createSetting('sourceMapInfobarDisabled', false));

@@ -66,8 +66,10 @@
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/ssl_config/ssl_config_switches.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/suggestions/features.h"
 #include "components/sync/driver/sync_driver_switches.h"
 #include "components/tracing/common/tracing_switches.h"
+#include "components/translate/core/browser/translate_infobar_delegate.h"
 #include "components/translate/core/browser/translate_manager.h"
 #include "components/translate/core/browser/translate_prefs.h"
 #include "components/version_info/version_info.h"
@@ -85,6 +87,7 @@
 #include "media/media_features.h"
 #include "media/midi/midi_switches.h"
 #include "net/cert/cert_verify_proc_android.h"
+#include "net/nqe/effective_connection_type.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
 #include "services/device/public/cpp/device_features.h"
@@ -528,10 +531,18 @@ const FeatureEntry::Choice kCrosRegionsModeChoices[] = {
 
 const FeatureEntry::Choice kForceUIDirectionChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kForceUiDirectionLtr, switches::kForceUIDirection,
-     switches::kForceUIDirectionLTR},
-    {flag_descriptions::kForceUiDirectionRtl, switches::kForceUIDirection,
-     switches::kForceUIDirectionRTL},
+    {flag_descriptions::kForceDirectionLtr, switches::kForceUIDirection,
+     switches::kForceDirectionLTR},
+    {flag_descriptions::kForceDirectionRtl, switches::kForceUIDirection,
+     switches::kForceDirectionRTL},
+};
+
+const FeatureEntry::Choice kForceTextDirectionChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kForceDirectionLtr, switches::kForceTextDirection,
+     switches::kForceDirectionLTR},
+    {flag_descriptions::kForceDirectionRtl, switches::kForceTextDirection,
+     switches::kForceDirectionRTL},
 };
 
 #if defined(OS_ANDROID)
@@ -706,6 +717,36 @@ const FeatureEntry::Choice kAutoplayPolicyChoices[] = {
      switches::autoplay::kCrossOriginUserGestureRequiredPolicy},
 #endif
 };
+
+const FeatureEntry::Choice kForceEffectiveConnectionTypeChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kEffectiveConnectionTypeUnknownDescription,
+     switches::kForceEffectiveConnectionType,
+     net::kEffectiveConnectionTypeUnknown},
+    {flag_descriptions::kEffectiveConnectionTypeOfflineDescription,
+     switches::kForceEffectiveConnectionType,
+     net::kEffectiveConnectionTypeOffline},
+    {flag_descriptions::kEffectiveConnectionTypeSlow2GDescription,
+     switches::kForceEffectiveConnectionType,
+     net::kEffectiveConnectionTypeSlow2G},
+    {flag_descriptions::kEffectiveConnectionType2GDescription,
+     switches::kForceEffectiveConnectionType, net::kEffectiveConnectionType2G},
+    {flag_descriptions::kEffectiveConnectionType3GDescription,
+     switches::kForceEffectiveConnectionType, net::kEffectiveConnectionType3G},
+    {flag_descriptions::kEffectiveConnectionType4GDescription,
+     switches::kForceEffectiveConnectionType, net::kEffectiveConnectionType4G},
+};
+
+// Ensure that all effective connection types returned by Network Quality
+// Estimator (NQE) are also exposed via flags.
+static_assert(net::EFFECTIVE_CONNECTION_TYPE_LAST + 1 ==
+                  arraysize(kForceEffectiveConnectionTypeChoices),
+              "ECT enum value is not handled.");
+static_assert(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN == 0,
+              "ECT enum value is not handled.");
+static_assert(net::EFFECTIVE_CONNECTION_TYPE_4G + 1 ==
+                  net::EFFECTIVE_CONNECTION_TYPE_LAST,
+              "ECT enum value is not handled.");
 
 const FeatureEntry::FeatureParam kNoStatePrefetchEnabled[] = {
     {prerender::kNoStatePrefetchFeatureModeParameterName,
@@ -1271,6 +1312,9 @@ const FeatureEntry kFeatureEntries[] = {
         SINGLE_DISABLE_VALUE_TYPE(
             ash::switches::kAshDisableScreenOrientationLock),
     },
+    {"enable-tether", flag_descriptions::kTetherName,
+     flag_descriptions::kTetherDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(chromeos::switches::kEnableTether)},
 #endif  // OS_CHROMEOS
     {
         "disable-accelerated-video-decode",
@@ -1594,6 +1638,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPullToRefreshEffectName,
      flag_descriptions::kPullToRefreshEffectDescription, kOsAndroid,
      SINGLE_DISABLE_VALUE_TYPE(switches::kDisablePullToRefreshEffect)},
+    {"translate-compact-infobar", flag_descriptions::kTranslateCompactUIName,
+     flag_descriptions::kTranslateCompactUIDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(translate::kTranslateCompactUI)},
 #endif  // OS_ANDROID
 #if defined(OS_MACOSX)
     {"enable-translate-new-ux", flag_descriptions::kTranslateNewUxName,
@@ -1632,6 +1679,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-chrome-home", flag_descriptions::kChromeHomeName,
      flag_descriptions::kChromeHomeDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeFeature)},
+    {"enable-chrome-home-expand-button",
+     flag_descriptions::kChromeHomeExpandButtonName,
+     flag_descriptions::kChromeHomeExpandButtonDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kChromeHomeExpandButton)},
 #endif  // OS_ANDROID
 #if defined(OS_ANDROID)
     {"enable-iph-demo-mode", flag_descriptions::kEnableIphDemoMode,
@@ -2078,6 +2129,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"force-ui-direction", flag_descriptions::kForceUiDirectionName,
      flag_descriptions::kForceUiDirectionDescription, kOsAll,
      MULTI_VALUE_TYPE(kForceUIDirectionChoices)},
+    {"force-text-direction", flag_descriptions::kForceTextDirectionName,
+     flag_descriptions::kForceTextDirectionDescription, kOsAll,
+     MULTI_VALUE_TYPE(kForceTextDirectionChoices)},
 #if BUILDFLAG(ENABLE_EXTENSIONS)
     {"enable-md-extensions",
      flag_descriptions::kEnableMaterialDesignExtensionsName,
@@ -2292,6 +2346,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"disable-native-cups", flag_descriptions::kDisableNativeCupsName,
      flag_descriptions::kDisableNativeCupsDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(switches::kDisableNativeCups)},
+    {"enable-cros-component", flag_descriptions::kCrOSComponentName,
+     flag_descriptions::kCrOSComponentDescription, kOsCrOS,
+     FEATURE_VALUE_TYPE(features::kCrOSComponent)},
     {"enable-encryption-migration",
      flag_descriptions::kEnableEncryptionMigrationName,
      flag_descriptions::kEnableEncryptionMigrationDescription, kOsCrOS,
@@ -2322,7 +2379,7 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::kImportantSitesInCBD)},
     {"tabs-in-cbd", flag_descriptions::kTabsInCbdName,
      flag_descriptions::kTabsInCbdDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kTabsInCBD)},
+     FEATURE_VALUE_TYPE(features::kTabsInCbd)},
 #endif  // OS_ANDROID
     {"enable-pointer-events", flag_descriptions::kExperimentalPointerEventName,
      flag_descriptions::kExperimentalPointerEventDescription, kOsAll,
@@ -2432,10 +2489,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kArcBootCompletedDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(arc::kBootCompletedBroadcastFeature)},
 #endif  // OS_CHROMEOS
-    {"saveas-menu-text-experiment",
-     flag_descriptions::kSaveasMenuLabelExperimentName,
-     flag_descriptions::kSaveasMenuLabelExperimentDescription, kOsDesktop,
-     SINGLE_VALUE_TYPE(switches::kEnableSaveAsMenuLabelExperiment)},
     {"enable-generic-sensor", flag_descriptions::kEnableGenericSensorName,
      flag_descriptions::kEnableGenericSensorDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kGenericSensor)},
@@ -2592,7 +2645,7 @@ const FeatureEntry kFeatureEntries[] = {
     {"force-enable-stylus-tools",
      flag_descriptions::kForceEnableStylusToolsName,
      flag_descriptions::kForceEnableStylusToolsDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(ash::switches::kAshForceEnablePalette)},
+     SINGLE_VALUE_TYPE(ash::switches::kAshForceEnableStylusTools)},
 #endif // defined(OS_CHROMEOS)
 
     {"enable-midi-manager-dynamic-instantiation",
@@ -2765,6 +2818,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAutoplayPolicyDescription, kOsAll,
      MULTI_VALUE_TYPE(kAutoplayPolicyChoices)},
 
+    {"force-effective-connection-type",
+     flag_descriptions::kForceEffectiveConnectionTypeName,
+     flag_descriptions::kForceEffectiveConnectionTypeDescription, kOsAll,
+     MULTI_VALUE_TYPE(kForceEffectiveConnectionTypeChoices)},
+
     {"enable-heap-profiling", flag_descriptions::kEnableHeapProfilingName,
      flag_descriptions::kEnableHeapProfilingDescription, kOsAll,
      MULTI_VALUE_TYPE(kEnableHeapProfilingChoices)},
@@ -2774,6 +2832,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kShowCertLinkOnPageInfoDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kShowCertLink)},
 #endif
+
+    {"use-suggestions-even-if-few",
+     flag_descriptions::kUseSuggestionsEvenIfFewFeatureName,
+     flag_descriptions::kUseSuggestionsEvenIfFewFeatureDescription, kOsAll,
+     FEATURE_VALUE_TYPE(suggestions::kUseSuggestionsEvenIfFewFeature)},
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms.xml. See note in

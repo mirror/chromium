@@ -31,7 +31,7 @@
 // Use this file to assert that various public API enum values continue
 // matching blink defined enum values.
 
-#include "bindings/core/v8/SerializedScriptValue.h"
+#include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/IconURL.h"
 #include "core/editing/SelectionType.h"
@@ -404,6 +404,8 @@ STATIC_ASSERT_ENUM(kWebAXTextStyleLineThrough, kTextStyleLineThrough);
 
 STATIC_ASSERT_ENUM(kWebAXNameFromUninitialized, kAXNameFromUninitialized);
 STATIC_ASSERT_ENUM(kWebAXNameFromAttribute, kAXNameFromAttribute);
+STATIC_ASSERT_ENUM(kWebAXNameFromAttributeExplicitlyEmpty,
+                   kAXNameFromAttributeExplicitlyEmpty);
 STATIC_ASSERT_ENUM(kWebAXNameFromCaption, kAXNameFromCaption);
 STATIC_ASSERT_ENUM(kWebAXNameFromContents, kAXNameFromContents);
 STATIC_ASSERT_ENUM(kWebAXNameFromPlaceholder, kAXNameFromPlaceholder);

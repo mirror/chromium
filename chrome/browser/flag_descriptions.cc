@@ -959,6 +959,12 @@ const char kBootAnimation[] = "Boot animation";
 const char kBootAnimationDescription[] =
     "Wallpaper boot animation (except for OOBE case).";
 
+const char kTetherName[] = "Instant Tethering";
+
+const char kTetherDescription[] =
+    "Enables Instant Tethering. Instant Tethering allows your nearby Google "
+    "phone to share its Internet connection with this device.";
+
 #endif  // defined(OS_CHROMEOS)
 
 const char kAcceleratedVideoDecodeName[] = "Hardware-accelerated video decode";
@@ -1341,6 +1347,11 @@ const char kPullToRefreshEffectName[] = "The pull-to-refresh effect";
 const char kPullToRefreshEffectDescription[] =
     "Page reloads triggered by vertically overscrolling content.";
 
+const char kTranslateCompactUIName[] = "New Translate Infobar";
+
+const char kTranslateCompactUIDescription[] =
+    "Enable the new Translate compact infobar UI.";
+
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_MACOSX)
@@ -1597,9 +1608,16 @@ const char kForceUiDirectionDescription[] =
     "Explicitly force the UI to left-to-right (LTR) or right-to-left (RTL) "
     "mode, overriding the default direction of the UI language.";
 
-const char kForceUiDirectionLtr[] = "Left-to-right";
+const char kForceTextDirectionName[] = "Force text direction";
 
-const char kForceUiDirectionRtl[] = "Right-to-left";
+const char kForceTextDirectionDescription[] =
+    "Explicitly force the per-character directionality of UI text to "
+    "left-to-right (LTR) or right-to-left (RTL) mode, overriding the "
+    "default direction of the character language.";
+
+const char kForceDirectionLtr[] = "Left-to-right";
+
+const char kForceDirectionRtl[] = "Right-to-left";
 
 #if defined(OS_WIN) || defined(OS_LINUX)
 
@@ -1966,6 +1984,11 @@ const char kChromeHomeName[] = "Chrome Home";
 
 const char kChromeHomeDescription[] = "Enables Chrome Home on Android.";
 
+const char kChromeHomeExpandButtonName[] = "Chrome Home Expand Button";
+
+const char kChromeHomeExpandButtonDescription[] =
+    "Enables the expand button for Chrome Home.";
+
 #endif  // defined(OS_ANDROID)
 
 //  In-Product Help flags
@@ -2313,6 +2336,12 @@ const char kEnableZipArchiverOnFileManagerName[] =
 
 const char kEnableZipArchiverOnFileManagerDescription[] =
     "Enable the ability to archive and unpack files on Drive in the Files app";
+
+const char kCrOSComponentName[] = "Chrome OS Component";
+
+const char kCrOSComponentDescription[] =
+    "Enable the use of Chrome OS Component to download Chrome OS features "
+    "on-demand as components.";
 
 #endif  // defined(OS_CHROMEOS)
 
@@ -3062,6 +3091,20 @@ const char kOmniboxDisplayTitleForCurrentUrlDescription[] =
     "the current page is provided as the first suggestion without a title. "
     "Enabling this flag causes the title to be displayed.";
 
+const char kForceEffectiveConnectionTypeName[] =
+    "Override effective connection type";
+
+const char kForceEffectiveConnectionTypeDescription[] =
+    "Overrides the effective connection type of the current connection "
+    "returned by the network quality estimator.";
+
+const char kEffectiveConnectionTypeUnknownDescription[] = "Unknown";
+const char kEffectiveConnectionTypeOfflineDescription[] = "Offline";
+const char kEffectiveConnectionTypeSlow2GDescription[] = "Slow 2G";
+const char kEffectiveConnectionType2GDescription[] = "2G";
+const char kEffectiveConnectionType3GDescription[] = "3G";
+const char kEffectiveConnectionType4GDescription[] = "4G";
+
 const char kEnableHeapProfilingName[] = "Heap profiling";
 
 const char kEnableHeapProfilingDescription[] = "Enables heap profiling.";
@@ -3071,5 +3114,12 @@ const char kEnableHeapProfilingModePseudo[] = "Enabled (pseudo mode)";
 const char kEnableHeapProfilingModeNative[] = "Enabled (native mode)";
 
 const char kEnableHeapProfilingTaskProfiler[] = "Enabled (task mode)";
+
+const char kUseSuggestionsEvenIfFewFeatureName[] =
+    "Disable minimum for server-side tile suggestions on NTP.";
+
+const char kUseSuggestionsEvenIfFewFeatureDescription[] =
+    "Request server-side suggestions even if there are only very few of them "
+    "and use them for tiles on the New Tab Page.";
 
 }  // namespace flag_descriptions

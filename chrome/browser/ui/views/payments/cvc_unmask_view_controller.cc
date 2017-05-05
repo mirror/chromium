@@ -206,4 +206,13 @@ void CvcUnmaskViewController::CvcConfirmed() {
   dialog()->ShowProcessingSpinner();
 }
 
+bool CvcUnmaskViewController::GetSheetId(DialogViewID* sheet_id) {
+  *sheet_id = DialogViewID::CVC_UNMASK_SHEET;
+  return true;
+}
+
+views::View* CvcUnmaskViewController::GetFirstFocusedView() {
+  return cvc_field_;
+}
+
 }  // namespace payments

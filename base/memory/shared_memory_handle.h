@@ -56,6 +56,11 @@ class BASE_EXPORT SharedMemoryHandle {
   // Whether the underlying OS resource is valid.
   bool IsValid() const;
 
+  // Duplicates the underlying OS resource. Using the return value as a
+  // parameter to an IPC message will cause the IPC subsystem to consume the OS
+  // resource.
+  SharedMemoryHandle Duplicate() const;
+
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   enum Type {
     // The SharedMemoryHandle is backed by a POSIX fd.
@@ -78,13 +83,8 @@ class BASE_EXPORT SharedMemoryHandle {
   explicit SharedMemoryHandle(mach_vm_size_t size);
 
   // Makes a Mach-based SharedMemoryHandle from |memory_object|, a named entry
-  // in the task with process id |pid|. The memory region has size |size|.
-  SharedMemoryHandle(mach_port_t memory_object,
-                     mach_vm_size_t size,
-                     base::ProcessId pid);
-
-  // Duplicates the underlying OS resources.
-  SharedMemoryHandle Duplicate() const;
+  // in the current task. The memory region has size |size|.
+  SharedMemoryHandle(mach_port_t memory_object, mach_vm_size_t size);
 
   // Exposed so that the SharedMemoryHandle can be transported between
   // processes.
@@ -100,17 +100,10 @@ class BASE_EXPORT SharedMemoryHandle {
   // mapped memory.
   bool MapAt(off_t offset, size_t bytes, void** memory, bool read_only);
 #elif defined(OS_WIN)
-  SharedMemoryHandle(HANDLE h, base::ProcessId pid);
-
-  // Whether |pid_| is the same as the current process's id.
-  bool BelongsToCurrentProcess() const;
-
-  // Whether handle_ needs to be duplicated into the destination process when
-  // an instance of this class is passed over a Chrome IPC channel.
-  bool NeedsBrokering() const;
+  // Takes implicit ownership of |h|.
+  SharedMemoryHandle(HANDLE h);
 
   HANDLE GetHandle() const;
-  base::ProcessId GetPID() const;
 #else
   // This constructor is deprecated, as it fails to propagate the GUID, which
   // will be added in the near future.
@@ -131,9 +124,6 @@ class BASE_EXPORT SharedMemoryHandle {
   // Invalidates [but doesn't close] the underlying OS resource. This will leak
   // unless the caller is careful.
   int Release();
-
-  // Duplicates the underlying OS resource.
-  SharedMemoryHandle Duplicate() const;
 #endif
 
  private:
@@ -157,10 +147,6 @@ class BASE_EXPORT SharedMemoryHandle {
       // relevant if |memory_object_| is not |MACH_PORT_NULL|.
       mach_vm_size_t size_;
 
-      // The pid of the process in which |memory_object_| is usable. Only
-      // relevant if |memory_object_| is not |MACH_PORT_NULL|.
-      base::ProcessId pid_;
-
       // Whether passing this object as a parameter to an IPC message passes
       // ownership of |memory_object_| to the IPC stack. This is meant to mimic
       // the behavior of the |auto_close| parameter of FileDescriptor.
@@ -170,10 +156,6 @@ class BASE_EXPORT SharedMemoryHandle {
   };
 #elif defined(OS_WIN)
   HANDLE handle_;
-
-  // The process in which |handle_| is valid and can be used. If |handle_| is
-  // invalid, this will be kNullProcessId.
-  base::ProcessId pid_;
 
   // Whether passing this object as a parameter to an IPC message passes
   // ownership of |handle_| to the IPC stack. This is meant to mimic the

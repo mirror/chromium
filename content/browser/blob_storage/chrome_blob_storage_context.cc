@@ -103,11 +103,8 @@ ChromeBlobStorageContext* ChromeBlobStorageContext::GetFor(
     // disk on the storage context.
     if (!context->IsOffTheRecord() && io_thread_valid) {
       file_task_runner = base::CreateTaskRunnerWithTraits(
-          base::TaskTraits()
-              .MayBlock()
-              .WithPriority(base::TaskPriority::BACKGROUND)
-              .WithShutdownBehavior(
-                  base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN));
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
       // Removes our old blob directories if they exist.
       BrowserThread::PostAfterStartupTask(
           FROM_HERE, file_task_runner,
@@ -218,7 +215,7 @@ void AttachRequestBodyBlobDataHandles(ResourceRequestBodyImpl* body,
     // Ensure the blob and any attached shareable files survive until
     // upload completion. The |body| takes ownership of |handle|.
     const void* key = handle.get();
-    body->SetUserData(key, handle.release());
+    body->SetUserData(key, std::move(handle));
   }
 }
 

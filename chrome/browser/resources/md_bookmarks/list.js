@@ -10,9 +10,6 @@ Polymer({
   ],
 
   properties: {
-    /** @type {BookmarkNode} */
-    menuItem_: Object,
-
     /** @private {Array<string>} */
     displayedList_: {
       type: Array,
@@ -29,7 +26,6 @@ Polymer({
 
   listeners: {
     'click': 'deselectItems_',
-    'open-item-menu': 'onOpenItemMenu_',
   },
 
   attached: function() {
@@ -44,60 +40,6 @@ Polymer({
 
   getDropTarget: function() {
     return this.$.message;
-  },
-
-  /**
-   * @param {Event} e
-   * @private
-   */
-  onOpenItemMenu_: function(e) {
-    this.menuItem_ = e.detail.item;
-    var menu = /** @type {!CrActionMenuElement} */ (
-        this.$.dropdown);
-    menu.showAt(/** @type {!Element} */ (e.detail.target));
-  },
-
-  /** @private */
-  onEditTap_: function() {
-    this.closeDropdownMenu_();
-    /** @type {BookmarksEditDialogElement} */ (this.$.editDialog.get())
-        .showEditDialog(this.menuItem_);
-  },
-
-  /** @private */
-  onCopyURLTap_: function() {
-    var idList = [this.menuItem_.id];
-    chrome.bookmarkManagerPrivate.copy(idList, function() {
-      // TODO(jiaxi): Add toast later.
-    });
-    this.closeDropdownMenu_();
-  },
-
-  /** @private */
-  onDeleteTap_: function() {
-    if (this.menuItem_.url) {
-      chrome.bookmarks.remove(this.menuItem_.id, function() {
-        // TODO(jiaxi): Add toast later.
-      }.bind(this));
-    } else {
-      chrome.bookmarks.removeTree(this.menuItem_.id, function() {
-        // TODO(jiaxi): Add toast later.
-      }.bind(this));
-    }
-    this.closeDropdownMenu_();
-  },
-
-  /** @private */
-  closeDropdownMenu_: function() {
-    var menu = /** @type {!CrActionMenuElement} */ (
-        this.$.dropdown);
-    menu.close();
-  },
-
-  /** @private */
-  getEditActionLabel_: function() {
-    var label = this.menuItem_.url ? 'menuEdit' : 'menuRename';
-    return loadTimeData.getString(label);
   },
 
   /** @private */

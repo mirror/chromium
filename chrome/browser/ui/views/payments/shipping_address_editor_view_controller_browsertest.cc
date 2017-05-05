@@ -141,7 +141,6 @@ class PaymentRequestShippingAddressEditorTest
 IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest, SyncData) {
   InvokePaymentRequestUI();
   SetRegionDataLoader(&test_region_data_loader_);
-  OpenShippingAddressSectionScreen();
 
   // No shipping profiles are available.
   PaymentRequest* request = GetPaymentRequests(GetActiveWebContents()).front();
@@ -180,10 +179,54 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest, SyncData) {
   ExpectExistingRequiredFields(/*unset_types=*/nullptr);
 }
 
+IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
+                       EnterAcceleratorSyncData) {
+  InvokePaymentRequestUI();
+  SetRegionDataLoader(&test_region_data_loader_);
+
+  // No shipping profiles are available.
+  PaymentRequest* request = GetPaymentRequests(GetActiveWebContents()).front();
+  EXPECT_EQ(0U, request->state()->shipping_profiles().size());
+  EXPECT_EQ(nullptr, request->state()->selected_shipping_profile());
+
+  test_region_data_loader_.set_synchronous_callback(true);
+  OpenShippingAddressEditorScreen();
+
+  std::string country_code(GetSelectedCountryCode());
+
+  SetCommonFields();
+  // We also need to set the state when no region data is provided.
+  SetFieldTestValue(autofill::ADDRESS_HOME_STATE);
+
+  ResetEventObserver(DialogEvent::BACK_TO_PAYMENT_SHEET_NAVIGATION);
+
+  // Verifying the data is in the DB.
+  autofill::PersonalDataManager* personal_data_manager = GetDataManager();
+  personal_data_manager->AddObserver(&personal_data_observer_);
+
+  // Wait until the web database has been updated and the notification sent.
+  base::RunLoop data_loop;
+  EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
+      .WillOnce(QuitMessageLoop(&data_loop));
+  views::View* editor_sheet = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SHIPPING_ADDRESS_EDITOR_SHEET));
+  editor_sheet->AcceleratorPressed(
+      ui::Accelerator(ui::VKEY_RETURN, ui::EF_NONE));
+  data_loop.Run();
+
+  ASSERT_EQ(1UL, personal_data_manager->GetProfiles().size());
+  autofill::AutofillProfile* profile = personal_data_manager->GetProfiles()[0];
+  DCHECK(profile);
+  EXPECT_EQ(base::ASCIIToUTF16(country_code),
+            profile->GetRawInfo(autofill::ADDRESS_HOME_COUNTRY));
+  EXPECT_EQ(base::ASCIIToUTF16(kAnyState),
+            profile->GetRawInfo(autofill::ADDRESS_HOME_STATE));
+  ExpectExistingRequiredFields(/*unset_types=*/nullptr);
+}
+
 IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest, AsyncData) {
   InvokePaymentRequestUI();
   SetRegionDataLoader(&test_region_data_loader_);
-  OpenShippingAddressSectionScreen();
 
   test_region_data_loader_.set_synchronous_callback(false);
   OpenShippingAddressEditorScreen();
@@ -229,7 +272,6 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
                        SwitchingCountryUpdatesViewAndKeepsValues) {
   InvokePaymentRequestUI();
   SetRegionDataLoader(&test_region_data_loader_);
-  OpenShippingAddressSectionScreen();
 
   test_region_data_loader_.set_synchronous_callback(false);
   OpenShippingAddressEditorScreen();
@@ -327,7 +369,6 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
                        FailToLoadRegionData) {
   InvokePaymentRequestUI();
   SetRegionDataLoader(&test_region_data_loader_);
-  OpenShippingAddressSectionScreen();
 
   // The synchronous callback is made with no data, which causes a failure.
   test_region_data_loader_.set_synchronous_callback(true);
@@ -364,7 +405,6 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
                        TimingOutRegionData) {
   InvokePaymentRequestUI();
   SetRegionDataLoader(&test_region_data_loader_);
-  OpenShippingAddressSectionScreen();
 
   test_region_data_loader_.set_synchronous_callback(false);
   OpenShippingAddressEditorScreen();

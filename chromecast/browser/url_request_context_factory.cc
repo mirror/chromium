@@ -11,7 +11,6 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/worker_pool.h"
 #include "chromecast/base/chromecast_switches.h"
 #include "chromecast/browser/cast_browser_process.h"
 #include "chromecast/browser/cast_http_user_agent_settings.h"
@@ -255,7 +254,7 @@ void URLRequestContextFactory::InitializeSystemContextDependencies() {
 
   DCHECK(proxy_config_service_);
   proxy_service_ = net::ProxyService::CreateUsingSystemProxyResolver(
-      std::move(proxy_config_service_), 0, NULL);
+      std::move(proxy_config_service_), NULL);
   system_dependencies_initialized_ = true;
 }
 
@@ -289,11 +288,8 @@ void URLRequestContextFactory::InitializeMainContextDependencies(
         url::kFileScheme,
         base::MakeUnique<net::FileProtocolHandler>(
             base::CreateTaskRunnerWithTraits(
-                base::TaskTraits()
-                    .MayBlock()
-                    .WithPriority(base::TaskPriority::BACKGROUND)
-                    .WithShutdownBehavior(
-                        base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN))));
+                {base::MayBlock(), base::TaskPriority::BACKGROUND,
+                 base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})));
     DCHECK(set_protocol);
   }
 

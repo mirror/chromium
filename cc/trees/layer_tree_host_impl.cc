@@ -242,7 +242,8 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       scroll_animating_latched_node_id_(ScrollTree::kInvalidNodeId),
       has_scrolled_by_wheel_(false),
       has_scrolled_by_touch_(false),
-      touchpad_and_wheel_scroll_latching_enabled_(false) {
+      touchpad_and_wheel_scroll_latching_enabled_(false),
+      impl_thread_phase_(ImplThreadPhase::IDLE) {
   DCHECK(mutator_host_);
   mutator_host_->SetMutatorHostClient(this);
 
@@ -330,6 +331,11 @@ void LayerTreeHostImpl::BeginCommit() {
 
 void LayerTreeHostImpl::CommitComplete() {
   TRACE_EVENT0("cc", "LayerTreeHostImpl::CommitComplete");
+
+  // In high latency mode commit cannot finish within the same frame. We need to
+  // flush input here to make sure they got picked up by |PrepareTiles()|.
+  if (input_handler_client_ && impl_thread_phase_ == ImplThreadPhase::IDLE)
+    input_handler_client_->DeliverInputForBeginFrame();
 
   UpdateSyncTreeAfterCommitOrImplSideInvalidation();
   micro_benchmark_controller_.DidCompleteCommit();
@@ -728,11 +734,12 @@ DrawMode LayerTreeHostImpl::GetDrawMode() const {
   }
 }
 
-static void AppendQuadsToFillScreen(const gfx::Rect& root_scroll_layer_rect,
-                                    RenderPass* target_render_pass,
-                                    RenderSurfaceImpl* root_render_surface,
-                                    SkColor screen_background_color,
-                                    const Region& fill_region) {
+static void AppendQuadsToFillScreen(
+    const gfx::Rect& root_scroll_layer_rect,
+    RenderPass* target_render_pass,
+    const RenderSurfaceImpl* root_render_surface,
+    SkColor screen_background_color,
+    const Region& fill_region) {
   if (!root_render_surface || !SkColorGetA(screen_background_color))
     return;
   if (fill_region.IsEmpty())
@@ -786,7 +793,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
 
   // If the root render surface has no visible damage, then don't generate a
   // frame at all.
-  RenderSurfaceImpl* root_surface = active_tree_->RootRenderSurface();
+  const RenderSurfaceImpl* root_surface = active_tree_->RootRenderSurface();
   bool root_surface_has_no_visible_damage =
       !root_surface->GetDamageRect().Intersects(root_surface->content_rect());
   bool root_surface_has_contributing_layers =
@@ -1912,9 +1919,12 @@ void LayerTreeHostImpl::WillBeginImplFrame(const BeginFrameArgs& args) {
 
   for (auto* it : video_frame_controllers_)
     it->OnBeginFrame(args);
+
+  impl_thread_phase_ = ImplThreadPhase::INSIDE_IMPL_FRAME;
 }
 
 void LayerTreeHostImpl::DidFinishImplFrame() {
+  impl_thread_phase_ = ImplThreadPhase::IDLE;
   current_begin_frame_tracker_.Finish();
   decoded_image_tracker_.NotifyFrameFinished();
 }

@@ -30,7 +30,6 @@
 #include <memory>
 #include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/ScriptPromise.h"
-#include "bindings/core/v8/TraceWrapperMember.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/SuspendableObject.h"
@@ -42,6 +41,7 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/audio/AudioSourceProvider.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/WebAudioSourceProviderClient.h"
 #include "public/platform/WebMediaPlayerClient.h"
@@ -417,7 +417,6 @@ class CORE_EXPORT HTMLMediaElement
   bool HasSelectedVideoTrack() final;
   WebMediaPlayer::TrackId GetSelectedVideoTrackId() final;
   bool IsAutoplayingMuted() final;
-  void RequestReload(const WebURL&) final;
   void ActivateViewportIntersectionMonitoring(bool) final;
 
   void LoadTimerFired(TimerBase*);
@@ -442,7 +441,7 @@ class CORE_EXPORT HTMLMediaElement
   void LoadInternal();
   void SelectMediaResource();
   void LoadResource(const WebMediaPlayerSource&, const String& content_type);
-  void StartPlayerLoad(const KURL& player_provided_url = KURL());
+  void StartPlayerLoad();
   void SetPlayerPreload();
   WebMediaPlayer::LoadType GetLoadType() const;
   void ScheduleNextSourceChild();

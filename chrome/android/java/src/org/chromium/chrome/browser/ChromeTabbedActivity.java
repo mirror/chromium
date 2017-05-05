@@ -87,7 +87,6 @@ import org.chromium.chrome.browser.ntp.ChromeHomeNewTabPage;
 import org.chromium.chrome.browser.ntp.NativePageAssassin;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
-import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.omaha.OmahaBase;
 import org.chromium.chrome.browser.omnibox.AutocompleteController;
 import org.chromium.chrome.browser.partnercustomizations.HomepageManager;
@@ -98,6 +97,7 @@ import org.chromium.chrome.browser.preferences.datareduction.DataReductionPromoS
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.SigninPromoUtil;
 import org.chromium.chrome.browser.snackbar.undo.UndoBarController;
+import org.chromium.chrome.browser.suggestions.SuggestionsEventReporterBridge;
 import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
@@ -522,9 +522,9 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         mLocaleManager.startObservingPhoneChanges();
 
         if (isWarmOnResume()) {
-            SnippetsBridge.notifySchedulerAboutWarmResume();
+            SuggestionsEventReporterBridge.onActivityWarmResumed();
         } else {
-            SnippetsBridge.notifySchedulerAboutColdStart();
+            SuggestionsEventReporterBridge.onColdStart();
         }
     }
 
@@ -576,7 +576,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             TraceEvent.begin("ChromeTabbedActivity.onNewIntentWithNative");
 
             super.onNewIntentWithNative(intent);
-            if (isMainIntent(intent)) {
+            if (isMainIntentFromLauncher(intent)) {
                 if (IntentHandler.getUrlFromIntent(intent) == null) {
                     maybeLaunchNtpFromMainIntent(intent);
                 }
@@ -737,16 +737,23 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         textBubble.show();
     }
 
-    private boolean isMainIntent(Intent intent) {
-        return intent != null && TextUtils.equals(intent.getAction(), Intent.ACTION_MAIN);
+    private boolean isMainIntentFromLauncher(Intent intent) {
+        return intent != null && TextUtils.equals(intent.getAction(), Intent.ACTION_MAIN)
+                && intent.hasCategory(Intent.CATEGORY_LAUNCHER);
     }
 
     private void logMainIntentBehavior(Intent intent) {
-        assert isMainIntent(intent);
+        assert isMainIntentFromLauncher(intent);
         long currentTime = System.currentTimeMillis();
         long lastBackgroundedTimeMs = ContextUtils.getAppSharedPreferences().getLong(
                 LAST_BACKGROUNDED_TIME_MS_PREF, currentTime);
         mMainIntentMetrics.onMainIntentWithNative(currentTime - lastBackgroundedTimeMs);
+    }
+
+    /** Access the main intent metrics for test validation. */
+    @VisibleForTesting
+    public MainIntentBehaviorMetrics getMainIntentBehaviorMetricsForTesting() {
+        return mMainIntentMetrics;
     }
 
     /**
@@ -756,7 +763,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
      * @return Whether an NTP was triggered as a result of this intent.
      */
     private boolean maybeLaunchNtpFromMainIntent(Intent intent) {
-        assert isMainIntent(intent);
+        assert isMainIntentFromLauncher(intent);
 
         if (!mIntentHandler.isIntentUserVisible()) return false;
         if (FeatureUtilities.isChromeHomeEnabled()) return false;
@@ -860,7 +867,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                     mIntentWithEffect = mIntentHandler.onNewIntent(intent);
                 }
 
-                if (isMainIntent(intent)) {
+                if (isMainIntentFromLauncher(intent)) {
                     if (IntentHandler.getUrlFromIntent(intent) == null) {
                         assert !mIntentWithEffect
                                 : "ACTION_MAIN should not have triggered any prior action";
@@ -1389,6 +1396,14 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                 LauncherShortcutActivity.updateIncognitoShortcut(ChromeTabbedActivity.this);
             }
         });
+    }
+
+    @Override
+    protected void recordIntentToCreationTime(long timeMs) {
+        super.recordIntentToCreationTime(timeMs);
+
+        RecordHistogram.recordTimesHistogram(
+                "MobileStartup.IntentToCreationTime.TabbedMode", timeMs, TimeUnit.MILLISECONDS);
     }
 
     @Override

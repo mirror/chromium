@@ -27,7 +27,9 @@
 #include "ui/gfx/image/image.h"
 #include "url/gurl.h"
 
-#if !defined(OS_ANDROID)
+#if defined(OS_ANDROID)
+#include "chrome/browser/android/android_theme_resources.h"
+#else
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
@@ -216,33 +218,34 @@ PageInfoUI::IdentityInfo::GetSecurityDescription() const {
     case PageInfo::SITE_IDENTITY_STATUS_ADMIN_PROVIDED_CERT:
       switch (connection_status) {
         case PageInfo::SITE_CONNECTION_STATUS_INSECURE_ACTIVE_SUBRESOURCE:
-          return CreateSecurityDescription(IDS_PAGEINFO_NOT_SECURE_SUMMARY,
-                                           IDS_PAGEINFO_NOT_SECURE_DETAILS);
+          return CreateSecurityDescription(IDS_PAGE_INFO_NOT_SECURE_SUMMARY,
+                                           IDS_PAGE_INFO_NOT_SECURE_DETAILS);
         case PageInfo::SITE_CONNECTION_STATUS_INSECURE_FORM_ACTION:
-          return CreateSecurityDescription(IDS_PAGEINFO_MIXED_CONTENT_SUMMARY,
-                                           IDS_PAGEINFO_NOT_SECURE_DETAILS);
+          return CreateSecurityDescription(IDS_PAGE_INFO_MIXED_CONTENT_SUMMARY,
+                                           IDS_PAGE_INFO_NOT_SECURE_DETAILS);
         case PageInfo::SITE_CONNECTION_STATUS_INSECURE_PASSIVE_SUBRESOURCE:
-          return CreateSecurityDescription(IDS_PAGEINFO_MIXED_CONTENT_SUMMARY,
-                                           IDS_PAGEINFO_MIXED_CONTENT_DETAILS);
+          return CreateSecurityDescription(IDS_PAGE_INFO_MIXED_CONTENT_SUMMARY,
+                                           IDS_PAGE_INFO_MIXED_CONTENT_DETAILS);
         default:
-          return CreateSecurityDescription(IDS_PAGEINFO_SECURE_SUMMARY,
-                                           IDS_PAGEINFO_SECURE_DETAILS);
+          return CreateSecurityDescription(IDS_PAGE_INFO_SECURE_SUMMARY,
+                                           IDS_PAGE_INFO_SECURE_DETAILS);
       }
     case PageInfo::SITE_IDENTITY_STATUS_MALWARE:
-      return CreateSecurityDescription(IDS_PAGEINFO_MALWARE_SUMMARY,
-                                       IDS_PAGEINFO_MALWARE_DETAILS);
+      return CreateSecurityDescription(IDS_PAGE_INFO_MALWARE_SUMMARY,
+                                       IDS_PAGE_INFO_MALWARE_DETAILS);
     case PageInfo::SITE_IDENTITY_STATUS_SOCIAL_ENGINEERING:
-      return CreateSecurityDescription(IDS_PAGEINFO_SOCIAL_ENGINEERING_SUMMARY,
-                                       IDS_PAGEINFO_SOCIAL_ENGINEERING_DETAILS);
+      return CreateSecurityDescription(
+          IDS_PAGE_INFO_SOCIAL_ENGINEERING_SUMMARY,
+          IDS_PAGE_INFO_SOCIAL_ENGINEERING_DETAILS);
     case PageInfo::SITE_IDENTITY_STATUS_UNWANTED_SOFTWARE:
-      return CreateSecurityDescription(IDS_PAGEINFO_UNWANTED_SOFTWARE_SUMMARY,
-                                       IDS_PAGEINFO_UNWANTED_SOFTWARE_DETAILS);
+      return CreateSecurityDescription(IDS_PAGE_INFO_UNWANTED_SOFTWARE_SUMMARY,
+                                       IDS_PAGE_INFO_UNWANTED_SOFTWARE_DETAILS);
     case PageInfo::SITE_IDENTITY_STATUS_DEPRECATED_SIGNATURE_ALGORITHM:
     case PageInfo::SITE_IDENTITY_STATUS_UNKNOWN:
     case PageInfo::SITE_IDENTITY_STATUS_NO_CERT:
     default:
-      return CreateSecurityDescription(IDS_PAGEINFO_NOT_SECURE_SUMMARY,
-                                       IDS_PAGEINFO_NOT_SECURE_DETAILS);
+      return CreateSecurityDescription(IDS_PAGE_INFO_NOT_SECURE_SUMMARY,
+                                       IDS_PAGE_INFO_NOT_SECURE_DETAILS);
   }
 }
 
@@ -256,21 +259,6 @@ base::string16 PageInfoUI::PermissionTypeToUIString(ContentSettingsType type) {
   }
   NOTREACHED();
   return base::string16();
-}
-
-// static
-base::string16 PageInfoUI::PermissionValueToUIString(ContentSetting value) {
-  switch (value) {
-    case CONTENT_SETTING_ALLOW:
-      return l10n_util::GetStringUTF16(IDS_PAGE_INFO_PERMISSION_ALLOW);
-    case CONTENT_SETTING_BLOCK:
-      return l10n_util::GetStringUTF16(IDS_PAGE_INFO_PERMISSION_BLOCK);
-    case CONTENT_SETTING_ASK:
-      return l10n_util::GetStringUTF16(IDS_PAGE_INFO_PERMISSION_ASK);
-    default:
-      NOTREACHED();
-      return base::string16();
-  }
 }
 
 // static
@@ -387,6 +375,7 @@ const gfx::Image& PageInfoUI::GetChosenObjectIcon(
                                         : object.ui_info.allowed_icon_id);
 }
 
+#if defined(OS_ANDROID)
 // static
 int PageInfoUI::GetIdentityIconID(PageInfo::SiteIdentityStatus status) {
   int resource_id = IDR_PAGEINFO_INFO;
@@ -421,13 +410,6 @@ int PageInfoUI::GetIdentityIconID(PageInfo::SiteIdentityStatus status) {
 }
 
 // static
-const gfx::Image& PageInfoUI::GetIdentityIcon(
-    PageInfo::SiteIdentityStatus status) {
-  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  return rb.GetNativeImageNamed(GetIdentityIconID(status));
-}
-
-// static
 int PageInfoUI::GetConnectionIconID(PageInfo::SiteConnectionStatus status) {
   int resource_id = IDR_PAGEINFO_INFO;
   switch (status) {
@@ -451,15 +433,7 @@ int PageInfoUI::GetConnectionIconID(PageInfo::SiteConnectionStatus status) {
   }
   return resource_id;
 }
-
-// static
-const gfx::Image& PageInfoUI::GetConnectionIcon(
-    PageInfo::SiteConnectionStatus status) {
-  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  return rb.GetNativeImageNamed(GetConnectionIconID(status));
-}
-
-#if !defined(OS_ANDROID)
+#else  // !defined(OS_ANDROID)
 // static
 const gfx::ImageSkia PageInfoUI::GetCertificateIcon() {
   return gfx::CreateVectorIcon(kCertificateIcon, 16, gfx::kChromeIconGrey);

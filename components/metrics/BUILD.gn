@@ -91,14 +91,16 @@ static_library("metrics") {
   ]
 
   public_deps = [
+    ":single_sample_metrics",
     "//components/metrics/proto",
+    "//components/metrics/public/interfaces:single_sample_metrics_mojo_bindings",
   ]
+
   deps = [
     ":call_stack_profile_params",
     "//base",
     "//base:base_static",
-    "//components/browser_watcher:stability",
-    "//components/browser_watcher:stability_data",
+    "//components/browser_watcher:stability_client",
     "//components/prefs",
     "//components/variations",
     "//third_party/zlib:compression_utils",
@@ -248,6 +250,22 @@ if (!is_ios) {
   }
 }
 
+source_set("single_sample_metrics") {
+  sources = [
+    "single_sample_metrics.cc",
+    "single_sample_metrics.h",
+    "single_sample_metrics_factory_impl.cc",
+    "single_sample_metrics_factory_impl.h",
+  ]
+
+  deps = [
+    "//components/metrics/public/interfaces:single_sample_metrics_mojo_bindings",
+    "//mojo/public/cpp/bindings",
+    "//services/service_manager/public/cpp",
+    "//services/service_manager/public/interfaces",
+  ]
+}
+
 source_set("call_stack_profile_params") {
   sources = [
     "call_stack_profile_params.cc",
@@ -335,6 +353,7 @@ source_set("unit_tests") {
     "persisted_logs_unittest.cc",
     "profiler/profiler_metrics_provider_unittest.cc",
     "profiler/tracking_synchronizer_unittest.cc",
+    "single_sample_metrics_factory_impl_unittest.cc",
     "stability_metrics_helper_unittest.cc",
     "stability_metrics_provider_unittest.cc",
     "ui/screen_info_metrics_provider_unittest.cc",
@@ -354,7 +373,7 @@ source_set("unit_tests") {
     "//components/variations",
     "//mojo/public/cpp/bindings",
     "//net:test_support",
-    "//services/service_manager/public/cpp:sources",
+    "//services/service_manager/public/cpp",
     "//testing/gtest",
     "//third_party/zlib:compression_utils",
     "//ui/gfx/geometry",

@@ -15,6 +15,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.infobar.translate.TranslateMenu;
 import org.chromium.chrome.browser.infobar.translate.TranslateMenuHelper;
 import org.chromium.chrome.browser.infobar.translate.TranslateTabLayout;
+import org.chromium.chrome.browser.snackbar.Snackbar;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.ui.widget.Toast;
 
@@ -177,9 +178,14 @@ class TranslateCompactInfoBar extends InfoBar
                 mLanguageMenuHelper.show(TranslateMenu.MENU_TARGET_LANGUAGE);
                 return;
             case TranslateMenu.ID_OVERFLOW_ALWAYS_TRANSLATE:
-                nativeApplyBoolTranslateOption(
-                        mNativeTranslateInfoBarPtr, TranslateOption.ALWAYS_TRANSLATE, true);
-                showSnackbar(TranslateSnackbarType.ALWAYS_TRANSLATE);
+                mOptions.toggleAlwaysTranslateLanguageState(
+                        !mOptions.alwaysTranslateLanguageState());
+                nativeApplyBoolTranslateOption(mNativeTranslateInfoBarPtr,
+                        TranslateOption.ALWAYS_TRANSLATE, mOptions.alwaysTranslateLanguageState());
+                // Only show snackbar when "Always Translate" is enabled.
+                if (mOptions.alwaysTranslateLanguageState()) {
+                    showSnackbar(TranslateSnackbarType.ALWAYS_TRANSLATE);
+                }
                 return;
             case TranslateMenu.ID_OVERFLOW_NEVER_LANGUAGE:
                 nativeApplyBoolTranslateOption(
@@ -198,10 +204,6 @@ class TranslateCompactInfoBar extends InfoBar
             default:
                 assert false : "Unexpected overflow menu code";
         }
-    }
-
-    private void showSnackbar(int snackbarType) {
-        // TODO(ramyasharma): Show snackbar.
     }
 
     @Override
@@ -226,6 +228,31 @@ class TranslateCompactInfoBar extends InfoBar
             mTabLayout.replaceTabTitle(SOURCE_TAB_INDEX, mOptions.getRepresentationFromCode(code));
             startTranslating(mTabLayout.getSelectedTabPosition());
         }
+    }
+
+    private void showSnackbar(int snackbarType) {
+        if (snackbarType == TranslateSnackbarType.NEVER_TRANSLATE) {
+            createAndShowSnackbar(getContext().getString(R.string.translate_snackbar_language_never,
+                                          mOptions.sourceLanguageName()),
+                    Snackbar.UMA_TRANSLATE_NEVER);
+        } else if (snackbarType == TranslateSnackbarType.ALWAYS_TRANSLATE) {
+            createAndShowSnackbar(
+                    getContext().getString(R.string.translate_snackbar_always_translate,
+                            mOptions.sourceLanguageName(), mOptions.targetLanguageName()),
+                    Snackbar.UMA_TRANSLATE_ALWAYS);
+        } else if (snackbarType == TranslateSnackbarType.NEVER_TRANSLATE_SITE) {
+            createAndShowSnackbar(getContext().getString(R.string.translate_snackbar_site_never),
+                    Snackbar.UMA_TRANSLATE_NEVER_SITE);
+        }
+    }
+
+    private void createAndShowSnackbar(String title, int type) {
+        if (getSnackbarManager() == null) {
+            return;
+        }
+        getSnackbarManager().showSnackbar(Snackbar.make(title, new TranslateSnackbarController(),
+                                                          Snackbar.TYPE_NOTIFICATION, type)
+                                                  .setSingleLine(false));
     }
 
     private native void nativeApplyStringTranslateOption(

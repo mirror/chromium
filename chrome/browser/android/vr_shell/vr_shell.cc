@@ -208,21 +208,19 @@ void VrShell::PostToGlThreadWhenReady(const base::Closure& task) {
   gl_thread_->task_runner()->PostTask(FROM_HERE, task);
 }
 
-void VrShell::SetContentPaused(bool paused) {
-  if (content_paused_ == paused)
+void VrShell::OnContentPaused(bool paused) {
+  if (!vr_shell_enabled_)
     return;
-  content_paused_ = paused;
 
   if (!delegate_provider_->device_provider())
     return;
 
   // TODO(mthiesse): The page is no longer visible when in menu mode. We
   // should unfocus or otherwise let it know it's hidden.
-  if (paused) {
+  if (paused)
     delegate_provider_->device_provider()->Device()->OnBlur();
-  } else {
+  else
     delegate_provider_->device_provider()->Device()->OnFocus();
-  }
 }
 
 void VrShell::OnTriggerEvent(JNIEnv* env, const JavaParamRef<jobject>& obj) {
@@ -262,7 +260,7 @@ void VrShell::SetSurface(JNIEnv* env,
 }
 
 void VrShell::SetWebVrMode(JNIEnv* env,
-                           const base::android::JavaParamRef<jobject>& obj,
+                           const JavaParamRef<jobject>& obj,
                            bool enabled) {
   webvr_mode_ = enabled;
   if (metrics_helper_)
@@ -274,6 +272,10 @@ void VrShell::SetWebVrMode(JNIEnv* env,
                        : UiInterface::Mode::STANDARD);
   PostToGlThreadWhenReady(base::Bind(&UiSceneManager::SetWebVRMode,
                                      gl_thread_->GetSceneManager(), enabled));
+}
+
+bool VrShell::GetWebVrMode(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+  return webvr_mode_;
 }
 
 void VrShell::OnLoadProgressChanged(JNIEnv* env,
@@ -402,11 +404,6 @@ void VrShell::AppButtonGesturePerformed(UiInterface::Direction direction) {
     ui_->HandleAppButtonGesturePerformed(direction);
 }
 
-void VrShell::AppButtonPressed() {
-  if (vr_shell_enabled_)
-    ui_->HandleAppButtonClicked();
-}
-
 void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,
                                            const JavaParamRef<jobject>& object,
                                            jint width,
@@ -421,16 +418,12 @@ void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,
   compositor_->SetWindowBounds(gfx::Size(width, height));
 }
 
+// Note that the following code is obsolete and is here as reference for the
+// actions that need to be implemented natively.
 void VrShell::DoUiAction(const UiAction action,
                          const base::DictionaryValue* arguments) {
   // Actions that can be handled natively.
   switch (action) {
-    case SET_CONTENT_PAUSED: {
-      bool paused;
-      CHECK(arguments->GetBoolean("paused", &paused));
-      SetContentPaused(paused);
-      return;
-    }
     case HISTORY_BACK:
       if (web_contents_ && web_contents_->IsFullscreen()) {
         web_contents_->ExitFullscreen(false);
@@ -560,7 +553,7 @@ void VrShell::RegisterGamepadDataFetcher(
 
 jlong Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
-           const base::android::JavaParamRef<jobject>& delegate,
+           const JavaParamRef<jobject>& delegate,
            jlong window_android,
            jboolean for_web_vr,
            jlong gvr_api,

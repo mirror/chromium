@@ -152,13 +152,11 @@ SharedMemory::SharedMemory(const std::wstring& name)
 
 SharedMemory::SharedMemory(const SharedMemoryHandle& handle, bool read_only)
     : external_section_(true),
+      shm_(handle),
       mapped_size_(0),
       memory_(NULL),
       read_only_(read_only),
-      requested_size_(0) {
-  DCHECK(!handle.IsValid() || handle.BelongsToCurrentProcess());
-  mapped_file_.Set(handle.GetHandle());
-}
+      requested_size_(0) {}
 
 SharedMemory::~SharedMemory() {
   Unmap();
@@ -185,18 +183,7 @@ size_t SharedMemory::GetHandleLimit() {
 // static
 SharedMemoryHandle SharedMemory::DuplicateHandle(
     const SharedMemoryHandle& handle) {
-  DCHECK(handle.BelongsToCurrentProcess());
-  HANDLE duped_handle;
-  ProcessHandle process = GetCurrentProcess();
-  BOOL success =
-      ::DuplicateHandle(process, handle.GetHandle(), process, &duped_handle, 0,
-                        FALSE, DUPLICATE_SAME_ACCESS);
-  if (success) {
-    base::SharedMemoryHandle handle(duped_handle, GetCurrentProcId());
-    handle.SetOwnershipPassesToIPC(true);
-    return handle;
-  }
-  return SharedMemoryHandle();
+  return handle.Duplicate();
 }
 
 bool SharedMemory::CreateAndMapAnonymous(size_t size) {
@@ -208,7 +195,7 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
   // wasting 32k per mapping on average.
   static const size_t kSectionMask = 65536 - 1;
   DCHECK(!options.executable);
-  DCHECK(!mapped_file_.Get());
+  DCHECK(!shm_.IsValid());
   if (options.size == 0) {
     LogError(SIZE_ZERO, 0);
     return false;
@@ -253,9 +240,9 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
                          rand_values[2], rand_values[3]);
   }
   DCHECK(!name_.empty());
-  mapped_file_.Set(CreateFileMappingWithReducedPermissions(&sa, rounded_size,
-                                                           name_.c_str()));
-  if (!mapped_file_.IsValid()) {
+  shm_ = SharedMemoryHandle(CreateFileMappingWithReducedPermissions(
+      &sa, rounded_size, name_.c_str()));
+  if (!shm_.IsValid()) {
     // The error is logged within CreateFileMappingWithReducedPermissions().
     return false;
   }
@@ -286,15 +273,15 @@ bool SharedMemory::Delete(const std::string& name) {
 }
 
 bool SharedMemory::Open(const std::string& name, bool read_only) {
-  DCHECK(!mapped_file_.Get());
+  DCHECK(!shm_.IsValid());
   DWORD access = FILE_MAP_READ | SECTION_QUERY;
   if (!read_only)
     access |= FILE_MAP_WRITE;
   name_ = ASCIIToUTF16(name);
   read_only_ = read_only;
-  mapped_file_.Set(
+  shm_ = SharedMemoryHandle(
       OpenFileMapping(access, false, name_.empty() ? nullptr : name_.c_str()));
-  if (!mapped_file_.IsValid())
+  if (!shm_.IsValid())
     return false;
   // If a name specified assume it's an external section.
   if (!name_.empty())
@@ -304,7 +291,7 @@ bool SharedMemory::Open(const std::string& name, bool read_only) {
 }
 
 bool SharedMemory::MapAt(off_t offset, size_t bytes) {
-  if (!mapped_file_.Get())
+  if (!shm_.IsValid())
     return false;
 
   if (bytes > static_cast<size_t>(std::numeric_limits<int>::max()))
@@ -313,11 +300,11 @@ bool SharedMemory::MapAt(off_t offset, size_t bytes) {
   if (memory_)
     return false;
 
-  if (external_section_ && !IsSectionSafeToMap(mapped_file_.Get()))
+  if (external_section_ && !IsSectionSafeToMap(shm_.GetHandle()))
     return false;
 
   memory_ = MapViewOfFile(
-      mapped_file_.Get(),
+      shm_.GetHandle(),
       read_only_ ? FILE_MAP_READ : FILE_MAP_READ | FILE_MAP_WRITE,
       static_cast<uint64_t>(offset) >> 32, static_cast<DWORD>(offset), bytes);
   if (memory_ != NULL) {
@@ -338,51 +325,33 @@ bool SharedMemory::Unmap() {
   return true;
 }
 
-bool SharedMemory::ShareToProcessCommon(ProcessHandle process,
-                                        SharedMemoryHandle* new_handle,
-                                        bool close_self,
-                                        ShareMode share_mode) {
-  *new_handle = SharedMemoryHandle();
-  DWORD access = FILE_MAP_READ | SECTION_QUERY;
-  DWORD options = 0;
-  HANDLE mapped_file = mapped_file_.Get();
+SharedMemoryHandle SharedMemory::GetReadOnlyHandle() {
   HANDLE result;
-  if (share_mode == SHARE_CURRENT_MODE && !read_only_)
-    access |= FILE_MAP_WRITE;
-  if (close_self) {
-    // DUPLICATE_CLOSE_SOURCE causes DuplicateHandle to close mapped_file.
-    options = DUPLICATE_CLOSE_SOURCE;
-    HANDLE detached_handle = mapped_file_.Take();
-    DCHECK_EQ(detached_handle, mapped_file);
-    Unmap();
+  ProcessHandle process = GetCurrentProcess();
+  if (!::DuplicateHandle(process, shm_.GetHandle(), process, &result,
+                         FILE_MAP_READ | SECTION_QUERY, FALSE, 0)) {
+    return SharedMemoryHandle();
   }
-
-  if (process == GetCurrentProcess() && close_self) {
-    *new_handle = SharedMemoryHandle(mapped_file, base::GetCurrentProcId());
-    return true;
-  }
-
-  if (!::DuplicateHandle(GetCurrentProcess(), mapped_file, process, &result,
-                         access, FALSE, options)) {
-    return false;
-  }
-  *new_handle = SharedMemoryHandle(result, base::GetProcId(process));
-  new_handle->SetOwnershipPassesToIPC(true);
-  return true;
+  SharedMemoryHandle handle = SharedMemoryHandle(result);
+  handle.SetOwnershipPassesToIPC(true);
+  return handle;
 }
 
-
 void SharedMemory::Close() {
-  mapped_file_.Close();
+  if (shm_.IsValid()) {
+    shm_.Close();
+    shm_ = SharedMemoryHandle();
+  }
 }
 
 SharedMemoryHandle SharedMemory::handle() const {
-  return SharedMemoryHandle(mapped_file_.Get(), base::GetCurrentProcId());
+  return shm_;
 }
 
 SharedMemoryHandle SharedMemory::TakeHandle() {
-  SharedMemoryHandle handle(mapped_file_.Take(), base::GetCurrentProcId());
+  SharedMemoryHandle handle(shm_);
   handle.SetOwnershipPassesToIPC(true);
+  shm_ = SharedMemoryHandle();
   memory_ = nullptr;
   mapped_size_ = 0;
   return handle;

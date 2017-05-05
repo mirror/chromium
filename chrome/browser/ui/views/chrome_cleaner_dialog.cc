@@ -5,7 +5,7 @@
 #include "chrome/browser/ui/views/chrome_cleaner_dialog.h"
 
 #include "base/strings/string16.h"
-#include "chrome/browser/safe_browsing/chrome_cleaner_dialog_controller.h"
+#include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -14,6 +14,7 @@
 #include "ui/events/event.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/text_constants.h"
+#include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/layout_constants.h"
@@ -39,10 +40,7 @@ constexpr int kDialogWidth = 448;
 
 ChromeCleanerDialog::ChromeCleanerDialog(
     safe_browsing::ChromeCleanerDialogController* controller)
-    : browser_(nullptr),
-      controller_(controller),
-      advanced_button_(
-          new views::LabelButton(this, controller_->GetAdvancedButtonLabel())) {
+    : browser_(nullptr), controller_(controller) {
   DCHECK(controller_);
 
   SetLayoutManager(new views::BoxLayout(
@@ -54,8 +52,6 @@ ChromeCleanerDialog::ChromeCleanerDialog(
   label->SetMultiLine(true);
   label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   AddChildView(label);
-
-  advanced_button_->SetStyle(views::Button::STYLE_BUTTON);
 }
 
 ChromeCleanerDialog::~ChromeCleanerDialog() {
@@ -107,7 +103,8 @@ base::string16 ChromeCleanerDialog::GetDialogButtonLabel(
 }
 
 views::View* ChromeCleanerDialog::CreateExtraView() {
-  return advanced_button_;
+  return views::MdTextButton::CreateSecondaryUiButton(
+      this, controller_->GetAdvancedButtonLabel());
 }
 
 bool ChromeCleanerDialog::Accept() {
@@ -144,7 +141,6 @@ gfx::Size ChromeCleanerDialog::GetPreferredSize() const {
 
 void ChromeCleanerDialog::ButtonPressed(views::Button* sender,
                                         const ui::Event& event) {
-  DCHECK_EQ(sender, advanced_button_);
   DCHECK(browser_);
 
   // TODO(alito): Navigate to the webui version of the Chrome Cleaner UI when
