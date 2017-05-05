@@ -23,6 +23,14 @@ struct ResolveResult {
   mojo.common.mojom.FilePath package_path;
 };
 
+struct ParentResolveResult {
+  // The name that was requested to be resolved.
+  string name;
+
+  // Whether the parent has the instance_per_child capability.
+  bool instance_per_child;
+};
+
 // Implemented exclusively for the Service Manager's use in resolving service
 // names and reading static manifest information.
 interface Resolver {
@@ -34,5 +42,5 @@ interface Resolver {
   // If the service is provided by another service, information about the
   // parent is given by |parent|; otherwise |parent| is null.
   ResolveServiceName(string service_name)
-      => (ResolveResult? result, ResolveResult? parent);
+      => (ResolveResult? result, ParentResolveResult? parent);
 };

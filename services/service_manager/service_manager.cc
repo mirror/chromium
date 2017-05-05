@@ -42,8 +42,6 @@ const char kCapability_UserID[] = "service_manager:user_id";
 const char kCapability_ClientProcess[] = "service_manager:client_process";
 const char kCapability_InstanceName[] = "service_manager:instance_name";
 const char kCapability_AllUsers[] = "service_manager:all_users";
-const char kCapability_InstancePerChild[] =
-    "service_manager:instance_per_child";
 const char kCapability_ServiceManager[] = "service_manager:service_manager";
 
 bool Succeeded(mojom::ConnectResult result) {
@@ -1011,7 +1009,7 @@ void ServiceManager::OnGotResolvedName(std::unique_ptr<ConnectParams> params,
                                        bool has_source_instance,
                                        base::WeakPtr<Instance> source_instance,
                                        mojom::ResolveResultPtr result,
-                                       mojom::ResolveResultPtr parent) {
+                                       mojom::ParentResolveResultPtr parent) {
   // If this request was originated by a specific Instance and that Instance is
   // no longer around, we ignore this response.
   if (has_source_instance && !source_instance)
@@ -1098,10 +1096,7 @@ void ServiceManager::OnGotResolvedName(std::unique_ptr<ConnectParams> params,
       std::string target_user_id = target.user_id();
       std::string factory_instance_name = instance_name;
 
-      auto spec_iter = parent->interface_provider_specs.find(
-          mojom::kServiceManager_ConnectorSpec);
-      if (spec_iter != parent->interface_provider_specs.end() &&
-              HasCapability(spec_iter->second, kCapability_InstancePerChild)) {
+      if (parent->instance_per_child) {
         // If configured to start a new instance, create a random instance name
         // for the factory so that we don't reuse an existing process.
         factory_instance_name = base::GenerateGUID();

@@ -11,15 +11,40 @@
 #include "services/catalog/entry.h"
 #include "services/catalog/entry_cache.h"
 #include "services/catalog/manifest_provider.h"
+#include "services/service_manager/public/interfaces/constants.mojom.h"
 
 namespace catalog {
 namespace {
+
+const char kCapability_InstancePerChild[] =
+    "service_manager:instance_per_child";
 
 void AddEntry(const Entry& entry, std::vector<mojom::EntryPtr>* ary) {
   mojom::EntryPtr entry_ptr(mojom::Entry::New());
   entry_ptr->name = entry.name();
   entry_ptr->display_name = entry.display_name();
   ary->push_back(std::move(entry_ptr));
+}
+
+bool HasCapability(const service_manager::InterfaceProviderSpec& spec,
+                   const std::string& capability) {
+  auto it = spec.requires.find(service_manager::mojom::kServiceName);
+  if (it == spec.requires.end())
+    return false;
+  return it->second.find(capability) != it->second.end();
+}
+
+service_manager::mojom::ParentResolveResultPtr
+CreateParentResolveResultFromEntry(const Entry* parent) {
+  if (!parent)
+    return nullptr;
+
+  auto spec_iter = parent->interface_provider_specs().find(
+      service_manager::mojom::kServiceManager_ConnectorSpec);
+  return service_manager::mojom::ParentResolveResult::New(
+      parent->name(),
+      spec_iter != parent->interface_provider_specs().end() &&
+          HasCapability(spec_iter->second, kCapability_InstancePerChild));
 }
 
 }  // namespace
@@ -47,17 +72,16 @@ void Instance::ResolveServiceName(const std::string& service_name,
   const Entry* entry = system_cache_->GetEntry(service_name);
   if (entry) {
     callback.Run(service_manager::mojom::ResolveResult::From(entry),
-                 service_manager::mojom::ResolveResult::From(entry->parent()));
+                 CreateParentResolveResultFromEntry(entry->parent()));
     return;
   } else if (service_manifest_provider_) {
     auto manifest = service_manifest_provider_->GetManifest(service_name);
     if (manifest) {
       auto entry = Entry::Deserialize(*manifest);
       if (entry) {
-        callback.Run(
-            service_manager::mojom::ResolveResult::From(
-                const_cast<const Entry*>(entry.get())),
-            service_manager::mojom::ResolveResult::From(entry->parent()));
+        callback.Run(service_manager::mojom::ResolveResult::From(
+                         const_cast<const Entry*>(entry.get())),
+                     CreateParentResolveResultFromEntry(entry->parent()));
 
         bool added = system_cache_->AddRootEntry(std::move(entry));
         DCHECK(added);
