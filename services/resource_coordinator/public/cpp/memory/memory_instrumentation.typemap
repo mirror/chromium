@@ -4,12 +4,15 @@
 
 mojom = "//services/resource_coordinator/public/interfaces/memory/memory_instrumentation.mojom"
 
+sources = [
+  "//services/resource_coordinator/public/cpp/memory/memory_instrumentation_struct_traits.cc",
+]
 public_headers = [
   "//base/trace_event/memory_dump_request_args.h",
   "//base/trace_event/process_memory_totals.h",
 ]
 traits_headers = [ "//services/resource_coordinator/public/cpp/memory/memory_instrumentation_struct_traits.h" ]
-deps = [
+public_deps = [
   "//base",
 ]
 type_mappings = [
