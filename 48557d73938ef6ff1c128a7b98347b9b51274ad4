@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a42da9a_254bba3e",
+        "filename": "android_webview/glue/glue.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-05T20:40:36Z",
+      "side": 1,
+      "message": "It\u0027s not okay to add these dependencies here. This will link Chrome code into the standalone WebView.",
+      "revId": "48557d73938ef6ff1c128a7b98347b9b51274ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c155f9_e492fa5d",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/LicenseContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-05T20:40:36Z",
+      "side": 1,
+      "message": "This should have triggered a DEPS violation, also.",
+      "revId": "48557d73938ef6ff1c128a7b98347b9b51274ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
