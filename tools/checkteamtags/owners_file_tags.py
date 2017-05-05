@@ -19,8 +19,10 @@ def parse(filename):
   """
   team = None
   component = None
+  os_name = None
   team_regex = re.compile('\s*#\s*TEAM\s*:\s*(\S+)')
   component_regex = re.compile('\s*#\s*COMPONENT\s*:\s*(\S+)')
+  os_regex = re.compile('\s*#\s*OS\s*:\s*(\S+)')
   with open(filename) as f:
     for line in f:
       team_matches = team_regex.match(line)
@@ -29,6 +31,11 @@ def parse(filename):
       component_matches = component_regex.match(line)
       if component_matches:
         component = component_matches.group(1)
+      os_matches = os_regex.match(line)
+      if os_matches:
+        os_name = os_matches.group(1)
+      if component and os_name:
+        component += '(%s)' % os_name
   return team, component
 
 

@@ -21,6 +21,8 @@ from owners_file_tags import parse
 DEFAULT_MAPPING_URL = \
     'https://storage.googleapis.com/chromium-owners/component_map.json'
 
+ALLOWED_OSES = ['Android', 'Chrome', 'iOS', 'Linux', 'Mac', 'Windows']
+
 
 def rel_and_full_paths(root, owners_path):
   if root:
@@ -124,10 +126,14 @@ def check_owners(rel_path, full_path):
                        ['#', 'COMPONENT:']]
   team_entries = [l for l in owners_file_lines if l.split()[:2] ==
                   ['#', 'TEAM:']]
+  os_entries = [l for l in owners_file_lines if l.split()[:2] ==
+                  ['#', 'OS:']]
   if len(component_entries) > 1:
     return result_dict('Contains more than one component per directory')
   if len(team_entries) > 1:
     return result_dict('Contains more than one team per directory')
+  if len(os_entries) > 1:
+    return result_dict('Contains more than one os per directory')
 
   if not component_entries and not team_entries:
     return
@@ -152,6 +158,11 @@ def check_owners(rel_path, full_path):
     team_entry_parts = team_entries[0].split('@')
     if len(team_entry_parts) != 2:
       return result_dict('Has TEAM line, but not exactly 1 team email')
+  if os_entries:
+    os_name = os_entries[0].split(':')[1].strip()
+    if os_name not in ALLOWED_OSES:
+      return result_dict('Has unrecognized OS %s, the list of allowed values '
+                         'is: %s' % (os_name, ', '.join(ALLOWED_OSES)))
   # TODO(robertocn): Raise a warning if only one of (COMPONENT, TEAM) is
   # present.
 

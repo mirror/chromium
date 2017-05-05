@@ -100,6 +100,24 @@ mock@chromium.org
 
 # TEAM: some-team@chromium.org
 # COMPONENT: V8>mock_component
+# OS: Windows
+""".splitlines()
+
+BAD_OS = """
+mock@chromium.org
+
+# TEAM: some-team@chromium.org
+# COMPONENT: V8>mock_component
+# OS: BSD
+""".splitlines()
+
+MULTIPLE_OS = """
+mock@chromium.org
+
+# TEAM: some-team@chromium.org
+# COMPONENT: V8>mock_component
+# OS: Linux
+# OS: Mac
 """.splitlines()
 
 open_name = 'checkteamtags.open'
@@ -165,10 +183,10 @@ class CheckTeamTagsTest(unittest.TestCase):
 
   @mock.patch('urllib2.urlopen', mock_url_open({
       'dir-to-component': {
-          'some/dir':      'V8>mock_component',
+          'some/dir':      'V8>mock_component(Windows)',
       },
       'component-to-team': {
-          'V8>mock_component': 'some-other-team@chromium.org',
+          'V8>mock_component(Windows)': 'some-other-team@chromium.org',
       },
   }))
   @mock.patch('sys.argv', ['checkteamtags', '--bare', 'fakepath/OWNERS'])
@@ -210,3 +228,17 @@ class CheckTeamTagsTest(unittest.TestCase):
       with mock.patch('owners_file_tags.open', create=True) as mock_open_2:
         mock_open_2.return_value = mock_file(BASIC)
         self.assertEqual(0, checkteamtags.main())
+
+  @mock.patch('urllib2.urlopen', mock_url_open())
+  @mock.patch('sys.argv', ['checkteamtags', '--bare' ,'OWNERS'])
+  def testMultipleOs(self):
+    with mock.patch(open_name, create=True) as mock_open:
+      mock_open.return_value = mock_file(MULTIPLE_OS)
+      self.assertEqual(1, checkteamtags.main())
+
+  @mock.patch('urllib2.urlopen', mock_url_open())
+  @mock.patch('sys.argv', ['checkteamtags', '--bare' ,'OWNERS'])
+  def testBadOs(self):
+    with mock.patch(open_name, create=True) as mock_open:
+      mock_open.return_value = mock_file(BAD_OS)
+      self.assertEqual(1, checkteamtags.main())
