@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca52fec2_1d63136f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/wasm/wasm_indexeddb_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-05-05T21:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb022d24_27f75309",
+      "range": {
+        "startLine": 76,
+        "startChar": 37,
+        "endLine": 76,
+        "endChar": 47
+      },
+      "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0b21d90_bc6ac205",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb0b12a_f67982e7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-05-05T21:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0b21d90_bc6ac205",
+      "range": {
+        "startLine": 448,
+        "startChar": 20,
+        "endLine": 448,
+        "endChar": 21
+      },
+      "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9acaee83_ae1074af",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-05-05T21:29:04Z",
+      "side": 1,
+      "message": "Done, but rephrased a bit.\n\nI think the secure/insecure thing is a higher layer concern. Here, we just know about inline/transfer.\n\nAn alternative would be to add an option saying \"deny wasm\" and have IDB set that - we\u0027d still throw here, though (since IDB won\u0027t know there\u0027s any wasm in the object graph to serialize). The state space would be large, hence my preference to not add this extra bool. \n\nThe comment about the behavioral difference would go where we make the decision (IDB side) I can follow up with that - we don\u0027t have a crbug tracking the desire to bridge behaviors (I\u0027m assuming that\u0027s the crbug you\u0027re thinking about), because this goal has been expressed recently.",
+      "parentUuid": "5ffb10f7_86a79d4f",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 18
+      },
+      "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69592e7b_501807b4",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-05T19:59:05Z",
       "side": 1,
       "message": "The security team prefers \"non-secure contexts\" (\"insecure\" has an alternate meaning in English)",
+      "range": {
+        "startLine": 457,
+        "startChar": 44,
+        "endLine": 457,
+        "endChar": 52
+      },
+      "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a52ed9_9d8b9f39",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-05-05T21:29:04Z",
+      "side": 1,
+      "message": "Oh.. true! :)",
+      "parentUuid": "69592e7b_501807b4",
       "range": {
         "startLine": 457,
         "startChar": 44,
