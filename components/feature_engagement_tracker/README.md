@@ -12,3 +12,15 @@ feature enlightenment or in-product help itself.
 
 The backend is feature agnostic and have no special logic for any specific
 features, but instead provides a generic API.
+
+## Testing
+
+To run tests, assuming the product out directory is `out/Debug`, use:
+
+```bash
+./out/Debug/components_unittests \
+  --test-launcher-filter-file=components/feature_engagement_tracker/components_unittests.filter
+```
+
+When adding new test suites, also remember to add the suite to the filter file:
+`components/feature_engagement_tracker/components_unittests.filter`.
