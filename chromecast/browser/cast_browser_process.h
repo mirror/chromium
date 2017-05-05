@@ -42,6 +42,7 @@ class CastBrowserProcess {
   virtual ~CastBrowserProcess();
 
   void SetBrowserContext(std::unique_ptr<CastBrowserContext> browser_context);
+  void ClearBrowserContext();
   void SetCastContentBrowserClient(CastContentBrowserClient* browser_client);
   void SetCastService(std::unique_ptr<CastService> cast_service);
 #if defined(USE_AURA)
@@ -85,15 +86,18 @@ class CastBrowserProcess {
 #endif  // defined(USE_AURA)
   std::unique_ptr<PrefService> pref_service_;
   scoped_refptr<ConnectivityChecker> connectivity_checker_;
-  std::unique_ptr<CastBrowserContext> browser_context_;
   std::unique_ptr<metrics::CastMetricsServiceClient> metrics_service_client_;
   std::unique_ptr<RemoteDebuggingServer> remote_debugging_server_;
 
   CastContentBrowserClient* cast_content_browser_client_;
   net::NetLog* net_log_;
 
-  // Note: CastService must be destroyed before others.
+  // Note: CastService must be destroyed before others above.
   std::unique_ptr<CastService> cast_service_;
+
+  // Note: browser_context_ needs to be destroyed on the Browser::IO thread,
+  // so it needs to be on CastBrowserMainParts::PostMainMessageLoopRun.
+  std::unique_ptr<CastBrowserContext> browser_context_;
 
   DISALLOW_COPY_AND_ASSIGN(CastBrowserProcess);
 };
