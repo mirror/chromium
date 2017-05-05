@@ -1495,6 +1495,12 @@ extern const char kPullToRefreshEffectName[];
 // Description of the flag for the pull-to-refresh effect.
 extern const char kPullToRefreshEffectDescription[];
 
+// Name of the flag for the translate compact infobar.
+extern const char kTranslateCompactUIName[];
+
+// Description of the flag for translate compact infobar.
+extern const char kTranslateCompactUIDescription[];
+
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_MACOSX)
@@ -3352,6 +3358,23 @@ extern const char kOmniboxDisplayTitleForCurrentUrlName[];
 // for current URL.
 extern const char kOmniboxDisplayTitleForCurrentUrlDescription[];
 
+// Name of the flag that forces Network Quality Estimator (NQE) to always
+// return the specified effective connection type.
+extern const char kForceEffectiveConnectionTypeName[];
+
+// Description of the flag that forces Network Quality Estimator (NQE) to always
+// return the specified effective connection type.
+extern const char kForceEffectiveConnectionTypeDescription[];
+
+// Description of the various effective connection type choices that can be
+// set using kForceEffectiveConnectionTypeName flag.
+extern const char kEffectiveConnectionTypeUnknownDescription[];
+extern const char kEffectiveConnectionTypeOfflineDescription[];
+extern const char kEffectiveConnectionTypeSlow2GDescription[];
+extern const char kEffectiveConnectionType2GDescription[];
+extern const char kEffectiveConnectionType3GDescription[];
+extern const char kEffectiveConnectionType4GDescription[];
+
 // Name & description for the heap profiling flag.
 extern const char kEnableHeapProfilingName[];
 extern const char kEnableHeapProfilingDescription[];
@@ -3360,6 +3383,11 @@ extern const char kEnableHeapProfilingDescription[];
 extern const char kEnableHeapProfilingModePseudo[];
 extern const char kEnableHeapProfilingModeNative[];
 extern const char kEnableHeapProfilingTaskProfiler[];
+
+// Name and description of the flag allowing the usage of a small set of
+// server-side suggestions in NTP tiles.
+extern const char kUseSuggestionsEvenIfFewFeatureName[];
+extern const char kUseSuggestionsEvenIfFewFeatureDescription[];
 
 }  // namespace flag_descriptions
 

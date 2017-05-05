@@ -84,10 +84,10 @@ class ASH_EXPORT ShelfView : public views::View,
   // Returns the ideal bounds of the specified item, or an empty rect if id
   // isn't know. If the item is in an overflow shelf, the overflow icon location
   // will be returned.
-  gfx::Rect GetIdealBoundsOfItemIcon(ShelfID id);
+  gfx::Rect GetIdealBoundsOfItemIcon(const ShelfID& id);
 
   // Repositions the icon for the specified item by the midpoint of the window.
-  void UpdatePanelIconPosition(ShelfID id, const gfx::Point& midpoint);
+  void UpdatePanelIconPosition(const ShelfID& id, const gfx::Point& midpoint);
 
   // Returns true if we're showing a menu.
   bool IsShowingMenu() const;
@@ -229,6 +229,11 @@ class ASH_EXPORT ShelfView : public views::View,
 
   // Invoked when the mouse is dragged. Updates the models as appropriate.
   void ContinueDrag(const ui::LocatedEvent& event);
+
+  // Ends the drag on the other shelf. (ie if we are on main shelf, ends drag on
+  // the overflow shelf). Invoked when a shelf item is being dragged from one
+  // shelf to the other.
+  void EndDragOnOtherShelf(bool cancel);
 
   // Handles ripping off an item from the shelf. Returns true when the item got
   // removed.
@@ -395,7 +400,7 @@ class ASH_EXPORT ShelfView : public views::View,
   int start_drag_index_ = -1;
 
   // Used for the context menu of a particular item.
-  ShelfID context_menu_id_ = 0;
+  ShelfID context_menu_id_;
 
   std::unique_ptr<views::FocusSearch> focus_search_;
 
@@ -423,9 +428,8 @@ class ASH_EXPORT ShelfView : public views::View,
   // and it needs to be deleted/unpinned again if the operation gets cancelled.
   bool drag_and_drop_item_pinned_ = false;
 
-  // The ShelfItem which is currently used for a drag and a drop operation
-  // or 0 otherwise.
-  ShelfID drag_and_drop_shelf_id_ = 0;
+  // The ShelfItem currently used for drag and drop; empty if none.
+  ShelfID drag_and_drop_shelf_id_;
 
   // The application ID of the application which we drag and drop.
   std::string drag_and_drop_app_id_;
@@ -445,6 +449,9 @@ class ASH_EXPORT ShelfView : public views::View,
 
   // True when the icon was dragged off the shelf.
   bool dragged_off_shelf_ = false;
+
+  // True when an item is dragged from one shelf to another (eg. overflow).
+  bool dragged_to_another_shelf_ = false;
 
   // The rip off view when a snap back operation is underway.
   views::View* snap_back_from_rip_off_view_ = nullptr;

@@ -52,7 +52,7 @@
 #include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "cc/output/buffer_to_texture_target_map.h"
-#include "components/discardable_memory/service/discardable_shared_memory_manager.h"
+#include "components/metrics/single_sample_metrics.h"
 #include "components/tracing/common/tracing_switches.h"
 #include "content/browser/appcache/appcache_dispatcher_host.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
@@ -182,7 +182,6 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
-#include "services/resource_coordinator/memory/coordinator/coordinator_impl.h"
 #include "services/service_manager/embedder/switches.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -1233,15 +1232,12 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       registry.get(), GetGlobalJavaInterfaces()
                           ->CreateInterfaceFactory<
                               shape_detection::mojom::FaceDetectionProvider>());
-  AddUIThreadInterface(
-      registry.get(),
-      GetGlobalJavaInterfaces()
-          ->CreateInterfaceFactory<shape_detection::mojom::BarcodeDetection>());
-  AddUIThreadInterface(
-      registry.get(),
-      GetGlobalJavaInterfaces()
-          ->CreateInterfaceFactory<shape_detection::mojom::TextDetection>());
 #else
+  AddUIThreadInterface(
+      registry.get(),
+      base::Bind(&ForwardShapeDetectionRequest<
+                 shape_detection::mojom::FaceDetectionProviderRequest>));
+#endif
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&ForwardShapeDetectionRequest<
@@ -1249,12 +1245,8 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&ForwardShapeDetectionRequest<
-                 shape_detection::mojom::FaceDetectionProviderRequest>));
-  AddUIThreadInterface(
-      registry.get(),
-      base::Bind(&ForwardShapeDetectionRequest<
                  shape_detection::mojom::TextDetectionRequest>));
-#endif
+
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&PermissionServiceContext::CreateService,
@@ -1329,6 +1321,9 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&VideoCaptureHost::Create,
                  BrowserMainLoop::GetInstance()->media_stream_manager()));
 
+  registry->AddInterface(
+      base::Bind(&metrics::CreateSingleSampleMetricsProvider));
+
   if (base::FeatureList::IsEnabled(features::kOffMainThreadFetch)) {
     scoped_refptr<ServiceWorkerContextWrapper> service_worker_context(
         static_cast<ServiceWorkerContextWrapper*>(
@@ -1344,24 +1339,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
                        base::Bind(&WebSocketManager::CreateWebSocket, GetID(),
                                   MSG_ROUTING_NONE));
 
-  // Chrome browser process only provides DiscardableSharedMemory service when
-  // Chrome is not running in mus+ash.
-  if (!service_manager::ServiceManagerIsRemote()) {
-    discardable_memory::DiscardableSharedMemoryManager* manager =
-        BrowserMainLoop::GetInstance()->discardable_shared_memory_manager();
-    registry->AddInterface(
-        base::Bind(&discardable_memory::DiscardableSharedMemoryManager::Bind,
-                   base::Unretained(manager)));
-  }
-
   AddUIThreadInterface(registry.get(), base::Bind(&FieldTrialRecorder::Create));
-
-  AddUIThreadInterface(
-      registry.get(),
-      base::Bind(
-          &memory_instrumentation::CoordinatorImpl::BindCoordinatorRequest,
-          base::Unretained(
-              memory_instrumentation::CoordinatorImpl::GetInstance())));
 
   associated_interfaces_.reset(new AssociatedInterfaceRegistryImpl());
   GetContentClient()->browser()->ExposeInterfacesToRenderer(

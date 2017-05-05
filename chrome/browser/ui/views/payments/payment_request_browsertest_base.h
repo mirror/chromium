@@ -74,6 +74,8 @@ class PaymentRequestBrowserTestBase
 
   void SetUpOnMainThread() override;
 
+  void NavigateTo(const std::string& file_path);
+
   void SetIncognito();
   void SetInvalidSsl();
 
@@ -121,6 +123,7 @@ class PaymentRequestBrowserTestBase
   void OpenShippingAddressEditorScreen();
   void OpenContactInfoEditorScreen();
   void ClickOnBackArrow();
+  void ClickOnCancel();
 
   content::WebContents* GetActiveWebContents();
 
@@ -181,8 +184,9 @@ class PaymentRequestBrowserTestBase
   // Sets proper animation delegates and waits for animation to finish.
   void WaitForAnimation();
 
-  // Returns the text of the StyledLabel with the specific |view_id| that is a
-  // child of the Payment Request dialog view.
+  // Returns the text of the Label or StyledLabel with the specific |view_id|
+  // that is a child of the Payment Request dialog view.
+  const base::string16& GetLabelText(DialogViewID view_id);
   const base::string16& GetStyledLabelText(DialogViewID view_id);
   // Returns the error label text associated with a given field |type|.
   const base::string16& GetErrorLabelForType(autofill::ServerFieldType type);

@@ -66,8 +66,10 @@
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/ssl_config/ssl_config_switches.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/suggestions/features.h"
 #include "components/sync/driver/sync_driver_switches.h"
 #include "components/tracing/common/tracing_switches.h"
+#include "components/translate/core/browser/translate_infobar_delegate.h"
 #include "components/translate/core/browser/translate_manager.h"
 #include "components/translate/core/browser/translate_prefs.h"
 #include "components/version_info/version_info.h"
@@ -85,6 +87,7 @@
 #include "media/media_features.h"
 #include "media/midi/midi_switches.h"
 #include "net/cert/cert_verify_proc_android.h"
+#include "net/nqe/effective_connection_type.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
 #include "services/device/public/cpp/device_features.h"
@@ -714,6 +717,36 @@ const FeatureEntry::Choice kAutoplayPolicyChoices[] = {
      switches::autoplay::kCrossOriginUserGestureRequiredPolicy},
 #endif
 };
+
+const FeatureEntry::Choice kForceEffectiveConnectionTypeChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kEffectiveConnectionTypeUnknownDescription,
+     switches::kForceEffectiveConnectionType,
+     net::kEffectiveConnectionTypeUnknown},
+    {flag_descriptions::kEffectiveConnectionTypeOfflineDescription,
+     switches::kForceEffectiveConnectionType,
+     net::kEffectiveConnectionTypeOffline},
+    {flag_descriptions::kEffectiveConnectionTypeSlow2GDescription,
+     switches::kForceEffectiveConnectionType,
+     net::kEffectiveConnectionTypeSlow2G},
+    {flag_descriptions::kEffectiveConnectionType2GDescription,
+     switches::kForceEffectiveConnectionType, net::kEffectiveConnectionType2G},
+    {flag_descriptions::kEffectiveConnectionType3GDescription,
+     switches::kForceEffectiveConnectionType, net::kEffectiveConnectionType3G},
+    {flag_descriptions::kEffectiveConnectionType4GDescription,
+     switches::kForceEffectiveConnectionType, net::kEffectiveConnectionType4G},
+};
+
+// Ensure that all effective connection types returned by Network Quality
+// Estimator (NQE) are also exposed via flags.
+static_assert(net::EFFECTIVE_CONNECTION_TYPE_LAST + 1 ==
+                  arraysize(kForceEffectiveConnectionTypeChoices),
+              "ECT enum value is not handled.");
+static_assert(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN == 0,
+              "ECT enum value is not handled.");
+static_assert(net::EFFECTIVE_CONNECTION_TYPE_4G + 1 ==
+                  net::EFFECTIVE_CONNECTION_TYPE_LAST,
+              "ECT enum value is not handled.");
 
 const FeatureEntry::FeatureParam kNoStatePrefetchEnabled[] = {
     {prerender::kNoStatePrefetchFeatureModeParameterName,
@@ -1605,6 +1638,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPullToRefreshEffectName,
      flag_descriptions::kPullToRefreshEffectDescription, kOsAndroid,
      SINGLE_DISABLE_VALUE_TYPE(switches::kDisablePullToRefreshEffect)},
+    {"translate-compact-infobar", flag_descriptions::kTranslateCompactUIName,
+     flag_descriptions::kTranslateCompactUIDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(translate::kTranslateCompactUI)},
 #endif  // OS_ANDROID
 #if defined(OS_MACOSX)
     {"enable-translate-new-ux", flag_descriptions::kTranslateNewUxName,
@@ -2609,7 +2645,7 @@ const FeatureEntry kFeatureEntries[] = {
     {"force-enable-stylus-tools",
      flag_descriptions::kForceEnableStylusToolsName,
      flag_descriptions::kForceEnableStylusToolsDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(ash::switches::kAshForceEnablePalette)},
+     SINGLE_VALUE_TYPE(ash::switches::kAshForceEnableStylusTools)},
 #endif // defined(OS_CHROMEOS)
 
     {"enable-midi-manager-dynamic-instantiation",
@@ -2782,6 +2818,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAutoplayPolicyDescription, kOsAll,
      MULTI_VALUE_TYPE(kAutoplayPolicyChoices)},
 
+    {"force-effective-connection-type",
+     flag_descriptions::kForceEffectiveConnectionTypeName,
+     flag_descriptions::kForceEffectiveConnectionTypeDescription, kOsAll,
+     MULTI_VALUE_TYPE(kForceEffectiveConnectionTypeChoices)},
+
     {"enable-heap-profiling", flag_descriptions::kEnableHeapProfilingName,
      flag_descriptions::kEnableHeapProfilingDescription, kOsAll,
      MULTI_VALUE_TYPE(kEnableHeapProfilingChoices)},
@@ -2791,6 +2832,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kShowCertLinkOnPageInfoDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kShowCertLink)},
 #endif
+
+    {"use-suggestions-even-if-few",
+     flag_descriptions::kUseSuggestionsEvenIfFewFeatureName,
+     flag_descriptions::kUseSuggestionsEvenIfFewFeatureDescription, kOsAll,
+     FEATURE_VALUE_TYPE(suggestions::kUseSuggestionsEvenIfFewFeature)},
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms.xml. See note in

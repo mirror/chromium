@@ -2919,7 +2919,6 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
     LayerImpl* root = host_impl_->active_tree()->InnerViewportContainerLayer();
     scrollbar->SetScrollElementId(scroll->element_id());
     root->test_properties()->AddChild(std::move(scrollbar));
-    scroll->set_needs_show_scrollbars(true);
     host_impl_->active_tree()->BuildPropertyTreesForTesting();
     host_impl_->active_tree()->DidBecomeActive();
     host_impl_->active_tree()->HandleScrollbarShowRequestsFromMain();
@@ -3223,7 +3222,6 @@ TEST_F(LayerTreeHostImplTest, ScrollbarVisibilityChangeCausesRedrawAndCommit) {
   scrollbar->SetPosition(gfx::PointF(90, 0));
   container->test_properties()->AddChild(std::move(scrollbar));
   host_impl_->pending_tree()->PushPageScaleFromMainThread(1.f, 1.f, 1.f);
-  scroll->set_needs_show_scrollbars(true);
   host_impl_->pending_tree()->BuildPropertyTreesForTesting();
   host_impl_->ActivateSyncTree();
 
@@ -3910,8 +3908,8 @@ TEST_F(LayerTreeHostImplTest, DidDrawCalledOnAllLayers) {
   EXPECT_TRUE(layer1->did_draw_called());
   EXPECT_TRUE(layer2->did_draw_called());
 
-  EXPECT_NE(root->GetRenderSurface(), layer1->GetRenderSurface());
-  EXPECT_TRUE(layer1->GetRenderSurface());
+  EXPECT_NE(GetRenderSurface(root), GetRenderSurface(layer1));
+  EXPECT_TRUE(GetRenderSurface(layer1));
 }
 
 class MissingTextureAnimatingLayer : public DidDrawCheckLayer {
@@ -7249,7 +7247,7 @@ class BlendStateCheckLayer : public LayerImpl {
                                     gfx::Size(1, 1), false, false);
     test_blending_draw_quad->visible_rect = quad_visible_rect_;
     EXPECT_EQ(blend_, test_blending_draw_quad->ShouldDrawWithBlending());
-    EXPECT_EQ(has_render_surface_, !!GetRenderSurface());
+    EXPECT_EQ(has_render_surface_, !!GetRenderSurface(this));
   }
 
   void SetExpectation(bool blend, bool has_render_surface) {
@@ -8759,10 +8757,12 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
       TestContextProvider::Create();
   FrameSinkClient test_client_(context_provider);
 
+  constexpr bool synchronous_composite = true;
+  constexpr bool disable_display_vsync = false;
   auto compositor_frame_sink = base::MakeUnique<TestCompositorFrameSink>(
       context_provider, TestContextProvider::CreateWorker(), nullptr, nullptr,
       RendererSettings(), base::ThreadTaskRunnerHandle::Get().get(),
-      true /* synchronous_composite */);
+      synchronous_composite, disable_display_vsync);
   compositor_frame_sink->SetClient(&test_client_);
 
   CreateHostImpl(DefaultSettings(), std::move(compositor_frame_sink));

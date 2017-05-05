@@ -311,8 +311,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
   // date when the renderer process requests the color profile.
   if (gfx::ICCProfile::CachedProfilesNeedUpdate()) {
     base::PostTaskWithTraits(
-        FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
-                       base::TaskPriority::BACKGROUND),
+        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
         base::Bind(&gfx::ICCProfile::UpdateCachedProfilesOnBackgroundThread));
   }
 #endif
@@ -2569,11 +2568,6 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
 
   // |has_damage| is not transmitted.
   frame.metadata.begin_frame_ack.has_damage = true;
-
-  if (!ui::LatencyInfo::Verify(frame.metadata.latency_info,
-                               "RenderWidgetHostImpl::OnSwapCompositorFrame")) {
-    std::vector<ui::LatencyInfo>().swap(frame.metadata.latency_info);
-  }
 
   last_frame_metadata_ = frame.metadata.Clone();
 

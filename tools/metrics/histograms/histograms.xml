@@ -10864,6 +10864,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="DataUse.ContentType.UserTraffic" enum="DataUseContentType"
     units="bytes">
+  <obsolete>
+    Deprecated 2017/04. Bytes are logged to DataUse.ContentType.UserTrafficKB.
+  </obsolete>
+  <owner>rajendrant@chromium.org</owner>
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Data use of user traffic by different content types. Recorded when network
+    bytes are received by Chrome.
+  </summary>
+</histogram>
+
+<histogram name="DataUse.ContentType.UserTrafficKB" enum="DataUseContentType"
+    units="KB">
   <owner>rajendrant@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -22418,6 +22431,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="GPU.DriverBugTestResultsPerEntry"
+    enum="GpuDriverBugWorkaroundEntry">
+  <owner>jbauman@chromium.org</owner>
+  <owner>vmiura@chromium.org</owner>
+  <owner>kbr@chromium.org</owner>
+  <owner>zmo@chromium.org</owner>
+  <summary>
+    For every entry in the gpu driver bug list that is hit on a machine, this
+    records the id. Entry 0 is the total number of times that data is recorded.
+    It should be recorded whenever new GPU information is received: on startup,
+    whenever a GPU process launches, and whenever the active GPU changes.
+  </summary>
+</histogram>
+
 <histogram name="GPU.EGLDisplayType" enum="EGLDisplayType">
   <owner>jbauman@chromium.org</owner>
   <summary>The display type used to ask for an EGLDisplay.</summary>
@@ -25362,11 +25389,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Chrome.
 
     The Menu item bucket is deprecated as of M57, and will only contain records
-    up until M56.
+    for shortcuts added to the homescreen until M56.
 
     For M57+, the Menu item (standalone) bucket contains all launch intents
     originating from the add to homescreen menu item that launch to standalone
-    mode and *are not* PWAs. These are sites which do not meet the PWA
+    mode and *are not* WebAPKs. These are sites which do not meet the PWA
     eligibility criteria, but have an app manifest that specifies either
     standalone or fullscreen display. This bucket also contains PWA *and*
     non-PWA intents that were added to the homescreen *prior* to M57, as we
@@ -27928,6 +27955,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.MSE.VideoCodec.MP4" enum="MSECodec">
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Video codec used in Media Source Extensions playback if the media container
+    is MP4. Set when AddId() is called during playback.
+  </summary>
+</histogram>
+
+<histogram name="Media.MSE.VideoCodec.WebM" enum="MSECodec">
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Video codec used in Media Source Extensions playback if the media container
+    is WebM. Set when AddId() is called during playback.
+  </summary>
+</histogram>
+
 <histogram name="Media.Netflix.AudioBitrate" units="kbps">
   <obsolete>
     Deprecated 04/2016 as doesn't have data nor owner.
@@ -28291,6 +28334,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>zqzhang@chromium.org</owner>
   <summary>
     The number of times user interacts with MediaSession sorted by action type.
+  </summary>
+</histogram>
+
+<histogram name="Media.SRC.VideoCodec.MP4" enum="VideoCodec">
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Video codec used in plain src= (not MSE) HTML5 media if the media container
+    is MP4.
+  </summary>
+</histogram>
+
+<histogram name="Media.SRC.VideoCodec.WebM" enum="VideoCodec">
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Video codec used in plain src= (not MSE) HTML5 media if the media container
+    is WebM.
   </summary>
 </histogram>
 
@@ -43824,6 +43883,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true" name="Notifications.Freedesktop.Capabilities"
+    enum="BooleanSupported">
+<!-- Name completed by histogram_suffixes name="FreedesktopNotificationCapabilitiesId" -->
+
+  <owner>thomasanderson@chromium.org</owner>
+  <summary>
+    Whether the notification server supports the capability in question.  (Linux
+    only) Logged when the proxy to /org/Freedesktop/Notifications is set up
+    successfully, which happens at most once on startup.
+  </summary>
+</histogram>
+
 <histogram name="Notifications.Icon.FileSize" units="bytes">
   <obsolete>
     Deprecated Nov 2016 in favor of Notifications.LoadFileSize.*
@@ -43862,6 +43933,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of milliseconds it took to scale down an icon for a Web
     Notification.
+  </summary>
+</histogram>
+
+<histogram name="Notifications.Linux.BridgeInitializationStatus"
+    enum="LinuxNotificationBridgeStatusCode">
+  <owner>thomasanderson@chromium.org</owner>
+  <summary>
+    The status code for initializing NotificationPlatformBridgeLinux.  (Linux
+    only) Logged on each start up.
   </summary>
 </histogram>
 
@@ -43955,6 +44035,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Records delivery status for persistent notification close events sent to a
     Service Worker when the event has been handled.
+  </summary>
+</histogram>
+
+<histogram name="Notifications.UsingNativeNotificationCenter"
+    enum="BooleanNativeNotifications">
+  <owner>thomasanderson@chromium.org</owner>
+  <summary>
+    Indicates if Chrome is using system notifications or the Chrome notification
+    center.  Logged on each start up.
   </summary>
 </histogram>
 
@@ -83002,6 +83091,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WinJumplist.OnFaviconDataAvailableDuration" units="ms">
+  <owner>chengx@chromium.org</owner>
+  <summary>Time spent in OnFaviconDataAvailable().</summary>
+</histogram>
+
+<histogram name="WinJumplist.StartLoadingFaviconDuration" units="ms">
+  <owner>chengx@chromium.org</owner>
+  <summary>Time spent in StartLoadingFavicon().</summary>
+</histogram>
+
 <histogram name="WinJumplist.UpdateJumpListDuration" units="ms">
   <obsolete>
     Obsolete 04/20/2017 as it's no longer accurate due to the code change.
@@ -85491,6 +85590,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Omnibox" label="The user interacted with the omnibox."/>
   <suffix name="SwitchTabs" label="The user switched tabs."/>
   <affected-histogram name="FirstUserAction.BackgroundTime.MainIntent"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="FreedesktopNotificationCapabilitiesId" separator=".">
+  <suffix name="ActionIcons" label="action-icons capability"/>
+  <suffix name="Actions" label="actions capability"/>
+  <suffix name="Body" label="body capability"/>
+  <suffix name="BodyHyperlinks" label="body-hyperlinks capability"/>
+  <suffix name="BodyImages" label="body-images capability"/>
+  <suffix name="BodyMarkup" label="body-markup capability"/>
+  <suffix name="IconMulti" label="icon-multi capability"/>
+  <suffix name="IconStatic" label="icon-static capability"/>
+  <suffix name="Persistence" label="persistence capability"/>
+  <suffix name="Sound" label="sound capability"/>
+  <affected-histogram name="Notifications.Freedesktop.Capabilities"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="FromGWS">

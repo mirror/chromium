@@ -11,6 +11,12 @@ import("//printing/features/features.gni")
 import("//third_party/WebKit/public/public_features.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
 
+declare_args() {
+  # Include code in the build that is only needed when using the video
+  # capture Mojo service, which is currently experimental.
+  enable_mojo_video_capture = false
+}
+
 source_set("browser") {
   # Only the public target should depend on this. All other targets (even
   # internal content ones) should depend on the public one.
@@ -43,6 +49,7 @@ source_set("browser") {
     "//components/filesystem:lib",
     "//components/leveldb:lib",
     "//components/link_header_util",
+    "//components/metrics",
     "//components/mime_util",
     "//components/payments/mojom:mojom_payment_app",
     "//components/rappor",
@@ -1286,6 +1293,8 @@ source_set("browser") {
     "resource_context_impl.h",
     "screen_orientation/screen_orientation_provider.cc",
     "screen_orientation/screen_orientation_provider.h",
+    "service_manager/common_browser_interfaces.cc",
+    "service_manager/common_browser_interfaces.h",
     "service_manager/merge_dictionary.cc",
     "service_manager/merge_dictionary.h",
     "service_manager/service_manager_context.cc",
@@ -1594,6 +1603,22 @@ source_set("browser") {
       "//third_party/webrtc/media:rtc_media_base",
       "//third_party/webrtc/modules/desktop_capture:primitives",
       "//third_party/webrtc_overrides:init_webrtc",
+    ]
+  }
+
+  if (enable_mojo_video_capture) {
+    sources += [
+      "renderer_host/media/service_launched_video_capture_device.cc",
+      "renderer_host/media/service_launched_video_capture_device.h",
+      "renderer_host/media/service_video_capture_device_launcher.cc",
+      "renderer_host/media/service_video_capture_device_launcher.h",
+      "renderer_host/media/service_video_capture_provider.cc",
+      "renderer_host/media/service_video_capture_provider.h",
+    ]
+
+    deps += [
+      "//services/video_capture/public/cpp",
+      "//services/video_capture/public/interfaces:constants",
     ]
   }
 

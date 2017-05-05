@@ -2328,7 +2328,6 @@ crbug.com/694958 virtual/stable/http/tests/navigation/same-and-different-back.ht
 crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/crossorigin.html [ Failure ]
 crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/errorhandling.html [ Failure ]
 crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/imports.html [ Failure ]
-crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/execorder.html [ Pass Timeout ]
 
 # This test has a failure console message with specific performance
 # numbers so a consistent baseline cannot be added. This test could be
@@ -2341,26 +2340,14 @@ crbug.com/698077 inspector/sources/debugger/live-edit.html [ NeedsManualRebaseli
 crbug.com/698077 inspector/sources/debugger/debug-inlined-scripts.html [ NeedsManualRebaseline ]
 
 # Working on getting the CSP tests going:
-crbug.com/694525 external/wpt/content-security-policy [ Skip ]
-crbug.com/694525 external/wpt/content-security-policy/child-src [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/connect-src [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/embedded-enforcement [ Pass ]
+crbug.com/694525 external/wpt/content-security-policy/base-uri [ Skip ]
+crbug.com/694525 external/wpt/content-security-policy/blink-contrib [ Skip ]
+crbug.com/694525 external/wpt/content-security-policy/blink-contrib-2 [ Skip ]
 crbug.com/694525 external/wpt/content-security-policy/embedded-enforcement/embedding_csp-header-invalid-format.html [ Skip ]
-crbug.com/694525 external/wpt/content-security-policy/font-src [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/frame-ancestors [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/generic [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/img-src [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/inside-worker [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/media-src [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/meta [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/navigation [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/script-src [ Pass ]
+crbug.com/694525 external/wpt/content-security-policy/object-src [ Skip ]
+crbug.com/694525 external/wpt/content-security-policy/reporting [ Skip ]
 crbug.com/694525 external/wpt/content-security-policy/script-src/script-src-1_10.html [ Skip ]
 crbug.com/694525 external/wpt/content-security-policy/script-src/script-src-strict_dynamic_in_img-src.html [ Skip ]
-crbug.com/694525 external/wpt/content-security-policy/securitypolicyviolation [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/style-src [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/svg [ Pass ]
-crbug.com/694525 external/wpt/content-security-policy/worker-src [ Pass ]
 
 # These policies are not implemented yet.
 crbug.com/627968 external/wpt/referrer-policy/same-origin/ [ Skip ]
@@ -2412,8 +2399,6 @@ crbug.com/626703 external/wpt/mixed-content/blockable/no-opt-in/same-host-http/i
 #crbug.com/695270 [ Linux ] external/wpt/css/css-writing-modes-3/overconstrained-rel-pos-rtl-top-bottom-vrl-006.xht [ Failure ]
 
 crbug.com/626703 external/wpt/domxpath/001.html [ Failure ]
-
-crbug.com/710226 [ Win Mac10.9 Mac10.10 Mac10.11 Mac10.12 ] external/wpt/cssom-view/MediaQueryList-001.html [ Failure ]
 
 # HTTP tests that started failing after WPT import
 crbug.com/711529 virtual/mojo-loading/http/tests/workers/shared-worker-performance-timeline.html [ Timeout ]
@@ -2474,9 +2459,6 @@ crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-header-allowed.htm
 crbug.com/626703 external/wpt/XMLHttpRequest/abort-after-stop.htm [ Timeout ]
 crbug.com/626703 external/wpt/XMLHttpRequest/event-readystatechange-loaded.htm [ Failure Timeout ]
 crbug.com/626703 external/wpt/XMLHttpRequest/send-authentication-existing-session-manual.htm [ Skip ]
-crbug.com/626703 external/wpt/content-security-policy/inside-worker/shared-inheritance.html [ Timeout ]
-crbug.com/626703 external/wpt/content-security-policy/inside-worker/shared-script.html [ Timeout ]
-crbug.com/626703 external/wpt/content-security-policy/securitypolicyviolation/inside-shared-worker.html [ Timeout ]
 crbug.com/626703 crbug.com/717157 external/wpt/fetch/api/basic/integrity-sharedworker.html [ Crash Timeout ]
 crbug.com/626703 external/wpt/html/browsers/offline/no-appcache-in-shared-workers-historical.html [ Timeout ]
 crbug.com/626703 external/wpt/html/webappapis/scripting/processing-model-2/unhandled-promise-rejections/promise-rejection-events.sharedworker.html [ Timeout ]
@@ -3411,5 +3393,3 @@ crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-path-context-cli
 crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Timeout ]
 crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-path-context-clip.html [ Timeout ]
 
-crbug.com/717914 virtual/stable/webexposed/element-instance-property-listing.html [ Failure ]
-crbug.com/717914 virtual/stable/webexposed/global-interface-listing.html [ Failure ]

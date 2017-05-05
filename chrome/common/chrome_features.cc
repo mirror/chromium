@@ -43,7 +43,7 @@ const base::Feature kAssetDownloadSuggestionsFeature{
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
 // Enables auto-dismissing JavaScript dialogs.
 const base::Feature kAutoDismissingDialogs{"AutoDismissingDialogs",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
+                                           base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
 #if defined(OS_WIN) || defined(OS_MACOSX)
@@ -208,6 +208,12 @@ const base::Feature kMaterialDesignSettings{"MaterialDesignSettings",
 // during Cast Tab Mirroring.
 const base::Feature kMediaRemoting{"MediaRemoting",
                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
+// If enabled, replaces the <extensionview> controller in the route details view
+// of the Media Router dialog with the controller bundled with the WebUI
+// resources.
+const base::Feature kMediaRouterUIRouteController{
+    "MediaRouterUIRouteController", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 
 // Enables or disables modal permission prompts.
