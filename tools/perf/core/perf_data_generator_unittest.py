@@ -137,7 +137,7 @@ class PerfDataGeneratorTest(unittest.TestCase):
     sharding_map = {'1': {'blacklisted': 0, 'not_blacklisted': 0}}
     benchmarks = [BlacklistedBenchmark, NotBlacklistedBenchmark]
     tests = perf_data_generator.generate_telemetry_tests(
-        test_config, benchmarks, sharding_map, ['blacklisted'])
+        'fake', test_config, benchmarks, sharding_map, ['blacklisted'])
 
     generated_test_names = set(t['name'] for t in tests)
     self.assertEquals(
