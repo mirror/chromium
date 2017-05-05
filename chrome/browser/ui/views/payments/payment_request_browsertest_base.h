@@ -34,6 +34,10 @@ namespace content {
 class WebContents;
 }  // namespace content
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace views {
 class Widget;
 }
@@ -68,8 +72,9 @@ class PaymentRequestBrowserTestBase
   explicit PaymentRequestBrowserTestBase(const std::string& test_file_path);
   ~PaymentRequestBrowserTestBase() override;
 
-  void SetUpCommandLine(base::CommandLine* command_line) override;
   void SetUpOnMainThread() override;
+
+  void NavigateTo(const std::string& file_path);
 
   void SetIncognito();
   void SetInvalidSsl();
@@ -118,6 +123,7 @@ class PaymentRequestBrowserTestBase
   void OpenShippingAddressEditorScreen();
   void OpenContactInfoEditorScreen();
   void ClickOnBackArrow();
+  void ClickOnCancel();
 
   content::WebContents* GetActiveWebContents();
 
@@ -137,7 +143,8 @@ class PaymentRequestBrowserTestBase
 
   void CreatePaymentRequestForTest(
       content::WebContents* web_contents,
-      mojo::InterfaceRequest<payments::mojom::PaymentRequest> request);
+      const service_manager::BindSourceInfo& source_info,
+      payments::mojom::PaymentRequestRequest request);
 
   // Click on a view from within the dialog and waits for an observed event
   // to be observed.
@@ -177,8 +184,9 @@ class PaymentRequestBrowserTestBase
   // Sets proper animation delegates and waits for animation to finish.
   void WaitForAnimation();
 
-  // Returns the text of the StyledLabel with the specific |view_id| that is a
-  // child of the Payment Request dialog view.
+  // Returns the text of the Label or StyledLabel with the specific |view_id|
+  // that is a child of the Payment Request dialog view.
+  const base::string16& GetLabelText(DialogViewID view_id);
   const base::string16& GetStyledLabelText(DialogViewID view_id);
   // Returns the error label text associated with a given field |type|.
   const base::string16& GetErrorLabelForType(autofill::ServerFieldType type);

@@ -32,9 +32,8 @@
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/content_features.h"
-#include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/test/ui_controls.h"
@@ -59,23 +58,15 @@ PaymentRequestBrowserTestBase::PaymentRequestBrowserTestBase(
       is_valid_ssl_(true) {}
 PaymentRequestBrowserTestBase::~PaymentRequestBrowserTestBase() {}
 
-void PaymentRequestBrowserTestBase::SetUpCommandLine(
-    base::CommandLine* command_line) {
-  InProcessBrowserTest::SetUpCommandLine(command_line);
-  command_line->AppendSwitch(switches::kEnableExperimentalWebPlatformFeatures);
-  command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                  features::kWebPayments.name);
-}
-
 void PaymentRequestBrowserTestBase::SetUpOnMainThread() {
+  // Setup the https server.
   https_server_ = base::MakeUnique<net::EmbeddedTestServer>(
       net::EmbeddedTestServer::TYPE_HTTPS);
   ASSERT_TRUE(https_server_->InitializeAndListen());
   https_server_->ServeFilesFromSourceDirectory("chrome/test/data/payments");
   https_server_->StartAcceptingConnections();
 
-  GURL url = https_server()->GetURL(test_file_path_);
-  ui_test_utils::NavigateToURL(browser(), url);
+  NavigateTo(test_file_path_);
 
   // Starting now, PaymentRequest Mojo messages sent by the renderer will
   // create PaymentRequest objects via this test's CreatePaymentRequestForTest,
@@ -87,6 +78,10 @@ void PaymentRequestBrowserTestBase::SetUpOnMainThread() {
   registry->AddInterface(
       base::Bind(&PaymentRequestBrowserTestBase::CreatePaymentRequestForTest,
                  base::Unretained(this), web_contents));
+}
+
+void PaymentRequestBrowserTestBase::NavigateTo(const std::string& file_path) {
+  ui_test_utils::NavigateToURL(browser(), https_server()->GetURL(file_path));
 }
 
 void PaymentRequestBrowserTestBase::SetIncognito() {
@@ -296,25 +291,55 @@ void PaymentRequestBrowserTestBase::OpenContactInfoScreen() {
 void PaymentRequestBrowserTestBase::OpenCreditCardEditorScreen() {
   ResetEventObserver(DialogEvent::CREDIT_CARD_EDITOR_OPENED);
 
-  ClickOnDialogViewAndWait(DialogViewID::PAYMENT_METHOD_ADD_CARD_BUTTON);
+  views::View* view = delegate_->dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::PAYMENT_METHOD_ADD_CARD_BUTTON));
+  if (!view) {
+    view = delegate_->dialog_view()->GetViewByID(static_cast<int>(
+        DialogViewID::PAYMENT_SHEET_PAYMENT_METHOD_SECTION_BUTTON));
+  }
+
+  EXPECT_TRUE(view);
+  ClickOnDialogViewAndWait(view);
 }
 
 void PaymentRequestBrowserTestBase::OpenShippingAddressEditorScreen() {
   ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
 
-  ClickOnDialogViewAndWait(DialogViewID::PAYMENT_METHOD_ADD_SHIPPING_BUTTON);
+  views::View* view = delegate_->dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::PAYMENT_METHOD_ADD_SHIPPING_BUTTON));
+  if (!view) {
+    view = delegate_->dialog_view()->GetViewByID(static_cast<int>(
+        DialogViewID::PAYMENT_SHEET_SHIPPING_ADDRESS_SECTION_BUTTON));
+  }
+
+  EXPECT_TRUE(view);
+  ClickOnDialogViewAndWait(view);
 }
 
 void PaymentRequestBrowserTestBase::OpenContactInfoEditorScreen() {
   ResetEventObserver(DialogEvent::CONTACT_INFO_EDITOR_OPENED);
 
-  ClickOnDialogViewAndWait(DialogViewID::PAYMENT_METHOD_ADD_CONTACT_BUTTON);
+  views::View* view = delegate_->dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::PAYMENT_METHOD_ADD_CONTACT_BUTTON));
+  if (!view) {
+    view = delegate_->dialog_view()->GetViewByID(static_cast<int>(
+        DialogViewID::PAYMENT_SHEET_CONTACT_INFO_SECTION_BUTTON));
+  }
+
+  EXPECT_TRUE(view);
+  ClickOnDialogViewAndWait(view);
 }
 
 void PaymentRequestBrowserTestBase::ClickOnBackArrow() {
   ResetEventObserver(DialogEvent::BACK_NAVIGATION);
 
   ClickOnDialogViewAndWait(DialogViewID::BACK_BUTTON);
+}
+
+void PaymentRequestBrowserTestBase::ClickOnCancel() {
+  ResetEventObserver(DialogEvent::DIALOG_CLOSED);
+
+  ClickOnDialogViewAndWait(DialogViewID::CANCEL_BUTTON, false);
 }
 
 content::WebContents* PaymentRequestBrowserTestBase::GetActiveWebContents() {
@@ -376,7 +401,8 @@ void PaymentRequestBrowserTestBase::AddCreditCard(
 
 void PaymentRequestBrowserTestBase::CreatePaymentRequestForTest(
     content::WebContents* web_contents,
-    mojo::InterfaceRequest<payments::mojom::PaymentRequest> request) {
+    const service_manager::BindSourceInfo& source_info,
+    payments::mojom::PaymentRequestRequest request) {
   DCHECK(web_contents);
   std::unique_ptr<TestChromePaymentRequestDelegate> delegate =
       base::MakeUnique<TestChromePaymentRequestDelegate>(
@@ -570,6 +596,13 @@ void PaymentRequestBrowserTestBase::WaitForAnimation() {
                                new gfx::TestAnimationDelegate()));
     base::RunLoop().Run();
   }
+}
+
+const base::string16& PaymentRequestBrowserTestBase::GetLabelText(
+    DialogViewID view_id) {
+  views::View* view = dialog_view()->GetViewByID(static_cast<int>(view_id));
+  DCHECK(view);
+  return static_cast<views::Label*>(view)->text();
 }
 
 const base::string16& PaymentRequestBrowserTestBase::GetStyledLabelText(

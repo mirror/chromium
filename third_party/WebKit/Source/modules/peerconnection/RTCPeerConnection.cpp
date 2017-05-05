@@ -37,7 +37,6 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
-#include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8ThrowException.h"
 #include "bindings/modules/v8/RTCIceCandidateInitOrRTCIceCandidate.h"
@@ -81,6 +80,7 @@
 #include "modules/peerconnection/RTCVoidRequestPromiseImpl.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/Microtask.h"
+#include "platform/bindings/ScriptState.h"
 #include "platform/peerconnection/RTCAnswerOptionsPlatform.h"
 #include "platform/peerconnection/RTCOfferOptionsPlatform.h"
 #include "platform/wtf/CurrentTime.h"
@@ -503,8 +503,7 @@ RTCPeerConnection::RTCPeerConnection(ExecutionContext* context,
     return;
   }
 
-  peer_handler_ = WTF::WrapUnique(
-      Platform::Current()->CreateRTCPeerConnectionHandler(this));
+  peer_handler_ = Platform::Current()->CreateRTCPeerConnectionHandler(this);
   if (!peer_handler_) {
     closed_ = true;
     stopped_ = true;
@@ -925,7 +924,7 @@ ScriptPromise RTCPeerConnection::generateCertificate(
   DCHECK(!key_params.IsNull());
 
   std::unique_ptr<WebRTCCertificateGenerator> certificate_generator =
-      WTF::WrapUnique(Platform::Current()->CreateRTCCertificateGenerator());
+      Platform::Current()->CreateRTCCertificateGenerator();
 
   // |keyParams| was successfully constructed, but does the certificate
   // generator support these parameters?

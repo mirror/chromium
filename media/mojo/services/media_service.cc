@@ -19,7 +19,8 @@ namespace media {
 MediaService::MediaService(std::unique_ptr<MojoMediaClient> mojo_media_client)
     : mojo_media_client_(std::move(mojo_media_client)) {
   DCHECK(mojo_media_client_);
-  registry_.AddInterface<mojom::MediaService>(this);
+  registry_.AddInterface<mojom::MediaService>(
+      base::Bind(&MediaService::Create, base::Unretained(this)));
 }
 
 MediaService::~MediaService() {}
@@ -35,7 +36,7 @@ void MediaService::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(source_info.identity, interface_name,
+  registry_.BindInterface(source_info, interface_name,
                           std::move(interface_pipe));
 }
 
@@ -44,7 +45,7 @@ bool MediaService::OnServiceManagerConnectionLost() {
   return true;
 }
 
-void MediaService::Create(const service_manager::Identity& remote_identity,
+void MediaService::Create(const service_manager::BindSourceInfo& source_info,
                           mojom::MediaServiceRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }

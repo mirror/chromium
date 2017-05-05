@@ -57,7 +57,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/installer/util/util_constants.h"
 #include "components/browser_sync/profile_sync_service.h"
-#include "components/browser_watcher/stability_debugging.h"
+#include "components/browser_watcher/stability_paths.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/metrics/call_stack_profile_metrics_provider.h"
 #include "components/metrics/drive_metrics_provider.h"
@@ -570,6 +570,12 @@ ChromeMetricsServiceClient::GetMetricsReportingDefaultState() {
       g_browser_process->local_state());
 }
 
+// static
+bool ChromeMetricsServiceClient::IsMetricsReportingForceEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kForceEnableMetricsReporting);
+}
+
 void ChromeMetricsServiceClient::Initialize() {
   PrefService* local_state = g_browser_process->local_state();
 
@@ -585,7 +591,8 @@ void ChromeMetricsServiceClient::Initialize() {
 
   RegisterMetricsServiceProviders();
 
-  if (base::FeatureList::IsEnabled(ukm::kUkmFeature)) {
+  if (IsMetricsReportingForceEnabled() ||
+      base::FeatureList::IsEnabled(ukm::kUkmFeature)) {
     ukm_service_.reset(new ukm::UkmService(local_state, this));
     RegisterUKMProviders();
   }

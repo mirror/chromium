@@ -46,6 +46,7 @@
 #include "cc/test/fake_scoped_ui_resource.h"
 #include "cc/test/fake_video_frame_provider.h"
 #include "cc/test/geometry_test_utils.h"
+#include "cc/test/layer_test_common.h"
 #include "cc/test/layer_tree_test.h"
 #include "cc/test/push_properties_counting_layer.h"
 #include "cc/test/push_properties_counting_layer_impl.h"
@@ -1043,29 +1044,29 @@ class LayerTreeHostTestSurfaceDamage : public LayerTreeHostTest {
     LayerImpl* child_impl = impl->active_tree()->LayerById(child_->id());
     switch (impl->active_tree()->source_frame_number()) {
       case 0:
-        EXPECT_TRUE(root_impl->GetRenderSurface()->AncestorPropertyChanged());
-        EXPECT_TRUE(child_impl->GetRenderSurface()->AncestorPropertyChanged());
+        EXPECT_TRUE(GetRenderSurface(root_impl)->AncestorPropertyChanged());
+        EXPECT_TRUE(GetRenderSurface(child_impl)->AncestorPropertyChanged());
         PostSetNeedsCommitToMainThread();
         break;
       case 1:
-        EXPECT_FALSE(root_impl->GetRenderSurface()->AncestorPropertyChanged());
-        EXPECT_FALSE(child_impl->GetRenderSurface()->AncestorPropertyChanged());
+        EXPECT_FALSE(GetRenderSurface(root_impl)->AncestorPropertyChanged());
+        EXPECT_FALSE(GetRenderSurface(child_impl)->AncestorPropertyChanged());
         PostSetNeedsCommitToMainThread();
         break;
       case 2:
-        EXPECT_TRUE(root_impl->GetRenderSurface()->AncestorPropertyChanged());
-        EXPECT_TRUE(child_impl->GetRenderSurface()->AncestorPropertyChanged());
+        EXPECT_TRUE(GetRenderSurface(root_impl)->AncestorPropertyChanged());
+        EXPECT_TRUE(GetRenderSurface(child_impl)->AncestorPropertyChanged());
         PostSetNeedsCommitToMainThread();
         break;
       case 3:
-        EXPECT_FALSE(root_impl->GetRenderSurface()->AncestorPropertyChanged());
-        EXPECT_TRUE(child_impl->GetRenderSurface()->AncestorPropertyChanged());
+        EXPECT_FALSE(GetRenderSurface(root_impl)->AncestorPropertyChanged());
+        EXPECT_TRUE(GetRenderSurface(child_impl)->AncestorPropertyChanged());
         EndTest();
         PostSetNeedsCommitToMainThread();
         break;
       case 4:
-        EXPECT_FALSE(root_impl->GetRenderSurface()->AncestorPropertyChanged());
-        EXPECT_FALSE(child_impl->GetRenderSurface()->AncestorPropertyChanged());
+        EXPECT_FALSE(GetRenderSurface(root_impl)->AncestorPropertyChanged());
+        EXPECT_FALSE(GetRenderSurface(child_impl)->AncestorPropertyChanged());
         EndTest();
         break;
     }
@@ -1491,16 +1492,14 @@ class LayerTreeHostTestSwitchMaskLayer : public LayerTreeHostTest {
     switch (index_) {
       case 0:
         index_++;
-        EXPECT_FALSE(impl->sync_tree()
-                         ->root_layer_for_testing()
-                         ->GetRenderSurface()
-                         ->MaskLayer());
+        EXPECT_FALSE(
+            GetRenderSurface(impl->sync_tree()->root_layer_for_testing())
+                ->MaskLayer());
         break;
       case 1:
-        EXPECT_TRUE(impl->sync_tree()
-                        ->root_layer_for_testing()
-                        ->GetRenderSurface()
-                        ->MaskLayer());
+        EXPECT_TRUE(
+            GetRenderSurface(impl->sync_tree()->root_layer_for_testing())
+                ->MaskLayer());
         EndTest();
         break;
     }
@@ -2591,12 +2590,11 @@ class LayerTreeHostTestDeviceScaleFactorScalesViewportAndLayers
 
     // Both layers should be drawing into the root render surface.
     ASSERT_EQ(1u, render_surface_list.size());
-    ASSERT_EQ(root->GetRenderSurface(), render_surface_list[0]);
-    ASSERT_EQ(2, root->GetRenderSurface()->num_contributors());
+    ASSERT_EQ(GetRenderSurface(root), render_surface_list[0]);
+    ASSERT_EQ(2, GetRenderSurface(root)->num_contributors());
 
     // The root render surface is the size of the viewport.
-    EXPECT_EQ(gfx::Rect(0, 0, 60, 60),
-              root->GetRenderSurface()->content_rect());
+    EXPECT_EQ(gfx::Rect(0, 0, 60, 60), GetRenderSurface(root)->content_rect());
 
     // The max tiling scale of the child should be scaled.
     EXPECT_FLOAT_EQ(1.5f, child->MaximumTilingContentsScale());
@@ -3091,7 +3089,8 @@ class OnDrawCompositorFrameSink : public TestCompositorFrameSink {
                                 gpu_memory_buffer_manager,
                                 renderer_settings,
                                 task_runner,
-                                synchronous_composite),
+                                synchronous_composite,
+                                false /* disable_display_vsync */),
         invalidate_callback_(std::move(invalidate_callback)) {}
 
   // TestCompositorFrameSink overrides.
@@ -5679,7 +5678,7 @@ class LayerTreeHostTestRenderSurfaceEffectTreeIndex : public LayerTreeHostTest {
       LayerImpl* grand_child_impl =
           host_impl->sync_tree()->LayerById(grand_child_->id());
       EXPECT_EQ(grand_child_impl->effect_tree_index(),
-                grand_child_impl->GetRenderSurface()->EffectTreeIndex());
+                GetRenderSurface(grand_child_impl)->EffectTreeIndex());
     }
   }
 
@@ -5693,12 +5692,12 @@ class LayerTreeHostTestRenderSurfaceEffectTreeIndex : public LayerTreeHostTest {
       case 1:
       case 2:
         EXPECT_EQ(grand_child_impl->effect_tree_index(),
-                  grand_child_impl->GetRenderSurface()->EffectTreeIndex());
+                  GetRenderSurface(grand_child_impl)->EffectTreeIndex());
         PostSetNeedsCommitToMainThread();
         break;
       case 3:
         EXPECT_EQ(grand_child_impl->effect_tree_index(),
-                  grand_child_impl->GetRenderSurface()->EffectTreeIndex());
+                  GetRenderSurface(grand_child_impl)->EffectTreeIndex());
         EndTest();
     }
   }
@@ -5740,6 +5739,7 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
   std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
       scoped_refptr<ContextProvider> compositor_context_provider,
       scoped_refptr<ContextProvider> worker_context_provider) override {
+    constexpr bool disable_display_vsync = false;
     bool synchronous_composite =
         !HasImplThread() &&
         !layer_tree_host()->GetSettings().single_thread_proxy_scheduler;
@@ -5747,7 +5747,7 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
         compositor_context_provider, std::move(worker_context_provider),
         shared_bitmap_manager(), gpu_memory_buffer_manager(),
         layer_tree_host()->GetSettings().renderer_settings,
-        ImplThreadTaskRunner(), synchronous_composite);
+        ImplThreadTaskRunner(), synchronous_composite, disable_display_vsync);
   }
 
   void BeginTest() override {
@@ -7054,6 +7054,82 @@ class LayerTreeTestMultiTextureMaskLayerWithDifferentBounds
 
 SINGLE_AND_MULTI_THREAD_TEST_F(
     LayerTreeTestMultiTextureMaskLayerWithDifferentBounds);
+
+class LayerTreeTestMaskWithNonExactTextureSize : public LayerTreeTest {
+ protected:
+  void SetupTree() override {
+    // The masked layer has bounds 100x100, but is allocated a 120x150 texture.
+
+    scoped_refptr<Layer> root = Layer::Create();
+
+    scoped_refptr<FakePictureLayer> content_layer =
+        FakePictureLayer::Create(&client_);
+    root->AddChild(content_layer);
+
+    std::unique_ptr<RecordingSource> recording_source =
+        FakeRecordingSource::CreateFilledRecordingSource(gfx::Size(100, 100));
+    PaintFlags paint1, paint2;
+    static_cast<FakeRecordingSource*>(recording_source.get())
+        ->add_draw_rect_with_flags(gfx::Rect(0, 0, 100, 90), paint1);
+    static_cast<FakeRecordingSource*>(recording_source.get())
+        ->add_draw_rect_with_flags(gfx::Rect(0, 90, 100, 10), paint2);
+    client_.set_fill_with_nonsolid_color(true);
+    static_cast<FakeRecordingSource*>(recording_source.get())->Rerecord();
+
+    scoped_refptr<FakePictureLayer> mask_layer =
+        FakePictureLayer::CreateWithRecordingSource(
+            &client_, std::move(recording_source));
+    content_layer->SetMaskLayer(mask_layer.get());
+
+    gfx::Size root_size(100, 100);
+    root->SetBounds(root_size);
+
+    gfx::Size layer_size(100, 100);
+    content_layer->SetBounds(layer_size);
+
+    gfx::Size mask_size(100, 100);
+    gfx::Size mask_texture_size(120, 150);
+    mask_layer->SetBounds(mask_size);
+    mask_layer->SetLayerMaskType(Layer::LayerMaskType::SINGLE_TEXTURE_MASK);
+    mask_layer->set_fixed_tile_size(mask_texture_size);
+
+    layer_tree_host()->SetRootLayer(root);
+    LayerTreeTest::SetupTree();
+    client_.set_bounds(root->bounds());
+  }
+
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+
+  DrawResult PrepareToDrawOnThread(LayerTreeHostImpl* host_impl,
+                                   LayerTreeHostImpl::FrameData* frame_data,
+                                   DrawResult draw_result) override {
+    EXPECT_EQ(2u, frame_data->render_passes.size());
+    RenderPass* root_pass = frame_data->render_passes.back().get();
+    EXPECT_EQ(2u, root_pass->quad_list.size());
+
+    // There's a solid color quad under everything.
+    EXPECT_EQ(DrawQuad::SOLID_COLOR, root_pass->quad_list.back()->material);
+
+    // The surface is 100x100
+    EXPECT_EQ(DrawQuad::RENDER_PASS, root_pass->quad_list.front()->material);
+    const RenderPassDrawQuad* render_pass_quad =
+        RenderPassDrawQuad::MaterialCast(root_pass->quad_list.front());
+    EXPECT_EQ(gfx::Rect(0, 0, 100, 100).ToString(),
+              render_pass_quad->rect.ToString());
+    // The mask layer is 100x100, but is backed by a 120x150 image.
+    EXPECT_EQ(gfx::RectF(0.0f, 0.0f, 100.f / 120.0f, 100.f / 150.0f).ToString(),
+              render_pass_quad->mask_uv_rect.ToString());
+    EndTest();
+    return draw_result;
+  }
+
+  void AfterTest() override {}
+
+  int mask_layer_id_;
+  FakeContentLayerClient client_;
+};
+
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeTestMaskWithNonExactTextureSize);
 
 class LayerTreeTestPageScaleFlags : public LayerTreeTest {
  protected:

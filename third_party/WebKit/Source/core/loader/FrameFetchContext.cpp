@@ -65,6 +65,7 @@
 #include "core/svg/graphics/SVGImageChromeClient.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
+#include "core/timing/PerformanceBase.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
@@ -353,9 +354,9 @@ void FrameFetchContext::DispatchDidReceiveResponse(
     resource_loading_policy = LinkLoader::kDoNotLoadResources;
   }
   LinkLoader::LoadLinksFromHeader(
-      response.HttpHeaderField(HTTPNames::Link), response.Url(),
-      GetFrame()->GetDocument(), NetworkHintsInterfaceImpl(),
-      resource_loading_policy, LinkLoader::kLoadAll, nullptr);
+      response.HttpHeaderField(HTTPNames::Link), response.Url(), *GetFrame(),
+      GetDocument(), NetworkHintsInterfaceImpl(), resource_loading_policy,
+      LinkLoader::kLoadAll, nullptr);
 
   if (response.HasMajorCertificateErrors()) {
     MixedContentChecker::HandleCertificateError(GetFrame(), response,
@@ -370,6 +371,18 @@ void FrameFetchContext::DispatchDidReceiveResponse(
   // It is essential that inspector gets resource response BEFORE console.
   GetFrame()->Console().ReportResourceResponseReceived(document_loader,
                                                        identifier, response);
+
+  // MainResource responses were already added, skip them here.
+  if (RuntimeEnabledFeatures::serverTimingEnabled() &&
+      resource->GetType() != Resource::kMainResource &&
+      GetFrame()->GetDocument() && GetFrame()->GetDocument()->domWindow()) {
+    LocalDOMWindow* localDOMWindow = GetFrame()->GetDocument()->domWindow();
+    DOMWindowPerformance::performance(*localDOMWindow)
+        ->AddServerTiming(response,
+                          localDOMWindow->HasLoadEventFired()
+                              ? PerformanceBase::ShouldAddToBuffer::Never
+                              : PerformanceBase::ShouldAddToBuffer::Always);
+  }
 }
 
 void FrameFetchContext::DispatchDidReceiveData(unsigned long identifier,
@@ -571,10 +584,15 @@ void FrameFetchContext::AddConsoleMessage(const String& message,
                                           LogMessageType message_type) const {
   MessageLevel level = message_type == kLogWarningMessage ? kWarningMessageLevel
                                                           : kErrorMessageLevel;
-  if (GetFrame()->GetDocument()) {
-    GetFrame()->GetDocument()->AddConsoleMessage(
-        ConsoleMessage::Create(kJSMessageSource, level, message));
-  }
+  ConsoleMessage* console_message =
+      ConsoleMessage::Create(kJSMessageSource, level, message);
+  // Route the console message through Document if it's attached, so
+  // that script line numbers can be included. Otherwise, route directly to the
+  // FrameConsole, to ensure we never drop a message.
+  if (GetDocument() && GetDocument()->GetFrame())
+    GetDocument()->AddConsoleMessage(console_message);
+  else
+    GetFrame()->Console().AddMessage(console_message);
 }
 
 void FrameFetchContext::ModifyRequestForCSP(ResourceRequest& resource_request) {
@@ -686,20 +704,6 @@ MHTMLArchive* FrameFetchContext::Archive() const {
       ->Archive();
 }
 
-ResourceLoadPriority FrameFetchContext::ModifyPriorityForExperiments(
-    ResourceLoadPriority priority) {
-  // If Settings is null, we can't verify any experiments are in force.
-  if (!GetFrame()->GetSettings())
-    return priority;
-
-  // If enabled, drop the priority of all resources in a subframe.
-  if (GetFrame()->GetSettings()->GetLowPriorityIframes() &&
-      !GetFrame()->IsMainFrame())
-    return kResourceLoadPriorityVeryLow;
-
-  return priority;
-}
-
 RefPtr<WebTaskRunner> FrameFetchContext::LoadingTaskRunner() const {
   return GetFrame()->FrameScheduler()->LoadingTaskRunner();
 }
@@ -718,9 +722,10 @@ SubresourceFilter* FrameFetchContext::GetSubresourceFilter() const {
   return document_loader ? document_loader->GetSubresourceFilter() : nullptr;
 }
 
-SecurityContext* FrameFetchContext::GetMainResourceSecurityContext() const {
-  DCHECK(GetFrame()->GetDocument());
-  return GetFrame()->GetDocument();
+SecurityContext* FrameFetchContext::GetParentSecurityContext() const {
+  if (Frame* parent = GetFrame()->Tree().Parent())
+    return parent->GetSecurityContext();
+  return nullptr;
 }
 
 bool FrameFetchContext::ShouldBlockRequestByInspector(
@@ -752,11 +757,11 @@ bool FrameFetchContext::IsSVGImageChromeClient() const {
 }
 
 void FrameFetchContext::CountUsage(UseCounter::Feature feature) const {
-  UseCounter::Count(GetFrame()->GetDocument(), feature);
+  UseCounter::Count(GetFrame(), feature);
 }
 
 void FrameFetchContext::CountDeprecation(UseCounter::Feature feature) const {
-  Deprecation::CountDeprecation(GetFrame()->GetDocument(), feature);
+  Deprecation::CountDeprecation(GetFrame(), feature);
 }
 
 bool FrameFetchContext::ShouldBlockFetchByMixedContentCheck(

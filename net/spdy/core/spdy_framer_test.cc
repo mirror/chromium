@@ -744,7 +744,7 @@ SpdyStringPiece GetSerializedHeaders(const SpdySerializedFrame& frame,
                          frame.size() - framer.GetHeadersMinimumSize());
 }
 
-enum DecoderChoice { DECODER_SELF, DECODER_NESTED, DECODER_HTTP2 };
+enum DecoderChoice { DECODER_SELF, DECODER_HTTP2 };
 enum HpackChoice { HPACK_DECODER_1, HPACK_DECODER_3 };
 enum Output { USE, NOT_USE };
 
@@ -758,15 +758,9 @@ class SpdyFramerTest : public ::testing::TestWithParam<
     auto param = GetParam();
     switch (std::get<0>(param)) {
       case DECODER_SELF:
-        FLAGS_use_nested_spdy_framer_decoder = false;
-        FLAGS_chromium_http2_flag_spdy_use_http2_frame_decoder_adapter = false;
-        break;
-      case DECODER_NESTED:
-        FLAGS_use_nested_spdy_framer_decoder = true;
         FLAGS_chromium_http2_flag_spdy_use_http2_frame_decoder_adapter = false;
         break;
       case DECODER_HTTP2:
-        FLAGS_use_nested_spdy_framer_decoder = false;
         FLAGS_chromium_http2_flag_spdy_use_http2_frame_decoder_adapter = true;
         break;
     }
@@ -818,7 +812,6 @@ class SpdyFramerTest : public ::testing::TestWithParam<
 INSTANTIATE_TEST_CASE_P(SpdyFramerTests,
                         SpdyFramerTest,
                         ::testing::Combine(::testing::Values(DECODER_SELF,
-                                                             DECODER_NESTED,
                                                              DECODER_HTTP2),
                                            ::testing::Values(HPACK_DECODER_1,
                                                              HPACK_DECODER_3),
@@ -873,7 +866,6 @@ TEST_P(SpdyFramerTest, RejectUpperCaseHeaderBlockValue) {
   frame.WriteUInt32(1);
   frame.WriteStringPiece32("Name1");
   frame.WriteStringPiece32("value1");
-  frame.OverwriteLength(framer, frame.length() - framer.GetFrameHeaderSize());
 
   SpdyFrameBuilder frame2(1024);
   frame2.BeginNewFrame(framer, SpdyFrameType::HEADERS, 0, 1);
@@ -882,7 +874,6 @@ TEST_P(SpdyFramerTest, RejectUpperCaseHeaderBlockValue) {
   frame2.WriteStringPiece32("value1");
   frame2.WriteStringPiece32("nAmE2");
   frame2.WriteStringPiece32("value2");
-  frame.OverwriteLength(framer, frame2.length() - framer.GetFrameHeaderSize());
 
   SpdySerializedFrame control_frame(frame.take());
   SpdyStringPiece serialized_headers =
@@ -1319,8 +1310,6 @@ TEST_P(SpdyFramerTest, DuplicateHeader) {
   frame.WriteStringPiece32("value1");
   frame.WriteStringPiece32("name");
   frame.WriteStringPiece32("value2");
-  // write the length
-  frame.OverwriteLength(framer, frame.length() - framer.GetFrameHeaderSize());
 
   SpdyHeaderBlock new_headers;
   SpdySerializedFrame control_frame(frame.take());
@@ -1333,13 +1322,6 @@ TEST_P(SpdyFramerTest, DuplicateHeader) {
 
 TEST_P(SpdyFramerTest, MultiValueHeader) {
   SpdyFramer framer(SpdyFramer::DISABLE_COMPRESSION);
-  // Frame builder with plentiful buffer size.
-  SpdyFrameBuilder frame(1024);
-  frame.BeginNewFrame(framer, SpdyFrameType::HEADERS,
-                      HEADERS_FLAG_PRIORITY | HEADERS_FLAG_END_HEADERS, 3);
-  frame.WriteUInt32(0);   // Priority exclusivity and dependent stream.
-  frame.WriteUInt8(255);  // Priority weight.
-
   SpdyString value("value1\0value2", 13);
   // TODO(jgraettinger): If this pattern appears again, move to test class.
   SpdyHeaderBlock header_set;
@@ -1348,9 +1330,14 @@ TEST_P(SpdyFramerTest, MultiValueHeader) {
   HpackEncoder encoder(ObtainHpackHuffmanTable());
   encoder.DisableCompression();
   encoder.EncodeHeaderSet(header_set, &buffer);
+  // Frame builder with plentiful buffer size.
+  SpdyFrameBuilder frame(1024);
+  frame.BeginNewFrame(framer, SpdyFrameType::HEADERS,
+                      HEADERS_FLAG_PRIORITY | HEADERS_FLAG_END_HEADERS, 3,
+                      buffer.size() + 5 /* priority */);
+  frame.WriteUInt32(0);   // Priority exclusivity and dependent stream.
+  frame.WriteUInt8(255);  // Priority weight.
   frame.WriteBytes(&buffer[0], buffer.size());
-  // write the length
-  frame.OverwriteLength(framer, frame.length() - framer.GetFrameHeaderSize());
 
   SpdySerializedFrame control_frame(frame.take());
 

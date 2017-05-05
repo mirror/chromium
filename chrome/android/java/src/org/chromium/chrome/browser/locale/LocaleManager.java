@@ -13,11 +13,13 @@ import android.support.annotation.Nullable;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.SearchEnginePreference;
+import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.snackbar.Snackbar;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
@@ -81,6 +83,17 @@ public class LocaleManager {
     };
 
     /**
+     * @return An instance of the {@link LocaleManager}. This should only be called on UI thread.
+     */
+    public static LocaleManager getInstance() {
+        assert ThreadUtils.runningOnUiThread();
+        if (sInstance == null) {
+            sInstance = AppHooks.get().createLocaleManager();
+        }
+        return sInstance;
+    }
+
+    /**
      * Starts listening to state changes of the phone.
      */
     public void startObservingPhoneChanges() {
@@ -91,17 +104,6 @@ public class LocaleManager {
      * Stops listening to state changes of the phone.
      */
     public void stopObservingPhoneChanges() {}
-
-    /**
-     * @return An instance of the {@link LocaleManager}. This should only be called on UI thread.
-     */
-    public static LocaleManager getInstance() {
-        assert ThreadUtils.runningOnUiThread();
-        if (sInstance == null) {
-            sInstance = AppHooks.get().createLocaleManager();
-        }
-        return sInstance;
-    }
 
     /**
      * Starts recording metrics in deferred startup.
@@ -260,7 +262,7 @@ public class LocaleManager {
      * @return Whether and which search engine promo should be shown.
      */
     @SearchEnginePromoType
-    protected int getSearchEnginePromoShowType() {
+    public int getSearchEnginePromoShowType() {
         if (!isSpecialLocaleEnabled()) return SEARCH_ENGINE_PROMO_DONT_SHOW;
         SharedPreferences preferences = ContextUtils.getAppSharedPreferences();
         if (preferences.getBoolean(PREF_PROMO_SHOWN, false)) {
@@ -269,8 +271,29 @@ public class LocaleManager {
         return SEARCH_ENGINE_PROMO_SHOW_SOGOU;
     }
 
+    /**
+     * To be called after the user has made a selection from a search engine promo dialog.
+     * @param type The type of search engine promo dialog that was shown.
+     * @param keyword The keyword for the search engine chosen.
+     */
+    protected void onUserSearchEngineChoiceFromPromoDialog(
+            @SearchEnginePromoType int type, String keyword) {
+        TemplateUrlService.getInstance().setSearchEngine(keyword);
+        ContextUtils.getAppSharedPreferences()
+                .edit()
+                .putInt(KEY_SEARCH_ENGINE_PROMO_SHOW_STATE, SEARCH_ENGINE_PROMO_CHECKED_AND_SHOWN)
+                .apply();
+    }
+
     private SpecialLocaleHandler getSpecialLocaleHandler() {
         if (mLocaleHandler == null) mLocaleHandler = new SpecialLocaleHandler(getSpecialLocaleId());
         return mLocaleHandler;
+    }
+
+    /** Set a LocaleManager to be used for testing. */
+    @VisibleForTesting
+    public static void setInstanceForTest(LocaleManager instance) {
+        assert sInstance == null;
+        sInstance = instance;
     }
 }

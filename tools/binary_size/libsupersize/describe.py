@@ -126,8 +126,8 @@ class Describer(object):
     ro_size = code_syms.Inverted().WhereInSection('r').pss
     unique_paths = set(s.object_path for s in group)
     header_desc = [
-        'Showing {:,} symbols with total pss: {} bytes'.format(
-            len(group), int(total_size)),
+        'Showing {:,} symbols ({:,} unique) with total pss: {} bytes'.format(
+            len(group), group.CountUniqueSymbols(), int(total_size)),
         '.text={:<10} .rodata={:<10} other={:<10} total={}'.format(
             _PrettySize(int(code_size)), _PrettySize(int(ro_size)),
             _PrettySize(int(total_size - code_size - ro_size)),
@@ -220,7 +220,6 @@ class Describer(object):
 
 def DescribeSizeInfoCoverage(size_info):
   """Yields lines describing how accurate |size_info| is."""
-  symbols = models.SymbolGroup(size_info.raw_symbols)
   for section in models.SECTION_TO_SECTION_NAME:
     if section == 'd':
       expected_size = sum(v for k, v in size_info.section_sizes.iteritems()
@@ -229,26 +228,37 @@ def DescribeSizeInfoCoverage(size_info):
       expected_size = size_info.section_sizes[
           models.SECTION_TO_SECTION_NAME[section]]
 
-    def one_stat(group):
-      template = ('Section {}: has {:.1%} of {} bytes accounted for from '
-                  '{} symbols. {} bytes are unaccounted for.')
-      actual_size = group.size
-      size_percent = float(actual_size) / expected_size
-      return template.format(section, size_percent, actual_size, len(group),
-                             expected_size - actual_size)
 
-    in_section = symbols.WhereInSection(section)
-    yield one_stat(in_section)
+    in_section = size_info.symbols.WhereInSection(section)
+    actual_size = in_section.size
+    size_percent = float(actual_size) / expected_size
+    yield ('Section {}: has {:.1%} of {} bytes accounted for from '
+           '{} symbols. {} bytes are unaccounted for.').format(
+               section, size_percent, actual_size, len(in_section),
+               expected_size - actual_size)
+    star_syms = in_section.WhereNameMatches(r'^\*')
+    padding = in_section.padding - star_syms.padding
+    anonymous_syms = star_syms.Inverted().WhereHasAnyAttribution().Inverted()
     yield '* Padding accounts for {} bytes ({:.1%})'.format(
-        in_section.padding, float(in_section.padding) / in_section.size)
+        padding, float(padding) / in_section.size)
+    if len(star_syms):
+      yield ('* {} placeholders (symbols that start with **) account for '
+             '{} bytes ({:.1%})').format(
+                 len(star_syms), star_syms.pss, star_syms.pss / in_section.size)
+    if anonymous_syms:
+      yield '* {} anonymous symbols account for {} bytes ({:.1%})'.format(
+          len(anonymous_syms), int(anonymous_syms.pss),
+          star_syms.pss / in_section.size)
 
     aliased_symbols = in_section.Filter(lambda s: s.aliases)
-    if len(aliased_symbols):
-      uniques = sum(1 for s in aliased_symbols.IterUniqueSymbols())
-      yield '* Contains {} aliases, mapped to {} addresses ({} bytes)'.format(
-          len(aliased_symbols), uniques, aliased_symbols.size)
-    else:
-      yield '* Contains 0 aliases'
+    if section == 't':
+      if len(aliased_symbols):
+        uniques = sum(1 for s in aliased_symbols.IterUniqueSymbols())
+        yield ('* Contains {} aliases, mapped to {} unique addresses '
+               '({} bytes)').format(
+                   len(aliased_symbols), uniques, aliased_symbols.size)
+      else:
+        yield '* Contains 0 aliases'
 
     inlined_symbols = in_section.WhereObjectPathMatches('{shared}')
     if len(inlined_symbols):
@@ -257,17 +267,6 @@ def DescribeSizeInfoCoverage(size_info):
     else:
       yield '* 0 symbols have shared ownership'
 
-    star_syms = in_section.WhereNameMatches(r'^\*')
-    attributed_syms = star_syms.Inverted().WhereHasAnyAttribution()
-    anonymous_syms = attributed_syms.Inverted()
-    if star_syms or anonymous_syms:
-      missing_size = star_syms.pss + anonymous_syms.pss
-      anon_str = ''
-      if len(anonymous_syms):
-        anon_str = 'and {} anonymous entries '.format(len(anonymous_syms))
-      yield '* Without {} merge sections {}(accounting for {} bytes):'.format(
-          len(star_syms), anon_str, int(missing_size))
-      yield '  * ' + one_stat(attributed_syms)
 
 
 def _UtcToLocal(utc):

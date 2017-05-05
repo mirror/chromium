@@ -29,13 +29,13 @@
       }
     </style>
     <template is="dom-repeat" items="[[fields]]"
-        filter="[[computeFilter_(propertyDict, editFieldTypes)]]">
+        filter="[[computeFilter_(prefix, propertyDict, editFieldTypes)]]">
       <div class="settings-box single-column two-line">
         <!-- Propety label -->
         <div>[[getPropertyLabel_(item, prefix)]]</div>
         <!-- Uneditable property value -->
         <div class="layout horizontal"
-            hidden$="[[isEditable_(item, '', propertyDict, editFieldTypes)]]">
+            hidden="[[isEditable_(item, '', propertyDict, editFieldTypes)]]">
           <div class="secondary">
             [[getPropertyValue_(item, prefix, propertyDict)]]
           </div>

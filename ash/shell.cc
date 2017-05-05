@@ -935,9 +935,8 @@ void Shell::Init(const ShellInitParams& init_params) {
   accelerator_controller_ = shell_port_->CreateAcceleratorController();
   maximize_mode_controller_ = base::MakeUnique<MaximizeModeController>();
 
-  if (config == Config::CLASSIC) {
-    // Not applicable to mus/mash as events are already routed to InputMethod
-    // first.
+  if (config == Config::CLASSIC || config == Config::MUS) {
+    // Not applicable to mash as events are already routed to InputMethod first.
     AddPreTargetHandler(
         window_tree_host_manager_->input_method_event_handler());
   }
@@ -983,8 +982,10 @@ void Shell::Init(const ShellInitParams& init_params) {
   power_button_controller_->OnDisplayModeChanged(
       display_configurator_->cached_displays());
 
+  // Forward user activity from the window server to |user_activity_detector_|.
   // The connector is unavailable in some tests.
-  if (config == Config::MASH && shell_delegate_->GetShellConnector()) {
+  if (aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS &&
+      shell_delegate_->GetShellConnector()) {
     ui::mojom::UserActivityMonitorPtr user_activity_monitor;
     shell_delegate_->GetShellConnector()->BindInterface(ui::mojom::kServiceName,
                                                         &user_activity_monitor);

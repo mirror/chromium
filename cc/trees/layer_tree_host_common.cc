@@ -322,6 +322,28 @@ static void AddSurfaceToRenderSurfaceList(
   }
 }
 
+static bool SkipForInvertibility(const LayerImpl* layer,
+                                 PropertyTrees* property_trees) {
+  const TransformNode* transform_node =
+      property_trees->transform_tree.Node(layer->transform_tree_index());
+  const EffectNode* effect_node =
+      property_trees->effect_tree.Node(layer->effect_tree_index());
+  bool non_root_copy_request =
+      effect_node->closest_ancestor_with_copy_request_id >
+      EffectTree::kContentsRootNodeId;
+  gfx::Transform from_target;
+  // If there is a copy request, we check the invertibility of the transform
+  // between the node corresponding to the layer and the node corresponding to
+  // the copy request. Otherwise, we are interested in the invertibility of
+  // screen space transform which is already cached on the transform node.
+  return non_root_copy_request
+             ? !property_trees->GetFromTarget(
+                   layer->transform_tree_index(),
+                   effect_node->closest_ancestor_with_copy_request_id,
+                   &from_target)
+             : !transform_node->ancestors_are_invertible;
+}
+
 static void ComputeInitialRenderSurfaceList(
     LayerTreeImpl* layer_tree_impl,
     PropertyTrees* property_trees,
@@ -354,15 +376,24 @@ static void ComputeInitialRenderSurfaceList(
         draw_property_utils::LayerShouldBeSkippedForDrawPropertiesComputation(
             layer, property_trees->transform_tree, property_trees->effect_tree);
 
-    const TransformNode* transform_node =
-        property_trees->transform_tree.Node(layer->transform_tree_index());
-    bool skip_for_invertibility = !transform_node->ancestors_are_invertible;
+    bool skip_for_invertibility = SkipForInvertibility(layer, property_trees);
+
+    const EffectNode* effect_node =
+        property_trees->effect_tree.Node(layer->effect_tree_index());
+    bool has_animating_opacity_and_hidden =
+        effect_node->has_potential_opacity_animation &&
+        property_trees->effect_tree.EffectiveOpacity(effect_node) == 0.f &&
+        !effect_node->has_copy_request;
 
     bool skip_layer = !is_root && (skip_draw_properties_computation ||
-                                   skip_for_invertibility);
+                                   skip_for_invertibility ||
+                                   has_animating_opacity_and_hidden);
 
-    layer->set_raster_even_if_not_in_rsll(skip_for_invertibility &&
-                                          !skip_draw_properties_computation);
+    bool raster_even_if_not_in_rsll =
+        skip_draw_properties_computation
+            ? false
+            : has_animating_opacity_and_hidden || skip_for_invertibility;
+    layer->set_raster_even_if_not_in_rsll(raster_even_if_not_in_rsll);
     if (skip_layer)
       continue;
 
@@ -582,7 +613,8 @@ void CalculateDrawPropertiesInternal(
 
   // A root layer render_surface should always exist after
   // CalculateDrawProperties.
-  DCHECK(inputs->root_layer->GetRenderSurface());
+  DCHECK(inputs->property_trees->effect_tree.GetRenderSurface(
+      EffectTree::kContentsRootNodeId));
 }
 
 void LayerTreeHostCommon::CalculateDrawPropertiesForTesting(

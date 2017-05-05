@@ -30,6 +30,7 @@
 #include "chrome/common/media_router/mojo/media_router.mojom.h"
 #include "chrome/common/media_router/route_request_result.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace content {
 class BrowserContext;
@@ -61,10 +62,10 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   //     suspension state.
   // |context|: The BrowserContext which owns the extension process.
   // |request|: The Mojo connection request used for binding.
-  static void BindToRequest(
-      const extensions::Extension* extension,
-      content::BrowserContext* context,
-      mojo::InterfaceRequest<mojom::MediaRouter> request);
+  static void BindToRequest(const extensions::Extension* extension,
+                            content::BrowserContext* context,
+                            const service_manager::BindSourceInfo& source_info,
+                            mojom::MediaRouterRequest request);
 
   // MediaRouter implementation.
   // Execution of the requests is delegated to the Do* methods, which can be
@@ -165,6 +166,8 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                            AttemptedWakeupTooManyTimes);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoExtensionTest,
                            WakeupFailedDrainsQueue);
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoExtensionTest,
+                           SyncStateToMediaRouteProvider);
 
   // The max number of pending requests allowed. When number of pending requests
   // exceeds this number, the oldest request will be dropped.
@@ -198,9 +201,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
    public:
     MediaRoutesQuery();
     ~MediaRoutesQuery();
-
-    // True if the query has been sent to the MRPM.  False otherwise.
-    bool is_active = false;
 
     // Cached list of routes and joinable route IDs for the query.
     base::Optional<std::vector<MediaRoute>> cached_route_list;
@@ -308,6 +308,17 @@ class MediaRouterMojoImpl : public MediaRouterBase,
 
   // Error handler callback for |binding_| and |media_route_provider_|.
   void OnConnectionError();
+
+  // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
+  // with MediaRouter on a best-effort basis. This method can be only called if
+  // |media_route_provider_| is a valid handle.
+  // The extension might have become out of sync with MediaRouter due to one
+  // of few reasons:
+  // (1) The extension crashed and lost unpersisted changes.
+  // (2) The extension was updated; temporary data is cleared.
+  // (3) The extension has an unforseen bug which causes temporary data to be
+  //     persisted incorrectly on suspension.
+  void SyncStateToMediaRouteProvider();
 
   // mojom::MediaRouter implementation.
   void RegisterMediaRouteProvider(

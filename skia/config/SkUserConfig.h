@@ -206,10 +206,6 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #   define SK_IGNORE_GPU_DITHER
 #endif
 
-#ifndef SK_SUPPORT_LEGACY_BITMAP_COPYTO
-#define SK_SUPPORT_LEGACY_BITMAP_COPYTO
-#endif
-
 // Remove this after we fixed all the issues related to the new SDF algorithm
 // (https://codereview.chromium.org/1643143002)
 #ifndef    SK_USE_LEGACY_DISTANCE_FIELDS
@@ -218,10 +214,6 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 
 #ifndef SK_DISABLE_DEFERRED_PROXIES
 #define SK_DISABLE_DEFERRED_PROXIES
-#endif
-
-#ifndef SK_SUPPORT_LEGACY_PIXELREF_API
-#define SK_SUPPORT_LEGACY_PIXELREF_API
 #endif
 
 #ifndef SK_LEGACY_SWEEP_GRADIENT

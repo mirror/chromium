@@ -19,9 +19,11 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "base/supports_user_data.h"
 #include "base/time/time.h"
+#include "base/unguessable_token.h"
 #include "build/build_config.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/bad_message.h"
@@ -42,13 +44,14 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "content/public/common/previews_state.h"
+#include "device/wake_lock/public/interfaces/wake_lock_context.mojom.h"
 #include "media/mojo/interfaces/interface_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/http/http_response_headers.h"
-#include "services/service_manager/public/cpp/interface_factory.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
+#include "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "third_party/WebKit/public/web/WebTreeScopeType.h"
 #include "ui/accessibility/ax_node_data.h"
@@ -69,12 +72,6 @@ struct FrameHostMsg_ShowPopup_Params;
 
 namespace base {
 class ListValue;
-}
-
-namespace blink {
-namespace mojom {
-class WebBluetoothService;
-}
 }
 
 namespace gfx {
@@ -115,8 +112,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
       NON_EXPORTED_BASE(public mojom::FrameHostInterfaceBroker),
       public BrowserAccessibilityDelegate,
       public SiteInstanceImpl::Observer,
-      public NON_EXPORTED_BASE(
-          service_manager::InterfaceFactory<media::mojom::InterfaceFactory>),
       public NON_EXPORTED_BASE(service_manager::mojom::InterfaceProvider),
       public CSPContext {
  public:
@@ -134,6 +129,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   static RenderFrameHostImpl* FromID(int process_id, int routing_id);
   static RenderFrameHostImpl* FromAXTreeID(
       ui::AXTreeIDRegistry::AXTreeID ax_tree_id);
+  static RenderFrameHostImpl* FromOverlayRoutingToken(
+      const base::UnguessableToken& token);
 
   ~RenderFrameHostImpl() override;
 
@@ -458,8 +455,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // closed by the user.
   void JavaScriptDialogClosed(IPC::Message* reply_msg,
                               bool success,
-                              const base::string16& user_input,
-                              bool dialog_was_suppressed);
+                              const base::string16& user_input);
 
   // Get the accessibility mode from the delegate and Send a message to the
   // renderer process to change the accessibility mode.
@@ -616,6 +612,13 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return has_focused_editable_element_;
   }
 
+  // This value is sent from the renderer and shouldn't be trusted.
+  // TODO(alexclarke): Remove once there is a solution for stable frame IDs. See
+  // crbug.com/715541
+  const std::string& untrusted_devtools_frame_id() const {
+    return untrusted_devtools_frame_id_;
+  }
+
   // Cancels any blocked request for the frame and its subframes.
   void CancelBlockedRequestsForFrame();
 
@@ -623,6 +626,14 @@ class CONTENT_EXPORT RenderFrameHostImpl
   base::android::ScopedJavaLocalRef<jobject> GetJavaRenderFrameHost();
   service_manager::InterfaceProvider* GetJavaInterfaces() override;
 #endif
+
+  // Returns an unguessable token for this RFHI.  This provides a temporary way
+  // to identify a RenderFrameHost that's compatible with IPC.  Else, one needs
+  // to send pid + RoutingID, but one cannot send pid.  One can get it from the
+  // channel, but this makes it much harder to get wrong.
+  // Once media switches to mojo, we should be able to remove this in favor of
+  // sending a mojo overlay factory.
+  const base::UnguessableToken& GetOverlayRoutingToken();
 
  protected:
   friend class RenderFrameHostFactory;
@@ -773,6 +784,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnFocusedNodeChanged(bool is_editable_element,
                             const gfx::Rect& bounds_in_frame_widget);
   void OnSetHasReceivedUserGesture();
+  void OnSetDevToolsFrameId(const std::string& devtools_frame_id);
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void OnShowPopup(const FrameHostMsg_ShowPopup_Params& params);
@@ -783,6 +795,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void ForwardGetInterfaceToRenderFrame(const std::string& interface_name,
                                         mojo::ScopedMessagePipeHandle pipe);
 #endif
+
+  // Called when the frame would like an overlay routing token.  This will
+  // create one if needed.  Either way, it will send it to the frame.
+  void OnRequestOverlayRoutingToken();
+
   void OnShowCreatedWindow(int pending_widget_routing_id,
                            WindowOpenDisposition disposition,
                            const gfx::Rect& initial_rect,
@@ -882,18 +899,23 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Creates Web Bluetooth Service owned by the frame. Returns a raw pointer
   // to it.
   WebBluetoothServiceImpl* CreateWebBluetoothService(
-      mojo::InterfaceRequest<blink::mojom::WebBluetoothService> request);
+      const service_manager::BindSourceInfo& source_info,
+      blink::mojom::WebBluetoothServiceRequest request);
 
   // Deletes the Web Bluetooth Service owned by the frame.
   void DeleteWebBluetoothService(
       WebBluetoothServiceImpl* web_bluetooth_service);
 
-  // service_manager::InterfaceFactory<media::mojom::InterfaceFactory>
-  void Create(const service_manager::Identity& remote_identity,
-              media::mojom::InterfaceFactoryRequest request) override;
+  void BindMediaInterfaceFactoryRequest(
+      const service_manager::BindSourceInfo& source_info,
+      media::mojom::InterfaceFactoryRequest request);
 
   // Callback for connection error on the media::mojom::InterfaceFactory client.
   void OnMediaInterfaceFactoryConnectionError();
+
+  void BindWakeLockServiceRequest(
+      const service_manager::BindSourceInfo& source_info,
+      device::mojom::WakeLockServiceRequest request);
 
   // service_manager::mojom::InterfaceProvider:
   void GetInterface(const std::string& interface_name,
@@ -1184,6 +1206,15 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   mojo::BindingSet<service_manager::mojom::InterfaceProvider>
       interface_provider_bindings_;
+
+  // IPC-friendly token that represents this host for AndroidOverlays, if we
+  // have created one yet.
+  base::Optional<base::UnguessableToken> overlay_routing_token_;
+
+  // This value is sent from the renderer and shouldn't be trusted.
+  // TODO(alexclarke): Remove once there is a solution for stable frame IDs. See
+  // crbug.com/715541
+  std::string untrusted_devtools_frame_id_;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;

@@ -23,9 +23,7 @@
 
 #include "core/SVGNames.h"
 #include "core/dom/StyleChangeReason.h"
-#include "core/frame/FrameView.h"
 #include "core/layout/LayoutObject.h"
-#include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/svg/SVGElementRareData.h"
 #include "core/svg/SVGMatrixTearOff.h"
 #include "core/svg/SVGRectTearOff.h"
@@ -59,11 +57,7 @@ static bool IsViewportElement(const Element& element) {
 
 AffineTransform SVGGraphicsElement::ComputeCTM(
     SVGElement::CTMScope mode,
-    SVGGraphicsElement::StyleUpdateStrategy style_update_strategy,
     const SVGGraphicsElement* ancestor) const {
-  if (style_update_strategy == kAllowStyleUpdate)
-    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
   AffineTransform ctm;
   bool done = false;
 
@@ -73,7 +67,7 @@ AffineTransform SVGGraphicsElement::ComputeCTM(
       break;
 
     ctm = ToSVGElement(current_element)
-              ->LocalCoordinateSpaceTransform()
+              ->LocalCoordinateSpaceTransform(mode)
               .Multiply(ctm);
 
     switch (mode) {
@@ -86,61 +80,23 @@ AffineTransform SVGGraphicsElement::ComputeCTM(
         done = current_element == ancestor;
         break;
       default:
-        NOTREACHED();
+        DCHECK_EQ(mode, kScreenScope);
         break;
     }
   }
-
   return ctm;
 }
 
-AffineTransform SVGGraphicsElement::GetCTM(
-    StyleUpdateStrategy style_update_strategy) {
-  return ComputeCTM(kNearestViewportScope, style_update_strategy);
+SVGMatrixTearOff* SVGGraphicsElement::getCTM() {
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
+
+  return SVGMatrixTearOff::Create(ComputeCTM(kNearestViewportScope));
 }
 
-AffineTransform SVGGraphicsElement::GetScreenCTM(
-    StyleUpdateStrategy style_update_strategy) {
-  if (style_update_strategy == kAllowStyleUpdate)
-    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  TransformationMatrix transform;
-  if (LayoutObject* layout_object = this->GetLayoutObject()) {
-    // Adjust for the zoom level factored into CSS coordinates (WK bug #96361).
-    transform.Scale(1.0 / layout_object->StyleRef().EffectiveZoom());
+SVGMatrixTearOff* SVGGraphicsElement::getScreenCTM() {
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
 
-    // Origin in the document. (This, together with the inverse-scale above,
-    // performs the same operation as
-    // Document::adjustFloatRectForScrollAndAbsoluteZoom, but in transformation
-    // matrix form.)
-    if (FrameView* view = GetDocument().View()) {
-      LayoutRect visible_content_rect(view->VisibleContentRect());
-      transform.Translate(-visible_content_rect.X(), -visible_content_rect.Y());
-    }
-
-    // Apply transforms from our ancestor coordinate space, including any
-    // non-SVG ancestor transforms.
-    transform.Multiply(layout_object->LocalToAbsoluteTransform());
-
-    // At the SVG/HTML boundary (aka LayoutSVGRoot), we need to apply the
-    // localToBorderBoxTransform to map an element from SVG viewport
-    // coordinates to CSS box coordinates.
-    if (layout_object->IsSVGRoot()) {
-      transform.Multiply(
-          ToLayoutSVGRoot(layout_object)->LocalToBorderBoxTransform());
-    }
-  }
-  // Drop any potential non-affine parts, because we're not able to convey that
-  // information further anyway until getScreenCTM returns a DOMMatrix (4x4
-  // matrix.)
-  return transform.ToAffineTransform();
-}
-
-SVGMatrixTearOff* SVGGraphicsElement::getCTMFromJavascript() {
-  return SVGMatrixTearOff::Create(GetCTM());
-}
-
-SVGMatrixTearOff* SVGGraphicsElement::getScreenCTMFromJavascript() {
-  return SVGMatrixTearOff::Create(GetScreenCTM());
+  return SVGMatrixTearOff::Create(ComputeCTM(kScreenScope));
 }
 
 void SVGGraphicsElement::CollectStyleForPresentationAttribute(
@@ -206,17 +162,18 @@ SVGElement* SVGGraphicsElement::farthestViewportElement() const {
 }
 
 FloatRect SVGGraphicsElement::GetBBox() {
-  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-  // FIXME: Eventually we should support getBBox for detached elements.
-  if (!GetLayoutObject())
-    return FloatRect();
-
+  DCHECK(GetLayoutObject());
   return GetLayoutObject()->ObjectBoundingBox();
 }
 
 SVGRectTearOff* SVGGraphicsElement::getBBoxFromJavascript() {
-  return SVGRectTearOff::Create(SVGRect::Create(GetBBox()), 0,
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  // FIXME: Eventually we should support getBBox for detached elements.
+  FloatRect boundingBox;
+  if (GetLayoutObject())
+    boundingBox = GetBBox();
+  return SVGRectTearOff::Create(SVGRect::Create(boundingBox), 0,
                                 kPropertyIsNotAnimVal);
 }
 

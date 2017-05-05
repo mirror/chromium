@@ -9,14 +9,16 @@
 #include "chromeos/components/tether/active_host_network_state_updater.h"
 #include "chromeos/components/tether/ble_connection_manager.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
+#include "chromeos/components/tether/host_scan_cache.h"
 #include "chromeos/components/tether/host_scan_device_prioritizer.h"
 #include "chromeos/components/tether/host_scan_scheduler.h"
 #include "chromeos/components/tether/host_scanner.h"
 #include "chromeos/components/tether/local_device_data_provider.h"
 #include "chromeos/components/tether/network_configuration_remover.h"
+#include "chromeos/components/tether/network_connection_handler_tether_delegate.h"
 #include "chromeos/components/tether/notification_presenter.h"
 #include "chromeos/components/tether/tether_connector.h"
-#include "chromeos/components/tether/tether_device_state_manager.h"
+#include "chromeos/components/tether/tether_disconnector.h"
 #include "chromeos/components/tether/tether_host_fetcher.h"
 #include "chromeos/components/tether/tether_host_response_recorder.h"
 #include "chromeos/components/tether/tether_network_disconnection_handler.h"
@@ -82,7 +84,7 @@ void Initializer::Init(
 // static
 void Initializer::Shutdown() {
   if (instance_) {
-    PA_LOG(INFO) << "Shutting down tether feature.";
+    PA_LOG(INFO) << "Shutting down Tether feature.";
     delete instance_;
     instance_ = nullptr;
   }
@@ -167,8 +169,6 @@ void Initializer::OnBluetoothAdapterAdvertisingIntervalSet(
   PA_LOG(INFO) << "Successfully set Bluetooth advertisement interval. "
                << "Initializing tether feature.";
 
-  tether_device_state_manager_ =
-      base::MakeUnique<TetherDeviceStateManager>(network_state_handler_);
   tether_host_fetcher_ =
       base::MakeUnique<TetherHostFetcher>(cryptauth_service_);
   local_device_data_provider_ =
@@ -194,23 +194,35 @@ void Initializer::OnBluetoothAdapterAdvertisingIntervalSet(
   device_id_tether_network_guid_map_ =
       base::MakeUnique<DeviceIdTetherNetworkGuidMap>();
   tether_connector_ = base::MakeUnique<TetherConnector>(
-      network_connection_handler_, network_state_handler_,
-      wifi_hotspot_connector_.get(), active_host_.get(),
+      network_state_handler_, wifi_hotspot_connector_.get(), active_host_.get(),
       tether_host_fetcher_.get(), ble_connection_manager_.get(),
       tether_host_response_recorder_.get(),
       device_id_tether_network_guid_map_.get());
   network_configuration_remover_ =
       base::MakeUnique<NetworkConfigurationRemover>(
           network_state_handler_, managed_network_configuration_handler_);
+  tether_disconnector_ = base::MakeUnique<TetherDisconnector>(
+      network_connection_handler_, network_state_handler_, active_host_.get(),
+      ble_connection_manager_.get(), network_configuration_remover_.get(),
+      tether_connector_.get(), device_id_tether_network_guid_map_.get(),
+      tether_host_fetcher_.get());
   tether_network_disconnection_handler_ =
       base::MakeUnique<TetherNetworkDisconnectionHandler>(
           active_host_.get(), network_state_handler_,
           network_configuration_remover_.get());
+  network_connection_handler_tether_delegate_ =
+      base::MakeUnique<NetworkConnectionHandlerTetherDelegate>(
+          network_connection_handler_, tether_connector_.get(),
+          tether_disconnector_.get());
+  host_scan_cache_ = base::MakeUnique<HostScanCache>(
+      network_state_handler_, active_host_.get(),
+      tether_host_response_recorder_.get(),
+      device_id_tether_network_guid_map_.get());
   host_scanner_ = base::MakeUnique<HostScanner>(
       tether_host_fetcher_.get(), ble_connection_manager_.get(),
       host_scan_device_prioritizer_.get(), tether_host_response_recorder_.get(),
-      network_state_handler_, notification_presenter_.get(),
-      device_id_tether_network_guid_map_.get());
+      notification_presenter_.get(), device_id_tether_network_guid_map_.get(),
+      host_scan_cache_.get());
 
   // TODO(khorimoto): Hook up HostScanScheduler. Currently, we simply start a
   // new scan once the user logs in.

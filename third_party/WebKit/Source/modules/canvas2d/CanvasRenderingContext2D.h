@@ -27,7 +27,6 @@
 #ifndef CanvasRenderingContext2D_h
 #define CanvasRenderingContext2D_h
 
-#include "bindings/core/v8/ScriptWrappable.h"
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
 #include "core/html/canvas/CanvasRenderingContext.h"
 #include "core/html/canvas/CanvasRenderingContextFactory.h"
@@ -37,6 +36,7 @@
 #include "modules/canvas2d/BaseRenderingContext2D.h"
 #include "modules/canvas2d/CanvasRenderingContext2DSettings.h"
 #include "modules/canvas2d/CanvasRenderingContext2DState.h"
+#include "platform/bindings/ScriptWrappable.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/wtf/Vector.h"
@@ -275,7 +275,6 @@ class MODULES_EXPORT CanvasRenderingContext2D final
   ListHashSet<String> font_lru_list_;
 };
 
-// TODO(fserb): remove this?
 DEFINE_TYPE_CASTS(CanvasRenderingContext2D,
                   CanvasRenderingContext,
                   context,

@@ -270,6 +270,9 @@ class BLINK_EXPORT WebFrameClient {
   // Called the first time this frame is the target of a user gesture.
   virtual void SetHasReceivedUserGesture() {}
 
+  // Notification of the devtools id for this frame.
+  virtual void SetDevToolsFrameId(const blink::WebString& devtools_frame_id) {}
+
   // Console messages ----------------------------------------------------
 
   // Whether or not we should report a detailed message for the given source.
@@ -416,7 +419,7 @@ class BLINK_EXPORT WebFrameClient {
 
   // The frame's document finished loading.
   // This method may not execute JavaScript code.
-  virtual void DidFinishDocumentLoad(WebLocalFrame*) {}
+  virtual void DidFinishDocumentLoad() {}
 
   // Like |didFinishDocumentLoad|, except this method may run JavaScript
   // code (and possibly invalidate the frame).
@@ -462,6 +465,12 @@ class BLINK_EXPORT WebFrameClient {
   // Returns the effective connection type when the frame was fetched.
   virtual WebEffectiveConnectionType GetEffectiveConnectionType() {
     return WebEffectiveConnectionType::kTypeUnknown;
+  }
+
+  // Returns whether or not the requested image should be replaced with a
+  // placeholder as part of the Client Lo-Fi previews feature.
+  virtual bool ShouldUseClientLoFiForRequest(const WebURLRequest&) {
+    return false;
   }
 
   // PlzNavigate
@@ -609,9 +618,7 @@ class BLINK_EXPORT WebFrameClient {
   // Notifies that a new script context has been created for this frame.
   // This is similar to didClearWindowObject but only called once per
   // frame context.
-  virtual void DidCreateScriptContext(WebLocalFrame*,
-                                      v8::Local<v8::Context>,
-                                      int world_id) {}
+  virtual void DidCreateScriptContext(v8::Local<v8::Context>, int world_id) {}
 
   // WebKit is about to release its reference to a v8 context for a frame.
   virtual void WillReleaseScriptContext(v8::Local<v8::Context>, int world_id) {}

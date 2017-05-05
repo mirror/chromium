@@ -405,9 +405,6 @@ const char kEnablePushApiBackgroundMode[] = "enable-push-api-background-mode";
 // Enables the QUIC protocol.  This is a temporary testing flag.
 const char kEnableQuic[] = "enable-quic";
 
-// Switches 'Save as...' context and app menu labels to 'Download...'.
-const char kEnableSaveAsMenuLabelExperiment[] = "saveas-menu-label";
-
 // Enable settings in a separate browser window per profile
 // (see SettingsWindowEnabled() below).
 const char kEnableSettingsWindow[]           = "enable-settings-window";
@@ -482,6 +479,13 @@ const char kForceAppMode[]                  = "force-app-mode";
 // Forces Desktop to iOS promotion to appear in windows whenever an entrypoint
 // is triggered.
 const char kForceDesktopIOSPromotion[] = "force-desktop-ios-promotion";
+
+// Forces Network Quality Estimator (NQE) to return a specific effective
+// connection type.
+const char kForceEffectiveConnectionType[] = "force-effective-connection-type";
+
+// Forces metrics reporting to be enabled.
+const char kForceEnableMetricsReporting[] = "force-enable-metrics-reporting";
 
 // Displays the First Run experience when the browser is started, regardless of
 // whether or not it's actually the First Run (this overrides kNoFirstRun).
@@ -628,10 +632,6 @@ const char kNoStartupWindow[]               = "no-startup-window";
 // support notifications.
 const char kNoSupervisedUserAcknowledgmentCheck[]  =
     "no-managed-user-acknowledgment-check";
-
-// Specifies the maximum number of threads to use for running the Proxy
-// Autoconfig (PAC) script.
-const char kNumPacThreads[]                 = "num-pac-threads";
 
 // Launches URL in new browser window.
 const char kOpenInNewWindow[]               = "new-window";

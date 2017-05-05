@@ -279,8 +279,8 @@ public class VrShellImpl
         // Set the UI and content sizes before we load the UI.
         if (forWebVR) {
             DisplayAndroid primaryDisplay = DisplayAndroid.getNonMultiDisplay(mActivity);
-            setContentCssSize(primaryDisplay.getPhysicalDisplayWidth(),
-                    primaryDisplay.getPhysicalDisplayHeight(), WEBVR_DPR);
+            setContentCssSize(
+                    primaryDisplay.getDisplayWidth(), primaryDisplay.getDisplayHeight(), WEBVR_DPR);
         } else {
             setContentCssSize(DEFAULT_CONTENT_WIDTH, DEFAULT_CONTENT_HEIGHT, DEFAULT_DPR);
         }
@@ -372,7 +372,7 @@ public class VrShellImpl
         int surfaceHeight = (int) Math.ceil(height * dpr);
 
         Point size = new Point(surfaceWidth, surfaceHeight);
-        mContentVirtualDisplay.update(size, size, dpr, null, null, null);
+        mContentVirtualDisplay.update(size, dpr, null, null, null);
         if (mTab != null && mTab.getContentViewCore() != null) {
             mTab.getContentViewCore().onSizeChanged(surfaceWidth, surfaceHeight, 0, 0);
             mTab.getContentViewCore().onPhysicalBackingSizeChanged(surfaceWidth, surfaceHeight);
@@ -464,6 +464,11 @@ public class VrShellImpl
     public void setWebVrModeEnabled(boolean enabled) {
         mContentVrWindowAndroid.setVSyncPaused(enabled);
         nativeSetWebVrMode(mNativeVrShell, enabled);
+    }
+
+    @Override
+    public boolean getWebVrModeEnabled() {
+        return nativeGetWebVrMode(mNativeVrShell);
     }
 
     @Override
@@ -599,6 +604,7 @@ public class VrShellImpl
     private native void nativeContentPhysicalBoundsChanged(long nativeVrShell, int width,
             int height, float dpr);
     private native void nativeSetWebVrMode(long nativeVrShell, boolean enabled);
+    private native boolean nativeGetWebVrMode(long nativeVrShell);
     private native void nativeOnTabListCreated(long nativeVrShell, Tab[] mainTabs,
             Tab[] incognitoTabs);
     private native void nativeOnTabUpdated(long nativeVrShell, boolean incognito, int id,

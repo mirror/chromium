@@ -43,7 +43,7 @@ const base::Feature kAssetDownloadSuggestionsFeature{
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
 // Enables auto-dismissing JavaScript dialogs.
 const base::Feature kAutoDismissingDialogs{"AutoDismissingDialogs",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
+                                           base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
 #if defined(OS_WIN) || defined(OS_MACOSX)
@@ -96,6 +96,8 @@ const base::Feature kBrowserTouchBar{"BrowserTouchBar",
 const base::Feature kTabStripKeyboardFocus{"TabStripKeyboardFocus",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_MACOSX)
+
+const base::Feature kTabsInCbd{"TabsInCBD", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Whether to trigger app banner installability checks on page load.
 const base::Feature kCheckInstallabilityForBannerOnLoad{
@@ -206,6 +208,12 @@ const base::Feature kMaterialDesignSettings{"MaterialDesignSettings",
 // during Cast Tab Mirroring.
 const base::Feature kMediaRemoting{"MediaRemoting",
                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
+// If enabled, replaces the <extensionview> controller in the route details view
+// of the Media Router dialog with the controller bundled with the WebUI
+// resources.
+const base::Feature kMediaRouterUIRouteController{
+    "MediaRouterUIRouteController", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 
 // Enables or disables modal permission prompts.
@@ -338,6 +346,10 @@ const base::Feature kEHVInputOnImeMenu{"EmojiHandwritingVoiceInput",
 // Enables or disables flash component updates on Chrome OS.
 const base::Feature kCrosCompUpdates{"CrosCompUpdates",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enables or disables Chrome OS Component updates on Chrome OS.
+const base::Feature kCrOSComponent{"CrOSComponent",
+                                   base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
 
 bool PrefServiceEnabled() {

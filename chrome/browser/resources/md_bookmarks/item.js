@@ -38,6 +38,7 @@ Polymer({
   listeners: {
     'click': 'onClick_',
     'dblclick': 'onDblClick_',
+    'contextmenu': 'onContextMenu_',
   },
 
   /** @override */
@@ -61,13 +62,28 @@ Polymer({
    * @param {Event} e
    * @private
    */
+  onContextMenu_: function(e) {
+    e.preventDefault();
+    if (!this.isSelectedItem_) {
+      this.dispatch(bookmarks.actions.selectItem(
+          this.itemId, false, false, this.getState()));
+    }
+    this.fire('open-item-menu', {
+      x: e.clientX,
+      y: e.clientY,
+    });
+  },
+
+  /**
+   * @param {Event} e
+   * @private
+   */
   onMenuButtonClick_: function(e) {
     e.stopPropagation();
     this.dispatch(bookmarks.actions.selectItem(
         this.itemId, false, false, this.getState()));
     this.fire('open-item-menu', {
-      target: e.target,
-      item: this.item_,
+      targetElement: e.target,
     });
   },
 
@@ -107,10 +123,12 @@ Polymer({
    * @private
    */
   onDblClick_: function(e) {
-    if (!this.item_.url)
-      this.dispatch(bookmarks.actions.selectFolder(this.item_.id));
-    else
+    if (!this.item_.url) {
+      this.dispatch(
+          bookmarks.actions.selectFolder(this.item_.id, this.getState().nodes));
+    } else {
       chrome.tabs.create({url: this.item_.url});
+    }
   },
 
   /**

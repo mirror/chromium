@@ -13,6 +13,7 @@
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_image.h"
 #include "cc/paint/paint_recorder.h"
+#include "cc/test/fake_picture_layer.h"
 #include "cc/test/layer_tree_pixel_resource_test.h"
 #include "cc/test/pixel_comparator.h"
 #include "cc/test/solid_color_content_layer_client.h"
@@ -72,8 +73,8 @@ class MaskContentLayerClient : public ContentLayerClient {
 };
 
 TEST_P(LayerTreeHostMasksPixelTest, MaskOfLayer) {
-  scoped_refptr<SolidColorLayer> background = CreateSolidColorLayer(
-      gfx::Rect(100, 100), SK_ColorWHITE);
+  scoped_refptr<SolidColorLayer> background =
+      CreateSolidColorLayer(gfx::Rect(100, 100), SK_ColorWHITE);
 
   scoped_refptr<SolidColorLayer> green = CreateSolidColorLayerWithBorder(
       gfx::Rect(25, 25, 50, 50), kCSSGreen, 1, SK_ColorBLACK);
@@ -84,7 +85,7 @@ TEST_P(LayerTreeHostMasksPixelTest, MaskOfLayer) {
   scoped_refptr<PictureLayer> mask = PictureLayer::Create(&client);
   mask->SetBounds(mask_bounds);
   mask->SetIsDrawable(true);
-  mask->SetLayerMaskType(Layer::LayerMaskType::MULTI_TEXTURE_MASK);
+  mask->SetLayerMaskType(mask_type_);
   green->SetMaskLayer(mask.get());
 
   RunPixelResourceTest(background,
@@ -92,14 +93,14 @@ TEST_P(LayerTreeHostMasksPixelTest, MaskOfLayer) {
 }
 
 TEST_P(LayerTreeHostMasksPixelTest, ImageMaskOfLayer) {
-  scoped_refptr<SolidColorLayer> background = CreateSolidColorLayer(
-      gfx::Rect(100, 100), SK_ColorWHITE);
+  scoped_refptr<SolidColorLayer> background =
+      CreateSolidColorLayer(gfx::Rect(100, 100), SK_ColorWHITE);
 
   gfx::Size mask_bounds(50, 50);
 
   scoped_refptr<PictureImageLayer> mask = PictureImageLayer::Create();
   mask->SetIsDrawable(true);
-  mask->SetLayerMaskType(Layer::LayerMaskType::MULTI_TEXTURE_MASK);
+  mask->SetLayerMaskType(mask_type_);
   mask->SetBounds(mask_bounds);
 
   sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(200, 200);
@@ -122,8 +123,8 @@ TEST_P(LayerTreeHostMasksPixelTest, ImageMaskOfLayer) {
 }
 
 TEST_P(LayerTreeHostMasksPixelTest, MaskOfClippedLayer) {
-  scoped_refptr<SolidColorLayer> background = CreateSolidColorLayer(
-      gfx::Rect(100, 100), SK_ColorWHITE);
+  scoped_refptr<SolidColorLayer> background =
+      CreateSolidColorLayer(gfx::Rect(100, 100), SK_ColorWHITE);
 
   // Clip to the top half of the green layer.
   scoped_refptr<Layer> clip = Layer::Create();
@@ -141,12 +142,69 @@ TEST_P(LayerTreeHostMasksPixelTest, MaskOfClippedLayer) {
   scoped_refptr<PictureLayer> mask = PictureLayer::Create(&client);
   mask->SetBounds(mask_bounds);
   mask->SetIsDrawable(true);
-  mask->SetLayerMaskType(Layer::LayerMaskType::MULTI_TEXTURE_MASK);
+  mask->SetLayerMaskType(mask_type_);
   green->SetMaskLayer(mask.get());
 
   RunPixelResourceTest(
       background,
       base::FilePath(FILE_PATH_LITERAL("mask_of_clipped_layer.png")));
+}
+
+TEST_P(LayerTreeHostMasksPixelTest, MaskOfLargerLayer) {
+  scoped_refptr<SolidColorLayer> background =
+      CreateSolidColorLayer(gfx::Rect(100, 100), SK_ColorWHITE);
+
+  scoped_refptr<SolidColorLayer> green = CreateSolidColorLayerWithBorder(
+      gfx::Rect(0, 0, 100, 100), kCSSGreen, 1, SK_ColorBLACK);
+  background->AddChild(green);
+
+  gfx::Size mask_bounds(50, 50);
+  MaskContentLayerClient client(mask_bounds);
+  scoped_refptr<PictureLayer> mask = PictureLayer::Create(&client);
+  mask->SetBounds(mask_bounds);
+  mask->SetIsDrawable(true);
+  mask->SetLayerMaskType(mask_type_);
+  green->SetMaskLayer(mask.get());
+
+  if (raster_buffer_provider_type_ == RASTER_BUFFER_PROVIDER_TYPE_BITMAP) {
+    // Bitmap produces a sharper (but equivalent sized) mask.
+    float percentage_pixels_large_error = 40.0f;
+    float percentage_pixels_small_error = 0.0f;
+    float average_error_allowed_in_bad_pixels = 65.0f;
+    int large_error_allowed = 120;
+    int small_error_allowed = 0;
+    pixel_comparator_.reset(new FuzzyPixelComparator(
+        true,  // discard_alpha
+        percentage_pixels_large_error, percentage_pixels_small_error,
+        average_error_allowed_in_bad_pixels, large_error_allowed,
+        small_error_allowed));
+  }
+
+  RunPixelResourceTest(
+      background,
+      base::FilePath(FILE_PATH_LITERAL("mask_of_larger_layer.png")));
+}
+
+TEST_P(LayerTreeHostMasksPixelTest, MaskOfLayerNonExactTextureSize) {
+  scoped_refptr<SolidColorLayer> background =
+      CreateSolidColorLayer(gfx::Rect(100, 100), SK_ColorWHITE);
+
+  scoped_refptr<SolidColorLayer> green = CreateSolidColorLayerWithBorder(
+      gfx::Rect(0, 0, 100, 100), kCSSGreen, 1, SK_ColorBLACK);
+  background->AddChild(green);
+
+  gfx::Size mask_bounds(100, 100);
+  MaskContentLayerClient client(mask_bounds);
+  scoped_refptr<FakePictureLayer> mask = FakePictureLayer::Create(&client);
+  mask->SetBounds(mask_bounds);
+  mask->SetIsDrawable(true);
+  mask->SetLayerMaskType(mask_type_);
+  mask->set_fixed_tile_size(gfx::Size(173, 135));
+  green->SetMaskLayer(mask.get());
+
+  RunPixelResourceTest(background,
+                       base::FilePath(FILE_PATH_LITERAL(
+                           "mask_with_non_exact_texture_size.png")));
 }
 
 class CheckerContentLayerClient : public ContentLayerClient {
@@ -230,16 +288,20 @@ class CircleContentLayerClient : public ContentLayerClient {
 using LayerTreeHostMasksForBackgroundFiltersPixelTest =
     ParameterizedPixelResourceTest;
 
-INSTANTIATE_TEST_CASE_P(PixelResourceTest,
-                        LayerTreeHostMasksForBackgroundFiltersPixelTest,
-                        ::testing::Values(SOFTWARE,
-                                          GL_GPU_RASTER_2D_DRAW,
-                                          GL_ONE_COPY_2D_STAGING_2D_DRAW,
-                                          GL_ONE_COPY_RECT_STAGING_2D_DRAW,
-                                          GL_ONE_COPY_EXTERNAL_STAGING_2D_DRAW,
-                                          GL_ZERO_COPY_2D_DRAW,
-                                          GL_ZERO_COPY_RECT_DRAW,
-                                          GL_ZERO_COPY_EXTERNAL_DRAW));
+INSTANTIATE_TEST_CASE_P(
+    PixelResourceTest,
+    LayerTreeHostMasksForBackgroundFiltersPixelTest,
+    ::testing::Combine(
+        ::testing::Values(SOFTWARE,
+                          GL_GPU_RASTER_2D_DRAW,
+                          GL_ONE_COPY_2D_STAGING_2D_DRAW,
+                          GL_ONE_COPY_RECT_STAGING_2D_DRAW,
+                          GL_ONE_COPY_EXTERNAL_STAGING_2D_DRAW,
+                          GL_ZERO_COPY_2D_DRAW,
+                          GL_ZERO_COPY_RECT_DRAW,
+                          GL_ZERO_COPY_EXTERNAL_DRAW),
+        ::testing::Values(Layer::LayerMaskType::SINGLE_TEXTURE_MASK,
+                          Layer::LayerMaskType::MULTI_TEXTURE_MASK)));
 
 TEST_P(LayerTreeHostMasksForBackgroundFiltersPixelTest,
        MaskOfLayerWithBackgroundFilter) {
@@ -266,7 +328,7 @@ TEST_P(LayerTreeHostMasksForBackgroundFiltersPixelTest,
   scoped_refptr<PictureLayer> mask = PictureLayer::Create(&mask_client);
   mask->SetBounds(mask_bounds);
   mask->SetIsDrawable(true);
-  mask->SetLayerMaskType(Layer::LayerMaskType::MULTI_TEXTURE_MASK);
+  mask->SetLayerMaskType(mask_type_);
   blur->SetMaskLayer(mask.get());
 
   float percentage_pixels_large_error = 2.5f;  // 2.5%, ~250px / (100*100)
@@ -317,7 +379,7 @@ TEST_P(LayerTreeHostMasksForBackgroundFiltersPixelTest,
   scoped_refptr<PictureLayer> mask = PictureLayer::Create(&mask_client);
   mask->SetBounds(mask_bounds);
   mask->SetIsDrawable(true);
-  mask->SetLayerMaskType(Layer::LayerMaskType::MULTI_TEXTURE_MASK);
+  mask->SetLayerMaskType(mask_type_);
   picture_horizontal->SetMaskLayer(mask.get());
 
   float percentage_pixels_large_error = 0.04f;  // 0.04%, ~6px / (128*128)

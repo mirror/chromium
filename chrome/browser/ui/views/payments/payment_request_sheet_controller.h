@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
 #include "ui/views/controls/button/button.h"
 
 namespace views {
@@ -33,6 +34,21 @@ class PaymentRequestSheetController : public views::ButtonListener {
                                 PaymentRequestDialogView* dialog);
   ~PaymentRequestSheetController() override;
 
+  // Creates a view to be displayed in the PaymentRequestDialog. The header view
+  // is the view displayed on top of the dialog, containing title, (optional)
+  // back button, and close buttons.
+  // The content view is displayed between the header view and the pay/cancel
+  // buttons. Also adds the footer, returned by CreateFooterView(), which is
+  // clamped to the bottom of the containing view.  The returned view takes
+  // ownership of the header, the content, and the footer.
+  // +---------------------------+
+  // |        HEADER VIEW        |
+  // +---------------------------+
+  // |          CONTENT          |
+  // |           VIEW            |
+  // +---------------------------+
+  // | EXTRA VIEW | PAY | CANCEL | <-- footer
+  // +---------------------------+
   std::unique_ptr<views::View> CreateView();
 
   PaymentRequestSpec* spec() { return spec_; }
@@ -92,23 +108,23 @@ class PaymentRequestSheetController : public views::ButtonListener {
   // |controller| is installed as the listener for button events.
   std::unique_ptr<views::View> CreateFooterView();
 
+  // Returns the view that should be initially focused on this sheet. Typically,
+  // this returns the primary button if it's enabled or the secondary button
+  // otherwise. Subclasses may return a different view if they need focus to
+  // start off on a different view (a textfield for example). This will only be
+  // called after the view has been completely created through calls to
+  // CreatePaymentView and related functions.
+  virtual views::View* GetFirstFocusedView();
+
+  // Returns true if the subclass wants the content sheet to have an id, and
+  // sets |sheet_id| to the desired value.
+  virtual bool GetSheetId(DialogViewID* sheet_id);
+
  private:
-  // Creates a view to be displayed in the PaymentRequestDialog.
-  // |header_view| is the view displayed on top of the dialog, containing title,
-  // (optional) back button, and close buttons.
-  // |content_view| is displayed between |header_view| and the pay/cancel
-  // buttons. Also adds the footer, returned by CreateFooterView(), which is
-  // clamped to the bottom of the containing view.  The returned view takes
-  // ownership of |header_view|, |content_view|, and the footer.
-  // +---------------------------+
-  // |        HEADER VIEW        |
-  // +---------------------------+
-  // |          CONTENT          |
-  // |           VIEW            |
-  // +---------------------------+
-  // | EXTRA VIEW | PAY | CANCEL | <-- footer
-  // +---------------------------+
-  std::unique_ptr<views::View> CreatePaymentView();
+  // Called when the Enter accelerator is pressed. Perform the action associated
+  // with the primary button and returns true if it's enabled, returns false
+  // otherwise.
+  bool PerformPrimaryButtonAction();
 
   // All these are not owned. Will outlive this.
   PaymentRequestSpec* spec_;
@@ -122,6 +138,11 @@ class PaymentRequestSheetController : public views::ButtonListener {
   // Hold on to the ScrollView because it must be explicitly laid out in some
   // cases.
   std::unique_ptr<views::ScrollView> scroll_;
+
+  // Hold on to the primary and secondary buttons to use them as initial focus
+  // targets when subclasses don't want to focus anything else.
+  std::unique_ptr<views::Button> primary_button_;
+  std::unique_ptr<views::Button> secondary_button_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentRequestSheetController);
 };

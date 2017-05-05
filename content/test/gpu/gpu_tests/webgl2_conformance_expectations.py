@@ -226,8 +226,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['sierra'], bug=705865)
 
     # Fails on all GPU types.
-    self.Flaky('conformance/context/context-release-upon-reload.html',
-        ['mac'], bug=713829)
     self.Fail('conformance2/glsl3/vector-dynamic-indexing-swizzled-lvalue.html',
         ['mac'], bug=709351)
     self.Fail('conformance2/rendering/' +
@@ -585,6 +583,15 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
       'conformance2/textures/webgl_canvas/tex-3d-rgb9_e5-rgb-half_float.html',
       ['sierra', 'intel'], bug=663188)
 
+    # Regressions in 10.12.4 on Haswell GPUs.
+    self.Fail('deqp/functional/gles3/fbocolorbuffer/tex2d_00.html',
+        ['mac', ('intel', 0x0a2e)], bug=718194)
+    self.Fail('deqp/functional/gles3/fboinvalidate/format_00.html',
+        ['mac', ('intel', 0x0a2e)], bug=718194)
+    self.Fail('deqp/functional/gles3/framebufferblit/' +
+        'default_framebuffer_05.html',
+        ['mac', ('intel', 0x0a2e)], bug=718194)
+
     self.Fail('conformance2/textures/misc/angle-stuck-depth-textures.html',
         ['mac', 'intel'], bug=679692)
     self.Fail('deqp/functional/gles3/fbomultisample*',
@@ -715,16 +722,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'amd', 'intel'], bug=662644) # WebGL 2.0.1
 
     # Linux NVIDIA
-    # Explicitly specifying GT 610 to avoid conflict with Quadro P400 rule
-    self.Flaky('deqp/functional/gles3/multisample.html',
-        ['linux', ('nvidia', 0x104a)], bug=714207)
-
-    # Any of these tests become flaky if they follow
-    # conformance2/samplers/samplers.html and if virtualized GL
-    # contexts are being used.
-    self.Flaky('conformance2/textures/canvas_sub_rectangle/*',
-        ['linux', 'nvidia'], bug=694359)
-
     # This test is flaky both with and without ANGLE.
     self.Flaky('deqp/functional/gles3/texturespecification/' +
         'random_teximage2d_2d.html',
@@ -841,6 +838,18 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'intel'], bug=715881)
     self.Fail('deqp/functional/gles3/texturefiltering/3d_formats_09.html',
         ['linux', 'intel'], bug=715881)
+
+    # Intermittently running out of memory.
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_00.html',
+        ['linux', 'intel'], bug=717023)
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_01.html',
+        ['linux', 'intel'], bug=717023)
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_02.html',
+        ['linux', 'intel'], bug=717023)
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_03.html',
+        ['linux', 'intel'], bug=717023)
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_04.html',
+        ['linux', 'intel'], bug=717023)
 
     # Linux AMD only.
     # It looks like AMD shader compiler rejects many valid ES3 semantics.

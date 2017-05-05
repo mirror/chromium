@@ -34,6 +34,7 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/audio/AudioUtilities.h"
 #include "platform/audio/PushPullFIFO.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
@@ -67,8 +68,6 @@ AudioDestination::AudioDestination(AudioIOCallback& callback,
                                    PassRefPtr<SecurityOrigin> security_origin)
     : number_of_output_channels_(number_of_output_channels),
       is_playing_(false),
-      rendering_thread_(WTF::WrapUnique(
-          Platform::Current()->CreateThread("WebAudio Rendering Thread"))),
       fifo_(WTF::WrapUnique(
           new PushPullFIFO(number_of_output_channels, kFIFOSize))),
       output_bus_(AudioBus::Create(number_of_output_channels,
@@ -82,9 +81,9 @@ AudioDestination::AudioDestination(AudioIOCallback& callback,
   // local input (e.g. loopback from OS audio system), but Chromium's media
   // renderer does not support it currently. Thus, we use zero for the number
   // of input channels.
-  web_audio_device_ = WTF::WrapUnique(Platform::Current()->CreateAudioDevice(
+  web_audio_device_ = Platform::Current()->CreateAudioDevice(
       0, number_of_output_channels, latency_hint, this, String(),
-      std::move(security_origin)));
+      std::move(security_origin));
   DCHECK(web_audio_device_);
 
   callback_buffer_size_ = web_audio_device_->FramesPerBuffer();
@@ -102,6 +101,9 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
                               double delay,
                               double delay_timestamp,
                               size_t prior_frames_skipped) {
+  TRACE_EVENT1("webaudio", "AudioDestination::Render",
+               "callback_buffer_size", number_of_frames);
+
   // This method is called by AudioDeviceThread.
   DCHECK(!IsRenderingThread());
 
@@ -121,12 +123,15 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
 
   size_t frames_to_render = fifo_->Pull(output_bus_.Get(), number_of_frames);
 
-  rendering_thread_->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE,
-      CrossThreadBind(&AudioDestination::RequestRenderOnWebThread,
-                      CrossThreadUnretained(this),
-                      number_of_frames, frames_to_render,
-                      delay, delay_timestamp, prior_frames_skipped));
+  // TODO(hongchan): this check might be redundant, so consider removing later.
+  if (frames_to_render != 0 && rendering_thread_) {
+    rendering_thread_->GetWebTaskRunner()->PostTask(
+        BLINK_FROM_HERE,
+        CrossThreadBind(&AudioDestination::RequestRenderOnWebThread,
+                        CrossThreadUnretained(this), number_of_frames,
+                        frames_to_render, delay, delay_timestamp,
+                        prior_frames_skipped));
+  }
 }
 
 void AudioDestination::RequestRenderOnWebThread(size_t frames_requested,
@@ -134,6 +139,9 @@ void AudioDestination::RequestRenderOnWebThread(size_t frames_requested,
                                                 double delay,
                                                 double delay_timestamp,
                                                 size_t prior_frames_skipped) {
+  TRACE_EVENT1("webaudio", "AudioDestination::RequestRenderOnWebThread",
+               "frames_to_render", frames_to_render);
+
   // This method is called by WebThread.
   DCHECK(IsRenderingThread());
 
@@ -171,17 +179,44 @@ void AudioDestination::RequestRenderOnWebThread(size_t frames_requested,
 }
 
 void AudioDestination::Start() {
+  DCHECK(IsMainThread());
+
+  // Start the "audio device" after the rendering thread is ready.
   if (web_audio_device_ && !is_playing_) {
+    TRACE_EVENT0("webaudio", "AudioDestination::Start");
+    rendering_thread_ =
+        Platform::Current()->CreateThread("WebAudio Rendering Thread");
     web_audio_device_->Start();
     is_playing_ = true;
   }
 }
 
 void AudioDestination::Stop() {
+  DCHECK(IsMainThread());
+
+  // This assumes stopping the "audio device" is synchronous and dumping the
+  // rendering thread is safe after that.
   if (web_audio_device_ && is_playing_) {
+    TRACE_EVENT0("webaudio", "AudioDestination::Stop");
     web_audio_device_->Stop();
+    rendering_thread_.reset();
     is_playing_ = false;
   }
+}
+
+size_t AudioDestination::CallbackBufferSize() const {
+  DCHECK(IsMainThread());
+  return callback_buffer_size_;
+}
+
+bool AudioDestination::IsPlaying() {
+  DCHECK(IsMainThread());
+  return is_playing_;
+}
+
+int AudioDestination::FramesPerBuffer() const {
+  DCHECK(IsMainThread());
+  return web_audio_device_->FramesPerBuffer();
 }
 
 size_t AudioDestination::HardwareBufferSize() {

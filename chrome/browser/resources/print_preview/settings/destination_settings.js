@@ -32,7 +32,7 @@ cr.define('print_preview', function() {
      * @private
      */
     this.iconClass_ = null;
-  };
+  }
 
   /**
    * Event types dispatched by the component.

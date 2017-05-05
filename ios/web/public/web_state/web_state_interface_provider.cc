@@ -4,7 +4,7 @@
 
 #include "ios/web/public/web_state/web_state_interface_provider.h"
 
-#include "services/service_manager/public/cpp/identity.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace web {
 
@@ -19,7 +19,7 @@ void WebStateInterfaceProvider::Bind(
 void WebStateInterfaceProvider::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle handle) {
-  registry_.BindInterface(service_manager::Identity(), interface_name,
+  registry_.BindInterface(service_manager::BindSourceInfo(), interface_name,
                           std::move(handle));
 }
 

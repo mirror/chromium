@@ -157,7 +157,6 @@ static_library("test_support") {
     "//skia",
     "//sql",
     "//sql:test_support",
-    "//sql:test_support",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/leveldatabase",
@@ -387,9 +386,13 @@ if (!is_android) {
       "../browser/ui/passwords/manage_passwords_test.h",
       "../browser/ui/search/instant_extended_interactive_uitest.cc",
       "../browser/ui/search/instant_extended_manual_interactive_uitest.cc",
+      "../browser/ui/search/instant_test_base.cc",
+      "../browser/ui/search/instant_test_base.h",
       "../browser/ui/search/instant_test_utils.cc",
       "../browser/ui/search/instant_test_utils.h",
-      "../browser/ui/search/local_ntp_browsertest.cc",
+      "../browser/ui/search/instant_uitest_base.cc",
+      "../browser/ui/search/instant_uitest_base.h",
+      "../browser/ui/search/local_ntp_uitest.cc",
       "../browser/ui/startup/startup_browser_creator_interactive_uitest.cc",
       "../browser/ui/translate/translate_bubble_test_utils.h",
       "../browser/ui/views/accessibility/navigation_accessibility_uitest_win.cc",
@@ -434,7 +437,7 @@ if (!is_android) {
       "//third_party/pywebsocket/",
       "//third_party/tlslite/",
       "//third_party/zlib/google/test/data/",
-      "//tools/metrics/histograms/histograms.xml",
+      "//tools/metrics/histograms/enums.xml",
       "//ui/webui/resources/js/",
       "$root_out_dir/pyproto/google/",
       "$root_out_dir/test_case.html",
@@ -1599,6 +1602,11 @@ test("browser_tests") {
       "../browser/ui/permission_bubble/permission_bubble_browser_test_util.h",
       "../browser/ui/prefs/prefs_tab_helper_browsertest.cc",
       "../browser/ui/profile_error_browsertest.cc",
+      "../browser/ui/search/instant_test_base.cc",
+      "../browser/ui/search/instant_test_base.h",
+      "../browser/ui/search/instant_test_utils.cc",
+      "../browser/ui/search/instant_test_utils.h",
+      "../browser/ui/search/local_ntp_browsertest.cc",
       "../browser/ui/search/new_tab_page_interceptor_browsertest.cc",
       "../browser/ui/search_engines/search_engine_tab_helper_browsertest.cc",
       "../browser/ui/settings_window_manager_browsertest.cc",
@@ -1976,6 +1984,7 @@ test("browser_tests") {
         "../browser/ui/views/payments/payment_request_browsertest_base.cc",
         "../browser/ui/views/payments/payment_request_browsertest_base.h",
         "../browser/ui/views/payments/payment_request_can_make_payment_browsertest.cc",
+        "../browser/ui/views/payments/payment_request_can_make_payment_metrics_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_app_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_response_browsertest.cc",
         "../browser/ui/views/payments/payment_sheet_view_controller_browsertest.cc",
@@ -2175,6 +2184,7 @@ test("browser_tests") {
         "../browser/chromeos/policy/policy_cert_verifier_browsertest.cc",
         "../browser/chromeos/policy/power_policy_browsertest.cc",
         "../browser/chromeos/policy/restore_on_startup_browsertest_chromeos.cc",
+        "../browser/chromeos/policy/signin_profile_apps_policy_browsertest.cc",
         "../browser/chromeos/policy/user_affiliation_browsertest.cc",
         "../browser/chromeos/policy/user_cloud_external_data_manager_browsertest.cc",
         "../browser/chromeos/policy/user_cloud_policy_manager_chromeos_browsertest.cc",
@@ -2858,10 +2868,10 @@ group("angle_perftests") {
 
 test("unit_tests") {
   sources = [
-    # histograms.xml is analyzed by AboutFlagsHistogramTest, so this
+    # enums.xml is analyzed by AboutFlagsHistogramTest, so this
     # dependency is needed to make commit bots run unit_tests on
-    # histograms.xml changes.
-    "../../tools/metrics/histograms/histograms.xml",
+    # enums.xml changes.
+    "../../tools/metrics/histograms/enums.xml",
 
     # All unittests in browser, common, renderer and service.
     "../browser/about_flags_unittest.cc",
@@ -3064,6 +3074,7 @@ test("unit_tests") {
     "../browser/page_load_metrics/experiments/delay_navigation_throttle_unittest.cc",
     "../browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
     "../browser/page_load_metrics/observers/aborts_page_load_metrics_observer_unittest.cc",
+    "../browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/amp_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/core_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer_unittest.cc",
@@ -3296,7 +3307,7 @@ test("unit_tests") {
     "//third_party/pywebsocket/",
     "//third_party/tlslite/",
     "//third_party/zlib/google/test/data/",
-    "//tools/metrics/histograms/histograms.xml",
+    "//tools/metrics/histograms/enums.xml",
     "$root_out_dir/pyproto/google/",
   ]
   if (is_android || is_linux || is_win) {
@@ -3329,7 +3340,6 @@ test("unit_tests") {
     "//components/autofill/content/renderer:test_support",
     "//components/browser_sync:test_support",
     "//components/component_updater:test_support",
-    "//components/content_settings/core/test:test_support",
     "//components/content_settings/core/test:test_support",
     "//components/data_reduction_proxy/core/browser:test_support",
     "//components/data_use_measurement/core",
@@ -3604,7 +3614,6 @@ test("unit_tests") {
     sources -=
         [ "../browser/download/download_request_infobar_delegate_unittest.cc" ]
     deps += [
-      "//device/battery:mojo_bindings",
       "//ipc",
       "//third_party/libaddressinput",
     ]
@@ -3659,6 +3668,10 @@ test("unit_tests") {
       "$root_out_dir/test_data/chrome/renderer/resources/extensions/",
       "$root_out_dir/test_data/ui/webui/",
     ]
+  }
+
+  if (is_desktop_linux && enable_native_notifications) {
+    sources += [ "../browser/notifications/notification_platform_bridge_linux_unittest.cc" ]
   }
 
   if (is_linux || is_win) {

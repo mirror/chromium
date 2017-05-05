@@ -51,6 +51,8 @@
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "components/discardable_memory/client/client_discardable_shared_memory_manager.h"
+#include "components/metrics/public/interfaces/single_sample_metrics.mojom.h"
+#include "components/metrics/single_sample_metrics.h"
 #include "content/child/appcache/appcache_dispatcher.h"
 #include "content/child/appcache/appcache_frontend_impl.h"
 #include "content/child/blob_storage/blob_message_filter.h"
@@ -317,7 +319,8 @@ void AddHistogramSample(void* hist, int sample) {
 
 class FrameFactoryImpl : public mojom::FrameFactory {
  public:
-  FrameFactoryImpl() : routing_id_highmark_(-1) {}
+  explicit FrameFactoryImpl(const service_manager::BindSourceInfo& source_info)
+      : source_info_(source_info), routing_id_highmark_(-1) {}
 
  private:
   // mojom::FrameFactory:
@@ -337,21 +340,23 @@ class FrameFactoryImpl : public mojom::FrameFactory {
     // we want.
     if (!frame) {
       RenderThreadImpl::current()->RegisterPendingFrameCreate(
-          frame_routing_id, std::move(frame_request),
+          source_info_, frame_routing_id, std::move(frame_request),
           std::move(frame_host_interface_broker));
       return;
     }
 
-    frame->BindFrame(std::move(frame_request),
+    frame->BindFrame(source_info_, std::move(frame_request),
                      std::move(frame_host_interface_broker));
   }
 
  private:
+  service_manager::BindSourceInfo source_info_;
   int32_t routing_id_highmark_;
 };
 
-void CreateFrameFactory(mojom::FrameFactoryRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<FrameFactoryImpl>(),
+void CreateFrameFactory(const service_manager::BindSourceInfo& source_info,
+                        mojom::FrameFactoryRequest request) {
+  mojo::MakeStrongBinding(base::MakeUnique<FrameFactoryImpl>(source_info),
                           std::move(request));
 }
 
@@ -388,6 +393,23 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
 bool IsRunningInMash() {
   const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
   return cmdline->HasSwitch(switches::kIsRunningInMash);
+}
+
+// Hook that allows single-sample metric code from //components/metrics to
+// connect from the renderer process to the browser process.
+void CreateSingleSampleMetricsProvider(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    service_manager::Connector* connector,
+    metrics::mojom::SingleSampleMetricsProviderRequest request) {
+  if (task_runner->BelongsToCurrentThread()) {
+    connector->BindInterface(mojom::kBrowserServiceName, std::move(request));
+    return;
+  }
+
+  task_runner->PostTask(
+      FROM_HERE,
+      base::Bind(&CreateSingleSampleMetricsProvider, std::move(task_runner),
+                 connector, base::Passed(&request)));
 }
 
 }  // namespace
@@ -611,6 +633,10 @@ void RenderThreadImpl::Init(
   // Register this object as the main thread.
   ChildProcess::current()->set_main_thread(this);
 
+  metrics::InitializeSingleSampleMetricsFactory(
+      base::BindRepeating(&CreateSingleSampleMetricsProvider,
+                          message_loop()->task_runner(), GetConnector()));
+
   gpu_ = ui::Gpu::Create(
       GetConnector(),
       IsRunningInMash() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
@@ -647,8 +673,6 @@ void RenderThreadImpl::Init(
       base::TimeDelta::FromSecondsD(kThrottledResourceRequestFlushPeriodS),
       kMaxResourceRequestsPerFlushWhenThrottled));
   resource_dispatcher()->set_message_sender(resource_dispatch_throttler_.get());
-
-  media_stream_center_ = nullptr;
 
   blob_message_filter_ = new BlobMessageFilter(GetFileThreadTaskRunner());
   AddFilter(blob_message_filter_.get());
@@ -993,7 +1017,7 @@ void RenderThreadImpl::AddRoute(int32_t routing_id, IPC::Listener* listener) {
     return;
 
   scoped_refptr<PendingFrameCreate> create(it->second);
-  frame->BindFrame(it->second->TakeFrameRequest(),
+  frame->BindFrame(it->second->browser_info(), it->second->TakeFrameRequest(),
                    it->second->TakeInterfaceBroker());
   pending_frame_creates_.erase(it);
 }
@@ -1020,13 +1044,14 @@ void RenderThreadImpl::RemoveEmbeddedWorkerRoute(int32_t routing_id) {
 }
 
 void RenderThreadImpl::RegisterPendingFrameCreate(
+    const service_manager::BindSourceInfo& browser_info,
     int routing_id,
     mojom::FrameRequest frame_request,
     mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
   std::pair<PendingFrameCreateMap::iterator, bool> result =
       pending_frame_creates_.insert(std::make_pair(
           routing_id, make_scoped_refptr(new PendingFrameCreate(
-                          routing_id, std::move(frame_request),
+                          browser_info, routing_id, std::move(frame_request),
                           std::move(frame_host_interface_broker)))));
   CHECK(result.second) << "Inserting a duplicate item.";
 }
@@ -1976,20 +2001,22 @@ RenderThreadImpl::RequestCopyOfOutputForLayoutTest(
   return layout_test_deps_->RequestCopyOfOutput(routing_id, std::move(request));
 }
 
-blink::WebMediaStreamCenter* RenderThreadImpl::CreateMediaStreamCenter(
+std::unique_ptr<blink::WebMediaStreamCenter>
+RenderThreadImpl::CreateMediaStreamCenter(
     blink::WebMediaStreamCenterClient* client) {
+  std::unique_ptr<blink::WebMediaStreamCenter> media_stream_center;
 #if BUILDFLAG(ENABLE_WEBRTC)
-  if (!media_stream_center_) {
-    media_stream_center_ = GetContentClient()->renderer()
-        ->OverrideCreateWebMediaStreamCenter(client);
-    if (!media_stream_center_) {
-      std::unique_ptr<MediaStreamCenter> media_stream_center(
-          new MediaStreamCenter(client, GetPeerConnectionDependencyFactory()));
-      media_stream_center_ = media_stream_center.release();
+  if (!media_stream_center) {
+    media_stream_center =
+        GetContentClient()->renderer()->OverrideCreateWebMediaStreamCenter(
+            client);
+    if (!media_stream_center) {
+      media_stream_center = base::MakeUnique<MediaStreamCenter>(
+          client, GetPeerConnectionDependencyFactory());
     }
   }
 #endif
-  return media_stream_center_;
+  return media_stream_center;
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -2352,10 +2379,12 @@ void RenderThreadImpl::ReleaseFreeMemory() {
 }
 
 RenderThreadImpl::PendingFrameCreate::PendingFrameCreate(
+    const service_manager::BindSourceInfo& browser_info,
     int routing_id,
     mojom::FrameRequest frame_request,
     mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker)
-    : routing_id_(routing_id),
+    : browser_info_(browser_info),
+      routing_id_(routing_id),
       frame_request_(std::move(frame_request)),
       frame_host_interface_broker_(std::move(frame_host_interface_broker)) {
   // The RenderFrame may be deleted before the CreateFrame message is received.

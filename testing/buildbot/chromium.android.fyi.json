@@ -761,13 +761,13 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
           ],
           "expiration": 10800,
-          "hard_timeout": 960,
+          "hard_timeout": 1500,
           "output_links": [
             {
               "link": [
@@ -777,7 +777,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 6
         },
         "test": "android_webview_test_apk"
       },
@@ -794,7 +795,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -827,7 +828,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -863,7 +864,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -896,7 +897,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -929,7 +930,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -965,13 +966,13 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
           ],
           "expiration": 10800,
-          "hard_timeout": 960,
+          "hard_timeout": 1200,
           "output_links": [
             {
               "link": [
@@ -981,7 +982,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 8
         },
         "test": "chrome_public_test_apk"
       },
@@ -1001,7 +1003,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1034,7 +1036,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1067,7 +1069,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1100,13 +1102,13 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
           ],
           "expiration": 10800,
-          "hard_timeout": 960,
+          "hard_timeout": 1200,
           "output_links": [
             {
               "link": [
@@ -1116,7 +1118,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 6
         },
         "test": "content_browsertests"
       },
@@ -1136,13 +1139,13 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
           ],
           "expiration": 10800,
-          "hard_timeout": 960,
+          "hard_timeout": 1200,
           "output_links": [
             {
               "link": [
@@ -1152,7 +1155,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 4
         },
         "test": "content_shell_test_apk"
       },
@@ -1169,13 +1173,13 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
           ],
           "expiration": 10800,
-          "hard_timeout": 960,
+          "hard_timeout": 1200,
           "output_links": [
             {
               "link": [
@@ -1185,7 +1189,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 2
         },
         "test": "content_unittests"
       },
@@ -1202,7 +1207,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1235,7 +1240,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1268,7 +1273,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1301,7 +1306,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1334,7 +1339,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1367,7 +1372,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1400,7 +1405,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1433,7 +1438,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1466,7 +1471,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1499,13 +1504,13 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
           ],
           "expiration": 10800,
-          "hard_timeout": 960,
+          "hard_timeout": 1200,
           "output_links": [
             {
               "link": [
@@ -1515,7 +1520,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 2
         },
         "test": "net_unittests"
       },
@@ -1535,7 +1541,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1568,7 +1574,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1601,7 +1607,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1634,7 +1640,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1667,7 +1673,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1700,7 +1706,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1733,7 +1739,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }
@@ -1766,7 +1772,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "NRD91N",
               "device_type": "bullhead"
             }

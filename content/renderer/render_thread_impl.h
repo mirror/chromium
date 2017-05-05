@@ -333,7 +333,7 @@ class CONTENT_EXPORT RenderThreadImpl
 
   // Creates the embedder implementation of WebMediaStreamCenter.
   // The resulting object is owned by WebKit and deleted by WebKit at tear-down.
-  blink::WebMediaStreamCenter* CreateMediaStreamCenter(
+  std::unique_ptr<blink::WebMediaStreamCenter> CreateMediaStreamCenter(
       blink::WebMediaStreamCenterClient* client);
 
   BrowserPluginManager* browser_plugin_manager() const {
@@ -477,9 +477,11 @@ class CONTENT_EXPORT RenderThreadImpl
   void AddEmbeddedWorkerRoute(int32_t routing_id, IPC::Listener* listener);
   void RemoveEmbeddedWorkerRoute(int32_t routing_id);
 
-  void RegisterPendingFrameCreate(int routing_id,
-                                  mojom::FrameRequest frame,
-                                  mojom::FrameHostInterfaceBrokerPtr host);
+  void RegisterPendingFrameCreate(
+      const service_manager::BindSourceInfo& source_info,
+      int routing_id,
+      mojom::FrameRequest frame,
+      mojom::FrameHostInterfaceBrokerPtr host);
 
   mojom::StoragePartitionService* GetStoragePartitionService();
 
@@ -605,9 +607,6 @@ class CONTENT_EXPORT RenderThreadImpl
   std::unique_ptr<RendererBlinkPlatformImpl> blink_platform_impl_;
   std::unique_ptr<ResourceDispatchThrottler> resource_dispatch_throttler_;
   std::unique_ptr<CacheStorageDispatcher> main_thread_cache_storage_dispatcher_;
-
-  // Used on the render thread and deleted by WebKit at shutdown.
-  blink::WebMediaStreamCenter* media_stream_center_;
 
   // Used on the renderer and IPC threads.
   scoped_refptr<BlobMessageFilter> blob_message_filter_;
@@ -741,10 +740,14 @@ class CONTENT_EXPORT RenderThreadImpl
   class PendingFrameCreate : public base::RefCounted<PendingFrameCreate> {
    public:
     PendingFrameCreate(
+        const service_manager::BindSourceInfo& source_info,
         int routing_id,
         mojom::FrameRequest frame_request,
         mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker);
 
+    const service_manager::BindSourceInfo& browser_info() const {
+      return browser_info_;
+    }
     mojom::FrameRequest TakeFrameRequest() { return std::move(frame_request_); }
     mojom::FrameHostInterfaceBrokerPtr TakeInterfaceBroker() {
       frame_host_interface_broker_.set_connection_error_handler(
@@ -760,6 +763,7 @@ class CONTENT_EXPORT RenderThreadImpl
     // Mojo error handler.
     void OnConnectionError();
 
+    service_manager::BindSourceInfo browser_info_;
     int routing_id_;
     mojom::FrameRequest frame_request_;
     mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker_;

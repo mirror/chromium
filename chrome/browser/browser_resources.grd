@@ -48,6 +48,8 @@
         <structure name="IDR_LOCK_JS" file="resources\chromeos\login\lock.js" flattenhtml="true" type="chrome_html" variables="OOBE=lock" expand_variables="true" />
         <structure name="IDR_LOGIN_HTML" file="resources\chromeos\login\login.html" flattenhtml="true" type="chrome_html" variables="OOBE=login" expand_variables="true"/>
         <structure name="IDR_LOGIN_JS" file="resources\chromeos\login\login.js" flattenhtml="true" type="chrome_html" />
+        <structure name="IDR_MD_LOGIN_HTML" file="resources\chromeos\login\md_login.html" flattenhtml="true" type="chrome_html" variables="OOBE=md_login" expand_variables="true"/>
+        <structure name="IDR_MD_LOGIN_JS" file="resources\chromeos\login\md_login.js" flattenhtml="true" type="chrome_html" />
       </if>
       <if expr="not is_android">
         <structure name="IDR_NEW_INCOGNITO_TAB_THEME_CSS" file="resources\ntp4\new_incognito_tab_theme.css" flattenhtml="true" type="chrome_html" />
@@ -207,6 +209,8 @@
         <include name="IDR_MD_EXTENSIONS_ITEM_UTIL_JS" file="resources\md_extensions\item_util.js" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_LOAD_ERROR_HTML" file="resources\md_extensions\load_error.html" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_LOAD_ERROR_JS" file="resources\md_extensions\load_error.js" type="BINDATA" />
+        <include name="IDR_MD_EXTENSIONS_NAVIGATION_HELPER_HTML" file="resources\md_extensions\navigation_helper.html" type="BINDATA" />
+        <include name="IDR_MD_EXTENSIONS_NAVIGATION_HELPER_JS" file="resources\md_extensions\navigation_helper.js" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_OPTIONS_DIALOG_HTML" file="resources\md_extensions\options_dialog.html" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_OPTIONS_DIALOG_JS" file="resources\md_extensions\options_dialog.js" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_PACK_DIALOG_HTML" file="resources\md_extensions\pack_dialog.html" type="BINDATA" />
@@ -236,6 +240,7 @@
         <include name="IDR_SNIPPETS_INTERNALS_HTML" file="resources\snippets_internals.html" allowexternalscript="true" compress="gzip" type="BINDATA" />
         <include name="IDR_SNIPPETS_INTERNALS_CSS" file="resources\snippets_internals.css" compress="gzip" type="BINDATA" />
         <include name="IDR_SNIPPETS_INTERNALS_JS" file="resources\snippets_internals.js" compress="gzip" type="BINDATA" />
+        <part file="vr_shell_resources.grdp" />
       </if>
       <include name="IDR_SUPERVISED_USER_INTERNALS_HTML" file="resources\supervised_user_internals.html" allowexternalscript="true" compress="gzip" type="BINDATA" />
       <include name="IDR_SUPERVISED_USER_INTERNALS_CSS" file="resources\supervised_user_internals.css" compress="gzip" type="BINDATA" />
@@ -266,6 +271,8 @@
         <include name="IDR_MD_BOOKMARKS_APP_HTML" file="resources\md_bookmarks\app.html" type="BINDATA" />
         <include name="IDR_MD_BOOKMARKS_APP_JS" file="resources\md_bookmarks\app.js" type="BINDATA" />
         <include name="IDR_MD_BOOKMARKS_BOOKMARKS_HTML" file="resources\md_bookmarks\bookmarks.html" type="BINDATA" />
+        <include name="IDR_MD_BOOKMARKS_COMMAND_MANAGER_HTML" file="resources\md_bookmarks\command_manager.html" type="BINDATA" />
+        <include name="IDR_MD_BOOKMARKS_COMMAND_MANAGER_JS" file="resources\md_bookmarks\command_manager.js" type="BINDATA" />
         <include name="IDR_MD_BOOKMARKS_CONSTANTS_HTML" file="resources\md_bookmarks\constants.html" type="BINDATA" />
         <include name="IDR_MD_BOOKMARKS_CONSTANTS_JS" file="resources\md_bookmarks\constants.js" type="BINDATA" />
         <include name="IDR_MD_BOOKMARKS_DND_MANAGER_HTML" file="resources\md_bookmarks\dnd_manager.html" type="BINDATA" />

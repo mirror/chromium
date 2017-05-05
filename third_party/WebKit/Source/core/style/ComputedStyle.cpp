@@ -116,7 +116,6 @@ ALWAYS_INLINE ComputedStyle::ComputedStyle()
     : ComputedStyleBase(), RefCounted<ComputedStyle>() {
   box_data_.Init();
   visual_data_.Init();
-  background_data_.Init();
   rare_non_inherited_data_.Init();
   rare_non_inherited_data_.Access()->deprecated_flexible_box_.Init();
   rare_non_inherited_data_.Access()->flexible_box_.Init();
@@ -138,7 +137,6 @@ ALWAYS_INLINE ComputedStyle::ComputedStyle(const ComputedStyle& o)
       RefCounted<ComputedStyle>(),
       box_data_(o.box_data_),
       visual_data_(o.visual_data_),
-      background_data_(o.background_data_),
       rare_non_inherited_data_(o.rare_non_inherited_data_),
       rare_inherited_data_(o.rare_inherited_data_),
       inherited_data_(o.inherited_data_),
@@ -333,7 +331,6 @@ void ComputedStyle::CopyNonInheritedFromCached(const ComputedStyle& other) {
   ComputedStyleBase::CopyNonInheritedFromCached(other);
   box_data_ = other.box_data_;
   visual_data_ = other.visual_data_;
-  background_data_ = other.background_data_;
   rare_non_inherited_data_ = other.rare_non_inherited_data_;
 
   // The flags are copied one-by-one because they contain
@@ -475,7 +472,6 @@ bool ComputedStyle::NonInheritedEqual(const ComputedStyle& other) const {
   return ComputedStyleBase::NonInheritedEqual(other) &&
          box_data_ == other.box_data_ &&
          visual_data_ == other.visual_data_ &&
-         background_data_ == other.background_data_ &&
          rare_non_inherited_data_ == other.rare_non_inherited_data_ &&
          svg_style_->NonInheritedEqual(*other.svg_style_);
 }
@@ -579,10 +575,8 @@ bool ComputedStyle::ScrollAnchorDisablingPropertyChanged(
       return true;
   }
 
-  if (surround_data_.Get() != other.surround_data_.Get()) {
-    if (!MarginEqual(other) || !OffsetEqual(other) || !PaddingEqual(other))
-      return true;
-  }
+  if (ComputedStyleBase::ScrollAnchorDisablingPropertyChanged(other, diff))
+    return true;
 
   if (diff.TransformChanged())
     return true;
@@ -607,10 +601,10 @@ bool ComputedStyle::DiffNeedsFullLayoutAndPaintInvalidation(
         BorderBottomWidth() != other.BorderBottomWidth() ||
         BorderRightWidth() != other.BorderRightWidth())
       return true;
-
-    if (!PaddingEqual(other))
-      return true;
   }
+
+  if (ComputedStyleBase::DiffNeedsFullLayoutAndPaintInvalidation(other))
+    return true;
 
   if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
     if (rare_non_inherited_data_->appearance_ !=
@@ -895,7 +889,7 @@ bool ComputedStyle::DiffNeedsPaintInvalidationObject(
   if (Visibility() != other.Visibility() ||
       PrintColorAdjust() != other.PrintColorAdjust() ||
       InsideLink() != other.InsideLink() ||
-      !Border().VisuallyEqual(other.Border()) ||
+      !Border().VisuallyEqual(other.Border()) || !RadiiEqual(other) ||
       *background_data_ != *other.background_data_)
     return true;
 
@@ -1017,27 +1011,39 @@ void ComputedStyle::UpdatePropertySpecificDifferences(
         rare_non_inherited_data_->perspective_origin_ !=
             other.rare_non_inherited_data_->perspective_origin_)
       diff.SetTransformChanged();
+  }
 
+  if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
     if (rare_non_inherited_data_->opacity !=
         other.rare_non_inherited_data_->opacity)
       diff.SetOpacityChanged();
+  }
 
+  if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
     if (rare_non_inherited_data_->filter_ !=
         other.rare_non_inherited_data_->filter_)
       diff.SetFilterChanged();
+  }
 
+  if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
     if (!rare_non_inherited_data_->ShadowDataEquivalent(
             *other.rare_non_inherited_data_.Get()))
       diff.SetNeedsRecomputeOverflow();
+  }
 
+  if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
     if (rare_non_inherited_data_->backdrop_filter_ !=
         other.rare_non_inherited_data_->backdrop_filter_)
       diff.SetBackdropFilterChanged();
+  }
 
+  if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
     if (!rare_non_inherited_data_->ReflectionDataEquivalent(
             *other.rare_non_inherited_data_.Get()))
       diff.SetFilterChanged();
+  }
 
+  if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
     if (!rare_non_inherited_data_->outline_.VisuallyEqual(
             other.rare_non_inherited_data_->outline_))
       diff.SetNeedsRecomputeOverflow();
@@ -1053,43 +1059,46 @@ void ComputedStyle::UpdatePropertySpecificDifferences(
         HasSimpleUnderlineInternal() != other.HasSimpleUnderlineInternal() ||
         visual_data_->text_decoration != other.visual_data_->text_decoration) {
       diff.SetTextDecorationOrColorChanged();
-    } else if (rare_non_inherited_data_.Get() !=
-                   other.rare_non_inherited_data_.Get() &&
-               (rare_non_inherited_data_->text_decoration_style_ !=
-                    other.rare_non_inherited_data_->text_decoration_style_ ||
-                rare_non_inherited_data_->text_decoration_color_ !=
-                    other.rare_non_inherited_data_->text_decoration_color_ ||
-                rare_non_inherited_data_->visited_link_text_decoration_color_ !=
-                    other.rare_non_inherited_data_
-                        ->visited_link_text_decoration_color_)) {
-      diff.SetTextDecorationOrColorChanged();
-    } else if (rare_inherited_data_.Get() != other.rare_inherited_data_.Get() &&
-               (rare_inherited_data_->TextFillColor() !=
-                    other.rare_inherited_data_->TextFillColor() ||
-                rare_inherited_data_->TextStrokeColor() !=
-                    other.rare_inherited_data_->TextStrokeColor() ||
-                rare_inherited_data_->TextEmphasisColor() !=
-                    other.rare_inherited_data_->TextEmphasisColor() ||
-                rare_inherited_data_->VisitedLinkTextFillColor() !=
-                    other.rare_inherited_data_->VisitedLinkTextFillColor() ||
-                rare_inherited_data_->VisitedLinkTextStrokeColor() !=
-                    other.rare_inherited_data_->VisitedLinkTextStrokeColor() ||
-                rare_inherited_data_->VisitedLinkTextEmphasisColor() !=
-                    other.rare_inherited_data_
-                        ->VisitedLinkTextEmphasisColor() ||
-                rare_inherited_data_->text_emphasis_fill !=
-                    other.rare_inherited_data_->text_emphasis_fill ||
-                rare_inherited_data_->text_underline_position_ !=
-                    other.rare_inherited_data_->text_underline_position_ ||
-                rare_inherited_data_->text_decoration_skip_ !=
-                    other.rare_inherited_data_->text_decoration_skip_ ||
-                rare_inherited_data_->applied_text_decorations !=
-                    other.rare_inherited_data_->applied_text_decorations ||
-                rare_inherited_data_->CaretColor() !=
-                    other.rare_inherited_data_->CaretColor() ||
-                rare_inherited_data_->VisitedLinkCaretColor() !=
-                    other.rare_inherited_data_->VisitedLinkCaretColor())) {
-      diff.SetTextDecorationOrColorChanged();
+    } else {
+      if (rare_non_inherited_data_.Get() !=
+              other.rare_non_inherited_data_.Get() &&
+          (rare_non_inherited_data_->text_decoration_style_ !=
+               other.rare_non_inherited_data_->text_decoration_style_ ||
+           rare_non_inherited_data_->text_decoration_color_ !=
+               other.rare_non_inherited_data_->text_decoration_color_ ||
+           rare_non_inherited_data_->visited_link_text_decoration_color_ !=
+               other.rare_non_inherited_data_
+                   ->visited_link_text_decoration_color_)) {
+        diff.SetTextDecorationOrColorChanged();
+      } else {
+        if (rare_inherited_data_.Get() != other.rare_inherited_data_.Get() &&
+            (rare_inherited_data_->TextFillColor() !=
+                 other.rare_inherited_data_->TextFillColor() ||
+             rare_inherited_data_->TextStrokeColor() !=
+                 other.rare_inherited_data_->TextStrokeColor() ||
+             rare_inherited_data_->TextEmphasisColor() !=
+                 other.rare_inherited_data_->TextEmphasisColor() ||
+             rare_inherited_data_->VisitedLinkTextFillColor() !=
+                 other.rare_inherited_data_->VisitedLinkTextFillColor() ||
+             rare_inherited_data_->VisitedLinkTextStrokeColor() !=
+                 other.rare_inherited_data_->VisitedLinkTextStrokeColor() ||
+             rare_inherited_data_->VisitedLinkTextEmphasisColor() !=
+                 other.rare_inherited_data_->VisitedLinkTextEmphasisColor() ||
+             rare_inherited_data_->text_emphasis_fill !=
+                 other.rare_inherited_data_->text_emphasis_fill ||
+             rare_inherited_data_->text_underline_position_ !=
+                 other.rare_inherited_data_->text_underline_position_ ||
+             rare_inherited_data_->text_decoration_skip_ !=
+                 other.rare_inherited_data_->text_decoration_skip_ ||
+             rare_inherited_data_->applied_text_decorations !=
+                 other.rare_inherited_data_->applied_text_decorations ||
+             rare_inherited_data_->CaretColor() !=
+                 other.rare_inherited_data_->CaretColor() ||
+             rare_inherited_data_->VisitedLinkCaretColor() !=
+                 other.rare_inherited_data_->VisitedLinkCaretColor())) {
+          diff.SetTextDecorationOrColorChanged();
+        }
+      }
     }
   }
 
@@ -1396,24 +1405,24 @@ void ComputedStyle::SetBoxShadow(PassRefPtr<ShadowList> s) {
 }
 
 static FloatRoundedRect::Radii CalcRadiiFor(const BorderData& border,
+                                            const LengthSize& top_left,
+                                            const LengthSize& top_right,
+                                            const LengthSize& bottom_left,
+                                            const LengthSize& bottom_right,
                                             LayoutSize size) {
   return FloatRoundedRect::Radii(
       FloatSize(
-          FloatValueForLength(border.TopLeft().Width(), size.Width().ToFloat()),
-          FloatValueForLength(border.TopLeft().Height(),
-                              size.Height().ToFloat())),
-      FloatSize(FloatValueForLength(border.TopRight().Width(),
-                                    size.Width().ToFloat()),
-                FloatValueForLength(border.TopRight().Height(),
-                                    size.Height().ToFloat())),
-      FloatSize(FloatValueForLength(border.BottomLeft().Width(),
-                                    size.Width().ToFloat()),
-                FloatValueForLength(border.BottomLeft().Height(),
-                                    size.Height().ToFloat())),
-      FloatSize(FloatValueForLength(border.BottomRight().Width(),
-                                    size.Width().ToFloat()),
-                FloatValueForLength(border.BottomRight().Height(),
-                                    size.Height().ToFloat())));
+          FloatValueForLength(top_left.Width(), size.Width().ToFloat()),
+          FloatValueForLength(top_left.Height(), size.Height().ToFloat())),
+      FloatSize(
+          FloatValueForLength(top_right.Width(), size.Width().ToFloat()),
+          FloatValueForLength(top_right.Height(), size.Height().ToFloat())),
+      FloatSize(
+          FloatValueForLength(bottom_left.Width(), size.Width().ToFloat()),
+          FloatValueForLength(bottom_left.Height(), size.Height().ToFloat())),
+      FloatSize(
+          FloatValueForLength(bottom_right.Width(), size.Width().ToFloat()),
+          FloatValueForLength(bottom_right.Height(), size.Height().ToFloat())));
 }
 
 StyleImage* ComputedStyle::ListStyleImage() const {
@@ -1456,7 +1465,10 @@ FloatRoundedRect ComputedStyle::GetRoundedBorderFor(
     bool include_logical_right_edge) const {
   FloatRoundedRect rounded_rect(PixelSnappedIntRect(border_rect));
   if (HasBorderRadius()) {
-    FloatRoundedRect::Radii radii = CalcRadiiFor(Border(), border_rect.Size());
+    FloatRoundedRect::Radii radii =
+        CalcRadiiFor(Border(), BorderTopLeftRadius(), BorderTopRightRadius(),
+                     BorderBottomLeftRadius(), BorderBottomRightRadius(),
+                     border_rect.Size());
     rounded_rect.IncludeLogicalEdges(radii, IsHorizontalWritingMode(),
                                      include_logical_left_edge,
                                      include_logical_right_edge);

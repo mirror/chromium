@@ -73,7 +73,7 @@ constexpr base::TimeDelta kDelayForJumplistUpdate =
 constexpr base::TimeDelta kTimeOutForJumplistUpdate =
     base::TimeDelta::FromMilliseconds(500);
 
-// Append the common switches to each shell link.
+// Appends the common switches to each shell link.
 void AppendCommonSwitches(ShellLinkItem* shell_link) {
   const char* kSwitchNames[] = { switches::kUserDataDir };
   const base::CommandLine& command_line =
@@ -83,7 +83,7 @@ void AppendCommonSwitches(ShellLinkItem* shell_link) {
                                                  arraysize(kSwitchNames));
 }
 
-// Create a ShellLinkItem preloaded with common switches.
+// Creates a ShellLinkItem preloaded with common switches.
 scoped_refptr<ShellLinkItem> CreateShellLink() {
   scoped_refptr<ShellLinkItem> link(new ShellLinkItem);
   AppendCommonSwitches(link.get());
@@ -197,13 +197,23 @@ bool UpdateTaskCategory(
   return jumplist_updater->AddTasks(items);
 }
 
+// Returns the full path of the JumpListIcons[|suffix|] directory in
+// |profile_dir|.
+base::FilePath GenerateJumplistIconDirName(
+    const base::FilePath& profile_dir,
+    const base::FilePath::StringPieceType& suffix) {
+  base::FilePath::StringType dir_name(chrome::kJumpListIconDirname);
+  suffix.AppendToString(&dir_name);
+  return profile_dir.Append(dir_name);
+}
+
 // Updates the application JumpList, which consists of 1) delete old icon files;
 // 2) create new icon files; 3) notify the OS.
 // Note that any timeout error along the way results in the old jumplist being
 // left as-is, while any non-timeout error results in the old jumplist being
 // left as-is, but without icon files.
 bool UpdateJumpList(const wchar_t* app_id,
-                    const base::FilePath& icon_dir,
+                    const base::FilePath& profile_dir,
                     const ShellLinkItemList& most_visited_pages,
                     const ShellLinkItemList& recently_closed_pages,
                     bool most_visited_pages_have_updates,
@@ -261,8 +271,8 @@ bool UpdateJumpList(const wchar_t* app_id,
 
   // Update the icons for "Most Visisted" category of the JumpList if needed.
   if (most_visited_pages_have_updates) {
-    base::FilePath icon_dir_most_visited = icon_dir.DirName().Append(
-        icon_dir.BaseName().value() + FILE_PATH_LITERAL("MostVisited"));
+    base::FilePath icon_dir_most_visited = GenerateJumplistIconDirName(
+        profile_dir, FILE_PATH_LITERAL("MostVisited"));
 
     UpdateIconFiles(icon_dir_most_visited, most_visited_pages,
                     most_visited_items);
@@ -272,8 +282,8 @@ bool UpdateJumpList(const wchar_t* app_id,
 
   // Update the icons for "Recently Closed" category of the JumpList if needed.
   if (recently_closed_pages_have_updates) {
-    base::FilePath icon_dir_recent_closed = icon_dir.DirName().Append(
-        icon_dir.BaseName().value() + FILE_PATH_LITERAL("RecentClosed"));
+    base::FilePath icon_dir_recent_closed = GenerateJumplistIconDirName(
+        profile_dir, FILE_PATH_LITERAL("RecentClosed"));
 
     UpdateIconFiles(icon_dir_recent_closed, recently_closed_pages,
                     recently_closed_items);
@@ -315,7 +325,7 @@ bool UpdateJumpList(const wchar_t* app_id,
 // Updates the jumplist, once all the data has been fetched.
 void RunUpdateJumpList(IncognitoModePrefs::Availability incognito_availability,
                        const std::wstring& app_id,
-                       const base::FilePath& icon_dir,
+                       const base::FilePath& profile_dir,
                        base::RefCountedData<JumpListData>* ref_counted_data) {
   JumpListData* data = &ref_counted_data->data;
   ShellLinkItemList local_most_visited_pages;
@@ -350,7 +360,7 @@ void RunUpdateJumpList(IncognitoModePrefs::Availability incognito_availability,
   // they were so that the corresponding JumpList categories will be tried to
   // update again in the next run.
   if (!UpdateJumpList(
-          app_id.c_str(), icon_dir, local_most_visited_pages,
+          app_id.c_str(), profile_dir, local_most_visited_pages,
           local_recently_closed_pages, most_visited_pages_have_updates,
           recently_closed_pages_have_updates, incognito_availability)) {
     base::AutoLock auto_lock(data->list_lock_);
@@ -374,18 +384,12 @@ JumpList::JumpList(Profile* profile)
       jumplist_data_(new base::RefCountedData<JumpListData>),
       task_id_(base::CancelableTaskTracker::kBadTaskId),
       update_jumplist_task_runner_(base::CreateCOMSTATaskRunnerWithTraits(
-          base::TaskTraits()
-              .WithPriority(base::TaskPriority::USER_VISIBLE)
-              .WithShutdownBehavior(
-                  base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN)
-              .MayBlock())),
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})),
       delete_jumplisticons_task_runner_(
           base::CreateSequencedTaskRunnerWithTraits(
-              base::TaskTraits()
-                  .WithPriority(base::TaskPriority::BACKGROUND)
-                  .WithShutdownBehavior(
-                      base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN)
-                  .MayBlock())),
+              {base::MayBlock(), base::TaskPriority::BACKGROUND,
+               base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})),
       weak_ptr_factory_(this) {
   DCHECK(Enabled());
   // To update JumpList when a tab is added or removed, we add this object to
@@ -400,7 +404,6 @@ JumpList::JumpList(Profile* profile)
 
   app_id_ =
       shell_integration::win::GetChromiumModelIdForProfile(profile_->GetPath());
-  icon_dir_ = profile_->GetPath().Append(chrome::kJumpListIconDirname);
 
   scoped_refptr<history::TopSites> top_sites =
       TopSitesFactory::GetForProfile(profile_);
@@ -504,8 +507,6 @@ void JumpList::TabRestoreServiceChanged(sessions::TabRestoreService* service) {
   //   The title of the last URL.
   // * icon
   //   An empty string. This value is to be updated in OnFaviconDataAvailable().
-  // This code is copied from
-  // RecentlyClosedTabsHandler::TabRestoreServiceChanged() to emulate it.
   const int kRecentlyClosedCount = 3;
   sessions::TabRestoreService* tab_restore_service =
       TabRestoreServiceFactory::GetForProfile(profile_);
@@ -582,6 +583,8 @@ void JumpList::AddWindow(const sessions::TabRestoreService::Window& window,
 void JumpList::StartLoadingFavicon() {
   DCHECK(CalledOnValidThread());
 
+  base::ElapsedTimer timer;
+
   GURL url;
   bool waiting_for_icons = true;
   {
@@ -609,11 +612,17 @@ void JumpList::StartLoadingFavicon() {
       url,
       base::Bind(&JumpList::OnFaviconDataAvailable, base::Unretained(this)),
       &cancelable_task_tracker_);
+
+  // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/717236
+  UMA_HISTOGRAM_TIMES("WinJumplist.StartLoadingFaviconDuration",
+                      timer.Elapsed());
 }
 
 void JumpList::OnFaviconDataAvailable(
     const favicon_base::FaviconImageResult& image_result) {
   DCHECK(CalledOnValidThread());
+
+  base::ElapsedTimer timer;
 
   // If there is currently a favicon request in progress, it is now outdated,
   // as we have received another, so nullify the handle from the old request.
@@ -636,6 +645,11 @@ void JumpList::OnFaviconDataAvailable(
     if (!data->icon_urls_.empty())
       data->icon_urls_.pop_front();
   }
+
+  // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/717236
+  UMA_HISTOGRAM_TIMES("WinJumplist.OnFaviconDataAvailableDuration",
+                      timer.Elapsed());
+
   // Check whether we need to load more favicons.
   StartLoadingFavicon();
 }
@@ -677,26 +691,34 @@ void JumpList::DeferredRunUpdate() {
   DCHECK(CalledOnValidThread());
 
   TRACE_EVENT0("browser", "JumpList::DeferredRunUpdate");
+  if (!profile_)
+    return;
+
+  base::FilePath profile_dir = profile_->GetPath();
+
   // Check if incognito windows (or normal windows) are disabled by policy.
   IncognitoModePrefs::Availability incognito_availability =
-      profile_ ? IncognitoModePrefs::GetAvailability(profile_->GetPrefs())
-               : IncognitoModePrefs::ENABLED;
+      IncognitoModePrefs::GetAvailability(profile_->GetPrefs());
 
   // Post a task to update the JumpList, which consists of 1) delete old icons,
   // 2) create new icons, 3) notify the OS.
   update_jumplist_task_runner_->PostTask(
       FROM_HERE, base::Bind(&RunUpdateJumpList, incognito_availability, app_id_,
-                            icon_dir_, base::RetainedRef(jumplist_data_)));
+                            profile_dir, base::RetainedRef(jumplist_data_)));
 
   // Post a task to delete JumpListIcons folder as it's no longer needed.
   // Now we have JumpListIconsMostVisited folder and JumpListIconsRecentClosed
   // folder instead.
+  base::FilePath icon_dir =
+      GenerateJumplistIconDirName(profile_dir, FILE_PATH_LITERAL(""));
+
   delete_jumplisticons_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&DeleteDirectory, icon_dir_, kFileDeleteLimit));
+      FROM_HERE,
+      base::Bind(&DeleteDirectory, std::move(icon_dir), kFileDeleteLimit));
 
   // Post a task to delete JumpListIconsOld folder as it's no longer needed.
-  base::FilePath icon_dir_old = icon_dir_.DirName().Append(
-      icon_dir_.BaseName().value() + FILE_PATH_LITERAL("Old"));
+  base::FilePath icon_dir_old =
+      GenerateJumplistIconDirName(profile_dir, FILE_PATH_LITERAL("Old"));
 
   delete_jumplisticons_task_runner_->PostTask(
       FROM_HERE,

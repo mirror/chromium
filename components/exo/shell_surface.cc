@@ -555,13 +555,13 @@ void ShellSurface::UpdateSystemModal() {
 void ShellSurface::SetApplicationId(aura::Window* window,
                                     const std::string& id) {
   TRACE_EVENT1("exo", "ShellSurface::SetApplicationId", "application_id", id);
-  window->SetProperty(aura::client::kAppIdKey, new std::string(id));
+  window->SetProperty(ash::kShelfIDKey, new ash::ShelfID(id));
 }
 
 // static
 const std::string ShellSurface::GetApplicationId(aura::Window* window) {
-  std::string* string_ptr = window->GetProperty(aura::client::kAppIdKey);
-  return string_ptr ? *string_ptr : std::string();
+  ash::ShelfID* shelf_id = window->GetProperty(ash::kShelfIDKey);
+  return shelf_id ? shelf_id->app_id : std::string();
 }
 
 void ShellSurface::SetApplicationId(const std::string& application_id) {
@@ -933,6 +933,11 @@ void ShellSurface::OnPreWindowStateTypeChange(
     ash::wm::WindowState* window_state,
     ash::wm::WindowStateType old_type) {
   ash::wm::WindowStateType new_type = window_state->GetStateType();
+  if (old_type == ash::wm::WINDOW_STATE_TYPE_MINIMIZED ||
+      new_type == ash::wm::WINDOW_STATE_TYPE_MINIMIZED) {
+    return;
+  }
+
   if (ash::wm::IsMaximizedOrFullscreenOrPinnedWindowStateType(old_type) ||
       ash::wm::IsMaximizedOrFullscreenOrPinnedWindowStateType(new_type)) {
     // When transitioning in/out of maximized or fullscreen mode we need to
@@ -940,7 +945,6 @@ void ShellSurface::OnPreWindowStateTypeChange(
     // cross-fade animations. The configure callback provides a mechanism for
     // the client to inform us that a frame has taken the state change into
     // account and without this cross-fade animations are unreliable.
-
     // TODO(domlaskowski): For BoundsMode::CLIENT, the configure callback does
     // not yet support window state changes. See crbug.com/699746.
     if (configure_callback_.is_null() || bounds_mode_ == BoundsMode::CLIENT)
@@ -1528,7 +1532,9 @@ void ShellSurface::UpdateWidgetBounds() {
   const gfx::Rect widget_bounds = widget_->GetWindowBoundsInScreen();
   if (widget_bounds != new_widget_bounds) {
     if (bounds_mode_ != BoundsMode::CLIENT || !resizer_) {
-      widget_->SetBounds(new_widget_bounds);
+      // TODO(domlaskowski): Use screen coordinates once multi-display support
+      // lands in ARC. See crbug.com/718627.
+      widget_->GetNativeWindow()->SetBounds(new_widget_bounds);
       UpdateSurfaceBounds();
     } else {
       // TODO(domlaskowski): Synchronize window state transitions with the

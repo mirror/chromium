@@ -265,6 +265,9 @@ const char kEnableExtensionAssetsSharing[] = "enable-extension-assets-sharing";
 // Enables animated transitions during first-run tutorial.
 const char kEnableFirstRunUITransitions[] = "enable-first-run-ui-transitions";
 
+// Enables action handler apps (e.g. creating new notes) on lock screen.
+const char kEnableLockScreenApps[] = "enable-lock-screen-apps";
+
 // Enables Kiosk mode for Chrome OS. Note this switch refers to retail mode
 // rather than the kiosk app mode.
 const char kEnableKioskMode[] = "enable-kiosk-mode";
@@ -418,6 +421,9 @@ const char kOobeSkipPostLogin[] = "oobe-skip-postlogin";
 
 // Interval at which we check for total time on OOBE.
 const char kOobeTimerInterval[] = "oobe-timer-interval";
+
+// If true, the md login and lock screens will be shown.
+const char kShowMdLogin[] = "show-md-login";
 
 // Specifies power stub behavior:
 //  'cycle=2' - Cycles power states every 2 seconds.

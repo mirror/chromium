@@ -117,6 +117,7 @@ extern const base::Feature kMaterialDesignSettings;
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
 extern const base::Feature kMediaRemoting;
+extern const base::Feature kMediaRouterUIRouteController;
 #endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 
 extern const base::Feature kModalPermissionPrompts;
@@ -169,6 +170,8 @@ extern const base::Feature kSimplifiedFullscreenUI;
 extern const base::Feature kSyzyasanDeferredFree;
 #endif
 
+extern const base::Feature kTabsInCbd;
+
 extern const base::Feature kUseGroupedPermissionInfobars;
 
 extern const base::Feature kUsePermissionManagerForMediaRequests;
@@ -185,6 +188,8 @@ extern const base::Feature kQuickUnlockFingerprint;
 extern const base::Feature kEHVInputOnImeMenu;
 
 extern const base::Feature kCrosCompUpdates;
+
+extern const base::Feature kCrOSComponent;
 #endif  // defined(OS_CHROMEOS)
 
 bool PrefServiceEnabled();

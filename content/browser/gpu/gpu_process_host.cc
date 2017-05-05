@@ -331,7 +331,8 @@ class GpuSandboxedProcessLauncherDelegate
 
 #if defined(OS_ANDROID)
 template <typename Interface>
-void BindJavaInterface(mojo::InterfaceRequest<Interface> request) {
+void BindJavaInterface(const service_manager::BindSourceInfo& source_info,
+                       mojo::InterfaceRequest<Interface> request) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   content::GetGlobalJavaInterfaces()->GetInterface(std::move(request));
 }
@@ -345,12 +346,6 @@ class GpuProcessHost::ConnectionFilterImpl : public ConnectionFilter {
     auto task_runner = BrowserThread::GetTaskRunnerForThread(BrowserThread::UI);
     registry_.AddInterface(base::Bind(&FieldTrialRecorder::Create),
                            task_runner);
-    registry_.AddInterface(
-        base::Bind(
-            &memory_instrumentation::CoordinatorImpl::BindCoordinatorRequest,
-            base::Unretained(
-                memory_instrumentation::CoordinatorImpl::GetInstance())),
-        task_runner);
 #if defined(OS_ANDROID)
     registry_.AddInterface(
         base::Bind(&BindJavaInterface<media::mojom::AndroidOverlayProvider>),
@@ -365,7 +360,7 @@ class GpuProcessHost::ConnectionFilterImpl : public ConnectionFilter {
                        mojo::ScopedMessagePipeHandle* interface_pipe,
                        service_manager::Connector* connector) override {
     if (registry_.CanBindInterface(interface_name)) {
-      registry_.BindInterface(source_info.identity, interface_name,
+      registry_.BindInterface(source_info, interface_name,
                               std::move(*interface_pipe));
     } else {
       GetContentClient()->browser()->BindInterfaceRequest(

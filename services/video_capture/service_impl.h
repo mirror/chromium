@@ -9,7 +9,6 @@
 
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
-#include "services/service_manager/public/cpp/interface_factory.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
 #include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
@@ -21,7 +20,7 @@ class ServiceImpl : public service_manager::Service {
   ServiceImpl();
   ~ServiceImpl() override;
 
-  // service_manager::Service implementation.
+  // service_manager::Service:
   void OnStart() override;
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
@@ -30,6 +29,7 @@ class ServiceImpl : public service_manager::Service {
 
  private:
   void OnDeviceFactoryProviderRequest(
+      const service_manager::BindSourceInfo& source_info,
       mojom::DeviceFactoryProviderRequest request);
   void SetShutdownDelayInSeconds(float seconds);
   void MaybeRequestQuitDelayed();

@@ -5,12 +5,18 @@
 #ifndef CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_PLATFORM_BRIDGE_LINUX_H_
 #define CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_PLATFORM_BRIDGE_LINUX_H_
 
+#include <string>
+
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 
 class NotificationPlatformBridgeLinuxImpl;
+
+namespace dbus {
+class Bus;
+}
 
 class NotificationPlatformBridgeLinux : public NotificationPlatformBridge {
  public:
@@ -33,6 +39,13 @@ class NotificationPlatformBridgeLinux : public NotificationPlatformBridge {
   void SetReadyCallback(NotificationBridgeReadyCallback callback) override;
 
  private:
+  friend class NotificationPlatformBridgeLinuxTest;
+
+  // Constructor only used in unit testing.
+  explicit NotificationPlatformBridgeLinux(scoped_refptr<dbus::Bus> bus);
+
+  void CleanUp();
+
   scoped_refptr<NotificationPlatformBridgeLinuxImpl> impl_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeLinux);

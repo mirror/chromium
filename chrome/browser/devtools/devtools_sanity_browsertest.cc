@@ -200,11 +200,8 @@ class PushTimesMockURLRequestJob : public net::URLRequestMockHTTPJob {
             network_delegate,
             file_path,
             base::CreateTaskRunnerWithTraits(
-                base::TaskTraits()
-                    .MayBlock()
-                    .WithPriority(base::TaskPriority::BACKGROUND)
-                    .WithShutdownBehavior(
-                        base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN))) {}
+                {base::MayBlock(), base::TaskPriority::BACKGROUND,
+                 base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {}
 
   void Start() override {
     load_timing_info_.socket_reused = true;
@@ -1840,6 +1837,23 @@ IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, AutoAttachToWindowOpen) {
   observer.WaitForLoad();
   DispatchOnTestSuite(observer.devtools_window(), "waitForDebuggerPaused");
   DevToolsWindowTesting::CloseDevToolsWindowSync(observer.devtools_window());
+  CloseDevToolsWindow();
+}
+
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, SecondTabAfterDevTools) {
+  OpenDevToolsWindow(kDebuggerTestPage, true);
+
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), spawned_test_server()->GetURL(kDebuggerTestPage),
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_TAB |
+          ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  WebContents* second = browser()->tab_strip_model()->GetActiveWebContents();
+
+  scoped_refptr<content::DevToolsAgentHost> agent(
+      content::DevToolsAgentHost::GetOrCreateFor(second));
+  EXPECT_EQ("page", agent->GetType());
+
   CloseDevToolsWindow();
 }
 

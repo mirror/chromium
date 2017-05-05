@@ -54,6 +54,7 @@ service_manager::mojom::ServiceRequest ConnectToServiceManager() {
 }
 
 void ConnectBootstrapChannel(IPC::mojom::ChannelBootstrapPtrInfo ptr,
+                             const service_manager::BindSourceInfo& source_info,
                              IPC::mojom::ChannelBootstrapRequest request) {
   mojo::FuseInterface(std::move(request), std::move(ptr));
 }
@@ -94,7 +95,7 @@ void NaClService::OnBindInterface(
   if (source_info.identity.name() == content::mojom::kBrowserServiceName &&
       !connected_) {
     connected_ = true;
-    registry_.BindInterface(source_info.identity, interface_name,
+    registry_.BindInterface(source_info, interface_name,
                             std::move(interface_pipe));
   }
 }

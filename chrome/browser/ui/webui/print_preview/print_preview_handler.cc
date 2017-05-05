@@ -1278,15 +1278,17 @@ void PrintPreviewHandler::SendAccessToken(const std::string& type,
 void PrintPreviewHandler::SendPrinterCapabilities(
     const std::string& printer_name,
     std::unique_ptr<base::DictionaryValue> settings_info) {
-  if (!settings_info) {
-    VLOG(1) << "Get printer capabilities failed";
-    web_ui()->CallJavascriptFunctionUnsafe("failedToGetPrinterCapabilities",
-                                           base::Value(printer_name));
+  // Check that |settings_info| is valid.
+  if (settings_info && settings_info->Get("capabilities", nullptr)) {
+    VLOG(1) << "Get printer capabilities finished";
+    web_ui()->CallJavascriptFunctionUnsafe("updateWithPrinterCapabilities",
+                                           *settings_info);
     return;
   }
-  VLOG(1) << "Get printer capabilities finished";
-  web_ui()->CallJavascriptFunctionUnsafe("updateWithPrinterCapabilities",
-                                         *settings_info);
+
+  VLOG(1) << "Get printer capabilities failed";
+  web_ui()->CallJavascriptFunctionUnsafe("failedToGetPrinterCapabilities",
+                                         base::Value(printer_name));
 }
 
 void PrintPreviewHandler::SendPrinterSetup(
@@ -1388,8 +1390,7 @@ void PrintPreviewHandler::SelectFile(const base::FilePath& default_filename,
   // returns and eventually FileSelected() gets called.
   if (!prompt_user) {
     base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
-                       base::TaskPriority::BACKGROUND),
+        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
         base::Bind(&GetUniquePath,
                    download_prefs->SaveFilePath().Append(default_filename)),
         base::Bind(&PrintPreviewHandler::OnGotUniqueFileName,
@@ -1457,9 +1458,7 @@ void PrintPreviewHandler::PostPrintToPdfTask() {
   }
 
   base::PostTaskWithTraits(
-      FROM_HERE,
-      base::TaskTraits().MayBlock().WithPriority(
-          base::TaskPriority::BACKGROUND),
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::BindOnce(&PrintToPdfCallback, data, print_to_pdf_path_,
                      pdf_file_saved_closure_));
   print_to_pdf_path_.clear();

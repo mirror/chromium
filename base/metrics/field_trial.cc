@@ -221,10 +221,8 @@ HANDLE CreateReadOnlyHandle(FieldTrialList::FieldTrialAllocator* allocator) {
 
 #if defined(OS_POSIX) && !defined(OS_NACL)
 int CreateReadOnlyHandle(FieldTrialList::FieldTrialAllocator* allocator) {
-  SharedMemoryHandle new_handle;
-  allocator->shared_memory()->ShareReadOnlyToProcess(GetCurrentProcessHandle(),
-                                                     &new_handle);
-  return SharedMemory::GetFdFromSharedMemoryHandle(new_handle);
+  SharedMemoryHandle handle = allocator->shared_memory()->GetReadOnlyHandle();
+  return SharedMemory::GetFdFromSharedMemoryHandle(handle);
 }
 #endif
 
@@ -1139,7 +1137,7 @@ bool FieldTrialList::CreateTrialsFromHandleSwitch(
     const std::string& handle_switch) {
   int field_trial_handle = std::stoi(handle_switch);
   HANDLE handle = reinterpret_cast<HANDLE>(field_trial_handle);
-  SharedMemoryHandle shm_handle(handle, GetCurrentProcId());
+  SharedMemoryHandle shm_handle(handle);
   return FieldTrialList::CreateTrialsFromSharedMemoryHandle(shm_handle);
 }
 #endif

@@ -284,7 +284,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-#include "media/remoting/adaptive_renderer_factory.h"     // nogncheck
+#include "media/remoting/courier_renderer_factory.h"      // nogncheck
 #include "media/remoting/remoting_cdm_controller.h"       // nogncheck
 #include "media/remoting/remoting_cdm_factory.h"          // nogncheck
 #include "media/remoting/renderer_controller.h"           // nogncheck
@@ -1318,9 +1318,7 @@ void RenderFrameImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   // TODO(beng): We should be getting this info from the frame factory request.
-  service_manager::BindSourceInfo browser_info =
-      ChildThreadImpl::current()->GetBrowserServiceInfo();
-  interface_registry_->BindInterface(browser_info.identity, interface_name,
+  interface_registry_->BindInterface(browser_info_, interface_name,
                                      std::move(interface_pipe));
 }
 
@@ -1631,6 +1629,8 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_BlinkFeatureUsageReport,
                         OnBlinkFeatureUsageReport)
     IPC_MESSAGE_HANDLER(FrameMsg_MixedContentFound, OnMixedContentFound)
+    IPC_MESSAGE_HANDLER(FrameMsg_SetOverlayRoutingToken,
+                        OnSetOverlayRoutingToken)
 #if defined(OS_ANDROID)
     IPC_MESSAGE_HANDLER(FrameMsg_ActivateNearestFindResult,
                         OnActivateNearestFindResult)
@@ -1682,8 +1682,10 @@ void RenderFrameImpl::BindEngagement(
 }
 
 void RenderFrameImpl::BindFrame(
+    const service_manager::BindSourceInfo& browser_info,
     mojom::FrameRequest request,
     mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
+  browser_info_ = browser_info;
   frame_binding_.Bind(std::move(request));
   frame_host_interface_broker_ = std::move(frame_host_interface_broker);
   frame_host_interface_broker_->GetInterfaceProvider(
@@ -2739,12 +2741,9 @@ void RenderFrameImpl::SetEngagementLevel(const url::Origin& origin,
 
 void RenderFrameImpl::GetInterfaceProvider(
     service_manager::mojom::InterfaceProviderRequest request) {
-  // TODO(beng): We should be getting this info from the frame factory request.
-  service_manager::BindSourceInfo browser_info =
-      ChildThreadImpl::current()->GetBrowserServiceInfo();
   service_manager::Connector* connector = ChildThread::Get()->GetConnector();
   connector->FilterInterfaces(
-      mojom::kNavigation_FrameSpec, browser_info.identity, std::move(request),
+      mojom::kNavigation_FrameSpec, browser_info_.identity, std::move(request),
       interface_provider_bindings_.CreateInterfacePtrAndBind(this));
 }
 
@@ -2957,11 +2956,19 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
 #endif  // defined(ENABLE_MOJO_RENDERER)
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-  media_renderer_factory =
-      base::MakeUnique<media::remoting::AdaptiveRendererFactory>(
-          std::move(media_renderer_factory), std::move(remoting_controller));
+  auto courier_factory =
+      base::MakeUnique<media::remoting::CourierRendererFactory>(
+          std::move(remoting_controller));
 
-  factory_type = media::RendererFactorySelector::FactoryType::ADAPTIVE;
+  // base::Unretained is safe here because |factory_selector| owns
+  // |courier_factory|.
+  factory_selector->SetQueryIsRemotingActiveCB(
+      base::Bind(&media::remoting::CourierRendererFactory::IsRemotingActive,
+                 base::Unretained(courier_factory.get())));
+
+  factory_selector->AddFactory(
+      media::RendererFactorySelector::FactoryType::COURIER,
+      std::move(courier_factory));
 #endif
 
   if (!url_index_.get() || url_index_->frame() != frame_)
@@ -3361,6 +3368,12 @@ void RenderFrameImpl::DidMatchCSS(
 
 void RenderFrameImpl::SetHasReceivedUserGesture() {
   Send(new FrameHostMsg_SetHasReceivedUserGesture(routing_id_));
+}
+
+void RenderFrameImpl::SetDevToolsFrameId(
+    const blink::WebString& devtools_frame_id) {
+  Send(new FrameHostMsg_SetDevToolsFrameId(routing_id_,
+                                           devtools_frame_id.Utf8()));
 }
 
 bool RenderFrameImpl::ShouldReportDetailedMessageForSource(
@@ -3948,20 +3961,18 @@ void RenderFrameImpl::DidChangeIcon(blink::WebIconURL::Type icon_type) {
   render_view_->didChangeIcon(frame_, icon_type);
 }
 
-void RenderFrameImpl::DidFinishDocumentLoad(blink::WebLocalFrame* frame) {
+void RenderFrameImpl::DidFinishDocumentLoad() {
   TRACE_EVENT1("navigation,benchmark,rail",
                "RenderFrameImpl::didFinishDocumentLoad", "id", routing_id_);
-  DCHECK_EQ(frame_, frame);
-
   Send(new FrameHostMsg_DidFinishDocumentLoad(routing_id_));
 
   for (auto& observer : render_view_->observers())
-    observer.DidFinishDocumentLoad(frame);
+    observer.DidFinishDocumentLoad(frame_);
   for (auto& observer : observers_)
     observer.DidFinishDocumentLoad();
 
   // Check whether we have new encoding name.
-  UpdateEncoding(frame, frame->View()->PageEncoding().Utf8());
+  UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
 }
 
 void RenderFrameImpl::RunScriptsAtDocumentReady(bool document_is_empty) {
@@ -4169,6 +4180,26 @@ void RenderFrameImpl::DispatchLoad() {
 blink::WebEffectiveConnectionType
 RenderFrameImpl::GetEffectiveConnectionType() {
   return effective_connection_type_;
+}
+
+bool RenderFrameImpl::ShouldUseClientLoFiForRequest(
+    const WebURLRequest& request) {
+  if (request.GetPreviewsState() != WebURLRequest::kPreviewsUnspecified)
+    return request.GetPreviewsState() & WebURLRequest::kClientLoFiOn;
+
+  if (!(previews_state_ & CLIENT_LOFI_ON))
+    return false;
+  if (previews_state_ &
+      (SERVER_LITE_PAGE_ON | PREVIEWS_OFF | PREVIEWS_NO_TRANSFORM)) {
+    return false;
+  }
+
+  // Even if this frame is using Server Lo-Fi, https:// images won't be handled
+  // by Server Lo-Fi since their requests won't be sent to the Data Saver proxy,
+  // so use Client Lo-Fi instead.
+  if (previews_state_ & SERVER_LOFI_ON)
+    return request.Url().ProtocolIs("https");
+  return true;
 }
 
 void RenderFrameImpl::AbortClientNavigation() {
@@ -4473,10 +4504,17 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
       request.SetPreviewsState(static_cast<WebURLRequest::PreviewsState>(
           navigation_state->common_params().previews_state));
     } else {
-      request.SetPreviewsState(
-          previews_state_ == PREVIEWS_UNSPECIFIED
-              ? WebURLRequest::kPreviewsOff
-              : static_cast<WebURLRequest::PreviewsState>(previews_state_));
+      WebURLRequest::PreviewsState request_previews_state =
+          static_cast<WebURLRequest::PreviewsState>(previews_state_);
+
+      // The decision of whether or not to enable Client Lo-Fi is made earlier
+      // in the request lifetime, using ShouldUseClientLoFiForRequest(), so
+      // don't add the Client Lo-Fi bit to the request here.
+      request_previews_state &= ~(WebURLRequest::kClientLoFiOn);
+      if (request_previews_state == WebURLRequest::kPreviewsUnspecified)
+        request_previews_state = WebURLRequest::kPreviewsOff;
+
+      request.SetPreviewsState(request_previews_state);
     }
   }
 
@@ -4606,11 +4644,8 @@ void RenderFrameImpl::DidObserveLoadingBehavior(
     observer.DidObserveLoadingBehavior(behavior);
 }
 
-void RenderFrameImpl::DidCreateScriptContext(blink::WebLocalFrame* frame,
-                                             v8::Local<v8::Context> context,
+void RenderFrameImpl::DidCreateScriptContext(v8::Local<v8::Context> context,
                                              int world_id) {
-  DCHECK_EQ(frame_, frame);
-
   for (auto& observer : observers_)
     observer.DidCreateScriptContext(context, world_id);
 }
@@ -5238,7 +5273,7 @@ void RenderFrameImpl::FocusedNodeChangedForAccessibility(const WebNode& node) {
 void RenderFrameImpl::OnCommitNavigation(
     const ResourceResponseHead& response,
     const GURL& stream_url,
-    mojo::DataPipeConsumerHandle handle,
+    const FrameMsg_CommitDataNetworkService_Params& commit_data,
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params) {
   CHECK(IsBrowserSideNavigationEnabled());
@@ -5247,11 +5282,18 @@ void RenderFrameImpl::OnCommitNavigation(
   std::unique_ptr<StreamOverrideParameters> stream_override(
       new StreamOverrideParameters());
   stream_override->stream_url = stream_url;
-  stream_override->consumer_handle = mojo::ScopedDataPipeConsumerHandle(handle);
+  stream_override->consumer_handle =
+      mojo::ScopedDataPipeConsumerHandle(commit_data.handle);
   stream_override->response = response;
   stream_override->redirects = request_params.redirects;
   stream_override->redirect_responses = request_params.redirect_response;
   stream_override->redirect_infos = request_params.redirect_infos;
+
+  if (commit_data.url_loader_factory.is_valid()) {
+    // Chrome doesn't use interface versioning.
+    url_loader_factory_.Bind(mojom::URLLoaderFactoryPtrInfo(
+        mojo::ScopedMessagePipeHandle(commit_data.url_loader_factory), 0u));
+  }
 
   // If the request was initiated in the context of a user gesture then make
   // sure that the navigation also executes in the context of a user gesture.
@@ -5918,6 +5960,28 @@ void RenderFrameImpl::OnFindMatchRects(int current_version) {
                                              match_rects, active_rect));
 }
 #endif
+
+void RenderFrameImpl::OnSetOverlayRoutingToken(
+    const base::UnguessableToken& token) {
+  overlay_routing_token_ = token;
+  for (const auto& cb : pending_routing_token_callbacks_)
+    cb.Run(overlay_routing_token_.value());
+  pending_routing_token_callbacks_.clear();
+}
+
+void RenderFrameImpl::RequestOverlayRoutingToken(
+    const media::RoutingTokenCallback& callback) {
+  if (overlay_routing_token_.has_value()) {
+    callback.Run(overlay_routing_token_.value());
+    return;
+  }
+
+  // Send a request to the host for the token.  We'll notify |callback| when it
+  // arrives later.
+  Send(new FrameHostMsg_RequestOverlayRoutingToken(routing_id_));
+
+  pending_routing_token_callbacks_.push_back(callback);
+}
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 #if defined(OS_MACOSX)

@@ -42,8 +42,8 @@ class V8TestCallbackInterface final : public TestCallbackInterface {
  private:
   CORE_EXPORT V8TestCallbackInterface(v8::Local<v8::Function>, ScriptState*);
 
-  ScopedPersistent<v8::Function> m_callback;
-  RefPtr<ScriptState> m_scriptState;
+  ScopedPersistent<v8::Function> callback_;
+  RefPtr<ScriptState> script_state_;
 };
 }
 #endif  // V8TestCallbackInterface_h
