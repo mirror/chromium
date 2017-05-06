@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c47be7b6_81142795",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-06T00:13:54Z",
+      "side": 1,
+      "message": "Well, that makes sense, except here we have code that throws with the message explicitly about non-secure contexts. So I\u0027d expect the comment to explain why the message is so explicit. \n\nRe: crbug - yes, exactly.",
+      "parentUuid": "9acaee83_ae1074af",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 18
+      },
+      "revId": "c4891dc7dc6153921eaf6642bff4b1da88d0dab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69592e7b_501807b4",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
         "patchSetId": 2
