@@ -746,3 +746,7 @@ external/wpt/keyboard-lock/navigator-cancelKeyboardLock.https.html [ Skip ]
 external/wpt/keyboard-lock/navigator-requestKeyboardLock.https.html [ Skip ]
 external/wpt/keyboard-lock/navigator-requestKeyboardLock-two-parallel-requests.https.html [ Skip ]
 external/wpt/keyboard-lock/navigator-requestKeyboardLock-two-sequential-requests.https.html [ Skip ]
+
+# These files contain tabs and broke PRESUBMIT
+external/wpt/web-animations/animation-model/animation-types/property-list.js [ Skip ]
+external/wpt/web-animations/animation-model/animation-types/property-types.js [ Skip ]
