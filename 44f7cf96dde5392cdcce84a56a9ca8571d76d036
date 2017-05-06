@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a24b99e_351eca61",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-06T00:17:04Z",
+      "side": 1,
+      "message": "Nit: capitalize \"This\"\n\nAlso, apparently it\u0027s okay to do: TODO(crbug.com/719053) which would make this one line shorter.",
+      "range": {
+        "startLine": 382,
+        "startChar": 17,
+        "endLine": 382,
+        "endChar": 21
+      },
+      "revId": "44f7cf96dde5392cdcce84a56a9ca8571d76d036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
