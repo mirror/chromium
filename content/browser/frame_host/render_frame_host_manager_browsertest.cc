@@ -1295,11 +1295,42 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, ClickLinkAfter204Error) {
   EXPECT_EQ(orig_site_instance, new_site_instance);
 }
 
-// Test for crbug.com/9682.  We should show the URL for a pending renderer-
-// initiated navigation in a new tab, until the content of the initial
-// about:blank page is modified by another window.  At that point, we should
-// revert to showing about:blank to prevent a URL spoof.
-IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, ShowLoadingURLUntilSpoof) {
+class RenderFrameHostManagerSpoofingTest : public RenderFrameHostManagerTest {
+ public:
+  void SetUpInProcessBrowserTestFixture() override {
+    base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+
+    base::CommandLine new_command_line(command_line->GetProgram());
+    base::CommandLine::SwitchMap switches = command_line->GetSwitches();
+
+    // Injecting the DOM automation controller causes false positives, since it
+    // triggers the DidAccessInitialDocument() callback by mutating the global
+    // object.
+    switches.erase(switches::kDomAutomationController);
+
+    for (const auto& it : switches)
+      new_command_line.AppendSwitchNative(it.first, it.second);
+
+    *command_line = new_command_line;
+  }
+
+ protected:
+  // Custom ExecuteScript() helper that doesn't depend on DOM automation
+  // controller. This is used to guarantee the script has completed execution,
+  // but the spoofing tests synchronize execution using window title changes.
+  void ExecuteScript(const ToRenderFrameHost& adapter, const char* script) {
+    adapter.render_frame_host()->ExecuteJavaScriptForTests(
+        base::UTF8ToUTF16(script));
+  }
+};
+
+// Sanity test that a newly opened window shows the pending URL if the initial
+// empty document is not modified. This is intentionally structured as similarly
+// as possible to the subsequent ShowLoadingURLUntil*Spoof tests, to ensure that
+// the tests aren't incorrectly passing due to a side effect of the test
+// harness.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerSpoofingTest,
+                       ShowLoadingURLIfNotModified) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // Load a page that can open a URL that won't commit in a new window.
@@ -1309,12 +1340,48 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, ShowLoadingURLUntilSpoof) {
 
   // Click a /nocontent link that opens in a new window but never commits.
   ShellAddedObserver new_shell_observer;
-  bool success = false;
-  EXPECT_TRUE(ExecuteScriptAndExtractBool(
-      orig_contents,
-      "window.domAutomationController.send(clickNoContentTargetedLink());",
-      &success));
-  EXPECT_TRUE(success);
+  ExecuteScript(orig_contents, "clickNoContentTargetedLink();");
+
+  // Wait for the window to open.
+  Shell* new_shell = new_shell_observer.GetShell();
+
+  // Ensure the destination URL is visible, because it is considered the
+  // initial navigation.
+  WebContents* contents = new_shell->web_contents();
+  EXPECT_TRUE(contents->GetController().IsInitialNavigation());
+  EXPECT_EQ("/nocontent",
+            contents->GetController().GetVisibleEntry()->GetURL().path());
+
+  // Now get another reference to the window object, but don't otherwise access
+  // it. This is to ensure that DidAccessInitialDocument() notifications are not
+  // incorrectly generated when nothing is modified.
+  base::string16 expected_title = ASCIIToUTF16("Modified Title");
+  TitleWatcher title_watcher(orig_contents, expected_title);
+  ExecuteScript(orig_contents, "getNewWindowReference();");
+  ASSERT_EQ(expected_title, title_watcher.WaitAndGetTitle());
+
+  // The destination URL should still be visible, since nothing was modified.
+  EXPECT_TRUE(contents->GetController().IsInitialNavigation());
+  EXPECT_EQ("/nocontent",
+            contents->GetController().GetVisibleEntry()->GetURL().path());
+}
+
+// Test for crbug.com/9682.  We should show the URL for a pending renderer-
+// initiated navigation in a new tab, until the content of the initial
+// about:blank page is modified by another window.  At that point, we should
+// revert to showing about:blank to prevent a URL spoof.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerSpoofingTest,
+                       ShowLoadingURLUntilSpoof) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Load a page that can open a URL that won't commit in a new window.
+  NavigateToURL(shell(),
+                embedded_test_server()->GetURL("/click-nocontent-link.html"));
+  WebContents* orig_contents = shell()->web_contents();
+
+  // Click a /nocontent link that opens in a new window but never commits.
+  ShellAddedObserver new_shell_observer;
+  ExecuteScript(orig_contents, "clickNoContentTargetedLink();");
 
   // Wait for the window to open.
   Shell* new_shell = new_shell_observer.GetShell();
@@ -1329,13 +1396,47 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, ShowLoadingURLUntilSpoof) {
   // Now modify the contents of the new window from the opener.  This will also
   // modify the title of the document to give us something to listen for.
   base::string16 expected_title = ASCIIToUTF16("Modified Title");
-  TitleWatcher title_watcher(contents, expected_title);
-  success = false;
-  EXPECT_TRUE(ExecuteScriptAndExtractBool(
-      orig_contents,
-      "window.domAutomationController.send(modifyNewWindow());",
-      &success));
-  EXPECT_TRUE(success);
+  TitleWatcher title_watcher(orig_contents, expected_title);
+  ExecuteScript(orig_contents, "modifyNewWindow();");
+  ASSERT_EQ(expected_title, title_watcher.WaitAndGetTitle());
+
+  // At this point, we should no longer be showing the destination URL.
+  // The visible entry should be null, resulting in about:blank in the address
+  // bar.
+  EXPECT_FALSE(contents->GetController().GetVisibleEntry());
+}
+
+// Similar but using document.open() instead, as document.write() allows
+// arbitrary content to be written to the target Document. Once document.open()
+// has been called, the pending URL should no longer be shown in the omnibox.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerSpoofingTest,
+                       ShowLoadingURLUntilDocumentOpenSpoof) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Load a page that can open a URL that won't commit in a new window.
+  NavigateToURL(shell(),
+                embedded_test_server()->GetURL("/click-nocontent-link.html"));
+  WebContents* orig_contents = shell()->web_contents();
+
+  // Click a /nocontent link that opens in a new window but never commits.
+  ShellAddedObserver new_shell_observer;
+  ExecuteScript(orig_contents, "clickNoContentTargetedLink();");
+
+  // Wait for the window to open.
+  Shell* new_shell = new_shell_observer.GetShell();
+
+  // Ensure the destination URL is visible, because it is considered the
+  // initial navigation.
+  WebContents* contents = new_shell->web_contents();
+  EXPECT_TRUE(contents->GetController().IsInitialNavigation());
+  EXPECT_EQ("/nocontent",
+            contents->GetController().GetVisibleEntry()->GetURL().path());
+
+  // Now modify the contents of the new window from the opener.  This will also
+  // modify the title of the document to give us something to listen for.
+  base::string16 expected_title = ASCIIToUTF16("Modified Title");
+  TitleWatcher title_watcher(orig_contents, expected_title);
+  ExecuteScript(orig_contents, "modifyNewWindowWithDocumentWrite();");
   ASSERT_EQ(expected_title, title_watcher.WaitAndGetTitle());
 
   // At this point, we should no longer be showing the destination URL.

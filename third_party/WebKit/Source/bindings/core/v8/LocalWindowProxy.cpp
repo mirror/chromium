@@ -282,7 +282,12 @@ void LocalWindowProxy::SetSecurityToken(SecurityOrigin* origin) {
   String token;
   // If document.domain is modified, v8 needs to do a full canAccess check,
   // so always use an empty security token in that case.
-  bool delay_set = world_->IsMainWorld() && origin->DomainWasSetInDOM();
+  bool delay_set =
+      world_->IsMainWorld() && (GetFrame()
+                                    ->Loader()
+                                    .StateMachine()
+                                    ->IsDisplayingInitialEmptyDocument() ||
+                                origin->DomainWasSetInDOM());
   if (origin && !delay_set)
     token = origin->ToString();
 
