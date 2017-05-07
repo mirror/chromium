@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bcb74e1_b517e712",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/AtomicString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-07T22:40:15Z",
+      "side": 1,
+      "message": "Can we remove the TextCaseSensitivity argument?",
+      "revId": "c8be9231ef7d11fc597c5bafe77077b02f37e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f8d64b_0173bf8f",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/AtomicString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-07T22:40:15Z",
+      "side": 1,
+      "message": "Don\u0027t you add AtomicString::EndsWithIgnoring*Case()?",
+      "revId": "c8be9231ef7d11fc597c5bafe77077b02f37e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35108a80_fdbdda94",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/WTFString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-07T22:40:15Z",
+      "side": 1,
+      "message": "Can we remove the TextCaseSensitivity argument?",
+      "revId": "c8be9231ef7d11fc597c5bafe77077b02f37e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4060dd1e_df4963e0",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/WTFString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-07T22:40:15Z",
+      "side": 1,
+      "message": "Can we remove the TextCaseSensitivity argument?",
+      "revId": "c8be9231ef7d11fc597c5bafe77077b02f37e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

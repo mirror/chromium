@@ -45,6 +45,30 @@
       "revId": "82239eb300b5881a8847dc49d8e6cf31b41927e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67526571_dad07d83",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/AtomicString.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-07T22:40:15Z",
+      "side": 1,
+      "message": "I think AtomicSting doesn\u0027t need Unicode-caseless matching at all. So can you name this DeprecatedStartsWithIgnoringCase()?\n\ncrbug.com/627682",
+      "parentUuid": "515edef8_ff5cfa9e",
+      "range": {
+        "startLine": 153,
+        "startChar": 7,
+        "endLine": 153,
+        "endChar": 29
+      },
+      "revId": "82239eb300b5881a8847dc49d8e6cf31b41927e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
