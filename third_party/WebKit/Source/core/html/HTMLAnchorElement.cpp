@@ -37,6 +37,7 @@
 #include "core/loader/PingLoader.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/NetworkHints.h"
 #include "platform/weborigin/SecurityPolicy.h"
 
@@ -305,6 +306,10 @@ void HTMLAnchorElement::SendPings(const KURL& destination_url) const {
       !GetDocument().GetSettings()->GetHyperlinkAuditingEnabled())
     return;
 
+  // Pings should not be sent if MHTML page is loaded.
+  if (GetDocument().Fetcher()->Archive())
+    return;
+
   UseCounter::Count(GetDocument(), UseCounter::kHTMLAnchorElementPingAttribute);
 
   SpaceSplitString ping_urls(ping_value, SpaceSplitString::kShouldNotFoldCase);
@@ -320,6 +325,11 @@ void HTMLAnchorElement::HandleClick(Event* event) {
   LocalFrame* frame = GetDocument().GetFrame();
   if (!frame)
     return;
+
+  if (!isConnected()) {
+    UseCounter::Count(GetDocument(),
+                      UseCounter::kAnchorClickDispatchForNonConnectedNode);
+  }
 
   StringBuilder url;
   url.Append(StripLeadingAndTrailingHTMLSpaces(FastGetAttribute(hrefAttr)));

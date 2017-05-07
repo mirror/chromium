@@ -1614,17 +1614,19 @@ uploading your change for review.  These are checked by presubmit scripts.
 
 <enum name="AutofillCardUploadDecisionMetric" type="int">
   <int value="0" label="Upload offered"/>
-  <int value="1" label="Upload not offered, no CVC detected"/>
-  <int value="2" label="Upload not offered, no address available"/>
-  <int value="3" label="Upload not offered, no name available"/>
+  <int value="1" label="CVC field not detected"/>
+  <int value="2" label="CVC value not filled in detected CVC field"/>
+  <int value="3" label="Invalid CVC value filled in detected CVC field"/>
   <int value="4"
-      label="Upload not offered, addresses had conflicting zip codes"/>
-  <int value="5" label="Upload not offered, no zip code available"/>
-  <int value="6" label="Upload not offered, get upload details RPC failed"/>
+      label="Upload not offered, no recently used address profile available"/>
+  <int value="5" label="Upload not offered, no address profile available"/>
+  <int value="6" label="Upload not offered, no name available"/>
   <int value="7"
+      label="Upload not offered, addresses had conflicting zip codes"/>
+  <int value="8" label="Upload not offered, no zip code available"/>
+  <int value="9"
       label="Upload not offered, card and/or addresses had conflicting names"/>
-  <int value="8" label="Upload offered, no CVC detected"/>
-  <int value="9" label="Upload not offered"/>
+  <int value="10" label="Upload not offered, get upload details RPC failed"/>
 </enum>
 
 <enum name="AutofillCreditCardInfoBar" type="int">
@@ -2624,6 +2626,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Data Reduction Proxy"/>
 </enum>
 
+<enum name="BooleanDeclarativeRules" type="int">
+  <int value="0" label="No declarative rules"/>
+  <int value="1" label="Has declarative rules"/>
+</enum>
+
 <enum name="BooleanDefault" type="int">
   <int value="0" label="Not Default"/>
   <int value="1" label="Default"/>
@@ -3561,6 +3568,13 @@ uploading your change for review.  These are checked by presubmit scripts.
     https://crbug.com/522312
   </obsolete>
   <int value="0" label="Root Certificate"/>
+</enum>
+
+<enum name="CertificateReportOutcome" type="int">
+  <int value="0" label="REPORT_SUBMITTED"/>
+  <int value="1" label="REPORT_FAILED"/>
+  <int value="2" label="REPORT_SUCCESSFUL"/>
+  <int value="3" label="REPORT_DROPPED_OR_IGNORED"/>
 </enum>
 
 <enum name="CertificateTransparencyDnsQueryStatus" type="int">
@@ -6856,6 +6870,18 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="40" label="LargeIconService"/>
 </enum>
 
+<enum name="DeclarativeAPIFunctionType" type="int">
+  <int value="0" label="kDeclarativeContentAddRules"/>
+  <int value="1" label="kDeclarativeContentRemoveRules"/>
+  <int value="2" label="kDeclarativeContentGetRules"/>
+  <int value="3" label="kDeclarativeWebRequestAddRules"/>
+  <int value="4" label="kDeclarativeWebRequestRemoveRules"/>
+  <int value="5" label="kDeclarativeWebRequestGetRules"/>
+  <int value="6" label="kDeclarativeWebRequestWebviewAddRules"/>
+  <int value="7" label="kDeclarativeWebRequestWebviewRemoveRules"/>
+  <int value="8" label="kDeclarativeWebRequestWebviewGetRules"/>
+</enum>
+
 <enum name="DecodedImageOrientation" type="int">
   <int value="0" label="Unknown"/>
   <int value="1" label="Top Left"/>
@@ -7096,7 +7122,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="4" label="Scripts"/>
   <int value="5" label="Timeline"/>
   <int value="6" label="Heap profiler"/>
-  <int value="7" label="Audits"/>
+  <int value="7" label="Legacy Audits"/>
   <int value="8" label="Console"/>
   <int value="9" label="Layers"/>
   <int value="10" label="Drawer - Console"/>
@@ -7107,6 +7133,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="15" label="Drawer - Search"/>
   <int value="16" label="Security"/>
   <int value="17" label="JavaScript Profiler"/>
+  <int value="18" label="Audits"/>
 </enum>
 
 <enum name="DevToolsSetting" type="int">
@@ -14816,6 +14843,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1968" label="ElementNameDOMInvalidHTMLParserValid"/>
   <int value="1969" label="ElementNameDOMValidHTMLParserInvalid"/>
   <int value="1970" label="GATTServerDisconnectedEvent"/>
+  <int value="1971" label="AnchorClickDispatchForNonConnectedNode"/>
 </enum>
 
 <enum name="FeedbackSource" type="int">
@@ -21049,6 +21077,7 @@ from previous Chrome versions.
   <int value="-2043128632" label="enable-tab-switcher-in-document-mode"/>
   <int value="-2040471724" label="CrOSComponent:disabled"/>
   <int value="-2040115518" label="load-media-router-component-extension"/>
+  <int value="-2033225430" label="NTPMostLikelyFaviconsFromServer:disabled"/>
   <int value="-2029912304" label="StaleWhileRevalidate2:enabled"/>
   <int value="-2025367104" label="enable-material-design-ntp"/>
   <int value="-2020721975" label="smart-virtual-keyboard"/>
@@ -21082,6 +21111,7 @@ from previous Chrome versions.
   <int value="-1938263248" label="enable-extension-info-dialog"/>
   <int value="-1937077699" label="http-form-warning"/>
   <int value="-1934673791" label="gl-composited-texture-quad-border"/>
+  <int value="-1933425042" label="OfflinePreviews:enabled"/>
   <int value="-1930720286" label="nacl-debug-mask"/>
   <int value="-1928198763" label="enable-async-dns"/>
   <int value="-1925117279" label="disable-quic-https"/>
@@ -21532,6 +21562,7 @@ from previous Chrome versions.
   <int value="-234687894"
       label="NonValidatingReloadOnRefreshContentV2:disabled"/>
   <int value="-231922000" label="enable-renderer-mojo-channel"/>
+  <int value="-230824955" label="NTPMostLikelyFaviconsFromServer:enabled"/>
   <int value="-216219963" label="ash-shelf-color-scheme"/>
   <int value="-213518852" label="protect-sync-credential:enabled"/>
   <int value="-213214894" label="enable-chromevox-arc-support"/>
@@ -21652,6 +21683,7 @@ from previous Chrome versions.
   <int value="328722396" label="NTPCondensedLayout:disabled"/>
   <int value="330138076" label="enable-clear-browsing-data-counters"/>
   <int value="332391072" label="cs-contextual-cards-bar-integration"/>
+  <int value="334802038" label="OfflinePreviews:disabled"/>
   <int value="346711293" label="enable-save-password-bubble"/>
   <int value="348854923" label="v8-cache-strategies-for-cache-storage"/>
   <int value="358399482" label="enable-high-dpi-fixed-position-compositing"/>
@@ -22058,6 +22090,7 @@ from previous Chrome versions.
   <int value="1828660283" label="enable-webfonts-intervention-trigger"/>
   <int value="1831835753" label="MaterialDesignIncognitoNTP:enabled"/>
   <int value="1838990777" label="V8Future:enabled"/>
+  <int value="1839740266" label="LocationHardReload:disabled"/>
   <int value="1844110073" label="enable-app-view"/>
   <int value="1847024354" label="enable-hotword-hardware"/>
   <int value="1852630189" label="NTPBookmarkSuggestions:disabled"/>
@@ -22070,6 +22103,7 @@ from previous Chrome versions.
   <int value="1865799183" label="javascript-harmony"/>
   <int value="1866079109" label="team-drives"/>
   <int value="1867085340" label="brotli-encoding:enabled"/>
+  <int value="1872185826" label="LocationHardReload:enabled"/>
   <int value="1874604540" label="UseSuggestionsEvenIfFew:disabled"/>
   <int value="1878331098" label="GuestViewCrossProcessFrames:enabled"/>
   <int value="1881036528" label="disable-multilingual-spellchecker"/>
@@ -35374,6 +35408,18 @@ from previous Chrome versions.
   <int value="1" label="Jpeg"/>
   <int value="2" label="HD Rec 709"/>
   <int value="3" label="SD Rec 601"/>
+</enum>
+
+<enum name="VideoFrameColorSpaceUMA" type="int">
+  <int value="0" label="Unknown"/>
+  <int value="1" label="UnknownRGB"/>
+  <int value="2" label="UnknownHDR"/>
+  <int value="3" label="rec601"/>
+  <int value="4" label="rec709"/>
+  <int value="5" label="JPEG"/>
+  <int value="6" label="PQ"/>
+  <int value="7" label="HLG"/>
+  <int value="8" label="scRGB"/>
 </enum>
 
 <enum name="VideoFramePixelFormat" type="int">

@@ -16,7 +16,6 @@ namespace features {
 
 // All features in alphabetical order. The features should be documented
 // alongside the definition of their values in the .cc file.
-CONTENT_EXPORT extern const base::Feature kAccessibilityObjectModel;
 CONTENT_EXPORT extern const base::Feature
     kAllowContentInitiatedDataUrlNavigations;
 CONTENT_EXPORT extern const base::Feature kAsmJsToWebAssembly;
@@ -39,6 +38,7 @@ CONTENT_EXPORT extern const base::Feature kHeapCompaction;
 CONTENT_EXPORT extern const base::Feature kIdleTimeSpellChecking;
 CONTENT_EXPORT extern const base::Feature kLazyParseCSS;
 CONTENT_EXPORT extern const base::Feature kLoadingWithMojo;
+CONTENT_EXPORT extern const base::Feature kLocationHardReload;
 CONTENT_EXPORT extern const base::Feature kMediaDocumentDownloadButton;
 CONTENT_EXPORT extern const base::Feature kMediaStreamOldVideoConstraints;
 CONTENT_EXPORT extern const base::Feature kMemoryCoordinator;
@@ -80,7 +80,6 @@ extern const base::Feature kSendBeaconThrowForBlobWithNonSimpleType;
 
 #if defined(OS_ANDROID)
 CONTENT_EXPORT extern const base::Feature kAndroidAutofillAccessibility;
-CONTENT_EXPORT extern const base::Feature kNativeAndroidHistoryManager;
 CONTENT_EXPORT extern const base::Feature kImeThread;
 CONTENT_EXPORT extern const base::Feature kSeccompSandboxAndroid;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerPaymentApps;

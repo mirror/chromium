@@ -14,6 +14,8 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "base/threading/thread.h"
 #include "cc/base/switches.h"
 #include "components/discardable_memory/client/client_discardable_shared_memory_manager.h"
@@ -48,6 +50,7 @@
 #include "ui/aura/mus/window_tree_host_mus_init_params.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
+#include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_tracker.h"
 #include "ui/base/layout.h"
 #include "ui/base/ui_base_types.h"
@@ -86,16 +89,16 @@ struct WindowPortPropertyDataMus : public ui::PropertyData {
 
 // Handles acknowledgment of an input event, either immediately when a nested
 // message loop starts, or upon destruction.
-class EventAckHandler : public base::MessageLoop::NestingObserver {
+class EventAckHandler : public base::RunLoop::NestingObserver {
  public:
   explicit EventAckHandler(std::unique_ptr<EventResultCallback> ack_callback)
       : ack_callback_(std::move(ack_callback)) {
     DCHECK(ack_callback_);
-    base::MessageLoop::current()->AddNestingObserver(this);
+    base::RunLoop::AddNestingObserverOnCurrentThread(this);
   }
 
   ~EventAckHandler() override {
-    base::MessageLoop::current()->RemoveNestingObserver(this);
+    base::RunLoop::RemoveNestingObserverOnCurrentThread(this);
     if (ack_callback_) {
       ack_callback_->Run(handled_ ? ui::mojom::EventResult::HANDLED
                                   : ui::mojom::EventResult::UNHANDLED);
@@ -104,10 +107,10 @@ class EventAckHandler : public base::MessageLoop::NestingObserver {
 
   void set_handled(bool handled) { handled_ = handled; }
 
-  // base::MessageLoop::NestingObserver:
-  void OnBeginNestedMessageLoop() override {
-    // Acknowledge the event immediately if a nested message loop starts.
-    // Otherwise we appear unresponsive for the life of the nested message loop.
+  // base::RunLoop::NestingObserver:
+  void OnBeginNestedRunLoop() override {
+    // Acknowledge the event immediately if a nested run loop starts.
+    // Otherwise we appear unresponsive for the life of the nested run loop.
     if (ack_callback_) {
       ack_callback_->Run(ui::mojom::EventResult::HANDLED);
       ack_callback_.reset();
@@ -488,6 +491,9 @@ std::unique_ptr<WindowTreeHostMus> WindowTreeClient::CreateWindowTreeHost(
   WindowMus* window = WindowMus::Get(window_tree_host->window());
 
   SetWindowBoundsFromServer(window, window_data.bounds, local_surface_id);
+  ui::Compositor* compositor =
+      window_tree_host->window()->GetHost()->compositor();
+  compositor->AddObserver(this);
   return window_tree_host;
 }
 
@@ -640,8 +646,8 @@ void WindowTreeClient::SetWindowBoundsFromServer(
     GetWindowTreeHostMus(window)->SetBoundsFromServer(revert_bounds_in_pixels);
     if (enable_surface_synchronization_ && local_surface_id &&
         local_surface_id->is_valid()) {
-      window->GetWindow()->GetHost()->compositor()->SetLocalSurfaceId(
-          *local_surface_id);
+      ui::Compositor* compositor = window->GetWindow()->GetHost()->compositor();
+      compositor->SetLocalSurfaceId(*local_surface_id);
     }
     return;
   }
@@ -679,6 +685,7 @@ void WindowTreeClient::ScheduleInFlightBoundsChange(
   if ((window->window_mus_type() == WindowMusType::TOP_LEVEL_IN_WM ||
        window->window_mus_type() == WindowMusType::EMBED_IN_OWNER)) {
     local_surface_id = window->GetOrAllocateLocalSurfaceId(new_bounds.size());
+    synchronizing_with_child_on_next_frame_ = true;
   }
   tree_->SetWindowBounds(change_id, window->server_id(), new_bounds,
                          local_surface_id);
@@ -2040,6 +2047,39 @@ uint32_t WindowTreeClient::CreateChangeIdForCapture(WindowMus* window) {
 uint32_t WindowTreeClient::CreateChangeIdForFocus(WindowMus* window) {
   return ScheduleInFlightChange(base::MakeUnique<InFlightFocusChange>(
       this, focus_synchronizer_.get(), window));
+}
+
+void WindowTreeClient::OnCompositingDidCommit(ui::Compositor* compositor) {}
+
+void WindowTreeClient::OnCompositingStarted(ui::Compositor* compositor,
+                                            base::TimeTicks start_time) {
+  if (!synchronizing_with_child_on_next_frame_)
+    return;
+  synchronizing_with_child_on_next_frame_ = false;
+  WindowTreeHost* host =
+      WindowTreeHost::GetForAcceleratedWidget(compositor->widget());
+  // Unit tests have a null widget and thus may not have an associated
+  // WindowTreeHost.
+  if (host) {
+    host->dispatcher()->HoldPointerMoves();
+    holding_pointer_moves_ = true;
+  }
+}
+
+void WindowTreeClient::OnCompositingEnded(ui::Compositor* compositor) {
+  if (!holding_pointer_moves_)
+    return;
+  WindowTreeHost* host =
+      WindowTreeHost::GetForAcceleratedWidget(compositor->widget());
+  host->dispatcher()->ReleasePointerMoves();
+  holding_pointer_moves_ = false;
+}
+
+void WindowTreeClient::OnCompositingLockStateChanged(
+    ui::Compositor* compositor) {}
+
+void WindowTreeClient::OnCompositingShuttingDown(ui::Compositor* compositor) {
+  compositor->RemoveObserver(this);
 }
 
 }  // namespace aura

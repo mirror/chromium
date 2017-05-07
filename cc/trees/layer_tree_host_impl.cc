@@ -414,7 +414,7 @@ bool LayerTreeHostImpl::CanDraw() const {
   if (resourceless_software_draw_)
     return true;
 
-  if (DrawViewportSize().IsEmpty()) {
+  if (DeviceViewport().IsEmpty()) {
     TRACE_EVENT_INSTANT0("cc", "LayerTreeHostImpl::CanDraw empty viewport",
                          TRACE_EVENT_SCOPE_THREAD);
     return false;
@@ -951,9 +951,10 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
         layer->set_was_ever_ready_since_last_transform_animation(true);
       }
     }
-    frame->embedded_surfaces.insert(frame->embedded_surfaces.end(),
-                                    append_quads_data.embedded_surfaces.begin(),
-                                    append_quads_data.embedded_surfaces.end());
+    frame->activation_dependencies.insert(
+        frame->activation_dependencies.end(),
+        append_quads_data.activation_dependencies.begin(),
+        append_quads_data.activation_dependencies.end());
   }
 
   // If CommitToActiveTree() is true, then we wait to draw until
@@ -1700,7 +1701,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
 
   CompositorFrameMetadata metadata = MakeCompositorFrameMetadata();
   metadata.may_contain_video = frame->may_contain_video;
-  metadata.embedded_surfaces = std::move(frame->embedded_surfaces);
+  metadata.activation_dependencies = std::move(frame->activation_dependencies);
   active_tree()->FinishSwapPromises(&metadata);
   for (auto& latency : metadata.latency_info) {
     TRACE_EVENT_WITH_FLOW1("input,benchmark", "LatencyInfo.Flow",
@@ -2496,22 +2497,18 @@ void LayerTreeHostImpl::SetViewportSize(const gfx::Size& device_viewport_size) {
   active_tree_->set_needs_update_draw_properties();
 }
 
-const gfx::Rect LayerTreeHostImpl::ViewportRectForTilePriority() const {
-  if (viewport_rect_for_tile_priority_.IsEmpty())
-    return DeviceViewport();
-
-  return viewport_rect_for_tile_priority_;
-}
-
-gfx::Size LayerTreeHostImpl::DrawViewportSize() const {
-  return DeviceViewport().size();
-}
-
 gfx::Rect LayerTreeHostImpl::DeviceViewport() const {
   if (external_viewport_.IsEmpty())
     return gfx::Rect(device_viewport_size_);
 
   return external_viewport_;
+}
+
+const gfx::Rect LayerTreeHostImpl::ViewportRectForTilePriority() const {
+  if (viewport_rect_for_tile_priority_.IsEmpty())
+    return DeviceViewport();
+
+  return viewport_rect_for_tile_priority_;
 }
 
 const gfx::Transform& LayerTreeHostImpl::DrawTransform() const {
@@ -3577,7 +3574,7 @@ std::unique_ptr<ScrollAndScaleSet> LayerTreeHostImpl::ProcessScrollDeltas() {
 }
 
 void LayerTreeHostImpl::SetFullViewportDamage() {
-  SetViewportDamage(gfx::Rect(DrawViewportSize()));
+  SetViewportDamage(gfx::Rect(DeviceViewport().size()));
 }
 
 bool LayerTreeHostImpl::AnimatePageScale(base::TimeTicks monotonic_time) {

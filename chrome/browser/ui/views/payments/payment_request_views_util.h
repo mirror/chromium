@@ -10,6 +10,7 @@
 
 #include "base/strings/string16.h"
 #include "components/payments/mojom/payment_request.mojom.h"
+#include "third_party/skia/include/core/SkColor.h"
 
 namespace autofill {
 class AutofillProfile;
@@ -39,6 +40,10 @@ constexpr int kPaymentRequestButtonSpacing = 10;
 
 // Dimensions of the dialog itself.
 constexpr int kDialogHeight = 450;
+
+// Fixed width of the amount sections in the payment sheet and the order summary
+// sheet, in pixels.
+constexpr int kAmountSectionWidth = 96;
 
 enum class PaymentRequestCommonTags {
   BACK_BUTTON_TAG = 0,
@@ -110,14 +115,17 @@ std::unique_ptr<views::View> GetContactInfoLabel(
 
 // Creates a views::Border object that can paint the gray horizontal ruler used
 // as a separator between items in the Payment Request dialog.
-std::unique_ptr<views::Border> CreatePaymentRequestRowBorder();
+std::unique_ptr<views::Border> CreatePaymentRequestRowBorder(SkColor color);
 
 // Creates a label with a bold font.
 std::unique_ptr<views::Label> CreateBoldLabel(const base::string16& text);
 
+// Creates a 2 line label containing |shipping_option|'s label and amount. If
+// |emphasize_label| is true, the label part will be in medium weight.
 std::unique_ptr<views::View> CreateShippingOptionLabel(
     payments::mojom::PaymentShippingOption* shipping_option,
-    const base::string16& formatted_amount);
+    const base::string16& formatted_amount,
+    bool emphasize_label);
 
 }  // namespace payments
 

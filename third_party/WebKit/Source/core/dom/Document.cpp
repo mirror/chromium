@@ -37,7 +37,6 @@
 #include "bindings/core/v8/StringOrDictionary.h"
 #include "bindings/core/v8/V0CustomElementConstructorBuilder.h"
 #include "bindings/core/v8/V8ElementCreationOptions.h"
-#include "bindings/core/v8/V8PerIsolateData.h"
 #include "bindings/core/v8/WindowProxy.h"
 #include "core/HTMLElementFactory.h"
 #include "core/HTMLElementTypeHelpers.h"
@@ -231,6 +230,7 @@
 #include "platform/bindings/DOMDataStore.h"
 #include "platform/bindings/Microtask.h"
 #include "platform/bindings/V8DOMWrapper.h"
+#include "platform/bindings/V8PerIsolateData.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
@@ -2511,7 +2511,7 @@ void Document::Shutdown() {
   // since that will cause a situation where LocalFrame still has a Document
   // attached after this finishes!  Normally, it shouldn't actually be possible
   // to trigger navigation here.  However, plugins (see below) can cause lots of
-  // crazy things to happen, since plugin detach involves nested message loops.
+  // crazy things to happen, since plugin detach involves nested run loops.
   FrameNavigationDisabler navigation_disabler(*frame_);
   // Defer FrameViewBase updates to avoid plugins trying to run script inside
   // ScriptForbiddenScope, which will crash the renderer after
@@ -3170,6 +3170,15 @@ bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
     DefaultEventHandler(before_unload_event);
   if (!GetFrame() || before_unload_event->returnValue().IsNull())
     return true;
+
+  if (!GetFrame()->HasReceivedUserGesture()) {
+    AddConsoleMessage(ConsoleMessage::Create(
+        kJSMessageSource, kErrorMessageLevel,
+        "Blocked attempt to show a 'beforeunload' confirmation panel for a "
+        "frame that never had a user gesture since its load. "
+        "https://www.chromestatus.com/feature/5082396709879808"));
+    return true;
+  }
 
   if (did_allow_navigation) {
     AddConsoleMessage(ConsoleMessage::Create(

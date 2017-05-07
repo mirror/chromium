@@ -456,7 +456,7 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
                 "::Compositor"));
 #if defined(OS_MACOSX)
         // On Mac, GpuCommandBufferMsg_SwapBuffersCompleted must be handled in
-        // a nested message loop during resize.
+        // a nested run loop during resize.
         context_provider->SetDefaultTaskRunner(
             ui::WindowResizeHelperMac::Get()->task_runner());
 #endif
@@ -686,7 +686,9 @@ void GpuProcessTransportFactory::RemoveCompositor(ui::Compositor* compositor) {
 #endif
 }
 
-bool GpuProcessTransportFactory::DoesCreateTestContexts() { return false; }
+double GpuProcessTransportFactory::GetRefreshRate() const {
+  return 60.0;
+}
 
 uint32_t GpuProcessTransportFactory::GetImageTextureTarget(
     gfx::BufferFormat format,

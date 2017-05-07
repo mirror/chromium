@@ -61,11 +61,11 @@ InspectorTest.TestFileSystem.prototype = {
 
     addFileMapping: function(urlPrefix, pathPrefix)
     {
-        var fileSystemMapping = new Workspace.FileSystemMapping(Workspace.isolatedFileSystemManager);
+        var fileSystemMapping = new Persistence.FileSystemMapping(Workspace.isolatedFileSystemManager);
         fileSystemMapping.addFileSystem(this.fileSystemPath);
         fileSystemMapping.addFileMapping(this.fileSystemPath, urlPrefix, pathPrefix);
         fileSystemMapping.dispose();
-        Workspace.fileSystemMapping._loadFromSettings();
+        Persistence.fileSystemMapping._loadFromSettings();
     },
 
     /**
@@ -189,10 +189,31 @@ InspectorTest.TestFileSystem.Entry.prototype = {
         this.getEntry(path, noop, callback, errorCallback);
     },
 
-    getEntry: function(path, noop, callback, errorCallback)
+    _createEntry: function(path, options, callback, errorCallback)
+    {
+        var tokens = path.split('/');
+        var name = tokens.pop();
+        var parentEntry = this;
+        for (var token of tokens)
+            parentEntry = parentEntry._childrenMap[token];
+        var entry = parentEntry._childrenMap[name];
+        if (entry && options.exclusive) {
+            errorCallback(new DOMException('File exists: ' + path, 'InvalidModificationError'));
+            return;
+        }
+        if (!entry)
+            entry = parentEntry.addFile(name, '');
+        callback(entry);
+    },
+
+    getEntry: function(path, options, callback, errorCallback)
     {
         if (path.startsWith("/"))
             path = path.substring(1);
+        if (options && options.create) {
+            this._createEntry(path, options, callback, errorCallback);
+            return;
+        }
         if (!path) {
             callback(this);
             return;

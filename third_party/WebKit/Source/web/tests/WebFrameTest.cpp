@@ -6949,7 +6949,7 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentBodyBeforeModalDialog)
       WebScriptSource("window.opener.document.body.innerHTML += 'Modified';"));
   EXPECT_TRUE(web_frame_client.did_access_initial_document_);
 
-  // Run a modal dialog, which used to run a nested message loop and require
+  // Run a modal dialog, which used to run a nested run loop and require
   // a special case for notifying about the access.
   new_view->MainFrame()->ExecuteScript(
       WebScriptSource("window.opener.confirm('Modal');"));
@@ -6986,7 +6986,7 @@ TEST_P(ParameterizedWebFrameTest, DidWriteToInitialDocumentBeforeModalDialog)
                       "window.opener.document.close();"));
   EXPECT_TRUE(web_frame_client.did_access_initial_document_);
 
-  // Run a modal dialog, which used to run a nested message loop and require
+  // Run a modal dialog, which used to run a nested run loop and require
   // a special case for notifying about the access.
   new_view->MainFrame()->ExecuteScript(
       WebScriptSource("window.opener.confirm('Modal');"));
@@ -9450,15 +9450,16 @@ TEST_F(WebFrameSwapTest, WindowOpenOnRemoteFrame) {
       ToWebLocalFrameImpl(MainFrame())->GetFrame()->DomWindow();
 
   KURL destination = ToKURL("data:text/html:destination");
+  NonThrowableExceptionState exception_state;
   main_window->open(destination.GetString(), "frame1", "", main_window,
-                    main_window);
+                    main_window, exception_state);
   ASSERT_FALSE(remote_client.LastRequest().IsNull());
   EXPECT_EQ(remote_client.LastRequest().Url(), WebURL(destination));
 
   // Pointing a named frame to an empty URL should just return a reference to
   // the frame's window without navigating it.
-  DOMWindow* result =
-      main_window->open("", "frame1", "", main_window, main_window);
+  DOMWindow* result = main_window->open("", "frame1", "", main_window,
+                                        main_window, exception_state);
   EXPECT_EQ(remote_client.LastRequest().Url(), WebURL(destination));
   EXPECT_EQ(result, WebFrame::ToCoreFrame(*remote_frame)->DomWindow());
 

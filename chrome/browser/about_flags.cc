@@ -52,11 +52,13 @@
 #include "components/nacl/common/nacl_switches.h"
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/ntp_snippets_constants.h"
+#include "components/ntp_tiles/constants.h"
 #include "components/ntp_tiles/switches.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_switches.h"
 #include "components/password_manager/core/common/password_manager_features.h"
+#include "components/previews/core/previews_features.h"
 #include "components/proximity_auth/switches.h"
 #include "components/security_state/core/security_state.h"
 #include "components/security_state/core/switches.h"
@@ -1574,9 +1576,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebglDraftExtensionsName,
      flag_descriptions::kWebglDraftExtensionsDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebGLDraftExtensions)},
+#if !defined(OS_ANDROID)
     {"enable-account-consistency", flag_descriptions::kAccountConsistencyName,
-     flag_descriptions::kAccountConsistencyDescription, kOsAll,
+     flag_descriptions::kAccountConsistencyDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kEnableAccountConsistency)},
+#endif
     {"enable-password-separated-signin-flow",
      flag_descriptions::kEnablePasswordSeparatedSigninFlowName,
      flag_descriptions::kEnablePasswordSeparatedSigninFlowDescription,
@@ -1870,6 +1874,9 @@ const FeatureEntry kFeatureEntries[] = {
      kOsAndroid,
      FEATURE_VALUE_TYPE(
          data_reduction_proxy::features::kDataReductionSiteBreakdown)},
+    {"enable-offline-previews", flag_descriptions::kEnableOfflinePreviewsName,
+     flag_descriptions::kEnableOfflinePreviewsDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(previews::features::kOfflinePreviews)},
 #endif  // OS_ANDROID
     {"allow-insecure-localhost", flag_descriptions::kAllowInsecureLocalhost,
      flag_descriptions::kAllowInsecureLocalhostDescription, kOsAll,
@@ -2112,9 +2119,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-md-feedback", flag_descriptions::kEnableMaterialDesignFeedbackName,
      flag_descriptions::kEnableMaterialDesignFeedbackDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kEnableMaterialDesignFeedback)},
-    {"enable-md-history", flag_descriptions::kEnableMaterialDesignHistoryName,
-     flag_descriptions::kEnableMaterialDesignHistoryDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(features::kMaterialDesignHistory)},
     {"enable-md-incognito-ntp",
      flag_descriptions::kMaterialDesignIncognitoNTPName,
      flag_descriptions::kMaterialDesignIncognitoNTPDescription, kOsDesktop,
@@ -2189,9 +2193,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableWebfontsInterventionTriggerName,
      flag_descriptions::kEnableWebfontsInterventionTriggerDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebFontsInterventionTrigger)},
-    {"enable-grouped-history", flag_descriptions::kEnableGroupedHistoryName,
-     flag_descriptions::kEnableGroupedHistoryDescription, kOsDesktop,
-     SINGLE_VALUE_TYPE(switches::kHistoryEnableGroupByDomain)},
     {"ssl-version-max", flag_descriptions::kSslVersionMaxName,
      flag_descriptions::kSslVersionMaxDescription, kOsAll,
      MULTI_VALUE_TYPE(kSSLVersionMaxChoices)},
@@ -2235,6 +2236,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableContentSuggestionsNewFaviconServerDescription,
      kOsAndroid,
      FEATURE_VALUE_TYPE(ntp_snippets::kPublisherFaviconsFromNewServerFeature)},
+    {"enable-ntp-tiles-favicons-from-server",
+     flag_descriptions::kEnableNtpMostLikelyFaviconsFromServerName,
+     flag_descriptions::kEnableNtpMostLikelyFaviconsFromServerDescription,
+     kOsAndroid,
+     FEATURE_VALUE_TYPE(ntp_tiles::kNtpMostLikelyFaviconsFromServerFeature)},
     {"enable-content-suggestions-settings",
      flag_descriptions::kEnableContentSuggestionsSettingsName,
      flag_descriptions::kEnableContentSuggestionsSettingsDescription,
@@ -2586,10 +2592,6 @@ const FeatureEntry kFeatureEntries[] = {
          // Must be AutofillCreditCardDropdownVariations to prevent DCHECK crash
          // when the flag is manually enabled in a local build.
          "AutofillCreditCardDropdownVariations")},
-    {"native-android-history-manager",
-     flag_descriptions::kNativeAndroidHistoryManager,
-     flag_descriptions::kNativeAndroidHistoryManagerDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(features::kNativeAndroidHistoryManager)},
 #endif  // OS_ANDROID
     {"enable-autofill-credit-card-last-used-date-display",
      flag_descriptions::kEnableAutofillCreditCardLastUsedDateDisplay,
@@ -2838,9 +2840,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kUseSuggestionsEvenIfFewFeatureDescription, kOsAll,
      FEATURE_VALUE_TYPE(suggestions::kUseSuggestionsEvenIfFewFeature)},
 
+    {"enable-location-hard-reload", flag_descriptions::kLocationHardReloadName,
+     flag_descriptions::kLocationHardReloadDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kLocationHardReload)},
+
     // NOTE: Adding new command-line switches requires adding corresponding
-    // entries to enum "LoginCustomFlags" in histograms.xml. See note in
-    // histograms.xml and don't forget to run AboutFlagsHistogramTest unit test.
+    // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
+    // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
 };
 
 class FlagsStateSingleton {

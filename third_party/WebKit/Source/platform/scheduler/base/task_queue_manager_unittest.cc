@@ -60,19 +60,19 @@ class MessageLoopTaskRunner : public TaskQueueManagerDelegateForTest {
     return make_scoped_refptr(new MessageLoopTaskRunner(std::move(tick_clock)));
   }
 
-  // NestableTaskRunner implementation.
+  // TaskQueueManagerDelegateForTest:
   bool IsNested() const override {
-    return base::MessageLoop::current()->IsNested();
+    DCHECK(RunsTasksOnCurrentThread());
+    return base::RunLoop::IsNestedOnCurrentThread();
   }
 
-  void AddNestingObserver(
-      base::MessageLoop::NestingObserver* observer) override {
-    base::MessageLoop::current()->AddNestingObserver(observer);
+  void AddNestingObserver(base::RunLoop::NestingObserver* observer) override {
+    base::RunLoop::AddNestingObserverOnCurrentThread(observer);
   }
 
   void RemoveNestingObserver(
-      base::MessageLoop::NestingObserver* observer) override {
-    base::MessageLoop::current()->RemoveNestingObserver(observer);
+      base::RunLoop::NestingObserver* observer) override {
+    base::RunLoop::RemoveNestingObserverOnCurrentThread(observer);
   }
 
  private:
@@ -1251,7 +1251,7 @@ TEST_F(TaskQueueManagerTest, DelayedTaskDoesNotSkipAHeadOfShorterDelayedTask) {
 }
 
 void CheckIsNested(bool* is_nested) {
-  *is_nested = base::MessageLoop::current()->IsNested();
+  *is_nested = base::RunLoop::IsNestedOnCurrentThread();
 }
 
 void PostAndQuitFromNestedRunloop(base::RunLoop* run_loop,
@@ -2728,7 +2728,7 @@ void MessageLoopTaskWithImmediateQuit(
   base::MessageLoop::ScopedNestableTaskAllower allow(message_loop);
 
   base::RunLoop run_loop;
-  // Needed because entering the nested message loop causes a DoWork to get
+  // Needed because entering the nested run loop causes a DoWork to get
   // posted.
   task_queue->PostTask(FROM_HERE, base::Bind(&NopTask));
   task_queue->PostTask(FROM_HERE, run_loop.QuitClosure());

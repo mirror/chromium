@@ -24,15 +24,6 @@ const char kEnableMaterialDesignPolicyPageDescription[] =
     "If enabled, the chrome://md-policy URL loads the Material Design "
     "policy page.";
 
-//  Material Design version of chrome://history
-
-const char kEnableMaterialDesignHistoryName[] =
-    "Enable Material Design history";
-
-const char kEnableMaterialDesignHistoryDescription[] =
-    "If enabled, the chrome://history/ URL loads the Material Design "
-    "history page.";
-
 //  Material Design version of chrome://settings
 
 const char kEnableMaterialDesignSettingsName[] =
@@ -1211,6 +1202,11 @@ const char kEnableDataReductionProxySiteBreakdownName[] =
 const char kEnableDataReductionProxySiteBreakdownDescription[] =
     "Enable the site breakdown on the Data Saver settings page.";
 
+const char kEnableOfflinePreviewsName[] = "Offline Page Previews";
+
+const char kEnableOfflinePreviewsDescription[] =
+    "Enable showing offline page previews on slow networks.";
+
 #endif  // defined(OS_ANDROID)
 
 const char kLcdTextName[] = "LCD text antialiasing";
@@ -2374,6 +2370,13 @@ const char kEnableContentSuggestionsNewFaviconServerDescription[] =
     "If enabled, the content suggestions (on the NTP) will get favicons from a "
     "new favicon server.";
 
+const char kEnableNtpMostLikelyFaviconsFromServerName[] =
+    "Download favicons for NTP tiles from Google.";
+
+const char kEnableNtpMostLikelyFaviconsFromServerDescription[] =
+    "If enabled, missing favicons for NTP tiles get downloaded from Google. "
+    "This only applies to tiles that originate from synced history.";
+
 const char kEnableContentSuggestionsSettingsName[] =
     "Show content suggestions settings.";
 
@@ -2726,17 +2729,6 @@ const char kCrosCompUpdatesName[] = "Chrome OS Flash Component Updates";
 
 const char kCrosCompUpdatesDescription[] =
     "Enable Flash component updates for Chrome OS.";
-
-//  Native Android History chrome://flags strings
-
-#if defined(OS_ANDROID)
-
-const char kNativeAndroidHistoryManager[] = "Native Android History";
-
-const char kNativeAndroidHistoryManagerDescription[] =
-    "Show the native Android UI for browsing history.";
-
-#endif  // defined(OS_ANDROID)
 
 //  Play Services LSD permission prompt chrome://flags strings
 
@@ -3121,5 +3113,12 @@ const char kUseSuggestionsEvenIfFewFeatureName[] =
 const char kUseSuggestionsEvenIfFewFeatureDescription[] =
     "Request server-side suggestions even if there are only very few of them "
     "and use them for tiles on the New Tab Page.";
+
+const char kLocationHardReloadName[] =
+    "Experimental change for Location.reload() to trigger a hard-reload.";
+
+const char kLocationHardReloadDescription[] =
+    "Enable an experimental change for Location.reload() to trigger a "
+    "hard-reload.";
 
 }  // namespace flag_descriptions

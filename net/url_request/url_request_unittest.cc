@@ -1271,7 +1271,7 @@ TEST_F(URLRequestTest, ResolveShortcutTest) {
     ASSERT_TRUE(SUCCEEDED(shell.CreateInstance(CLSID_ShellLink, NULL,
                                                CLSCTX_INPROC_SERVER)));
     base::win::ScopedComPtr<IPersistFile> persist;
-    ASSERT_TRUE(SUCCEEDED(shell.QueryInterface(persist.Receive())));
+    ASSERT_TRUE(SUCCEEDED(shell.CopyTo(persist.Receive())));
     EXPECT_TRUE(SUCCEEDED(shell->SetPath(app_path.value().c_str())));
     EXPECT_TRUE(SUCCEEDED(shell->SetDescription(L"ResolveShortcutTest")));
     EXPECT_TRUE(SUCCEEDED(persist->Save(lnk_path.c_str(), TRUE)));
@@ -6538,7 +6538,10 @@ class MockExpectCTReporter : public TransportSecurityState::ExpectCTReporter {
 
   void OnExpectCTFailed(const HostPortPair& host_port_pair,
                         const GURL& report_uri,
-                        const net::SSLInfo& ssl_info) override {
+                        const X509Certificate* validated_certificate_chain,
+                        const X509Certificate* served_certificate_chain,
+                        const SignedCertificateTimestampAndStatusList&
+                            signed_certificate_timestamps) override {
     num_failures_++;
   }
 

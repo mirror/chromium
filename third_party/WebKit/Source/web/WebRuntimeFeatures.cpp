@@ -68,10 +68,6 @@ void WebRuntimeFeatures::EnableAccelerated2dCanvas(bool enable) {
   RuntimeEnabledFeatures::setAccelerated2dCanvasEnabled(enable);
 }
 
-void WebRuntimeFeatures::EnableAccessibilityObjectModel(bool enable) {
-  RuntimeEnabledFeatures::setAccessibilityObjectModelEnabled(enable);
-}
-
 void WebRuntimeFeatures::EnableAudioOutputDevices(bool enable) {
   RuntimeEnabledFeatures::setAudioOutputDevicesEnabled(enable);
 }
@@ -406,6 +402,10 @@ void WebRuntimeFeatures::EnableVideoFullscreenDetection(bool enable) {
 
 void WebRuntimeFeatures::EnableMediaControlsOverlayPlayButton(bool enable) {
   RuntimeEnabledFeatures::setMediaControlsOverlayPlayButtonEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableLocationHardReload(bool enable) {
+  RuntimeEnabledFeatures::setLocationHardReloadEnabled(enable);
 }
 
 }  // namespace blink
