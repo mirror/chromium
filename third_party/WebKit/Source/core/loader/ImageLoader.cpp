@@ -401,7 +401,6 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
     ImageResource* image_resource = ImageResource::Create(
         ResourceRequest(ImageSourceToKURL(element_->ImageSourceURL())));
     image_resource->SetStatus(ResourceStatus::kPending);
-    image_resource->NotifyStartLoad();
     image_resource_for_image_document_ = image_resource;
     SetImage(image_resource->GetContent());
     return;

@@ -46,7 +46,6 @@ import org.chromium.chrome.browser.widget.FadingBackgroundView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController.ContentType;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.content_public.browser.LoadUrlParams;
-import org.chromium.ui.UiUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -511,15 +510,8 @@ public class BottomSheet
                 mContainerHeight = bottom - top;
                 updateSheetDimensions();
 
-                // If we are in the middle of a touch event stream (i.e. scrolling while keyboard is
-                // up) don't set the sheet state. Instead allow the gesture detector to position the
-                // sheet and make sure the keyboard hides.
-                if (mIsScrolling) {
-                    UiUtils.hideKeyboard(BottomSheet.this);
-                } else {
-                    cancelAnimation();
-                    setSheetState(mCurrentState, false);
-                }
+                cancelAnimation();
+                setSheetState(mCurrentState, false);
 
                 if (!mHasRootLayoutOccurred && mTabModelSelector != null
                         && mTabModelSelector.isTabStateInitialized()) {
@@ -641,9 +633,6 @@ public class BottomSheet
      * @param content The {@link BottomSheetContent} to show.
      */
     public void showContent(final BottomSheetContent content) {
-        // If an animation is already running, end it.
-        if (mContentSwapAnimatorSet != null) mContentSwapAnimatorSet.end();
-
         // If the desired content is already showing, do nothing.
         if (mSheetContent == content) return;
 
@@ -655,6 +644,9 @@ public class BottomSheet
                 ? mSheetContent.getToolbarView()
                 : mDefaultToolbarView;
         View oldContent = mSheetContent != null ? mSheetContent.getContentView() : null;
+
+        // If an animation is already running, end it.
+        if (mContentSwapAnimatorSet != null) mContentSwapAnimatorSet.end();
 
         List<Animator> animators = new ArrayList<>();
         mContentSwapAnimatorSet = new AnimatorSet();

@@ -55,11 +55,13 @@ public class ColorUtils {
     /**
      * @return The base color for the textbox given a toolbar background color.
      */
-    public static int getTextBoxColorForToolbarBackground(Resources res, boolean isNtp, int color) {
+    public static int getTextBoxColorForToolbarBackground(Resources res, Tab tab, int color) {
         if (shouldUseOpaqueTextboxBackground(color)) {
             // NTP should have no visible textbox in the toolbar, so just return the toolbar's
             // background color.
-            if (isNtp) return ApiCompatibilityUtils.getColor(res, R.color.ntp_bg);
+            if (tab.getNativePage() instanceof NewTabPage) {
+                return ApiCompatibilityUtils.getColor(res, R.color.ntp_bg);
+            }
 
             return Color.WHITE;
         }

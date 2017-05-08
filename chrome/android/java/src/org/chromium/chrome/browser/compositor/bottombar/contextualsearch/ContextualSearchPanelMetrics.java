@@ -37,10 +37,12 @@ public class ContextualSearchPanelMetrics {
     private boolean mIsSerpNavigation;
     private boolean mWasActivatedByTap;
     private boolean mWasPanelOpenedBeyondPeek;
+    private boolean mWasSelectionPartOfUrl;
     private boolean mWasContextualCardsDataShown;
     private boolean mWasQuickActionShown;
     private int mQuickActionCategory;
     private boolean mWasQuickActionClicked;
+    private boolean mWasSelectionAllCaps;
     private boolean mDidSelectionStartWithCapital;
     private char mSelectionFirstChar;
     private int mSelectionLength;
@@ -119,6 +121,11 @@ public class ContextualSearchPanelMetrics {
                 ContextualSearchUma.logResultsSeen(mWasSearchContentViewSeen, mWasActivatedByTap);
             }
 
+            if (mWasSelectionPartOfUrl) {
+                ContextualSearchUma.logResultsSeenSelectionIsUrl(mWasSearchContentViewSeen,
+                        mWasActivatedByTap);
+            }
+
             if (mWasContextualCardsDataShown) {
                 ContextualSearchUma.logContextualCardsResultsSeen(mWasSearchContentViewSeen);
             }
@@ -132,7 +139,9 @@ public class ContextualSearchPanelMetrics {
                         mWasQuickActionClicked);
             }
 
-            if (mDidSelectionStartWithCapital && mWasActivatedByTap) {
+            if (mWasSelectionAllCaps && mWasActivatedByTap) {
+                ContextualSearchUma.logAllCapsResultsSeen(mWasSearchContentViewSeen);
+            } else if (mDidSelectionStartWithCapital && mWasActivatedByTap) {
                 ContextualSearchUma.logStartedWithCapitalResultsSeen(mWasSearchContentViewSeen);
             }
 
@@ -145,7 +154,8 @@ public class ContextualSearchPanelMetrics {
             }
 
             if (mWasActivatedByTap) {
-                boolean wasAnySuppressionHeuristicSatisfied = mWasAnyHeuristicSatisfiedOnPanelShow;
+                boolean wasAnySuppressionHeuristicSatisfied =
+                        mWasAnyHeuristicSatisfiedOnPanelShow || mWasSelectionPartOfUrl;
                 ContextualSearchUma.logAnyTapSuppressionHeuristicSatisfied(
                         mWasSearchContentViewSeen, wasAnySuppressionHeuristicSatisfied);
                 // Log all the experiments to the Ranker logger.
@@ -232,10 +242,12 @@ public class ContextualSearchPanelMetrics {
             mHasExitedExpanded = false;
             mHasExitedMaximized = false;
             mIsSerpNavigation = false;
+            mWasSelectionPartOfUrl = false;
             mWasContextualCardsDataShown = false;
             mWasQuickActionShown = false;
             mQuickActionCategory = QuickActionCategory.NONE;
             mWasQuickActionClicked = false;
+            mWasSelectionAllCaps = false;
             mDidSelectionStartWithCapital = false;
             mWasAnyHeuristicSatisfiedOnPanelShow = false;
             mPanelTriggerTimeFromTapNs = 0;
@@ -274,6 +286,13 @@ public class ContextualSearchPanelMetrics {
     }
 
     /**
+     * @param wasPartOfUrl Whether the selected text was part of a URL.
+     */
+    public void setWasSelectionPartOfUrl(boolean wasPartOfUrl) {
+        mWasSelectionPartOfUrl = wasPartOfUrl;
+    }
+
+    /**
      * @param wasContextualCardsDataShown Whether Contextual Cards data was shown in the Contextual
      *                                    Search Bar.
      */
@@ -309,6 +328,10 @@ public class ContextualSearchPanelMetrics {
      */
     public void onSelectionEstablished(String selection) {
         mSelectionLength = selection.length();
+        // In some locales, there is no concept of an upper or lower case letter. Account for this
+        // by checking that the selected text is not equivalent to selection#toLowerCase().
+        mWasSelectionAllCaps = selection.equals(selection.toUpperCase(Locale.getDefault()))
+                && !selection.equals(selection.toLowerCase(Locale.getDefault()));
         mSelectionFirstChar = selection.charAt(0);
         String firstChar = String.valueOf(mSelectionFirstChar);
         mDidSelectionStartWithCapital = firstChar.equals(
@@ -324,6 +347,8 @@ public class ContextualSearchPanelMetrics {
                 ContextualSearchRankerLogger.Feature.SELECTION_LENGTH, mSelectionLength);
         mTapSuppressionRankerLogger.log(
                 ContextualSearchRankerLogger.Feature.SELECTION_FIRST_CHAR, mSelectionFirstChar);
+        mTapSuppressionRankerLogger.log(
+                ContextualSearchRankerLogger.Feature.SELECTION_WAS_ALL_CAPS, mWasSelectionAllCaps);
     }
 
     /**

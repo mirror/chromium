@@ -496,11 +496,10 @@ void GCMEncryptionProviderTest::TestEncryptionRoundTrip(
   // Encrypts the |kExampleMessage| using the generated shared key and the
   // random |salt|, storing the result in |record_size| and the message.
   GCMMessageCryptographer cryptographer(
-      GCMMessageCryptographer::Version::DRAFT_03);
+      pair.public_key(), server_pair.public_key(), auth_secret);
 
-  ASSERT_TRUE(cryptographer.Encrypt(
-      pair.public_key(), server_pair.public_key(), shared_secret, auth_secret,
-      salt, kExampleMessage, &record_size, &message.raw_data));
+  ASSERT_TRUE(cryptographer.Encrypt(kExampleMessage, shared_secret, salt,
+                                    &record_size, &message.raw_data));
 
   std::string encoded_salt, encoded_key;
 

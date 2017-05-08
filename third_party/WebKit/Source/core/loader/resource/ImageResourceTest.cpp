@@ -170,8 +170,6 @@ void ReceiveResponse(ImageResource* image_resource,
   response.SetURL(url);
   response.SetHTTPStatusCode(200);
   response.SetMimeType(mime_type);
-  image_resource->SetStatus(ResourceStatus::kPending);
-  image_resource->NotifyStartLoad();
   image_resource->ResponseReceived(response, nullptr);
   image_resource->AppendData(data, data_size);
   image_resource->Finish();
@@ -448,7 +446,6 @@ TEST(ImageResourceTest, CancelOnRemoveObserver) {
 TEST(ImageResourceTest, DecodedDataRemainsWhileHasClients) {
   ImageResource* image_resource = ImageResource::Create(ResourceRequest());
   image_resource->SetStatus(ResourceStatus::kPending);
-  image_resource->NotifyStartLoad();
 
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
@@ -491,7 +488,6 @@ TEST(ImageResourceTest, DecodedDataRemainsWhileHasClients) {
 TEST(ImageResourceTest, UpdateBitmapImages) {
   ImageResource* image_resource = ImageResource::Create(ResourceRequest());
   image_resource->SetStatus(ResourceStatus::kPending);
-  image_resource->NotifyStartLoad();
 
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
@@ -517,7 +513,6 @@ TEST(ImageResourceTest, ReloadIfLoFiOrPlaceholderAfterFinished) {
   ResourceRequest request = ResourceRequest(test_url);
   ImageResource* image_resource = ImageResource::Create(request);
   image_resource->SetStatus(ResourceStatus::kPending);
-  image_resource->NotifyStartLoad();
 
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
@@ -562,7 +557,6 @@ TEST(ImageResourceTest, ReloadIfLoFiOrPlaceholderAfterFinishedWithOldHeaders) {
   ResourceRequest request = ResourceRequest(test_url);
   ImageResource* image_resource = ImageResource::Create(request);
   image_resource->SetStatus(ResourceStatus::kPending);
-  image_resource->NotifyStartLoad();
 
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
@@ -608,7 +602,6 @@ TEST(ImageResourceTest,
   request.SetPreviewsState(WebURLRequest::kServerLoFiOn);
   ImageResource* image_resource = ImageResource::Create(request);
   image_resource->SetStatus(ResourceStatus::kPending);
-  image_resource->NotifyStartLoad();
 
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
@@ -1530,7 +1523,6 @@ TEST(ImageResourceTest, PeriodicFlushTest) {
   ResourceRequest request = ResourceRequest(test_url);
   ImageResource* image_resource = ImageResource::Create(request);
   image_resource->SetStatus(ResourceStatus::kPending);
-  image_resource->NotifyStartLoad();
 
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());

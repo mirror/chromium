@@ -549,16 +549,7 @@ def _SectionSizesFromElf(elf_path, tool_prefix):
 def _ArchFromElf(elf_path, tool_prefix):
   args = [tool_prefix + 'readelf', '-h', elf_path]
   stdout = subprocess.check_output(args)
-  machine = re.search('Machine:\s*(.+)', stdout).group(1)
-  if machine == 'Intel 80386':
-    return 'x86'
-  if machine == 'Advanced Micro Devices X86-64':
-    return 'x64'
-  elif machine == 'ARM':
-    return 'arm'
-  elif machine == 'AArch64':
-    return 'arm64'
-  return machine
+  return re.search('Machine:\s*(\S+)', stdout).group(1)
 
 
 def _ParseGnArgs(args_path):
@@ -673,10 +664,9 @@ def Run(args, parser):
 
       packed_section_name = None
       architecture = metadata[models.METADATA_ELF_ARCHITECTURE]
-      # Packing occurs enabled only arm32 & arm64.
-      if architecture == 'arm':
+      if architecture == 'ARM':
         packed_section_name = '.rel.dyn'
-      elif architecture == 'arm64':
+      elif architecture == 'AArch64':
         packed_section_name = '.rela.dyn'
 
       if packed_section_name:

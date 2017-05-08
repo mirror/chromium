@@ -58,6 +58,7 @@ UI_BASE_X_EXPORT void LogErrorEventDescription(Display* dpy,
 // --------------------------------------------------------------------------
 // Selects a visual with a preference for alpha support on compositing window
 // managers.
+#if !defined(OS_CHROMEOS)
 class UI_BASE_X_EXPORT XVisualManager {
  public:
   static XVisualManager* GetInstance();
@@ -77,9 +78,6 @@ class UI_BASE_X_EXPORT XVisualManager {
   bool OnGPUInfoChanged(bool software_rendering,
                         VisualID default_visual_id,
                         VisualID transparent_visual_id);
-
-  // Are all of the system requirements met for using transparent visuals?
-  bool ArgbVisualAvailable() const;
 
   ~XVisualManager();
 
@@ -118,6 +116,7 @@ class UI_BASE_X_EXPORT XVisualManager {
 
   DISALLOW_COPY_AND_ASSIGN(XVisualManager);
 };
+#endif
 
 }  // namespace ui
 

@@ -182,14 +182,12 @@ void FingerprintChromeOS::BiodServiceRestarted() {
 
 void FingerprintChromeOS::BiodEnrollScanDoneReceived(
     biod::ScanResult scan_result,
-    bool enroll_session_complete,
-    int percent_complete) {
+    bool enroll_session_complete) {
   if (enroll_session_complete)
     opened_session_ = FingerprintSession::NONE;
 
   for (auto& observer : observers_)
-    observer->OnEnrollScanDone(scan_result, enroll_session_complete,
-                               percent_complete);
+    observer->OnEnrollScanDone(scan_result, enroll_session_complete);
 }
 
 void FingerprintChromeOS::BiodAuthScanDoneReceived(

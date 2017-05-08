@@ -74,17 +74,19 @@ void DesktopEnvironmentOptions::set_enable_user_interface(bool enabled) {
 void DesktopEnvironmentOptions::ApplyHostSessionOptions(
     const HostSessionOptions& options) {
 #if defined(OS_WIN)
-  base::Optional<bool> directx_capturer =
-      options.GetBool("DirectX-Capturer");
+  base::Optional<std::string> directx_capturer =
+      options.Get("DirectX-Capturer");
   if (directx_capturer) {
-    desktop_capture_options_.set_allow_directx_capturer(*directx_capturer);
+    desktop_capture_options_.set_allow_directx_capturer(
+        *directx_capturer == "true");
   }
 #endif
   // This field is for test purpose. Usually it should not be set to false.
-  base::Optional<bool> detect_updated_region =
-      options.GetBool("Detect-Updated-Region");
+  base::Optional<std::string> detect_updated_region =
+      options.Get("Detect-Updated-Region");
   if (detect_updated_region) {
-    desktop_capture_options_.set_detect_updated_region(*detect_updated_region);
+    desktop_capture_options_.set_detect_updated_region(
+        *detect_updated_region == "true");
   }
 }
 

@@ -89,7 +89,7 @@ class TestWebState : public WebState {
   void SetView(UIView* view);
 
   // Getters for test data.
-  CRWContentView* GetTransientContentView();
+  bool IsShowingTransientContentView();
 
   // Notifier for tests.
   void OnPageLoaded(PageLoadCompletionStatus load_completion_status);
@@ -100,7 +100,7 @@ class TestWebState : public WebState {
   BrowserState* browser_state_;
   bool web_usage_enabled_;
   bool is_loading_;
-  base::scoped_nsobject<CRWContentView> transient_content_view_;
+  bool is_showing_transient_content_view_;
   GURL url_;
   base::string16 title_;
   URLVerificationTrustLevel trust_level_;

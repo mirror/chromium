@@ -7,7 +7,6 @@
 #include <stdint.h>
 
 #include "base/callback.h"
-#import "ios/web/public/web_state/ui/crw_content_view.h"
 #include "ios/web/public/web_state/web_state_observer.h"
 
 namespace web {
@@ -24,6 +23,7 @@ TestWebState::TestWebState()
     : browser_state_(nullptr),
       web_usage_enabled_(false),
       is_loading_(false),
+      is_showing_transient_content_view_(false),
       trust_level_(kAbsolute),
       content_is_html_(true) {}
 
@@ -194,16 +194,12 @@ void TestWebState::OnRenderProcessGone() {
 
 void TestWebState::ShowTransientContentView(CRWContentView* content_view) {
   if (content_view) {
-    transient_content_view_.reset([content_view retain]);
+    is_showing_transient_content_view_ = true;
   }
 }
 
 void TestWebState::ClearTransientContentView() {
-  transient_content_view_.reset();
-}
-
-CRWContentView* TestWebState::GetTransientContentView() {
-  return transient_content_view_.get();
+  is_showing_transient_content_view_ = false;
 }
 
 void TestWebState::SetCurrentURL(const GURL& url) {
@@ -229,6 +225,10 @@ bool TestWebState::HasOpener() const {
 base::WeakPtr<WebState> TestWebState::AsWeakPtr() {
   NOTREACHED();
   return base::WeakPtr<WebState>();
+}
+
+bool TestWebState::IsShowingTransientContentView() {
+  return is_showing_transient_content_view_;
 }
 
 }  // namespace web

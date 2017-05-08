@@ -58,8 +58,7 @@ void TestBiodObserver::ResetAllCounts() {
 void TestBiodObserver::BiodServiceRestarted() {}
 
 void TestBiodObserver::BiodEnrollScanDoneReceived(biod::ScanResult scan_result,
-                                                  bool is_complete,
-                                                  int percent_complete) {
+                                                  bool is_complete) {
   is_complete ? num_complete_enroll_scans_received_++
               : num_incomplete_enroll_scans_received_++;
 }

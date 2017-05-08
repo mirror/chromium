@@ -137,7 +137,7 @@ v8::Local<v8::Object> GenerateMostVisitedItem(
   // http://yahoo.com is "Yahoo!". In RTL locales, in the New Tab page, the
   // title will be rendered as "!Yahoo" if its "dir" attribute is not set to
   // "ltr".
-  const char* direction;
+  std::string direction;
   if (base::i18n::StringContainsStrongRTLChars(mv_item.title))
     direction = kRTLHtmlTextDirection;
   else
@@ -174,7 +174,7 @@ v8::Local<v8::Object> GenerateMostVisitedItem(
   obj->Set(v8::String::NewFromUtf8(isolate, "domain"),
            UTF8ToV8String(isolate, mv_item.url.host()));
   obj->Set(v8::String::NewFromUtf8(isolate, "direction"),
-           v8::String::NewFromUtf8(isolate, direction));
+           UTF8ToV8String(isolate, direction));
   obj->Set(v8::String::NewFromUtf8(isolate, "url"),
            UTF8ToV8String(isolate, mv_item.url.spec()));
   return obj;
@@ -517,54 +517,56 @@ v8::Local<v8::FunctionTemplate>
 SearchBoxExtensionWrapper::GetNativeFunctionTemplate(
     v8::Isolate* isolate,
     v8::Local<v8::String> name) {
-  // Extract the name for easier comparison.
-  std::string name_str;
-  if (name->Length() > 0)
-    name->WriteUtf8(base::WriteInto(&name_str, name->Length() + 1));
-
-  if (name_str == "CheckIsUserSignedInToChromeAs")
+  if (name->Equals(
+          v8::String::NewFromUtf8(isolate, "CheckIsUserSignedInToChromeAs")))
     return v8::FunctionTemplate::New(isolate, CheckIsUserSignedInToChromeAs);
-  if (name_str == "CheckIsUserSyncingHistory")
+  if (name->Equals(
+          v8::String::NewFromUtf8(isolate, "CheckIsUserSyncingHistory")))
     return v8::FunctionTemplate::New(isolate, CheckIsUserSyncingHistory);
-  if (name_str == "DeleteMostVisitedItem")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "DeleteMostVisitedItem")))
     return v8::FunctionTemplate::New(isolate, DeleteMostVisitedItem);
-  if (name_str == "GetMostVisitedItems")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "GetMostVisitedItems")))
     return v8::FunctionTemplate::New(isolate, GetMostVisitedItems);
-  if (name_str == "GetMostVisitedItemData")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "GetMostVisitedItemData")))
     return v8::FunctionTemplate::New(isolate, GetMostVisitedItemData);
-  if (name_str == "GetQuery")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "GetQuery")))
     return v8::FunctionTemplate::New(isolate, GetQuery);
-  if (name_str == "GetRightToLeft")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "GetRightToLeft")))
     return v8::FunctionTemplate::New(isolate, GetRightToLeft);
-  if (name_str == "GetSearchRequestParams")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "GetSearchRequestParams")))
     return v8::FunctionTemplate::New(isolate, GetSearchRequestParams);
-  if (name_str == "GetSuggestionToPrefetch")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "GetSuggestionToPrefetch")))
     return v8::FunctionTemplate::New(isolate, GetSuggestionToPrefetch);
-  if (name_str == "GetThemeBackgroundInfo")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "GetThemeBackgroundInfo")))
     return v8::FunctionTemplate::New(isolate, GetThemeBackgroundInfo);
-  if (name_str == "IsFocused")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "IsFocused")))
     return v8::FunctionTemplate::New(isolate, IsFocused);
-  if (name_str == "IsInputInProgress")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "IsInputInProgress")))
     return v8::FunctionTemplate::New(isolate, IsInputInProgress);
-  if (name_str == "IsKeyCaptureEnabled")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "IsKeyCaptureEnabled")))
     return v8::FunctionTemplate::New(isolate, IsKeyCaptureEnabled);
-  if (name_str == "LogEvent")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "LogEvent")))
     return v8::FunctionTemplate::New(isolate, LogEvent);
-  if (name_str == "LogMostVisitedImpression")
+  if (name->Equals(
+          v8::String::NewFromUtf8(isolate, "LogMostVisitedImpression"))) {
     return v8::FunctionTemplate::New(isolate, LogMostVisitedImpression);
-  if (name_str == "LogMostVisitedNavigation")
+  }
+  if (name->Equals(
+          v8::String::NewFromUtf8(isolate, "LogMostVisitedNavigation"))) {
     return v8::FunctionTemplate::New(isolate, LogMostVisitedNavigation);
-  if (name_str == "Paste")
+  }
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "Paste")))
     return v8::FunctionTemplate::New(isolate, Paste);
-  if (name_str == "StartCapturingKeyStrokes")
+  if (name->Equals(
+          v8::String::NewFromUtf8(isolate, "StartCapturingKeyStrokes")))
     return v8::FunctionTemplate::New(isolate, StartCapturingKeyStrokes);
-  if (name_str == "StopCapturingKeyStrokes")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "StopCapturingKeyStrokes")))
     return v8::FunctionTemplate::New(isolate, StopCapturingKeyStrokes);
-  if (name_str == "UndoAllMostVisitedDeletions")
+  if (name->Equals(
+          v8::String::NewFromUtf8(isolate, "UndoAllMostVisitedDeletions")))
     return v8::FunctionTemplate::New(isolate, UndoAllMostVisitedDeletions);
-  if (name_str == "UndoMostVisitedDeletion")
+  if (name->Equals(v8::String::NewFromUtf8(isolate, "UndoMostVisitedDeletion")))
     return v8::FunctionTemplate::New(isolate, UndoMostVisitedDeletion);
-
   return v8::Local<v8::FunctionTemplate>();
 }
 
@@ -637,7 +639,6 @@ void SearchBoxExtensionWrapper::GetMostVisitedItems(
   DVLOG(1) << render_frame << " GetMostVisitedItems";
 
   const SearchBox* search_box = SearchBox::Get(render_frame);
-  int render_view_id = render_frame->GetRenderView()->GetRoutingID();
 
   std::vector<InstantMostVisitedItemIDPair> instant_mv_items;
   search_box->GetMostVisitedItems(&instant_mv_items);
@@ -645,9 +646,10 @@ void SearchBoxExtensionWrapper::GetMostVisitedItems(
   v8::Local<v8::Array> v8_mv_items =
       v8::Array::New(isolate, instant_mv_items.size());
   for (size_t i = 0; i < instant_mv_items.size(); ++i) {
-    v8_mv_items->Set(i, GenerateMostVisitedItem(isolate, render_view_id,
-                                                instant_mv_items[i].first,
-                                                instant_mv_items[i].second));
+    v8_mv_items->Set(
+        i, GenerateMostVisitedItem(
+               isolate, render_frame->GetRenderView()->GetRoutingID(),
+               instant_mv_items[i].first, instant_mv_items[i].second));
   }
   args.GetReturnValue().Set(v8_mv_items);
 }

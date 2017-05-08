@@ -10,8 +10,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
-#include "base/task_scheduler/post_task.h"
-#include "base/threading/thread_restrictions.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "content/public/browser/browser_thread.h"
 #include "printing/backend/print_backend.h"
@@ -20,8 +19,9 @@ namespace printing {
 
 namespace {
 
-PrinterList EnumeratePrintersAsync() {
-  base::ThreadRestrictions::AssertIOAllowed();
+PrinterList EnumeratePrintersOnBlockingPoolThread() {
+  DCHECK(content::BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
+
   scoped_refptr<PrintBackend> print_backend(
       PrintBackend::CreateInstance(nullptr));
 
@@ -31,9 +31,9 @@ PrinterList EnumeratePrintersAsync() {
   return printer_list;
 }
 
-std::unique_ptr<base::DictionaryValue> FetchCapabilitiesAsync(
+std::unique_ptr<base::DictionaryValue> FetchCapabilitiesOnBlockingPool(
     const std::string& device_name) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK(content::BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
   scoped_refptr<printing::PrintBackend> print_backend(
       printing::PrintBackend::CreateInstance(nullptr));
 
@@ -53,8 +53,9 @@ std::unique_ptr<base::DictionaryValue> FetchCapabilitiesAsync(
   return GetSettingsOnBlockingPool(device_name, basic_info);
 }
 
-std::string GetDefaultPrinterAsync() {
-  base::ThreadRestrictions::AssertIOAllowed();
+std::string GetDefaultPrinterOnBlockingPoolThread() {
+  DCHECK(content::BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
+
   scoped_refptr<printing::PrintBackend> print_backend(
       PrintBackend::CreateInstance(nullptr));
 
@@ -76,17 +77,17 @@ class PrinterBackendProxyDefault : public PrinterBackendProxy {
   void GetDefaultPrinter(const DefaultPrinterCallback& cb) override {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-    base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-        base::Bind(&GetDefaultPrinterAsync), cb);
+    base::PostTaskAndReplyWithResult(
+        content::BrowserThread::GetBlockingPool(), FROM_HERE,
+        base::Bind(&GetDefaultPrinterOnBlockingPoolThread), cb);
   }
 
   void EnumeratePrinters(const EnumeratePrintersCallback& cb) override {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-    base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-        base::Bind(&EnumeratePrintersAsync), cb);
+    base::PostTaskAndReplyWithResult(
+        content::BrowserThread::GetBlockingPool(), FROM_HERE,
+        base::Bind(&EnumeratePrintersOnBlockingPoolThread), cb);
   }
 
   void ConfigurePrinterAndFetchCapabilities(
@@ -94,9 +95,9 @@ class PrinterBackendProxyDefault : public PrinterBackendProxy {
       const PrinterSetupCallback& cb) override {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-    base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-        base::Bind(&FetchCapabilitiesAsync, device_name), cb);
+    base::PostTaskAndReplyWithResult(
+        content::BrowserThread::GetBlockingPool(), FROM_HERE,
+        base::Bind(&FetchCapabilitiesOnBlockingPool, device_name), cb);
   }
 
  private:

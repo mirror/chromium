@@ -21,6 +21,7 @@
       'type': 'none',
       'dependencies': [
         '../../chrome/browser/resources/chromeos/compiled_resources.gyp:*',
+        '../../chrome/browser/resources/extensions/compiled_resources.gyp:*',
         '../../chrome/browser/resources/help/compiled_resources.gyp:*',
         '../../chrome/browser/resources/options/compiled_resources.gyp:*',
         '../../ui/file_manager/file_manager/foreground/js/compiled_resources.gyp:*',

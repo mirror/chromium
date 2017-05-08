@@ -23,9 +23,7 @@ class FakeFingerprintObserver : public mojom::FingerprintObserver {
   // mojom::FingerprintObserver
   void OnRestarted() override { restarts_++; }
 
-  void OnEnrollScanDone(uint32_t scan_result,
-                        bool is_complete,
-                        int percent_complete) override {
+  void OnEnrollScanDone(uint32_t scan_result, bool is_complete) override {
     enroll_scan_dones_++;
   }
 
@@ -73,8 +71,7 @@ class FingerprintChromeOSTest : public testing::Test {
   void GenerateEnrollScanDoneSignal() {
     std::string fake_fingerprint_data;
     fake_biod_client_->SendEnrollScanDone(fake_fingerprint_data,
-                                          biod::SCAN_RESULT_SUCCESS, true,
-                                          -1 /* percent_complete */);
+                                          biod::SCAN_RESULT_SUCCESS, true);
   }
 
   void GenerateAuthScanDoneSignal() {
