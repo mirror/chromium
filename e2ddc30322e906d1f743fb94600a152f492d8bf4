@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "801ed754_0edb1424",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T07:14:47Z",
+      "side": 1,
+      "message": "Assuming there are no bugs, Document::setDomain() calls UpdateSecurityOrigin(), which eventually ends up here: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Document.cpp?rcl\u003d3a0342b256ebc20b201f435f10dc61105c7515df\u0026l\u003d4877",
+      "parentUuid": "1796e20a_a40074e6",
+      "revId": "e2ddc30322e906d1f743fb94600a152f492d8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47ba3ed9_f2cae2c5",
         "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
         "patchSetId": 8
@@ -56,6 +74,24 @@
       "revId": "e2ddc30322e906d1f743fb94600a152f492d8bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d556258_17128511",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T07:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47ba3ed9_f2cae2c5",
+      "revId": "e2ddc30322e906d1f743fb94600a152f492d8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
