@@ -123,29 +123,6 @@ base::string16 SanitizeCreditCardFieldValue(const base::string16& value) {
   return sanitized;
 }
 
-// If |name| consists of three whitespace-separated parts and the second of the
-// three parts is a single character or a single character followed by a period,
-// returns the result of joining the first and third parts with a space.
-// Otherwise, returns |name|.
-//
-// Note that a better way to do this would be to use SplitName from
-// src/components/autofill/core/browser/contact_info.cc. However, for now we
-// want the logic of which variations of names are considered to be the same to
-// exactly match the logic applied on the Payments server.
-base::string16 RemoveMiddleInitial(const base::string16& name) {
-  std::vector<base::StringPiece16> parts =
-      base::SplitStringPiece(name, base::kWhitespaceUTF16,
-                             base::KEEP_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
-  if (parts.size() == 3 && (parts[1].length() == 1 ||
-                            (parts[1].length() == 2 &&
-                             base::EndsWith(parts[1], base::ASCIIToUTF16("."),
-                                            base::CompareCase::SENSITIVE)))) {
-    parts.erase(parts.begin() + 1);
-    return base::JoinString(parts, base::ASCIIToUTF16(" "));
-  }
-  return name;
-}
-
 // Returns whether the |field| is predicted as being any kind of name.
 bool IsNameType(const AutofillField& field) {
   return field.Type().group() == NAME || field.Type().group() == NAME_BILLING ||
@@ -245,6 +222,8 @@ AutofillManager::AutofillManager(
       user_did_edit_autofilled_field_(false),
       user_did_accept_upload_prompt_(false),
       should_cvc_be_requested_(false),
+      found_cvc_field_(false),
+      found_cvc_value_(false),
       external_delegate_(NULL),
       test_delegate_(NULL),
 #if defined(OS_ANDROID) || defined(OS_IOS)
@@ -1055,9 +1034,19 @@ void AutofillManager::OnDidGetUploadDetails(
                    weak_ptr_factory_.GetWeakPtr()));
     client_->LoadRiskData(base::Bind(&AutofillManager::OnDidGetUploadRiskData,
                                      weak_ptr_factory_.GetWeakPtr()));
-    card_upload_decision_metrics = should_cvc_be_requested_
-                                       ? AutofillMetrics::UPLOAD_OFFERED_NO_CVC
-                                       : AutofillMetrics::UPLOAD_OFFERED;
+    card_upload_decision_metrics = AutofillMetrics::UPLOAD_OFFERED;
+    if (!found_cvc_field_ || !found_cvc_value_)
+      DCHECK(should_cvc_be_requested_);
+    if (found_cvc_field_) {
+      if (found_cvc_value_) {
+        if (should_cvc_be_requested_)
+          card_upload_decision_metrics |= AutofillMetrics::INVALID_CVC_VALUE;
+      } else {
+        card_upload_decision_metrics |= AutofillMetrics::CVC_VALUE_NOT_FOUND;
+      }
+    } else {
+      card_upload_decision_metrics |= AutofillMetrics::CVC_FIELD_NOT_FOUND;
+    }
   } else {
     // If the upload details request failed, fall back to a local save. The
     // reasoning here is as follows:
@@ -1248,12 +1237,18 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
     // upload and sometimes offering local save is a confusing user experience.
     // If no CVC and the experiment is on, request CVC from the user in the
     // bubble and save using the provided value.
+    found_cvc_field_ = false;
+    found_cvc_value_ = false;
     for (const auto& field : submitted_form) {
-      if (field->Type().GetStorableType() == CREDIT_CARD_VERIFICATION_CODE &&
-          IsValidCreditCardSecurityCode(field->value,
-                                        upload_request_.card.network())) {
-        upload_request_.cvc = field->value;
-        break;
+      if (field->Type().GetStorableType() == CREDIT_CARD_VERIFICATION_CODE) {
+        found_cvc_field_ = true;
+        if (!field->value.empty())
+          found_cvc_value_ = true;
+        if (IsValidCreditCardSecurityCode(field->value,
+                                          upload_request_.card.network())) {
+          upload_request_.cvc = field->value;
+          break;
+        }
       }
     }
 
@@ -1265,15 +1260,18 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
 
     pending_upload_request_url_ = GURL(submitted_form.source_url());
 
-    // Both the CVC and address checks are done.  Conform to the legacy order of
-    // reporting on CVC then address.
     should_cvc_be_requested_ = false;
     if (upload_request_.cvc.empty()) {
       should_cvc_be_requested_ =
           (!upload_decision_metrics &&
            IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled());
       if (!should_cvc_be_requested_) {
-        upload_decision_metrics |= AutofillMetrics::UPLOAD_NOT_OFFERED_NO_CVC;
+        if (found_cvc_field_)
+          upload_decision_metrics |= found_cvc_value_
+                                         ? AutofillMetrics::INVALID_CVC_VALUE
+                                         : AutofillMetrics::CVC_VALUE_NOT_FOUND;
+        else
+          upload_decision_metrics |= AutofillMetrics::CVC_FIELD_NOT_FOUND;
         rappor_metric_name = "Autofill.CardUploadNotOfferedNoCvc";
       }
     }
@@ -1299,41 +1297,44 @@ int AutofillManager::GetProfilesForCreditCardUpload(
   const base::Time now = AutofillClock::Now();
   const base::TimeDelta fifteen_minutes = base::TimeDelta::FromMinutes(15);
   int upload_decision_metrics = 0;
+  bool has_profile = false;
 
   // First, collect all of the addresses used recently.
   for (AutofillProfile* profile : personal_data_->GetProfiles()) {
+    has_profile = true;
     if ((now - profile->use_date()) < fifteen_minutes ||
         (now - profile->modification_date()) < fifteen_minutes) {
       candidate_profiles.push_back(*profile);
     }
   }
   if (candidate_profiles.empty()) {
-    upload_decision_metrics |= AutofillMetrics::UPLOAD_NOT_OFFERED_NO_ADDRESS;
+    upload_decision_metrics |=
+        has_profile
+            ? AutofillMetrics::UPLOAD_NOT_OFFERED_NO_RECENTLY_USED_ADDRESS
+            : AutofillMetrics::UPLOAD_NOT_OFFERED_NO_ADDRESS_PROFILE;
     *rappor_metric_name = "Autofill.CardUploadNotOfferedNoAddress";
   }
 
-  // If any of the names on the card or the addresses don't match (where
-  // matching is case insensitive and ignores middle initials if present), the
+  // If any of the names on the card or the addresses don't match the
   // candidate set is invalid. This matches the rules for name matching applied
   // server-side by Google Payments and ensures that we don't send upload
   // requests that are guaranteed to fail.
-  base::string16 verified_name;
   const base::string16 card_name =
       card.GetInfo(AutofillType(CREDIT_CARD_NAME_FULL), app_locale_);
-  if (!card_name.empty()) {
-    verified_name = RemoveMiddleInitial(card_name);
-  }
-  for (const AutofillProfile& profile : candidate_profiles) {
-    const base::string16 address_name =
-        profile.GetInfo(AutofillType(NAME_FULL), app_locale_);
-    if (!address_name.empty()) {
-      if (verified_name.empty()) {
-        verified_name = RemoveMiddleInitial(address_name);
-      } else {
-        // TODO(crbug.com/590307): We'll need to make the name comparison more
-        // sophisticated.
-        if (!base::EqualsCaseInsensitiveASCII(
-                verified_name, RemoveMiddleInitial(address_name))) {
+  base::string16 verified_name;
+  if (candidate_profiles.empty()) {
+    verified_name = card_name;
+  } else {
+    AutofillProfileComparator comparator(app_locale_);
+    verified_name = comparator.NormalizeForComparison(card_name);
+    for (const AutofillProfile& profile : candidate_profiles) {
+      const base::string16 address_name = comparator.NormalizeForComparison(
+          profile.GetInfo(AutofillType(NAME_FULL), app_locale_));
+      if (!address_name.empty()) {
+        if (verified_name.empty() ||
+            comparator.IsNameVariantOf(address_name, verified_name)) {
+          verified_name = address_name;
+        } else if (!comparator.IsNameVariantOf(verified_name, address_name)) {
           if (!upload_decision_metrics)
             *rappor_metric_name =
                 "Autofill.CardUploadNotOfferedConflictingNames";
@@ -1344,6 +1345,7 @@ int AutofillManager::GetProfilesForCreditCardUpload(
       }
     }
   }
+
   // If neither the card nor any of the addresses have a name associated with
   // them, the candidate set is invalid.
   if (verified_name.empty()) {
@@ -1384,7 +1386,7 @@ int AutofillManager::GetProfilesForCreditCardUpload(
 
   // If none of the candidate addresses have a zip, the candidate set is
   // invalid.
-  if (verified_zip.empty())
+  if (verified_zip.empty() && !candidate_profiles.empty())
     upload_decision_metrics |= AutofillMetrics::UPLOAD_NOT_OFFERED_NO_ZIP_CODE;
 
   if (!upload_decision_metrics)

@@ -2487,7 +2487,7 @@ blink::WebLocalFrame* RenderFrameImpl::GetWebFrame() {
   return frame_;
 }
 
-WebPreferences& RenderFrameImpl::GetWebkitPreferences() {
+const WebPreferences& RenderFrameImpl::GetWebkitPreferences() {
   return render_view_->GetWebkitPreferences();
 }
 
@@ -2512,19 +2512,17 @@ void RenderFrameImpl::CancelContextMenu(int request_id) {
 }
 
 blink::WebPlugin* RenderFrameImpl::CreatePlugin(
-    blink::WebFrame* frame,
     const WebPluginInfo& info,
     const blink::WebPluginParams& params,
     std::unique_ptr<content::PluginInstanceThrottler> throttler) {
-  DCHECK_EQ(frame_, frame);
 #if BUILDFLAG(ENABLE_PLUGINS)
   if (info.type == WebPluginInfo::PLUGIN_TYPE_BROWSER_PLUGIN) {
+    // |delegate| deletes itself.
+    BrowserPluginDelegate* delegate =
+        GetContentClient()->renderer()->CreateBrowserPluginDelegate(
+            this, params.mime_type.Utf8(), GURL(params.url));
     return BrowserPluginManager::Get()->CreateBrowserPlugin(
-        this, GetContentClient()
-                  ->renderer()
-                  ->CreateBrowserPluginDelegate(this, params.mime_type.Utf8(),
-                                                GURL(params.url))
-                  ->GetWeakPtr());
+        this, delegate->GetWeakPtr());
   }
 
   bool pepper_plugin_was_registered = false;
@@ -2541,8 +2539,8 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
 #if defined(OS_CHROMEOS)
   LOG(WARNING) << "Pepper module/plugin creation failed.";
 #endif
-#endif
-  return NULL;
+#endif  // BUILDFLAG(ENABLE_PLUGINS)
+  return nullptr;
 }
 
 void RenderFrameImpl::LoadURLExternally(const blink::WebURLRequest& request,
@@ -2715,6 +2713,11 @@ void RenderFrameImpl::AddMessageToConsole(ConsoleMessageLevel level,
   frame_->AddMessageToConsole(wcm);
 }
 
+void RenderFrameImpl::DetachDevToolsForTest() {
+  if (devtools_agent_)
+    devtools_agent_->DetachAllSessions();
+}
+
 PreviewsState RenderFrameImpl::GetPreviewsState() const {
   return previews_state_;
 }
@@ -2782,23 +2785,21 @@ void RenderFrameImpl::SetHostZoomLevel(const GURL& url, double zoom_level) {
 // blink::WebFrameClient implementation ----------------------------------------
 
 blink::WebPlugin* RenderFrameImpl::CreatePlugin(
-    blink::WebLocalFrame* frame,
     const blink::WebPluginParams& params) {
-  DCHECK_EQ(frame_, frame);
-  blink::WebPlugin* plugin = NULL;
-  if (GetContentClient()->renderer()->OverrideCreatePlugin(
-          this, frame, params, &plugin)) {
+  blink::WebPlugin* plugin = nullptr;
+  if (GetContentClient()->renderer()->OverrideCreatePlugin(this, params,
+                                                           &plugin)) {
     return plugin;
   }
 
   if (params.mime_type.ContainsOnlyASCII() &&
       params.mime_type.Ascii() == kBrowserPluginMimeType) {
+    // |delegate| deletes itself.
+    BrowserPluginDelegate* delegate =
+        GetContentClient()->renderer()->CreateBrowserPluginDelegate(
+            this, kBrowserPluginMimeType, GURL(params.url));
     return BrowserPluginManager::Get()->CreateBrowserPlugin(
-        this, GetContentClient()
-                  ->renderer()
-                  ->CreateBrowserPluginDelegate(this, kBrowserPluginMimeType,
-                                                GURL(params.url))
-                  ->GetWeakPtr());
+        this, delegate->GetWeakPtr());
   }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -2806,16 +2807,16 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
   std::string mime_type;
   bool found = false;
   Send(new FrameHostMsg_GetPluginInfo(
-      routing_id_, params.url, frame->Top()->GetSecurityOrigin(),
+      routing_id_, params.url, frame_->Top()->GetSecurityOrigin(),
       params.mime_type.Utf8(), &found, &info, &mime_type));
   if (!found)
-    return NULL;
+    return nullptr;
 
   WebPluginParams params_to_use = params;
   params_to_use.mime_type = WebString::FromUTF8(mime_type);
-  return CreatePlugin(frame, info, params_to_use, nullptr /* throttler */);
+  return CreatePlugin(info, params_to_use, nullptr /* throttler */);
 #else
-  return NULL;
+  return nullptr;
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 }
 
@@ -4496,6 +4497,8 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
           current_request_data->navigation_initiated_by_renderer());
     }
   }
+
+  extra_data->set_url_loader_factory_override(url_loader_factory_.get());
 
   request.SetExtraData(extra_data);
 

@@ -424,7 +424,7 @@ class DevToolsAgentTest : public RenderViewImplTest {
 
   void Detach() {
     agent()->send_protocol_message_callback_for_test_.Reset();
-    agent()->OnDetach();
+    agent()->DetachAllSessions();
   }
 
   bool IsPaused() {
@@ -2498,7 +2498,7 @@ TEST_F(DevToolsAgentTest, DevToolsResumeOnClose) {
   DispatchDevToolsMessage("Debugger.enable",
                           "{\"id\":1,\"method\":\"Debugger.enable\"}");
 
-  // Executing javascript will pause the thread and create nested message loop.
+  // Executing javascript will pause the thread and create nested run loop.
   // Posting task simulates message coming from browser.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,

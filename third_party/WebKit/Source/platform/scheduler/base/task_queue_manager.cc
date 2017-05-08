@@ -172,8 +172,8 @@ void TaskQueueManager::WakeUpReadyDelayedQueues(LazyNow* lazy_now) {
   }
 }
 
-void TaskQueueManager::OnBeginNestedMessageLoop() {
-  // We just entered a nested message loop, make sure there's a DoWork posted or
+void TaskQueueManager::OnBeginNestedRunLoop() {
+  // We just entered a nested run loop, make sure there's a DoWork posted or
   // the system will grind to a halt.
   {
     base::AutoLock lock(any_thread_lock_);
@@ -181,10 +181,10 @@ void TaskQueueManager::OnBeginNestedMessageLoop() {
     any_thread().is_nested = true;
   }
 
-  // When a nested message loop starts, task time observers may want to ignore
+  // When a nested run loop starts, task time observers may want to ignore
   // the current task.
   for (auto& observer : task_time_observers_)
-    observer.OnBeginNestedMessageLoop();
+    observer.OnBeginNestedRunLoop();
 
   delegate_->PostTask(FROM_HERE, immediate_do_work_closure_);
 }
@@ -288,7 +288,7 @@ void TaskQueueManager::DoWork(bool delayed) {
     queues_to_delete_.clear();
 
   // This must be done before running any tasks because they could invoke a
-  // nested message loop and we risk having a stale |next_delayed_do_work_|.
+  // nested run loop and we risk having a stale |next_delayed_do_work_|.
   if (delayed)
     next_delayed_do_work_.Clear();
 

@@ -716,7 +716,7 @@ void LayoutView::UpdateAfterLayout() {
   if (!GetDocument().Printing())
     GetFrameView()->AdjustViewSize();
   frame.GetChromeClient().ResizeAfterLayout(&frame);
-  LayoutBlock::UpdateAfterLayout();
+  LayoutBlockFlow::UpdateAfterLayout();
 }
 
 void LayoutView::UpdateHitTestResult(HitTestResult& result,

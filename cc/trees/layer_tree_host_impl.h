@@ -227,7 +227,7 @@ class CC_EXPORT LayerTreeHostImpl
     ~FrameData();
     void AsValueInto(base::trace_event::TracedValue* value) const;
 
-    std::vector<SurfaceId> embedded_surfaces;
+    std::vector<SurfaceId> activation_dependencies;
     std::vector<gfx::Rect> occluding_screen_space_rects;
     std::vector<gfx::Rect> non_occluding_screen_space_rects;
     RenderPassList render_passes;
@@ -332,13 +332,6 @@ class CC_EXPORT LayerTreeHostImpl
       ElementId scroll_element_id) const;
 
   DrawMode GetDrawMode() const;
-
-  // Viewport size in draw space: this size is in physical pixels and is used
-  // for draw properties, tilings, quads and render passes.
-  gfx::Size DrawViewportSize() const;
-
-  // Viewport rect in view space used for tiling prioritization.
-  const gfx::Rect ViewportRectForTilePriority() const;
 
   // TileManagerClient implementation.
   void NotifyReadyToActivate() override;
@@ -542,9 +535,13 @@ class CC_EXPORT LayerTreeHostImpl
   void ScheduleMicroBenchmark(std::unique_ptr<MicroBenchmarkImpl> benchmark);
 
   CompositorFrameMetadata MakeCompositorFrameMetadata() const;
+
   // Viewport rectangle and clip in device space.  These rects are used to
   // prioritize raster and determine what is submitted in a CompositorFrame.
   gfx::Rect DeviceViewport() const;
+  // Viewport rect to be used for tiling prioritization instead of the
+  // DeviceViewport().
+  const gfx::Rect ViewportRectForTilePriority() const;
 
   // When a SwapPromiseMonitor is created on the impl thread, it calls
   // InsertSwapPromiseMonitor() to register itself with LayerTreeHostImpl.

@@ -13951,6 +13951,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Download.HttpResponseCode" enum="HttpResponseCode">
+  <owner>xingliu@chromium.org</owner>
+  <summary>The count of HTTP Response codes for download requests.</summary>
+</histogram>
+
 <histogram name="Download.InterruptedAtEndError" enum="NetErrorCodes">
   <owner>asanka@chromium.org</owner>
   <summary>
@@ -18441,9 +18446,30 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Extensions.DeclarativeAPIFunctionCalls"
+    enum="DeclarativeAPIFunctionType">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Number of calls to the declarative API extension functions. This includes
+    the declarativeContent and declarativeWebRequest APIs. Emitted when the
+    extension function is called.
+  </summary>
+</histogram>
+
 <histogram name="Extensions.DeclarativeRulesStorageInitialization" units="ms">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>Time spent until rules storage delegate gets ready.</summary>
+</histogram>
+
+<histogram
+    name="Extensions.DeclarativeWebRequest.WebViewRequestDeclarativeRules"
+    enum="BooleanDeclarativeRules">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Whether a network request from a guest webview has any declarative web
+    request rules that need to be evaluated. Emitted whenever a network request
+    from a guest webview is received at the network layer.
+  </summary>
 </histogram>
 
 <histogram name="Extensions.DepricatedExternalJsonCount">
@@ -28832,6 +28858,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </obsolete>
   <owner>mcasas@chromium.org</owner>
   <summary>Pixel format used in HTML5 video. Emitted on video load.</summary>
+</histogram>
+
+<histogram name="Media.VideoFrame.ColorSpace" enum="VideoFrameColorSpaceUMA">
+  <owner>hubbe@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>Video frame color space. Emitted for each video frame.</summary>
 </histogram>
 
 <histogram name="Media.VideoFrameColorSpace" enum="VideoFrameColorSpace">
@@ -55773,43 +55805,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Previews.EligibilityReason" enum="PreviewsEligibilityReason">
   <owner>ryansturm@chromium.org</owner>
   <summary>
-    Whether a particular preview was allowed to be shown or the reason the
-    preview could not be shown to the user.
+    When evaluating whether to show a user a preview, the preview might be
+    disallowed for various reasons. If the preview is disallowed, then this
+    reports the reason for disallowing it. If the preview is allowed, then this
+    reports &quot;Previews Allowed&quot;.
   </summary>
 </histogram>
 
-<histogram name="Previews.InfoBarAction.LitePage" enum="PreviewsInfoBarAction">
+<histogram name="Previews.InfoBarAction" enum="PreviewsInfoBarAction">
   <owner>bengr@chromium.org</owner>
   <owner>megjablon@chromium.org</owner>
   <summary>
-    User interactions with the previews LitePage &quot;Saved data&quot; infobar.
-    These include:
-
-    Displays of the infobar and clicks on the &quot;Load original&quot; link.
-    Whether the infobar was dismissed by navigation or the user clicking on
-    &quot;X&quot; close button.
-  </summary>
-</histogram>
-
-<histogram name="Previews.InfoBarAction.LoFi" enum="PreviewsInfoBarAction">
-  <owner>bengr@chromium.org</owner>
-  <owner>megjablon@chromium.org</owner>
-  <summary>
-    User interactions with the previews Lo-Fi &quot;Saved data&quot; infobar.
-    These include:
-
-    Displays of the infobar and clicks on the &quot;Load original&quot; link.
-    Whether the infobar was dismissed by navigation or the user clicking on
-    &quot;X&quot; close button.
-  </summary>
-</histogram>
-
-<histogram name="Previews.InfoBarAction.Offline" enum="PreviewsInfoBarAction">
-  <owner>bengr@chromium.org</owner>
-  <owner>megjablon@chromium.org</owner>
-  <summary>
-    User interactions with the previews Offline &quot;Faster page loaded&quot;
-    infobar. These include:
+    User interactions with the previews &quot;Saved data&quot; infobar. These
+    include:
 
     Displays of the infobar and clicks on the &quot;Load original&quot; link.
     Whether the infobar was dismissed by navigation or the user clicking on
@@ -55824,12 +55832,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Previews.OptOut.UserOptedOut.Offline"
-    enum="PreviewsUserOptedOut">
+<histogram name="Previews.OptOut.UserOptedOut" enum="PreviewsUserOptedOut">
   <owner>ryansturm@chromium.org</owner>
   <summary>
-    Whether the user chose to reload the full page when shown an offline
-    preview.
+    Whether the user chose to reload the original page when shown a preview.
   </summary>
 </histogram>
 
@@ -69901,6 +69907,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SSL.CertificateErrorReportOutcome"
+    enum="CertificateReportOutcome">
+  <owner>meacer@chromium.org</owner>
+  <summary>
+    Users can opt in to send reports of certificate validation errors to Google.
+    This records the outcome whenever Chrome sends such a report.
+  </summary>
+</histogram>
+
 <histogram name="SSL.ExpectCTReportFailure" enum="NetErrorCodes">
   <obsolete>
     Deprecated as of 07/2016. Replaced with SSL.ExpectCTReportFailure2.
@@ -77366,10 +77381,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.ArrayBufferBigAllocations" units="MB">
+  <obsolete>
+    Deprecated 5/2017 in Issue 704922. Replaced by
+    V8.ArrayBufferLargeAllocations.
+  </obsolete>
   <owner>bradnelson@chromium.org</owner>
   <owner>titzer@chromium.org</owner>
   <owner>kschimpf@chromium.org</owner>
   <summary>Number of bytes requested in an array buffer allocation.</summary>
+</histogram>
+
+<histogram name="V8.ArrayBufferLargeAllocations" units="MB">
+  <owner>bradnelson@chromium.org</owner>
+  <owner>titzer@chromium.org</owner>
+  <owner>kschimpf@chromium.org</owner>
+  <summary>
+    Number of bytes requested in array buffer allocations greater than one
+    megabyte.
+  </summary>
 </histogram>
 
 <histogram name="V8.ArrayBufferNewSizeFailures" units="MB">
@@ -90058,8 +90087,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram_suffixes name="Previews.Types" separator=".">
   <suffix name="Offline" label="Offline previews"/>
-  <suffix name="ClientLoFi" label="Client LoFi previews"/>
+  <suffix name="LitePage" label="Lite page previews"/>
+  <suffix name="LoFi" label="Server LoFi previews"/>
   <affected-histogram name="Previews.EligibilityReason"/>
+  <affected-histogram name="Previews.InfoBarAction"/>
+  <affected-histogram name="Previews.OptOut.UserOptedOut"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="ProcessType" separator=".">

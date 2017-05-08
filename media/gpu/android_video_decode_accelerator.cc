@@ -38,7 +38,6 @@
 #include "media/gpu/android_video_surface_chooser_impl.h"
 #include "media/gpu/avda_picture_buffer_manager.h"
 #include "media/gpu/content_video_view_overlay.h"
-#include "media/gpu/content_video_view_overlay_factory.h"
 #include "media/gpu/shared_memory_region.h"
 #include "media/video/picture.h"
 #include "ui/gl/android/scoped_java_surface.h"
@@ -117,6 +116,13 @@ bool ShouldDeferSurfaceCreation(
          (surface_id == SurfaceManager::kNoSurfaceID && codec == kCodecH264 &&
           codec_allocator->IsAnyRegisteredAVDA() &&
           platform_config.sdk_int <= 18);
+}
+
+std::unique_ptr<AndroidOverlay> CreateContentVideoViewOverlay(
+    int32_t surface_id,
+    AndroidOverlayConfig config) {
+  return base::MakeUnique<ContentVideoViewOverlay>(surface_id,
+                                                   std::move(config));
 }
 
 }  // namespace
@@ -399,11 +405,9 @@ void AndroidVideoDecodeAccelerator::StartSurfaceChooser() {
   }
 
   // If we have a surface, then notify |surface_chooser_| about it.
-  std::unique_ptr<AndroidOverlayFactory> factory;
-  if (config_.surface_id != SurfaceManager::kNoSurfaceID) {
-    factory =
-        base::MakeUnique<ContentVideoViewOverlayFactory>(config_.surface_id);
-  }
+  AndroidOverlayFactoryCB factory;
+  if (config_.surface_id != SurfaceManager::kNoSurfaceID)
+    factory = base::Bind(&CreateContentVideoViewOverlay, config_.surface_id);
 
   // Notify |surface_chooser_| that we've started.  This guarantees that we'll
   // get a callback.  It might not be a synchronous callback, but we're not in
@@ -1271,9 +1275,9 @@ void AndroidVideoDecodeAccelerator::SetSurface(int32_t surface_id) {
     return;
   }
 
-  std::unique_ptr<AndroidOverlayFactory> factory;
+  AndroidOverlayFactoryCB factory;
   if (surface_id != SurfaceManager::kNoSurfaceID)
-    factory = base::MakeUnique<ContentVideoViewOverlayFactory>(surface_id);
+    factory = base::Bind(&CreateContentVideoViewOverlay, surface_id);
 
   surface_chooser_->ReplaceOverlayFactory(std::move(factory));
 }
@@ -1299,7 +1303,10 @@ void AndroidVideoDecodeAccelerator::ActualDestroy() {
   // our weak refs.
   weak_this_factory_.InvalidateWeakPtrs();
   GetManager()->StopTimer(this);
-  ReleaseCodecAndBundle();
+  // We only release the codec here, in case codec allocation is in progress.
+  // We don't want to modify |codec_config_|.  Note that the ref will sill be
+  // dropped when it completes, or when we delete |this|.
+  ReleaseCodec();
 
   delete this;
 }
@@ -1391,7 +1398,8 @@ void AndroidVideoDecodeAccelerator::OnStopUsingOverlayImmediately(
 
   // If we're currently asynchronously configuring a codec, it will be destroyed
   // when configuration completes and it notices that |state_| has changed to
-  // SURFACE_DESTROYED.
+  // SURFACE_DESTROYED.  It's safe to modify |codec_config_| here, since we
+  // checked above for WAITING_FOR_CODEC.
   state_ = SURFACE_DESTROYED;
   ReleaseCodecAndBundle();
 
@@ -1653,6 +1661,7 @@ bool AndroidVideoDecodeAccelerator::IsMediaCodecSoftwareDecodingForbidden()
 
 bool AndroidVideoDecodeAccelerator::UpdateSurface() {
   DCHECK(incoming_overlay_);
+  DCHECK_NE(state_, WAITING_FOR_CODEC);
 
   // Start surface creation.  Note that if we're called via surfaceDestroyed,
   // then this must complete synchronously or it will DCHECK.  Otherwise, we

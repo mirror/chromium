@@ -33,14 +33,6 @@ extern const char kEnableMaterialDesignPolicyPageName[];
 // Description for the flag to enable the material design policy page.
 extern const char kEnableMaterialDesignPolicyPageDescription[];
 
-//  Material Design version of chrome://history
-
-// Name for the flag to enable the material design history page.
-extern const char kEnableMaterialDesignHistoryName[];
-
-// Description for the flag to enable the material design history page.
-extern const char kEnableMaterialDesignHistoryDescription[];
-
 //  Material Design version of chrome://settings
 
 // Name for the flag to enable the material design settings page.
@@ -1355,6 +1347,12 @@ extern const char kEnableDataReductionProxySiteBreakdownName[];
 // Saver settings page.
 extern const char kEnableDataReductionProxySiteBreakdownDescription[];
 
+// An about:flags experiment title to enable offline page previews.
+extern const char kEnableOfflinePreviewsName[];
+
+// Describes an about:flags experiment to enable offline page previews.
+extern const char kEnableOfflinePreviewsDescription[];
+
 #endif  // defined(OS_ANDROID)
 
 // Name of about:flags option for LCD text.
@@ -2593,6 +2591,14 @@ extern const char kEnableContentSuggestionsNewFaviconServerName[];
 // on the New Tab Page.
 extern const char kEnableContentSuggestionsNewFaviconServerDescription[];
 
+// Name for the flag to enable fetching favicons from a Google server for tiles
+// on the New Tab Page (that originate from synced history).
+extern const char kEnableNtpMostLikelyFaviconsFromServerName[];
+
+// Description for the flag to enable fetching favicons from a Google server for
+// tiles on the New Tab Page (that originate from synced history).
+extern const char kEnableNtpMostLikelyFaviconsFromServerDescription[];
+
 // Name for the flag to enable the settings entry for content suggestions.
 extern const char kEnableContentSuggestionsSettingsName[];
 
@@ -2953,18 +2959,6 @@ extern const char kCrosCompUpdatesName[];
 
 // Description for the flag to enable Chrome OS component flash updates
 extern const char kCrosCompUpdatesDescription[];
-
-//  Native Android History chrome://flags strings
-
-#if defined(OS_ANDROID)
-
-// Name of the flag that enables the native Android history UI.
-extern const char kNativeAndroidHistoryManager[];
-
-// Description of the flag that enables the native Android history UI.
-extern const char kNativeAndroidHistoryManagerDescription[];
-
-#endif  // defined(OS_ANDROID)
 
 //  Play Services LSD permission prompt chrome://flags strings
 
@@ -3388,6 +3382,14 @@ extern const char kEnableHeapProfilingTaskProfiler[];
 // server-side suggestions in NTP tiles.
 extern const char kUseSuggestionsEvenIfFewFeatureName[];
 extern const char kUseSuggestionsEvenIfFewFeatureDescription[];
+
+// Name of the about: flag for experimental location.reload() to trigger a
+// hard-reload.
+extern const char kLocationHardReloadName[];
+
+// Description of the about: flag for experimental location.reload() to trigger
+// a hard-reload.
+extern const char kLocationHardReloadDescription[];
 
 }  // namespace flag_descriptions
 

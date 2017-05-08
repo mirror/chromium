@@ -2919,6 +2919,7 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
     LayerImpl* root = host_impl_->active_tree()->InnerViewportContainerLayer();
     scrollbar->SetScrollElementId(scroll->element_id());
     root->test_properties()->AddChild(std::move(scrollbar));
+    scroll->set_needs_show_scrollbars(true);
     host_impl_->active_tree()->BuildPropertyTreesForTesting();
     host_impl_->active_tree()->DidBecomeActive();
     host_impl_->active_tree()->HandleScrollbarShowRequestsFromMain();
@@ -3222,6 +3223,7 @@ TEST_F(LayerTreeHostImplTest, ScrollbarVisibilityChangeCausesRedrawAndCommit) {
   scrollbar->SetPosition(gfx::PointF(90, 0));
   container->test_properties()->AddChild(std::move(scrollbar));
   host_impl_->pending_tree()->PushPageScaleFromMainThread(1.f, 1.f, 1.f);
+  scroll->set_needs_show_scrollbars(true);
   host_impl_->pending_tree()->BuildPropertyTreesForTesting();
   host_impl_->ActivateSyncTree();
 
@@ -3517,7 +3519,7 @@ TEST_F(LayerTreeHostImplTest, MouseMoveAtWithDeviceScaleOf2) {
 }
 
 // This test verifies that only SurfaceLayers in the viewport are included
-// in CompositorFrameMetadata's |embedded_surfaces|.
+// in CompositorFrameMetadata's |activation_dependencies|.
 TEST_F(LayerTreeHostImplTest, EmbeddedSurfacesInMetadata) {
   SetupScrollAndContentsLayers(gfx::Size(100, 100));
   host_impl_->SetViewportSize(gfx::Size(50, 50));
@@ -3546,7 +3548,7 @@ TEST_F(LayerTreeHostImplTest, EmbeddedSurfacesInMetadata) {
           host_impl_->compositor_frame_sink());
   const CompositorFrameMetadata& metadata =
       fake_compositor_frame_sink->last_sent_frame()->metadata;
-  EXPECT_THAT(metadata.embedded_surfaces,
+  EXPECT_THAT(metadata.activation_dependencies,
               testing::UnorderedElementsAre(children[0], children[1]));
   EXPECT_THAT(
       metadata.referenced_surfaces,
@@ -8321,7 +8323,7 @@ TEST_F(LayerTreeHostImplTestDrawAndTestDamage, FrameIncludesDamageRect) {
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   // Draw a frame. In the first frame, the entire viewport should be damaged.
-  gfx::Rect full_frame_damage(host_impl_->DrawViewportSize());
+  gfx::Rect full_frame_damage(host_impl_->DeviceViewport().size());
   DrawFrameAndTestDamage(full_frame_damage);
 
   // The second frame has damage that doesn't touch the child layer. Its quads
@@ -9123,7 +9125,7 @@ TEST_F(LayerTreeHostImplTest, LatencyInfoPassedToCompositorFrameMetadata) {
       new LatencyInfoSwapPromise(latency_info));
   host_impl_->active_tree()->QueuePinnedSwapPromise(std::move(swap_promise));
 
-  gfx::Rect full_frame_damage(host_impl_->DrawViewportSize());
+  gfx::Rect full_frame_damage(host_impl_->DeviceViewport().size());
   TestFrameData frame;
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
   EXPECT_TRUE(host_impl_->DrawLayers(&frame));
@@ -9167,7 +9169,7 @@ TEST_F(LayerTreeHostImplTest, SelectionBoundsPassedToCompositorFrameMetadata) {
   // Trigger a draw-swap sequence.
   host_impl_->SetNeedsRedraw();
 
-  gfx::Rect full_frame_damage(host_impl_->DrawViewportSize());
+  gfx::Rect full_frame_damage(host_impl_->DeviceViewport().size());
   TestFrameData frame;
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
   EXPECT_TRUE(host_impl_->DrawLayers(&frame));

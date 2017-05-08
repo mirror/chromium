@@ -59,6 +59,7 @@
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
 #include "content/browser/websockets/websocket_manager.h"
 #include "content/browser/webui/web_ui_controller_factory_registry.h"
+#include "content/browser/webui/web_ui_url_loader_factory.h"
 #include "content/common/accessibility_messages.h"
 #include "content/common/associated_interface_provider_impl.h"
 #include "content/common/associated_interface_registry_impl.h"
@@ -2792,12 +2793,12 @@ bool RenderFrameHostImpl::CanCommitOrigin(
     return true;
 
   // Standard URLs must match the reported origin.
-  if (url.IsStandard() && !origin.IsSameOriginWith(url::Origin(url)))
+  if (url.IsStandard() && !origin.IsSamePhysicalOriginWith(url::Origin(url)))
     return false;
 
   // A non-unique origin must be a valid URL, which allows us to safely do a
   // conversion to GURL.
-  GURL origin_url(origin.Serialize());
+  GURL origin_url = origin.GetPhysicalOrigin().GetURL();
 
   // Verify that the origin is allowed to commit in this process.
   // Note: This also handles non-standard cases for |url|, such as
@@ -3048,7 +3049,16 @@ void RenderFrameHostImpl::CommitNavigation(
   FrameMsg_CommitDataNetworkService_Params commit_data;
   commit_data.handle = handle.release();
   // TODO(scottmg): Pass a factory for SW, etc. once we have one.
-  commit_data.url_loader_factory = mojo::MessagePipeHandle();
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableNetworkService) &&
+      common_params.url.SchemeIs(kChromeUIScheme)) {
+    commit_data.url_loader_factory = GetWebUIURLLoader(frame_tree_node_)
+                                         .PassInterface()
+                                         .PassHandle()
+                                         .release();
+  } else {
+    commit_data.url_loader_factory = mojo::MessagePipeHandle();
+  }
   Send(new FrameMsg_CommitNavigation(routing_id_, head, body_url, commit_data,
                                      common_params, request_params));
 
