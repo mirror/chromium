@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "395721e2_6bd52678",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-08T02:28:43Z",
+      "side": 1,
+      "message": "It\u0027s not currently possible to do that without refactoring other targets. For example, any type which is the target of a typemap and currently in content/common would need to be separated into a different component target (e.g. content/common:common_types) which does not itself depend on the mojom target.\n\nI plan to ensure that no targets outside of the content/blink boundary use these, and I\u0027ll mark them deprecated as soon as I get rid of all other uses.",
+      "parentUuid": "53ca0b79_555c4270",
+      "range": {
+        "startLine": 172,
+        "startChar": 16,
+        "endLine": 172,
+        "endChar": 39
+      },
+      "revId": "6a42a0da6d587b8d4ca4372f03061b4901d981cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63ce2397_cceec668",
         "filename": "mojo/public/tools/bindings/mojom.gni",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6a42a0da6d587b8d4ca4372f03061b4901d981cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3c1186_b9e1f7a9",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-08T02:28:43Z",
+      "side": 1,
+      "message": "The goal wasn\u0027t so much to save typing but to make it more obvious that it\u0027s a different type of target than a mojom(). I think it feels more natural to encourage developers to use mojom_component() when they want a component target rather than mojom() with some magic parameters.\n\nMaybe there\u0027s some better way to convey this in the docs? I\u0027ll think about it some more!",
+      "parentUuid": "63ce2397_cceec668",
+      "range": {
+        "startLine": 812,
+        "startChar": 10,
+        "endLine": 812,
+        "endChar": 25
+      },
+      "revId": "6a42a0da6d587b8d4ca4372f03061b4901d981cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
