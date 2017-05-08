@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "9c9dc124_14bdf559",
+        "filename": "content/browser/manifest/manifest_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-05-08T17:45:33Z",
+      "side": 1,
+      "message": "Maybe also add EXPECT_TRUE(manifest_url-\u003eis_valid())? Or do we expect invalid URLs coming through?",
+      "range": {
+        "startLine": 118,
+        "startChar": 31,
+        "endLine": 118,
+        "endChar": 39
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3b22c2_52802e36",
+        "filename": "content/browser/manifest/manifest_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-05-08T17:45:33Z",
+      "side": 1,
+      "message": "nit: Why not create a vector as part of the test scope and just append to it?",
+      "range": {
+        "startLine": 269,
+        "startChar": 20,
+        "endLine": 269,
+        "endChar": 26
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f0102a_0187310c",
+        "filename": "content/browser/manifest/manifest_manager_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-05-08T17:45:33Z",
+      "side": 1,
+      "message": "Feels strange to have one bindings object cover all frames in a WebContents, as one of the main design goals of Mojo is to have one-to-one connectivity. This, however, is much more generic discussion to be had, so no need to do anything on this CL.",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 34
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eccb6a2_8712e9af",
         "filename": "content/public/browser/web_contents_observer.h",
         "patchSetId": 1
@@ -41,6 +110,29 @@
         "startChar": 50,
         "endLine": 432,
         "endChar": 0
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0e530f_bdfb2627",
+        "filename": "content/renderer/manifest/manifest_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-05-08T17:45:33Z",
+      "side": 1,
+      "message": "Is the goal just to avoid the multiple notifications within a single task of the event loop? Or do we expect more spurious changes on subsequent, close in time, iterations of the event loop?",
+      "range": {
+        "startLine": 118,
+        "startChar": 42,
+        "endLine": 118,
+        "endChar": 52
       },
       "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
