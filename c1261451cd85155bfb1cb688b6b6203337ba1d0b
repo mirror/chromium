@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3049038_2b3be0c5",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T17:29:01Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment mentioning bug 9682, which gives a sense of what type of spoof we\u0027re talking about.  Something like:\n\nA collection of tests to prevent URL spoofs when showing pending URLs above initial empty documents, ensuring that the URL reverts to about:blank if the document is accessed.  See https://crbug.com/9682.",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59cde5e_052a4898",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T17:29:01Z",
+      "side": 1,
+      "message": "That\u0027s amazing.  Glad you caught it.",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3816d9fa_5ed7569b",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T17:29:01Z",
+      "side": 1,
+      "message": "I\u0027m guessing this didn\u0027t fail before the DevTools CL, since it uses targeted links instead of window.open.  Is that right?\n\nI\u0027d be happy to add a window.open-to-slow-URL test separately (using TestNavigationManager to pause the response), but we should make sure that happens as well.",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05c4f8c_ae133ec0",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T17:29:01Z",
+      "side": 1,
+      "message": "Wait, this doesn\u0027t sound right.  I thought we did want to generate DidAccessInitialDocument for this sort of event, since there\u0027s such a wide variety of things you could do once you have the reference, even if you don\u0027t modify it.  Things like requesting permissions, playing audio, changing the title, etc.",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff116954_b8b849f6",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T17:29:01Z",
+      "side": 1,
+      "message": "Can you clarify that document.write() calls document.open() internally?  Without knowing that, it\u0027s unclear why this test uses open() to test write().",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136754aa_15487fe0",
+        "filename": "content/test/data/click-nocontent-link.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T17:29:01Z",
+      "side": 1,
+      "message": "Let\u0027s clarify that we\u0027re talking about this window\u0027s title, not the foo window\u0027s title (which should definitely trigger a didAccessInitialDocument notification).",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef2d0e2_0c0a2a76",
+        "filename": "content/test/data/click-nocontent-link.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T17:29:01Z",
+      "side": 1,
+      "message": "Maybe we should call this ...DocumentOpen if it doesn\u0027t actually call document.write() in the function?",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
