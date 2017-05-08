@@ -16,6 +16,24 @@
       "revId": "179840cc5103d17d52a049f6af54642b9108fca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5ac84f_a546647e",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-08T00:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77e74f2_d7ad17df",
+      "revId": "179840cc5103d17d52a049f6af54642b9108fca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
