@@ -4,35 +4,145 @@
 
 #include "mojo/public/cpp/bindings/sync_handle_registry.h"
 
+#include <unordered_map>
+
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/sequence_token.h"
+#include "base/sequenced_task_runner.h"
 #include "base/stl_util.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_local.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "mojo/public/c/system/core.h"
 
 namespace mojo {
 namespace {
 
-base::LazyInstance<base::ThreadLocalPointer<SyncHandleRegistry>>::Leaky
-    g_current_sync_handle_watcher = LAZY_INSTANCE_INITIALIZER;
+struct WorkerPoolSequenceTokenHasher {
+  size_t operator()(
+      const base::SequencedWorkerPool::SequenceToken& value) const {
+    return std::hash<std::string>()(value.ToString());
+  }
+};
+
+struct WorkerPoolSequenceTokenEquals {
+  size_t operator()(const base::SequencedWorkerPool::SequenceToken& a,
+                    const base::SequencedWorkerPool::SequenceToken& b) const {
+    return a.Equals(b);
+  }
+};
+
+struct SequenceTokenHasher {
+  size_t operator()(const base::SequenceToken& value) const {
+    return std::hash<decltype(value.ToInternalValue())>()(
+        value.ToInternalValue());
+  }
+};
+
+// Provides access to a sequence-local SyncHandleRegistry pointer. For
+// standalone threads, thread-local storage is used. Otherwise, global maps
+// keyed by SequenceToken are used if one is set for the current thread. Note
+// that both types of SequenceToken are used: base::SequenceToken and
+// base::SequencedWorkerPool::SequenceToken, in that order.
+class SequenceLocalPointer {
+ public:
+  template <typename Factory>
+  scoped_refptr<SyncHandleRegistry> GetOrCreate(const Factory& create) {
+    SyncHandleRegistry** registry_pointer_storage = GetRegistryPointerStorage();
+    if (!registry_pointer_storage) {
+      scoped_refptr<SyncHandleRegistry> registry(thread_local_storage_.Get());
+      if (registry)
+        return registry;
+
+      registry = create();
+      thread_local_storage_.Set(registry.get());
+      return registry;
+    }
+
+    scoped_refptr<SyncHandleRegistry> registry(*registry_pointer_storage);
+    if (!registry) {
+      registry = create();
+      *registry_pointer_storage = registry.get();
+    }
+    return registry;
+  }
+
+  void Clear() {
+    auto sequence_token = base::SequenceToken::GetForCurrentThread();
+    if (sequence_token.IsValid()) {
+      base::AutoLock l(lock_);
+      size_t erased = sequence_to_registry_map_.erase(sequence_token);
+      DCHECK(erased);
+      return;
+    }
+    auto worker_pool_sequence_token =
+        base::SequencedWorkerPool::GetSequenceTokenForCurrentThread();
+    if (worker_pool_sequence_token.IsValid()) {
+      base::AutoLock l(lock_);
+      size_t erased = worker_pool_sequence_to_registry_map_.erase(
+          worker_pool_sequence_token);
+      DCHECK(erased);
+      return;
+    }
+    thread_local_storage_.Set(nullptr);
+    return;
+  }
+
+ private:
+  // Returns a pointer to the storage for a |SyncHandleRegistry*| for the
+  // current sequence. Note that the returned pointer may be safely read and
+  // written without |lock_| held since this entry in the map is only accessed
+  // on the current sequence.
+  SyncHandleRegistry** GetRegistryPointerStorage() {
+    auto sequence_token = base::SequenceToken::GetForCurrentThread();
+    if (sequence_token.IsValid()) {
+      base::AutoLock l(lock_);
+      return &sequence_to_registry_map_[sequence_token];
+    }
+    auto worker_pool_sequence_token =
+        base::SequencedWorkerPool::GetSequenceTokenForCurrentThread();
+    if (worker_pool_sequence_token.IsValid()) {
+      base::AutoLock l(lock_);
+      return &worker_pool_sequence_to_registry_map_[worker_pool_sequence_token];
+    }
+    return nullptr;
+  }
+
+  base::ThreadLocalPointer<SyncHandleRegistry> thread_local_storage_;
+
+  // Guards |sequence_to_registry_map_| and
+  // |worker_pool_sequence_to_registry_map_|.
+  base::Lock lock_;
+
+  std::unordered_map<base::SequenceToken,
+                     SyncHandleRegistry*,
+                     SequenceTokenHasher>
+      sequence_to_registry_map_;
+
+  // TODO(sammc): Remove this once base::SequenceToken is used everywhere.
+  std::unordered_map<base::SequencedWorkerPool::SequenceToken,
+                     SyncHandleRegistry*,
+                     WorkerPoolSequenceTokenHasher,
+                     WorkerPoolSequenceTokenEquals>
+      worker_pool_sequence_to_registry_map_;
+};
+
+base::LazyInstance<SequenceLocalPointer>::Leaky g_current_sync_handle_registry =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
 // static
 scoped_refptr<SyncHandleRegistry> SyncHandleRegistry::current() {
-  scoped_refptr<SyncHandleRegistry> result(
-      g_current_sync_handle_watcher.Pointer()->Get());
-  if (!result) {
-    result = new SyncHandleRegistry();
-    DCHECK_EQ(result.get(), g_current_sync_handle_watcher.Pointer()->Get());
-  }
-  return result;
+  return g_current_sync_handle_registry.Pointer()->GetOrCreate(
+      []() { return make_scoped_refptr(new SyncHandleRegistry()); });
 }
 
 bool SyncHandleRegistry::RegisterHandle(const Handle& handle,
                                         MojoHandleSignals handle_signals,
                                         const HandleCallback& callback) {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(sequence_checker_.CalledOnValidSequence());
 
   if (base::ContainsKey(handles_, handle))
     return false;
@@ -46,7 +156,7 @@ bool SyncHandleRegistry::RegisterHandle(const Handle& handle,
 }
 
 void SyncHandleRegistry::UnregisterHandle(const Handle& handle) {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(sequence_checker_.CalledOnValidSequence());
   if (!base::ContainsKey(handles_, handle))
     return;
 
@@ -75,7 +185,7 @@ void SyncHandleRegistry::UnregisterEvent(base::WaitableEvent* event) {
 }
 
 bool SyncHandleRegistry::Wait(const bool* should_stop[], size_t count) {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(sequence_checker_.CalledOnValidSequence());
 
   size_t num_ready_handles;
   Handle ready_handle;
@@ -109,27 +219,11 @@ bool SyncHandleRegistry::Wait(const bool* should_stop[], size_t count) {
   return false;
 }
 
-SyncHandleRegistry::SyncHandleRegistry() {
-  DCHECK(!g_current_sync_handle_watcher.Pointer()->Get());
-  g_current_sync_handle_watcher.Pointer()->Set(this);
-}
+SyncHandleRegistry::SyncHandleRegistry() = default;
 
 SyncHandleRegistry::~SyncHandleRegistry() {
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  // This object may be destructed after the thread local storage slot used by
-  // |g_current_sync_handle_watcher| is reset during thread shutdown.
-  // For example, another slot in the thread local storage holds a referrence to
-  // this object, and that slot is cleaned up after
-  // |g_current_sync_handle_watcher|.
-  if (!g_current_sync_handle_watcher.Pointer()->Get())
-    return;
-
-  // If this breaks, it is likely that the global variable is bulit into and
-  // accessed from multiple modules.
-  DCHECK_EQ(this, g_current_sync_handle_watcher.Pointer()->Get());
-
-  g_current_sync_handle_watcher.Pointer()->Set(nullptr);
+  DCHECK(sequence_checker_.CalledOnValidSequence());
+  g_current_sync_handle_registry.Pointer()->Clear();
 }
 
 }  // namespace mojo

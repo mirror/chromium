@@ -16,19 +16,19 @@ SyncEventWatcher::SyncEventWatcher(base::WaitableEvent* event,
       destroyed_(new base::RefCountedData<bool>(false)) {}
 
 SyncEventWatcher::~SyncEventWatcher() {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(sequence_checker_.CalledOnValidSequence());
   if (registered_)
     registry_->UnregisterEvent(event_);
   destroyed_->data = true;
 }
 
 void SyncEventWatcher::AllowWokenUpBySyncWatchOnSameThread() {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(sequence_checker_.CalledOnValidSequence());
   IncrementRegisterCount();
 }
 
 bool SyncEventWatcher::SyncWatch(const bool* should_stop) {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(sequence_checker_.CalledOnValidSequence());
   IncrementRegisterCount();
   if (!registered_) {
     DecrementRegisterCount();

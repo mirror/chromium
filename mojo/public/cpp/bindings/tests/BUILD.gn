@@ -135,12 +135,16 @@ source_set("perftests") {
 }
 
 source_set("mojo_public_bindings_test_utils") {
+  testonly = true
+
   sources = [
     "validation_test_input_parser.cc",
     "validation_test_input_parser.h",
   ]
 
   deps = [
+    "//base",
     "//mojo/public/c/system",
+    "//testing/gtest",
   ]
 }

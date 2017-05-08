@@ -11,8 +11,8 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/single_thread_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/sequenced_task_runner.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "mojo/public/cpp/bindings/connection_error_callback.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "mojo/public/cpp/bindings/interface_ptr_info.h"
@@ -60,7 +60,7 @@ class MessageReceiver;
 // bound to a message pipe, it may be bound or destroyed on any thread.
 //
 // When you bind this class to a message pipe, optionally you can specify a
-// base::SingleThreadTaskRunner. This task runner must belong to the same
+// base::SequencedTaskRunner. This task runner must belong to the same
 // thread. It will be used to dispatch incoming method calls and connection
 // error notification. It is useful when you attach multiple task runners to a
 // single thread for the purposes of task scheduling. Please note that incoming
@@ -81,8 +81,8 @@ class Binding {
   // |impl|. Does not take ownership of |impl|, which must outlive the binding.
   Binding(ImplPointerType impl,
           ScopedMessagePipeHandle handle,
-          scoped_refptr<base::SingleThreadTaskRunner> runner =
-              base::ThreadTaskRunnerHandle::Get())
+          scoped_refptr<base::SequencedTaskRunner> runner =
+              base::SequencedTaskRunnerHandle::Get())
       : Binding(std::move(impl)) {
     Bind(std::move(handle), std::move(runner));
   }
@@ -94,8 +94,8 @@ class Binding {
   // last until the constructor returns.
   Binding(ImplPointerType impl,
           InterfacePtr<Interface>* ptr,
-          scoped_refptr<base::SingleThreadTaskRunner> runner =
-              base::ThreadTaskRunnerHandle::Get())
+          scoped_refptr<base::SequencedTaskRunner> runner =
+              base::SequencedTaskRunnerHandle::Get())
       : Binding(std::move(impl)) {
     Bind(ptr, std::move(runner));
   }
@@ -105,8 +105,8 @@ class Binding {
   // |impl|, which must outlive the binding.
   Binding(ImplPointerType impl,
           InterfaceRequest<Interface> request,
-          scoped_refptr<base::SingleThreadTaskRunner> runner =
-              base::ThreadTaskRunnerHandle::Get())
+          scoped_refptr<base::SequencedTaskRunner> runner =
+              base::SequencedTaskRunnerHandle::Get())
       : Binding(std::move(impl)) {
     Bind(request.PassMessagePipe(), std::move(runner));
   }
@@ -118,8 +118,8 @@ class Binding {
   // Returns an InterfacePtr bound to one end of a pipe whose other end is
   // bound to |this|.
   InterfacePtr<Interface> CreateInterfacePtrAndBind(
-      scoped_refptr<base::SingleThreadTaskRunner> runner =
-          base::ThreadTaskRunnerHandle::Get()) {
+      scoped_refptr<base::SequencedTaskRunner> runner =
+          base::SequencedTaskRunnerHandle::Get()) {
     InterfacePtr<Interface> interface_ptr;
     Bind(&interface_ptr, std::move(runner));
     return interface_ptr;
@@ -129,8 +129,8 @@ class Binding {
   // implementation. Takes ownership of |handle| and binds it to the previously
   // specified implementation.
   void Bind(ScopedMessagePipeHandle handle,
-            scoped_refptr<base::SingleThreadTaskRunner> runner =
-                base::ThreadTaskRunnerHandle::Get()) {
+            scoped_refptr<base::SequencedTaskRunner> runner =
+                base::SequencedTaskRunnerHandle::Get()) {
     internal_state_.Bind(std::move(handle), std::move(runner));
   }
 
@@ -140,8 +140,8 @@ class Binding {
   // takes ownership of it. The caller is expected to pass |ptr| on to the
   // eventual client of the service. Does not take ownership of |ptr|.
   void Bind(InterfacePtr<Interface>* ptr,
-            scoped_refptr<base::SingleThreadTaskRunner> runner =
-                base::ThreadTaskRunnerHandle::Get()) {
+            scoped_refptr<base::SequencedTaskRunner> runner =
+                base::SequencedTaskRunnerHandle::Get()) {
     MessagePipe pipe;
     ptr->Bind(InterfacePtrInfo<Interface>(std::move(pipe.handle0),
                                           Interface::Version_),
@@ -153,8 +153,8 @@ class Binding {
   // implementation by removing the message pipe endpoint from |request| and
   // binding it to the previously specified implementation.
   void Bind(InterfaceRequest<Interface> request,
-            scoped_refptr<base::SingleThreadTaskRunner> runner =
-                base::ThreadTaskRunnerHandle::Get()) {
+            scoped_refptr<base::SequencedTaskRunner> runner =
+                base::SequencedTaskRunnerHandle::Get()) {
     Bind(request.PassMessagePipe(), std::move(runner));
   }
 

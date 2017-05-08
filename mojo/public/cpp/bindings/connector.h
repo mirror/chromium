@@ -12,8 +12,8 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
-#include "base/single_thread_task_runner.h"
-#include "base/threading/thread_checker.h"
+#include "base/sequence_checker.h"
+#include "base/sequenced_task_runner.h"
 #include "mojo/public/cpp/bindings/bindings_export.h"
 #include "mojo/public/cpp/bindings/message.h"
 #include "mojo/public/cpp/bindings/sync_handle_watcher.h"
@@ -49,14 +49,14 @@ class MOJO_CPP_BINDINGS_EXPORT Connector
   // The Connector takes ownership of |message_pipe|.
   Connector(ScopedMessagePipeHandle message_pipe,
             ConnectorConfig config,
-            scoped_refptr<base::SingleThreadTaskRunner> runner);
+            scoped_refptr<base::SequencedTaskRunner> runner);
   ~Connector() override;
 
   // Sets the receiver to handle messages read from the message pipe.  The
   // Connector will read messages from the pipe regardless of whether or not an
   // incoming receiver has been set.
   void set_incoming_receiver(MessageReceiver* receiver) {
-    DCHECK(thread_checker_.CalledOnValidThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
     incoming_receiver_ = receiver;
   }
 
@@ -64,21 +64,21 @@ class MOJO_CPP_BINDINGS_EXPORT Connector
   // state, where no more messages will be processed. This method is used
   // during testing to prevent that from happening.
   void set_enforce_errors_from_incoming_receiver(bool enforce) {
-    DCHECK(thread_checker_.CalledOnValidThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
     enforce_errors_from_incoming_receiver_ = enforce;
   }
 
   // Sets the error handler to receive notifications when an error is
   // encountered while reading from the pipe or waiting to read from the pipe.
   void set_connection_error_handler(const base::Closure& error_handler) {
-    DCHECK(thread_checker_.CalledOnValidThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
     connection_error_handler_ = error_handler;
   }
 
   // Returns true if an error was encountered while reading from the pipe or
   // waiting to read from the pipe.
   bool encountered_error() const {
-    DCHECK(thread_checker_.CalledOnValidThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
     return error_;
   }
 
@@ -106,7 +106,7 @@ class MOJO_CPP_BINDINGS_EXPORT Connector
 
   // Is the connector bound to a MessagePipe handle?
   bool is_valid() const {
-    DCHECK(thread_checker_.CalledOnValidThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
     return message_pipe_.is_valid();
   }
 
@@ -123,7 +123,7 @@ class MOJO_CPP_BINDINGS_EXPORT Connector
   bool Accept(Message* message) override;
 
   MessagePipeHandle handle() const {
-    DCHECK(thread_checker_.CalledOnValidThread());
+    DCHECK(sequence_checker_.CalledOnValidSequence());
     return message_pipe_.get();
   }
 
@@ -147,9 +147,7 @@ class MOJO_CPP_BINDINGS_EXPORT Connector
     return sync_handle_watcher_callback_count_ > 0;
   }
 
-  base::SingleThreadTaskRunner* task_runner() const {
-    return task_runner_.get();
-  }
+  base::SequencedTaskRunner* task_runner() const { return task_runner_.get(); }
 
   // Sets the tag used by the heap profiler.
   // |tag| must be a const string literal.
@@ -190,7 +188,7 @@ class MOJO_CPP_BINDINGS_EXPORT Connector
   ScopedMessagePipeHandle message_pipe_;
   MessageReceiver* incoming_receiver_ = nullptr;
 
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
   std::unique_ptr<SimpleWatcher> handle_watcher_;
 
   bool error_ = false;
@@ -209,7 +207,7 @@ class MOJO_CPP_BINDINGS_EXPORT Connector
   // callback.
   size_t sync_handle_watcher_callback_count_ = 0;
 
-  base::ThreadChecker thread_checker_;
+  base::SequenceChecker sequence_checker_;
 
   base::Lock connected_lock_;
   bool connected_ = true;
