@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c0180f4b_a13b5dbf",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/AtomicString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-08T08:44:47Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "66f73e5c_07b250bb",
+      "revId": "c8be9231ef7d11fc597c5bafe77077b02f37e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47f8d64b_0173bf8f",
         "filename": "third_party/WebKit/Source/platform/wtf/text/AtomicString.h",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I didn\u0027t add it since it wasn\u0027t necessary, but I think it makes sense for symmetry. I will add this in the next patchset.",
       "parentUuid": "47f8d64b_0173bf8f",
+      "revId": "c8be9231ef7d11fc597c5bafe77077b02f37e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a61b09d_3068a99f",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/AtomicString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-08T08:44:47Z",
+      "side": 1,
+      "message": "ok.  IMO we don\u0027t need to add them if there are no callsites now.",
+      "parentUuid": "b8189516_d3bbc0e1",
       "revId": "c8be9231ef7d11fc597c5bafe77077b02f37e510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Ditto. My only question is: if we only need the TestCaseSensitivity argument for one overload, which you prefer that we have it for AtomicString and String for symmetry?",
       "parentUuid": "4060dd1e_df4963e0",
+      "revId": "c8be9231ef7d11fc597c5bafe77077b02f37e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e33e6e_edb97c9f",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/WTFString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-08T08:44:47Z",
+      "side": 1,
+      "message": "I prefer removing TextCaseSensitivity arguments entirely.\n\nFunctions passing TextCaseSensitivity value to multiple string methods like AttributeValueMatches() can be rewritten by a strategy pattern.",
+      "parentUuid": "ebeadef6_6db5b167",
       "revId": "c8be9231ef7d11fc597c5bafe77077b02f37e510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
