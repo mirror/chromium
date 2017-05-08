@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "253f461b_4e38ef25",
+        "filename": "components/content_settings/core/browser/content_settings_pref.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-08T00:49:45Z",
+      "side": 1,
+      "message": "Could you please add a comment here about why we don\u0027t need to call Canonc...\n\nDon\u0027t call CanonicalizeContentSettingsExceptions here as it should already have been called when reading in the non-incognito case and the canonicalized settings written back. The non-incognito call to ReadContentSettingsFromPref will always happen prior to the incognito call so we can always be sure the underlying settings have been canonicalized prior to reading them.",
+      "revId": "818b4c6220588ce382691fe0b7798b36ad829d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
