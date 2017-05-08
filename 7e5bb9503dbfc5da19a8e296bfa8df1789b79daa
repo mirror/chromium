@@ -16,6 +16,24 @@
       "revId": "7e5bb9503dbfc5da19a8e296bfa8df1789b79daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d36cb5d_23fcd63a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-08T18:17:56Z",
+      "side": 1,
+      "message": "I have no idea, tbh.  gerrit just sticks that in there when you upload a patch.  If you click the link it comes back to this patch, so maybe it\u0027s just a way to have some persistent identifier?",
+      "parentUuid": "72f047a7_20b5d824",
+      "revId": "7e5bb9503dbfc5da19a8e296bfa8df1789b79daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
