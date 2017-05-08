@@ -26,7 +26,7 @@
 #include "content/public/common/sandbox_init.h"
 #include "ipc/ipc_channel.h"
 #include "mojo/edk/embedder/embedder.h"
-#include "mojo/edk/embedder/pending_process_connection.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "sandbox/win/src/sandbox_policy.h"
@@ -135,10 +135,10 @@ void NaClBrokerListener::OnLaunchLoaderThroughBroker(
         mojo::edk::PlatformChannelPair::kMojoPlatformChannelHandleSwitch,
         base::UintToString(base::win::HandleToUint32(handles[0])));
 
-    mojo::edk::PendingProcessConnection pending_process;
-    std::string token;
+    mojo::edk::OutgoingBrokerClientInvitation invitation;
+    std::string token = mojo::edk::GenerateRandomToken();
     mojo::ScopedMessagePipeHandle host_message_pipe =
-        pending_process.CreateMessagePipe(&token);
+        invitation.AttachMessagePipe(token);
     cmd_line->AppendSwitchASCII(switches::kServiceRequestChannelToken, token);
     CHECK_EQ(MOJO_RESULT_OK,
              mojo::FuseMessagePipes(std::move(loader_message_pipe),
@@ -149,9 +149,8 @@ void NaClBrokerListener::OnLaunchLoaderThroughBroker(
         this, cmd_line, handles, &loader_process);
 
     if (result == sandbox::SBOX_ALL_OK) {
-      pending_process.Connect(
-          loader_process.Handle(),
-          mojo::edk::ConnectionParams(std::move(parent_handle)));
+      invitation.Send(loader_process.Handle(),
+                      mojo::edk::ConnectionParams(std::move(parent_handle)));
 
       // Note: PROCESS_DUP_HANDLE is necessary here, because:
       // 1) The current process is the broker, which is the loader's parent.
