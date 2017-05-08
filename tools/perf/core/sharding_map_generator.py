@@ -60,7 +60,8 @@ def load_benchmark_sharding_map():
 # Returns a sorted list of (benchmark, avg_runtime) pairs for every
 # benchmark in the all_benchmarks list where avg_runtime is in seconds.  Also
 # returns a list of benchmarks whose run time have not been seen before
-def get_sorted_benchmark_list_by_time(all_benchmarks):
+def get_sorted_benchmark_list_by_time(all_benchmarks, debug=False):
+  benchmarks_with_times = set()
   runtime_list = []
   benchmark_avgs = {}
   new_benchmarks = []
@@ -80,12 +81,18 @@ def get_sorted_benchmark_list_by_time(all_benchmarks):
       # new benchmarks list.
       new_benchmarks.append(benchmark)
     else:
+      benchmarks_with_times.add(benchmark.Name())
       # Need to multiple the seconds by 2 since we will be generating two tests
       # for each benchmark to be run on the same shard for the reference build
       runtime_list.append((benchmark, benchmark_avg_time * 2.0))
 
   # Return a reverse sorted list by runtime
   runtime_list.sort(key=lambda tup: tup[1], reverse=True)
+
+  if debug:
+    unused_benchmarks = set(benchmark_avgs.keys()) - benchmarks_with_times
+    return new_benchmarks, unused_benchmarks
+
   return runtime_list, new_benchmarks
 
 
@@ -106,7 +113,56 @@ def shard_benchmarks(num_shards, all_benchmarks):
   for benchmark in new_benchmarks:
      device_affinity = bot_utils.GetDeviceAffinity(num_shards, benchmark.Name())
      benchmark_to_shard_dict[benchmark.Name()] = device_affinity
+
   return benchmark_to_shard_dict
+
+def verify(benchmarks, waterfall_configs, dry_run):
+  timing_file_path = os.path.join(
+      path_util.GetChromiumSrcDir(), 'tools', 'perf', 'core',
+      'desktop_benchmark_avg_times.json')
+
+  for config in waterfall_configs.values():
+    for tester in config['testers'].values():
+      if not tester.get('swarming'):
+        continue
+
+      new_benchmarks, unused_benchmarks = get_sorted_benchmark_list_by_time(
+          benchmarks, debug=True)
+
+      if dry_run:
+        if unused_benchmarks:
+          print (
+            'Would delete these items:\n%s' % (
+                '\n'.join(sorted('* ' + str(s) for s in unused_benchmarks))))
+        if new_benchmarks:
+          if unused_benchmarks:
+            print
+          print (
+              'Please add times for these items:\n%s' % (
+                  '\n'.join(sorted(
+                      '* ' + b.Name() for b in new_benchmarks))))
+      else:
+        if unused_benchmarks:
+          print 'deleting %d benchmarks. Run with --dry-run to see a list.' % (
+              len(unused_benchmarks))
+          # Load in the avg times as calculated on Nov 1st, 2016
+          with open(timing_file_path) as f:
+            benchmark_avgs = json.load(f)
+
+          for name in unused_benchmarks:
+            del benchmark_avgs[name]
+
+          with open(timing_file_path, 'w') as f:
+            dump_json(benchmark_avgs, f)
+        if new_benchmarks:
+          # TODO(martiniss): error out, ask for average times.
+          pass
+
+      break
+    break
+
+  if dry_run:
+    print 'run with --dry_run=False to remove old benchmarks'
 
 
 def regenerate(benchmarks, waterfall_configs):
@@ -143,7 +199,7 @@ def regenerate(benchmarks, waterfall_configs):
       value['benchmarks'].sort()
 
   with open(get_sharding_map_path(), 'w') as f:
-    json.dump(sharding_map, f, indent=2, sort_keys=True, separators=(',', ': '))
+    dump_json(sharding_map, f)
 
   return 0
 
@@ -154,10 +210,25 @@ def get_args():
                    'This needs to be done anytime you add/remove any existing'
                    'benchmarks in tools/perf/benchmarks.'))
 
-  parser.add_argument('mode', choices=['regenerate'])
+  def bool_type(v):
+    if v.lower() in ('true', '1'):
+        return True
+    if v.lower() in ('false', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+  parser.add_argument('mode', choices=['regenerate', 'verify'])
+  parser.add_argument('--dry_run', default=False, type=bool_type)
   return parser
+
+
+def dump_json(data, f):
+  return json.dump(data, f, indent=2, sort_keys=True, separators=(',', ': '))
 
 
 def main(args, benchmarks, configs):
   if args.mode == 'regenerate':
     return regenerate(benchmarks, configs)
+  elif args.mode == 'verify':
+    return verify(benchmarks, configs, args.dry_run)
