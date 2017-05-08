@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79a16712_3b1951c1",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T18:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3049038_2b3be0c5",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d59cde5e_052a4898",
         "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
         "patchSetId": 9
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "03113768_6056bb0f",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T18:57:29Z",
+      "side": 1,
+      "message": "It\u0027s true that using a targeted link instead of window.open means this issue won\u0027t trigger--but since JS can\u0027t modify the initial empty document without getting some sort of reference to it, the critical path here is window.open() either way.\n\nAs soon as JS requests the window proxy, Blink will initialize the context. The act of initializing the context used to trigger initialization of the window.console object, which obscured the fact that we had this bug.\n\nThis is what this control test attempts to test for.",
+      "parentUuid": "3816d9fa_5ed7569b",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b05c4f8c_ae133ec0",
         "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
         "patchSetId": 9
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "46b2487b_57770b01",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T18:57:29Z",
+      "side": 1,
+      "message": "Getting the window proxy itself shouldn\u0027t trigger the callback. Doing anything through the window proxy (invoking methods, accessing members, etc)\n\n(Otherwise, window.open(\u0027\u003curl\u003e\u0027) would never showing the pending URL)",
+      "parentUuid": "b05c4f8c_ae133ec0",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff116954_b8b849f6",
         "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
         "patchSetId": 9
@@ -84,6 +138,24 @@
       "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7293d8ac_e151db8b",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T18:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff116954_b8b849f6",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "ea8af922_f9302565",
+        "filename": "content/test/data/click-nocontent-link.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T18:57:29Z",
+      "side": 1,
+      "message": "Isn\u0027t this implied by the comment on line 24-25?",
+      "parentUuid": "136754aa_15487fe0",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ef2d0e2_0c0a2a76",
         "filename": "content/test/data/click-nocontent-link.html",
         "patchSetId": 9
@@ -124,6 +220,24 @@
       "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48d3d35_d256698b",
+        "filename": "content/test/data/click-nocontent-link.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T18:57:29Z",
+      "side": 1,
+      "message": "I renamed it but used document.write as well (in case anyone is trying to repro manually)",
+      "parentUuid": "5ef2d0e2_0c0a2a76",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

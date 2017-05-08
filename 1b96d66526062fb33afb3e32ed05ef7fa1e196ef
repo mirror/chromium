@@ -39,6 +39,24 @@
       "revId": "1b96d66526062fb33afb3e32ed05ef7fa1e196ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359e580a_c70d9520",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 6882,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T18:57:29Z",
+      "side": 0,
+      "message": "Deduping was moved into the embedder, so we can\u0027t test for it in Blink.\n\nThis is also a useful -- if the counts change, that means we\u0027ve introduced potential bugs in the Blink side. I added a comment noting this.",
+      "parentUuid": "6955ed7c_47d53ab9",
+      "revId": "1b96d66526062fb33afb3e32ed05ef7fa1e196ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
