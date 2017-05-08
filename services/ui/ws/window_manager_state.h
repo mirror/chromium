@@ -187,7 +187,7 @@ class WindowManagerState : public EventDispatcherDelegate,
 
   // Returns the ServerWindow that is the root of the WindowManager for
   // |window|. |window| corresponds to the root of a Display.
-  ServerWindow* GetWindowManagerRootForDisplayRoot(ServerWindow* window);
+  ServerWindow* GetWindowManagerRoot(ServerWindow* window);
 
   // Called from the callback supplied to WindowTree::OnAccelerator().
   void OnAcceleratorAck(

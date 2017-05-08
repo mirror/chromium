@@ -5,40 +5,33 @@
 #import <Cronet/Cronet.h>
 #import <Foundation/Foundation.h>
 
-#include "components/cronet/ios/test/start_cronet.h"
-#include "components/grpc_support/test/quic_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-@interface Cronet (ExposedForTesting)
-+ (void)shutdownForTesting;
-@end
-
 namespace cronet {
+
+void StartCronetIfNecessary();
 
 class NetLogTest : public ::testing::Test {
  protected:
   NetLogTest() {}
   ~NetLogTest() override {}
 
-  void SetUp() override { StartCronet(grpc_support::GetQuicTestServerPort()); }
-
-  void TearDown() override {
-    [Cronet stopNetLog];
-    [Cronet shutdownForTesting];
-  }
+  void SetUp() override { StartCronetIfNecessary(); }
 };
 
-TEST_F(NetLogTest, OpenFile) {
+TEST(NetLogTest, OpenFile) {
   bool netlog_started =
       [Cronet startNetLogToFile:@"cronet_netlog.json" logBytes:YES];
+  [Cronet stopNetLog];
 
   EXPECT_TRUE(netlog_started);
 }
 
-TEST_F(NetLogTest, CreateFile) {
+TEST(NetLogTest, CreateFile) {
   NSString* filename = [[[NSProcessInfo processInfo] globallyUniqueString]
       stringByAppendingString:@"_netlog.json"];
   bool netlog_started = [Cronet startNetLogToFile:filename logBytes:YES];
+  [Cronet stopNetLog];
 
   bool file_created = [[NSFileManager defaultManager]
       fileExistsAtPath:[Cronet getNetLogPathForFile:filename]];
@@ -51,7 +44,7 @@ TEST_F(NetLogTest, CreateFile) {
   EXPECT_TRUE(file_created);
 }
 
-TEST_F(NetLogTest, NonExistantDir) {
+TEST(NetLogTest, NonExistantDir) {
   NSString* notdir = [[[NSProcessInfo processInfo] globallyUniqueString]
       stringByAppendingString:@"/netlog.json"];
   bool netlog_started = [Cronet startNetLogToFile:notdir logBytes:NO];
@@ -59,7 +52,7 @@ TEST_F(NetLogTest, NonExistantDir) {
   EXPECT_FALSE(netlog_started);
 }
 
-TEST_F(NetLogTest, ExistantDir) {
+TEST(NetLogTest, ExistantDir) {
   NSString* dir = [[NSProcessInfo processInfo] globallyUniqueString];
 
   bool dir_created = [[NSFileManager defaultManager]
@@ -86,13 +79,13 @@ TEST_F(NetLogTest, ExistantDir) {
   EXPECT_TRUE(netlog_started);
 }
 
-TEST_F(NetLogTest, EmptyFilename) {
+TEST(NetLogTest, EmptyFilename) {
   bool netlog_started = [Cronet startNetLogToFile:@"" logBytes:NO];
 
   EXPECT_FALSE(netlog_started);
 }
 
-TEST_F(NetLogTest, AbsoluteFilename) {
+TEST(NetLogTest, AbsoluteFilename) {
   bool netlog_started =
       [Cronet startNetLogToFile:@"/home/netlog.json" logBytes:NO];
 
