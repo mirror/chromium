@@ -8,7 +8,7 @@ for building Chrome, and it is currently useful for its warning and error
 messages on Android and Windows.
 
 See
-[the open bugs](http://code.google.com/p/chromium/issues/list?q=label:clang).
+[the open bugs](http://code.google.com/p/chromium/issues/list?q=label:clang). fawefawefawefaewf
 
 [TOC]
 
