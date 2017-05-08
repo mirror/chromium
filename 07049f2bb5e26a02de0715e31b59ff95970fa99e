@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd0dc170_3f008098",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/wasm/wasm_indexeddb_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-08T18:31:16Z",
+      "side": 1,
+      "message": "Do we will want to set the oncomplete and onabort listeners in this case, or should this return (or just have the try-catch span that, too)?",
+      "revId": "07049f2bb5e26a02de0715e31b59ff95970fa99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4699f9e2_d1f3b704",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-08T18:31:16Z",
+      "side": 1,
+      "message": "Is it that hard to plumb a proper bit? \"if for storage, tell the user it\u0027s because of context security\" sounds really bizarre, even with the justifying comment.\n\nMaybe something along the lines of:\n\nenum class WasmPolicy {\n  kAllowed,\n  kDisallowedDueToNonsecureContext,\n  // other policies here\n};",
+      "revId": "07049f2bb5e26a02de0715e31b59ff95970fa99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
