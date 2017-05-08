@@ -1,6 +1,6 @@
 {%- set class_name = struct.name ~ "_Data" -%}
 
-class {{class_name}} {
+class {{export_attribute}} {{class_name}} {
  public:
   static {{class_name}}* New(mojo::internal::Buffer* buf) {
     return new (buf->Allocate(sizeof({{class_name}}))) {{class_name}}();
