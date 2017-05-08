@@ -248,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "9092076e_42114fc1",
+        "filename": "content/test/data/click-nocontent-link.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T20:53:49Z",
+      "side": 1,
+      "message": "Ah, I see what you mean. Done.",
+      "parentUuid": "9d72fca9_b2451ed4",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ef2d0e2_0c0a2a76",
         "filename": "content/test/data/click-nocontent-link.html",
         "patchSetId": 9
