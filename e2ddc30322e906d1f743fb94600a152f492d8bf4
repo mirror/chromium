@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "1796e20a_a40074e6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-08T06:58:09Z",
+      "side": 1,
+      "message": "Not related to this CL, what happens if document.domain is set after initializing the window proxy?",
+      "revId": "e2ddc30322e906d1f743fb94600a152f492d8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ba3ed9_f2cae2c5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-08T06:58:09Z",
+      "side": 1,
+      "message": "the default security token serves for two purposes",
+      "revId": "e2ddc30322e906d1f743fb94600a152f492d8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05ac3869_5a10c9c5",
         "filename": "third_party/WebKit/Source/web/tests/FrameTestHelpers.h",
         "patchSetId": 8
