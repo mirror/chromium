@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d0d0778a_94204d66",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/wasm/wasm_indexeddb_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-08T19:21:52Z",
+      "side": 1,
+      "message": "`reject(e); return;` probably makes the most sense here - the handlers would be no-op after the rejection, might as well make it clear.",
+      "parentUuid": "8d73de86_3c4be12a",
+      "revId": "07049f2bb5e26a02de0715e31b59ff95970fa99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4699f9e2_d1f3b704",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
         "patchSetId": 5
