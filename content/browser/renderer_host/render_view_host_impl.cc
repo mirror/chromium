@@ -309,8 +309,7 @@ bool RenderViewHostImpl::CreateRenderView(
   params->swapped_out = !is_active_;
   params->replicated_frame_state = replicated_frame_state;
   params->proxy_routing_id = proxy_route_id;
-  params->hidden = is_active_ ? GetWidget()->is_hidden()
-                              : GetWidget()->delegate()->IsHidden();
+  params->hidden = GetWidget()->is_hidden();
   params->never_visible = delegate_->IsNeverVisible();
   params->window_was_created_with_opener = window_was_created_with_opener;
   params->enable_auto_resize = GetWidget()->auto_resize_enabled();
