@@ -17,7 +17,6 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "ui/base/cursor/ozone/bitmap_cursor_factory_ozone.h"
@@ -109,8 +108,7 @@ class OzonePlatformGbm : public OzonePlatform {
   }
   void AddInterfaces(service_manager::BinderRegistry* registry) override {
     registry->AddInterface<ozone::mojom::DeviceCursor>(
-        base::Bind(&OzonePlatformGbm::Create, base::Unretained(this)),
-        gpu_task_runner_);
+        base::Bind(&OzonePlatformGbm::Create, base::Unretained(this)));
   }
   void Create(const service_manager::BindSourceInfo& source_info,
               ozone::mojom::DeviceCursorRequest request) {
@@ -210,7 +208,6 @@ class OzonePlatformGbm : public OzonePlatform {
     // complete.
     // using_mojo_ = args.connector != nullptr;
 
-    gpu_task_runner_ = base::ThreadTaskRunnerHandle::Get();
     InterThreadMessagingProxy* itmp;
     if (using_mojo_ || single_process_) {
       itmp = mus_thread_proxy_.get();
@@ -250,7 +247,6 @@ class OzonePlatformGbm : public OzonePlatform {
   scoped_refptr<IPC::MessageFilter> gpu_message_filter_;
   // TODO(sad): Once the mus gpu process split happens, this can go away.
   std::vector<ozone::mojom::DeviceCursorRequest> pending_cursor_requests_;
-  scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner_;
 
   // Objects in the Browser process.
   std::unique_ptr<DeviceManager> device_manager_;

@@ -3755,6 +3755,14 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     previews_state_ =
         extra_data ? extra_data->previews_state() : PREVIEWS_OFF;
 
+    // Set lite pages off if a lite page was not loaded for the main frame.
+    if (web_url_response
+            .HttpHeaderField(
+                WebString::FromUTF8(kChromeProxyContentTransformHeader))
+            .Utf8() != kChromeProxyLitePageDirective) {
+      previews_state_ &= ~(SERVER_LITE_PAGE_ON);
+    }
+
     if (extra_data) {
       effective_connection_type_ =
           EffectiveConnectionTypeToWebEffectiveConnectionType(
@@ -5635,17 +5643,11 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
     }
   }
 
-  // When an MHTML Archive is present, it should be used to serve iframe content
-  // instead of doing a network request.
-  bool use_archive =
-      (info.archive_status == NavigationPolicyInfo::ArchiveStatus::Present) &&
-      !url.SchemeIs(url::kDataScheme);
-
   // PlzNavigate: if the navigation is not synchronous, send it to the browser.
   // This includes navigations with no request being sent to the network stack.
   if (IsBrowserSideNavigationEnabled() &&
       info.url_request.CheckForBrowserSideNavigation() &&
-      ShouldMakeNetworkRequestForURL(url) && !use_archive) {
+      ShouldMakeNetworkRequestForURL(url)) {
     if (info.default_policy == blink::kWebNavigationPolicyCurrentTab) {
       // The BeginNavigation() call happens in didStartProvisionalLoad(). We
       // need to save information about the navigation here.

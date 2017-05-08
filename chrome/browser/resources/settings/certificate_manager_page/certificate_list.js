@@ -18,16 +18,6 @@ Polymer({
 
     /** @type {!CertificateType} */
     certificateType: String,
-
-// <if expr="chromeos">
-    /** @private */
-    isGuest_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('isGuest');
-      }
-    },
-// </if>
   },
 
   behaviors: [I18nBehavior],
@@ -68,7 +58,7 @@ Polymer({
    * @private
    */
   canImportAndBind_: function() {
-    return !this.isGuest_ && this.certificateType == CertificateType.PERSONAL;
+    return this.certificateType == CertificateType.PERSONAL;
   },
 // </if>
 

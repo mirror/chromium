@@ -508,10 +508,7 @@ void MediaControlsImpl::RemovedFrom(ContainerNode*) {
   if (rotate_to_fullscreen_delegate_)
     rotate_to_fullscreen_delegate_->Detach();
 
-  if (resize_observer_) {
-    resize_observer_->disconnect();
-    resize_observer_.Clear();
-  }
+  resize_observer_.Clear();
 
   if (element_mutation_callback_) {
     element_mutation_callback_->Disconnect();

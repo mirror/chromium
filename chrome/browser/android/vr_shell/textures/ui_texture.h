@@ -14,6 +14,7 @@
 class SkCanvas;
 
 namespace gfx {
+class Canvas;
 class FontList;
 }  // namespace gfx
 
@@ -29,10 +30,9 @@ class UiTexture {
   virtual gfx::SizeF GetDrawnSize() const = 0;
 
  protected:
-  virtual void Draw(SkCanvas* canvas, const gfx::Size& texture_size) = 0;
+  virtual void Draw(gfx::Canvas* canvas, const gfx::Size& texture_size) = 0;
 
   static bool IsRTL();
-  static gfx::FontList GetDefaultFontList(int size);
   static gfx::FontList GetFontList(int size, base::string16 text);
 };
 

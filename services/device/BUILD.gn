@@ -86,7 +86,6 @@ source_set("tests") {
       "//chromeos",
       "//dbus",
       "//services/device/fingerprint",
-      "//third_party/protobuf:protobuf_lite",
     ]
   }
 

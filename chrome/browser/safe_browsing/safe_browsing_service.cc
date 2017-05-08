@@ -330,7 +330,6 @@ void SafeBrowsingService::Initialize() {
   services_delegate_->Initialize(v4_enabled_);
   services_delegate_->InitializeCsdService(url_request_context_getter_.get());
 
-  // Needs to happen after |ui_manager_| is created.
   CreateTriggerManager();
 
   // Track profile creation and destruction.
@@ -434,11 +433,6 @@ SafeBrowsingPingManager* SafeBrowsingService::ping_manager() const {
 const scoped_refptr<SafeBrowsingDatabaseManager>&
 SafeBrowsingService::v4_local_database_manager() const {
   return services_delegate_->v4_local_database_manager();
-}
-
-TriggerManager* SafeBrowsingService::trigger_manager() const {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  return trigger_manager_.get();
 }
 
 PasswordProtectionService* SafeBrowsingService::GetPasswordProtectionService(
@@ -787,6 +781,6 @@ void SafeBrowsingService::RemovePasswordProtectionService(Profile* profile) {
 
 void SafeBrowsingService::CreateTriggerManager() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  trigger_manager_ = base::MakeUnique<TriggerManager>(ui_manager_.get());
+  trigger_manager_ = base::MakeUnique<TriggerManager>();
 }
 }  // namespace safe_browsing

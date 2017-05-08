@@ -91,7 +91,9 @@ static_library("metrics") {
   ]
 
   public_deps = [
+    ":single_sample_metrics",
     "//components/metrics/proto",
+    "//components/metrics/public/interfaces:single_sample_metrics_mojo_bindings",
   ]
 
   deps = [
@@ -248,7 +250,7 @@ if (!is_ios) {
   }
 }
 
-static_library("single_sample_metrics") {
+source_set("single_sample_metrics") {
   sources = [
     "single_sample_metrics.cc",
     "single_sample_metrics.h",
@@ -257,13 +259,10 @@ static_library("single_sample_metrics") {
   ]
 
   deps = [
+    "//components/metrics/public/interfaces:single_sample_metrics_mojo_bindings",
     "//mojo/public/cpp/bindings",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
-  ]
-
-  public_deps = [
-    "//components/metrics/public/interfaces:single_sample_metrics_mojo_bindings",
   ]
 }
 
@@ -366,7 +365,6 @@ source_set("unit_tests") {
     ":metrics",
     ":net",
     ":profiler",
-    ":single_sample_metrics",
     ":test_support",
     ":ui",
     "//base/test:test_support",

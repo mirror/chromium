@@ -41,11 +41,10 @@ void MockImageResourceObserver::ImageChanged(ImageResourceContent* image,
 void MockImageResourceObserver::ImageNotifyFinished(
     ImageResourceContent* image) {
   ASSERT_EQ(0, image_notify_finished_count_);
-  DCHECK(image->IsLoaded());
   image_notify_finished_count_++;
   image_width_on_image_notify_finished_ =
       content_->HasImage() ? content_->GetImage()->width() : 0;
-  status_on_image_notify_finished_ = content_->GetContentStatus();
+  status_on_image_notify_finished_ = content_->GetStatus();
 }
 
 bool MockImageResourceObserver::ImageNotifyFinishedCalled() const {

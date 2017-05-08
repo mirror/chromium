@@ -153,7 +153,8 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     @Override
     public int getPrimaryColor() {
-        if (mBottomSheet != null) {
+        if (mBottomSheet != null && mBottomSheet.isSheetOpen()
+                && mBottomSheet.getTargetSheetState() != BottomSheet.SHEET_STATE_PEEK) {
             int colorId =
                     isIncognito() ? R.color.incognito_primary_color : R.color.default_primary_color;
             return ApiCompatibilityUtils.getColor(
@@ -164,6 +165,6 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     @Override
     public boolean isUsingBrandColor() {
-        return mIsUsingBrandColor && mBottomSheet == null;
+        return mIsUsingBrandColor;
     }
 }

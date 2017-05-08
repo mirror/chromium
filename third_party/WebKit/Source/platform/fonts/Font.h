@@ -135,11 +135,6 @@ class PLATFORM_EXPORT Font {
                          const PaintFlags&,
                          const std::tuple<float, float>& bounds,
                          Vector<TextIntercept>&) const;
-  void GetTextIntercepts(const TextFragmentPaintInfo&,
-                         float device_scale_factor,
-                         const PaintFlags&,
-                         const std::tuple<float, float>& bounds,
-                         Vector<TextIntercept>&) const;
 
   // Glyph bounds will be the minimum rect containing all glyph strokes, in
   // coordinates using (<text run x position>, <baseline position>) as the

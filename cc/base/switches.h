@@ -53,11 +53,10 @@ CC_BASE_EXPORT extern const char kCompositedRenderPassBorders[];
 CC_BASE_EXPORT extern const char kCompositedSurfaceBorders[];
 CC_BASE_EXPORT extern const char kCompositedLayerBorders[];
 
-// Test related.
+// Unit test related.
 CC_BASE_EXPORT extern const char kCCLayerTreeTestNoTimeout[];
 CC_BASE_EXPORT extern const char kCCLayerTreeTestLongTimeout[];
 CC_BASE_EXPORT extern const char kCCRebaselinePixeltests[];
-CC_BASE_EXPORT extern const char kDisallowNonExactResourceReuse[];
 
 }  // namespace switches
 }  // namespace cc

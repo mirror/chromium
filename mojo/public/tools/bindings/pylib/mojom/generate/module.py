@@ -82,13 +82,11 @@ class Kind(object):
 
   Attributes:
     spec: A string uniquely identifying the type. May be None.
-    module: {Module} The defining module. Set to None for built-in types.
     parent_kind: The enclosing type. For example, a struct defined
         inside an interface has that interface as its parent. May be None.
   """
-  def __init__(self, spec=None, module=None):
+  def __init__(self, spec=None):
     self.spec = spec
-    self.module = module
     self.parent_kind = None
 
   def Repr(self, as_ref=True):
@@ -108,9 +106,10 @@ class ReferenceKind(Kind):
   Attributes:
     is_nullable: True if the type is nullable.
   """
-  def __init__(self, spec=None, is_nullable=False, module=None):
+
+  def __init__(self, spec=None, is_nullable=False):
     assert spec is None or is_nullable == spec.startswith('?')
-    Kind.__init__(self, spec, module)
+    Kind.__init__(self, spec)
     self.is_nullable = is_nullable
     self.shared_definition = {}
 
@@ -139,8 +138,6 @@ class ReferenceKind(Kind):
     if self.spec is not None:
       nullable_kind.spec = '?' + self.spec
     nullable_kind.is_nullable = True
-    nullable_kind.parent_kind = self.parent_kind
-    nullable_kind.module = self.module
 
     return nullable_kind
 
@@ -227,11 +224,13 @@ ATTRIBUTE_SYNC = 'Sync'
 class NamedValue(object):
   def __init__(self, module, parent_kind, name):
     self.module = module
+    self.namespace = module.namespace
     self.parent_kind = parent_kind
     self.name = name
+    self.imported_from = None
 
   def GetSpec(self):
-    return (self.module.namespace + '.' +
+    return (self.namespace + '.' +
         (self.parent_kind and (self.parent_kind.name + '.') or "") +
         self.name)
 
@@ -253,7 +252,7 @@ class EnumValue(NamedValue):
     self.enum = enum
 
   def GetSpec(self):
-    return (self.module.namespace + '.' +
+    return (self.namespace + '.' +
         (self.parent_kind and (self.parent_kind.name + '.') or "") +
         self.enum.name + '.' + self.name)
 
@@ -301,6 +300,9 @@ class Struct(ReferenceKind):
     name: {str} The name of the struct type.
     native_only: {bool} Does the struct have a body (i.e. any fields) or is it
         purely a native struct.
+    module: {Module} The defining module.
+    imported_from: {dict} Information about where this union was
+        imported from.
     fields: {List[StructField]} The members of the struct.
     attributes: {dict} Additional information about the struct, such as
         if it's a native struct.
@@ -308,6 +310,8 @@ class Struct(ReferenceKind):
 
   ReferenceKind.AddSharedProperty('name')
   ReferenceKind.AddSharedProperty('native_only')
+  ReferenceKind.AddSharedProperty('module')
+  ReferenceKind.AddSharedProperty('imported_from')
   ReferenceKind.AddSharedProperty('fields')
   ReferenceKind.AddSharedProperty('attributes')
 
@@ -316,19 +320,22 @@ class Struct(ReferenceKind):
       spec = 'x:' + name
     else:
       spec = None
-    ReferenceKind.__init__(self, spec, False, module)
+    ReferenceKind.__init__(self, spec)
     self.name = name
     self.native_only = False
+    self.module = module
+    self.imported_from = None
     self.fields = []
     self.attributes = attributes
 
   def Repr(self, as_ref=True):
     if as_ref:
-      return '<%s name=%r module=%s>' % (
+      return '<%s name=%r imported_from=%s>' % (
           self.__class__.__name__, self.name,
-          Repr(self.module, as_ref=True))
+          Repr(self.imported_from, as_ref=True))
     else:
-      return GenericRepr(self, {'name': False, 'fields': False, 'module': True})
+      return GenericRepr(self, {'name': False, 'fields': False,
+                                'imported_from': True})
 
   def AddField(self, name, kind, ordinal=None, default=None, attributes=None):
     field = StructField(name, kind, ordinal, default, attributes)
@@ -341,12 +348,17 @@ class Union(ReferenceKind):
 
   Attributes:
     name: {str} The name of the union type.
+    module: {Module} The defining module.
+    imported_from: {dict} Information about where this union was
+        imported from.
     fields: {List[UnionField]} The members of the union.
     attributes: {dict} Additional information about the union, such as
         which Java class name to use to represent it in the generated
         bindings.
   """
   ReferenceKind.AddSharedProperty('name')
+  ReferenceKind.AddSharedProperty('module')
+  ReferenceKind.AddSharedProperty('imported_from')
   ReferenceKind.AddSharedProperty('fields')
   ReferenceKind.AddSharedProperty('attributes')
 
@@ -355,8 +367,10 @@ class Union(ReferenceKind):
       spec = 'x:' + name
     else:
       spec = None
-    ReferenceKind.__init__(self, spec, False, module)
+    ReferenceKind.__init__(self, spec)
     self.name = name
+    self.module = module
+    self.imported_from = None
     self.fields = []
     self.attributes = attributes
 
@@ -537,7 +551,9 @@ class Method(object):
 
 
 class Interface(ReferenceKind):
+  ReferenceKind.AddSharedProperty('module')
   ReferenceKind.AddSharedProperty('name')
+  ReferenceKind.AddSharedProperty('imported_from')
   ReferenceKind.AddSharedProperty('methods')
   ReferenceKind.AddSharedProperty('attributes')
 
@@ -546,8 +562,10 @@ class Interface(ReferenceKind):
       spec = 'x:' + name
     else:
       spec = None
-    ReferenceKind.__init__(self, spec, False, module)
+    ReferenceKind.__init__(self, spec)
+    self.module = module
     self.name = name
+    self.imported_from = None
     self.methods = []
     self.attributes = attributes
 
@@ -600,13 +618,15 @@ class EnumField(object):
 
 class Enum(Kind):
   def __init__(self, name=None, module=None, attributes=None):
+    self.module = module
     self.name = name
     self.native_only = False
+    self.imported_from = None
     if name is not None:
       spec = 'x:' + name
     else:
       spec = None
-    Kind.__init__(self, spec, module)
+    Kind.__init__(self, spec)
     self.fields = []
     self.attributes = attributes
 

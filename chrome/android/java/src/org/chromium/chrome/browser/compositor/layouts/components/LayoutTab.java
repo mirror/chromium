@@ -103,7 +103,6 @@ public class LayoutTab implements ChromeAnimation.Animatable<LayoutTab.Property>
     private boolean mInsetBorderVertical;
     private float mToolbarYOffset;
     private float mSideBorderScale;
-    private boolean mForceDefaultThemeColor;
 
     private final RectF mBounds = new RectF(); // Pre-allocated to avoid in-frame allocations.
     private final RectF mClosePlacement = new RectF();
@@ -275,21 +274,6 @@ public class LayoutTab implements ChromeAnimation.Animatable<LayoutTab.Property>
      */
     public boolean isInitFromHostNeeded() {
         return !mInitFromHostCalled;
-    }
-
-    /**
-     * @return Whether or not the object rendering this LayoutTab should force default theme colors.
-     */
-    public boolean getForceDefaultThemeColor() {
-        return mForceDefaultThemeColor;
-    }
-
-    /**
-     * @param force Whether or not the object rendering this LayoutTab should force default theme
-     *              colors.
-     */
-    public void setForceDefaultThemeColor(boolean force) {
-        mForceDefaultThemeColor = force;
     }
 
     /**

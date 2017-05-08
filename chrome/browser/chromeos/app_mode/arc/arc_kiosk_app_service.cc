@@ -174,11 +174,9 @@ void ArcKioskAppService::RequestNameAndIconUpdate() {
     return;
   app_icon_ = base::MakeUnique<ArcAppIcon>(profile_, app_id_,
                                            app_list::kGridIconDimension, this);
-  app_icon_->image_skia().GetRepresentation(ui::GetSupportedScaleFactor(
+  app_icon_->LoadForScaleFactor(ui::GetSupportedScaleFactor(
       display::Screen::GetScreen()->GetPrimaryDisplay().device_scale_factor()));
-  // Apply default image now and in case icon is updated then OnIconUpdated()
-  // will be called additionally.
-  OnIconUpdated(app_icon_.get());
+  // Name and icon are updated when icon is loaded in OnIconUpdated()
 }
 
 void ArcKioskAppService::PreconditionsChanged() {

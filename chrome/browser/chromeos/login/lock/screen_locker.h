@@ -141,8 +141,7 @@ class ScreenLocker : public AuthStatusConsumer,
   void OnSessionFailed() override;
   void OnRestarted() override{};
   void OnEnrollScanDone(uint32_t scan_result,
-                        bool enroll_session_complete,
-                        int percent_complete) override{};
+                        bool enroll_session_complete) override{};
 
   void OnFingerprintAuthFailure(const user_manager::User& user);
 
