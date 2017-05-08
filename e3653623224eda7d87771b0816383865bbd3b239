@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "978ddc4e_d8a7a188",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/IPHInfoBarSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-08T23:22:32Z",
+      "side": 1,
+      "message": "Discussed offline.",
+      "parentUuid": "a731e2ef_e3b0d862",
+      "range": {
+        "startLine": 114,
+        "startChar": 12,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "e3653623224eda7d87771b0816383865bbd3b239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "261abaf8_d1c98ca4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/IPHInfoBarSupport.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e3653623224eda7d87771b0816383865bbd3b239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abffb99f_361682cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/IPHInfoBarSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-08T23:22:32Z",
+      "side": 1,
+      "message": "Discussed offline.",
+      "parentUuid": "261abaf8_d1c98ca4",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 36
+      },
+      "revId": "e3653623224eda7d87771b0816383865bbd3b239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
