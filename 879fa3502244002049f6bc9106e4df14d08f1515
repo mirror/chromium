@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ba534c3_2d5604a2",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-08T23:08:39Z",
+      "side": 0,
+      "message": "This needs to be converted to swarming, it seems like",
+      "revId": "879fa3502244002049f6bc9106e4df14d08f1515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cd5965_6630c62a",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-08T23:08:39Z",
+      "side": 0,
+      "message": "Ditto",
+      "revId": "879fa3502244002049f6bc9106e4df14d08f1515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42ac643_4b6d3a7b",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-08T23:08:39Z",
+      "side": 0,
+      "message": "Ditto",
+      "range": {
+        "startLine": 93,
+        "startChar": 70,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "879fa3502244002049f6bc9106e4df14d08f1515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
