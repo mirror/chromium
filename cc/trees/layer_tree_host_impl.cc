@@ -1030,6 +1030,9 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
                    "draw_result", draw_result, "missing tiles",
                    num_missing_tiles);
 
+  TRACE_COUNTER_ID1("cc", "num_missing_tiles", id_, num_missing_tiles);
+  TRACE_COUNTER_ID1("cc", "num_incomplete_tiles", id_, num_incomplete_tiles);
+
   // Draw has to be successful to not drop the copy request layer.
   // When we have a copy request for a layer, we need to draw even if there
   // would be animating checkerboards, because failing under those conditions
