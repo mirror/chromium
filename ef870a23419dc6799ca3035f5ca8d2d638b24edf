@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a9dd685_51f49781",
+        "filename": "mojo/common/values_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-05-08T20:49:20Z",
+      "side": 1,
+      "message": "nit: where does this come into play?  I only saw std::vector\u003c\u003e.",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "ef870a23419dc6799ca3035f5ca8d2d638b24edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
