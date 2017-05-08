@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eccb6a2_8712e9af",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-05-08T09:12:30Z",
+      "side": 1,
+      "message": "Can you document whether this function be called for pages without a manifest? Similarly, if a page clears out the manifest URL via Javascript.\n\nAssuming not, is it guaranteed to run before or after DidUpdateFaviconURL? I mention this because the favicon processing will need to wait until both (favicon candidates and manifest URL) are available.",
+      "range": {
+        "startLine": 430,
+        "startChar": 20,
+        "endLine": 430,
+        "endChar": 0
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79caeda8_54896038",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-05-08T09:12:30Z",
+      "side": 1,
+      "message": "I don\u0027t personally care either way, but some people like pkotwicz@ have argued for an empty URL replacing the need for a base::Optional.",
+      "range": {
+        "startLine": 432,
+        "startChar": 50,
+        "endLine": 432,
+        "endChar": 0
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
