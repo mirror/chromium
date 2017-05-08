@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "99153317_cf2a071d",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T19:57:26Z",
+      "side": 1,
+      "message": "Ok, as long as all those types of accesses still trigger the notification, I\u0027m ok with it.",
+      "parentUuid": "46b2487b_57770b01",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff116954_b8b849f6",
         "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
         "patchSetId": 9
@@ -206,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "9d72fca9_b2451ed4",
+        "filename": "content/test/data/click-nocontent-link.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T19:57:26Z",
+      "side": 1,
+      "message": "No.  The previous comment is talking about the foo window and uses pronouns like \"it.\"  This comment continues the previous thought with \"Also,\" so it sounds like it\u0027s saying \"Also modify the existing foo window\u0027s title.\"\n\nThis is also confusing because the first sentence talks about grabbing a reference, but we don\u0027t store that reference anywhere.  You can figure out what\u0027s going on if you look carefully at the code, but it makes the reader wonder if the code has a bug or was intentional.",
+      "parentUuid": "ea8af922_f9302565",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ef2d0e2_0c0a2a76",
         "filename": "content/test/data/click-nocontent-link.html",
         "patchSetId": 9
@@ -235,6 +277,24 @@
       "side": 1,
       "message": "I renamed it but used document.write as well (in case anyone is trying to repro manually)",
       "parentUuid": "5ef2d0e2_0c0a2a76",
+      "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f30bab77_8b0a5691",
+        "filename": "content/test/data/click-nocontent-link.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-08T19:57:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b48d3d35_d256698b",
       "revId": "c1261451cd85155bfb1cb688b6b6203337ba1d0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
