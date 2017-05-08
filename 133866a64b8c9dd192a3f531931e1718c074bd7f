@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8de7aad_c2d57b3f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-08T19:46:13Z",
+      "side": 1,
+      "message": "Remember to change this before landing :-)",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc74aeef_3aab651b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-08T19:46:13Z",
+      "side": 1,
+      "message": "Nit: This could also be written without the else clause (which I slightly prefer, but this change isn\u0027t necessary).\n\nAnother possible change: Instead of having the argument \"raw\", you could change it to \"load_jsonp\".\nIt might be worth noting that the JSONP padding is part of the Gerrit API.",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ab477d_795e76d8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit_mock.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-08T19:46:13Z",
+      "side": 1,
+      "message": "The else clause could also be removed here, or this could be changed to go on one line:\n\n    return \u0027\u0027 if raw else {}",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777c28e8_bd8d3b18",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-08T19:46:13Z",
+      "side": 1,
+      "message": "Optionally you could add a line here for force_push, although it should be fairly clear based on the name.",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfcbe935_02b109ea",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-08T19:46:13Z",
+      "side": 1,
+      "message": "Optionally you could add a line here for force_push, although it should be fairly clear based on the name.",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f813707_d86e49b5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-08T19:46:13Z",
+      "side": 1,
+      "message": "Could add a period here :-)",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7cd9a6_2d2f4994",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-08T19:46:13Z",
+      "side": 1,
+      "message": "Maybe this could be done in this CL? This method is a little on the long side, if some helper methods could be extracted and used in multiple methods here, that would be nice.",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
