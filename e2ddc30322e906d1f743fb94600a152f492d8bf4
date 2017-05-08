@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77d62140_5a798230",
+        "filename": "content/test/data/click-nocontent-link.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T05:12:18Z",
+      "side": 1,
+      "message": "I did a bunch of testing; the second window.open() call itself seems to trigger installation of the DOM automation controller. This incorrectly caused the document.open() test on lines 45-55 to pass even if it shouldn\u0027t (i.e. with no Blink changes).",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "e2ddc30322e906d1f743fb94600a152f492d8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05ac3869_5a10c9c5",
+        "filename": "third_party/WebKit/Source/web/tests/FrameTestHelpers.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T05:12:18Z",
+      "side": 1,
+      "message": "This fixes a longstanding FIXME in WebFrameTest, since I didn\u0027t want to copy and paste it into yet another new test.\n\nThe root issue is that TestWebViewClient owns a WebLayerTreeViewImplForTesting: this is owned by a smart pointer. If the same TestWebViewClient is reused, subsequent calls to InitializeLayerTreeView() delete the initial WebLayerTreeViewImplForTesting object, causing use-after-free bugs.",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 65
+      },
+      "revId": "e2ddc30322e906d1f743fb94600a152f492d8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36cd005d_cfdd1dad",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 6850,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T05:12:18Z",
+      "side": 1,
+      "message": "I changed this to a count instead of a bool, since this count changing can indicate bugs: for example, when I reverted the v8 change to make console a builtin, it caused these tests to start failing (since the count no longer matches; every count is 1 higher than it should be)\n\nUnfortunately, I don\u0027t have an easy way to write the Blink equivalent of the ShowLoadingURLIfNotModified test right now; I need to restructure the tests to actually use window.open(), I think. I will attempt this in a followup.",
+      "range": {
+        "startLine": 6850,
+        "startChar": 2,
+        "endLine": 6850,
+        "endChar": 39
+      },
+      "revId": "e2ddc30322e906d1f743fb94600a152f492d8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bdba59_53aea282",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 6876,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T05:12:18Z",
+      "side": 1,
+      "message": "I\u0027m still debugging this new test: it seems to pass even without any Blink impl changes. I think it might be related to the way that this test is setup.",
+      "range": {
+        "startLine": 6876,
+        "startChar": 34,
+        "endLine": 6876,
+        "endChar": 62
+      },
+      "revId": "e2ddc30322e906d1f743fb94600a152f492d8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

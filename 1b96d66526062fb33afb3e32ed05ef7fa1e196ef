@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea94b4bc_5537acf4",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 6886,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-08T05:12:18Z",
+      "side": 0,
+      "message": "Deduping is done by the embedder now, so remove this.",
+      "range": {
+        "startLine": 6882,
+        "startChar": 0,
+        "endLine": 6886,
+        "endChar": 61
+      },
+      "revId": "1b96d66526062fb33afb3e32ed05ef7fa1e196ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
