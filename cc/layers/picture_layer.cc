@@ -95,7 +95,7 @@ bool PictureLayer::Update() {
   update_source_frame_number_ = layer_tree_host()->SourceFrameNumber();
   bool updated = Layer::Update();
 
-  gfx::Size layer_size = paint_properties().bounds;
+  gfx::Size layer_size = bounds();
 
   recording_source_->SetBackgroundColor(SafeOpaqueBackgroundColor());
   recording_source_->SetRequiresClear(
@@ -221,8 +221,6 @@ void PictureLayer::DropRecordingSourceContentIfInvalid() {
   gfx::Size recording_source_bounds = recording_source_->GetSize();
 
   gfx::Size layer_bounds = bounds();
-  if (paint_properties().source_frame_number == source_frame_number)
-    layer_bounds = paint_properties().bounds;
 
   // If update called, then recording source size must match bounds pushed to
   // impl layer.

@@ -45,7 +45,6 @@ TEST(PictureLayerTest, NoTilesIfEmptyBounds) {
       &host_client, &task_graph_runner, animation_host.get());
   host->SetRootLayer(layer);
   layer->SetIsDrawable(true);
-  layer->SavePaintProperties();
   layer->Update();
 
   EXPECT_EQ(0, host->SourceFrameNumber());
@@ -53,7 +52,6 @@ TEST(PictureLayerTest, NoTilesIfEmptyBounds) {
   EXPECT_EQ(1, host->SourceFrameNumber());
 
   layer->SetBounds(gfx::Size(0, 0));
-  layer->SavePaintProperties();
   // Intentionally skipping Update since it would normally be skipped on
   // a layer with empty bounds.
 
@@ -89,7 +87,6 @@ TEST(PictureLayerTest, InvalidateRasterAfterUpdate) {
       &host_client, &task_graph_runner, animation_host.get());
   host->SetRootLayer(layer);
   layer->SetIsDrawable(true);
-  layer->SavePaintProperties();
 
   gfx::Rect invalidation_bounds(layer_size);
 
@@ -132,7 +129,6 @@ TEST(PictureLayerTest, InvalidateRasterWithoutUpdate) {
       &host_client, &task_graph_runner, animation_host.get());
   host->SetRootLayer(layer);
   layer->SetIsDrawable(true);
-  layer->SavePaintProperties();
 
   gfx::Rect invalidation_bounds(layer_size);
 
@@ -175,14 +171,12 @@ TEST(PictureLayerTest, ClearVisibleRectWhenNoTiling) {
       &host_client, &task_graph_runner, animation_host.get());
   host->SetRootLayer(layer);
   layer->SetIsDrawable(true);
-  layer->SavePaintProperties();
   layer->Update();
 
   EXPECT_EQ(0, host->SourceFrameNumber());
   host->CommitComplete();
   EXPECT_EQ(1, host->SourceFrameNumber());
 
-  layer->SavePaintProperties();
   layer->Update();
   host->BuildPropertyTreesForTesting();
 
@@ -218,7 +212,6 @@ TEST(PictureLayerTest, ClearVisibleRectWhenNoTiling) {
   host_impl.active_tree()->UpdateDrawProperties(can_use_lcd_text);
 
   layer->SetBounds(gfx::Size(11, 11));
-  layer->SavePaintProperties();
 
   host_impl.CreatePendingTree();
   layer_impl = static_cast<FakePictureLayerImpl*>(
