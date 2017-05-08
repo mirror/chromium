@@ -28,6 +28,15 @@
 #include "ui/views/animation/ink_drop_mask.h"
 #include "ui/views/painter.h"
 
+namespace {
+
+bool IsVoiceInteractionEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kEnableVoiceInteraction);
+}
+
+}  // namespace
+
 namespace ash {
 
 AppListButton::AppListButton(InkDropButtonListener* listener,
@@ -94,7 +103,7 @@ void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
       ImageButton::OnGestureEvent(event);
       break;
     case ui::ET_GESTURE_LONG_PRESS:
-      if (chromeos::switches::IsVoiceInteractionEnabled()) {
+      if (IsVoiceInteractionEnabled()) {
         Shell::Get()->app_list()->StartVoiceInteractionSession();
         event->SetHandled();
       } else {
@@ -102,7 +111,7 @@ void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
       }
       break;
     case ui::ET_GESTURE_LONG_TAP:
-      if (chromeos::switches::IsVoiceInteractionEnabled()) {
+      if (IsVoiceInteractionEnabled()) {
         // Also consume the long tap event. This happens after the user long
         // presses and lifts the finger. We already handled the long press
         // ignore the long tap to avoid bringing up the context menu again.

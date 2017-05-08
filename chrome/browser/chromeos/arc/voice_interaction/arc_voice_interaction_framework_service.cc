@@ -43,6 +43,12 @@ void ScreenshotCallback(
 const char ArcVoiceInteractionFrameworkService::kArcServiceName[] =
     "arc::ArcVoiceInteractionFrameworkService";
 
+// static
+bool ArcVoiceInteractionFrameworkService::IsVoiceInteractionEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kEnableVoiceInteraction);
+}
+
 ArcVoiceInteractionFrameworkService::ArcVoiceInteractionFrameworkService(
     ArcBridgeService* bridge_service)
     : ArcService(bridge_service), binding_(this) {

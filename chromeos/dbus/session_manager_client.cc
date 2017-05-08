@@ -418,7 +418,6 @@ class SessionManagerClientImpl : public SessionManagerClient {
 
   void StartArcInstance(const cryptohome::Identification& cryptohome_id,
                         bool disable_boot_completed_broadcast,
-                        bool enable_vendor_privileged,
                         const StartArcInstanceCallback& callback) override {
     dbus::MethodCall method_call(
         login_manager::kSessionManagerInterface,
@@ -426,7 +425,6 @@ class SessionManagerClientImpl : public SessionManagerClient {
     dbus::MessageWriter writer(&method_call);
     writer.AppendString(cryptohome_id.id());
     writer.AppendBool(disable_boot_completed_broadcast);
-    writer.AppendBool(enable_vendor_privileged);
     session_manager_proxy_->CallMethodWithErrorCallback(
         &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         base::Bind(&SessionManagerClientImpl::OnStartArcInstanceSucceeded,
@@ -1113,7 +1111,6 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
 
   void StartArcInstance(const cryptohome::Identification& cryptohome_id,
                         bool disable_boot_completed_broadcast,
-                        bool enable_vendor_privileged,
                         const StartArcInstanceCallback& callback) override {
     callback.Run(StartArcInstanceResult::UNKNOWN_ERROR);
   }

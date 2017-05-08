@@ -272,15 +272,14 @@ float Font::Width(const TextRun& run,
   return shaper.Width(run, fallback_fonts, glyph_bounds);
 }
 
-namespace {  // anonymous namespace
-
-unsigned InterceptsFromBlobs(const ShapeResultBloberizer::BlobBuffer& blobs,
-                             const SkPaint& paint,
-                             const std::tuple<float, float>& bounds,
-                             SkScalar* intercepts_buffer) {
+static int GetInterceptsFromBlobs(
+    const ShapeResultBloberizer::BlobBuffer& blobs,
+    const SkPaint& paint,
+    const std::tuple<float, float>& bounds,
+    SkScalar* intercepts_buffer) {
   SkScalar bounds_array[2] = {std::get<0>(bounds), std::get<1>(bounds)};
 
-  unsigned num_intervals = 0;
+  int num_intervals = 0;
   for (const auto& blob_info : blobs) {
     DCHECK(blob_info.blob);
 
@@ -300,26 +299,6 @@ unsigned InterceptsFromBlobs(const ShapeResultBloberizer::BlobBuffer& blobs,
   return num_intervals;
 }
 
-void GetTextInterceptsInternal(const ShapeResultBloberizer::BlobBuffer& blobs,
-                               const PaintFlags& flags,
-                               const std::tuple<float, float>& bounds,
-                               Vector<Font::TextIntercept>& intercepts) {
-  // Get the number of intervals, without copying the actual values by
-  // specifying nullptr for the buffer, following the Skia allocation model for
-  // retrieving text intercepts.
-  SkPaint paint(ToSkPaint(flags));
-  unsigned num_intervals = InterceptsFromBlobs(blobs, paint, bounds, nullptr);
-  if (!num_intervals)
-    return;
-  DCHECK_EQ(num_intervals % 2, 0u);
-  intercepts.resize(num_intervals / 2u);
-
-  InterceptsFromBlobs(blobs, paint, bounds,
-                      reinterpret_cast<SkScalar*>(intercepts.data()));
-}
-
-}  // anonymous namespace
-
 void Font::GetTextIntercepts(const TextRunPaintInfo& run_info,
                              float device_scale_factor,
                              const PaintFlags& flags,
@@ -330,28 +309,26 @@ void Font::GetTextIntercepts(const TextRunPaintInfo& run_info,
 
   ShapeResultBloberizer bloberizer(
       *this, device_scale_factor, ShapeResultBloberizer::Type::kTextIntercepts);
+
   CachingWordShaper word_shaper(*this);
   ShapeResultBuffer buffer;
   word_shaper.FillResultBuffer(run_info, &buffer);
   bloberizer.FillGlyphs(run_info, buffer);
 
-  GetTextInterceptsInternal(bloberizer.Blobs(), flags, bounds, intercepts);
-}
+  const auto& blobs = bloberizer.Blobs();
 
-void Font::GetTextIntercepts(const TextFragmentPaintInfo& text_info,
-                             float device_scale_factor,
-                             const PaintFlags& flags,
-                             const std::tuple<float, float>& bounds,
-                             Vector<TextIntercept>& intercepts) const {
-  if (ShouldSkipDrawing())
+  // Get the number of intervals, without copying the actual values by
+  // specifying nullptr for the buffer, following the Skia allocation model for
+  // retrieving text intercepts.
+  SkPaint paint(ToSkPaint(flags));
+  int num_intervals = GetInterceptsFromBlobs(blobs, paint, bounds, nullptr);
+  if (!num_intervals)
     return;
+  DCHECK_EQ(num_intervals % 2, 0);
+  intercepts.resize(num_intervals / 2);
 
-  ShapeResultBloberizer bloberizer(
-      *this, device_scale_factor, ShapeResultBloberizer::Type::kTextIntercepts);
-  bloberizer.FillGlyphs(text_info.text, text_info.from, text_info.to,
-                        text_info.shape_result);
-
-  GetTextInterceptsInternal(bloberizer.Blobs(), flags, bounds, intercepts);
+  GetInterceptsFromBlobs(blobs, paint, bounds,
+                         reinterpret_cast<SkScalar*>(intercepts.data()));
 }
 
 static inline FloatRect PixelSnappedSelectionRect(FloatRect rect) {
