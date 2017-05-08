@@ -22,6 +22,30 @@
       "revId": "ef870a23419dc6799ca3035f5ca8d2d638b24edf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a264ca19_ca91a02d",
+        "filename": "mojo/common/values_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-08T23:28:12Z",
+      "side": 1,
+      "message": "base::Value::DictStorage is a flat_map.\n\nAdded \u003cvector\u003e and the other missing headers the linter noticed.",
+      "parentUuid": "4a9dd685_51f49781",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "ef870a23419dc6799ca3035f5ca8d2d638b24edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
