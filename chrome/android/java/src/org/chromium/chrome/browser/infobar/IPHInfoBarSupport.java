@@ -52,6 +52,9 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
 
         /** The bubble that is currently showing the in-product help. */
         public TextBubble bubble;
+
+        /** The in-product help feature that the popup relates to. */
+        public String feature;
     }
 
     /** The state of the currently showing in-product window or {@code null} if none is showing. */
@@ -76,7 +79,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
             // Clean up any old infobar if necessary.
             if (mCurrentState.view != view) {
                 mCurrentState.bubble.dismiss();
-                mCurrentState = null;
+                assert mCurrentState == null;
             }
         }
 
@@ -97,6 +100,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
         mCurrentState.bubble.addOnDismissListener(this);
         mCurrentState.bubble.setDismissOnTouchInteraction(true);
         mCurrentState.bubble.show();
+        mCurrentState.feature = params.feature;
     }
 
     // InfoBarContainerObserver implementation.
@@ -107,7 +111,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     public void onRemoveInfoBar(InfoBarContainer container, InfoBar infoBar, boolean isLast) {
         if (mCurrentState != null && infoBar.getView() == mCurrentState.view) {
             mCurrentState.bubble.dismiss();
-            mCurrentState = null;
+            assert mCurrentState == null;
         }
     }
 
@@ -117,8 +121,10 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     // PopupWindow.OnDismissListener implementation.
     @Override
     public void onDismiss() {
+        assert mCurrentState != null;
+        String feature = mCurrentState.feature;
         mCurrentState = null;
-        mTracker.dismissed();
+        mTracker.dismissed(feature);
     }
 
     private void logEvent(Item infoBar) {
