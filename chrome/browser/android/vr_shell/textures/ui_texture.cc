@@ -22,9 +22,7 @@
 namespace vr_shell {
 
 namespace {
-
-static constexpr char kDefaultFontFamily[] = "sans-serif";
-
+constexpr char kDefaultFontFamily[] = "sans-serif";
 }  // namespace
 
 UiTexture::UiTexture() = default;
@@ -32,16 +30,14 @@ UiTexture::UiTexture() = default;
 UiTexture::~UiTexture() = default;
 
 void UiTexture::DrawAndLayout(SkCanvas* canvas, const gfx::Size& texture_size) {
-  canvas->drawColor(SK_ColorTRANSPARENT);
-  Draw(canvas, texture_size);
+  cc::SkiaPaintCanvas paint_canvas(canvas);
+  gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
+  gfx_canvas.DrawColor(SK_ColorTRANSPARENT);
+  Draw(&gfx_canvas, texture_size);
 }
 
 bool UiTexture::IsRTL() {
   return base::i18n::IsRTL();
-}
-
-gfx::FontList UiTexture::GetDefaultFontList(int size) {
-  return gfx::FontList(gfx::Font(kDefaultFontFamily, size));
 }
 
 gfx::FontList UiTexture::GetFontList(int size, base::string16 text) {

@@ -151,14 +151,10 @@ NSImage* DragImageForBookmark(NSImage* favicon,
   NSString* ns_title = base::SysUTF16ToNSString(title);
 
   // Set the look of the title.
-  base::scoped_nsobject<NSMutableParagraphStyle> paragraph_style(
-      [[NSMutableParagraphStyle alloc] init]);
-  [paragraph_style setLineBreakMode:NSLineBreakByClipping];
-  NSDictionary* attrs = @{
-    NSFontAttributeName :
-        [NSFont systemFontOfSize:[NSFont smallSystemFontSize]],
-    NSParagraphStyleAttributeName : paragraph_style
-  };
+  NSDictionary* attrs =
+      [NSDictionary dictionaryWithObject:[NSFont systemFontOfSize:
+                                           [NSFont smallSystemFontSize]]
+                                  forKey:NSFontAttributeName];
   base::scoped_nsobject<NSAttributedString> rich_title(
       [[NSAttributedString alloc] initWithString:ns_title attributes:attrs]);
 

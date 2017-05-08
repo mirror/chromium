@@ -13,7 +13,6 @@
 #include "base/json/json_writer.h"
 #include "base/location.h"
 #include "base/macros.h"
-#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -263,7 +262,7 @@ class RenderViewImplTest : public RenderViewTest {
 
   template<class T>
   typename T::Param ProcessAndReadIPC() {
-    base::RunLoop().RunUntilIdle();
+    ProcessPendingMessages();
     const IPC::Message* message =
         render_thread_->sink().GetUniqueMessageMatching(T::ID);
     typename T::Param param;
@@ -589,7 +588,7 @@ TEST_F(RenderViewImplTest, OnNavStateChanged) {
   // notification. We need to spin the message loop to catch this update.
   ExecuteJavaScriptForTests(
       "document.getElementById('elt_text').value = 'foo';");
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
 
   EXPECT_TRUE(render_thread_->sink().GetUniqueMessageMatching(
       FrameHostMsg_UpdateState::ID));
@@ -613,7 +612,7 @@ TEST_F(RenderViewImplTest, OnNavigationHttpPost) {
   common_params.post_data = post_data;
 
   frame()->Navigate(common_params, start_params, request_params);
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
 
   const IPC::Message* frame_navigate_msg =
       render_thread_->sink().GetUniqueMessageMatching(
@@ -654,7 +653,7 @@ TEST_F(RenderViewImplTest, OnNavigationLoadDataWithBaseURL) {
                     request_params);
   const IPC::Message* frame_title_msg = nullptr;
   do {
-    base::RunLoop().RunUntilIdle();
+    ProcessPendingMessages();
     frame_title_msg = render_thread_->sink().GetUniqueMessageMatching(
         FrameHostMsg_UpdateTitle::ID);
   } while (!frame_title_msg);
@@ -933,7 +932,7 @@ TEST_F(RenderViewImplTest,  DISABLED_LastCommittedUpdateState) {
   LoadHTML("<div>Page B</div>");
 
   // Check for a valid UpdateState message for page A.
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
   const IPC::Message* msg_A = render_thread_->sink().GetUniqueMessageMatching(
       FrameHostMsg_UpdateState::ID);
   ASSERT_TRUE(msg_A);
@@ -946,7 +945,7 @@ TEST_F(RenderViewImplTest,  DISABLED_LastCommittedUpdateState) {
   LoadHTML("<div>Page C</div>");
 
   // Check for a valid UpdateState for page B.
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
   const IPC::Message* msg_B = render_thread_->sink().GetUniqueMessageMatching(
       FrameHostMsg_UpdateState::ID);
   ASSERT_TRUE(msg_B);
@@ -959,7 +958,7 @@ TEST_F(RenderViewImplTest,  DISABLED_LastCommittedUpdateState) {
   LoadHTML("<div>Page D</div>");
 
   // Check for a valid UpdateState for page C.
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
   const IPC::Message* msg_C = render_thread_->sink().GetUniqueMessageMatching(
       FrameHostMsg_UpdateState::ID);
   ASSERT_TRUE(msg_C);
@@ -980,7 +979,7 @@ TEST_F(RenderViewImplTest,  DISABLED_LastCommittedUpdateState) {
   request_params_C.nav_entry_id = 3;
   request_params_C.page_state = state_C;
   frame()->Navigate(common_params_C, StartNavigationParams(), request_params_C);
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
   render_thread_->sink().ClearMessages();
 
   // Go back twice quickly, such that page B does not have a chance to commit.
@@ -1012,7 +1011,7 @@ TEST_F(RenderViewImplTest,  DISABLED_LastCommittedUpdateState) {
   request_params.nav_entry_id = 1;
   request_params.page_state = state_A;
   frame()->Navigate(common_params, StartNavigationParams(), request_params);
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
 
   // Now ensure that the UpdateState message we receive is consistent
   // and represents page C in state.
@@ -1081,7 +1080,7 @@ TEST_F(RenderViewImplTest, OnImeTypeChanged) {
     // Move the input focus to the first <input> element, where we should
     // activate IMEs.
     ExecuteJavaScriptForTests("document.getElementById('test1').focus();");
-    base::RunLoop().RunUntilIdle();
+    ProcessPendingMessages();
     render_thread_->sink().ClearMessages();
 
     // Update the IME status and verify if our IME backend sends an IPC message
@@ -1102,7 +1101,7 @@ TEST_F(RenderViewImplTest, OnImeTypeChanged) {
     // Move the input focus to the second <input> element, where we should
     // de-activate IMEs.
     ExecuteJavaScriptForTests("document.getElementById('test2').focus();");
-    base::RunLoop().RunUntilIdle();
+    ProcessPendingMessages();
     render_thread_->sink().ClearMessages();
 
     // Update the IME status and verify if our IME backend sends an IPC message
@@ -1125,13 +1124,13 @@ TEST_F(RenderViewImplTest, OnImeTypeChanged) {
       // Move the input focus to the target <input> element, where we should
       // activate IMEs.
       ExecuteJavaScriptAndReturnIntValue(base::ASCIIToUTF16(javascript), NULL);
-      base::RunLoop().RunUntilIdle();
+      ProcessPendingMessages();
       render_thread_->sink().ClearMessages();
 
       // Update the IME status and verify if our IME backend sends an IPC
       // message to activate IMEs.
       view()->UpdateTextInputState();
-      base::RunLoop().RunUntilIdle();
+      ProcessPendingMessages();
       const IPC::Message* msg = render_thread_->sink().GetMessageAt(0);
       EXPECT_TRUE(msg != NULL);
       EXPECT_EQ(ViewHostMsg_TextInputStateChanged::ID, msg->type());
@@ -1271,7 +1270,7 @@ TEST_F(RenderViewImplTest, ImeComposition) {
     // Update the status of our IME back-end.
     // TODO(hbono): we should verify messages to be sent from the back-end.
     view()->UpdateTextInputState();
-    base::RunLoop().RunUntilIdle();
+    ProcessPendingMessages();
     render_thread_->sink().ClearMessages();
 
     if (ime_message->result) {
@@ -2057,7 +2056,7 @@ TEST_F(RenderViewImplTest, BrowserNavigationStartSanitized) {
 
   frame()->Navigate(late_common_params, StartNavigationParams(),
                     RequestNavigationParams());
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
   base::Time after_navigation =
       base::Time::Now() + base::TimeDelta::FromDays(1);
 
@@ -2091,7 +2090,7 @@ TEST_F(RenderViewImplTest, NavigationStartForReload) {
   const char url_string[] = "data:text/html,<div>Page</div>";
   // Navigate once, then reload.
   LoadHTML(url_string);
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
   render_thread_->sink().ClearMessages();
 
   CommonNavigationParams common_params;
@@ -2125,7 +2124,7 @@ TEST_F(RenderViewImplTest, NavigationStartForSameProcessHistoryNavigation) {
   PageState back_state = GetCurrentPageState();
   LoadHTML("<div id=pagename>Page C</div>");
   PageState forward_state = GetCurrentPageState();
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
   render_thread_->sink().ClearMessages();
 
   // Go back.

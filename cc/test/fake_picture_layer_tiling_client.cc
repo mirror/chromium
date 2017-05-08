@@ -27,8 +27,7 @@ FakePictureLayerTilingClient::FakePictureLayerTilingClient(
           ResourcePool::Create(resource_provider,
                                base::ThreadTaskRunnerHandle::Get().get(),
                                ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-                               ResourcePool::kDefaultExpirationDelay,
-                               false)),
+                               ResourcePool::kDefaultExpirationDelay)),
       tile_manager_(
           new FakeTileManager(&tile_manager_client_, resource_pool_.get())),
       raster_source_(FakeRasterSource::CreateInfiniteFilled()),

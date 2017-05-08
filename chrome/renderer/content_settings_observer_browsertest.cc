@@ -4,7 +4,6 @@
 
 #include <stddef.h>
 
-#include "base/run_loop.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/renderer/content_settings_observer.h"
 #include "chrome/test/base/chrome_render_view_test.h"
@@ -115,7 +114,7 @@ TEST_F(ChromeRenderViewTest, JSBlockSentAfterPageLoad) {
   observer->SetContentSettingRules(&content_setting_rules);
 
   // Make sure no pending messages are in the queue.
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
   render_thread_->sink().ClearMessages();
 
   // 3. Reload page.
@@ -123,7 +122,7 @@ TEST_F(ChromeRenderViewTest, JSBlockSentAfterPageLoad) {
   url_str.append(kHtml);
   GURL url(url_str);
   Reload(url);
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
 
   // 4. Verify that the notification that javascript was blocked is sent after
   //    the navigation notification is sent.

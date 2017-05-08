@@ -36,7 +36,6 @@
 #include "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
-#include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_session.h"
 #include "components/arc/arc_session_runner.h"
@@ -145,7 +144,7 @@ void ArcServiceLauncher::Initialize() {
       base::MakeUnique<ArcTracingBridge>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcTtsService>(arc_bridge_service));
-  if (chromeos::switches::IsVoiceInteractionEnabled()) {
+  if (ArcVoiceInteractionFrameworkService::IsVoiceInteractionEnabled()) {
     arc_service_manager_->AddService(
         base::MakeUnique<ArcVoiceInteractionFrameworkService>(
             arc_bridge_service));
