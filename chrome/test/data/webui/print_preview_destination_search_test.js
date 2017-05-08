@@ -129,14 +129,14 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
     };
 
     function requestSetup(destId, destinationSearch) {
-      var origin = cr.isChromeOS ? print_preview.DestinationOrigin.CROS :
-                                   print_preview.DestinationOrigin.LOCAL;
+      var origin = cr.isChromeOS ? print_preview.Destination.Origin.CROS :
+                                   print_preview.Destination.Origin.LOCAL;
 
       var dest = new print_preview.Destination(destId,
-          print_preview.DestinationType.LOCAL,
+          print_preview.Destination.Type.LOCAL,
           origin,
           "displayName",
-          print_preview.DestinationConnectionStatus.ONLINE);
+          print_preview.Destination.ConnectionStatus.ONLINE);
 
       // Add the destination to the list.
       destinationSearch.localList_.updateDestinations([dest]);
@@ -230,10 +230,10 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
 
       // Create cloud destination.
       var cloudDest = new print_preview.Destination(printerId,
-          print_preview.DestinationType.GOOGLE,
-          print_preview.DestinationOrigin.DEVICE,
+          print_preview.Destination.Type.GOOGLE,
+          print_preview.Destination.Origin.DEVICE,
           "displayName",
-          print_preview.DestinationConnectionStatus.ONLINE);
+          print_preview.Destination.ConnectionStatus.ONLINE);
       cloudDest.capabilities = getCaps();
 
       // Place destination in the local list as happens for Kiosk printers.

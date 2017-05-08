@@ -20,7 +20,7 @@ cr.define('print_preview.ticket_items', function() {
         null /*field*/,
         null /*destinationStore*/,
         documentInfo);
-  }
+  };
 
   /**
    * Impossibly large page number.
@@ -46,7 +46,7 @@ cr.define('print_preview.ticket_items', function() {
      */
     getPageNumberSet: function() {
       var pageNumberList = pageRangeTextToPageList(
-          this.getValueAsString_(), this.getDocumentInfoInternal().pageCount);
+          this.getValue(), this.getDocumentInfoInternal().pageCount);
       return new print_preview.PageNumberSet(pageNumberList);
     },
 
@@ -66,31 +66,23 @@ cr.define('print_preview.ticket_items', function() {
     },
 
     /**
-     * @return {string} The value of the ticket item as a string.
-     * @private
-     */
-    getValueAsString_: function() {
-      return /** @type {string} */(this.getValue());
-    },
-
-    /**
      * @return {!Array<Object<{from: number, to: number}>>} A list of page
      *     ranges.
      */
     getPageRanges: function() {
-      var pageRanges = pageRangeTextToPageRanges(this.getValueAsString_());
+      var pageRanges = pageRangeTextToPageRanges(this.getValue());
       return pageRanges instanceof Array ? pageRanges : [];
     },
 
     /**
-     * @return {!Array<Object<{from: number, to: number}>>} A list of page
+     * @return {!Array<object<{from: number, to: number}>>} A list of page
      *     ranges suitable for use in the native layer.
      * TODO(vitalybuka): this should be removed when native layer switched to
      *     page ranges.
      */
     getDocumentPageRanges: function() {
       var pageRanges = pageRangeTextToPageRanges(
-          this.getValueAsString_(), this.getDocumentInfoInternal().pageCount);
+          this.getValue(), this.getDocumentInfoInternal().pageCount);
       return pageRanges instanceof Array ? pageRanges : [];
     },
 
@@ -106,7 +98,7 @@ cr.define('print_preview.ticket_items', function() {
      */
     checkValidity: function() {
       var pageRanges = pageRangeTextToPageRanges(
-          this.getValueAsString_(), this.getDocumentInfoInternal().pageCount);
+          this.getValue(), this.getDocumentInfoInternal().pageCount);
       return pageRanges instanceof Array ?
           PageRangeStatus.NO_ERROR : pageRanges;
     },

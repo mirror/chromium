@@ -7,7 +7,7 @@ cr.define('print_preview', function() {
 
   /**
    * Draggable control for setting a page margin.
-   * @param {!print_preview.ticket_items.CustomMarginsOrientation} orientation
+   * @param {!print_preview.ticket_items.CustomMargins.Orientation} orientation
    *     Orientation of the margin control that determines where the margin
    *     textbox will be placed.
    * @constructor
@@ -18,7 +18,7 @@ cr.define('print_preview', function() {
 
     /**
      * Determines where the margin textbox will be placed.
-     * @type {!print_preview.ticket_items.CustomMarginsOrientation}
+     * @type {!print_preview.ticket_items.CustomMargins.Orientation}
      * @private
      */
     this.orientation_ = orientation;
@@ -150,7 +150,7 @@ cr.define('print_preview', function() {
     },
 
     /**
-     * @return {!print_preview.ticket_items.CustomMarginsOrientation}
+     * @return {!print_preview.ticket_items.CustomMargins.Orientation}
      *     Orientation of the margin control.
      */
     getOrientation: function() {
@@ -220,7 +220,7 @@ cr.define('print_preview', function() {
     setPositionInPts: function(posInPts) {
       this.positionInPts_ = posInPts;
       var orientationEnum =
-          print_preview.ticket_items.CustomMarginsOrientation;
+          print_preview.ticket_items.CustomMargins.Orientation;
       var x = this.translateTransform_.x;
       var y = this.translateTransform_.y;
       var width = null, height = null;
@@ -271,7 +271,7 @@ cr.define('print_preview', function() {
     convertPixelsToPts: function(pixels) {
       var pts;
       var orientationEnum =
-          print_preview.ticket_items.CustomMarginsOrientation;
+          print_preview.ticket_items.CustomMargins.Orientation;
       if (this.orientation_ == orientationEnum.TOP) {
         pts = pixels - this.translateTransform_.y + MarginControl.RADIUS_;
         pts /= this.scaleTransform_;
