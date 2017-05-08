@@ -91,6 +91,8 @@ class {{class_name}}_{{method.name}}_HandleSyncResponse
 };
 bool {{class_name}}_{{method.name}}_HandleSyncResponse::Accept(
     mojo::Message* message) {
+  TRACE_EVENT0("mojom",
+               "{{class_name}}::{{method.name}} sync response deserialize");
   internal::{{class_name}}_{{method.name}}_ResponseParams_Data* params =
       reinterpret_cast<internal::{{class_name}}_{{method.name}}_ResponseParams_Data*>(
           message->mutable_payload());
@@ -126,14 +128,19 @@ class {{class_name}}_{{method.name}}_ForwardToCallback
 };
 bool {{class_name}}_{{method.name}}_ForwardToCallback::Accept(
     mojo::Message* message) {
+  TRACE_EVENT_BEGIN0(
+      "mojom", "{{class_name}}::{{method.name}} response deserialize");
   internal::{{class_name}}_{{method.name}}_ResponseParams_Data* params =
       reinterpret_cast<internal::{{class_name}}_{{method.name}}_ResponseParams_Data*>(
           message->mutable_payload());
 
 {%-     set desc = class_name~"::"~method.name~" response" %}
   {{alloc_params(method.response_param_struct, "params", "message", desc)}}
+  TRACE_EVENT_END0(
+      "mojom", "{{class_name}}::{{method.name}} response deserialize");
   if (!callback_.is_null()) {
     mojo::internal::MessageDispatchContext context(message);
+    TRACE_EVENT0("mojom", "{{class_name}}::{{method.name}} response callback run");
     std::move(callback_).Run({{pass_params(method.response_parameters)}});
   }
   return true;
@@ -156,6 +163,8 @@ bool {{class_name}}_{{method.name}}_ForwardToCallback::Accept(
 {%-   if method.sync %}
 bool {{proxy_name}}::{{method.name}}(
     {{interface_macros.declare_sync_method_params("param_", method)}}) {
+  TRACE_EVENT_BEGIN0(
+      "mojom", "{{class_name}}::{{method.name}} request serialize");
   mojo::internal::SerializationContext serialization_context;
   {{struct_macros.get_serialized_size(params_struct, "param_%s",
                                       "&serialization_context")}}
@@ -167,6 +176,8 @@ bool {{proxy_name}}::{{method.name}}(
 
   {{build_message(params_struct, "param_%s", params_description,
                   "&serialization_context")}}
+  TRACE_EVENT_END0(
+      "mojom", "{{class_name}}::{{method.name}} request serialize");
 
   bool result = false;
   std::unique_ptr<mojo::MessageReceiver> responder(
@@ -175,6 +186,7 @@ bool {{proxy_name}}::{{method.name}}(
 {%-     for param in method.response_parameters -%}
           , param_{{param.name}}
 {%-     endfor %}));
+  TRACE_EVENT0("mojom", "{{class_name}}::{{method.name}} request mojo call");
   ignore_result(receiver_->AcceptWithResponder(builder.message(),
                                                std::move(responder)));
   return result;
@@ -183,6 +195,8 @@ bool {{proxy_name}}::{{method.name}}(
 
 void {{proxy_name}}::{{method.name}}(
     {{interface_macros.declare_request_params("in_", method, use_once_callback)}}) {
+  TRACE_EVENT_BEGIN0(
+      "mojom", "{{class_name}}::{{method.name}} request serialize");
   mojo::internal::SerializationContext serialization_context;
   {{struct_macros.get_serialized_size(params_struct, "in_%s",
                                       "&serialization_context")}}
@@ -198,14 +212,18 @@ void {{proxy_name}}::{{method.name}}(
 
   {{build_message(params_struct, "in_%s", params_description,
                   "&serialization_context")}}
+  TRACE_EVENT_END0(
+      "mojom", "{{class_name}}::{{method.name}} request serialize");
 
 {%- if method.response_parameters != None %}
   std::unique_ptr<mojo::MessageReceiver> responder(
       new {{class_name}}_{{method.name}}_ForwardToCallback(
           std::move(callback)));
+  TRACE_EVENT0("mojom", "{{class_name}}::{{method.name}} request mojo call");
   ignore_result(receiver_->AcceptWithResponder(builder.message(),
                                                std::move(responder)));
 {%- else %}
+  TRACE_EVENT0("mojom", "{{class_name}}::{{method.name}} request mojo call");
   // This return value may be ignored as false implies the Connector has
   // encountered an error, which will be visible through other means.
   ignore_result(receiver_->Accept(builder.message()));
@@ -272,6 +290,8 @@ class {{class_name}}_{{method.name}}_ProxyToResponder {
 void {{class_name}}_{{method.name}}_ProxyToResponder::Run(
     {{interface_macros.declare_responder_params(
         "in_", method.response_parameters, for_blink)}}) {
+  TRACE_EVENT_BEGIN0(
+      "mojom", "{{class_name}}::{{method.name}} response serialize");
   mojo::internal::SerializationContext serialization_context;
   {{struct_macros.get_serialized_size(response_params_struct, "in_%s",
                                       "&serialization_context")}}
@@ -285,6 +305,10 @@ void {{class_name}}_{{method.name}}_ProxyToResponder::Run(
 
   {{build_message(response_params_struct, "in_%s", params_description,
                   "&serialization_context")}}
+  TRACE_EVENT_END0(
+      "mojom", "{{class_name}}::{{method.name}} response serialize");
+  TRACE_EVENT0("mojom",
+               "{{class_name}}::{{method.name}} response mojo call");
   ignore_result(responder_->Accept(builder.message()));
   // TODO(darin): Accept() returning false indicates a malformed message, and
   // that may be good reason to close the connection. However, we don't have a
@@ -310,8 +334,12 @@ bool {{class_name}}StubDispatch::Accept(
               message->mutable_payload());
 
 {%-       set desc = class_name~"::"~method.name %}
+      TRACE_EVENT_BEGIN0(
+          "mojom", "{{class_name}}::{{method.name}} request deserialize");
       {{alloc_params(method.param_struct, "params", "message", desc)|
           indent(4)}}
+      TRACE_EVENT_END0(
+          "mojom", "{{class_name}}::{{method.name}} request deserialize");
       // A null |impl| means no implementation was bound.
       assert(impl);
       TRACE_EVENT0("mojom", "{{class_name}}::{{method.name}}");
@@ -342,9 +370,13 @@ bool {{class_name}}StubDispatch::AcceptWithResponder(
           reinterpret_cast<internal::{{class_name}}_{{method.name}}_Params_Data*>(
               message->mutable_payload());
 
+      TRACE_EVENT_BEGIN0(
+          "mojom", "{{class_name}}::{{method.name}} request deserialize");
 {%-       set desc = class_name~"::"~method.name %}
       {{alloc_params(method.param_struct, "params", "message", desc)|
           indent(4)}}
+      TRACE_EVENT_END0(
+          "mojom", "{{class_name}}::{{method.name}} request deserialize");
       {{class_name}}::{{method.name}}Callback callback =
           {{class_name}}_{{method.name}}_ProxyToResponder::CreateCallback(
               message->request_id(),
