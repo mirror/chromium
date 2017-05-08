@@ -1,4 +1,263 @@
 {
+  "Android Nexus5 Perf": {
+    "build13-b1--device1": {
+      "benchmarks": [
+        "smoothness.key_silk_cases",
+        "system_health.memory_desktop",
+        "system_health.memory_mobile"
+      ]
+    },
+    "build13-b1--device2": {
+      "benchmarks": [
+        "page_cycler_v2.intl_ja_zh",
+        "smoothness.simple_mobile_sites",
+        "v8.browsing_desktop_classic"
+      ]
+    },
+    "build13-b1--device3": {
+      "benchmarks": [
+        "page_cycler_v2.typical_25",
+        "power.typical_10_mobile_reload",
+        "text_selection.character",
+        "v8.runtimestats.browsing_mobile_classic"
+      ]
+    },
+    "build13-b1--device4": {
+      "benchmarks": [
+        "blink_perf.blink_gc",
+        "system_health.common_desktop",
+        "v8.infinite_scroll-turbo_tbmv2"
+      ]
+    },
+    "build13-b1--device5": {
+      "benchmarks": [
+        "blink_style.key_mobile_sites",
+        "gpu_times.gpu_rasterization.key_mobile_sites_smooth",
+        "gpu_times.gpu_rasterization.top_25_smooth",
+        "media.chromeOS4kOnly.tough_video_cases",
+        "smoothness.tough_animation_cases",
+        "v8.browsing_mobile",
+        "v8.browsing_mobile_turbo"
+      ]
+    },
+    "build13-b1--device6": {
+      "benchmarks": [
+        "blink_perf.svg",
+        "blink_style.polymer",
+        "dummy_benchmark.noisy_benchmark_1",
+        "memory.desktop",
+        "page_cycler_v2.intl_ko_th_vi",
+        "power.typical_10_mobile",
+        "thread_times.key_mobile_sites_smooth",
+        "v8.detached_context_age_in_gc"
+      ]
+    },
+    "build13-b1--device7": {
+      "benchmarks": [
+        "battor.trivial_pages",
+        "blink_perf.dom",
+        "memory.blink_memory_mobile",
+        "power.idle_platform",
+        "start_with_ext.warm.blank_page",
+        "tracing.tracing_with_debug_overhead",
+        "v8.browsing_mobile_classic",
+        "webrtc.getusermedia",
+        "webrtc.peerconnection",
+        "webrtc.webrtc_smoothness_tbmv2"
+      ]
+    },
+    "build14-b1--device1": {
+      "benchmarks": [
+        "blink_perf.css",
+        "media.tough_video_cases_tbmv2",
+        "page_cycler_v2.intl_hi_ru",
+        "smoothness.gpu_rasterization.tough_path_rendering_cases",
+        "smoothness.gpu_rasterization.tough_scrolling_cases",
+        "smoothness.scrolling_tough_ad_cases",
+        "thread_times.key_hit_test_cases",
+        "thread_times.key_idle_power_cases",
+        "v8.infinite_scroll-classic_tbmv2",
+        "v8.runtimestats.browsing_mobile"
+      ]
+    },
+    "build14-b1--device2": {
+      "benchmarks": [
+        "dromaeo.domcoreattr",
+        "media.tough_video_cases_extra",
+        "oortonline_tbmv2",
+        "power.tough_ad_cases",
+        "smoothness.gpu_rasterization.tough_filters_cases",
+        "startup.large_profile.cold.blank_page"
+      ]
+    },
+    "build14-b1--device3": {
+      "benchmarks": [
+        "blink_perf.events",
+        "memory.top_10_mobile",
+        "page_cycler_v2.intl_es_fr_pt-BR",
+        "smoothness.image_decoding_cases",
+        "smoothness.pathological_mobile_sites",
+        "smoothness.tough_pinch_zoom_cases",
+        "smoothness.tough_texture_upload_cases",
+        "thread_times.tough_compositor_cases"
+      ]
+    },
+    "build14-b1--device4": {
+      "benchmarks": [
+        "blink_perf.shadow_dom",
+        "gpu_times.key_mobile_sites_smooth",
+        "memory.dual_browser_test",
+        "memory.long_running_idle_gmail_background_tbmv2",
+        "octane",
+        "page_cycler_v2.intl_ar_fa_he",
+        "rasterize_and_record_micro.top_25",
+        "smoothness.gpu_rasterization.polymer",
+        "start_with_url.cold.startup_pages",
+        "startup.warm.chrome_signin",
+        "system_health.webview_startup",
+        "v8.browsing_desktop_turbo"
+      ]
+    },
+    "build14-b1--device5": {
+      "benchmarks": [
+        "battor.steady_state",
+        "blink_style.top_25",
+        "jetstream",
+        "oortonline",
+        "power.android_acceptance",
+        "smoothness.maps",
+        "startup.warm.blank_page",
+        "sunspider",
+        "thread_times.simple_mobile_sites"
+      ]
+    },
+    "build14-b1--device6": {
+      "benchmarks": [
+        "blink_perf.layout",
+        "kraken",
+        "loading.cluster_telemetry",
+        "media.android.tough_video_cases",
+        "power.top_25",
+        "rasterize_and_record_micro.polymer",
+        "repaint.gpu_rasterization.key_mobile_sites_repaint",
+        "smoothness.gpu_rasterization.top_25_smooth",
+        "smoothness.tough_image_decode_cases",
+        "tab_switching.typical_25",
+        "thread_times.key_noop_cases",
+        "thread_times.polymer",
+        "v8.google",
+        "v8.mobile_infinite_scroll-turbo_tbmv2",
+        "v8.runtimestats.browsing_mobile_turbo"
+      ]
+    },
+    "build14-b1--device7": {
+      "benchmarks": [
+        "blob_storage.blob_storage",
+        "dromaeo.domcoremodify",
+        "gpu_times.top_25_smooth",
+        "repaint.key_mobile_sites_repaint",
+        "smoothness.tough_webgl_ad_cases",
+        "speedometer",
+        "speedometer-classic",
+        "system_health.common_mobile",
+        "tracing.tracing_with_background_memory_infra",
+        "v8.browsing_desktop"
+      ]
+    },
+    "build48-b1--device1": {
+      "benchmarks": [
+        "blink_perf.canvas",
+        "dromaeo.domcoretraverse",
+        "loading.mobile",
+        "media.android.tough_video_cases_tbmv2",
+        "power.trivial_pages",
+        "storage.indexeddb_endure",
+        "v8.infinite_scroll_tbmv2",
+        "v8.top_25_smooth"
+      ]
+    },
+    "build48-b1--device2": {
+      "benchmarks": [
+        "blink_perf.paint",
+        "media.media_cns_cases",
+        "media.tough_video_cases",
+        "rasterize_and_record_micro.partial_invalidation",
+        "smoothness.tough_ad_cases",
+        "thread_times.tough_scrolling_cases"
+      ]
+    },
+    "build48-b1--device3": {
+      "benchmarks": [
+        "blink_perf.bindings",
+        "memory.long_running_dual_browser_test",
+        "memory.top_10_mobile_stress",
+        "service_worker.service_worker_micro_benchmark",
+        "smoothness.sync_scroll.key_mobile_sites_smooth",
+        "smoothness.top_25_smooth",
+        "smoothness.tough_canvas_cases",
+        "smoothness.tough_path_rendering_cases",
+        "startup.large_profile.warm.blank_page",
+        "text_selection.direction"
+      ]
+    },
+    "build48-b1--device4": {
+      "benchmarks": [
+        "memory.long_running_idle_gmail_tbmv2",
+        "page_cycler_v2.top_10_mobile",
+        "page_cycler_v2_site_isolation.basic_oopif",
+        "power.top_10",
+        "smoothness.gpu_rasterization_and_decoding.image_decoding_cases",
+        "smoothness.key_desktop_move_cases",
+        "speedometer-turbo",
+        "start_with_ext.cold.blank_page",
+        "system_health.webview_startup_multiprocess",
+        "thread_times.key_silk_cases"
+      ]
+    },
+    "build48-b1--device5": {
+      "benchmarks": [
+        "blink_perf.parser",
+        "page_cycler_v2.basic_oopif",
+        "rasterize_and_record_micro.key_silk_cases",
+        "service_worker.service_worker",
+        "smoothness.gpu_rasterization.tough_pinch_zoom_cases",
+        "smoothness.tough_filters_cases",
+        "start_with_url.warm.startup_pages",
+        "startup.cold.blank_page",
+        "v8.key_mobile_sites_smooth",
+        "v8.mobile_infinite_scroll-classic_tbmv2",
+        "v8.mobile_infinite_scroll_tbmv2",
+        "v8.runtimestats.browsing_desktop_turbo",
+        "webrtc.datachannel"
+      ]
+    },
+    "build48-b1--device6": {
+      "benchmarks": [
+        "image_decoding.image_decoding_measurement",
+        "media.chromeOS.tough_video_cases",
+        "media.mse_cases",
+        "rasterize_and_record_micro.key_mobile_sites",
+        "scheduler.tough_scheduling_cases",
+        "smoothness.desktop_tough_pinch_zoom_cases",
+        "smoothness.key_mobile_sites_smooth",
+        "webrtc.stress",
+        "webrtc.webrtc_smoothness"
+      ]
+    },
+    "build48-b1--device7": {
+      "benchmarks": [
+        "dromaeo.domcorequery",
+        "dummy_benchmark.stable_benchmark_1",
+        "power.steady_state",
+        "smoothness.tough_scrolling_cases",
+        "smoothness.tough_webgl_cases",
+        "storage.indexeddb_endure_tracing",
+        "v8.runtime_stats.top_25",
+        "v8.runtimestats.browsing_desktop",
+        "v8.runtimestats.browsing_desktop_classic"
+      ]
+    }
+  },
   "Android Nexus5X Perf": {
     "build73-b1--device1": {
       "benchmarks": [
@@ -256,6 +515,524 @@
         "v8.runtimestats.browsing_desktop",
         "v8.runtimestats.browsing_desktop_classic",
         "webrtc.peerconnection"
+      ]
+    }
+  },
+  "Android Nexus6 Perf": {
+    "build15-b1--device1": {
+      "benchmarks": [
+        "smoothness.key_silk_cases",
+        "system_health.memory_desktop",
+        "system_health.memory_mobile"
+      ]
+    },
+    "build15-b1--device2": {
+      "benchmarks": [
+        "page_cycler_v2.intl_ja_zh",
+        "smoothness.simple_mobile_sites",
+        "v8.browsing_desktop_classic"
+      ]
+    },
+    "build15-b1--device4": {
+      "benchmarks": [
+        "blink_perf.blink_gc",
+        "system_health.common_desktop",
+        "v8.infinite_scroll-turbo_tbmv2"
+      ]
+    },
+    "build15-b1--device5": {
+      "benchmarks": [
+        "blink_style.key_mobile_sites",
+        "gpu_times.gpu_rasterization.key_mobile_sites_smooth",
+        "gpu_times.gpu_rasterization.top_25_smooth",
+        "media.chromeOS4kOnly.tough_video_cases",
+        "smoothness.tough_animation_cases",
+        "v8.browsing_mobile",
+        "v8.browsing_mobile_turbo"
+      ]
+    },
+    "build15-b1--device7": {
+      "benchmarks": [
+        "battor.trivial_pages",
+        "blink_perf.dom",
+        "memory.blink_memory_mobile",
+        "power.idle_platform",
+        "start_with_ext.warm.blank_page",
+        "tracing.tracing_with_debug_overhead",
+        "v8.browsing_mobile_classic",
+        "webrtc.getusermedia",
+        "webrtc.peerconnection",
+        "webrtc.webrtc_smoothness_tbmv2"
+      ]
+    },
+    "build16-b1--device1": {
+      "benchmarks": [
+        "blink_perf.css",
+        "media.tough_video_cases_tbmv2",
+        "page_cycler_v2.intl_hi_ru",
+        "smoothness.gpu_rasterization.tough_path_rendering_cases",
+        "smoothness.gpu_rasterization.tough_scrolling_cases",
+        "smoothness.scrolling_tough_ad_cases",
+        "thread_times.key_hit_test_cases",
+        "thread_times.key_idle_power_cases",
+        "v8.infinite_scroll-classic_tbmv2",
+        "v8.runtimestats.browsing_mobile"
+      ]
+    },
+    "build16-b1--device2": {
+      "benchmarks": [
+        "dromaeo.domcoreattr",
+        "media.tough_video_cases_extra",
+        "oortonline_tbmv2",
+        "power.tough_ad_cases",
+        "smoothness.gpu_rasterization.tough_filters_cases",
+        "startup.large_profile.cold.blank_page"
+      ]
+    },
+    "build16-b1--device3": {
+      "benchmarks": [
+        "blink_perf.events",
+        "memory.top_10_mobile",
+        "page_cycler_v2.intl_es_fr_pt-BR",
+        "smoothness.image_decoding_cases",
+        "smoothness.pathological_mobile_sites",
+        "smoothness.tough_pinch_zoom_cases",
+        "smoothness.tough_texture_upload_cases",
+        "thread_times.tough_compositor_cases"
+      ]
+    },
+    "build16-b1--device4": {
+      "benchmarks": [
+        "blink_perf.shadow_dom",
+        "gpu_times.key_mobile_sites_smooth",
+        "memory.dual_browser_test",
+        "memory.long_running_idle_gmail_background_tbmv2",
+        "octane",
+        "page_cycler_v2.intl_ar_fa_he",
+        "rasterize_and_record_micro.top_25",
+        "smoothness.gpu_rasterization.polymer",
+        "start_with_url.cold.startup_pages",
+        "startup.warm.chrome_signin",
+        "system_health.webview_startup",
+        "v8.browsing_desktop_turbo"
+      ]
+    },
+    "build16-b1--device5": {
+      "benchmarks": [
+        "battor.steady_state",
+        "blink_style.top_25",
+        "jetstream",
+        "oortonline",
+        "power.android_acceptance",
+        "smoothness.maps",
+        "startup.warm.blank_page",
+        "sunspider",
+        "thread_times.simple_mobile_sites"
+      ]
+    },
+    "build16-b1--device6": {
+      "benchmarks": [
+        "blink_perf.layout",
+        "kraken",
+        "loading.cluster_telemetry",
+        "media.android.tough_video_cases",
+        "power.top_25",
+        "rasterize_and_record_micro.polymer",
+        "repaint.gpu_rasterization.key_mobile_sites_repaint",
+        "smoothness.gpu_rasterization.top_25_smooth",
+        "smoothness.tough_image_decode_cases",
+        "tab_switching.typical_25",
+        "thread_times.key_noop_cases",
+        "thread_times.polymer",
+        "v8.google",
+        "v8.mobile_infinite_scroll-turbo_tbmv2",
+        "v8.runtimestats.browsing_mobile_turbo"
+      ]
+    },
+    "build16-b1--device7": {
+      "benchmarks": [
+        "blob_storage.blob_storage",
+        "dromaeo.domcoremodify",
+        "gpu_times.top_25_smooth",
+        "repaint.key_mobile_sites_repaint",
+        "smoothness.tough_webgl_ad_cases",
+        "speedometer",
+        "speedometer-classic",
+        "system_health.common_mobile",
+        "tracing.tracing_with_background_memory_infra",
+        "v8.browsing_desktop"
+      ]
+    },
+    "build45-b1--device1": {
+      "benchmarks": [
+        "blink_perf.canvas",
+        "dromaeo.domcoretraverse",
+        "loading.mobile",
+        "media.android.tough_video_cases_tbmv2",
+        "power.trivial_pages",
+        "storage.indexeddb_endure",
+        "v8.infinite_scroll_tbmv2",
+        "v8.top_25_smooth"
+      ]
+    },
+    "build45-b1--device2": {
+      "benchmarks": [
+        "blink_perf.paint",
+        "media.media_cns_cases",
+        "media.tough_video_cases",
+        "rasterize_and_record_micro.partial_invalidation",
+        "smoothness.tough_ad_cases",
+        "thread_times.tough_scrolling_cases"
+      ]
+    },
+    "build45-b1--device3": {
+      "benchmarks": [
+        "blink_perf.bindings",
+        "memory.long_running_dual_browser_test",
+        "memory.top_10_mobile_stress",
+        "service_worker.service_worker_micro_benchmark",
+        "smoothness.sync_scroll.key_mobile_sites_smooth",
+        "smoothness.top_25_smooth",
+        "smoothness.tough_canvas_cases",
+        "smoothness.tough_path_rendering_cases",
+        "startup.large_profile.warm.blank_page",
+        "text_selection.direction"
+      ]
+    },
+    "build45-b1--device4": {
+      "benchmarks": [
+        "memory.long_running_idle_gmail_tbmv2",
+        "page_cycler_v2.top_10_mobile",
+        "page_cycler_v2_site_isolation.basic_oopif",
+        "power.top_10",
+        "smoothness.gpu_rasterization_and_decoding.image_decoding_cases",
+        "smoothness.key_desktop_move_cases",
+        "speedometer-turbo",
+        "start_with_ext.cold.blank_page",
+        "system_health.webview_startup_multiprocess",
+        "thread_times.key_silk_cases"
+      ]
+    },
+    "build45-b1--device5": {
+      "benchmarks": [
+        "blink_perf.parser",
+        "page_cycler_v2.basic_oopif",
+        "rasterize_and_record_micro.key_silk_cases",
+        "service_worker.service_worker",
+        "smoothness.gpu_rasterization.tough_pinch_zoom_cases",
+        "smoothness.tough_filters_cases",
+        "start_with_url.warm.startup_pages",
+        "startup.cold.blank_page",
+        "v8.key_mobile_sites_smooth",
+        "v8.mobile_infinite_scroll-classic_tbmv2",
+        "v8.mobile_infinite_scroll_tbmv2",
+        "v8.runtimestats.browsing_desktop_turbo",
+        "webrtc.datachannel"
+      ]
+    },
+    "build45-b1--device6": {
+      "benchmarks": [
+        "image_decoding.image_decoding_measurement",
+        "media.chromeOS.tough_video_cases",
+        "media.mse_cases",
+        "rasterize_and_record_micro.key_mobile_sites",
+        "scheduler.tough_scheduling_cases",
+        "smoothness.desktop_tough_pinch_zoom_cases",
+        "smoothness.key_mobile_sites_smooth",
+        "webrtc.stress",
+        "webrtc.webrtc_smoothness"
+      ]
+    },
+    "build45-b1--device7": {
+      "benchmarks": [
+        "dromaeo.domcorequery",
+        "dummy_benchmark.stable_benchmark_1",
+        "power.steady_state",
+        "smoothness.tough_scrolling_cases",
+        "smoothness.tough_webgl_cases",
+        "storage.indexeddb_endure_tracing",
+        "v8.runtime_stats.top_25",
+        "v8.runtimestats.browsing_desktop",
+        "v8.runtimestats.browsing_desktop_classic"
+      ]
+    },
+    "build73-15--device3": {
+      "benchmarks": [
+        "page_cycler_v2.typical_25",
+        "power.typical_10_mobile_reload",
+        "text_selection.character",
+        "v8.runtimestats.browsing_mobile_classic"
+      ]
+    },
+    "build73-15--device6": {
+      "benchmarks": [
+        "blink_perf.svg",
+        "blink_style.polymer",
+        "dummy_benchmark.noisy_benchmark_1",
+        "memory.desktop",
+        "page_cycler_v2.intl_ko_th_vi",
+        "power.typical_10_mobile",
+        "thread_times.key_mobile_sites_smooth",
+        "v8.detached_context_age_in_gc"
+      ]
+    }
+  },
+  "Android Nexus7v2 Perf": {
+    "build10-b1--device1": {
+      "benchmarks": [
+        "blink_perf.css",
+        "media.tough_video_cases_tbmv2",
+        "page_cycler_v2.intl_hi_ru",
+        "smoothness.gpu_rasterization.tough_path_rendering_cases",
+        "smoothness.gpu_rasterization.tough_scrolling_cases",
+        "smoothness.scrolling_tough_ad_cases",
+        "thread_times.key_hit_test_cases",
+        "thread_times.key_idle_power_cases",
+        "v8.infinite_scroll-classic_tbmv2",
+        "v8.runtimestats.browsing_mobile"
+      ]
+    },
+    "build10-b1--device2": {
+      "benchmarks": [
+        "dromaeo.domcoreattr",
+        "media.tough_video_cases_extra",
+        "oortonline_tbmv2",
+        "power.tough_ad_cases",
+        "smoothness.gpu_rasterization.tough_filters_cases",
+        "startup.large_profile.cold.blank_page"
+      ]
+    },
+    "build10-b1--device3": {
+      "benchmarks": [
+        "blink_perf.events",
+        "memory.top_10_mobile",
+        "page_cycler_v2.intl_es_fr_pt-BR",
+        "smoothness.image_decoding_cases",
+        "smoothness.pathological_mobile_sites",
+        "smoothness.tough_pinch_zoom_cases",
+        "smoothness.tough_texture_upload_cases",
+        "thread_times.tough_compositor_cases"
+      ]
+    },
+    "build10-b1--device4": {
+      "benchmarks": [
+        "blink_perf.shadow_dom",
+        "gpu_times.key_mobile_sites_smooth",
+        "memory.dual_browser_test",
+        "memory.long_running_idle_gmail_background_tbmv2",
+        "octane",
+        "page_cycler_v2.intl_ar_fa_he",
+        "rasterize_and_record_micro.top_25",
+        "smoothness.gpu_rasterization.polymer",
+        "start_with_url.cold.startup_pages",
+        "startup.warm.chrome_signin",
+        "system_health.webview_startup",
+        "v8.browsing_desktop_turbo"
+      ]
+    },
+    "build10-b1--device5": {
+      "benchmarks": [
+        "battor.steady_state",
+        "blink_style.top_25",
+        "jetstream",
+        "oortonline",
+        "power.android_acceptance",
+        "smoothness.maps",
+        "startup.warm.blank_page",
+        "sunspider",
+        "thread_times.simple_mobile_sites"
+      ]
+    },
+    "build10-b1--device6": {
+      "benchmarks": [
+        "blink_perf.layout",
+        "kraken",
+        "loading.cluster_telemetry",
+        "media.android.tough_video_cases",
+        "power.top_25",
+        "rasterize_and_record_micro.polymer",
+        "repaint.gpu_rasterization.key_mobile_sites_repaint",
+        "smoothness.gpu_rasterization.top_25_smooth",
+        "smoothness.tough_image_decode_cases",
+        "tab_switching.typical_25",
+        "thread_times.key_noop_cases",
+        "thread_times.polymer",
+        "v8.google",
+        "v8.mobile_infinite_scroll-turbo_tbmv2",
+        "v8.runtimestats.browsing_mobile_turbo"
+      ]
+    },
+    "build10-b1--device7": {
+      "benchmarks": [
+        "blob_storage.blob_storage",
+        "dromaeo.domcoremodify",
+        "gpu_times.top_25_smooth",
+        "repaint.key_mobile_sites_repaint",
+        "smoothness.tough_webgl_ad_cases",
+        "speedometer",
+        "speedometer-classic",
+        "system_health.common_mobile",
+        "tracing.tracing_with_background_memory_infra",
+        "v8.browsing_desktop"
+      ]
+    },
+    "build49-b1--device1": {
+      "benchmarks": [
+        "blink_perf.canvas",
+        "dromaeo.domcoretraverse",
+        "loading.mobile",
+        "media.android.tough_video_cases_tbmv2",
+        "power.trivial_pages",
+        "storage.indexeddb_endure",
+        "v8.infinite_scroll_tbmv2",
+        "v8.top_25_smooth"
+      ]
+    },
+    "build49-b1--device2": {
+      "benchmarks": [
+        "blink_perf.paint",
+        "media.media_cns_cases",
+        "media.tough_video_cases",
+        "rasterize_and_record_micro.partial_invalidation",
+        "smoothness.tough_ad_cases",
+        "thread_times.tough_scrolling_cases"
+      ]
+    },
+    "build49-b1--device3": {
+      "benchmarks": [
+        "blink_perf.bindings",
+        "memory.long_running_dual_browser_test",
+        "memory.top_10_mobile_stress",
+        "service_worker.service_worker_micro_benchmark",
+        "smoothness.sync_scroll.key_mobile_sites_smooth",
+        "smoothness.top_25_smooth",
+        "smoothness.tough_canvas_cases",
+        "smoothness.tough_path_rendering_cases",
+        "startup.large_profile.warm.blank_page",
+        "text_selection.direction"
+      ]
+    },
+    "build49-b1--device4": {
+      "benchmarks": [
+        "memory.long_running_idle_gmail_tbmv2",
+        "page_cycler_v2.top_10_mobile",
+        "page_cycler_v2_site_isolation.basic_oopif",
+        "power.top_10",
+        "smoothness.gpu_rasterization_and_decoding.image_decoding_cases",
+        "smoothness.key_desktop_move_cases",
+        "speedometer-turbo",
+        "start_with_ext.cold.blank_page",
+        "system_health.webview_startup_multiprocess",
+        "thread_times.key_silk_cases"
+      ]
+    },
+    "build49-b1--device5": {
+      "benchmarks": [
+        "blink_perf.parser",
+        "page_cycler_v2.basic_oopif",
+        "rasterize_and_record_micro.key_silk_cases",
+        "service_worker.service_worker",
+        "smoothness.gpu_rasterization.tough_pinch_zoom_cases",
+        "smoothness.tough_filters_cases",
+        "start_with_url.warm.startup_pages",
+        "startup.cold.blank_page",
+        "v8.key_mobile_sites_smooth",
+        "v8.mobile_infinite_scroll-classic_tbmv2",
+        "v8.mobile_infinite_scroll_tbmv2",
+        "v8.runtimestats.browsing_desktop_turbo",
+        "webrtc.datachannel"
+      ]
+    },
+    "build49-b1--device6": {
+      "benchmarks": [
+        "image_decoding.image_decoding_measurement",
+        "media.chromeOS.tough_video_cases",
+        "media.mse_cases",
+        "rasterize_and_record_micro.key_mobile_sites",
+        "scheduler.tough_scheduling_cases",
+        "smoothness.desktop_tough_pinch_zoom_cases",
+        "smoothness.key_mobile_sites_smooth",
+        "webrtc.stress",
+        "webrtc.webrtc_smoothness"
+      ]
+    },
+    "build49-b1--device7": {
+      "benchmarks": [
+        "dromaeo.domcorequery",
+        "dummy_benchmark.stable_benchmark_1",
+        "power.steady_state",
+        "smoothness.tough_scrolling_cases",
+        "smoothness.tough_webgl_cases",
+        "storage.indexeddb_endure_tracing",
+        "v8.runtime_stats.top_25",
+        "v8.runtimestats.browsing_desktop",
+        "v8.runtimestats.browsing_desktop_classic"
+      ]
+    },
+    "build9-b1--device1": {
+      "benchmarks": [
+        "smoothness.key_silk_cases",
+        "system_health.memory_desktop",
+        "system_health.memory_mobile"
+      ]
+    },
+    "build9-b1--device2": {
+      "benchmarks": [
+        "page_cycler_v2.intl_ja_zh",
+        "smoothness.simple_mobile_sites",
+        "v8.browsing_desktop_classic"
+      ]
+    },
+    "build9-b1--device3": {
+      "benchmarks": [
+        "page_cycler_v2.typical_25",
+        "power.typical_10_mobile_reload",
+        "text_selection.character",
+        "v8.runtimestats.browsing_mobile_classic"
+      ]
+    },
+    "build9-b1--device4": {
+      "benchmarks": [
+        "blink_perf.blink_gc",
+        "system_health.common_desktop",
+        "v8.infinite_scroll-turbo_tbmv2"
+      ]
+    },
+    "build9-b1--device5": {
+      "benchmarks": [
+        "blink_style.key_mobile_sites",
+        "gpu_times.gpu_rasterization.key_mobile_sites_smooth",
+        "gpu_times.gpu_rasterization.top_25_smooth",
+        "media.chromeOS4kOnly.tough_video_cases",
+        "smoothness.tough_animation_cases",
+        "v8.browsing_mobile",
+        "v8.browsing_mobile_turbo"
+      ]
+    },
+    "build9-b1--device6": {
+      "benchmarks": [
+        "blink_perf.svg",
+        "blink_style.polymer",
+        "dummy_benchmark.noisy_benchmark_1",
+        "memory.desktop",
+        "page_cycler_v2.intl_ko_th_vi",
+        "power.typical_10_mobile",
+        "thread_times.key_mobile_sites_smooth",
+        "v8.detached_context_age_in_gc"
+      ]
+    },
+    "build9-b1--device7": {
+      "benchmarks": [
+        "battor.trivial_pages",
+        "blink_perf.dom",
+        "memory.blink_memory_mobile",
+        "power.idle_platform",
+        "start_with_ext.warm.blank_page",
+        "tracing.tracing_with_debug_overhead",
+        "v8.browsing_mobile_classic",
+        "webrtc.getusermedia",
+        "webrtc.peerconnection",
+        "webrtc.webrtc_smoothness_tbmv2"
       ]
     }
   },
@@ -709,8 +1486,8 @@
         "v8.browsing_mobile_turbo",
         "v8.infinite_scroll-classic_tbmv2",
         "v8.key_mobile_sites_smooth",
-        "v8.runtimestats.browsing_mobile",
         "v8.runtime_stats.top_25",
+        "v8.runtimestats.browsing_mobile",
         "webrtc.stress"
       ]
     }
@@ -1297,8 +2074,8 @@
         "v8.browsing_mobile_turbo",
         "v8.infinite_scroll-classic_tbmv2",
         "v8.key_mobile_sites_smooth",
-        "v8.runtimestats.browsing_mobile",
         "v8.runtime_stats.top_25",
+        "v8.runtimestats.browsing_mobile",
         "webrtc.stress"
       ]
     }
@@ -1493,8 +2270,8 @@
         "v8.browsing_mobile_turbo",
         "v8.infinite_scroll-classic_tbmv2",
         "v8.key_mobile_sites_smooth",
-        "v8.runtimestats.browsing_mobile",
         "v8.runtime_stats.top_25",
+        "v8.runtimestats.browsing_mobile",
         "webrtc.stress"
       ]
     }
@@ -4213,7 +4990,6 @@
     "gpu_times.top_25_smooth",
     "image_decoding.image_decoding_measurement",
     "jetstream",
-    "jitter",
     "kraken",
     "loading.cluster_telemetry",
     "loading.mobile",
