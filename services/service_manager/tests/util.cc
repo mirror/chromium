@@ -61,10 +61,9 @@ mojom::ConnectResult LaunchAndConnectToProcess(
   platform_channel_pair.PrepareToPassClientHandleToChildProcess(
       &child_command_line, &handle_passing_info);
 
-  mojo::edk::PendingProcessConnection pending_process;
-  std::string token;
-  mojo::ScopedMessagePipeHandle pipe =
-      pending_process.CreateMessagePipe(&token);
+  mojo::edk::OutgoingBrokerClientInvitation invitation;
+  std::string token = mojo::edk::GenerateRandomToken();
+  mojo::ScopedMessagePipeHandle pipe = invitation.AttachMessagePipe(token);
   child_command_line.AppendSwitchASCII(switches::kServicePipeToken, token);
 
   service_manager::mojom::ServicePtr client;

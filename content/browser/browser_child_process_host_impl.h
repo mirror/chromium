@@ -22,7 +22,7 @@
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/common/child_process_host_delegate.h"
-#include "mojo/edk/embedder/pending_process_connection.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 
 #if defined(OS_WIN)
 #include "base/win/object_watcher.h"
@@ -109,6 +109,11 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
     return child_connection_.get();
   }
 
+  mojo::edk::OutgoingBrokerClientInvitation*
+  GetInProcessBrokerClientInvitation() {
+    return broker_client_invitation_.get();
+  }
+
   IPC::Channel* child_channel() const { return channel_; }
 
   typedef std::list<BrowserChildProcessHostImpl*> BrowserChildProcessList;
@@ -151,7 +156,8 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
   BrowserChildProcessHostDelegate* delegate_;
   std::unique_ptr<ChildProcessHost> child_process_host_;
 
-  std::unique_ptr<mojo::edk::PendingProcessConnection> pending_connection_;
+  std::unique_ptr<mojo::edk::OutgoingBrokerClientInvitation>
+      broker_client_invitation_;
   std::unique_ptr<ChildConnection> child_connection_;
 
   std::unique_ptr<ChildProcessLauncher> child_process_;
