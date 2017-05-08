@@ -7,7 +7,6 @@
 #include <string>
 
 #include "base/command_line.h"
-#include "base/feature_list.h"
 #include "base/metrics/field_trial.h"
 
 namespace chromeos {
@@ -26,10 +25,6 @@ const char kTestCrosGaiaIdMigration[] = "test-cros-gaia-id-migration";
 // Value for kTestCrosGaiaIdMigration indicating that migration is started (i.e.
 // all stored user keys will be converted to GaiaId)
 const char kTestCrosGaiaIdMigrationStarted[] = "started";
-
-// Controls whether enable voice interaction feature.
-const base::Feature kVoiceInteractionFeature{"ChromeOSVoiceInteraction",
-                                             base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace
 
@@ -539,12 +534,6 @@ bool IsGaiaIdMigrationStarted() {
 
 bool IsCellularFirstDevice() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(kCellularFirst);
-}
-
-bool IsVoiceInteractionEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-             kEnableVoiceInteraction) ||
-         base::FeatureList::IsEnabled(kVoiceInteractionFeature);
 }
 
 }  // namespace switches

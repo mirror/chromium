@@ -64,6 +64,7 @@ TEST_F(TabStripModelStatsRecorderTest, BasicTabLifecycle) {
   tester.ExpectUniqueSample(
       "Tabs.StateTransfer.Target_Inactive",
       static_cast<int>(TabStripModelStatsRecorder::TabState::ACTIVE), 1);
+  tester.ExpectTotalCount("Tabs.StateTransfer.Time_Inactive_Active", 1);
   tester.ExpectUniqueSample(
       "Tabs.StateTransfer.NumberOfOtherTabsActivatedBeforeMadeActive", 1, 1);
 
@@ -80,6 +81,7 @@ TEST_F(TabStripModelStatsRecorderTest, BasicTabLifecycle) {
   tester.ExpectBucketCount(
       "Tabs.StateTransfer.Target_Inactive",
       static_cast<int>(TabStripModelStatsRecorder::TabState::CLOSED), 1);
+  tester.ExpectTotalCount("Tabs.StateTransfer.Time_Inactive_Closed", 1);
 
   // Close the active first tab.
   tabstrip.CloseSelectedTabs();
