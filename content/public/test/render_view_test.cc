@@ -156,6 +156,12 @@ RenderViewTest::RenderViewTest()
 RenderViewTest::~RenderViewTest() {
 }
 
+void RenderViewTest::ProcessPendingMessages() {
+  msg_loop_.task_runner()->PostTask(FROM_HERE,
+                                    base::MessageLoop::QuitWhenIdleClosure());
+  base::RunLoop().Run();
+}
+
 WebLocalFrame* RenderViewTest::GetMainFrame() {
   return view_->GetWebView()->MainFrame()->ToWebLocalFrame();
 }
@@ -316,7 +322,7 @@ void RenderViewTest::SetUp() {
 
 void RenderViewTest::TearDown() {
   // Run the loop so the release task from the renderwidget executes.
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
 
   render_thread_->SendCloseMessage();
 

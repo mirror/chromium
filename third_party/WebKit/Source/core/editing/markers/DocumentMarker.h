@@ -122,7 +122,8 @@ class CORE_EXPORT DocumentMarker : public GarbageCollected<DocumentMarker> {
 
   class AllMarkers : public MarkerTypes {
    public:
-    AllMarkers() : MarkerTypes((1 << kMarkerTypeIndexesCount) - 1) {}
+    AllMarkers()
+        : MarkerTypes(kSpelling | kGrammar | kTextMatch | kComposition) {}
   };
 
   class MisspellingMarkers : public MarkerTypes {
