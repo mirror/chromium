@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c854dcf6_81bea3d8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "I renamed it to more easily differentiate between the GerritAPI and GerritCL classes in this file (and because GerritCL expects an instance of the Gerrit API to be passed to it through which it makes network calls). I think I\u0027ll stick with GerritAPI for now but we can reevaluate naming schemes whenever.",
+      "parentUuid": "6297f675_fbbc6bba",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b1bc89_47eecbd4",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 7
@@ -118,6 +136,24 @@
       "writtenOn": "2017-04-21T23:47:37Z",
       "side": 1,
       "message": "Not part of this change, but it may be more consistent to use an assert here?\nAlso, requried -\u003e required",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001ddc5c_6d73e756",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "Thanks, will turn this into an assert and fix spelling.",
+      "parentUuid": "f1b1bc89_47eecbd4",
       "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "3154f2b0_691fc066",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "I added this since there was an open CL during testing that I\u0027m pretty sure was accidental - I think it touched every file in Chromium or Blink. We could log an error here to be clearer that we\u0027re skipping a CL.",
+      "parentUuid": "c36de8a3_a2bdc3d2",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c341e60_91c5a8ca",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 7
@@ -155,6 +209,24 @@
       "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3be32f5_92be6637",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c341e60_91c5a8ca",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "6f9bf5da_dc622e54",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47a1ee59_2bd04ad8",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63f1623c_01c0e108",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 7
@@ -189,6 +279,24 @@
       "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39ea01d_2269c98c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63f1623c_01c0e108",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -227,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "3735e18f_9c5c4252",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96315cbb_7ec3c5be",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cb9e031_774a980c",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
         "patchSetId": 7
@@ -259,6 +385,24 @@
       "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58731762_eb5b1679",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a5dacb7_d7ebec5f",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -332,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "ef2a292f_24b6fc4c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "Extracted into constant in common.py.\n\nThe PR revision is the current_revision attribute in the CL data from Gerrit. It looks like a Git SHA, so one guess is that Gerrit maintains its own Git tree and has one branch per CL. The current_revision would be the HEAD of that CL branch.",
+      "parentUuid": "1d64d517_85571ee3",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c2000e2_50987a11",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 7
@@ -346,6 +508,24 @@
       "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "061f6af8_3aed78bf",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-08T19:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c2000e2_50987a11",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
