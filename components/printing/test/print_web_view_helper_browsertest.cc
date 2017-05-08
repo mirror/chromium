@@ -172,7 +172,7 @@ class PrintWebViewHelperTestBase : public content::RenderViewTest {
 
   void PrintWithJavaScript() {
     ExecuteJavaScriptForTests("window.print();");
-    base::RunLoop().RunUntilIdle();
+    ProcessPendingMessages();
   }
 
   // The renderer should be done calculating the number of rendered pages
@@ -242,7 +242,7 @@ class PrintWebViewHelperTestBase : public content::RenderViewTest {
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
   void OnPrintPages() {
     GetPrintWebViewHelper()->OnPrintPages();
-    base::RunLoop().RunUntilIdle();
+    ProcessPendingMessages();
   }
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
 
@@ -270,7 +270,7 @@ class PrintWebViewHelperTestBase : public content::RenderViewTest {
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
   void OnPrintForPrintPreview(const base::DictionaryValue& dict) {
     GetPrintWebViewHelper()->OnPrintForPrintPreview(dict);
-    base::RunLoop().RunUntilIdle();
+    ProcessPendingMessages();
   }
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
 
@@ -365,7 +365,7 @@ TEST_F(MAYBE_PrintWebViewHelperTest, AllowUserOriginatedPrinting) {
   SendWebMouseEvent(mouse_event);
   mouse_event.SetType(blink::WebInputEvent::kMouseUp);
   SendWebMouseEvent(mouse_event);
-  base::RunLoop().RunUntilIdle();
+  ProcessPendingMessages();
 
   VerifyPageCount(1);
   VerifyPagesPrinted(true);

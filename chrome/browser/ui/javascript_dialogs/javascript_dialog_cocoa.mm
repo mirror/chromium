@@ -169,13 +169,6 @@ void JavaScriptDialogCocoa::CloseDialogWithoutCallback() {
   impl_->window_->CloseWebContentsModalDialog();
 }
 
-base::string16 JavaScriptDialogCocoa::GetUserInput() {
-  if (!impl_->textField_)
-    return base::string16();
-
-  return base::SysNSStringToUTF16([impl_->textField_ stringValue]);
-}
-
 JavaScriptDialogCocoa::JavaScriptDialogCocoa(
     content::WebContents* parent_web_contents,
     content::WebContents* alerting_web_contents,

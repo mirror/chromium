@@ -375,11 +375,10 @@ void WindowManagerState::SetAllRootWindowsVisible(bool value) {
     display_root_ptr->root()->SetVisible(value);
 }
 
-ServerWindow* WindowManagerState::GetWindowManagerRootForDisplayRoot(
-    ServerWindow* window) {
+ServerWindow* WindowManagerState::GetWindowManagerRoot(ServerWindow* window) {
   for (auto& display_root_ptr : window_manager_display_roots_) {
     if (display_root_ptr->root()->parent() == window)
-      return display_root_ptr->GetClientVisibileRoot();
+      return display_root_ptr->root();
   }
   NOTREACHED();
   return nullptr;
@@ -459,7 +458,7 @@ void WindowManagerState::DispatchInputEventToWindowImpl(
     base::WeakPtr<Accelerator> accelerator) {
   DCHECK(target);
   if (target->parent() == nullptr)
-    target = GetWindowManagerRootForDisplayRoot(target);
+    target = GetWindowManagerRoot(target);
 
   if (event.IsMousePointerEvent()) {
     DCHECK(event_dispatcher_.mouse_cursor_source_window());
@@ -565,18 +564,7 @@ void WindowManagerState::SetFocusedWindowFromEventDispatcher(
 }
 
 ServerWindow* WindowManagerState::GetFocusedWindowForEventDispatcher() {
-  ServerWindow* focused_window = window_server()->GetFocusedWindow();
-  if (focused_window)
-    return focused_window;
-
-  // When none of the windows have focus return the window manager's root.
-  for (auto& display_root_ptr : window_manager_display_roots_) {
-    if (display_root_ptr->display()->GetId() == event_processing_display_id_)
-      return display_root_ptr->GetClientVisibileRoot();
-  }
-  if (!window_manager_display_roots_.empty())
-    return (*window_manager_display_roots_.begin())->GetClientVisibileRoot();
-  return nullptr;
+  return window_server()->GetFocusedWindow();
 }
 
 void WindowManagerState::SetNativeCapture(ServerWindow* window) {
@@ -694,7 +682,7 @@ ServerWindow* WindowManagerState::GetRootWindowContaining(
   gfx::Point origin =
       target_display_root->display()->GetDisplay().bounds().origin();
   *location -= origin.OffsetFromOrigin();
-  return target_display_root->GetClientVisibileRoot();
+  return target_display_root->root();
 }
 
 void WindowManagerState::OnEventTargetNotFound(const ui::Event& event) {
