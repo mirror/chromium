@@ -3411,7 +3411,7 @@ void CompositedLayerMapping::PaintScrollableArea(
   DrawingRecorder drawing_recorder(context, *graphics_layer,
                                    DisplayItem::kScrollbarCompositedScrollbar,
                                    layer_bounds);
-  context.Canvas()->PlaybackPaintRecord(builder.EndRecording());
+  context.Canvas()->drawPicture(builder.EndRecording());
 }
 
 bool CompositedLayerMapping::IsScrollableAreaLayer(
