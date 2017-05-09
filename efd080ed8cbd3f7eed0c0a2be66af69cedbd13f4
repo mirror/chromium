@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "988c4e47_d2355935",
+        "filename": "base/threading/sequenced_worker_pool.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-05-09T20:00:49Z",
+      "side": 1,
+      "message": "The usage in SyncHandleRegistry is neither tracing or debugging.",
+      "range": {
+        "startLine": 148,
+        "startChar": 30,
+        "endLine": 148,
+        "endChar": 53
+      },
+      "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4737570_ad3b449c",
         "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
         "patchSetId": 1
@@ -13,6 +36,23 @@
       "writtenOn": "2017-05-09T19:45:31Z",
       "side": 1,
       "message": "Is it common in Mojo to use templates for this? Feels like it\u0027s merely passing a function pointer?",
+      "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8597d1_064f75fa",
+        "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-05-09T20:00:49Z",
+      "side": 1,
+      "message": "Why do we need this |create|? Can\u0027t we directly new a SyncHandleRegistry here?",
       "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +104,29 @@
       "writtenOn": "2017-05-09T19:45:31Z",
       "side": 1,
       "message": "DCHECK_EQ(1U, erased);",
+      "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb28bc0c_af591212",
+        "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-05-09T20:00:49Z",
+      "side": 1,
+      "message": "According to Brett, in general std::unordered_map is discouraged. Is there a good reason to use it instead of other maps?",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 20
+      },
       "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
