@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dbae9ca_eb9757c8",
+        "filename": "cc/layers/picture_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-09T01:33:29Z",
+      "side": 1,
+      "message": "Apparently this check no longer works when a layer moves between LayerTreeHosts.\n\nPreviously if you have a layer that\u0027s hidden, change its bounds, and then give it a new LTH with a colliding source frame number, it would push properties and use the paint property bounds.  However, now it complains because it thinks there should be an update here.  The solution is to stomp the update source frame number in SetLayerTreeHost.  I\u0027ll add a new test for this case.",
+      "revId": "3b1dfbd7f41cfc9db84c149b2c99615488a64014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
