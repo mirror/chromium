@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "896b4cb7_bdf78252",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-09T20:52:58Z",
+      "side": 1,
+      "message": "Since \u0027external\u0027 is now in skipped_directories, is this condition necessary?",
+      "range": {
+        "startLine": 700,
+        "startChar": 37,
+        "endLine": 700,
+        "endChar": 45
+      },
+      "revId": "3fe97488b0a30009ce4d690eab13437b59574e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4dadb2_7b4ef3d0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-09T20:52:58Z",
+      "side": 1,
+      "message": "\u0027suites\u0027 is unused so far as I can tell - is this incomplete?",
+      "range": {
+        "startLine": 1519,
+        "startChar": 51,
+        "endLine": 1519,
+        "endChar": 57
+      },
+      "revId": "3fe97488b0a30009ce4d690eab13437b59574e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fba67d3_bcf98b5f",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 26
