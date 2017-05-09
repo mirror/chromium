@@ -536,7 +536,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                tracker.dismissed();
+                                tracker.dismissed(FeatureConstants.DOWNLOAD_PAGE_FEATURE);
                                 activity.getAppMenuHandler().setMenuHighlight(null);
                             }
                         });
