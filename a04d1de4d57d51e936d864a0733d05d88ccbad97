@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00122c07_9c16e1ab",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-09T13:56:02Z",
+      "side": 1,
+      "message": "I assume there\u0027s also going to be a browser process interface exposed to the renderer for receiving requests to perform spellchecking on text. How do you plan to name that interface? For example:\n\ninterface PleaseNameMe {\n  CheckSpelling(string text) \u003d\u003e (array\u003cSpellcheckResult\u003e spellcheck_results);\n};\n\nstruct SpellcheckResult {\n  uint64_t offset;\n  uint64_t length;\n  array\u003cstring\u003e suggestions;\n};",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "a04d1de4d57d51e936d864a0733d05d88ccbad97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
