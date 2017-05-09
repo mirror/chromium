@@ -341,6 +341,32 @@ scoped_refptr<TaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
   return loading_task_queue;
 }
 
+scoped_refptr<TaskQueue> RendererSchedulerImpl::NewLoadingControlTaskQueue(
+    TaskQueue::QueueType queue_type) {
+  helper_.CheckOnValidThread();
+  scoped_refptr<TaskQueue> loading_control_task_queue(helper_.NewTaskQueue(
+      TaskQueue::Spec(queue_type)
+          .SetShouldMonitorQuiescence(true)
+          .SetTimeDomain(GetMainThreadOnly().use_virtual_time
+                             ? GetVirtualTimeDomain()
+                             : nullptr)));
+  auto insert_result = loading_task_runners_.insert(
+      std::make_pair(loading_control_task_queue,
+                     loading_control_task_queue->CreateQueueEnabledVoter()));
+  insert_result.first->second->SetQueueEnabled(
+      GetMainThreadOnly().current_policy.loading_queue_policy.is_enabled);
+  loading_control_task_queue->SetQueuePriority(TaskQueue::CONTROL_PRIORITY);
+  if (GetMainThreadOnly()
+          .current_policy.loading_queue_policy.time_domain_type ==
+      TimeDomainType::THROTTLED) {
+    task_queue_throttler_->IncreaseThrottleRefCount(
+        loading_control_task_queue.get());
+  }
+  loading_control_task_queue->AddTaskObserver(
+      &GetMainThreadOnly().loading_task_cost_estimator);
+  return loading_control_task_queue;
+}
+
 scoped_refptr<TaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
     TaskQueue::QueueType queue_type) {
   helper_.CheckOnValidThread();

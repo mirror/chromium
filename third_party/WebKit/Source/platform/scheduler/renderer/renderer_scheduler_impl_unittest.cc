@@ -3675,6 +3675,8 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
 
   scoped_refptr<TaskQueue> loading_tq =
       scheduler_->NewLoadingTaskQueue(TaskQueue::QueueType::TEST);
+  scoped_refptr<TaskQueue> loading_control_tq =
+      scheduler_->NewLoadingControlTaskQueue(TaskQueue::QueueType::TEST);
   scoped_refptr<TaskQueue> timer_tq =
       scheduler_->NewTimerTaskQueue(TaskQueue::QueueType::TEST);
   scoped_refptr<TaskQueue> unthrottled_tq =
@@ -3696,6 +3698,8 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->real_time_domain());
 
   EXPECT_EQ(loading_tq->GetTimeDomain(), scheduler_->GetVirtualTimeDomain());
+  EXPECT_EQ(loading_control_tq->GetTimeDomain(),
+            scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(timer_tq->GetTimeDomain(), scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(unthrottled_tq->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());

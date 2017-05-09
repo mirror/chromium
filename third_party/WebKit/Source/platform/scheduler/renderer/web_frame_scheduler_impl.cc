@@ -142,6 +142,22 @@ RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner() {
   return loading_web_task_runner_;
 }
 
+RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingControlTaskRunner() {
+  DCHECK(parent_web_view_scheduler_);
+  if (!loading_control_web_task_runner_) {
+    loading_control_task_queue_ =
+        renderer_scheduler_->NewLoadingControlTaskQueue(
+            TaskQueue::QueueType::FRAME_LOADING);
+    loading_control_task_queue_->SetBlameContext(blame_context_);
+    loading_control_queue_enabled_voter_ =
+        loading_control_task_queue_->CreateQueueEnabledVoter();
+    loading_control_queue_enabled_voter_->SetQueueEnabled(!frame_suspended_);
+    loading_control_web_task_runner_ =
+        WebTaskRunnerImpl::Create(loading_control_task_queue_);
+  }
+  return loading_control_web_task_runner_;
+}
+
 RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::TimerTaskRunner() {
   DCHECK(parent_web_view_scheduler_);
   if (!timer_web_task_runner_) {
