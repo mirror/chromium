@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4737570_ad3b449c",
+        "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-09T19:45:31Z",
+      "side": 1,
+      "message": "Is it common in Mojo to use templates for this? Feels like it\u0027s merely passing a function pointer?",
+      "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64895998_28720cd2",
+        "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-09T19:45:31Z",
+      "side": 1,
+      "message": "I think this would be easier to read the other way around (i.e. handle the case where |registry_pointer_storage| is set above (w/ early return) and then continue with the case where it\u0027s not here",
+      "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e686d2_f4bdadb9",
+        "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-09T19:45:31Z",
+      "side": 1,
+      "message": "DCHECK_EQ(1U, erased);",
+      "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73fc0be_ec759419",
+        "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-09T19:45:31Z",
+      "side": 1,
+      "message": "DCHECK_EQ(1U, erased);",
+      "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec5a725_800c2eb2",
+        "filename": "mojo/public/cpp/bindings/sync_handle_registry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-09T19:45:31Z",
+      "side": 1,
+      "message": "Sequences provide thread-safety just like threads do, so if calls are moving from being always on the same thread to being always on the same sequence, it\u0027s still thread-safe and you don\u0027t need to supplement with RefCountedThreadSafe.",
+      "range": {
+        "startLine": 55,
+        "startChar": 31,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "efd080ed8cbd3f7eed0c0a2be66af69cedbd13f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
