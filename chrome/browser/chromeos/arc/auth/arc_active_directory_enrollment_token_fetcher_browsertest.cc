@@ -17,6 +17,7 @@
 #include "chrome/browser/chromeos/arc/auth/arc_auth_code_fetcher.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/dm_token_storage.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/policy/cloud/test_request_interceptor.h"
@@ -37,21 +38,32 @@
 #include "net/url_request/url_request_test_job.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace em = enterprise_management;
+
 namespace {
 
 constexpr char kFakeDmToken[] = "fake-dm-token";
 constexpr char kFakeEnrollmentToken[] = "fake-enrollment-token";
 constexpr char kFakeUserId[] = "fake-user-id";
+constexpr char kFakeAuthSessionId[] = "fake-auth-session-id";
+constexpr char kFakeRedirectUrl[] = "https://example.com";
 constexpr char kFakeGuid[] = "f04557de-5da2-40ce-ae9d-b8874d8da96e";
 constexpr char kNotYetFetched[] = "NOT-YET-FETCHED";
+
+/* std::string GetDmServerUrl() {
+  8policy::BrowserPolicyConnectorChromeOS* const connector =
+      g_browser_process->platform_part()->browser_policy_connector_chromeos();
+  return connector->device_management_service()->GetServerUrl();
+} */
 
 }  // namespace
 
 namespace arc {
 
-// JobCallback for the interceptor.
-net::URLRequestJob* ResponseJob(net::URLRequest* request,
-                                net::NetworkDelegate* network_delegate) {
+// Checks whether |request| is a valid request to enroll a play user and returns
+// the corresponding protobuf.
+em::ActiveDirectoryEnrollPlayUserRequest CheckRequestAndGetEnrollRequest(
+    net::URLRequest* request) {
   // Check the operation.
   std::string request_type;
   EXPECT_TRUE(
@@ -68,30 +80,86 @@ net::URLRequestJob* ResponseJob(net::URLRequest* request,
   const net::UploadBytesElementReader* bytes_reader =
       (*upload->GetElementReaders())[0]->AsBytesReader();
 
-  enterprise_management::DeviceManagementRequest parsed_request;
-  EXPECT_TRUE(parsed_request.ParseFromArray(bytes_reader->bytes(),
-                                            bytes_reader->length()));
-  EXPECT_TRUE(parsed_request.has_active_directory_enroll_play_user_request());
-
   // Check the DMToken.
   net::HttpRequestHeaders request_headers = request->extra_request_headers();
   std::string value;
   EXPECT_TRUE(request_headers.GetHeader("Authorization", &value));
   EXPECT_EQ("GoogleDMToken token=" + std::string(kFakeDmToken), value);
 
-  // Response contains the enrollment token and user id.
-  enterprise_management::DeviceManagementResponse response;
-  enterprise_management::ActiveDirectoryEnrollPlayUserResponse*
-      enroll_response =
-          response.mutable_active_directory_enroll_play_user_response();
-  enroll_response->set_enrollment_token(kFakeEnrollmentToken);
-  enroll_response->set_user_id(kFakeUserId);
+  // Extract the actual request proto.
+  em::DeviceManagementRequest parsed_request;
+  EXPECT_TRUE(parsed_request.ParseFromArray(bytes_reader->bytes(),
+                                            bytes_reader->length()));
+  EXPECT_TRUE(parsed_request.has_active_directory_enroll_play_user_request());
+
+  return parsed_request.active_directory_enroll_play_user_request();
+}
+
+net::URLRequestJob* SendResponse(net::URLRequest* request,
+                                 net::NetworkDelegate* network_delegate,
+                                 const em::DeviceManagementResponse& response) {
   std::string response_data;
   EXPECT_TRUE(response.SerializeToString(&response_data));
-
   return new net::URLRequestTestJob(request, network_delegate,
                                     net::URLRequestTestJob::test_headers(),
                                     response_data, true);
+}
+
+// JobCallback for the interceptor to test non-SAML flow.
+net::URLRequestJob* ResponseJob(net::URLRequest* request,
+                                net::NetworkDelegate* network_delegate) {
+  CheckRequestAndGetEnrollRequest(request);
+
+  // Response contains the enrollment token and user id.
+  em::DeviceManagementResponse response;
+  em::ActiveDirectoryEnrollPlayUserResponse* enroll_response =
+      response.mutable_active_directory_enroll_play_user_response();
+  enroll_response->set_enrollment_token(kFakeEnrollmentToken);
+  enroll_response->set_user_id(kFakeUserId);
+
+  return SendResponse(request, network_delegate, response);
+}
+
+// JobCallback for the interceptor to start the SAML flow.
+net::URLRequestJob* RequestSamlResponseJob(
+    net::URLRequest* request,
+    net::NetworkDelegate* network_delegate) {
+  em::ActiveDirectoryEnrollPlayUserRequest enroll_request =
+      CheckRequestAndGetEnrollRequest(request);
+
+  EXPECT_FALSE(enroll_request.has_auth_session_id());
+
+  // Response contains only SAML parameters to initialize the SAML flow.
+  em::DeviceManagementResponse response;
+  em::ActiveDirectoryEnrollPlayUserResponse* enroll_response =
+      response.mutable_active_directory_enroll_play_user_response();
+  em::SamlParametersProto* saml_parameters =
+      enroll_response->mutable_saml_parameters();
+  saml_parameters->set_auth_session_id(kFakeAuthSessionId);
+  saml_parameters->set_auth_redirect_url(kFakeRedirectUrl);
+
+  return SendResponse(request, network_delegate, response);
+}
+
+// JobCallback for the interceptor to start the SAML flow.
+net::URLRequestJob* FinishSamlResponseJob(
+    net::URLRequest* request,
+    net::NetworkDelegate* network_delegate) {
+  em::ActiveDirectoryEnrollPlayUserRequest enroll_request =
+      CheckRequestAndGetEnrollRequest(request);
+
+  EXPECT_EQ(GURL(kFakeRedirectUrl), request->url());
+  EXPECT_TRUE(enroll_request.has_auth_session_id());
+  EXPECT_EQ(kFakeAuthSessionId, enroll_request.auth_session_id());
+
+  // Response contains the enrollment token and user id.
+  em::DeviceManagementResponse response;
+  em::ActiveDirectoryEnrollPlayUserResponse* enroll_response =
+      response.mutable_active_directory_enroll_play_user_response();
+  enroll_response->set_enrollment_token(kFakeEnrollmentToken);
+  enroll_response->set_user_id(kFakeUserId);
+
+  return SendResponse(request, network_delegate, response);
 }
 
 class ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest
@@ -313,6 +381,30 @@ IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
             fetch_status);
   EXPECT_EQ(std::string(), enrollment_token);
   EXPECT_EQ(std::string(), user_id);
+}
+
+IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
+                       SamlFlow) {
+  interceptor()->PushJobCallback(base::Bind(&RequestSamlResponseJob));
+  interceptor()->PushJobCallback(base::Bind(&FinishSamlResponseJob));
+
+  // Retrieving the DM token will succeed.
+  StoreCorrectDmToken();
+
+  std::string enrollment_token;
+  std::string user_id;
+  ArcActiveDirectoryEnrollmentTokenFetcher::Status fetch_status =
+      ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE;
+
+  auto token_fetcher =
+      base::MakeUnique<ArcActiveDirectoryEnrollmentTokenFetcher>();
+  FetchEnrollmentToken(token_fetcher.get(), &fetch_status, &enrollment_token,
+                       &user_id);
+
+  EXPECT_EQ(ArcActiveDirectoryEnrollmentTokenFetcher::Status::SUCCESS,
+            fetch_status);
+  EXPECT_EQ(kFakeEnrollmentToken, enrollment_token);
+  EXPECT_EQ(kFakeUserId, user_id);
 }
 
 }  // namespace arc

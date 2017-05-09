@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/chromeos/arc/auth/arc_fetcher_base.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
+#include "content/public/browser/web_contents_observer.h"
 
 namespace enterprise_management {
 class DeviceManagementResponse;
@@ -27,7 +28,9 @@ namespace arc {
 
 // Fetches an enrollment token and user id for a new managed Google Play account
 // when using ARC with Active Directory.
-class ArcActiveDirectoryEnrollmentTokenFetcher : public ArcFetcherBase {
+class ArcActiveDirectoryEnrollmentTokenFetcher
+    : public ArcFetcherBase,
+      public content::WebContentsObserver {
  public:
   ArcActiveDirectoryEnrollmentTokenFetcher();
   ~ArcActiveDirectoryEnrollmentTokenFetcher() override;
@@ -51,15 +54,43 @@ class ArcActiveDirectoryEnrollmentTokenFetcher : public ArcFetcherBase {
   void Fetch(const FetchCallback& callback);
 
  private:
+  // Called when the |dm_token| is retrieved from policy::DMTokenStorage.
+  // Triggers DoFetchEnrollmentToken().
   void OnDMTokenAvailable(const std::string& dm_token);
+
+  // Sends a request to fetch an enrollment token from DM server.
+  void DoFetchEnrollmentToken();
+
+  // Response from DM server. Calls the stored FetchCallback or initiates the
+  // SAML flow.
   void OnFetchEnrollmentTokenCompleted(
       policy::DeviceManagementStatus dm_status,
       int net_error,
       const enterprise_management::DeviceManagementResponse& response);
 
+  // Opens up a web browser, follows |auth_redirect_url| and observes the web
+  // contents (hooks up DidFinishNavigation()). Calls CancelSamlFlow() if the
+  // url is invalid.
+  void InitiateSamlFlow(const std::string& auth_redirect_url);
+
+  // Calls callback_ with an error status and resets state.
+  void CancelSamlFlow();
+
+  // content::WebContentsObserver:
+  // Checks whether the server URL of the device management service was hit. If
+  // it was, triggers another enrollment token fetch, this time passing the now
+  // non-empty |auth_session_id_|. Cancels the SAML flow if anything went wrong.
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
+
   std::unique_ptr<policy::DeviceManagementRequestJob> fetch_request_job_;
   std::unique_ptr<policy::DMTokenStorage> dm_token_storage_;
   FetchCallback callback_;
+
+  std::string dm_token_;
+
+  // Current SAML auth session id, stored during SAML authentication.
+  std::string auth_session_id_;
 
   base::WeakPtrFactory<ArcActiveDirectoryEnrollmentTokenFetcher>
       weak_ptr_factory_;
