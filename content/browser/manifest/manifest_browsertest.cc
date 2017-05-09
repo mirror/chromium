@@ -46,7 +46,8 @@ class MockWebContentsDelegate : public WebContentsDelegate {
   ManifestBrowserTest* test_;
 };
 
-class ManifestBrowserTest : public ContentBrowserTest  {
+class ManifestBrowserTest : public ContentBrowserTest,
+                            public WebContentsObserver {
  protected:
   friend MockWebContentsDelegate;
 
@@ -65,6 +66,7 @@ class ManifestBrowserTest : public ContentBrowserTest  {
     mock_web_contents_delegate_.reset(
         new MockWebContentsDelegate(shell()->web_contents(), this));
     shell()->web_contents()->SetDelegate(mock_web_contents_delegate_.get());
+    Observe(shell()->web_contents());
   }
 
   void GetManifestAndWait() {
@@ -102,6 +104,22 @@ class ManifestBrowserTest : public ContentBrowserTest  {
     return cors_embedded_test_server_.get();
   }
 
+  const std::vector<GURL>& reported_manifest_urls() {
+    return reported_manifest_urls_;
+  }
+
+  // WebContentsObserver:
+  void DidUpdateWebManifestURL(
+      const base::Optional<GURL>& manifest_url) override {
+    if (!manifest_url) {
+      reported_manifest_urls_.emplace_back();
+      return;
+    }
+    EXPECT_FALSE(manifest_url->is_empty());
+    EXPECT_TRUE(manifest_url->is_valid());
+    reported_manifest_urls_.push_back(*manifest_url);
+  }
+
  private:
   scoped_refptr<MessageLoopRunner> message_loop_runner_;
   std::unique_ptr<MockWebContentsDelegate> mock_web_contents_delegate_;
@@ -109,6 +127,7 @@ class ManifestBrowserTest : public ContentBrowserTest  {
   GURL manifest_url_;
   Manifest manifest_;
   int console_error_count_;
+  std::vector<GURL> reported_manifest_urls_;
 
   DISALLOW_COPY_AND_ASSIGN(ManifestBrowserTest);
 };
@@ -141,6 +160,7 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, NoManifest) {
   EXPECT_TRUE(manifest().IsEmpty());
   EXPECT_TRUE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  EXPECT_TRUE(reported_manifest_urls().empty());
 }
 
 // If a page manifest points to a 404 URL, requesting the manifest should return
@@ -156,6 +176,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, 404Manifest) {
   EXPECT_TRUE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 }
 
 // If a page has an empty manifest, requesting the manifest should return the
@@ -171,6 +193,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, EmptyManifest) {
   EXPECT_TRUE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 }
 
 // If a page's manifest can't be parsed correctly, requesting the manifest
@@ -186,6 +210,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, ParseErrorManifest) {
   EXPECT_TRUE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(1u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 }
 
 // If a page has a manifest that can be fetched and parsed, requesting the
@@ -203,6 +229,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, DummyManifest) {
   EXPECT_FALSE(manifest_url().is_empty());
 
   EXPECT_EQ(0u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 }
 
 // If a page changes manifest during its life-time, requesting the manifest
@@ -213,11 +241,13 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, DynamicManifest) {
   TestNavigationObserver navigation_observer(shell()->web_contents(), 1);
   shell()->LoadURL(test_url);
   navigation_observer.Wait();
+  std::vector<GURL> expected_manifest_urls;
 
   {
     GetManifestAndWait();
     EXPECT_TRUE(manifest().IsEmpty());
     EXPECT_TRUE(manifest_url().is_empty());
+    EXPECT_TRUE(reported_manifest_urls().empty());
   }
 
   {
@@ -229,8 +259,9 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, DynamicManifest) {
     GetManifestAndWait();
     EXPECT_FALSE(manifest().IsEmpty());
     EXPECT_FALSE(manifest_url().is_empty());
+    expected_manifest_urls.push_back(manifest_url());
+    EXPECT_EQ(expected_manifest_urls, reported_manifest_urls());
   }
-
   {
     std::string manifest_link =
         GetTestUrl("manifest", "empty-manifest.json").spec();
@@ -240,6 +271,18 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, DynamicManifest) {
     GetManifestAndWait();
     EXPECT_TRUE(manifest().IsEmpty());
     EXPECT_FALSE(manifest_url().is_empty());
+    expected_manifest_urls.push_back(manifest_url());
+    EXPECT_EQ(expected_manifest_urls, reported_manifest_urls());
+  }
+
+  {
+    ASSERT_TRUE(content::ExecuteScript(shell(), "clearManifest()"));
+
+    GetManifestAndWait();
+    EXPECT_TRUE(manifest().IsEmpty());
+    EXPECT_TRUE(manifest_url().is_empty());
+    expected_manifest_urls.push_back(manifest_url());
+    EXPECT_EQ(expected_manifest_urls, reported_manifest_urls());
   }
 
   EXPECT_EQ(0u, console_error_count());
@@ -256,6 +299,7 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, CORSManifest) {
 
   GURL test_url =
       embedded_test_server()->GetURL("/manifest/dynamic-manifest.html");
+  std::vector<GURL> expected_manifest_urls;
 
   TestNavigationObserver navigation_observer(shell()->web_contents(), 1);
   shell()->LoadURL(test_url);
@@ -270,6 +314,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, CORSManifest) {
   EXPECT_TRUE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  expected_manifest_urls.push_back(manifest_url());
+  EXPECT_EQ(expected_manifest_urls, reported_manifest_urls());
 
   // The purpose of this second load is to make sure the first load is fully
   // finished. The first load will fail because of Access Control error but the
@@ -282,6 +328,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, CORSManifest) {
   ASSERT_TRUE(content::ExecuteScript(shell(),
                                      "setManifestTo('" + manifest_link + "')"));
   GetManifestAndWait();
+  expected_manifest_urls.push_back(manifest_url());
+  EXPECT_EQ(expected_manifest_urls, reported_manifest_urls());
 }
 
 // If a page's manifest lives in a different origin, it should be accessible if
@@ -308,6 +356,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, CORSManifestWithAcessControls) {
   EXPECT_FALSE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 }
 
 // If a page's manifest is in an insecure origin while the page is in a secure
@@ -336,6 +386,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, MixedContentManifest) {
   EXPECT_TRUE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 }
 
 // If a page's manifest has some parsing errors, they should show up in the
@@ -351,12 +403,15 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, ParsingErrorsManifest) {
   EXPECT_TRUE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(6u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 }
 
 // If a page has a manifest and the page is navigated to a page without a
 // manifest, the page's manifest should be updated.
 IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, Navigation) {
   ASSERT_TRUE(embedded_test_server()->Start());
+  std::vector<GURL> expected_manifest_urls;
   {
     GURL test_url =
         embedded_test_server()->GetURL("/manifest/dummy-manifest.html");
@@ -369,7 +424,10 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, Navigation) {
     EXPECT_FALSE(manifest().IsEmpty());
     EXPECT_FALSE(manifest_url().is_empty());
     EXPECT_EQ(0u, console_error_count());
+    expected_manifest_urls.push_back(manifest_url());
+    EXPECT_EQ(expected_manifest_urls, reported_manifest_urls());
   }
+  GURL old_manifest_url = manifest_url();
 
   {
     GURL test_url =
@@ -383,6 +441,7 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, Navigation) {
     EXPECT_TRUE(manifest().IsEmpty());
     EXPECT_EQ(0u, console_error_count());
     EXPECT_TRUE(manifest_url().is_empty());
+    EXPECT_EQ(expected_manifest_urls, reported_manifest_urls());
   }
 }
 
@@ -410,6 +469,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, PushStateNavigation) {
   EXPECT_FALSE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 }
 
 // If a page has a manifest and is navigated using an anchor (ie. same page), it
@@ -438,6 +499,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, AnchorNavigation) {
   EXPECT_FALSE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 }
 
 namespace {
@@ -494,6 +557,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, UseCredentialsSendCookies) {
   EXPECT_FALSE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 
   // The custom embedded test server will fill the name field with the cookie
   // content.
@@ -551,6 +616,8 @@ IN_PROC_BROWSER_TEST_F(ManifestBrowserTest, NoUseCredentialsNoCookies) {
   EXPECT_FALSE(manifest().IsEmpty());
   EXPECT_FALSE(manifest_url().is_empty());
   EXPECT_EQ(0u, console_error_count());
+  ASSERT_EQ(1u, reported_manifest_urls().size());
+  EXPECT_EQ(manifest_url(), reported_manifest_urls()[0]);
 
   // The custom embedded test server will fill set the name to 'no cookies' if
   // it did not find cookies.

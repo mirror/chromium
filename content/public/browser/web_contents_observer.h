@@ -426,6 +426,13 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
   // Notifes that a CompositorFrame was received from the renderer.
   virtual void DidReceiveCompositorFrame() {}
 
+  // Notifies that the manifest URL for the main frame changed to
+  // |manifest_url|. This will be invoked when a page with a manifest loads or
+  // when the manifest URL changes (possibly to nothing). It is not invoked
+  // when a page with no manifest loads.
+  virtual void DidUpdateWebManifestURL(
+      const base::Optional<GURL>& manifest_url) {}
+
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
 
