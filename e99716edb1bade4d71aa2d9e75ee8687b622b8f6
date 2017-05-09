@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2b07dc0_79bef5ec",
+        "filename": "mojo/edk/system/node_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1170449
+      },
+      "writtenOn": "2017-05-09T16:10:49Z",
+      "side": 1,
+      "message": "Typo: bea broker -\u003e be a broker",
+      "range": {
+        "startLine": 87,
+        "startChar": 59,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "e99716edb1bade4d71aa2d9e75ee8687b622b8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767be6c8_4f4fc134",
+        "filename": "mojo/edk/system/node_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1170449
+      },
+      "writtenOn": "2017-05-09T16:10:49Z",
+      "side": 1,
+      "message": "Do you mean guards |reserved_ports_|?",
+      "range": {
+        "startLine": 273,
+        "startChar": 13,
+        "endLine": 273,
+        "endChar": 38
+      },
+      "revId": "e99716edb1bade4d71aa2d9e75ee8687b622b8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
