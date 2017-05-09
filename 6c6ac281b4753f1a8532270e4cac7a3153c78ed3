@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "498fc7cb_a714f0ae",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-09T23:14:07Z",
+      "side": 1,
+      "message": "Do we need this option? Isn\u0027t it always specified c/o the default below?",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "6c6ac281b4753f1a8532270e4cac7a3153c78ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdc1669_7359a364",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-09T23:14:07Z",
+      "side": 1,
+      "message": "Since we\u0027re switching on an enum, prefer to list all the enum cases and not have a default: (so the compiler will warn if a new enum value is added). \n\nIf we eliminate kUnspecified this isn\u0027t needed at all.",
+      "range": {
+        "startLine": 476,
+        "startChar": 4,
+        "endLine": 476,
+        "endChar": 11
+      },
+      "revId": "6c6ac281b4753f1a8532270e4cac7a3153c78ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278703d7_c2e1dd26",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-09T23:14:07Z",
+      "side": 1,
+      "message": "... but NOTREACHED() now, like the rest of chromium, in case we keep this.",
+      "range": {
+        "startLine": 477,
+        "startChar": 6,
+        "endLine": 477,
+        "endChar": 17
+      },
+      "revId": "6c6ac281b4753f1a8532270e4cac7a3153c78ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890166b7_1b4b1f96",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-09T23:14:07Z",
+      "side": 1,
+      "message": "Odd to have different defaults between the SerializeOptions struct and here. This one will always be overwritten by the constructor.\n\nMaybe leave off the default here, so we\u0027ll get a compile (etc) warning if uninitialized by a change to the ctor?",
+      "revId": "6c6ac281b4753f1a8532270e4cac7a3153c78ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
