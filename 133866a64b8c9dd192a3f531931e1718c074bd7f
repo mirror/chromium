@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "960112fd_139c6642",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-09T18:04:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc74aeef_3aab651b",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9ab477d_795e76d8",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit_mock.py",
         "patchSetId": 8
@@ -50,6 +68,24 @@
       "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb84142_76af6b2b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit_mock.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-09T18:04:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9ab477d_795e76d8",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "2ed5a1b8_000416b0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-09T18:04:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfcbe935_02b109ea",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f813707_d86e49b5",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
         "patchSetId": 8
@@ -98,6 +152,24 @@
       "writtenOn": "2017-05-08T19:46:13Z",
       "side": 1,
       "message": "Could add a period here :-)",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb4bb29_c7e75810",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-09T18:04:52Z",
+      "side": 1,
+      "message": "Ahh thanks, I think the giant period sticky note on my laptop was not effective.",
+      "parentUuid": "3f813707_d86e49b5",
       "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +190,24 @@
       "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6547f61_d3c53998",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-09T18:04:52Z",
+      "side": 1,
+      "message": "I combined these into one method. This removes most of the overlap, but there are still some places where things can be further de-duplicated into helper methods as you suggested.",
+      "parentUuid": "8a7cd9a6_2d2f4994",
+      "revId": "133866a64b8c9dd192a3f531931e1718c074bd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
