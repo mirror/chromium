@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8607d585_c86819d8",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-09T23:44:56Z",
+      "side": 1,
+      "message": "Sadly not. :-/",
+      "parentUuid": "aeb0b023_61dfc16d",
+      "revId": "1bc625315c9d1ad73385414a094be1649e6f6496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69aaaf74_c9ed31ee",
         "filename": "components/feature_engagement_tracker/internal/BUILD.gn",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-09T23:27:13Z",
       "side": 1,
       "message": "Needing to update this in two places seems liable to bite people in the future, but I can\u0027t immediately think of a good way to deal with it.",
+      "revId": "1bc625315c9d1ad73385414a094be1649e6f6496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec351dbd_311cb923",
+        "filename": "components/feature_engagement_tracker/internal/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-09T23:44:56Z",
+      "side": 1,
+      "message": "Yeah. I\u0027m not sure how to work around this. Happy to address this later if you come up with something smart!",
+      "parentUuid": "69aaaf74_c9ed31ee",
       "revId": "1bc625315c9d1ad73385414a094be1649e6f6496",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
