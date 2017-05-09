@@ -38,7 +38,7 @@ class RefCountedInterfacePtr
 
 void DoNothingHandleReadError(PersistentPrefStore::PrefReadError error) {}
 
-scoped_refptr<PrefStore> CreatePrefStore(
+scoped_refptr<PrefStore> CreatePrefStoreClient(
     PrefValueStore::PrefStoreType store_type,
     std::unordered_map<PrefValueStore::PrefStoreType,
                        mojom::PrefStoreConnectionPtr>* connections) {
@@ -60,17 +60,18 @@ void OnConnect(
     std::unordered_map<PrefValueStore::PrefStoreType,
                        mojom::PrefStoreConnectionPtr> connections) {
   scoped_refptr<PrefStore> managed_prefs =
-      CreatePrefStore(PrefValueStore::MANAGED_STORE, &connections);
-  scoped_refptr<PrefStore> supervised_user_prefs =
-      CreatePrefStore(PrefValueStore::SUPERVISED_USER_STORE, &connections);
+      CreatePrefStoreClient(PrefValueStore::MANAGED_STORE, &connections);
+  scoped_refptr<PrefStore> supervised_user_prefs = CreatePrefStoreClient(
+      PrefValueStore::SUPERVISED_USER_STORE, &connections);
   scoped_refptr<PrefStore> extension_prefs =
-      CreatePrefStore(PrefValueStore::EXTENSION_STORE, &connections);
+      CreatePrefStoreClient(PrefValueStore::EXTENSION_STORE, &connections);
   scoped_refptr<PrefStore> command_line_prefs =
-      CreatePrefStore(PrefValueStore::COMMAND_LINE_STORE, &connections);
+      CreatePrefStoreClient(PrefValueStore::COMMAND_LINE_STORE, &connections);
   scoped_refptr<PrefStore> recommended_prefs =
-      CreatePrefStore(PrefValueStore::RECOMMENDED_STORE, &connections);
-  scoped_refptr<PrefStore> default_prefs =
-      CreatePrefStore(PrefValueStore::DEFAULT_STORE, &connections);
+      CreatePrefStoreClient(PrefValueStore::RECOMMENDED_STORE, &connections);
+  // TODO(crbug.com/719770): Once owning registrations are supported, pass the
+  // default values of owned prefs to the service and connect to the service's
+  // defaults pref store instead of using a local one.
   scoped_refptr<PersistentPrefStore> persistent_pref_store(
       new PersistentPrefStoreClient(
           std::move(persistent_pref_store_connection)));
@@ -78,7 +79,7 @@ void OnConnect(
   auto* pref_value_store = new PrefValueStore(
       managed_prefs.get(), supervised_user_prefs.get(), extension_prefs.get(),
       command_line_prefs.get(), persistent_pref_store.get(),
-      recommended_prefs.get(), default_prefs.get(), pref_notifier);
+      recommended_prefs.get(), pref_registry->defaults().get(), pref_notifier);
   callback.Run(base::MakeUnique<::PrefService>(
       pref_notifier, pref_value_store, persistent_pref_store.get(),
       pref_registry.get(), base::Bind(&DoNothingHandleReadError), true));
