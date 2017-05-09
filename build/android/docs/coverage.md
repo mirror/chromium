@@ -2,7 +2,7 @@
 
 These are instructions for collecting code coverage data for android
 instrumentation and junit tests.
-
+jfijeo
 [TOC]
 
 ## How EMMA coverage works
