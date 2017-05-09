@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29504a25_5db1af33",
+        "filename": "content/browser/manifest/manifest_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-09T05:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c9dc124_14bdf559",
+      "range": {
+        "startLine": 118,
+        "startChar": 31,
+        "endLine": 118,
+        "endChar": 39
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d3b22c2_52802e36",
         "filename": "content/browser/manifest/manifest_browsertest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d16b47_ab5a03fa",
+        "filename": "content/browser/manifest/manifest_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-09T05:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d3b22c2_52802e36",
+      "range": {
+        "startLine": 269,
+        "startChar": 20,
+        "endLine": 269,
+        "endChar": 26
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9fcfcee0_ed65e708",
+        "filename": "content/browser/manifest/manifest_manager_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-09T05:38:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51f0102a_0187310c",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 34
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eccb6a2_8712e9af",
         "filename": "content/public/browser/web_contents_observer.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c78fa7_c44803b2",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-09T05:38:54Z",
+      "side": 1,
+      "message": "\u003e Can you document whether this function be called for pages without a manifest? Similarly, if a page clears out the manifest URL via Javascript.\n\nDone.\n\n\u003e Assuming not, is it guaranteed to run before or after DidUpdateFaviconURL? I mention this because the favicon processing will need to wait until both (favicon candidates and manifest URL) are available.\n\nI don\u0027t think we can provide guarantees about the order.",
+      "parentUuid": "2eccb6a2_8712e9af",
+      "range": {
+        "startLine": 430,
+        "startChar": 20,
+        "endLine": 430,
+        "endChar": 0
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b43c6f89_c471d10d",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-09T05:38:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79caeda8_54896038",
+      "range": {
+        "startLine": 432,
+        "startChar": 50,
+        "endLine": 432,
+        "endChar": 0
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a0e530f_bdfb2627",
         "filename": "content/renderer/manifest/manifest_manager.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab4b50e_3a753c56",
+        "filename": "content/renderer/manifest/manifest_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-09T05:38:54Z",
+      "side": 1,
+      "message": "This is only aimed at single task coalescing. This came up in the existing tests; they remove the old URL before adding the new one.",
+      "parentUuid": "5a0e530f_bdfb2627",
+      "range": {
+        "startLine": 118,
+        "startChar": 42,
+        "endLine": 118,
+        "endChar": 52
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
