@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd9d1c2e_3b4cb3ce",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-05-09T00:48:26Z",
+      "side": 1,
+      "message": "Dunno if this is the best approach..",
+      "revId": "de8c71db9dca0a9e0d5042b18277c40b60d8b5cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
