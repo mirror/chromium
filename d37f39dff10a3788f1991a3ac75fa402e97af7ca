@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01c3f75a_95cb8df8",
+        "filename": "services/preferences/public/cpp/pref_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-09T03:02:02Z",
+      "side": 1,
+      "message": "Add PrefValueStore::DEFAULT_STORE to |already_connected_types|.",
+      "range": {
+        "startLine": 112,
+        "startChar": 43,
+        "endLine": 112,
+        "endChar": 66
+      },
+      "revId": "d37f39dff10a3788f1991a3ac75fa402e97af7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
