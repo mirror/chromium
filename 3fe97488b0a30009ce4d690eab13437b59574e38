@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fba67d3_bcf98b5f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-09T01:30:56Z",
+      "side": 1,
+      "message": "nit: |u| is too short.  |url|?",
+      "revId": "3fe97488b0a30009ce4d690eab13437b59574e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
