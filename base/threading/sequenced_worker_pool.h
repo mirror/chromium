@@ -144,6 +144,10 @@ class BASE_EXPORT SequencedWorkerPool : public TaskRunner {
     // used for debugging.
     std::string ToString() const;
 
+    // Returns the integer uniquely representing this SequenceToken. This method
+    // should only be used for tracing and debugging.
+    int ToInternalValue() const { return id_; }
+
    private:
     friend class SequencedWorkerPool;
 
