@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02f0e1c3_c65510d5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-05-09T08:43:21Z",
+      "side": 1,
+      "message": "Does this really need to be control priority?  Isn\u0027t HIGH_PRIORITY sufficient?",
+      "range": {
+        "startLine": 358,
+        "startChar": 58,
+        "endLine": 358,
+        "endChar": 74
+      },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
