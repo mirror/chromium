@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f70b754_d9ad99fb",
+        "filename": "cc/layers/picture_layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-09T01:46:50Z",
+      "side": 1,
+      "message": "This is the fix.",
+      "revId": "ba0039f3099a394a16dc131b37d5c8c2132fb96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31eeb787_38ae46f7",
+        "filename": "cc/layers/picture_layer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-09T01:46:50Z",
+      "side": 1,
+      "message": "FakeLayerTreeHost sure is complicated these days.  /o\\",
+      "revId": "ba0039f3099a394a16dc131b37d5c8c2132fb96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
