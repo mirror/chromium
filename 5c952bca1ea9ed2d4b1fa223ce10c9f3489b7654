@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d711094_0f84386f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-09T06:29:10Z",
+      "side": 1,
+      "message": "Nit: wording a bit mixed, maybe delete words \u0027there are\u0027",
+      "revId": "5c952bca1ea9ed2d4b1fa223ce10c9f3489b7654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
