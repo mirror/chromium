@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5a0f109_16dc46b1",
+        "filename": "content/browser/manifest/manifest_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-05-09T13:35:00Z",
+      "side": 1,
+      "message": "This will be much simpler as one liner:\n\nEXPECT_TRUE(NavigateToURL(shell(), test_url));\n\nIt will also verify that the navigation actually succeeded, since right now the test will continue happily even if the navigation fails for some reason.",
+      "range": {
+        "startLine": 489,
+        "startChar": 4,
+        "endLine": 489,
+        "endChar": 23
+      },
+      "revId": "a03b03f1ff82c93de54fadd2aa16f21a2d09ded5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f1619d_0b34aeb0",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-05-09T13:35:00Z",
+      "side": 1,
+      "message": "nit: s/page/document/",
+      "range": {
+        "startLine": 432,
+        "startChar": 48,
+        "endLine": 432,
+        "endChar": 52
+      },
+      "revId": "a03b03f1ff82c93de54fadd2aa16f21a2d09ded5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28c2625_3eff83e5",
+        "filename": "content/renderer/manifest/manifest_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-05-09T13:35:00Z",
+      "side": 1,
+      "message": "nit: s/page/document/",
+      "range": {
+        "startLine": 120,
+        "startChar": 12,
+        "endLine": 120,
+        "endChar": 16
+      },
+      "revId": "a03b03f1ff82c93de54fadd2aa16f21a2d09ded5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
