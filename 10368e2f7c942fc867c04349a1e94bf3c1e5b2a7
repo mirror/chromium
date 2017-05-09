@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "a83f6278_01e4f01c",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-09T08:27:55Z",
+      "side": 1,
+      "message": "With coalescing disabled during page load I think we can provide ordering guarantees. We\u0027ll see if the bots disagree ;)",
+      "parentUuid": "c10e99c1_9186b9fe",
+      "range": {
+        "startLine": 430,
+        "startChar": 20,
+        "endLine": 430,
+        "endChar": 0
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79caeda8_54896038",
         "filename": "content/public/browser/web_contents_observer.h",
         "patchSetId": 1
