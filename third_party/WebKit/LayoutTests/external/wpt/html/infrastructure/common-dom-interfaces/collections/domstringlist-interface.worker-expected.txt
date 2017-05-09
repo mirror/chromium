@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS Untitled 
+PASS DOMStringList interface: existence and properties of interface object 
+PASS DOMStringList interface object length 
+PASS DOMStringList interface object name 
+FAIL DOMStringList interface: existence and properties of interface prototype object assert_equals: class string of DOMStringList.prototype expected "[object DOMStringListPrototype]" but got "[object DOMStringList]"
+PASS DOMStringList interface: existence and properties of interface prototype object's "constructor" property 
+PASS DOMStringList interface: attribute length 
+PASS DOMStringList interface: operation item(unsigned long) 
+PASS DOMStringList interface: operation contains(DOMString) 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL error event is normal (return true does not cancel; one arg) on WorkerGlobalScope, with a synthetic ErrorEvent ErrorEvent is not defined
+Harness: the test ran to completion.
+
