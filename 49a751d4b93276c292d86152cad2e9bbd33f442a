@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "17033074_c77b0c6b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-05-09T14:46:54Z",
+      "side": 1,
+      "message": "I think this could just call NewLoadingTaskQueue() and then set the priority on the returned queue.",
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02f0e1c3_c65510d5",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 1
@@ -43,6 +60,47 @@
         "endLine": 358,
         "endChar": 74
       },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d463b48_baf1c64d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-05-09T14:46:54Z",
+      "side": 1,
+      "message": "Right, HIGH_PRIORITY is what we should use here I think. It has some starvation projection (5:1 ratio) unlike CONTROL_PRIORITY.",
+      "parentUuid": "e68d18f0_274ff2aa",
+      "range": {
+        "startLine": 358,
+        "startChar": 58,
+        "endLine": 358,
+        "endChar": 74
+      },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e8f28f_32994425",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3673,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-05-09T14:46:54Z",
+      "side": 1,
+      "message": "When we get to testing this, let\u0027s add a test that checks loading control tasks generally take priority over loading tasks.",
       "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
