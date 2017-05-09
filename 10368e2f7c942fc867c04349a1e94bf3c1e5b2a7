@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c10e99c1_9186b9fe",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-05-09T07:23:49Z",
+      "side": 1,
+      "message": "Thanks for the comment! My concern still holds that I don\u0027t see how this new API can be used in the context of favicons, unless we provide some guarantees such as timing guarantees (or alternatively the triggering if this function with nullopt for pages without manifest). Essentially, ContentFaviconDriver needs to wait until both the manifest URL (if any) and favicon URLs are gathered.\n\nI\u0027m not familiar with contents codebase but I believe favicon notifications are deferred until the page stopped loading (e.g. https://cs.chromium.org/chromium/src/content/renderer/render_view_impl.cc?type\u003dcs\u0026l\u003d1552). You haven\u0027t implemented anything similar, have you? If you report manifest URLs as soon as the link tag is parsed (which is how I interpret the code around DispatchDidChangeManifest), wouldn\u0027t it be safe to claim the manifest URL will always be reported earlier?",
+      "parentUuid": "45c78fa7_c44803b2",
+      "range": {
+        "startLine": 430,
+        "startChar": 20,
+        "endLine": 430,
+        "endChar": 0
+      },
+      "revId": "10368e2f7c942fc867c04349a1e94bf3c1e5b2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79caeda8_54896038",
         "filename": "content/public/browser/web_contents_observer.h",
         "patchSetId": 1
