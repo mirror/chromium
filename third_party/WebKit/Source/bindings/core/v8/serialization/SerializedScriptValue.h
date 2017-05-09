@@ -92,10 +92,16 @@ class CORE_EXPORT SerializedScriptValue
   static constexpr uint32_t kWireFormatVersion = 17;
 
   struct SerializeOptions {
+    enum WasmSerializationPolicy {
+      kUnspecified,
+      kTransfer,
+      kSerialize,
+      kBlockedInNonSecureContext
+    };
     STACK_ALLOCATED();
     Transferables* transferables = nullptr;
     WebBlobInfoArray* blob_info = nullptr;
-    bool write_wasm_to_stream = false;
+    WasmSerializationPolicy wasm_policy = kTransfer;
     // Set when serializing a value for storage; e.g. when writing to
     // IndexedDB.
     bool for_storage = false;
