@@ -56,7 +56,7 @@ class Model {
   virtual void IncrementEvent(const std::string& event_name) = 0;
 
   // Returns the number of days since epoch (1970-01-01) in the local timezone.
-  virtual uint32_t GetCurrentDay() = 0;
+  virtual uint32_t GetCurrentDay() const = 0;
 
  protected:
   Model() = default;

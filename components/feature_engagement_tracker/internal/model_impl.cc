@@ -11,9 +11,11 @@
 
 #include "base/bind.h"
 #include "base/memory/weak_ptr.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "components/feature_engagement_tracker/internal/configuration.h"
 #include "components/feature_engagement_tracker/internal/model.h"
 #include "components/feature_engagement_tracker/internal/storage_validator.h"
@@ -90,9 +92,9 @@ void ModelImpl::IncrementEvent(const std::string& event_name) {
   store_->WriteEvent(event);
 }
 
-uint32_t ModelImpl::GetCurrentDay() {
-  // TODO(nyquist): Implement this according to specification.
-  return 1u;
+uint32_t ModelImpl::GetCurrentDay() const {
+  base::TimeDelta delta = base::Time::Now() - base::Time::UnixEpoch();
+  return base::saturated_cast<uint32_t>(delta.InDays());
 }
 
 void ModelImpl::OnStoreLoaded(const OnModelInitializationFinished& callback,
