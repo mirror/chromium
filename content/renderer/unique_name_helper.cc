@@ -12,11 +12,14 @@
 #include "base/strings/string_piece.h"
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_frame_proxy.h"
+#include "crypto/secure_hash.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace content {
 
 namespace {
+
+constexpr size_t kSizeLimit = 512;
 
 const std::string& UniqueNameForFrame(blink::WebFrame* frame) {
   return frame->IsWebLocalFrame()
@@ -142,9 +145,9 @@ std::string AppendUniqueSuffix(blink::WebFrame* top,
   return candidate;
 }
 
-std::string CalculateNewName(blink::WebFrame* parent,
-                             blink::WebFrame* child,
-                             const std::string& name) {
+std::string CalculateLegacyName(blink::WebFrame* parent,
+                                blink::WebFrame* child,
+                                const std::string& name) {
   blink::WebFrame* top = parent->Top();
   if (!name.empty() && !UniqueNameExists(top, name) && name != "_blank")
     return name;
@@ -155,6 +158,22 @@ std::string CalculateNewName(blink::WebFrame* parent,
 
   std::string likely_unique_suffix = GenerateFramePosition(parent, child);
   return AppendUniqueSuffix(top, candidate, likely_unique_suffix);
+}
+
+std::string CalculateHashedName(const std::string& input) {
+  return "";
+}
+
+std::string CalculateNewName(blink::WebFrame* parent,
+                             blink::WebFrame* child,
+                             const std::string& name) {
+  std::string candidate = CalculateLegacyName(parent, child, name);
+  if (candidate.size() < kSizeLimit)
+    return candidate;
+  do {
+    candidate = CalculateHashedName(candidate);
+  } while (UniqueNameExists(parent->Top(), candidate));
+  return candidate;
 }
 
 }  // namespace

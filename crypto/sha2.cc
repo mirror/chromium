@@ -25,4 +25,10 @@ std::string SHA256HashString(const base::StringPiece& str) {
   return output;
 }
 
+void SHA512HashString(const base::StringPiece& str, void* output, size_t len) {
+  std::unique_ptr<SecureHash> ctx(SecureHash::Create(SecureHash::SHA512));
+  ctx->Update(str.data(), str.length());
+  ctx->Finish(output, len);
+}
+
 }  // namespace crypto
