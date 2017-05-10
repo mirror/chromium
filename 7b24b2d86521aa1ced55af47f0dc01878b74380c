@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc7c0fa_5dd720d2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-05-10T00:14:25Z",
+      "side": 1,
+      "message": "Should this be kUnspecified then, if you always want users to specify?",
+      "range": {
+        "startLine": 104,
+        "startChar": 42,
+        "endLine": 104,
+        "endChar": 51
+      },
+      "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
