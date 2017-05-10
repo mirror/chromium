@@ -23,13 +23,15 @@ namespace feature_engagement_tracker {
 class Configuration;
 class StorageValidator;
 class Store;
+class TimeProvider;
 
 // A ModelImpl provides the default implementation of the Model.
 class ModelImpl : public Model {
  public:
   ModelImpl(std::unique_ptr<Store> store,
             std::unique_ptr<Configuration> configuration,
-            std::unique_ptr<StorageValidator> storage_validator);
+            std::unique_ptr<StorageValidator> storage_validator,
+            std::unique_ptr<TimeProvider> time_provider);
   ~ModelImpl() override;
 
   // Model implementation.
@@ -41,7 +43,6 @@ class ModelImpl : public Model {
   bool IsCurrentlyShowing() const override;
   const Event* GetEvent(const std::string& event_name) const override;
   void IncrementEvent(const std::string& event_name) override;
-  uint32_t GetCurrentDay() override;
 
  private:
   // Callback for loading the underlying store.
@@ -62,6 +63,9 @@ class ModelImpl : public Model {
   // A utility for checking whether new events should be stored and for whether
   // old events should be kept.
   std::unique_ptr<StorageValidator> storage_validator_;
+
+  // A utility for retriving time-related information.
+  std::unique_ptr<TimeProvider> time_provider_;
 
   // An in-memory representation of all events.
   std::map<std::string, Event> events_;

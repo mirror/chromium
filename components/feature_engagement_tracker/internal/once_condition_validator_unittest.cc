@@ -53,8 +53,6 @@ class TestModel : public Model {
 
   void IncrementEvent(const std::string& event_name) override {}
 
-  uint32_t GetCurrentDay() override { return 0u; }
-
  private:
   EditableConfiguration configuration_;
   bool ready_;

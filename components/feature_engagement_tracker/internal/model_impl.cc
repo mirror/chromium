@@ -11,6 +11,7 @@
 
 #include "base/bind.h"
 #include "base/memory/weak_ptr.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -18,16 +19,19 @@
 #include "components/feature_engagement_tracker/internal/model.h"
 #include "components/feature_engagement_tracker/internal/storage_validator.h"
 #include "components/feature_engagement_tracker/internal/store.h"
+#include "components/feature_engagement_tracker/internal/time_provider.h"
 
 namespace feature_engagement_tracker {
 
 ModelImpl::ModelImpl(std::unique_ptr<Store> store,
                      std::unique_ptr<Configuration> configuration,
-                     std::unique_ptr<StorageValidator> storage_validator)
+                     std::unique_ptr<StorageValidator> storage_validator,
+                     std::unique_ptr<TimeProvider> time_provider)
     : Model(),
       store_(std::move(store)),
       configuration_(std::move(configuration)),
       storage_validator_(std::move(storage_validator)),
+      time_provider_(std::move(time_provider)),
       ready_(false),
       currently_showing_(false),
       weak_factory_(this) {}
@@ -71,7 +75,7 @@ void ModelImpl::IncrementEvent(const std::string& event_name) {
   // TODO(nyquist): Use StorageValidator to check if the event should be stored.
 
   Event& event = GetNonConstEvent(event_name);
-  uint32_t current_day = GetCurrentDay();
+  uint32_t current_day = time_provider_->GetCurrentDay();
   for (int i = 0; i < event.events_size(); ++i) {
     Event_Count* event_count = event.mutable_events(i);
     DCHECK(event_count->has_day());
@@ -88,11 +92,6 @@ void ModelImpl::IncrementEvent(const std::string& event_name) {
   event_count->set_day(current_day);
   event_count->set_count(1u);
   store_->WriteEvent(event);
-}
-
-uint32_t ModelImpl::GetCurrentDay() {
-  // TODO(nyquist): Implement this according to specification.
-  return 1u;
 }
 
 void ModelImpl::OnStoreLoaded(const OnModelInitializationFinished& callback,
