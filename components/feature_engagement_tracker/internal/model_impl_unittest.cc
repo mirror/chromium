@@ -12,12 +12,15 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/time/time.h"
 #include "components/feature_engagement_tracker/internal/editable_configuration.h"
 #include "components/feature_engagement_tracker/internal/in_memory_store.h"
 #include "components/feature_engagement_tracker/internal/never_storage_validator.h"
 #include "components/feature_engagement_tracker/internal/proto/event.pb.h"
+#include "components/feature_engagement_tracker/internal/time_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace feature_engagement_tracker {
@@ -128,25 +131,38 @@ std::unique_ptr<TestInMemoryStore> CreatePrefilledStore() {
   return base::MakeUnique<TestInMemoryStore>(std::move(events), true);
 }
 
+class TestTimeProvider : public TimeProvider {
+ public:
+  TestTimeProvider() = default;
+  ~TestTimeProvider() override = default;
+
+  // TimeProvider implementation.
+  uint32_t GetCurrentDay() const override { return current_day_; };
+
+  void SetCurrentDay(uint32_t current_day) { current_day_ = current_day; }
+
+ private:
+  uint32_t current_day_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestTimeProvider);
+};
+
 // A test-only implementation of ModelImpl to be able to change the current
 // day while a test is running.
 class TestModelImpl : public ModelImpl {
  public:
   TestModelImpl(std::unique_ptr<Store> store,
                 std::unique_ptr<Configuration> configuration,
-                std::unique_ptr<StorageValidator> storage_validator)
+                std::unique_ptr<StorageValidator> storage_validator,
+                std::unique_ptr<TimeProvider> time_provider)
       : ModelImpl(std::move(store),
                   std::move(configuration),
-                  std::move(storage_validator)),
-        current_day_(0) {}
+                  std::move(storage_validator),
+                  std::move(time_provider)) {}
   ~TestModelImpl() override {}
 
-  uint32_t GetCurrentDay() override { return current_day_; }
-
-  void SetCurrentDay(uint32_t current_day) { current_day_ = current_day; }
-
  private:
-  uint32_t current_day_;
+  DISALLOW_COPY_AND_ASSIGN(TestModelImpl);
 };
 
 class ModelImplTest : public ::testing::Test {
@@ -167,8 +183,13 @@ class ModelImplTest : public ::testing::Test {
     std::unique_ptr<TestInMemoryStore> store = CreateStore();
     store_ = store.get();
 
+    std::unique_ptr<TestTimeProvider> time_provider =
+        base::MakeUnique<TestTimeProvider>();
+    time_provider_ = time_provider.get();
+
     model_.reset(new TestModelImpl(std::move(store), std::move(configuration),
-                                   base::MakeUnique<NeverStorageValidator>()));
+                                   base::MakeUnique<NeverStorageValidator>(),
+                                   std::move(time_provider)));
   }
 
   virtual std::unique_ptr<TestInMemoryStore> CreateStore() {
@@ -183,6 +204,7 @@ class ModelImplTest : public ::testing::Test {
  protected:
   std::unique_ptr<TestModelImpl> model_;
   TestInMemoryStore* store_;
+  TestTimeProvider* time_provider_;
   bool got_initialize_callback_;
   bool initialize_callback_result_;
 
@@ -250,7 +272,7 @@ TEST_F(ModelImplTest, IncrementingNonExistingEvent) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(model_->IsReady());
 
-  model_->SetCurrentDay(1u);
+  time_provider_->SetCurrentDay(1u);
 
   // Incrementing the event should work even if it does not exist.
   model_->IncrementEvent("nonexisting");
@@ -276,12 +298,12 @@ TEST_F(ModelImplTest, IncrementingNonExistingEventMultipleDays) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(model_->IsReady());
 
-  model_->SetCurrentDay(1u);
+  time_provider_->SetCurrentDay(1u);
   model_->IncrementEvent("nonexisting");
-  model_->SetCurrentDay(2u);
+  time_provider_->SetCurrentDay(2u);
   model_->IncrementEvent("nonexisting");
   model_->IncrementEvent("nonexisting");
-  model_->SetCurrentDay(3u);
+  time_provider_->SetCurrentDay(3u);
   model_->IncrementEvent("nonexisting");
   const Event* event = model_->GetEvent("nonexisting");
   EXPECT_EQ(3, event->events_size());
@@ -297,7 +319,7 @@ TEST_F(ModelImplTest, IncrementingSingleDayExistingEvent) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(model_->IsReady());
 
-  model_->SetCurrentDay(1u);
+  time_provider_->SetCurrentDay(1u);
 
   // |foo| is inserted into the store with a count of 1 at day 1.
   const Event* foo_event = model_->GetEvent("foo");
@@ -319,7 +341,7 @@ TEST_F(ModelImplTest, IncrementingSingleDayExistingEventTwice) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(model_->IsReady());
 
-  model_->SetCurrentDay(1u);
+  time_provider_->SetCurrentDay(1u);
 
   // |foo| is inserted into the store with a count of 1 at day 1, so
   // incrementing twice should lead to 3.
@@ -339,7 +361,7 @@ TEST_F(ModelImplTest, IncrementingExistingMultiDayEvent) {
 
   // |bar| is inserted into the store with a count of 3 at day 2. Incrementing
   // that day should lead to a count of 4.
-  model_->SetCurrentDay(2u);
+  time_provider_->SetCurrentDay(2u);
   const Event* bar_event = model_->GetEvent("bar");
   VerifyEventCount(bar_event, 2u, 3u);
   model_->IncrementEvent("bar");
@@ -356,7 +378,7 @@ TEST_F(ModelImplTest, IncrementingExistingMultiDayEventNewDay) {
 
   // |bar| does not contain entries for day 10, so incrementing should create
   // the day.
-  model_->SetCurrentDay(10u);
+  time_provider_->SetCurrentDay(10u);
   model_->IncrementEvent("bar");
   const Event* bar_event = model_->GetEvent("bar");
   VerifyEventCount(bar_event, 10u, 1u);

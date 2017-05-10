@@ -15,6 +15,7 @@
 #include "components/feature_engagement_tracker/internal/never_storage_validator.h"
 #include "components/feature_engagement_tracker/internal/once_condition_validator.h"
 #include "components/feature_engagement_tracker/internal/single_invalid_configuration.h"
+#include "components/feature_engagement_tracker/internal/system_time_provider.h"
 #include "components/feature_engagement_tracker/public/feature_constants.h"
 #include "components/feature_engagement_tracker/public/feature_list.h"
 
@@ -40,7 +41,8 @@ CreateDemoModeFeatureEngagementTracker() {
   return base::MakeUnique<FeatureEngagementTrackerImpl>(
       base::MakeUnique<InMemoryStore>(), std::move(configuration),
       base::MakeUnique<OnceConditionValidator>(),
-      base::MakeUnique<NeverStorageValidator>());
+      base::MakeUnique<NeverStorageValidator>(),
+      base::MakeUnique<SystemTimeProvider>());
 }
 
 }  // namespace
@@ -62,22 +64,27 @@ FeatureEngagementTracker* FeatureEngagementTracker::Create(
       base::MakeUnique<NeverConditionValidator>();
   std::unique_ptr<StorageValidator> storage_validator =
       base::MakeUnique<NeverStorageValidator>();
+  std::unique_ptr<TimeProvider> time_provider =
+      base::MakeUnique<SystemTimeProvider>();
 
   return new FeatureEngagementTrackerImpl(
       std::move(store), std::move(configuration),
-      std::move(condition_validator), std::move(storage_validator));
+      std::move(condition_validator), std::move(storage_validator),
+      std::move(time_provider));
 }
 
 FeatureEngagementTrackerImpl::FeatureEngagementTrackerImpl(
     std::unique_ptr<Store> store,
     std::unique_ptr<Configuration> configuration,
     std::unique_ptr<ConditionValidator> condition_validator,
-    std::unique_ptr<StorageValidator> storage_validator)
+    std::unique_ptr<StorageValidator> storage_validator,
+    std::unique_ptr<TimeProvider> time_provider)
     : condition_validator_(std::move(condition_validator)),
       initialization_finished_(false),
       weak_ptr_factory_(this) {
   model_ = base::MakeUnique<ModelImpl>(
-      std::move(store), std::move(configuration), std::move(storage_validator));
+      std::move(store), std::move(configuration), std::move(storage_validator),
+      std::move(time_provider));
   model_->Initialize(
       base::Bind(&FeatureEngagementTrackerImpl::OnModelInitializationFinished,
                  weak_ptr_factory_.GetWeakPtr()));
