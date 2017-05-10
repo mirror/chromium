@@ -261,6 +261,7 @@
 #endif
 
 #if defined(USE_ASH)
+#include "ash/shell.h"
 #include "chrome/browser/ui/ash/chrome_launcher_prefs.h"
 #endif
 
@@ -643,7 +644,8 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 #endif
 
 #if defined(USE_ASH)
-  ash::launcher::RegisterChromeLauncherUserPrefs(registry);
+  RegisterChromeLauncherUserPrefs(registry);
+  ash::Shell::RegisterPrefs(registry);
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS)

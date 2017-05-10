@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Region;
-import android.os.Build;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -22,7 +21,6 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
@@ -37,7 +35,6 @@ import org.chromium.chrome.browser.TabLoadStatus;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
-import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
@@ -49,6 +46,7 @@ import org.chromium.chrome.browser.widget.FadingBackgroundView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController.ContentType;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.ui.UiUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -342,6 +340,9 @@ public class BottomSheet
             @SheetState
             int targetState = getTargetSheetState(
                     getSheetOffsetFromBottom() + getFlingDistance(-velocityY), -velocityY);
+            if (targetState == SHEET_STATE_PEEK) {
+                mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_SWIPE);
+            }
             setSheetState(targetState, true);
             mIsScrolling = false;
 
@@ -437,6 +438,9 @@ public class BottomSheet
                 @SheetState
                 int targetState = getTargetSheetState(getSheetOffsetFromBottom(), currentVelocity);
 
+                if (targetState == SHEET_STATE_PEEK) {
+                    mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_SWIPE);
+                }
                 setSheetState(targetState, true);
             }
         }
@@ -479,32 +483,6 @@ public class BottomSheet
     }
 
     /**
-     * Set the window's status bar color. On Android M and above, this will set the status bar color
-     * to the default theme color with dark icons except in the case of the tab switcher and
-     * incognito NTP. On Android versions < M, the status bar will always be black.
-     * @param window The Android window.
-     */
-    public void setStatusBarColor(Window window) {
-        Tab tab = getActiveTab();
-        boolean isInOverviewMode = tab != null && tab.getActivity().isInOverviewMode();
-        boolean isIncognitoNtp =
-                tab != null && NewTabPage.isNTPUrl(tab.getUrl()) && tab.isIncognito();
-        boolean isValidAndroidVersion = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-
-        int color = ApiCompatibilityUtils.getColor(getResources(), R.color.default_primary_color);
-        setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        // Special case the incognito NTP and the tab switcher.
-        if (!isValidAndroidVersion || isIncognitoNtp || isInOverviewMode) {
-            color = Color.BLACK;
-            // The light status bar flag is always set above, meaning XORing that value with the
-            // current flags will remove it.
-            setSystemUiVisibility(getSystemUiVisibility() ^ View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-        ApiCompatibilityUtils.setStatusBarColor(window, color);
-    }
-
-    /**
      * @return Whether or not the toolbar Android View is hidden due to being scrolled off-screen.
      */
     private boolean isToolbarAndroidViewHidden() {
@@ -539,8 +517,15 @@ public class BottomSheet
                 mContainerHeight = bottom - top;
                 updateSheetDimensions();
 
-                cancelAnimation();
-                setSheetState(mCurrentState, false);
+                // If we are in the middle of a touch event stream (i.e. scrolling while keyboard is
+                // up) don't set the sheet state. Instead allow the gesture detector to position the
+                // sheet and make sure the keyboard hides.
+                if (mIsScrolling) {
+                    UiUtils.hideKeyboard(BottomSheet.this);
+                } else {
+                    cancelAnimation();
+                    setSheetState(mCurrentState, false);
+                }
 
                 if (!mHasRootLayoutOccurred && mTabModelSelector != null
                         && mTabModelSelector.isTabStateInitialized()) {
@@ -605,6 +590,7 @@ public class BottomSheet
         }
 
         // In all non-native cases, minimize the sheet.
+        mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_NAVIGATION);
         setSheetState(SHEET_STATE_PEEK, true);
 
         assert mTabModelSelector != null;
@@ -662,6 +648,9 @@ public class BottomSheet
      * @param content The {@link BottomSheetContent} to show.
      */
     public void showContent(final BottomSheetContent content) {
+        // If an animation is already running, end it.
+        if (mContentSwapAnimatorSet != null) mContentSwapAnimatorSet.end();
+
         // If the desired content is already showing, do nothing.
         if (mSheetContent == content) return;
 
@@ -673,9 +662,6 @@ public class BottomSheet
                 ? mSheetContent.getToolbarView()
                 : mDefaultToolbarView;
         View oldContent = mSheetContent != null ? mSheetContent.getContentView() : null;
-
-        // If an animation is already running, end it.
-        if (mContentSwapAnimatorSet != null) mContentSwapAnimatorSet.end();
 
         List<Animator> animators = new ArrayList<>();
         mContentSwapAnimatorSet = new AnimatorSet();
@@ -1140,6 +1126,7 @@ public class BottomSheet
 
     @Override
     public void onFadingViewClick() {
+        mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_TAP_SCRIM);
         setSheetState(SHEET_STATE_PEEK, true);
     }
 

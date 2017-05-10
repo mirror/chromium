@@ -349,7 +349,9 @@ void HostContentSettingsMap::SetDefaultContentSetting(
   std::unique_ptr<base::Value> value;
   // A value of CONTENT_SETTING_DEFAULT implies deleting the content setting.
   if (setting != CONTENT_SETTING_DEFAULT) {
-    DCHECK(IsDefaultSettingAllowedForType(setting, content_type));
+    DCHECK(content_settings::ContentSettingsRegistry::GetInstance()
+               ->Get(content_type)
+               ->IsDefaultSettingValid(setting));
     value.reset(new base::Value(setting));
   }
   SetWebsiteSettingCustomScope(ContentSettingsPattern::Wildcard(),
@@ -658,6 +660,14 @@ void HostContentSettingsMap::ClearSettingsForOneType(
   FlushLossyWebsiteSettings();
 }
 
+base::Time HostContentSettingsMap::GetSettingLastModifiedDate(
+    const ContentSettingsPattern& primary_pattern,
+    const ContentSettingsPattern& secondary_pattern,
+    ContentSettingsType content_type) const {
+  return pref_provider_->GetWebsiteSettingLastModified(
+      primary_pattern, secondary_pattern, content_type, std::string());
+}
+
 void HostContentSettingsMap::ClearSettingsForOneTypeWithPredicate(
     ContentSettingsType content_type,
     base::Time begin_time,
@@ -683,35 +693,6 @@ void HostContentSettingsMap::ClearSettingsForOneTypeWithPredicate(
       }
     }
   }
-}
-
-// TODO(raymes): Remove this function. Consider making it a property of
-// ContentSettingsInfo or removing it altogether (it's unclear whether we should
-// be restricting allowed default values at this layer).
-// static
-bool HostContentSettingsMap::IsDefaultSettingAllowedForType(
-    ContentSetting setting,
-    ContentSettingsType content_type) {
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
-  // Don't support ALLOW for protected media default setting until migration.
-  if (content_type == CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER &&
-      setting == CONTENT_SETTING_ALLOW) {
-    return false;
-  }
-#endif
-
-  // Don't support ALLOW for the default media settings.
-  if ((content_type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA ||
-       content_type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC) &&
-      setting == CONTENT_SETTING_ALLOW) {
-    return false;
-  }
-
-  const content_settings::ContentSettingsInfo* info =
-      content_settings::ContentSettingsRegistry::GetInstance()->Get(
-          content_type);
-  DCHECK(info);
-  return info->IsSettingValid(setting);
 }
 
 void HostContentSettingsMap::OnContentSettingChanged(
@@ -813,11 +794,8 @@ std::unique_ptr<base::Value> HostContentSettingsMap::GetWebsiteSetting(
     }
   }
 
-  return GetWebsiteSettingInternal(primary_url,
-                                   secondary_url,
-                                   content_type,
-                                   resource_identifier,
-                                   info);
+  return GetWebsiteSettingInternal(primary_url, secondary_url, content_type,
+                                   resource_identifier, info);
 }
 
 // static
@@ -927,4 +905,9 @@ HostContentSettingsMap::GetContentSettingValueAndPatterns(
     }
   }
   return std::unique_ptr<base::Value>();
+}
+
+void HostContentSettingsMap::SetClockForTesting(
+    std::unique_ptr<base::Clock> clock) {
+  pref_provider_->SetClockForTesting(std::move(clock));
 }

@@ -26,6 +26,7 @@
 #include "chrome/grit/theme_resources.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
+#include "components/prefs/pref_change_registrar.h"
 #include "components/prefs/pref_service.h"
 #include "components/session_manager/core/session_manager.h"
 #include "content/public/browser/notification_service.h"
@@ -38,6 +39,7 @@
 
 using session_manager::Session;
 using session_manager::SessionManager;
+using session_manager::SessionState;
 using user_manager::UserManager;
 using user_manager::User;
 using user_manager::UserList;
@@ -188,12 +190,18 @@ void SessionControllerClient::CycleActiveUser(
 void SessionControllerClient::ActiveUserChanged(const User* active_user) {
   SendSessionInfoIfChanged();
 
-  // UserAddedToSession is not called for the primary user session so send its
-  // meta data here once.
+  // UserAddedToSession is not called for the primary user session so its meta
+  // data here needs to be sent to ash before setting user session order.
+  // However, ActiveUserChanged happens at different timing for primary user
+  // and secondary users. For primary user, it happens before user profile load.
+  // For secondary users, it happens after user profile load. This caused
+  // confusing down the path. Bail out here to defer the primary user session
+  // metadata  sent until it becomes active so that ash side could expect a
+  // consistent state.
+  // TODO(xiyuan): Get rid of this after http://crbug.com/657149 refactoring.
   if (!primary_user_session_sent_ &&
       UserManager::Get()->GetPrimaryUser() == active_user) {
-    primary_user_session_sent_ = true;
-    SendUserSession(*active_user);
+    return;
   }
 
   SendUserSessionOrder();
@@ -315,6 +323,17 @@ void SessionControllerClient::FlushForTesting() {
 }
 
 void SessionControllerClient::OnSessionStateChanged() {
+  // Sent the primary user metadata and user session order that are deferred
+  // from ActiveUserChanged before update session state.
+  if (!primary_user_session_sent_ &&
+      SessionManager::Get()->session_state() == SessionState::ACTIVE) {
+    DCHECK_EQ(UserManager::Get()->GetPrimaryUser(),
+              UserManager::Get()->GetActiveUser());
+    primary_user_session_sent_ = true;
+    SendUserSession(*UserManager::Get()->GetPrimaryUser());
+    SendUserSessionOrder();
+  }
+
   SendSessionInfoIfChanged();
 }
 
@@ -358,6 +377,18 @@ void SessionControllerClient::OnLoginUserProfilePrepared(Profile* profile) {
     SupervisedUserServiceFactory::GetForProfile(supervised_user_profile_)
         ->AddObserver(this);
   }
+
+  base::Closure session_info_changed_closure =
+      base::Bind(&SessionControllerClient::SendSessionInfoIfChanged,
+                 weak_ptr_factory_.GetWeakPtr());
+  std::unique_ptr<PrefChangeRegistrar> pref_change_registrar =
+      base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar->Init(profile->GetPrefs());
+  pref_change_registrar->Add(prefs::kAllowScreenLock,
+                             session_info_changed_closure);
+  pref_change_registrar->Add(prefs::kEnableAutoScreenLock,
+                             session_info_changed_closure);
+  pref_change_registrars_.push_back(std::move(pref_change_registrar));
 
   // Needed because the user-to-profile mapping isn't available until later,
   // which is needed in UserToUserSession().

@@ -463,12 +463,16 @@ mojom("content_test_mojo_bindings") {
     "../public/test/test_service.mojom",
     "test_browser_associated_interfaces.mojom",
   ]
+
+  use_once_callback = true
 }
 
 mojom("web_ui_test_mojo_bindings") {
   sources = [
     "data/web_ui_test_mojo_bindings.mojom",
   ]
+
+  use_once_callback = true
 }
 
 static_library("layouttest_support") {
@@ -494,6 +498,7 @@ static_library("layouttest_support") {
     "//content/browser:for_content_tests",
     "//content/child:for_content_tests",
     "//content/public/common",
+    "//content/public/renderer",
     "//content/renderer:for_content_tests",
     "//content/shell/test_runner:test_runner",
     "//device/bluetooth",
@@ -1072,6 +1077,7 @@ test("content_unittests") {
     "../browser/cocoa/system_hotkey_map_unittest.mm",
     "../browser/compositor/reflector_impl_unittest.cc",
     "../browser/compositor/software_browser_compositor_output_surface_unittest.cc",
+    "../browser/compositor/software_output_device_mac_unittest.mm",
     "../browser/compositor/software_output_device_ozone_unittest.cc",
     "../browser/devtools/devtools_http_handler_unittest.cc",
     "../browser/devtools/devtools_manager_unittest.cc",
@@ -1234,7 +1240,7 @@ test("content_unittests") {
     "../browser/renderer_host/media/video_capture_controller_unittest.cc",
     "../browser/renderer_host/media/video_capture_manager_unittest.cc",
     "../browser/renderer_host/media/video_capture_unittest.cc",
-    "../browser/renderer_host/offscreen_canvas_compositor_frame_sink_manager_unittest.cc",
+    "../browser/renderer_host/offscreen_canvas_provider_impl_unittest.cc",
     "../browser/renderer_host/render_process_host_unittest.cc",
     "../browser/renderer_host/render_view_host_unittest.cc",
     "../browser/renderer_host/render_widget_host_unittest.cc",
@@ -1364,6 +1370,7 @@ test("content_unittests") {
     "../common/webplugininfo_unittest.cc",
     "../network/url_loader_unittest.cc",
     "../public/test/referrer_unittest.cc",
+    "../public/test/test_browser_thread_bundle_unittest.cc",
     "../renderer/android/disambiguation_popup_helper_unittest.cc",
     "../renderer/bmp_image_decoder_unittest.cc",
     "../renderer/categorized_worker_pool_unittest.cc",
@@ -1505,7 +1512,6 @@ test("content_unittests") {
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/WebKit/public:blink",
-    "//third_party/WebKit/public:offscreen_canvas_mojo_bindings",
     "//third_party/icu",
     "//third_party/leveldatabase",
     "//third_party/re2",
@@ -1513,6 +1519,7 @@ test("content_unittests") {
     "//third_party/widevine/cdm:headers",
     "//ui/accessibility",
     "//ui/base:test_support",
+    "//ui/base/ime",
     "//ui/compositor:test_support",
     "//ui/display",
     "//ui/display:test_support",
@@ -1690,6 +1697,7 @@ test("content_unittests") {
       "//third_party/ocmock",
       "//ui/accelerated_widget_mac",
     ]
+    libs = [ "IOSurface.framework" ]
   }
   if (is_chromeos) {
     deps += [ "//chromeos" ]

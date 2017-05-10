@@ -2986,8 +2986,30 @@ void LayoutBlockFlow::AddChild(LayoutObject* new_child,
   // children as blocks.
   // So, if our children are currently inline and a block child has to be
   // inserted, we move all our inline children into anonymous block boxes.
-  bool child_is_block_level =
-      !new_child->IsInline() && !new_child->IsFloatingOrOutOfFlowPositioned();
+  bool child_is_block_level = !new_child->IsInline();
+
+  // ** LayoutNG **
+  // We want to use the block layout for out of flow positioned
+  // objects when they go in front of inline blocks or if they are just
+  // standalone objects.
+  // Example 1:
+  //   <div id="zero"><div id="oof"></div></div>
+  //   Legacy Layout: #oof is in inline context.
+  //   LayoutNG: #oof is in block context.
+  //
+  // Example 2:
+  //   <div id=container><oof></oof>Hello!</div>
+  //   Legacy Layout: oof is in inline context.
+  //   LayoutNG: oof is in block context.
+  //
+  // Example 3:
+  //   <div id=container>Hello!<oof></oof></div>
+  //   Legacy Layout: oof is in inline context.
+  //   LayoutNG: oof is in inline context.
+  bool layout_ng_enabled = RuntimeEnabledFeatures::layoutNGEnabled();
+  if (new_child->IsFloatingOrOutOfFlowPositioned())
+    child_is_block_level = layout_ng_enabled && !FirstChild();
+
   if (ChildrenInline()) {
     if (child_is_block_level) {
       // Wrap the inline content in anonymous blocks, to allow for the new block
@@ -3021,7 +3043,8 @@ void LayoutBlockFlow::AddChild(LayoutObject* new_child,
       LayoutBlockFlow* new_block = ToLayoutBlockFlow(CreateAnonymousBlock());
       LayoutBox::AddChild(new_block, before_child);
       // Reparent adjacent floating or out-of-flow siblings to the new box.
-      new_block->ReparentPrecedingFloatingOrOutOfFlowSiblings();
+      if (!layout_ng_enabled)
+        new_block->ReparentPrecedingFloatingOrOutOfFlowSiblings();
       new_block->AddChild(new_child);
       new_block->ReparentSubsequentFloatingOrOutOfFlowSiblings();
       return;
@@ -3131,7 +3154,6 @@ void LayoutBlockFlow::MoveAllChildrenIncludingFloatsTo(
     LayoutBlock* to_block,
     bool full_remove_insert) {
   LayoutBlockFlow* to_block_flow = ToLayoutBlockFlow(to_block);
-  MoveAllChildrenTo(to_block_flow, full_remove_insert);
 
   // When a portion of the layout tree is being detached, anonymous blocks
   // will be combined as their children are deleted. In this process, the
@@ -3169,6 +3191,7 @@ void LayoutBlockFlow::MoveAllChildrenIncludingFloatsTo(
       to_block_flow->floating_objects_->Add(floating_object.UnsafeClone());
     }
   }
+  MoveAllChildrenTo(to_block_flow, full_remove_insert);
 }
 
 void LayoutBlockFlow::ChildBecameFloatingOrOutOfFlow(LayoutBox* child) {

@@ -9,7 +9,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.SystemClock;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -23,6 +22,7 @@ import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.TintedImageButton;
+import org.chromium.chrome.browser.widget.ToolbarProgressBar;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetMetrics;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetObserver;
@@ -153,6 +153,17 @@ public class BottomToolbarPhone extends ToolbarPhone {
     }
 
     @Override
+    protected int getProgressBarColor() {
+        int color = super.getProgressBarColor();
+        if (getToolbarDataProvider().getTab() != null) {
+            // ToolbarDataProvider itself accounts for Chrome Home and will return default colors,
+            // so pull the progress bar color from the tab.
+            color = getToolbarDataProvider().getTab().getThemeColor();
+        }
+        return color;
+    }
+
+    @Override
     protected int getProgressBarTopMargin() {
         // In the case where the toolbar is at the bottom of the screen, the progress bar should
         // be at the top of the screen.
@@ -161,17 +172,13 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
     @Override
     protected int getProgressBarHeight() {
-        // On Android versions that do not support themed status bars (< M), use a thicker progress
-        // bar so it is more visible.
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return getResources().getDimensionPixelSize(R.dimen.chrome_home_progress_bar_height);
-        }
-        return super.getProgressBarHeight();
+        return getResources().getDimensionPixelSize(R.dimen.chrome_home_progress_bar_height);
     }
 
     @Override
-    protected boolean getProgressBarUsesThemeColors() {
-        return false;
+    protected ToolbarProgressBar createProgressBar() {
+        return new ToolbarProgressBar(
+                getContext(), getProgressBarHeight(), getProgressBarTopMargin(), true);
     }
 
     @Override
@@ -335,6 +342,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
     @Override
     protected void updateVisualsForToolbarState() {
         super.updateVisualsForToolbarState();
+
+        getProgressBar().setThemeColor(getProgressBarColor(), isIncognito());
 
         // TODO(mdjones): Creating a new tab from the tab switcher skips the
         // drawTabSwitcherFadeAnimation which would otherwise make this line unnecessary.

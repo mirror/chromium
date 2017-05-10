@@ -131,7 +131,7 @@ class PLATFORM_EXPORT TaskQueueImpl final : public TaskQueue {
 
   // TaskQueue implementation.
   void UnregisterTaskQueue() override;
-  bool RunsTasksOnCurrentThread() const override;
+  bool RunsTasksInCurrentSequence() const override;
   bool PostDelayedTask(const tracked_objects::Location& from_here,
                        base::OnceClosure task,
                        base::TimeDelta delay) override;
@@ -154,6 +154,7 @@ class PLATFORM_EXPORT TaskQueueImpl final : public TaskQueue {
   void SetBlameContext(base::trace_event::BlameContext* blame_context) override;
   void InsertFence(InsertFencePosition position) override;
   void RemoveFence() override;
+  bool HasFence() const override;
   bool BlockedByFence() const override;
   const char* GetName() const override;
   QueueType GetQueueType() const override;

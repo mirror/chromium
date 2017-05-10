@@ -27,7 +27,6 @@
 
 #include <memory>
 #include "bindings/core/v8/ScriptPromise.h"
-#include "bindings/core/v8/V8ThrowException.h"
 #include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
@@ -40,6 +39,7 @@
 #include "platform/InstanceCounters.h"
 #include "platform/Timer.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/bindings/V8ThrowException.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/WebContentDecryptionModule.h"
 
@@ -313,8 +313,8 @@ bool MediaKeys::HasPendingActivity() const {
   // Remain around if there are pending events.
   DVLOG(MEDIA_KEYS_LOG_LEVEL)
       << __func__ << "(" << this << ")"
-      << (!pending_actions_.IsEmpty() ? " !m_pendingActions.isEmpty()" : "")
-      << (reserved_for_media_element_ ? " m_reservedForMediaElement" : "");
+      << (!pending_actions_.IsEmpty() ? " !pending_actions_.isEmpty()" : "")
+      << (reserved_for_media_element_ ? " reserved_for_media_element_" : "");
 
   return !pending_actions_.IsEmpty() || reserved_for_media_element_;
 }

@@ -6,7 +6,6 @@
 
 #include <stddef.h>
 
-#include <tuple>
 #include <utility>
 
 #include "base/atomic_sequence_num.h"
@@ -76,20 +75,6 @@ base::StaticAtomicSequenceNumber g_extension_event_id;
 }  // namespace
 
 const char EventRouter::kRegisteredEvents[] = "events";
-
-struct EventRouter::ListenerProcess {
-  content::RenderProcessHost* process;
-  std::string extension_id;
-
-  ListenerProcess(content::RenderProcessHost* process,
-                  const std::string& extension_id)
-      : process(process), extension_id(extension_id) {}
-
-  bool operator<(const ListenerProcess& that) const {
-    return std::tie(process, extension_id) <
-           std::tie(that.process, that.extension_id);
-  }
-};
 
 // static
 void EventRouter::DispatchExtensionMessage(IPC::Sender* ipc_sender,
@@ -336,25 +321,6 @@ bool EventRouter::HasEventListener(const std::string& event_name) {
 bool EventRouter::ExtensionHasEventListener(const std::string& extension_id,
                                             const std::string& event_name) {
   return listeners_.HasListenerForExtension(extension_id, event_name);
-}
-
-bool EventRouter::HasEventListenerImpl(const ListenerMap& listener_map,
-                                       const std::string& extension_id,
-                                       const std::string& event_name) {
-  ListenerMap::const_iterator it = listener_map.find(event_name);
-  if (it == listener_map.end())
-    return false;
-
-  const std::set<ListenerProcess>& listeners = it->second;
-  if (extension_id.empty())
-    return !listeners.empty();
-
-  for (std::set<ListenerProcess>::const_iterator listener = listeners.begin();
-       listener != listeners.end(); ++listener) {
-    if (listener->extension_id == extension_id)
-      return true;
-  }
-  return false;
 }
 
 std::set<std::string> EventRouter::GetRegisteredEvents(
@@ -694,8 +660,7 @@ void EventRouter::IncrementInFlightEvents(BrowserContext* context,
                                           const Extension* extension,
                                           int event_id,
                                           const std::string& event_name) {
-  // TODO(chirantan): Turn this on once crbug.com/464513 is fixed.
-  // DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // Only increment in-flight events if the lazy background page is active,
   // because that's the only time we'll get an ACK.

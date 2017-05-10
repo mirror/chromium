@@ -37,6 +37,7 @@
 #include "platform/graphics/ImageOrientation.h"
 #include "platform/graphics/paint/PaintCanvas.h"
 #include "platform/graphics/paint/PaintFlags.h"
+#include "platform/graphics/paint/PaintImage.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/PassRefPtr.h"
@@ -154,6 +155,8 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
   virtual sk_sp<SkImage> ImageForCurrentFrame() = 0;
   virtual PassRefPtr<Image> ImageForDefaultFrame();
 
+  PaintImage PaintImageForCurrentFrame();
+
   enum ImageClampingMode {
     kClampImageToSourceRect,
     kDoNotClampImageToSourceRect
@@ -209,6 +212,7 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
                            const FloatSize& repeat_spacing = FloatSize());
 
  private:
+  bool image_observer_disabled_;
   RefPtr<SharedBuffer> encoded_image_data_;
   // TODO(Oilpan): consider having Image on the Oilpan heap and
   // turn this into a Member<>.
@@ -216,7 +220,6 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
   // The observer (an ImageResourceContent) is an untraced member, with the
   // ImageResourceContent being responsible for clearing itself out.
   UntracedMember<ImageObserver> image_observer_;
-  bool image_observer_disabled_;
 };
 
 #define DEFINE_IMAGE_TYPE_CASTS(typeName)                          \

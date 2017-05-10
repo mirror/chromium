@@ -99,6 +99,11 @@ const base::Feature kTabStripKeyboardFocus{"TabStripKeyboardFocus",
 
 const base::Feature kTabsInCbd{"TabsInCBD", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Whether to capture page thumbnails when the page load finishes (in addition
+// to any other times this might happen).
+const base::Feature kCaptureThumbnailOnLoadFinished{
+    "CaptureThumbnailOnLoadFinished", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Whether to trigger app banner installability checks on page load.
 const base::Feature kCheckInstallabilityForBannerOnLoad{
     "CheckInstallabilityForBannerOnLoad", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -189,10 +194,6 @@ const base::Feature kMaterialDesignExtensions{
 extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate{
     "AcknowledgeNtpOverrideOnDeactivate", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
-
-// Enables or disables the Material Design version of chrome://history.
-const base::Feature kMaterialDesignHistory{"MaterialDesignHistory",
-                                           base::FEATURE_ENABLED_BY_DEFAULT};
 
 // The material redesign of the Incognito NTP.
 const base::Feature kMaterialDesignIncognitoNTP{
@@ -303,6 +304,11 @@ const base::Feature kSafeSearchUrlReporting{"SafeSearchUrlReporting",
 // lock states.
 const base::Feature kSimplifiedFullscreenUI{"ViewsSimplifiedFullscreenUI",
                                             base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enables or disables UI in MD Settings to view content settings grouped by
+// origin.
+const base::Feature kSiteDetails{"SiteDetails",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(SYZYASAN)
 // Enable the deferred free mechanism in the syzyasan module, which helps the

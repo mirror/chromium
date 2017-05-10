@@ -21,27 +21,15 @@ DesktopViewport::DesktopViewport() : desktop_to_surface_transform_() {}
 DesktopViewport::~DesktopViewport() {}
 
 void DesktopViewport::SetDesktopSize(int desktop_width, int desktop_height) {
-  bool need_resize_to_fit = !desktop_size_ready_ && surface_size_ready_;
   desktop_size_.x = desktop_width;
   desktop_size_.y = desktop_height;
-  desktop_size_ready_ = true;
-  if (need_resize_to_fit) {
-    ResizeToFit();
-  } else if (IsViewportReady()) {
-    UpdateViewport();
-  }
+  ResizeToFit();
 }
 
 void DesktopViewport::SetSurfaceSize(int surface_width, int surface_height) {
-  bool need_resize_to_fit = desktop_size_ready_ && !surface_size_ready_;
   surface_size_.x = surface_width;
   surface_size_.y = surface_height;
-  surface_size_ready_ = true;
-  if (need_resize_to_fit) {
-    ResizeToFit();
-  } else if (IsViewportReady()) {
-    UpdateViewport();
-  }
+  ResizeToFit();
 }
 
 void DesktopViewport::MoveDesktop(float dx, float dy) {
@@ -54,10 +42,14 @@ void DesktopViewport::ScaleDesktop(float px, float py, float scale) {
   UpdateViewport();
 }
 
+void DesktopViewport::MoveViewport(float dx, float dy) {
+  MoveViewportWithoutUpdate(dx, dy);
+  UpdateViewport();
+}
+
 void DesktopViewport::SetViewportCenter(float x, float y) {
   ViewMatrix::Point old_center = GetViewportCenter();
-  MoveViewportCenterWithoutUpdate(x - old_center.x, y - old_center.y);
-  UpdateViewport();
+  MoveViewport(x - old_center.x, y - old_center.y);
 }
 
 void DesktopViewport::RegisterOnTransformationChangedCallback(
@@ -69,8 +61,14 @@ void DesktopViewport::RegisterOnTransformationChangedCallback(
   }
 }
 
+const ViewMatrix& DesktopViewport::GetTransformation() const {
+  return desktop_to_surface_transform_;
+}
+
 void DesktopViewport::ResizeToFit() {
-  DCHECK(IsViewportReady());
+  if (!IsViewportReady()) {
+    return;
+  }
 
   // <---Desktop Width---->
   // +==========+---------+
@@ -93,11 +91,13 @@ void DesktopViewport::ResizeToFit() {
   float scale = std::max(surface_size_.x / desktop_size_.x,
                          surface_size_.y / desktop_size_.y);
   desktop_to_surface_transform_.SetScale(scale);
+  desktop_to_surface_transform_.SetOffset({0.f, 0.f});
   UpdateViewport();
 }
 
 bool DesktopViewport::IsViewportReady() const {
-  return desktop_size_ready_ && surface_size_ready_;
+  return desktop_size_.x != 0 && desktop_size_.y != 0 && surface_size_.x != 0 &&
+         surface_size_.y != 0;
 }
 
 void DesktopViewport::UpdateViewport() {
@@ -164,8 +164,8 @@ void DesktopViewport::UpdateViewport() {
   ViewMatrix::Point old_center = GetViewportCenter();
   ViewMatrix::Point new_center =
       ConstrainPointToBounds(GetViewportCenterBounds(), old_center);
-  MoveViewportCenterWithoutUpdate(new_center.x - old_center.x,
-                                  new_center.y - old_center.y);
+  MoveViewportWithoutUpdate(new_center.x - old_center.x,
+                            new_center.y - old_center.y);
 
   if (on_transformation_changed_) {
     on_transformation_changed_.Run(desktop_to_surface_transform_);
@@ -209,7 +209,7 @@ ViewMatrix::Point DesktopViewport::GetViewportCenter() const {
       {surface_size_.x / 2.f, surface_size_.y / 2.f});
 }
 
-void DesktopViewport::MoveViewportCenterWithoutUpdate(float dx, float dy) {
+void DesktopViewport::MoveViewportWithoutUpdate(float dx, float dy) {
   // <dx, dy> is defined on desktop's reference frame. Translation must be
   // flipped and scaled.
   desktop_to_surface_transform_.PostTranslate(

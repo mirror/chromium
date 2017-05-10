@@ -10,12 +10,12 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "bindings/core/v8/V8IteratorResultValue.h"
-#include "bindings/core/v8/V8ThrowException.h"
 #include "core/dom/Document.h"
 #include "core/streams/ReadableStreamController.h"
 #include "core/streams/UnderlyingSourceBase.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8BindingMacros.h"
+#include "platform/bindings/V8ThrowException.h"
 #include "platform/heap/Handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "v8/include/v8.h"
@@ -48,7 +48,7 @@ class Iteration final : public GarbageCollectedFinalized<Iteration> {
   Iteration() : is_set_(false), is_done_(false), is_valid_(true) {}
 
   void Set(ScriptValue v) {
-    ASSERT(!v.IsEmpty());
+    DCHECK(!v.IsEmpty());
     is_set_ = true;
     v8::TryCatch block(v.GetScriptState()->GetIsolate());
     v8::Local<v8::Value> value;

@@ -100,7 +100,7 @@ class ScopedComPtr {
   }
 
   template <class Query>
-  HRESULT QueryInterface(Query** p) {
+  HRESULT CopyTo(Query** p) {
     DCHECK(p);
     DCHECK(ptr_);
     // IUnknown already has a template version of QueryInterface
@@ -110,7 +110,7 @@ class ScopedComPtr {
   }
 
   // QI for times when the IID is not associated with the type.
-  HRESULT QueryInterface(const IID& iid, void** obj) {
+  HRESULT CopyTo(const IID& iid, void** obj) {
     DCHECK(obj);
     DCHECK(ptr_);
     return ptr_->QueryInterface(iid, obj);
@@ -131,23 +131,6 @@ class ScopedComPtr {
     HRESULT hr = ::CoCreateInstance(clsid, outer, context, *interface_id,
                                     reinterpret_cast<void**>(&ptr_));
     return hr;
-  }
-
-  // Checks if the identity of |other| and this object is the same.
-  bool IsSameObject(IUnknown* other) {
-    if (!other && !ptr_)
-      return true;
-
-    if (!other || !ptr_)
-      return false;
-
-    ScopedComPtr<IUnknown> my_identity;
-    QueryInterface(IID_PPV_ARGS(my_identity.Receive()));
-
-    ScopedComPtr<IUnknown> other_identity;
-    other->QueryInterface(IID_PPV_ARGS(other_identity.Receive()));
-
-    return my_identity == other_identity;
   }
 
   // Provides direct access to the interface.

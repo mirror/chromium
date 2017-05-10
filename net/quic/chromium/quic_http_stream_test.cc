@@ -103,12 +103,17 @@ class TestQuicConnection : public QuicConnection {
 class AutoClosingStream : public QuicHttpStream {
  public:
   explicit AutoClosingStream(
-      const base::WeakPtr<QuicChromiumClientSession>& session,
+      std::unique_ptr<QuicChromiumClientSession::Handle> session,
       HttpServerProperties* http_server_properties)
-      : QuicHttpStream(session, http_server_properties) {}
+      : QuicHttpStream(std::move(session), http_server_properties) {}
 
-  void OnHeadersAvailable(const SpdyHeaderBlock& headers,
-                          size_t frame_len) override {
+  void OnInitialHeadersAvailable(const SpdyHeaderBlock& headers,
+                                 size_t frame_len) override {
+    Close(false);
+  }
+
+  void OnTrailingHeadersAvailable(const SpdyHeaderBlock& headers,
+                                  size_t frame_len) override {
     Close(false);
   }
 
@@ -173,9 +178,9 @@ class DeleteStreamCallback : public TestCompletionCallbackBase {
 
 class QuicHttpStreamPeer {
  public:
-  static QuicChromiumClientStream* GetQuicChromiumClientStream(
+  static QuicChromiumClientStream::Handle* GetQuicChromiumClientStream(
       QuicHttpStream* stream) {
-    return stream->stream_;
+    return stream->stream_.get();
   }
 };
 
@@ -322,17 +327,18 @@ class QuicHttpStreamTest : public ::testing::TestWithParam<QuicVersion> {
         /*socket_performance_watcher=*/nullptr, net_log_.bound().net_log()));
     session_->Initialize();
     TestCompletionCallback callback;
+
     session_->CryptoConnect(callback.callback());
     stream_.reset(use_closing_stream_
-                      ? new AutoClosingStream(session_->GetWeakPtr(),
+                      ? new AutoClosingStream(session_->CreateHandle(),
                                               &http_server_properties_)
-                      : new QuicHttpStream(session_->GetWeakPtr(),
+                      : new QuicHttpStream(session_->CreateHandle(),
                                            &http_server_properties_));
 
     promised_stream_.reset(use_closing_stream_
-                               ? new AutoClosingStream(session_->GetWeakPtr(),
+                               ? new AutoClosingStream(session_->CreateHandle(),
                                                        &http_server_properties_)
-                               : new QuicHttpStream(session_->GetWeakPtr(),
+                               : new QuicHttpStream(session_->CreateHandle(),
                                                     &http_server_properties_));
 
     push_promise_[":path"] = "/bar";
@@ -530,7 +536,7 @@ class QuicHttpStreamTest : public ::testing::TestWithParam<QuicVersion> {
 
   void ReceivePromise(QuicStreamId id) {
     auto headers = AsHeaderList(push_promise_);
-    QuicChromiumClientStream* stream =
+    QuicChromiumClientStream::Handle* stream =
         QuicHttpStreamPeer::GetQuicChromiumClientStream(stream_.get());
     stream->OnPromiseHeaderList(id, headers.uncompressed_header_bytes(),
                                 headers);
@@ -625,7 +631,7 @@ TEST_P(QuicHttpStreamTest, DisableConnectionMigrationForStream) {
   EXPECT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  QuicChromiumClientStream* client_stream =
+  QuicChromiumClientStream::Handle* client_stream =
       QuicHttpStreamPeer::GetQuicChromiumClientStream(stream_.get());
   EXPECT_FALSE(client_stream->can_migrate());
 }
@@ -721,7 +727,7 @@ TEST_P(QuicHttpStreamTest, LoadTimingTwoRequests) {
             stream_->SendRequest(headers_, &response_, callback_.callback()));
 
   // Start a second request.
-  QuicHttpStream stream2(session_->GetWeakPtr(), &http_server_properties_);
+  QuicHttpStream stream2(session_->CreateHandle(), &http_server_properties_);
   TestCompletionCallback callback2;
   EXPECT_EQ(OK,
             stream2.InitializeStream(&request_, DEFAULT_PRIORITY,
@@ -1460,7 +1466,7 @@ TEST_P(QuicHttpStreamTest, Priority) {
                                           callback_.callback()));
 
   // Check that priority is highest.
-  QuicChromiumClientStream* reliable_stream =
+  QuicChromiumClientStream::Handle* reliable_stream =
       QuicHttpStreamPeer::GetQuicChromiumClientStream(stream_.get());
   DCHECK(reliable_stream);
   DCHECK_EQ(kV3HighestPriority, reliable_stream->priority());
@@ -1511,7 +1517,7 @@ TEST_P(QuicHttpStreamTest, CheckPriorityWithNoDelegate) {
                                           callback_.callback()));
 
   // Check that priority is highest.
-  QuicChromiumClientStream* reliable_stream =
+  QuicChromiumClientStream::Handle* reliable_stream =
       QuicHttpStreamPeer::GetQuicChromiumClientStream(stream_.get());
   DCHECK(reliable_stream);
   QuicChromiumClientStream::Delegate* delegate = reliable_stream->GetDelegate();
@@ -1520,9 +1526,8 @@ TEST_P(QuicHttpStreamTest, CheckPriorityWithNoDelegate) {
 
   // Set Delegate to nullptr and make sure Priority returns highest
   // priority.
-  reliable_stream->SetDelegate(nullptr);
+  reliable_stream->ClearDelegate();
   DCHECK_EQ(kV3HighestPriority, reliable_stream->priority());
-  reliable_stream->SetDelegate(delegate);
 
   EXPECT_EQ(0, stream_->GetTotalSentBytes());
   EXPECT_EQ(0, stream_->GetTotalReceivedBytes());

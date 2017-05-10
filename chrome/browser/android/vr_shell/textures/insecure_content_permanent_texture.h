@@ -17,7 +17,7 @@ class InsecureContentPermanentTexture : public UiTexture {
   gfx::SizeF GetDrawnSize() const override;
 
  private:
-  void Draw(gfx::Canvas* canvas, const gfx::Size& texture_size) override;
+  void Draw(SkCanvas* canvas, const gfx::Size& texture_size) override;
 
   gfx::SizeF size_;
 };

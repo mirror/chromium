@@ -39,7 +39,6 @@
 #include "bindings/core/v8/V8MessagePort.h"
 #include "bindings/core/v8/V8Node.h"
 #include "bindings/core/v8/V8NodeFilterCondition.h"
-#include "bindings/core/v8/V8PrivateProperty.h"
 #include "bindings/core/v8/V8ShadowRoot.h"
 #include "bindings/core/v8/V8TestCallbackInterface.h"
 #include "bindings/core/v8/V8TestDictionary.h"
@@ -75,6 +74,7 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ObjectConstructor.h"
+#include "platform/bindings/V8PrivateProperty.h"
 #include "platform/wtf/GetPtr.h"
 #include "platform/wtf/RefPtr.h"
 
@@ -8303,8 +8303,7 @@ static void postMessageImpl(const char* interfaceName, TestObject* instance, con
     // Clear references to array buffers and image bitmaps from transferables
     // so that the serializer can consider the array buffers as
     // non-transferable and serialize them into the message.
-    ArrayBufferArray transferableArrayBuffers = transferables.array_buffers;
-    transferables.array_buffers.clear();
+    ArrayBufferArray transferableArrayBuffers = SerializedScriptValue::ExtractNonSharedArrayBuffers(transferables);
     ImageBitmapArray transferableImageBitmaps = transferables.image_bitmaps;
     transferables.image_bitmaps.clear();
     SerializedScriptValue::SerializeOptions options;

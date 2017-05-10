@@ -78,26 +78,57 @@ TEST_F(TabManagerDelegateTest, CandidatesSorted) {
 
   candidates = TabManagerDelegate::GetSortedCandidates(
           tab_list, arc_processes);
-  EXPECT_EQ(9U, candidates.size());
+  ASSERT_EQ(9U, candidates.size());
 
   // focused app.
+  ASSERT_TRUE(candidates[0].app());
   EXPECT_EQ("focused", candidates[0].app()->process_name());
   // visible app 1, last_activity_time larger than visible app 2.
+  ASSERT_TRUE(candidates[1].app());
   EXPECT_EQ("visible1", candidates[1].app()->process_name());
   // visible app 2, last_activity_time less than visible app 1.
+  ASSERT_TRUE(candidates[2].app());
   EXPECT_EQ("visible2", candidates[2].app()->process_name());
   // pinned and media.
+  ASSERT_TRUE(candidates[3].tab());
   EXPECT_EQ(300, candidates[3].tab()->tab_contents_id);
   // media.
+  ASSERT_TRUE(candidates[4].tab());
   EXPECT_EQ(400, candidates[4].tab()->tab_contents_id);
   // pinned.
+  ASSERT_TRUE(candidates[5].tab());
   EXPECT_EQ(100, candidates[5].tab()->tab_contents_id);
   // chrome app.
+  ASSERT_TRUE(candidates[6].tab());
   EXPECT_EQ(500, candidates[6].tab()->tab_contents_id);
   // internal page.
+  ASSERT_TRUE(candidates[7].tab());
   EXPECT_EQ(200, candidates[7].tab()->tab_contents_id);
   // background service.
+  ASSERT_TRUE(candidates[8].app());
   EXPECT_EQ("service", candidates[8].app()->process_name());
+}
+
+// Occasionally, Chrome sees both FOCUSED_TAB and FOCUSED_APP at the same time.
+// Test that Chrome treats the former as a more important process.
+TEST_F(TabManagerDelegateTest, CandidatesSortedWithFocusedAppAndTab) {
+  std::vector<arc::ArcProcess> arc_processes;
+  arc_processes.emplace_back(1, 10, "focused", arc::mojom::ProcessState::TOP,
+                             kIsFocused, 100);
+  TabStats tab1;
+  tab1.tab_contents_id = 100;
+  tab1.is_pinned = true;
+  tab1.is_selected = true;
+  const TabStatsList tab_list = {tab1};
+
+  const std::vector<TabManagerDelegate::Candidate> candidates =
+      TabManagerDelegate::GetSortedCandidates(tab_list, arc_processes);
+  ASSERT_EQ(2U, candidates.size());
+  // FOCUSED_TAB should be the first one.
+  ASSERT_TRUE(candidates[0].tab());
+  EXPECT_EQ(100, candidates[0].tab()->tab_contents_id);
+  ASSERT_TRUE(candidates[1].app());
+  EXPECT_EQ("focused", candidates[1].app()->process_name());
 }
 
 class MockTabManagerDelegate : public TabManagerDelegate {

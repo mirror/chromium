@@ -53,7 +53,6 @@
 #include "core/style/StyleReflection.h"
 #include "core/style/StyleSelfAlignmentData.h"
 #include "core/style/StyleTransformData.h"
-#include "core/style/StyleVisualData.h"
 #include "core/style/StyleWillChangeData.h"
 #include "core/style/TransformOrigin.h"
 #include "platform/Length.h"
@@ -184,7 +183,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
  protected:
   // non-inherited attributes
   DataRef<StyleBoxData> box_data_;
-  DataRef<StyleVisualData> visual_data_;
   DataRef<StyleRareNonInheritedData> rare_non_inherited_data_;
 
   // inherited attributes
@@ -262,6 +260,12 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   const PseudoStyleCache* CachedPseudoStyles() const {
     return cached_pseudo_styles_.get();
+  }
+
+  bool BorderWidthEquals(float border_width_first,
+                         float border_width_second) const {
+    return WidthToFixedPoint(border_width_first) ==
+           WidthToFixedPoint(border_width_second);
   }
 
   /**
@@ -470,36 +474,53 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // Border width properties.
   static float InitialBorderWidth() { return 3; }
 
+  // TODO(nainar): Move all fixed point logic to a separate class.
   // border-top-width
   float BorderTopWidth() const {
-    return surround_data_->border_.BorderTopWidth();
+    if (surround_data_->border_.top_.Style() == kBorderStyleNone ||
+        surround_data_->border_.top_.Style() == kBorderStyleHidden)
+      return 0;
+    return static_cast<float>(BorderTopWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderTopWidth(float v) {
-    SET_BORDER_WIDTH(surround_data_, border_.top_, v);
+    surround_data_.Access()->border_top_width_ = WidthToFixedPoint(v);
   }
 
   // border-bottom-width
   float BorderBottomWidth() const {
-    return surround_data_->border_.BorderBottomWidth();
+    if (surround_data_->border_.bottom_.Style() == kBorderStyleNone ||
+        surround_data_->border_.bottom_.Style() == kBorderStyleHidden)
+      return 0;
+    return static_cast<float>(BorderBottomWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderBottomWidth(float v) {
-    SET_BORDER_WIDTH(surround_data_, border_.bottom_, v);
+    surround_data_.Access()->border_bottom_width_ = WidthToFixedPoint(v);
   }
 
   // border-left-width
   float BorderLeftWidth() const {
-    return surround_data_->border_.BorderLeftWidth();
+    if (surround_data_->border_.left_.Style() == kBorderStyleNone ||
+        surround_data_->border_.left_.Style() == kBorderStyleHidden)
+      return 0;
+    return static_cast<float>(BorderLeftWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderLeftWidth(float v) {
-    SET_BORDER_WIDTH(surround_data_, border_.left_, v);
+    surround_data_.Access()->border_left_width_ = WidthToFixedPoint(v);
   }
 
   // border-right-width
   float BorderRightWidth() const {
-    return surround_data_->border_.BorderRightWidth();
+    if (surround_data_->border_.right_.Style() == kBorderStyleNone ||
+        surround_data_->border_.right_.Style() == kBorderStyleHidden)
+      return 0;
+    return static_cast<float>(BorderRightWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderRightWidth(float v) {
-    SET_BORDER_WIDTH(surround_data_, border_.right_, v);
+    surround_data_.Access()->border_right_width_ = WidthToFixedPoint(v);
   }
 
   // Border style properties.
@@ -576,15 +597,15 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // clip
   static LengthBox InitialClip() { return LengthBox(); }
-  const LengthBox& Clip() const { return visual_data_->clip; }
+  const LengthBox& Clip() const { return visual_data_->clip_; }
   void SetClip(const LengthBox& box) {
-    SET_VAR(visual_data_, has_auto_clip, false);
-    SET_VAR(visual_data_, clip, box);
+    SET_VAR(visual_data_, has_auto_clip_, false);
+    SET_VAR(visual_data_, clip_, box);
   }
-  bool HasAutoClip() const { return visual_data_->has_auto_clip; }
+  bool HasAutoClip() const { return visual_data_->has_auto_clip_; }
   void SetHasAutoClip() {
-    SET_VAR(visual_data_, has_auto_clip, true);
-    SET_VAR(visual_data_, clip, ComputedStyle::InitialClip());
+    SET_VAR(visual_data_, has_auto_clip_, true);
+    SET_VAR(visual_data_, clip_, ComputedStyle::InitialClip());
   }
 
   // Column properties.
@@ -1454,10 +1475,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // text-decoration-line
   static TextDecoration InitialTextDecoration() { return kTextDecorationNone; }
   TextDecoration GetTextDecoration() const {
-    return static_cast<TextDecoration>(visual_data_->text_decoration);
+    return static_cast<TextDecoration>(visual_data_->text_decoration_);
   }
   void SetTextDecoration(TextDecoration v) {
-    SET_VAR(visual_data_, text_decoration, v);
+    SET_VAR(visual_data_, text_decoration_, v);
   }
 
   // text-decoration-color
@@ -1997,6 +2018,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   const AtomicString& Locale() const {
     return LayoutLocale::LocaleString(GetFontDescription().Locale());
   }
+  AtomicString LocaleForLineBreakIterator() const;
 
   // FIXME: Remove letter-spacing/word-spacing and replace them with respective
   // FontBuilder calls.  letter-spacing
@@ -2822,20 +2844,28 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   void SetBorderImageSlicesFill(bool);
   const BorderData& Border() const { return surround_data_->border_; }
-  const BorderValue& BorderLeft() const {
-    return surround_data_->border_.Left();
+  const BorderValue BorderLeft() const {
+    return BorderValue(surround_data_->border_.Left(), BorderLeftWidth());
   }
-  const BorderValue& BorderRight() const {
-    return surround_data_->border_.Right();
+  const BorderValue BorderRight() const {
+    return BorderValue(surround_data_->border_.Right(), BorderRightWidth());
   }
-  const BorderValue& BorderTop() const { return surround_data_->border_.Top(); }
-  const BorderValue& BorderBottom() const {
-    return surround_data_->border_.Bottom();
+  const BorderValue BorderTop() const {
+    return BorderValue(surround_data_->border_.Top(), BorderTopWidth());
   }
-  const BorderValue& BorderBefore() const;
-  const BorderValue& BorderAfter() const;
-  const BorderValue& BorderStart() const;
-  const BorderValue& BorderEnd() const;
+  const BorderValue BorderBottom() const {
+    return BorderValue(surround_data_->border_.Bottom(), BorderBottomWidth());
+  }
+  bool BorderSizeEquals(const ComputedStyle& o) const {
+    return BorderWidthEquals(BorderLeftWidth(), o.BorderLeftWidth()) &&
+           BorderWidthEquals(BorderTopWidth(), o.BorderTopWidth()) &&
+           BorderWidthEquals(BorderRightWidth(), o.BorderRightWidth()) &&
+           BorderWidthEquals(BorderBottomWidth(), o.BorderBottomWidth());
+  }
+  const BorderValue BorderBefore() const;
+  const BorderValue BorderAfter() const;
+  const BorderValue BorderStart() const;
+  const BorderValue BorderEnd() const;
   float BorderAfterWidth() const;
   float BorderBeforeWidth() const;
   float BorderEndWidth() const;
@@ -2844,7 +2874,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   float BorderUnderWidth() const;
 
   bool HasBorderFill() const { return Border().HasBorderFill(); }
-  bool HasBorder() const { return Border().HasBorder(); }
+  bool HasBorder() const {
+    return Border().HasBorder() || BorderLeftWidth() || BorderRightWidth() ||
+           BorderTopWidth() || BorderBottomWidth();
+  }
   bool HasBorderDecoration() const { return HasBorder() || HasBorderFill(); }
   bool HasBorderRadius() const {
     if (!BorderTopLeftRadius().Width().IsZero())
@@ -2880,16 +2913,20 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     ResetBorderBottomRightRadius();
   }
   void ResetBorderTop() {
-    SET_VAR(surround_data_, border_.top_, BorderValue());
+    SET_VAR(surround_data_, border_.top_, BorderColorAndStyle());
+    SetBorderTopWidth(3);
   }
   void ResetBorderRight() {
-    SET_VAR(surround_data_, border_.right_, BorderValue());
+    SET_VAR(surround_data_, border_.right_, BorderColorAndStyle());
+    SetBorderRightWidth(3);
   }
   void ResetBorderBottom() {
-    SET_VAR(surround_data_, border_.bottom_, BorderValue());
+    SET_VAR(surround_data_, border_.bottom_, BorderColorAndStyle());
+    SetBorderBottomWidth(3);
   }
   void ResetBorderLeft() {
-    SET_VAR(surround_data_, border_.left_, BorderValue());
+    SET_VAR(surround_data_, border_.left_, BorderColorAndStyle());
+    SetBorderLeftWidth(3);
   }
   void ResetBorderImage() {
     SET_VAR(surround_data_, border_.image_, NinePieceImage());
@@ -2971,10 +3008,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
 
   // Clip utility functions.
-  const Length& ClipLeft() const { return visual_data_->clip.Left(); }
-  const Length& ClipRight() const { return visual_data_->clip.Right(); }
-  const Length& ClipTop() const { return visual_data_->clip.Top(); }
-  const Length& ClipBottom() const { return visual_data_->clip.Bottom(); }
+  const Length& ClipLeft() const { return visual_data_->clip_.Left(); }
+  const Length& ClipRight() const { return visual_data_->clip_.Right(); }
+  const Length& ClipTop() const { return visual_data_->clip_.Top(); }
+  const Length& ClipBottom() const { return visual_data_->clip_.Bottom(); }
 
   // Offset utility functions.
   // Accessors for positioned object edges that take into account writing mode.

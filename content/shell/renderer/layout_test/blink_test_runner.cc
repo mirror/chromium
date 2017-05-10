@@ -458,10 +458,7 @@ void BlinkTestRunner::ShowDevTools(const std::string& settings,
 
 void BlinkTestRunner::CloseDevTools() {
   Send(new ShellViewHostMsg_CloseDevTools(routing_id()));
-  WebDevToolsAgent* agent =
-      render_view()->GetMainRenderFrame()->GetWebFrame()->DevToolsAgent();
-  if (agent)
-    agent->Detach();
+  render_view()->GetMainRenderFrame()->DetachDevToolsForTest();
 }
 
 void BlinkTestRunner::EvaluateInWebInspector(int call_id,
@@ -748,13 +745,12 @@ void BlinkTestRunner::ResolveBeforeInstallPromptPromise(
 }
 
 blink::WebPlugin* BlinkTestRunner::CreatePluginPlaceholder(
-    blink::WebLocalFrame* frame, const blink::WebPluginParams& params) {
+    const blink::WebPluginParams& params) {
   if (params.mime_type != "application/x-plugin-placeholder-test")
     return nullptr;
 
-  plugins::PluginPlaceholder* placeholder =
-      new plugins::PluginPlaceholder(render_view()->GetMainRenderFrame(), frame,
-                                     params, "<div>Test content</div>");
+  plugins::PluginPlaceholder* placeholder = new plugins::PluginPlaceholder(
+      render_view()->GetMainRenderFrame(), params, "<div>Test content</div>");
   return placeholder->plugin();
 }
 

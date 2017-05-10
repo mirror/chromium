@@ -123,10 +123,14 @@ bool HardwareSupportsOverlays() {
 
   base::win::ScopedComPtr<ID3D11Device> d3d11_device =
       gl::QueryD3D11DeviceObjectFromANGLE();
-  DCHECK(d3d11_device);
+  if (!d3d11_device) {
+    DLOG(ERROR) << "Failing to create overlay swapchain because couldn't "
+                   "retrieve D3D11 device from ANGLE.";
+    return false;
+  }
 
   base::win::ScopedComPtr<IDXGIDevice> dxgi_device;
-  d3d11_device.QueryInterface(dxgi_device.Receive());
+  d3d11_device.CopyTo(dxgi_device.Receive());
   base::win::ScopedComPtr<IDXGIAdapter> dxgi_adapter;
   dxgi_device->GetAdapter(dxgi_adapter.Receive());
 
@@ -136,7 +140,7 @@ bool HardwareSupportsOverlays() {
     if (FAILED(dxgi_adapter->EnumOutputs(i++, output.Receive())))
       break;
     base::win::ScopedComPtr<IDXGIOutput3> output3;
-    if (FAILED(output.QueryInterface(output3.Receive())))
+    if (FAILED(output.CopyTo(output3.Receive())))
       continue;
 
     UINT flags = 0;
@@ -144,11 +148,17 @@ bool HardwareSupportsOverlays() {
                                             d3d11_device.Get(), &flags)))
       continue;
 
-    // Direct-only support might be ok in some circumstances, but since the
-    // overlay processor isn't set up to try to distinguish, only try to use
-    // overlays when scaling's enabled.
-    if (flags & DXGI_OVERLAY_SUPPORT_FLAG_SCALING)
+    UMA_HISTOGRAM_SPARSE_SLOWLY("GPU.DirectComposition.OverlaySupportFlags",
+                                flags);
+
+    // Some new Intel drivers only claim to support unscaled overlays, but
+    // scaled overlays still work. Even when scaled overlays aren't actually
+    // supported, presentation using the overlay path should be relatively
+    // efficient.
+    if (flags & (DXGI_OVERLAY_SUPPORT_FLAG_SCALING |
+                 DXGI_OVERLAY_SUPPORT_FLAG_DIRECT)) {
       return true;
+    }
   }
   return false;
 }
@@ -303,13 +313,13 @@ class DCLayerTree::SwapChainPresenter {
 };
 
 bool DCLayerTree::Initialize(HWND window) {
-  d3d11_device_.QueryInterface(video_device_.Receive());
+  d3d11_device_.CopyTo(video_device_.Receive());
   base::win::ScopedComPtr<ID3D11DeviceContext> context;
   d3d11_device_->GetImmediateContext(context.Receive());
-  context.QueryInterface(video_context_.Receive());
+  context.CopyTo(video_context_.Receive());
 
   base::win::ScopedComPtr<IDCompositionDesktopDevice> desktop_device;
-  dcomp_device_.QueryInterface(desktop_device.Receive());
+  dcomp_device_.CopyTo(desktop_device.Receive());
 
   HRESULT hr = desktop_device->CreateTargetForHwnd(window, TRUE,
                                                    dcomp_target_.Receive());
@@ -365,10 +375,10 @@ DCLayerTree::SwapChainPresenter::SwapChainPresenter(
     DCLayerTree* surface,
     base::win::ScopedComPtr<ID3D11Device> d3d11_device)
     : surface_(surface), d3d11_device_(d3d11_device) {
-  d3d11_device_.QueryInterface(video_device_.Receive());
+  d3d11_device_.CopyTo(video_device_.Receive());
   base::win::ScopedComPtr<ID3D11DeviceContext> context;
   d3d11_device_->GetImmediateContext(context.Receive());
-  context.QueryInterface(video_context_.Receive());
+  context.CopyTo(video_context_.Receive());
   HMODULE dcomp = ::GetModuleHandleA("dcomp.dll");
   CHECK(dcomp);
   create_surface_handle_function_ =
@@ -547,7 +557,7 @@ void DCLayerTree::SwapChainPresenter::PresentToSwapChain(
   // TODO(jbauman): Use correct colorspace.
   gfx::ColorSpace src_color_space = gfx::ColorSpace::CreateREC709();
   base::win::ScopedComPtr<ID3D11VideoContext1> context1;
-  if (SUCCEEDED(video_context_.QueryInterface(context1.Receive()))) {
+  if (SUCCEEDED(video_context_.CopyTo(context1.Receive()))) {
     context1->VideoProcessorSetStreamColorSpace1(
         video_processor_.Get(), 0,
         gfx::ColorSpaceWin::GetDXGIColorSpace(src_color_space));
@@ -568,7 +578,7 @@ void DCLayerTree::SwapChainPresenter::PresentToSwapChain(
   }
 
   base::win::ScopedComPtr<IDXGISwapChain3> swap_chain3;
-  if (SUCCEEDED(swap_chain_.QueryInterface(swap_chain3.Receive()))) {
+  if (SUCCEEDED(swap_chain_.CopyTo(swap_chain3.Receive()))) {
     DXGI_COLOR_SPACE_TYPE color_space =
         gfx::ColorSpaceWin::GetDXGIColorSpace(output_color_space);
     HRESULT hr = swap_chain3->SetColorSpace1(color_space);
@@ -649,7 +659,7 @@ void DCLayerTree::SwapChainPresenter::PresentToSwapChain(
   frames_since_color_space_change_++;
 
   base::win::ScopedComPtr<IDXGISwapChainMedia> swap_chain_media;
-  if (SUCCEEDED(swap_chain_.QueryInterface(swap_chain_media.Receive()))) {
+  if (SUCCEEDED(swap_chain_.CopyTo(swap_chain_media.Receive()))) {
     DXGI_FRAME_STATISTICS_MEDIA stats = {};
     if (SUCCEEDED(swap_chain_media->GetFrameStatisticsMedia(&stats))) {
       UMA_HISTOGRAM_SPARSE_SLOWLY("GPU.DirectComposition.CompositionMode",
@@ -682,14 +692,14 @@ void DCLayerTree::SwapChainPresenter::ReallocateSwapChain(bool yuy2) {
   DCHECK(!swap_chain_);
 
   base::win::ScopedComPtr<IDXGIDevice> dxgi_device;
-  d3d11_device_.QueryInterface(dxgi_device.Receive());
+  d3d11_device_.CopyTo(dxgi_device.Receive());
   base::win::ScopedComPtr<IDXGIAdapter> dxgi_adapter;
   dxgi_device->GetAdapter(dxgi_adapter.Receive());
   base::win::ScopedComPtr<IDXGIFactory2> dxgi_factory;
   dxgi_adapter->GetParent(IID_PPV_ARGS(dxgi_factory.Receive()));
 
   base::win::ScopedComPtr<IDXGIFactoryMedia> media_factory;
-  dxgi_factory.QueryInterface(media_factory.Receive());
+  dxgi_factory.CopyTo(media_factory.Receive());
   DXGI_SWAP_CHAIN_DESC1 desc = {};
   desc.Width = swap_chain_size_.width();
   desc.Height = swap_chain_size_.height();
@@ -1021,7 +1031,7 @@ void DirectCompositionSurfaceWin::InitializeSurface() {
     DXGI_ALPHA_MODE alpha_mode =
         has_alpha_ ? DXGI_ALPHA_MODE_PREMULTIPLIED : DXGI_ALPHA_MODE_IGNORE;
     base::win::ScopedComPtr<IDXGIDevice> dxgi_device;
-    d3d11_device_.QueryInterface(dxgi_device.Receive());
+    d3d11_device_.CopyTo(dxgi_device.Receive());
     base::win::ScopedComPtr<IDXGIAdapter> dxgi_adapter;
     dxgi_device->GetAdapter(dxgi_adapter.Receive());
     base::win::ScopedComPtr<IDXGIFactory2> dxgi_factory;
@@ -1068,7 +1078,7 @@ void DirectCompositionSurfaceWin::ReleaseDrawTexture(bool will_discard) {
         // committing the DirectComposition tree, or else the swapchain
         // may flicker black when it's first presented.
         base::win::ScopedComPtr<IDXGIDevice2> dxgi_device2;
-        HRESULT hr = d3d11_device_.QueryInterface(dxgi_device2.Receive());
+        HRESULT hr = d3d11_device_.CopyTo(dxgi_device2.Receive());
         DCHECK(SUCCEEDED(hr));
         base::WaitableEvent event(
             base::WaitableEvent::ResetPolicy::AUTOMATIC,

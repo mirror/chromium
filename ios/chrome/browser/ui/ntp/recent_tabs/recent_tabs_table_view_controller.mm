@@ -808,6 +808,8 @@ enum CellType {
     case CELL_OTHER_DEVICES_SIGNED_OUT:
       subview = [[SignedOutView alloc] initWithFrame:CGRectZero];
       [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Impression_FromRecentTabs"));
       break;
     case CELL_OTHER_DEVICES_SIGNED_IN_SYNC_OFF:
       subview = [[SignedInSyncOffView alloc] initWithFrame:CGRectZero
@@ -826,7 +828,9 @@ enum CellType {
       contentViewTopMargin = kSigninPromoViewTopMargin;
       SigninPromoView* signinPromoView =
           [[SigninPromoView alloc] initWithFrame:CGRectZero];
-      signinPromoView.sendChromeCommand = YES;
+      [signinPromoView
+          enableChromeCommandWithAccessPoint:signin_metrics::AccessPoint::
+                                                 ACCESS_POINT_RECENT_TABS];
       signinPromoView.textLabel.text =
           l10n_util::GetNSString(IDS_IOS_SIGNIN_PROMO_RECENT_TABS);
       signinPromoView.textLabel.preferredMaxLayoutWidth =
@@ -837,6 +841,8 @@ enum CellType {
       [configurator configureSigninPromoView:signinPromoView];
       subview = signinPromoView;
       [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Impression_FromRecentTabs"));
       break;
     }
     case CELL_OTHER_DEVICES_SYNC_IN_PROGRESS:

@@ -102,7 +102,8 @@ const char kVideoOnlyWebM[] = "video/webm; codecs=\"vp8\"";
 const char kADTS[] = "audio/aac";
 const char kMP4[] = "video/mp4; codecs=\"avc1.4D4041,mp4a.40.2\"";
 const char kMP4VideoAVC3[] = "video/mp4; codecs=\"avc3.64001f\"";
-const char kMP4VideoVP9[] = "video/mp4; codecs=\"vp09.00.10.08.01.05.01\"";
+const char kMP4VideoVP9[] =
+    "video/mp4; codecs=\"vp09.00.10.08.01.02.02.02.00\"";
 const char kMP4VideoHEVC1[] = "video/mp4; codecs=\"hvc1.1.6.L93.B0\"";
 const char kMP4VideoHEVC2[] = "video/mp4; codecs=\"hev1.1.6.L93.B0\"";
 const char kMP4Video[] = "video/mp4; codecs=\"avc1.4D4041\"";
@@ -227,14 +228,13 @@ class KeyProvidingApp : public FakeEncryptedMedia::AppBase {
   }
 
   void OnSessionMessage(const std::string& session_id,
-                        ContentDecryptionModule::MessageType message_type,
+                        CdmMessageType message_type,
                         const std::vector<uint8_t>& message,
                         AesDecryptor* decryptor) override {
     EXPECT_FALSE(session_id.empty());
     EXPECT_FALSE(message.empty());
     EXPECT_EQ(current_session_id_, session_id);
-    EXPECT_EQ(ContentDecryptionModule::MessageType::LICENSE_REQUEST,
-              message_type);
+    EXPECT_EQ(CdmMessageType::LICENSE_REQUEST, message_type);
 
     // Extract the key ID from |message|. For Clear Key this is a JSON object
     // containing a set of "kids". There should only be 1 key ID in |message|.
@@ -337,7 +337,7 @@ class RotatingKeyProvidingApp : public KeyProvidingApp {
 class NoResponseApp : public FakeEncryptedMedia::AppBase {
  public:
   void OnSessionMessage(const std::string& session_id,
-                        ContentDecryptionModule::MessageType message_type,
+                        CdmMessageType message_type,
                         const std::vector<uint8_t>& message,
                         AesDecryptor* decryptor) override {
     EXPECT_FALSE(session_id.empty());

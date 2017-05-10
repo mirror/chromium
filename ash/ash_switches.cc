@@ -58,6 +58,10 @@ const char kAshEnableTouchView[] = "enable-touchview";
 // Enables mirrored screen.
 const char kAshEnableMirroredScreen[] = "ash-enable-mirrored-screen";
 
+// Enables display scale tray settings. This uses force-device-scale-factor flag
+// to modify the dsf of the device to any non discrete value.
+const char kAshEnableScaleSettingsTray[] = "ash-enable-scale-settings-tray";
+
 // Disables a smoother animation for screen rotation.
 const char kAshDisableSmoothScreenRotation[] =
     "ash-disable-smooth-screen-rotation";
@@ -106,6 +110,10 @@ const char kAshTouchHud[] = "ash-touch-hud";
 // lock the screen or shutdown the system immediately in response to a press
 // instead of displaying an interactive animation.
 const char kAuraLegacyPowerButton[] = "aura-legacy-power-button";
+
+// By default we use classic IME (i.e. InputMethodChromeOS) in kMus. This flag
+// enables the IME service (i.e. InputMethodMus) instead.
+const char kUseIMEService[] = "use-ime-service";
 
 // Constrains the pointer movement within a root window on desktop.
 bool ConstrainPointerToRoot() {

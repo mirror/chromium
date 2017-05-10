@@ -69,10 +69,9 @@ public class VrShellImpl
     // text too small to read.
     private static final float DEFAULT_CONTENT_WIDTH = 960f;
     private static final float DEFAULT_CONTENT_HEIGHT = 640f;
-    // Temporary values that will be changed when the UI loads and figures out how what size it
-    // needs to be.
-    private static final float DEFAULT_UI_WIDTH = 1920f;
-    private static final float DEFAULT_UI_HEIGHT = 1080f;
+    // Make full screen 16:9 while maintaining same width as default.
+    private static final float FULLSCREEN_CONTENT_WIDTH = 960f;
+    private static final float FULLSCREEN_CONTENT_HEIGHT = 540f;
 
     private final ChromeActivity mActivity;
     private final VrShellDelegate mDelegate;
@@ -270,14 +269,13 @@ public class VrShellImpl
     }
 
     @Override
-    public void initializeNative(Tab currentTab, boolean forWebVR) {
+    public void initializeNative(Tab currentTab, boolean forWebVr, boolean inCct) {
         mContentVrWindowAndroid = new VrWindowAndroid(mActivity, mContentVirtualDisplay);
-
-        mNativeVrShell = nativeInit(mDelegate, mContentVrWindowAndroid.getNativePointer(), forWebVR,
-                getGvrApi().getNativeGvrContext(), mReprojectedRendering);
+        mNativeVrShell = nativeInit(mDelegate, mContentVrWindowAndroid.getNativePointer(), forWebVr,
+                inCct, getGvrApi().getNativeGvrContext(), mReprojectedRendering);
 
         // Set the UI and content sizes before we load the UI.
-        if (forWebVR) {
+        if (forWebVr) {
             DisplayAndroid primaryDisplay = DisplayAndroid.getNonMultiDisplay(mActivity);
             setContentCssSize(
                     primaryDisplay.getDisplayWidth(), primaryDisplay.getDisplayHeight(), WEBVR_DPR);
@@ -380,6 +378,15 @@ public class VrShellImpl
         mRenderToSurfaceLayout.setLayoutParams(
                 new FrameLayout.LayoutParams(surfaceWidth, surfaceHeight));
         nativeContentPhysicalBoundsChanged(mNativeVrShell, surfaceWidth, surfaceHeight, dpr);
+    }
+
+    @CalledByNative
+    public void onFullscreenChanged(boolean enabled) {
+        if (enabled) {
+            setContentCssSize(FULLSCREEN_CONTENT_WIDTH, FULLSCREEN_CONTENT_HEIGHT, DEFAULT_DPR);
+        } else {
+            setContentCssSize(DEFAULT_CONTENT_WIDTH, DEFAULT_CONTENT_HEIGHT, DEFAULT_DPR);
+        }
     }
 
     @CalledByNative
@@ -592,7 +599,7 @@ public class VrShellImpl
     }
 
     private native long nativeInit(VrShellDelegate delegate, long nativeWindowAndroid,
-            boolean forWebVR, long gvrApi, boolean reprojectedRendering);
+            boolean forWebVR, boolean inCct, long gvrApi, boolean reprojectedRendering);
     private native void nativeSetSurface(long nativeVrShell, Surface surface);
     private native void nativeSwapContents(
             long nativeVrShell, WebContents webContents, MotionEventSynthesizer eventSynthesizer);

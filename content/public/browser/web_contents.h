@@ -44,6 +44,12 @@ namespace blink {
 struct WebFindOptions;
 }
 
+namespace device {
+namespace mojom {
+class WakeLockContext;
+}
+}
+
 namespace net {
 struct LoadStateWithParam;
 }
@@ -606,7 +612,7 @@ class WebContents : public PageNavigator,
   virtual content::RendererPreferences* GetMutableRendererPrefs() = 0;
 
   // Tells the tab to close now. The tab will take care not to close until it's
-  // out of nested message loops.
+  // out of nested run loops.
   virtual void Close() = 0;
 
   // A render view-originated drag has ended. Informs the render view host and
@@ -673,6 +679,9 @@ class WebContents : public PageNavigator,
   // Returns the original opener if HasOriginalOpener() is true, or nullptr
   // otherwise.
   virtual WebContents* GetOriginalOpener() const = 0;
+
+  // Returns the WakeLockContext accociated with this WebContents.
+  virtual device::mojom::WakeLockContext* GetWakeLockContext() = 0;
 
   typedef base::Callback<void(
       int, /* id */

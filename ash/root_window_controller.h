@@ -179,7 +179,7 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
   // modal container is used if the screen is currently locked. Otherwise, the
   // default modal container is used.
   SystemModalContainerLayoutManager* GetSystemModalLayoutManager(
-      WmWindow* window);
+      aura::Window* window);
 
   AlwaysOnTopController* always_on_top_controller() {
     return always_on_top_controller_.get();
@@ -243,7 +243,7 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
   // Deletes associated objects and clears the state, but doesn't delete
   // the root window yet. This is used to delete a secondary displays'
   // root window safely when the display disconnect signal is received,
-  // which may come while we're in the nested message loop.
+  // which may come while we're in the nested run loop.
   void Shutdown();
 
   // Deletes all child windows and performs necessary cleanup.

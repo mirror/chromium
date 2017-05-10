@@ -149,7 +149,7 @@
           <div class="start">
             <div class="label">$i18n{printerName}</div>
             <div class="secondary">
-              <paper-input no-label-float id="printerNameInput"
+              <paper-input no-label-float id="printerNameInput" autofocus
                   value="{{newPrinter.printerName}}">
               </paper-input>
             </div>
@@ -191,7 +191,8 @@
           <div class="start">
             <div class="label">$i18n{printerQueue}</div>
             <div class="secondary">
-              <paper-input no-label-float value="{{newPrinter.printerQueue}}">
+              <paper-input no-label-float label="ipp/print" 
+                  value="{{newPrinter.printerQueue}}">
               </paper-input>
             </div>
           </div>
@@ -274,9 +275,6 @@
     <add-printer-dialog>
       <div class="dialog-title">$i18n{addPrintersManuallyTitle}</div>
       <div class="dialog-body">
-        <div class="settings-box first">
-          $i18n{selectManufacturerModelMessage}
-        </div>
         <div class="settings-box two-line">
           <div class="start">
             <div class="label">$i18n{printerManufacturer}</div>

@@ -73,17 +73,17 @@ BitmapImage::BitmapImage(ImageObserver* observer)
     : Image(observer),
       current_frame_(0),
       cached_frame_index_(0),
-      repetition_count_(kCAnimationNone),
-      repetition_count_status_(kUnknown),
-      repetitions_complete_(0),
-      desired_frame_start_time_(0),
-      frame_count_(0),
       animation_policy_(kImageAnimationPolicyAllowed),
       animation_finished_(false),
       all_data_received_(false),
       have_size_(false),
       size_available_(false),
-      have_frame_count_(false) {}
+      have_frame_count_(false),
+      repetition_count_status_(kUnknown),
+      repetition_count_(kCAnimationNone),
+      repetitions_complete_(0),
+      desired_frame_start_time_(0),
+      frame_count_(0) {}
 
 BitmapImage::BitmapImage(const SkBitmap& bitmap, ImageObserver* observer)
     : Image(observer),
@@ -91,16 +91,16 @@ BitmapImage::BitmapImage(const SkBitmap& bitmap, ImageObserver* observer)
       current_frame_(0),
       cached_frame_(SkImage::MakeFromBitmap(bitmap)),
       cached_frame_index_(0),
-      repetition_count_(kCAnimationNone),
-      repetition_count_status_(kUnknown),
-      repetitions_complete_(0),
-      frame_count_(1),
       animation_policy_(kImageAnimationPolicyAllowed),
       animation_finished_(true),
       all_data_received_(true),
       have_size_(true),
       size_available_(true),
-      have_frame_count_(true) {
+      have_frame_count_(true),
+      repetition_count_status_(kUnknown),
+      repetition_count_(kCAnimationNone),
+      repetitions_complete_(0),
+      frame_count_(1) {
   // Since we don't have a decoder, we can't figure out the image orientation.
   // Set m_sizeRespectingOrientation to be the same as m_size so it's not 0x0.
   size_respecting_orientation_ = size_;
@@ -263,12 +263,12 @@ void BitmapImage::Draw(
     ImageClampingMode clamp_mode) {
   TRACE_EVENT0("skia", "BitmapImage::draw");
 
-  sk_sp<SkImage> image = ImageForCurrentFrame();
+  PaintImage image = PaintImageForCurrentFrame();
   if (!image)
     return;  // It's too early and we don't have an image yet.
 
   FloatRect adjusted_src_rect = src_rect;
-  adjusted_src_rect.Intersect(SkRect::Make(image->bounds()));
+  adjusted_src_rect.Intersect(SkRect::Make(image.sk_image()->bounds()));
 
   if (adjusted_src_rect.IsEmpty() || dst_rect.IsEmpty())
     return;  // Nothing to draw.
@@ -299,18 +299,11 @@ void BitmapImage::Draw(
     }
   }
 
-  uint32_t unique_id = image->uniqueID();
-  bool is_lazy_generated = image->isLazyGenerated();
-  auto animation_type = MaybeAnimated() ? PaintImage::AnimationType::ANIMATED
-                                        : PaintImage::AnimationType::STATIC;
-  auto completion_state = CurrentFrameIsComplete()
-                              ? PaintImage::CompletionState::DONE
-                              : PaintImage::CompletionState::PARTIALLY_DONE;
-
-  canvas->drawImageRect(
-      PaintImage(std::move(image), animation_type, completion_state),
-      adjusted_src_rect, adjusted_dst_rect, &flags,
-      WebCoreClampingModeToSkiaRectConstraint(clamp_mode));
+  uint32_t unique_id = image.sk_image()->uniqueID();
+  bool is_lazy_generated = image.sk_image()->isLazyGenerated();
+  canvas->drawImageRect(std::move(image), adjusted_src_rect, adjusted_dst_rect,
+                        &flags,
+                        WebCoreClampingModeToSkiaRectConstraint(clamp_mode));
 
   if (is_lazy_generated)
     PlatformInstrumentation::DidDrawLazyPixelRef(unique_id);

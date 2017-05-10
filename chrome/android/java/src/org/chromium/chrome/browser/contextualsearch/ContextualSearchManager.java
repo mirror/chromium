@@ -846,9 +846,6 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
                     mContext.getEncoding(), surroundingText, startOffset, endOffset);
             notifyShowContextualSearch(selection);
         }
-        mSearchPanel.setWasSelectionPartOfUrl(
-                ContextualSearchSelectionController.isSelectionPartOfUrl(
-                        surroundingText, startOffset, endOffset));
     }
 
     /**
@@ -1209,9 +1206,12 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
     }
 
     @Override
-    public boolean sendsSelectionPopupUpdates() {
+    public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
         return false;
     }
+
+    @Override
+    public void cancelAllRequests() {}
 
     // TODO(donnd): add handling of an ACK to selectWordAroundCaret (crbug.com/435778 has details).
 
@@ -1416,10 +1416,15 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
                     mContext.setResolveProperties(
                             mPolicy.getHomeCountry(mActivity), mPolicy.maySendBasePageUrl());
                 }
-
-                mInternalStateController.notifyStartingWorkOn(InternalState.GATHERING_SURROUNDINGS);
-                nativeGatherSurroundingText(
-                        mNativeContextualSearchManagerPtr, mContext, getBaseWebContents());
+                WebContents webContents = getBaseWebContents();
+                if (webContents != null) {
+                    mInternalStateController.notifyStartingWorkOn(
+                            InternalState.GATHERING_SURROUNDINGS);
+                    nativeGatherSurroundingText(
+                            mNativeContextualSearchManagerPtr, mContext, webContents);
+                } else {
+                    mInternalStateController.reset(StateChangeReason.UNKNOWN);
+                }
             }
 
             /** Starts the process of deciding if we'll suppress the current Tap gesture or not. */

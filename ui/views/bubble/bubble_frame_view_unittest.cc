@@ -14,6 +14,7 @@
 #include "ui/views/bubble/bubble_border.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/button/label_button.h"
+#include "ui/views/test/test_layout_provider.h"
 #include "ui/views/test/test_views.h"
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/widget/widget.h"
@@ -502,36 +503,24 @@ class TestBubbleDialogDelegateView : public BubbleDialogDelegateView {
 
   using BubbleDialogDelegateView::SetAnchorView;
 
+  void set_override_snap(bool value) { override_snap_ = value; }
+
   // BubbleDialogDelegateView:
   void DeleteDelegate() override {
     // This delegate is owned by the test case itself, so it should not delete
     // itself here.
   }
-
   int GetDialogButtons() const override { return ui::DIALOG_BUTTON_NONE; }
-
+  bool ShouldSnapFrameWidth() const override {
+    return override_snap_.value_or(
+        BubbleDialogDelegateView::ShouldSnapFrameWidth());
+  }
   gfx::Size GetPreferredSize() const override { return gfx::Size(200, 200); }
 
  private:
+  base::Optional<bool> override_snap_;
+
   DISALLOW_COPY_AND_ASSIGN(TestBubbleDialogDelegateView);
-};
-
-class TestLayoutProvider : public LayoutProvider {
- public:
-  TestLayoutProvider() : LayoutProvider() {}
-  ~TestLayoutProvider() override {}
-
-  // LayoutProvider:
-  int GetSnappedDialogWidth(int min_width) const override {
-    return snap_to_ ? snap_to_ : min_width;
-  }
-
-  void set_snap_to(int width) { snap_to_ = width; }
-
- private:
-  int snap_to_ = 0;
-
-  DISALLOW_COPY_AND_ASSIGN(TestLayoutProvider);
 };
 
 }  // namespace
@@ -539,7 +528,7 @@ class TestLayoutProvider : public LayoutProvider {
 // This test ensures that if the installed LayoutProvider snaps dialog widths,
 // BubbleFrameView correctly sizes itself to that width.
 TEST_F(BubbleFrameViewTest, WidthSnaps) {
-  TestLayoutProvider provider;
+  test::TestLayoutProvider provider;
   TestBubbleDialogDelegateView delegate;
 
   Widget anchor;
@@ -558,7 +547,7 @@ TEST_F(BubbleFrameViewTest, WidthSnaps) {
   w0->CloseNow();
 
   constexpr int kTestWidth = 300;
-  provider.set_snap_to(kTestWidth);
+  provider.SetSnappedDialogWidth(kTestWidth);
 
   // The Widget's snapped width should exactly match the width returned by the
   // LayoutProvider.
@@ -566,6 +555,14 @@ TEST_F(BubbleFrameViewTest, WidthSnaps) {
   w1->Show();
   EXPECT_EQ(kTestWidth, w1->GetWindowBoundsInScreen().width());
   w1->CloseNow();
+
+  // If the DialogDelegate asks not to snap, it should not snap.
+  delegate.set_override_snap(false);
+  Widget* w2 = BubbleDialogDelegateView::CreateBubble(&delegate);
+  w2->Show();
+  EXPECT_EQ(delegate.GetPreferredSize().width(),
+            w2->GetWindowBoundsInScreen().width());
+  w2->CloseNow();
 }
 
 }  // namespace views

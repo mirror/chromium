@@ -21,6 +21,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/aura/window.h"
 #include "ui/base/clipboard/clipboard.h"
 #include "ui/base/clipboard/scoped_clipboard_writer.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
@@ -60,6 +61,10 @@
 
 #if defined(USE_X11)
 #include "ui/events/event_utils.h"
+#endif
+
+#if defined(OS_CHROMEOS)
+#include "ui/wm/core/ime_util_chromeos.h"
 #endif
 
 using base::ASCIIToUTF16;
@@ -2953,6 +2958,48 @@ TEST_F(TextfieldTest, CursorBlinkRestartsOnInsertOrReplace) {
   EXPECT_TRUE(test_api_->IsCursorBlinkTimerRunning());
 }
 
+#if defined(OS_CHROMEOS)
+// Check that when accessibility virtual keyboard is enabled, windows are
+// shifted up when focused and restored when focus is lost.
+TEST_F(TextfieldTest, VirtualKeyboardFocusEnsureCaretNotInRect) {
+  InitTextfield();
+
+  // Enable new virtual keyboard behavior.
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (!command_line->HasSwitch(::switches::kUseNewVirtualKeyboardBehavior)) {
+    command_line->AppendSwitch(::switches::kUseNewVirtualKeyboardBehavior);
+  }
+
+  aura::Window* root_window = widget_->GetNativeView()->GetRootWindow();
+  int keyboard_height = 200;
+  gfx::Rect root_bounds = root_window->bounds();
+  gfx::Rect orig_widget_bounds = gfx::Rect(0, 300, 400, 200);
+  gfx::Rect shifted_widget_bounds = gfx::Rect(0, 200, 400, 200);
+  gfx::Rect keyboard_view_bounds =
+      gfx::Rect(0, root_bounds.height() - keyboard_height, root_bounds.width(),
+                keyboard_height);
+
+  // Focus the window.
+  widget_->SetBounds(orig_widget_bounds);
+  input_method_->SetFocusedTextInputClient(textfield_);
+  EXPECT_EQ(widget_->GetNativeView()->bounds(), orig_widget_bounds);
+
+  // Simulate virtual keyboard.
+  input_method_->SetOnScreenKeyboardBounds(keyboard_view_bounds);
+
+  // Window should be shifted.
+  EXPECT_EQ(widget_->GetNativeView()->bounds(), shifted_widget_bounds);
+
+  // Detach the textfield from the IME
+  input_method_->DetachTextInputClient(textfield_);
+  wm::RestoreWindowBoundsOnClientFocusLost(
+      widget_->GetNativeView()->GetToplevelWindow());
+
+  // Window should be restored.
+  EXPECT_EQ(widget_->GetNativeView()->bounds(), orig_widget_bounds);
+}
+#endif  // defined(OS_CHROMEOS)
+
 class TextfieldTouchSelectionTest : public TextfieldTest {
  protected:
   // Simulates a complete tap.
@@ -3101,21 +3148,19 @@ TEST_F(TextfieldTest, AccessiblePasswordTest) {
   textfield_->SetText(ASCIIToUTF16("password"));
 
   ui::AXNodeData node_data_regular;
-  node_data_regular.state = 0;
   textfield_->GetAccessibleNodeData(&node_data_regular);
   EXPECT_EQ(ui::AX_ROLE_TEXT_FIELD, node_data_regular.role);
   EXPECT_EQ(ASCIIToUTF16("password"),
             node_data_regular.GetString16Attribute(ui::AX_ATTR_VALUE));
-  EXPECT_FALSE(node_data_regular.HasStateFlag(ui::AX_STATE_PROTECTED));
+  EXPECT_FALSE(node_data_regular.HasState(ui::AX_STATE_PROTECTED));
 
   textfield_->SetTextInputType(ui::TEXT_INPUT_TYPE_PASSWORD);
   ui::AXNodeData node_data_protected;
-  node_data_protected.state = 0;
   textfield_->GetAccessibleNodeData(&node_data_protected);
   EXPECT_EQ(ui::AX_ROLE_TEXT_FIELD, node_data_protected.role);
   EXPECT_EQ(ASCIIToUTF16("********"),
             node_data_protected.GetString16Attribute(ui::AX_ATTR_VALUE));
-  EXPECT_TRUE(node_data_protected.HasStateFlag(ui::AX_STATE_PROTECTED));
+  EXPECT_TRUE(node_data_protected.HasState(ui::AX_STATE_PROTECTED));
 }
 
 // Verify that cursor visibility is controlled by SetCursorEnabled.

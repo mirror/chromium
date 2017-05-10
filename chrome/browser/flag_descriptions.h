@@ -33,14 +33,6 @@ extern const char kEnableMaterialDesignPolicyPageName[];
 // Description for the flag to enable the material design policy page.
 extern const char kEnableMaterialDesignPolicyPageDescription[];
 
-//  Material Design version of chrome://history
-
-// Name for the flag to enable the material design history page.
-extern const char kEnableMaterialDesignHistoryName[];
-
-// Description for the flag to enable the material design history page.
-extern const char kEnableMaterialDesignHistoryDescription[];
-
 //  Material Design version of chrome://settings
 
 // Name for the flag to enable the material design settings page.
@@ -259,6 +251,13 @@ extern const char kTopChromeMdMaterial[];
 
 // Top Chrome material hybrid design option (for touchscreens).
 extern const char kTopChromeMdMaterialHybrid[];
+
+// Title of the flag which enables site details in MD settings.
+extern const char kSiteDetails[];
+
+// Description of the flag which enables or disables site details in MD
+// settings.
+extern const char kSiteDetailsDescription[];
 
 // Title of the flag which enables the site settings all sites list and site
 // details.
@@ -1355,6 +1354,12 @@ extern const char kEnableDataReductionProxySiteBreakdownName[];
 // Saver settings page.
 extern const char kEnableDataReductionProxySiteBreakdownDescription[];
 
+// An about:flags experiment title to enable offline page previews.
+extern const char kEnableOfflinePreviewsName[];
+
+// Describes an about:flags experiment to enable offline page previews.
+extern const char kEnableOfflinePreviewsDescription[];
+
 #endif  // defined(OS_ANDROID)
 
 // Name of about:flags option for LCD text.
@@ -1912,13 +1917,6 @@ extern const char kAccountConsistencyName[];
 // Description for the flag for account consistency between browser and cookie
 // jar.
 extern const char kAccountConsistencyDescription[];
-
-// Title for the flag to enable the new gaia password-separated sign in flow.
-extern const char kEnablePasswordSeparatedSigninFlowName[];
-
-// Description for the flag to enable the new gaia password-separated sign in
-// flow.
-extern const char kEnablePasswordSeparatedSigninFlowDescription[];
 
 // Title for the flag to enable the google profile information
 extern const char kGoogleProfileInfoName[];
@@ -2593,6 +2591,14 @@ extern const char kEnableContentSuggestionsNewFaviconServerName[];
 // on the New Tab Page.
 extern const char kEnableContentSuggestionsNewFaviconServerDescription[];
 
+// Name for the flag to enable fetching favicons from a Google server for tiles
+// on the New Tab Page (that originate from synced history).
+extern const char kEnableNtpMostLikelyFaviconsFromServerName[];
+
+// Description for the flag to enable fetching favicons from a Google server for
+// tiles on the New Tab Page (that originate from synced history).
+extern const char kEnableNtpMostLikelyFaviconsFromServerDescription[];
+
 // Name for the flag to enable the settings entry for content suggestions.
 extern const char kEnableContentSuggestionsSettingsName[];
 
@@ -2808,6 +2814,12 @@ extern const char kAndroidPaymentAppsName[];
 // Description for the flag to enable third party Android payment apps
 extern const char kAndroidPaymentAppsDescription[];
 
+// Name of the flag to enable Service Worker payment apps
+extern const char kServiceWorkerPaymentAppsName[];
+
+// Description for the flag to enable Service Worker payment apps
+extern const char kServiceWorkerPaymentAppsDescription[];
+
 #endif  // defined(OS_ANDROID)
 
 // Name for the flag to enable feature policy.
@@ -2953,18 +2965,6 @@ extern const char kCrosCompUpdatesName[];
 
 // Description for the flag to enable Chrome OS component flash updates
 extern const char kCrosCompUpdatesDescription[];
-
-//  Native Android History chrome://flags strings
-
-#if defined(OS_ANDROID)
-
-// Name of the flag that enables the native Android history UI.
-extern const char kNativeAndroidHistoryManager[];
-
-// Description of the flag that enables the native Android history UI.
-extern const char kNativeAndroidHistoryManagerDescription[];
-
-#endif  // defined(OS_ANDROID)
 
 //  Play Services LSD permission prompt chrome://flags strings
 
@@ -3358,6 +3358,12 @@ extern const char kOmniboxDisplayTitleForCurrentUrlName[];
 // for current URL.
 extern const char kOmniboxDisplayTitleForCurrentUrlDescription[];
 
+// Name of the Omnibox UI vertical margin flag.
+extern const char kOmniboxUIVerticalMarginName[];
+
+// Description of the Omnibox UI vertical margin flag.
+extern const char kOmniboxUIVerticalMarginDescription[];
+
 // Name of the flag that forces Network Quality Estimator (NQE) to always
 // return the specified effective connection type.
 extern const char kForceEffectiveConnectionTypeName[];
@@ -3388,6 +3394,18 @@ extern const char kEnableHeapProfilingTaskProfiler[];
 // server-side suggestions in NTP tiles.
 extern const char kUseSuggestionsEvenIfFewFeatureName[];
 extern const char kUseSuggestionsEvenIfFewFeatureDescription[];
+
+// Name of the about: flag for experimental location.reload() to trigger a
+// hard-reload.
+extern const char kLocationHardReloadName[];
+
+// Description of the about: flag for experimental location.reload() to trigger
+// a hard-reload.
+extern const char kLocationHardReloadDescription[];
+
+// Name and description for the capture-thumbnail-on-load-finished flag.
+extern const char kCaptureThumbnailOnLoadFinishedName[];
+extern const char kCaptureThumbnailOnLoadFinishedDescription[];
 
 }  // namespace flag_descriptions
 

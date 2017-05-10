@@ -32,7 +32,7 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
   FrameViewBase* Parent() const override { return parent_; }
 
   RemoteFrame& GetFrame() const {
-    ASSERT(remote_frame_);
+    DCHECK(remote_frame_);
     return *remote_frame_;
   }
 
@@ -50,12 +50,12 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
 
   IntRect ConvertFromContainingFrameViewBase(const IntRect&) const override;
 
+  void UpdateRemoteViewportIntersection();
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit RemoteFrameView(RemoteFrame*);
-
-  void UpdateRemoteViewportIntersection();
 
   // The properties and handling of the cycle between RemoteFrame
   // and its RemoteFrameView corresponds to that between LocalFrame

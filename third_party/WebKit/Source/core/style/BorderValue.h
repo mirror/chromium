@@ -26,21 +26,12 @@
 #define BorderValue_h
 
 #include "core/css/StyleColor.h"
+#include "core/style/BorderColorAndStyle.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/graphics/Color.h"
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
-
-// In order to conserve memory, the border width uses fixed point,
-// which can be bitpacked.  This fixed point implementation is
-// essentially the same as in LayoutUnit.  Six bits are used for the
-// fraction, which leaves 20 bits for the integer part, making 1048575
-// the largest number.
-
-static const int kBorderWidthFractionalBits = 6;
-static const int kBorderWidthDenominator = 1 << kBorderWidthFractionalBits;
-static const int kMaxForBorderWidth = ((1 << 26) - 1) / kBorderWidthDenominator;
 
 class BorderValue {
   DISALLOW_NEW();
@@ -53,6 +44,14 @@ class BorderValue {
         style_(kBorderStyleNone),
         is_auto_(kOutlineIsAutoOff) {
     SetWidth(3);
+  }
+
+  BorderValue(const BorderColorAndStyle& data, float width) {
+    SetColor(data.GetColor());
+    SetColorIsCurrentColor(ColorIsCurrentColor());
+    SetStyle(data.Style());
+    SetIsAuto(data.IsAuto());
+    SetWidth(width);
   }
 
   bool NonZero() const { return Width() && (style_ != kBorderStyleNone); }
@@ -101,6 +100,14 @@ class BorderValue {
 
   EBorderStyle Style() const { return static_cast<EBorderStyle>(style_); }
   void SetStyle(EBorderStyle style) { style_ = style; }
+
+  OutlineIsAuto IsAuto() const { return static_cast<OutlineIsAuto>(is_auto_); }
+  void SetIsAuto(OutlineIsAuto is_auto) { is_auto_ = is_auto; }
+
+  bool ColorIsCurrentColor() const { return color_is_current_color_; }
+  void SetColorIsCurrentColor(bool color_is_current_color) {
+    color_is_current_color_ = static_cast<unsigned>(color_is_current_color);
+  }
 
  protected:
   static unsigned WidthToFixedPoint(float width) {

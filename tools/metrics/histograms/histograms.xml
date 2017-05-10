@@ -3815,6 +3815,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The autofill state related to a submitted form.</summary>
 </histogram>
 
+<histogram name="Autofill.HasModifiedProfile.CreditCardFormSubmission"
+    enum="Boolean">
+  <owner>csashi@google.com</owner>
+  <owner>jsaul@google.com</owner>
+  <owner>sebsg@chromium.org</owner>
+  <summary>
+    Whether user modified an address profile shortly before submitting a credit
+    card form.
+  </summary>
+</histogram>
+
 <histogram name="Autofill.IcuCollatorCreationSuccess" enum="BooleanSuccess">
   <owner>mathp@chromium.org</owner>
   <summary>
@@ -13951,6 +13962,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Download.HttpResponseCode" enum="HttpResponseCode">
+  <owner>xingliu@chromium.org</owner>
+  <summary>The count of HTTP Response codes for download requests.</summary>
+</histogram>
+
 <histogram name="Download.InterruptedAtEndError" enum="NetErrorCodes">
   <owner>asanka@chromium.org</owner>
   <summary>
@@ -18441,9 +18457,30 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Extensions.DeclarativeAPIFunctionCalls"
+    enum="DeclarativeAPIFunctionType">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Number of calls to the declarative API extension functions. This includes
+    the declarativeContent and declarativeWebRequest APIs. Emitted when the
+    extension function is called.
+  </summary>
+</histogram>
+
 <histogram name="Extensions.DeclarativeRulesStorageInitialization" units="ms">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>Time spent until rules storage delegate gets ready.</summary>
+</histogram>
+
+<histogram
+    name="Extensions.DeclarativeWebRequest.WebViewRequestDeclarativeRules"
+    enum="BooleanDeclarativeRules">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Whether a network request from a guest webview has any declarative web
+    request rules that need to be evaluated. Emitted whenever a network request
+    from a guest webview is received at the network layer.
+  </summary>
 </histogram>
 
 <histogram name="Extensions.DepricatedExternalJsonCount">
@@ -22411,6 +22448,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="BooleanOverlaySupported">
   <owner>jbauman@chromium.org</owner>
   <summary>True if Chrome will try to use DirectComposition overlays.</summary>
+</histogram>
+
+<histogram name="GPU.DirectComposition.OverlaySupportFlags"
+    enum="OverlaySupportFlag">
+  <owner>jbauman@chromium.org</owner>
+  <summary>
+    These are the flags explaining how well overlays are supported on the
+    current display. The is recorded for every connected display when creating a
+    DirectComposition view context.
+  </summary>
 </histogram>
 
 <histogram name="GPU.DirectComposition.OverlaysUsed" enum="BooleanOverlayUsage">
@@ -28834,6 +28881,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Pixel format used in HTML5 video. Emitted on video load.</summary>
 </histogram>
 
+<histogram name="Media.VideoFrame.ColorSpace" enum="VideoFrameColorSpaceUMA">
+  <owner>hubbe@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>Video frame color space. Emitted for each video frame.</summary>
+</histogram>
+
 <histogram name="Media.VideoFrameColorSpace" enum="VideoFrameColorSpace">
   <owner>mcasas@chromium.org</owner>
   <owner>watk@chromium.org</owner>
@@ -31924,9 +31977,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>elawrence@chromium.org</owner>
   <owner>estark@chromium.org</owner>
   <summary>
-    The scheme of the URL for each main-frame navigation that goes to a
-    different page. Transitions like fragment change or history.pushState are
-    excluded.
+    The scheme of the URL for each main-frame navigation that replaces a
+    document object. This is not reported for reference fragment navigations,
+    pushState/replaceState or same page history navigation.
   </summary>
 </histogram>
 
@@ -31935,9 +31988,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>elawrence@chromium.org</owner>
   <owner>estark@chromium.org</owner>
   <summary>
-    The scheme of the URL for each main-frame navigation that goes to a
-    different page while in incognito. Transitions like fragment change or
-    history.pushState are excluded.
+    The scheme of the URL for each main-frame navigation that replaces a
+    document object while in incognito. This is not reported for reference
+    fragment navigations, pushState/replaceState or same page history
+    navigation.
   </summary>
 </histogram>
 
@@ -49948,6 +50002,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PDF.LoadStatus" enum="PDFLoadStatus">
+  <owner>tommycli@chromium.org</owner>
+  <summary>
+    Tracks what happens when Chrome tries to load a PDF. This metric tracks all
+    cases, but is focused on measuring failed PDF embeds, which occur if the
+    user is on Android, or if PDF plugin is disabled.
+  </summary>
+</histogram>
+
 <histogram name="Pepper.Graphics3DHasShareGroup" units="BooleanShareGroup">
   <owner>jbauman@chromium.org</owner>
   <summary>
@@ -55773,43 +55836,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Previews.EligibilityReason" enum="PreviewsEligibilityReason">
   <owner>ryansturm@chromium.org</owner>
   <summary>
-    Whether a particular preview was allowed to be shown or the reason the
-    preview could not be shown to the user.
+    When evaluating whether to show a user a preview, the preview might be
+    disallowed for various reasons. If the preview is disallowed, then this
+    reports the reason for disallowing it. If the preview is allowed, then this
+    reports &quot;Previews Allowed&quot;.
   </summary>
 </histogram>
 
-<histogram name="Previews.InfoBarAction.LitePage" enum="PreviewsInfoBarAction">
+<histogram name="Previews.InfoBarAction" enum="PreviewsInfoBarAction">
   <owner>bengr@chromium.org</owner>
   <owner>megjablon@chromium.org</owner>
   <summary>
-    User interactions with the previews LitePage &quot;Saved data&quot; infobar.
-    These include:
-
-    Displays of the infobar and clicks on the &quot;Load original&quot; link.
-    Whether the infobar was dismissed by navigation or the user clicking on
-    &quot;X&quot; close button.
-  </summary>
-</histogram>
-
-<histogram name="Previews.InfoBarAction.LoFi" enum="PreviewsInfoBarAction">
-  <owner>bengr@chromium.org</owner>
-  <owner>megjablon@chromium.org</owner>
-  <summary>
-    User interactions with the previews Lo-Fi &quot;Saved data&quot; infobar.
-    These include:
-
-    Displays of the infobar and clicks on the &quot;Load original&quot; link.
-    Whether the infobar was dismissed by navigation or the user clicking on
-    &quot;X&quot; close button.
-  </summary>
-</histogram>
-
-<histogram name="Previews.InfoBarAction.Offline" enum="PreviewsInfoBarAction">
-  <owner>bengr@chromium.org</owner>
-  <owner>megjablon@chromium.org</owner>
-  <summary>
-    User interactions with the previews Offline &quot;Faster page loaded&quot;
-    infobar. These include:
+    User interactions with the previews &quot;Saved data&quot; infobar. These
+    include:
 
     Displays of the infobar and clicks on the &quot;Load original&quot; link.
     Whether the infobar was dismissed by navigation or the user clicking on
@@ -55824,12 +55863,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Previews.OptOut.UserOptedOut.Offline"
-    enum="PreviewsUserOptedOut">
+<histogram name="Previews.OptOut.UserOptedOut" enum="PreviewsUserOptedOut">
   <owner>ryansturm@chromium.org</owner>
   <summary>
-    Whether the user chose to reload the full page when shown an offline
-    preview.
+    Whether the user chose to reload the original page when shown a preview.
   </summary>
 </histogram>
 
@@ -63931,6 +63968,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Search.ContextualSearchAllCapsResultsSeen"
     enum="ContextualSearchResultsSeen">
+  <obsolete>
+    Deprecated 05/2017 because it's no longer ever used.
+  </obsolete>
   <owner>donnd@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
   <summary>
@@ -64572,6 +64612,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Search.ContextualSearchResultsSeenSelectionWasUrl"
     enum="ContextualSearchSeenByGesture">
+  <obsolete>
+    Deprecated 05/2017 because it's no longer ever used.
+  </obsolete>
   <owner>donnd@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
   <summary>
@@ -74795,15 +74838,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Tabs.StateTransfer.Time" units="ms">
+  <obsolete>
+    Deprecated as of 4/2017.
+  </obsolete>
   <owner>kouhei@chromium.org</owner>
   <owner>tzik@chromium.org</owner>
   <summary>
     Tabs.StateTransfer.TimeA_B measures the time a tab was in state A before it
     transferred to state B.
   </summary>
-  <details>
-    kouhei@ and tzik@ will remove some variation of these once M46 hits stable.
-  </details>
 </histogram>
 
 <histogram name="Tabs.SwitchFromCloseLatency" units="ms">
@@ -77366,10 +77409,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.ArrayBufferBigAllocations" units="MB">
+  <obsolete>
+    Deprecated 5/2017 in Issue 704922. Replaced by
+    V8.ArrayBufferLargeAllocations.
+  </obsolete>
   <owner>bradnelson@chromium.org</owner>
   <owner>titzer@chromium.org</owner>
   <owner>kschimpf@chromium.org</owner>
   <summary>Number of bytes requested in an array buffer allocation.</summary>
+</histogram>
+
+<histogram name="V8.ArrayBufferLargeAllocations" units="MB">
+  <owner>bradnelson@chromium.org</owner>
+  <owner>titzer@chromium.org</owner>
+  <owner>kschimpf@chromium.org</owner>
+  <summary>
+    Number of bytes requested in array buffer allocations greater than one
+    megabyte.
+  </summary>
 </histogram>
 
 <histogram name="V8.ArrayBufferNewSizeFailures" units="MB">
@@ -78967,6 +79024,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The length of a WebAPK session (launch/foregrounding to backgrounding) in
     milliseconds.
+  </summary>
+</histogram>
+
+<histogram name="WebApk.Update.GooglePlayUpdateResult"
+    enum="WebApkGooglePlayInstallResult">
+  <owner>hanxi@chromium.org</owner>
+  <owner>pkotwicz@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>
+    Records whether updating a WebAPK from Google Play succeeded. If not,
+    records the reason that the update failed.
   </summary>
 </histogram>
 
@@ -90058,8 +90126,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram_suffixes name="Previews.Types" separator=".">
   <suffix name="Offline" label="Offline previews"/>
-  <suffix name="ClientLoFi" label="Client LoFi previews"/>
+  <suffix name="LitePage" label="Lite page previews"/>
+  <suffix name="LoFi" label="Server LoFi previews"/>
   <affected-histogram name="Previews.EligibilityReason"/>
+  <affected-histogram name="Previews.InfoBarAction"/>
+  <affected-histogram name="Previews.OptOut.UserOptedOut"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="ProcessType" separator=".">

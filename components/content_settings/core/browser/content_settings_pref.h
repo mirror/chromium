@@ -23,8 +23,8 @@
 class PrefService;
 class PrefChangeRegistrar;
 
-namespace base {
-class DictionaryValue;
+namespace prefs {
+class DictionaryValueUpdate;
 }
 
 namespace content_settings {
@@ -44,7 +44,6 @@ class ContentSettingsPref {
                       PrefChangeRegistrar* registrar,
                       const std::string& pref_name,
                       bool incognito,
-                      bool store_last_modified,
                       NotifyObserversCallback notify_callback);
   ~ContentSettingsPref();
 
@@ -56,6 +55,7 @@ class ContentSettingsPref {
   bool SetWebsiteSetting(const ContentSettingsPattern& primary_pattern,
                          const ContentSettingsPattern& secondary_pattern,
                          const ResourceIdentifier& resource_identifier,
+                         base::Time modified_time,
                          base::Value* value);
 
   // Returns the |last_modified| date of a setting.
@@ -92,7 +92,7 @@ class ContentSettingsPref {
                   const base::Value* value);
 
   static void CanonicalizeContentSettingsExceptions(
-      base::DictionaryValue* all_settings_dictionary);
+      prefs::DictionaryValueUpdate* all_settings_dictionary);
 
   // In the debug mode, asserts that |lock_| is not held by this thread. It's
   // ok if some other thread holds |lock_|, as long as it will eventually
@@ -112,8 +112,6 @@ class ContentSettingsPref {
   const std::string& pref_name_;
 
   bool is_incognito_;
-
-  bool store_last_modified_;
 
   // Whether we are currently updating preferences, this is used to ignore
   // notifications from the preferences service that we triggered ourself.

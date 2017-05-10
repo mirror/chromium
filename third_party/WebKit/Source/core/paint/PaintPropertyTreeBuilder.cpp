@@ -269,6 +269,17 @@ void PaintPropertyTreeBuilder::UpdatePaintOffsetTranslation(
         RoundedIntPoint(context.current.paint_offset);
     LayoutPoint fractional_paint_offset =
         LayoutPoint(context.current.paint_offset - rounded_paint_offset);
+    if (fractional_paint_offset != LayoutPoint()) {
+      // If the object has a non-translation transform, discard the fractional
+      // paint offset which can't be transformed by the transform.
+      TransformationMatrix matrix;
+      object.StyleRef().ApplyTransform(
+          matrix, LayoutSize(), ComputedStyle::kExcludeTransformOrigin,
+          ComputedStyle::kIncludeMotionPath,
+          ComputedStyle::kIncludeIndependentTransformProperties);
+      if (!matrix.IsIdentityOrTranslation())
+        fractional_paint_offset = LayoutPoint();
+    }
 
     force_subtree_update |= properties.UpdatePaintOffsetTranslation(
         context.current.transform,
@@ -283,8 +294,8 @@ void PaintPropertyTreeBuilder::UpdatePaintOffsetTranslation(
         object.IsLayoutView()) {
       context.absolute_position.transform = properties.PaintOffsetTranslation();
       context.fixed_position.transform = properties.PaintOffsetTranslation();
-      context.absolute_position.paint_offset = LayoutPoint();
-      context.fixed_position.paint_offset = LayoutPoint();
+      context.absolute_position.paint_offset = fractional_paint_offset;
+      context.fixed_position.paint_offset = fractional_paint_offset;
     }
   } else {
     if (auto* properties = object.GetMutableForPainting().PaintProperties())
@@ -413,16 +424,12 @@ void PaintPropertyTreeBuilder::UpdateTransform(
       if (style.Preserves3D() && !rendering_context_id)
         rendering_context_id = PtrHash<const LayoutObject>::GetHash(&object);
 
-      CompositorElementId compositor_element_id =
-          style.HasCurrentTransformAnimation()
-              ? CreateDomNodeBasedCompositorElementId(object)
-              : CompositorElementId();
-
       auto& properties = *object.GetMutableForPainting().PaintProperties();
       force_subtree_update |= properties.UpdateTransform(
           context.current.transform, matrix, TransformOrigin(box),
           context.current.should_flatten_inherited_transform,
-          rendering_context_id, compositing_reasons, compositor_element_id);
+          rendering_context_id, compositing_reasons,
+          properties.GetCompositorElementId());
     } else {
       if (auto* properties = object.GetMutableForPainting().PaintProperties())
         force_subtree_update |= properties->ClearTransform();
@@ -583,18 +590,13 @@ void PaintPropertyTreeBuilder::UpdateEffect(
                                                 style.BlendMode())
               : SkBlendMode::kSrcOver;
 
-      CompositorElementId compositor_element_id =
-          style.HasCurrentOpacityAnimation()
-              ? CreateDomNodeBasedCompositorElementId(object)
-              : CompositorElementId();
-
       DCHECK(!style.HasCurrentOpacityAnimation() ||
              compositing_reasons != kCompositingReasonNone);
 
       force_subtree_update |= properties.UpdateEffect(
           context.current_effect, context.current.transform, output_clip,
           kColorFilterNone, CompositorFilterOperations(), style.Opacity(),
-          blend_mode, compositing_reasons, compositor_element_id);
+          blend_mode, compositing_reasons, properties.GetCompositorElementId());
       if (has_mask) {
         // TODO(crbug.com/683425): PaintArtifactCompositor does not handle
         // grouping (i.e. descendant-dependent compositing reason) properly
@@ -675,10 +677,6 @@ void PaintPropertyTreeBuilder::UpdateFilter(
       // We may begin to composite our subtree prior to an animation starts,
       // but a compositor element ID is only needed when an animation is
       // current.
-      CompositorElementId compositor_element_id =
-          style.HasCurrentFilterAnimation()
-              ? CreateDomNodeBasedCompositorElementId(object)
-              : CompositorElementId();
       CompositingReasons compositing_reasons =
           CompositingReasonFinder::RequiresCompositingForFilterAnimation(style)
               ? kCompositingReasonActiveAnimation
@@ -690,7 +688,7 @@ void PaintPropertyTreeBuilder::UpdateFilter(
       force_subtree_update |= properties.UpdateFilter(
           context.current_effect, context.current.transform, output_clip,
           kColorFilterNone, std::move(filter), 1.f, SkBlendMode::kSrcOver,
-          compositing_reasons, compositor_element_id);
+          compositing_reasons, properties.GetCompositorElementId());
     } else {
       if (auto* properties = object.GetMutableForPainting().PaintProperties())
         force_subtree_update |= properties->ClearFilter();
@@ -975,17 +973,15 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
           force_subtree_update = true;
       }
 
-      CompositorElementId compositor_element_id =
-          CreateDomNodeBasedCompositorElementId(object);
       TransformationMatrix matrix = TransformationMatrix().Translate(
           -scroll_offset.Width(), -scroll_offset.Height());
       force_subtree_update |= properties.UpdateScrollTranslation(
           context.current.transform, matrix, FloatPoint3D(),
           context.current.should_flatten_inherited_transform,
           context.current.rendering_context_id, kCompositingReasonNone,
-          compositor_element_id, context.current.scroll, scroll_clip,
-          scroll_bounds, user_scrollable_horizontal, user_scrollable_vertical,
-          reasons, scrollable_area);
+          properties.GetCompositorElementId(), context.current.scroll,
+          scroll_clip, scroll_bounds, user_scrollable_horizontal,
+          user_scrollable_vertical, reasons, scrollable_area);
     } else {
       // Ensure pre-existing properties are cleared.
       if (auto* properties = object.GetMutableForPainting().PaintProperties())
@@ -1196,7 +1192,13 @@ void PaintPropertyTreeBuilder::UpdatePaintProperties(
   bool had_paint_properties = object.PaintProperties();
 
   if (needs_paint_properties) {
-    object.GetMutableForPainting().EnsurePaintProperties();
+    ObjectPaintProperties& paint_properties =
+        object.GetMutableForPainting().EnsurePaintProperties();
+    if (!had_paint_properties &&
+        RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+      paint_properties.SetCompositorElementId(
+          CreateDomNodeBasedCompositorElementId(object));
+    }
   } else {
     object.GetMutableForPainting().ClearPaintProperties();
     if (had_paint_properties)

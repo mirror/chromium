@@ -273,12 +273,8 @@ enum HeaderBehaviour {
 const CGFloat kIPadFindBarOverlap = 11;
 
 bool IsURLAllowedInIncognito(const GURL& url) {
-  // Most URLs are allowed in incognito; the following are exceptions.
-  if (!url.SchemeIs(kChromeUIScheme))
-    return true;
-  std::string url_host = url.host();
-  return url_host != kChromeUIHistoryHost &&
-         url_host != kChromeUIHistoryFrameHost;
+  // Most URLs are allowed in incognito; the following is an exception.
+  return !(url.SchemeIs(kChromeUIScheme) && url.host() == kChromeUIHistoryHost);
 }
 
 // Temporary key to use when storing native controllers vended to tabs before
@@ -2437,9 +2433,14 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
   if (!initiatedByUser) {
     auto* helper = BlockedPopupTabHelper::FromWebState(webState);
     if (helper->ShouldBlockPopup(openerURL)) {
-      web::NavigationItem* item =
-          webState->GetNavigationManager()->GetLastCommittedItem();
-      web::Referrer referrer(openerURL, item->GetReferrer().policy);
+      // It's possible for a page to inject a popup into a window created via
+      // window.open before its initial load is committed.  Rather than relying
+      // on the last committed or pending NavigationItem's referrer policy, just
+      // use ReferrerPolicyDefault.
+      // TODO(crbug.com/719993): Update this to a more appropriate referrer
+      // policy once referrer policies are correctly recorded in
+      // NavigationItems.
+      web::Referrer referrer(openerURL, web::ReferrerPolicyDefault);
       helper->HandlePopup(URL, referrer);
       return nil;
     }
@@ -3103,13 +3104,6 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
     DCHECK(![self hasControllerForURL:url]);
     // In any other case the PageNotAvailableController is returned.
     nativeController = [[PageNotAvailableController alloc] initWithUrl:url];
-    if (url_host == kChromeUIHistoryFrameHost) {
-      base::mac::ObjCCastStrict<PageNotAvailableController>(nativeController)
-          .descriptionText = l10n_util::GetNSStringFWithFixup(
-          IDS_IOS_HISTORY_URL_NOT_AVAILABLE,
-          base::UTF8ToUTF16(kChromeUIHistoryURL),
-          l10n_util::GetStringUTF16(IDS_HISTORY_SHOW_HISTORY));
-    }
   }
   // If a native controller is vended before its tab is added to the tab model,
   // use the temporary key and add it under the new tab's tabId in the
@@ -3709,7 +3703,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
   }
 
   // NOTE: This check for the Crash Host URL is here to avoid the URL from
-  // ending up in the history causign the app to crash at every subsequent
+  // ending up in the history causing the app to crash at every subsequent
   // restart.
   if (url.host() == kChromeUIBrowserCrashHost) {
     [self induceBrowserCrash];
@@ -4624,6 +4618,11 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
           atIndex:(NSUInteger)index {
   [self uninstallDelegatesForTab:oldTab];
   [self installDelegatesForTab:newTab];
+
+  if (_infoBarContainer) {
+    infobars::InfoBarManager* infoBarManager = [newTab infoBarManager];
+    _infoBarContainer->ChangeInfoBarManager(infoBarManager);
+  }
 
   // Add |newTab|'s view to the hierarchy if it's the current Tab.
   if (self.active && model.currentTab == newTab)

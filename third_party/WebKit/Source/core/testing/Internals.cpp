@@ -35,9 +35,6 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/V8IteratorResultValue.h"
-#include "bindings/core/v8/V8ThrowException.h"
-#include "bindings/core/v8/serialization/SerializedScriptValue.h"
-#include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
 #include "core/HTMLNames.h"
 #include "core/SVGNames.h"
 #include "core/animation/DocumentTimeline.h"
@@ -134,6 +131,7 @@
 #include "platform/Language.h"
 #include "platform/LayoutLocale.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/bindings/V8ThrowException.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/GraphicsLayer.h"
@@ -147,7 +145,6 @@
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/weborigin/SchemeRegistry.h"
-#include "platform/wtf/InstanceCounter.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/dtoa.h"
@@ -1983,10 +1980,6 @@ unsigned Internals::numberOfLiveDocuments() const {
   return InstanceCounters::CounterValue(InstanceCounters::kDocumentCounter);
 }
 
-String Internals::dumpRefCountedInstanceCounts() const {
-  return WTF::DumpRefCountedInstanceCounts();
-}
-
 bool Internals::hasGrammarMarker(Document* document,
                                  int from,
                                  int length,
@@ -2676,13 +2669,12 @@ bool Internals::cursorUpdatePending() const {
 
 DOMArrayBuffer* Internals::serializeObject(
     PassRefPtr<SerializedScriptValue> value) const {
-  String string_value = value->ToWireString();
-  DOMArrayBuffer* buffer = DOMArrayBuffer::CreateUninitializedOrNull(
-      string_value.length(), sizeof(UChar));
-  if (buffer) {
-    string_value.CopyTo(static_cast<UChar*>(buffer->Data()), 0,
-                        string_value.length());
-  }
+  StringView view = value->GetWireData();
+  DCHECK(view.Is8Bit());
+  DOMArrayBuffer* buffer =
+      DOMArrayBuffer::CreateUninitializedOrNull(view.length(), sizeof(LChar));
+  if (buffer)
+    memcpy(buffer->Data(), view.Characters8(), view.length());
   return buffer;
 }
 

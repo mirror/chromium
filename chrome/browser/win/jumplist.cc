@@ -127,33 +127,6 @@ bool CreateIconFile(const gfx::ImageSkia& image_skia,
   return true;
 }
 
-// Creates icon files for the asynchrounously loaded icons.
-void CreateIconFiles(const base::FilePath& icon_dir,
-                     const ShellLinkItemList& item_list,
-                     size_t max_items) {
-  // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
-  SCOPED_UMA_HISTOGRAM_TIMER("WinJumplist.CreateIconFilesDuration");
-
-  for (ShellLinkItemList::const_iterator item = item_list.begin();
-       item != item_list.end() && max_items > 0; ++item, --max_items) {
-    base::FilePath icon_path;
-    if (CreateIconFile((*item)->icon_image(), icon_dir, &icon_path))
-      (*item)->set_icon(icon_path.value(), 0);
-  }
-}
-
-// Updates icon files in |icon_dir|, which includes deleting old icons and
-// creating at most |slot_limit| new icons for |page_list|.
-void UpdateIconFiles(const base::FilePath& icon_dir,
-                     const ShellLinkItemList& page_list,
-                     size_t slot_limit) {
-  DeleteDirectoryContentAndLogRuntime(icon_dir, kFileDeleteLimit);
-
-  // Create new icons only when the directory exists and is empty.
-  if (base::CreateDirectory(icon_dir) && base::IsDirectoryEmpty(icon_dir))
-    CreateIconFiles(icon_dir, page_list, slot_limit);
-}
-
 // Updates the "Tasks" category of the JumpList.
 bool UpdateTaskCategory(
     JumpListUpdater* jumplist_updater,
@@ -205,170 +178,6 @@ base::FilePath GenerateJumplistIconDirName(
   base::FilePath::StringType dir_name(chrome::kJumpListIconDirname);
   suffix.AppendToString(&dir_name);
   return profile_dir.Append(dir_name);
-}
-
-// Updates the application JumpList, which consists of 1) delete old icon files;
-// 2) create new icon files; 3) notify the OS.
-// Note that any timeout error along the way results in the old jumplist being
-// left as-is, while any non-timeout error results in the old jumplist being
-// left as-is, but without icon files.
-bool UpdateJumpList(const wchar_t* app_id,
-                    const base::FilePath& profile_dir,
-                    const ShellLinkItemList& most_visited_pages,
-                    const ShellLinkItemList& recently_closed_pages,
-                    bool most_visited_pages_have_updates,
-                    bool recently_closed_pages_have_updates,
-                    IncognitoModePrefs::Availability incognito_availability) {
-  if (!JumpListUpdater::IsEnabled())
-    return true;
-
-  JumpListUpdater jumplist_updater(app_id);
-
-  base::ElapsedTimer begin_update_timer;
-
-  if (!jumplist_updater.BeginUpdate())
-    return false;
-
-  // Discard this JumpList update if JumpListUpdater::BeginUpdate takes longer
-  // than the maximum allowed time, as it's very likely the following update
-  // steps will also take a long time.
-  if (begin_update_timer.Elapsed() >= kTimeOutForJumplistUpdate)
-    return false;
-
-  // The default maximum number of items to display in JumpList is 10.
-  // https://msdn.microsoft.com/library/windows/desktop/dd378398.aspx
-  // The "Most visited" category title always takes 1 of the JumpList slots if
-  // |most_visited_pages| isn't empty.
-  // The "Recently closed" category title will also take 1 if
-  // |recently_closed_pages| isn't empty.
-  // For the remaining slots, we allocate 5/8 (i.e., 5 slots if both categories
-  // present) to "most-visited" items and 3/8 (i.e., 3 slots if both categories
-  // present) to "recently-closed" items, respectively.
-  // Nevertheless, if there are not so many items in |recently_closed_pages|,
-  // we give the remaining slots to "most-visited" items.
-
-  const int kMostVisited = 50;
-  const int kRecentlyClosed = 30;
-  const int kTotal = kMostVisited + kRecentlyClosed;
-
-  // Adjust the available jumplist slots to account for the category titles.
-  size_t user_max_items_adjusted = jumplist_updater.user_max_items();
-  if (!most_visited_pages.empty())
-    --user_max_items_adjusted;
-  if (!recently_closed_pages.empty())
-    --user_max_items_adjusted;
-
-  size_t most_visited_items =
-      MulDiv(user_max_items_adjusted, kMostVisited, kTotal);
-  size_t recently_closed_items = user_max_items_adjusted - most_visited_items;
-  if (recently_closed_pages.size() < recently_closed_items) {
-    most_visited_items += recently_closed_items - recently_closed_pages.size();
-    recently_closed_items = recently_closed_pages.size();
-  }
-
-  // Record the desired number of icons to create in this JumpList update.
-  int icons_to_create = 0;
-
-  // Update the icons for "Most Visisted" category of the JumpList if needed.
-  if (most_visited_pages_have_updates) {
-    base::FilePath icon_dir_most_visited = GenerateJumplistIconDirName(
-        profile_dir, FILE_PATH_LITERAL("MostVisited"));
-
-    UpdateIconFiles(icon_dir_most_visited, most_visited_pages,
-                    most_visited_items);
-
-    icons_to_create += std::min(most_visited_pages.size(), most_visited_items);
-  }
-
-  // Update the icons for "Recently Closed" category of the JumpList if needed.
-  if (recently_closed_pages_have_updates) {
-    base::FilePath icon_dir_recent_closed = GenerateJumplistIconDirName(
-        profile_dir, FILE_PATH_LITERAL("RecentClosed"));
-
-    UpdateIconFiles(icon_dir_recent_closed, recently_closed_pages,
-                    recently_closed_items);
-
-    icons_to_create +=
-        std::min(recently_closed_pages.size(), recently_closed_items);
-  }
-
-  // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
-  UMA_HISTOGRAM_COUNTS_100("WinJumplist.CreateIconFilesCount", icons_to_create);
-
-  // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
-  SCOPED_UMA_HISTOGRAM_TIMER("WinJumplist.UpdateJumpListDuration");
-
-  // Update the "Most Visited" category of the JumpList if it exists.
-  // This update request is applied into the JumpList when we commit this
-  // transaction.
-  if (!jumplist_updater.AddCustomCategory(
-          l10n_util::GetStringUTF16(IDS_NEW_TAB_MOST_VISITED),
-          most_visited_pages, most_visited_items)) {
-    return false;
-  }
-
-  // Update the "Recently Closed" category of the JumpList.
-  if (!jumplist_updater.AddCustomCategory(
-          l10n_util::GetStringUTF16(IDS_RECENTLY_CLOSED),
-          recently_closed_pages, recently_closed_items)) {
-    return false;
-  }
-
-  // Update the "Tasks" category of the JumpList.
-  if (!UpdateTaskCategory(&jumplist_updater, incognito_availability))
-    return false;
-
-  // Commit this transaction and send the updated JumpList to Windows.
-  return jumplist_updater.CommitUpdate();
-}
-
-// Updates the jumplist, once all the data has been fetched.
-void RunUpdateJumpList(IncognitoModePrefs::Availability incognito_availability,
-                       const std::wstring& app_id,
-                       const base::FilePath& profile_dir,
-                       base::RefCountedData<JumpListData>* ref_counted_data) {
-  JumpListData* data = &ref_counted_data->data;
-  ShellLinkItemList local_most_visited_pages;
-  ShellLinkItemList local_recently_closed_pages;
-  bool most_visited_pages_have_updates;
-  bool recently_closed_pages_have_updates;
-
-  {
-    base::AutoLock auto_lock(data->list_lock_);
-    // Make sure we are not out of date: if icon_urls_ is not empty, then
-    // another notification has been received since we processed this one
-    if (!data->icon_urls_.empty())
-      return;
-
-    // Make local copies of lists and flags so we can release the lock.
-    local_most_visited_pages = data->most_visited_pages_;
-    local_recently_closed_pages = data->recently_closed_pages_;
-
-    most_visited_pages_have_updates = data->most_visited_pages_have_updates_;
-    recently_closed_pages_have_updates =
-        data->recently_closed_pages_have_updates_;
-
-    // Clear the flags to reflect that we'll take actions on these updates.
-    data->most_visited_pages_have_updates_ = false;
-    data->recently_closed_pages_have_updates_ = false;
-  }
-
-  if (!most_visited_pages_have_updates && !recently_closed_pages_have_updates)
-    return;
-
-  // Update the application JumpList. If it fails, reset the flags to true if
-  // they were so that the corresponding JumpList categories will be tried to
-  // update again in the next run.
-  if (!UpdateJumpList(
-          app_id.c_str(), profile_dir, local_most_visited_pages,
-          local_recently_closed_pages, most_visited_pages_have_updates,
-          recently_closed_pages_have_updates, incognito_availability)) {
-    base::AutoLock auto_lock(data->list_lock_);
-    if (most_visited_pages_have_updates)
-      data->most_visited_pages_have_updates_ = true;
-    if (recently_closed_pages_have_updates)
-      data->recently_closed_pages_have_updates_ = true;
-  }
 }
 
 }  // namespace
@@ -444,6 +253,8 @@ void JumpList::CancelPendingUpdate() {
 
 void JumpList::Terminate() {
   DCHECK(CalledOnValidThread());
+  timer_most_visited_.Stop();
+  timer_recently_closed_.Stop();
   CancelPendingUpdate();
   if (profile_) {
     sessions::TabRestoreService* tab_restore_service =
@@ -467,18 +278,20 @@ void JumpList::ShutdownOnUIThread() {
 void JumpList::OnMostVisitedURLsAvailable(
     const history::MostVisitedURLList& urls) {
   DCHECK(CalledOnValidThread());
-  // If we have a pending favicon request, cancel it here (it is out of date).
-  CancelPendingUpdate();
 
+  // At most 9 JumpList items can be displayed for the "Most Visited"
+  // category.
+  const int kMostVistedCount = 9;
   {
     JumpListData* data = &jumplist_data_->data;
     base::AutoLock auto_lock(data->list_lock_);
     data->most_visited_pages_.clear();
-    for (size_t i = 0; i < urls.size(); i++) {
+
+    for (size_t i = 0; i < urls.size() && i < kMostVistedCount; i++) {
       const history::MostVisitedURL& url = urls[i];
       scoped_refptr<ShellLinkItem> link = CreateShellLink();
       std::string url_string = url.url.spec();
-      std::wstring url_string_wide = base::UTF8ToWide(url_string);
+      base::string16 url_string_wide = base::UTF8ToUTF16(url_string);
       link->GetCommandLine()->AppendArgNative(url_string_wide);
       link->GetCommandLine()->AppendSwitchASCII(
           switches::kWinJumplistAction, jumplist::kMostVisitedCategory);
@@ -495,46 +308,23 @@ void JumpList::OnMostVisitedURLsAvailable(
 
 void JumpList::TabRestoreServiceChanged(sessions::TabRestoreService* service) {
   DCHECK(CalledOnValidThread());
+
   // if we have a pending favicon request, cancel it here (it is out of date).
   CancelPendingUpdate();
 
-  // Create a list of ShellLinkItems from the "Recently Closed" pages.
-  // As noted above, we create a ShellLinkItem objects with the following
-  // parameters.
-  // * arguments
-  //   The last URL of the tab object.
-  // * title
-  //   The title of the last URL.
-  // * icon
-  //   An empty string. This value is to be updated in OnFaviconDataAvailable().
-  const int kRecentlyClosedCount = 3;
-  sessions::TabRestoreService* tab_restore_service =
-      TabRestoreServiceFactory::GetForProfile(profile_);
-
-  {
-    JumpListData* data = &jumplist_data_->data;
-    base::AutoLock auto_lock(data->list_lock_);
-    data->recently_closed_pages_.clear();
-
-    for (const auto& entry : tab_restore_service->entries()) {
-      switch (entry->type) {
-        case sessions::TabRestoreService::TAB:
-          AddTab(static_cast<const sessions::TabRestoreService::Tab&>(*entry),
-                 kRecentlyClosedCount, data);
-          break;
-        case sessions::TabRestoreService::WINDOW:
-          AddWindow(
-              static_cast<const sessions::TabRestoreService::Window&>(*entry),
-              kRecentlyClosedCount, data);
-          break;
-      }
-    }
-
-    data->recently_closed_pages_have_updates_ = true;
+  // Initialize the one-shot timer to update the the "Recently Closed" category
+  // in a while. If there is already a request queued then cancel it and post
+  // the new request. This ensures that JumpList update of the "Recently Closed"
+  // category won't happen until there has been a brief quiet period, thus
+  // avoiding update storms.
+  if (timer_recently_closed_.IsRunning()) {
+    timer_recently_closed_.Reset();
+  } else {
+    timer_recently_closed_.Start(
+        FROM_HERE, kDelayForJumplistUpdate,
+        base::Bind(&JumpList::DeferredTabRestoreServiceChanged,
+                   base::Unretained(this)));
   }
-
-  // Send a query that retrieves the first favicon.
-  StartLoadingFavicon();
 }
 
 void JumpList::TabRestoreServiceDestroyed(
@@ -554,7 +344,7 @@ bool JumpList::AddTab(const sessions::TabRestoreService::Tab& tab,
   const sessions::SerializedNavigationEntry& current_navigation =
       tab.navigations.at(tab.current_navigation_index);
   std::string url = current_navigation.virtual_url().spec();
-  link->GetCommandLine()->AppendArgNative(base::UTF8ToWide(url));
+  link->GetCommandLine()->AppendArgNative(base::UTF8ToUTF16(url));
   link->GetCommandLine()->AppendSwitchASCII(switches::kWinJumplistAction,
                                             jumplist::kRecentlyClosedCategory);
   link->set_title(current_navigation.title());
@@ -675,22 +465,6 @@ void JumpList::PostRunUpdate() {
   DCHECK(CalledOnValidThread());
 
   TRACE_EVENT0("browser", "JumpList::PostRunUpdate");
-  // Initialize the one-shot timer to update the jumplists in a while.
-  // If there is already a request queued then cancel it and post the new
-  // request. This ensures that JumpListUpdates won't happen until there has
-  // been a brief quiet period, thus avoiding update storms.
-  if (timer_.IsRunning()) {
-    timer_.Reset();
-  } else {
-    timer_.Start(FROM_HERE, kDelayForJumplistUpdate, this,
-                 &JumpList::DeferredRunUpdate);
-  }
-}
-
-void JumpList::DeferredRunUpdate() {
-  DCHECK(CalledOnValidThread());
-
-  TRACE_EVENT0("browser", "JumpList::DeferredRunUpdate");
   if (!profile_)
     return;
 
@@ -703,8 +477,9 @@ void JumpList::DeferredRunUpdate() {
   // Post a task to update the JumpList, which consists of 1) delete old icons,
   // 2) create new icons, 3) notify the OS.
   update_jumplist_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&RunUpdateJumpList, incognito_availability, app_id_,
-                            profile_dir, base::RetainedRef(jumplist_data_)));
+      FROM_HERE,
+      base::Bind(&JumpList::RunUpdateJumpList, this, incognito_availability,
+                 app_id_, profile_dir, base::RetainedRef(jumplist_data_)));
 
   // Post a task to delete JumpListIcons folder as it's no longer needed.
   // Now we have JumpListIconsMostVisited folder and JumpListIconsRecentClosed
@@ -730,8 +505,256 @@ void JumpList::TopSitesLoaded(history::TopSites* top_sites) {
 
 void JumpList::TopSitesChanged(history::TopSites* top_sites,
                                ChangeReason change_reason) {
-  top_sites->GetMostVisitedURLs(
-      base::Bind(&JumpList::OnMostVisitedURLsAvailable,
-                 weak_ptr_factory_.GetWeakPtr()),
-      false);
+  // If we have a pending favicon request, cancel it here (it is out of date).
+  CancelPendingUpdate();
+
+  // Initialize the one-shot timer to update the the "Most visited" category in
+  // a while. If there is already a request queued then cancel it and post the
+  // new request. This ensures that JumpList update of the "Most visited"
+  // category won't happen until there has been a brief quiet period, thus
+  // avoiding update storms.
+  if (timer_most_visited_.IsRunning()) {
+    timer_most_visited_.Reset();
+  } else {
+    timer_most_visited_.Start(
+        FROM_HERE, kDelayForJumplistUpdate,
+        base::Bind(&JumpList::DeferredTopSitesChanged, base::Unretained(this)));
+  }
+}
+
+void JumpList::DeferredTopSitesChanged() {
+  scoped_refptr<history::TopSites> top_sites =
+      TopSitesFactory::GetForProfile(profile_);
+  if (top_sites) {
+    top_sites->GetMostVisitedURLs(
+        base::Bind(&JumpList::OnMostVisitedURLsAvailable,
+                   weak_ptr_factory_.GetWeakPtr()),
+        false);
+  }
+}
+
+void JumpList::DeferredTabRestoreServiceChanged() {
+  // Create a list of ShellLinkItems from the "Recently Closed" pages.
+  // As noted above, we create a ShellLinkItem objects with the following
+  // parameters.
+  // * arguments
+  //   The last URL of the tab object.
+  // * title
+  //   The title of the last URL.
+  // * icon
+  //   An empty string. This value is to be updated in OnFaviconDataAvailable().
+  const int kRecentlyClosedCount = 3;
+  sessions::TabRestoreService* tab_restore_service =
+      TabRestoreServiceFactory::GetForProfile(profile_);
+
+  {
+    JumpListData* data = &jumplist_data_->data;
+    base::AutoLock auto_lock(data->list_lock_);
+    data->recently_closed_pages_.clear();
+
+    for (const auto& entry : tab_restore_service->entries()) {
+      if (data->recently_closed_pages_.size() >= kRecentlyClosedCount)
+        break;
+      switch (entry->type) {
+        case sessions::TabRestoreService::TAB:
+          AddTab(static_cast<const sessions::TabRestoreService::Tab&>(*entry),
+                 kRecentlyClosedCount, data);
+          break;
+        case sessions::TabRestoreService::WINDOW:
+          AddWindow(
+              static_cast<const sessions::TabRestoreService::Window&>(*entry),
+              kRecentlyClosedCount, data);
+          break;
+      }
+    }
+
+    data->recently_closed_pages_have_updates_ = true;
+  }
+
+  // Send a query that retrieves the first favicon.
+  StartLoadingFavicon();
+}
+
+void JumpList::CreateIconFiles(const base::FilePath& icon_dir,
+                               const ShellLinkItemList& item_list,
+                               size_t max_items) {
+  // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
+  SCOPED_UMA_HISTOGRAM_TIMER("WinJumplist.CreateIconFilesDuration");
+
+  for (ShellLinkItemList::const_iterator item = item_list.begin();
+       item != item_list.end() && max_items > 0; ++item, --max_items) {
+    base::FilePath icon_path;
+    if (CreateIconFile((*item)->icon_image(), icon_dir, &icon_path))
+      (*item)->set_icon(icon_path.value(), 0);
+  }
+}
+
+void JumpList::UpdateIconFiles(const base::FilePath& icon_dir,
+                               const ShellLinkItemList& page_list,
+                               size_t slot_limit) {
+  DeleteDirectoryContentAndLogRuntime(icon_dir, kFileDeleteLimit);
+
+  // Create new icons only when the directory exists and is empty.
+  if (base::CreateDirectory(icon_dir) && base::IsDirectoryEmpty(icon_dir))
+    CreateIconFiles(icon_dir, page_list, slot_limit);
+}
+
+bool JumpList::UpdateJumpList(
+    const base::string16& app_id,
+    const base::FilePath& profile_dir,
+    const ShellLinkItemList& most_visited_pages,
+    const ShellLinkItemList& recently_closed_pages,
+    bool most_visited_pages_have_updates,
+    bool recently_closed_pages_have_updates,
+    IncognitoModePrefs::Availability incognito_availability) {
+  if (!JumpListUpdater::IsEnabled())
+    return true;
+
+  JumpListUpdater jumplist_updater(app_id);
+
+  base::ElapsedTimer begin_update_timer;
+
+  if (!jumplist_updater.BeginUpdate())
+    return false;
+
+  // Discard this JumpList update if JumpListUpdater::BeginUpdate takes longer
+  // than the maximum allowed time, as it's very likely the following update
+  // steps will also take a long time.
+  if (begin_update_timer.Elapsed() >= kTimeOutForJumplistUpdate)
+    return false;
+
+  // The default maximum number of items to display in JumpList is 10.
+  // https://msdn.microsoft.com/library/windows/desktop/dd378398.aspx
+  // The "Most visited" category title always takes 1 of the JumpList slots if
+  // |most_visited_pages| isn't empty.
+  // The "Recently closed" category title will also take 1 if
+  // |recently_closed_pages| isn't empty.
+  // For the remaining slots, we allocate 5/8 (i.e., 5 slots if both categories
+  // present) to "most-visited" items and 3/8 (i.e., 3 slots if both categories
+  // present) to "recently-closed" items, respectively.
+  // Nevertheless, if there are not so many items in |recently_closed_pages|,
+  // we give the remaining slots to "most-visited" items.
+
+  const int kMostVisited = 50;
+  const int kRecentlyClosed = 30;
+  const int kTotal = kMostVisited + kRecentlyClosed;
+
+  // Adjust the available jumplist slots to account for the category titles.
+  size_t user_max_items_adjusted = jumplist_updater.user_max_items();
+  if (!most_visited_pages.empty())
+    --user_max_items_adjusted;
+  if (!recently_closed_pages.empty())
+    --user_max_items_adjusted;
+
+  size_t most_visited_items =
+      MulDiv(user_max_items_adjusted, kMostVisited, kTotal);
+  size_t recently_closed_items = user_max_items_adjusted - most_visited_items;
+  if (recently_closed_pages.size() < recently_closed_items) {
+    most_visited_items += recently_closed_items - recently_closed_pages.size();
+    recently_closed_items = recently_closed_pages.size();
+  }
+
+  // Record the desired number of icons to create in this JumpList update.
+  int icons_to_create = 0;
+
+  // Update the icons for "Most Visisted" category of the JumpList if needed.
+  if (most_visited_pages_have_updates) {
+    base::FilePath icon_dir_most_visited = GenerateJumplistIconDirName(
+        profile_dir, FILE_PATH_LITERAL("MostVisited"));
+
+    UpdateIconFiles(icon_dir_most_visited, most_visited_pages,
+                    most_visited_items);
+
+    icons_to_create += std::min(most_visited_pages.size(), most_visited_items);
+  }
+
+  // Update the icons for "Recently Closed" category of the JumpList if needed.
+  if (recently_closed_pages_have_updates) {
+    base::FilePath icon_dir_recent_closed = GenerateJumplistIconDirName(
+        profile_dir, FILE_PATH_LITERAL("RecentClosed"));
+
+    UpdateIconFiles(icon_dir_recent_closed, recently_closed_pages,
+                    recently_closed_items);
+
+    icons_to_create +=
+        std::min(recently_closed_pages.size(), recently_closed_items);
+  }
+
+  // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
+  UMA_HISTOGRAM_COUNTS_100("WinJumplist.CreateIconFilesCount", icons_to_create);
+
+  // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
+  SCOPED_UMA_HISTOGRAM_TIMER("WinJumplist.UpdateJumpListDuration");
+
+  // Update the "Most Visited" category of the JumpList if it exists.
+  // This update request is applied into the JumpList when we commit this
+  // transaction.
+  if (!jumplist_updater.AddCustomCategory(
+          l10n_util::GetStringUTF16(IDS_NEW_TAB_MOST_VISITED),
+          most_visited_pages, most_visited_items)) {
+    return false;
+  }
+
+  // Update the "Recently Closed" category of the JumpList.
+  if (!jumplist_updater.AddCustomCategory(
+          l10n_util::GetStringUTF16(IDS_RECENTLY_CLOSED), recently_closed_pages,
+          recently_closed_items)) {
+    return false;
+  }
+
+  // Update the "Tasks" category of the JumpList.
+  if (!UpdateTaskCategory(&jumplist_updater, incognito_availability))
+    return false;
+
+  // Commit this transaction and send the updated JumpList to Windows.
+  return jumplist_updater.CommitUpdate();
+}
+
+void JumpList::RunUpdateJumpList(
+    IncognitoModePrefs::Availability incognito_availability,
+    const base::string16& app_id,
+    const base::FilePath& profile_dir,
+    base::RefCountedData<JumpListData>* ref_counted_data) {
+  JumpListData* data = &ref_counted_data->data;
+  ShellLinkItemList local_most_visited_pages;
+  ShellLinkItemList local_recently_closed_pages;
+  bool most_visited_pages_have_updates;
+  bool recently_closed_pages_have_updates;
+
+  {
+    base::AutoLock auto_lock(data->list_lock_);
+    // Make sure we are not out of date: if icon_urls_ is not empty, then
+    // another notification has been received since we processed this one
+    if (!data->icon_urls_.empty())
+      return;
+
+    // Make local copies of lists and flags so we can release the lock.
+    local_most_visited_pages = data->most_visited_pages_;
+    local_recently_closed_pages = data->recently_closed_pages_;
+
+    most_visited_pages_have_updates = data->most_visited_pages_have_updates_;
+    recently_closed_pages_have_updates =
+        data->recently_closed_pages_have_updates_;
+
+    // Clear the flags to reflect that we'll take actions on these updates.
+    data->most_visited_pages_have_updates_ = false;
+    data->recently_closed_pages_have_updates_ = false;
+  }
+
+  if (!most_visited_pages_have_updates && !recently_closed_pages_have_updates)
+    return;
+
+  // Update the application JumpList. If it fails, reset the flags to true if
+  // they were so that the corresponding JumpList categories will be tried to
+  // update again in the next run.
+  if (!UpdateJumpList(
+          app_id, profile_dir, local_most_visited_pages,
+          local_recently_closed_pages, most_visited_pages_have_updates,
+          recently_closed_pages_have_updates, incognito_availability)) {
+    base::AutoLock auto_lock(data->list_lock_);
+    if (most_visited_pages_have_updates)
+      data->most_visited_pages_have_updates_ = true;
+    if (recently_closed_pages_have_updates)
+      data->recently_closed_pages_have_updates_ = true;
+  }
 }

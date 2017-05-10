@@ -52,6 +52,7 @@
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/native_widget_types.h"
+#include "url/gurl.h"
 
 using base::android::JavaParamRef;
 using base::android::JavaRef;
@@ -83,6 +84,7 @@ VrShell::VrShell(JNIEnv* env,
                  jobject obj,
                  ui::WindowAndroid* window,
                  bool for_web_vr,
+                 bool in_cct,
                  VrShellDelegate* delegate,
                  gvr_context* gvr_api,
                  bool reprojected_rendering)
@@ -99,16 +101,15 @@ VrShell::VrShell(JNIEnv* env,
   g_instance = this;
   j_vr_shell_.Reset(env, obj);
 
-  gl_thread_ = base::MakeUnique<VrGLThread>(weak_ptr_factory_.GetWeakPtr(),
-                                            main_thread_task_runner_, gvr_api,
-                                            for_web_vr, reprojected_rendering_);
+  gl_thread_ = base::MakeUnique<VrGLThread>(
+      weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
+      for_web_vr, in_cct, reprojected_rendering_);
+  ui_ = gl_thread_.get();
 
   base::Thread::Options options(base::MessageLoop::TYPE_DEFAULT, 0);
   options.priority = base::ThreadPriority::DISPLAY;
   gl_thread_->StartWithOptions(options);
 
-  ui_ = base::MakeUnique<UiInterface>(for_web_vr ? UiInterface::Mode::WEB_VR
-                                                 : UiInterface::Mode::STANDARD);
 
   content::BrowserThread::PostTask(
       content::BrowserThread::FILE, FROM_HERE,
@@ -150,7 +151,7 @@ void VrShell::SwapContents(
   }
   input_manager_ = base::MakeUnique<VrInputManager>(web_contents_);
   vr_web_contents_observer_ =
-      base::MakeUnique<VrWebContentsObserver>(web_contents_, ui_.get(), this);
+      base::MakeUnique<VrWebContentsObserver>(web_contents_, ui_, this);
   // TODO(billorr): Make VrMetricsHelper tab-aware and able to track multiple
   // tabs. crbug.com/684661
   metrics_helper_ = base::MakeUnique<VrMetricsHelper>(web_contents_);
@@ -164,6 +165,7 @@ void VrShell::SetUiState() {
     ui_->SetURL(GURL());
     ui_->SetLoading(false);
     ui_->SetFullscreen(false);
+    ui_->SetURL(GURL());
   } else {
     ui_->SetURL(web_contents_->GetVisibleURL());
     ui_->SetLoading(web_contents_->IsLoading());
@@ -223,6 +225,11 @@ void VrShell::OnContentPaused(bool paused) {
     delegate_provider_->device_provider()->Device()->OnFocus();
 }
 
+void VrShell::NavigateBack() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrShellImpl_navigateBack(env, j_vr_shell_.obj());
+}
+
 void VrShell::OnTriggerEvent(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   gl_thread_->task_runner()->PostTask(
       FROM_HERE,
@@ -267,11 +274,13 @@ void VrShell::SetWebVrMode(JNIEnv* env,
     metrics_helper_->SetWebVREnabled(enabled);
   PostToGlThreadWhenReady(base::Bind(&VrShellGl::SetWebVrMode,
                                      gl_thread_->GetVrShellGl(), enabled));
+  ui_->SetWebVrMode(enabled);
+}
 
-  ui_->SetMode(enabled ? UiInterface::Mode::WEB_VR
-                       : UiInterface::Mode::STANDARD);
-  PostToGlThreadWhenReady(base::Bind(&UiSceneManager::SetWebVRMode,
-                                     gl_thread_->GetSceneManager(), enabled));
+void VrShell::OnFullscreenChanged(bool enabled) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrShellImpl_onFullscreenChanged(env, j_vr_shell_.obj(), enabled);
+  ui_->SetFullscreen(enabled);
 }
 
 bool VrShell::GetWebVrMode(JNIEnv* env, const JavaParamRef<jobject>& obj) {
@@ -288,7 +297,6 @@ void VrShell::OnTabListCreated(JNIEnv* env,
                                const JavaParamRef<jobject>& obj,
                                jobjectArray tabs,
                                jobjectArray incognito_tabs) {
-  ui_->InitTabList();
   ProcessTabArray(env, tabs, false);
   ProcessTabArray(env, incognito_tabs, true);
   ui_->FlushTabList();
@@ -322,9 +330,7 @@ void VrShell::OnTabRemoved(JNIEnv* env,
 }
 
 void VrShell::SetWebVRSecureOrigin(bool secure_origin) {
-  PostToGlThreadWhenReady(base::Bind(&UiSceneManager::SetWebVRSecureOrigin,
-                                     gl_thread_->GetSceneManager(),
-                                     secure_origin));
+  ui_->SetWebVrSecureOrigin(secure_origin);
 }
 
 void VrShell::SubmitWebVRFrame(int16_t frame_index,
@@ -399,11 +405,6 @@ void VrShell::GvrDelegateReady() {
   delegate_provider_->SetPresentingDelegate(this, gvr_api_);
 }
 
-void VrShell::AppButtonGesturePerformed(UiInterface::Direction direction) {
-  if (vr_shell_enabled_)
-    ui_->HandleAppButtonGesturePerformed(direction);
-}
-
 void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,
                                            const JavaParamRef<jobject>& object,
                                            jint width,
@@ -424,13 +425,6 @@ void VrShell::DoUiAction(const UiAction action,
                          const base::DictionaryValue* arguments) {
   // Actions that can be handled natively.
   switch (action) {
-    case HISTORY_BACK:
-      if (web_contents_ && web_contents_->IsFullscreen()) {
-        web_contents_->ExitFullscreen(false);
-        return;
-      }
-      // Otherwise handle in java.
-      break;
     case EXIT_PRESENT:
       delegate_provider_->ExitWebVRPresent();
       return;
@@ -452,9 +446,6 @@ void VrShell::DoUiAction(const UiAction action,
       Java_VrShellImpl_openNewTab(env, j_vr_shell_.obj(), incognito);
       return;
     }
-    case HISTORY_BACK:
-      Java_VrShellImpl_navigateBack(env, j_vr_shell_.obj());
-      break;
     case HISTORY_FORWARD:
       Java_VrShellImpl_navigateForward(env, j_vr_shell_.obj());
       break;
@@ -556,11 +547,13 @@ jlong Init(JNIEnv* env,
            const JavaParamRef<jobject>& delegate,
            jlong window_android,
            jboolean for_web_vr,
+           jboolean in_cct,
            jlong gvr_api,
            jboolean reprojected_rendering) {
   return reinterpret_cast<intptr_t>(new VrShell(
       env, obj, reinterpret_cast<ui::WindowAndroid*>(window_android),
-      for_web_vr, VrShellDelegate::GetNativeVrShellDelegate(env, delegate),
+      for_web_vr, in_cct,
+      VrShellDelegate::GetNativeVrShellDelegate(env, delegate),
       reinterpret_cast<gvr_context*>(gvr_api), reprojected_rendering));
 }
 

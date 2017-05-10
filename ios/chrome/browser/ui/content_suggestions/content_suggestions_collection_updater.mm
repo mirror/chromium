@@ -14,6 +14,7 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_article_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item.h"
+#import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_reading_list_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_text_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestion.h"
@@ -236,16 +237,16 @@ SectionIdentifier SectionIdentifierForInfo(
     return [NSArray array];
   }
 
+  CSCollectionViewModel* model =
+      self.collectionViewController.collectionViewModel;
   NSMutableArray<NSIndexPath*>* indexPaths = [NSMutableArray array];
   for (ContentSuggestion* suggestion in suggestions) {
     ContentSuggestionsSectionInformation* sectionInfo =
         suggestion.suggestionIdentifier.sectionInfo;
     NSInteger sectionIdentifier = SectionIdentifierForInfo(sectionInfo);
-    CSCollectionViewModel* model =
-        self.collectionViewController.collectionViewModel;
 
     if (![model hasSectionForSectionIdentifier:sectionIdentifier])
-      return [NSArray array];
+      continue;
 
     NSInteger section = [model sectionForSectionIdentifier:sectionIdentifier];
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
@@ -288,7 +289,13 @@ SectionIdentifier SectionIdentifierForInfo(
         break;
       }
       case ContentSuggestionTypeMostVisited: {
-        // TODO(crbug.com/707754): Add the most visited item.
+        ContentSuggestionsMostVisitedItem* mostVisitedItem =
+            [[ContentSuggestionsMostVisitedItem alloc]
+                initWithType:ItemTypeMostVisited];
+        mostVisitedItem.title = suggestion.title;
+        [model addItem:mostVisitedItem
+            toSectionWithIdentifier:SectionIdentifierMostVisited];
+        [indexPaths addObject:indexPath];
         break;
       }
     }

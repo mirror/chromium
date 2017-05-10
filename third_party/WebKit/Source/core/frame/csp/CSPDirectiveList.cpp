@@ -931,7 +931,7 @@ bool CSPDirectiveList::AllowDynamicWorker() const {
 }
 
 const String& CSPDirectiveList::PluginTypesText() const {
-  ASSERT(HasPluginTypes());
+  DCHECK(HasPluginTypes());
   return plugin_types_->GetText();
 }
 
@@ -958,7 +958,7 @@ void CSPDirectiveList::Parse(const UChar* begin, const UChar* end) {
 
     String name, value;
     if (ParseDirective(directive_begin, position, name, value)) {
-      ASSERT(!name.IsEmpty());
+      DCHECK(!name.IsEmpty());
       AddDirective(name, value);
     }
 
@@ -975,8 +975,8 @@ bool CSPDirectiveList::ParseDirective(const UChar* begin,
                                       const UChar* end,
                                       String& name,
                                       String& value) {
-  ASSERT(name.IsEmpty());
-  ASSERT(value.IsEmpty());
+  DCHECK(name.IsEmpty());
+  DCHECK(value.IsEmpty());
 
   const UChar* position = begin;
   skipWhile<UChar, IsASCIISpace>(position, end);
@@ -1049,9 +1049,9 @@ void CSPDirectiveList::ParseRequireSRIFor(const String& name,
 
     if (token_begin < position) {
       String token = String(token_begin, position - token_begin);
-      if (DeprecatedEqualIgnoringCase(token, "script")) {
+      if (EqualIgnoringASCIICase(token, "script")) {
         require_sri_for_ |= RequireSRIForToken::kScript;
-      } else if (DeprecatedEqualIgnoringCase(token, "style")) {
+      } else if (EqualIgnoringASCIICase(token, "style")) {
         require_sri_for_ |= RequireSRIForToken::kStyle;
       } else {
         if (number_of_token_errors)
@@ -1209,7 +1209,7 @@ void CSPDirectiveList::EnableInsecureRequestsUpgrade(const String& name,
 }
 
 void CSPDirectiveList::AddDirective(const String& name, const String& value) {
-  ASSERT(!name.IsEmpty());
+  DCHECK(!name.IsEmpty());
 
   ContentSecurityPolicy::DirectiveType type =
       ContentSecurityPolicy::GetDirectiveType(name);

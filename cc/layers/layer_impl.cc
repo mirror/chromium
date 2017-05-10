@@ -727,6 +727,11 @@ void LayerImpl::UpdatePropertyTreeScrollOffset() {
   // directly instead of going through layers.
   TransformTree& transform_tree = GetTransformTree();
   TransformNode* node = transform_tree.Node(transform_tree_index_);
+  DCHECK(node);
+  // TODO(pdr): This is a workaround for https://crbug.com/712298 to avoid
+  // crashing when there's no transform node. This workaround should be removed.
+  if (!node)
+    return;
   gfx::ScrollOffset current_offset = CurrentScrollOffset();
   if (node->scroll_offset != current_offset) {
     node->scroll_offset = current_offset;
@@ -868,13 +873,8 @@ void LayerImpl::RunMicroBenchmark(MicroBenchmarkImpl* benchmark) {
 gfx::Transform LayerImpl::DrawTransform() const {
   // Only drawn layers have up-to-date draw properties.
   if (!contributes_to_drawn_render_surface()) {
-    if (GetPropertyTrees()->non_root_surfaces_enabled) {
       return draw_property_utils::DrawTransform(this, GetTransformTree(),
                                                 GetEffectTree());
-    } else {
-      return draw_property_utils::ScreenSpaceTransform(this,
-                                                       GetTransformTree());
-    }
   }
 
   return draw_properties().target_space_transform;

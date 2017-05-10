@@ -73,6 +73,8 @@ _NEGATIVE_FILTER = [
 
 _VERSION_SPECIFIC_FILTER = {}
 _VERSION_SPECIFIC_FILTER['HEAD'] = [
+    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1803
+    'ChromeDriverTest.testAlertHandlingOnPageUnload',
 ]
 _VERSION_SPECIFIC_FILTER['58'] = [
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1673
@@ -171,6 +173,8 @@ _ANDROID_NEGATIVE_FILTER['chromium'] = (
         'ChromeDriverTest.testHoverOverElement',
         # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1478
         'ChromeDriverTest.testShouldHandleNewWindowLoadingProperly',
+        # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1803
+        'ChromeDriverTest.testAlertHandlingOnPageUnload',
     ]
 )
 _ANDROID_NEGATIVE_FILTER['chromedriver_webview_shell'] = (

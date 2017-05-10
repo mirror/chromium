@@ -322,9 +322,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
           features::kSendBeaconThrowForBlobWithNonSimpleType))
     WebRuntimeFeatures::EnableSendBeaconThrowForBlobWithNonSimpleType(true);
 
-  WebRuntimeFeatures::EnableAccessibilityObjectModel(
-      base::FeatureList::IsEnabled(features::kAccessibilityObjectModel));
-
 #if defined(OS_ANDROID)
   if (command_line.HasSwitch(switches::kDisableMediaSessionAPI))
     WebRuntimeFeatures::EnableMediaSession(false);
@@ -380,6 +377,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
     WebRuntimeFeatures::EnableAutoplayMutedVideos(true);
   }
 #endif
+
+  WebRuntimeFeatures::EnableLocationHardReload(
+      base::FeatureList::IsEnabled(features::kLocationHardReload));
 
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.

@@ -1227,21 +1227,14 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&IndexedDBDispatcherHost::AddBinding,
                  base::Unretained(indexed_db_factory_.get())));
 
-#if defined(OS_ANDROID)
-  AddUIThreadInterface(
-      registry.get(), GetGlobalJavaInterfaces()
-                          ->CreateInterfaceFactory<
-                              shape_detection::mojom::FaceDetectionProvider>());
-#else
-  AddUIThreadInterface(
-      registry.get(),
-      base::Bind(&ForwardShapeDetectionRequest<
-                 shape_detection::mojom::FaceDetectionProviderRequest>));
-#endif
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&ForwardShapeDetectionRequest<
                  shape_detection::mojom::BarcodeDetectionRequest>));
+  AddUIThreadInterface(
+      registry.get(),
+      base::Bind(&ForwardShapeDetectionRequest<
+                 shape_detection::mojom::FaceDetectionProviderRequest>));
   AddUIThreadInterface(
       registry.get(),
       base::Bind(&ForwardShapeDetectionRequest<
@@ -1873,6 +1866,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     // also be added to chrome/browser/chromeos/login/chrome_restart_request.cc.
     cc::switches::kDisableCompositedAntialiasing,
     cc::switches::kDisableThreadedAnimation,
+    cc::switches::kDisallowNonExactResourceReuse,
     cc::switches::kEnableCheckerImaging,
     cc::switches::kEnableColorCorrectRendering,
     cc::switches::kEnableGpuBenchmarking,

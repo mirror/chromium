@@ -708,6 +708,9 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
         view_->DoBrowserControlsShrinkBlinkSize();
     resize_params->bottom_controls_height = view_->GetBottomControlsHeight();
     resize_params->visible_viewport_size = view_->GetVisibleViewportSize();
+    cc::LocalSurfaceId local_surface_id = view_->GetLocalSurfaceId();
+    if (local_surface_id.is_valid())
+      resize_params->local_surface_id = local_surface_id;
   }
 
   const bool size_changed =
@@ -881,7 +884,7 @@ void RenderWidgetHostImpl::WaitForSurface() {
   // How long to (synchronously) wait for the renderer to respond with a
   // new frame when our current frame doesn't exist or is the wrong size.
   // This timeout impacts the "choppiness" of our window resize.
-  const int kPaintMsgTimeoutMS = 50;
+  const int kPaintMsgTimeoutMS = 167;
 
   if (!view_)
     return;
@@ -929,7 +932,7 @@ void RenderWidgetHostImpl::WaitForSurface() {
     Send(new ViewMsg_Repaint(routing_id_, view_size));
   }
 
-  // Pump a nested message loop until we time out or get a frame of the right
+  // Pump a nested run loop until we time out or get a frame of the right
   // size.
   TimeTicks start_time = TimeTicks::Now();
   TimeDelta time_left = TimeDelta::FromMilliseconds(kPaintMsgTimeoutMS);

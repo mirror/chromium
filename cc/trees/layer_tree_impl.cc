@@ -1021,21 +1021,16 @@ bool LayerTreeImpl::UpdateDrawProperties(bool update_lcd_text) {
     TRACE_EVENT2(
         "cc", "LayerTreeImpl::UpdateDrawProperties::CalculateDrawProperties",
         "IsActive", IsActiveTree(), "SourceFrameNumber", source_frame_number_);
-    // TODO(crbug.com/692780): Remove this option entirely once this get to
-    // stable and proves it works.
-    bool can_render_to_separate_surface = true;
-
     // We verify visible rect calculations whenever we verify clip tree
     // calculations except when this function is explicitly passed a flag asking
     // us to skip it.
     LayerTreeHostCommon::CalcDrawPropsImplInputs inputs(
-        layer_list_[0], DrawViewportSize(),
+        layer_list_[0], DeviceViewport().size(),
         layer_tree_host_impl_->DrawTransform(), device_scale_factor(),
         current_page_scale_factor(), PageScaleLayer(),
         InnerViewportScrollLayer(), OuterViewportScrollLayer(),
         elastic_overscroll()->Current(IsActiveTree()),
         OverscrollElasticityLayer(), resource_provider()->max_texture_size(),
-        can_render_to_separate_surface,
         settings().layer_transforms_should_scale_layer_contents,
         &render_surface_list_, &property_trees_);
     LayerTreeHostCommon::CalculateDrawProperties(&inputs);
@@ -1169,8 +1164,8 @@ void LayerTreeImpl::BuildPropertyTreesForTesting() {
       OuterViewportScrollLayer(), OverscrollElasticityLayer(),
       elastic_overscroll()->Current(IsActiveTree()),
       current_page_scale_factor(), device_scale_factor(),
-      gfx::Rect(DrawViewportSize()), layer_tree_host_impl_->DrawTransform(),
-      &property_trees_);
+      gfx::Rect(DeviceViewport().size()),
+      layer_tree_host_impl_->DrawTransform(), &property_trees_);
   property_trees_.transform_tree.set_source_to_parent_updates_allowed(false);
 }
 
@@ -1390,10 +1385,6 @@ base::TimeDelta LayerTreeImpl::CurrentBeginFrameInterval() const {
 
 gfx::Rect LayerTreeImpl::DeviceViewport() const {
   return layer_tree_host_impl_->DeviceViewport();
-}
-
-gfx::Size LayerTreeImpl::DrawViewportSize() const {
-  return layer_tree_host_impl_->DrawViewportSize();
 }
 
 const gfx::Rect LayerTreeImpl::ViewportRectForTilePriority() const {
@@ -1703,8 +1694,6 @@ void LayerTreeImpl::RegisterScrollLayer(LayerImpl* layer) {
       std::pair<int, int>(layer->scroll_clip_layer_id(), layer->id()));
 
   DidUpdateScrollState(layer->id());
-
-  layer->set_needs_show_scrollbars(true);
 }
 
 void LayerTreeImpl::UnregisterScrollLayer(LayerImpl* layer) {

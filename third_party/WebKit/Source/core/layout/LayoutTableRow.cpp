@@ -98,7 +98,7 @@ void LayoutTableRow::StyleDidChange(StyleDifference diff,
   }
 }
 
-const BorderValue& LayoutTableRow::BorderAdjoiningStartCell(
+BorderValue LayoutTableRow::BorderAdjoiningStartCell(
     const LayoutTableCell* cell) const {
 #if DCHECK_IS_ON()
   DCHECK(cell->IsFirstOrLastCellInRow());
@@ -108,7 +108,7 @@ const BorderValue& LayoutTableRow::BorderAdjoiningStartCell(
   return Style()->BorderStart();
 }
 
-const BorderValue& LayoutTableRow::BorderAdjoiningEndCell(
+BorderValue LayoutTableRow::BorderAdjoiningEndCell(
     const LayoutTableCell* cell) const {
 #if DCHECK_IS_ON()
   DCHECK(cell->IsFirstOrLastCellInRow());
@@ -292,30 +292,45 @@ void LayoutTableRow::ComputeOverflow() {
 }
 
 void LayoutTableRow::AddOverflowFromCell(const LayoutTableCell* cell) {
-  // Non-row-spanning-cells don't create overflow (they are fully contained
-  // within this row).
-  // TODO(crbug.com/603993): This seems incorrect because cell may have visual
-  // effect overflow that should be included in this row.
-  if (cell->RowSpan() == 1)
-    return;
-
-  // Cells only generates visual overflow.
-  LayoutRect cell_visual_overflow_rect =
-      cell->VisualOverflowRectForPropagation(StyleRef());
-
-  // The cell and the row share the section's coordinate system. However
-  // the visual overflow should be determined in the coordinate system of
-  // the row, that's why we shift it below.
-  cell_visual_overflow_rect.MoveBy(-Location());
-  AddContentsVisualOverflow(cell_visual_overflow_rect);
-
   // Table row paints its background behind cells. If the cell spans multiple
   // rows, the row's visual rect should be expanded to cover the cell.
-  if (StyleRef().HasBackground()) {
+  // Here don't check background existence to avoid requirement to invalidate
+  // overflow on change of background existence.
+  if (cell->RowSpan() > 1) {
     LayoutRect cell_background_rect = cell->FrameRect();
     cell_background_rect.MoveBy(-Location());
     AddSelfVisualOverflow(cell_background_rect);
   }
+
+  // The cell and the row share the section's coordinate system. However
+  // the visual overflow should be determined in the coordinate system of
+  // the row, that's why we shift the rects by cell_row_offset below.
+  LayoutSize cell_row_offset = cell->Location() - Location();
+
+  // Let the row's self visual overflow cover the cell's whole collapsed
+  // borders. This ensures correct raster invalidation on row border style
+  // change.
+  if (const auto* collapsed_borders = cell->GetCollapsedBorderValues()) {
+    LayoutRect collapsed_border_rect =
+        cell->RectForOverflowPropagation(collapsed_borders->LocalVisualRect());
+    collapsed_border_rect.Move(cell_row_offset);
+    AddSelfVisualOverflow(collapsed_border_rect);
+  }
+
+  // Should propagate cell's overflow to row if the cell has row span or has
+  // overflow.
+  if (cell->RowSpan() == 1 && !cell->HasOverflowModel())
+    return;
+
+  LayoutRect cell_visual_overflow_rect =
+      cell->VisualOverflowRectForPropagation();
+  cell_visual_overflow_rect.Move(cell_row_offset);
+  AddContentsVisualOverflow(cell_visual_overflow_rect);
+
+  LayoutRect cell_layout_overflow_rect =
+      cell->LayoutOverflowRectForPropagation();
+  cell_layout_overflow_rect.Move(cell_row_offset);
+  AddLayoutOverflow(cell_layout_overflow_rect);
 }
 
 bool LayoutTableRow::IsFirstRowInSectionAfterHeader() const {

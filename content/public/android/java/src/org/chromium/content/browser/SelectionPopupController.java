@@ -387,9 +387,13 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         }
     }
 
-    void setScrollInProgress(boolean inProgress) {
-        mScrollInProgress = inProgress;
-        hideActionMode(inProgress);
+    void setScrollInProgress(boolean touchScrollInProgress, boolean scrollInProgress) {
+        mScrollInProgress = scrollInProgress;
+
+        // The active fling count reflected in |scrollInProgress| isn't reliable with WebView,
+        // so only use the active touch scroll signal for hiding. The fling animation
+        // movement will naturally hide the ActionMode by invalidating its content rect.
+        hideActionMode(touchScrollInProgress);
     }
 
     /**
@@ -931,12 +935,13 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 mSelectionRect.set(left, top, right, bottom);
                 mHasSelection = true;
                 mUnselectAllOnDismiss = true;
-                if (mSelectionClient == null || !mSelectionClient.sendsSelectionPopupUpdates()) {
-                    showActionModeOrClearOnFailure();
-                } else {
+                if (mSelectionClient != null
+                        && mSelectionClient.requestSelectionPopupUpdates(true /* suggest */)) {
                     // Rely on |mSelectionClient| sending a classification request and the request
                     // always calling onClassified() callback.
                     mPendingShowActionMode = true;
+                } else {
+                    showActionModeOrClearOnFailure();
                 }
                 break;
 
@@ -953,6 +958,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 mHasSelection = false;
                 mUnselectAllOnDismiss = false;
                 mSelectionRect.setEmpty();
+                if (mSelectionClient != null) mSelectionClient.cancelAllRequests();
                 finishActionMode();
                 break;
 
@@ -961,11 +967,13 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 break;
 
             case SelectionEventType.SELECTION_HANDLE_DRAG_STOPPED:
-                if (mSelectionClient == null || !mSelectionClient.sendsSelectionPopupUpdates()) {
+                if (mSelectionClient != null
+                        && mSelectionClient.requestSelectionPopupUpdates(false /* suggest */)) {
+                    // Rely on |mSelectionClient| sending a classification request and the request
+                    // always calling onClassified() callback.
+                } else {
                     hideActionMode(false);
                 }
-                // Otherwise rely on |mSelectionClient| sending a classification request and the
-                // request always calling onClassified() callback.
                 break;
 
             case SelectionEventType.INSERTION_HANDLE_SHOWN:

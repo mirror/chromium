@@ -19,9 +19,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "cc/output/copy_output_request.h"
+#include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/frame_sink_id.h"
-#include "cc/surfaces/pending_frame_observer.h"
-#include "cc/surfaces/surface_factory.h"
 #include "cc/surfaces/surface_id.h"
 #include "cc/surfaces/surface_sequence.h"
 #include "cc/surfaces/surfaces_export.h"
@@ -35,14 +34,15 @@ namespace cc {
 
 class CompositorFrame;
 class CopyOutputRequest;
-class SurfaceFactory;
 
 class CC_SURFACES_EXPORT Surface {
  public:
-  using DrawCallback = SurfaceFactory::DrawCallback;
-  using WillDrawCallback = SurfaceFactory::WillDrawCallback;
+  using WillDrawCallback =
+      base::RepeatingCallback<void(const LocalSurfaceId&, const gfx::Rect&)>;
 
-  Surface(const SurfaceId& id, base::WeakPtr<SurfaceFactory> factory);
+  Surface(
+      const SurfaceId& id,
+      base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support);
   ~Surface();
 
   const SurfaceId& surface_id() const { return surface_id_; }
@@ -58,15 +58,12 @@ class CC_SURFACES_EXPORT Surface {
   // |will_draw_callback| is called when |surface| is scheduled for a draw and
   // there is visible damage.
   void QueueFrame(CompositorFrame frame,
-                  const DrawCallback& draw_callback,
+                  const base::Closure& draw_callback,
                   const WillDrawCallback& will_draw_callback);
   void RequestCopyOfOutput(std::unique_ptr<CopyOutputRequest> copy_request);
 
   // Notifies the Surface that a blocking SurfaceId now has an active frame.
   void NotifySurfaceIdAvailable(const SurfaceId& surface_id);
-
-  void AddObserver(PendingFrameObserver* observer);
-  void RemoveObserver(PendingFrameObserver* observer);
 
   // Called if a deadline has been hit and this surface is not yet active but
   // it's marked as respecting deadlines.
@@ -93,7 +90,9 @@ class CC_SURFACES_EXPORT Surface {
   void RunDrawCallback();
   void RunWillDrawCallback(const gfx::Rect& damage_rect);
 
-  base::WeakPtr<SurfaceFactory> factory() { return factory_; }
+  base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support() {
+    return compositor_frame_sink_support_;
+  }
 
   // Add a SurfaceSequence that must be satisfied before the Surface is
   // destroyed.
@@ -127,15 +126,19 @@ class CC_SURFACES_EXPORT Surface {
  private:
   struct FrameData {
     FrameData(CompositorFrame&& frame,
-              const DrawCallback& draw_callback,
+              const base::Closure& draw_callback,
               const WillDrawCallback& will_draw_callback);
     FrameData(FrameData&& other);
     ~FrameData();
     FrameData& operator=(FrameData&& other);
     CompositorFrame frame;
-    DrawCallback draw_callback;
+    base::Closure draw_callback;
     WillDrawCallback will_draw_callback;
   };
+
+  // Called to prevent additional CompositorFrames from being accepted into this
+  // surface. Once a Surface is closed, it cannot accept CompositorFrames again.
+  void Close();
 
   void ActivatePendingFrame();
   // Called when all of the surface's dependencies have been resolved.
@@ -153,18 +156,19 @@ class CC_SURFACES_EXPORT Surface {
       CompositorFrame* frame,
       std::vector<ui::LatencyInfo>* latency_info);
 
-  SurfaceId surface_id_;
+  const SurfaceId surface_id_;
   SurfaceId previous_frame_surface_id_;
-  base::WeakPtr<SurfaceFactory> factory_;
+  base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support_;
+  SurfaceManager* const surface_manager_;
 
   base::Optional<FrameData> pending_frame_data_;
   base::Optional<FrameData> active_frame_data_;
   int frame_index_;
+  bool closed_ = false;
   bool destroyed_;
   std::vector<SurfaceSequence> destruction_dependencies_;
 
   base::flat_set<SurfaceId> blocking_surfaces_;
-  base::ObserverList<PendingFrameObserver, true> observers_;
 
   DISALLOW_COPY_AND_ASSIGN(Surface);
 };

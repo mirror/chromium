@@ -632,17 +632,16 @@ void FrameSelection::SelectAll() {
 
   Node* root = nullptr;
   Node* select_start_target = nullptr;
-  if (ComputeVisibleSelectionInDOMTreeDeprecated().IsContentEditable()) {
-    root = HighestEditableRoot(
-        ComputeVisibleSelectionInDOMTreeDeprecated().Start());
+  if (ComputeVisibleSelectionInDOMTree().IsContentEditable()) {
+    root = HighestEditableRoot(ComputeVisibleSelectionInDOMTree().Start());
     if (Node* shadow_root = NonBoundaryShadowTreeRootNode(
-            ComputeVisibleSelectionInDOMTreeDeprecated().Start()))
+            ComputeVisibleSelectionInDOMTree().Start()))
       select_start_target = shadow_root->OwnerShadowHost();
     else
       select_start_target = root;
   } else {
     root = NonBoundaryShadowTreeRootNode(
-        ComputeVisibleSelectionInDOMTreeDeprecated().Start());
+        ComputeVisibleSelectionInDOMTree().Start());
     if (root) {
       select_start_target = root->OwnerShadowHost();
     } else {
@@ -984,7 +983,7 @@ void FrameSelection::RevealSelection(const ScrollAlignment& alignment,
       break;
   }
 
-  Position start = ComputeVisibleSelectionInDOMTreeDeprecated().Start();
+  Position start = ComputeVisibleSelectionInDOMTree().Start();
   DCHECK(start.AnchorNode());
   if (start.AnchorNode() && start.AnchorNode()->GetLayoutObject()) {
     // FIXME: This code only handles scrolling the startContainer's layer, but
@@ -1107,7 +1106,7 @@ GranularityStrategy* FrameSelection::GetGranularityStrategy() {
 }
 
 void FrameSelection::MoveRangeSelectionExtent(const IntPoint& contents_point) {
-  if (ComputeVisibleSelectionInDOMTreeDeprecated().IsNone())
+  if (ComputeVisibleSelectionInDOMTree().IsNone())
     return;
 
   const SetSelectionOptions kOptions =

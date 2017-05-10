@@ -31,6 +31,8 @@
 
 #include "web/LocalFrameClientImpl.h"
 
+#include <memory>
+
 #include "bindings/core/v8/ScriptController.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
@@ -74,6 +76,7 @@
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/exported/WrappedResourceResponse.h"
 #include "platform/feature_policy/FeaturePolicy.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/plugins/PluginData.h"
@@ -106,8 +109,6 @@
 #include "web/WebDevToolsFrontendImpl.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebPluginContainerImpl.h"
-
-#include <memory>
 
 namespace blink {
 
@@ -514,6 +515,12 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
               kCheckContentSecurityPolicy
           ? kWebContentSecurityPolicyDispositionCheck
           : kWebContentSecurityPolicyDispositionDoNotCheck;
+
+  if (IsLoadedAsMHTMLArchive()) {
+    navigation_info.archive_status =
+        WebFrameClient::NavigationPolicyInfo::ArchiveStatus::Present;
+  }
+
   // Caching could be disabled for requests initiated by DevTools.
   // TODO(ananta)
   // We should extract the network cache state into a global component which
@@ -733,8 +740,7 @@ PluginView* LocalFrameClientImpl::CreatePlugin(
   params.attribute_values = param_values;
   params.load_manually = load_manually;
 
-  WebPlugin* web_plugin =
-      web_frame_->Client()->CreatePlugin(web_frame_, params);
+  WebPlugin* web_plugin = web_frame_->Client()->CreatePlugin(params);
   if (!web_plugin)
     return nullptr;
 
@@ -979,6 +985,26 @@ bool LocalFrameClientImpl::ShouldUseClientLoFiForRequest(
 WebDevToolsAgentImpl* LocalFrameClientImpl::DevToolsAgent() {
   return WebLocalFrameImpl::FromFrame(web_frame_->GetFrame()->LocalFrameRoot())
       ->DevToolsAgentImpl();
+}
+
+bool LocalFrameClientImpl::IsLoadedAsMHTMLArchive() const {
+  WebFrame* parent_frame = web_frame_->Parent();
+  if (!parent_frame)
+    return false;
+
+  // TODO(nasko): How should this work with OOPIF?
+  // The MHTMLArchive is parsed as a whole, but can be constructed from frames
+  // in multiple processes. In that case, which process should parse it and how
+  // should the output be spread back across multiple processes?
+  if (!parent_frame->IsWebLocalFrame())
+    return false;
+
+  return ToWebLocalFrameImpl(parent_frame)
+      ->GetFrame()
+      ->Loader()
+      .GetDocumentLoader()
+      ->Fetcher()
+      ->Archive();
 }
 
 KURL LocalFrameClientImpl::OverrideFlashEmbedWithHTML(const KURL& url) {

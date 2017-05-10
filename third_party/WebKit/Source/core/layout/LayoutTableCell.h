@@ -251,7 +251,7 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   // direction on all table parts and writing-mode on cells.
   const ComputedStyle& StyleForCellFlow() const { return Row()->StyleRef(); }
 
-  const BorderValue& BorderAdjoiningTableStart() const {
+  BorderValue BorderAdjoiningTableStart() const {
 #if DCHECK_IS_ON()
     DCHECK(IsFirstOrLastCellInRow());
 #endif
@@ -261,7 +261,7 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
     return Style()->BorderEnd();
   }
 
-  const BorderValue& BorderAdjoiningTableEnd() const {
+  BorderValue BorderAdjoiningTableEnd() const {
 #if DCHECK_IS_ON()
     DCHECK(IsFirstOrLastCellInRow());
 #endif
@@ -271,14 +271,14 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
     return Style()->BorderStart();
   }
 
-  const BorderValue& BorderAdjoiningCellBefore(const LayoutTableCell* cell) {
+  BorderValue BorderAdjoiningCellBefore(const LayoutTableCell* cell) {
     DCHECK_EQ(Table()->CellAfter(cell), this);
     // FIXME: https://webkit.org/b/79272 - Add support for mixed directionality
     // at the cell level.
     return Style()->BorderStart();
   }
 
-  const BorderValue& BorderAdjoiningCellAfter(const LayoutTableCell* cell) {
+  BorderValue BorderAdjoiningCellAfter(const LayoutTableCell* cell) {
     DCHECK_EQ(Table()->CellBefore(cell), this);
     // FIXME: https://webkit.org/b/79272 - Add support for mixed directionality
     // at the cell level.
@@ -317,17 +317,21 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
     String DebugName() const;
     LayoutRect VisualRect() const;
 
+    LayoutRect LocalVisualRect() const { return local_visual_rect_; }
+    void SetLocalVisualRect(const LayoutRect& r) { local_visual_rect_ = r; }
+
    private:
     const LayoutTableCell& layout_table_cell_;
     CollapsedBorderValue start_border_;
     CollapsedBorderValue end_border_;
     CollapsedBorderValue before_border_;
     CollapsedBorderValue after_border_;
+    LayoutRect local_visual_rect_;
   };
 
   bool UsesCompositedCellDisplayItemClients() const;
   const CollapsedBorderValues* GetCollapsedBorderValues() const {
-    DCHECK(collapsed_border_values_valid_);
+    UpdateCollapsedBorderValues();
     return collapsed_border_values_.get();
   }
   void InvalidateCollapsedBorderValues() {
@@ -371,6 +375,9 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   void PaintMask(const PaintInfo&, const LayoutPoint&) const override;
 
   LayoutSize OffsetFromContainer(const LayoutObject*) const override;
+
+  void ComputeOverflow(LayoutUnit old_client_after_edge,
+                       bool recompute_floats = false) override;
   LayoutRect LocalVisualRect() const override;
 
   LayoutUnit CollapsedBorderHalfLeft(bool outer) const;

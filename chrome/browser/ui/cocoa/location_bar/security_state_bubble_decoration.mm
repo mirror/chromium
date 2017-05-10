@@ -232,23 +232,7 @@ void SecurityStateBubbleDecoration::DrawInFrame(NSRect frame,
 
     // Draw the divider.
     if (state() == DecorationMouseState::NONE && !active()) {
-      const CGFloat divider_x_position =
-          is_rtl ? NSMinX(decoration_frame) + DividerPadding()
-                 : NSMaxX(decoration_frame) - DividerPadding();
-      NSBezierPath* line = [NSBezierPath bezierPath];
-      [line setLineWidth:line_width];
-      [line moveToPoint:NSMakePoint(divider_x_position,
-                                    NSMinY(decoration_frame))];
-      [line lineToPoint:NSMakePoint(divider_x_position,
-                                    NSMaxY(decoration_frame))];
-
-      NSColor* divider_color = GetDividerColor(in_dark_mode);
-      CGFloat divider_alpha =
-          [divider_color alphaComponent] * GetAnimationProgress();
-      divider_color = [divider_color colorWithAlphaComponent:divider_alpha];
-      [divider_color set];
-      [line stroke];
-
+      DrawDivider(control_view, decoration_frame, GetAnimationProgress());
       focus_ring_right_inset_ = DividerPadding() + line_width;
     } else {
       // When mouse-hovered, the divider isn't drawn, but the padding for it is

@@ -135,7 +135,7 @@ class ServiceManager {
 
   Instance* CreateInstance(const Identity& source,
                            const Identity& target,
-                           const InterfaceProviderSpecMap& specs);
+                           InterfaceProviderSpecMap specs);
 
   // Called from the instance implementing mojom::ServiceManager.
   void AddListener(mojom::ServiceManagerListenerPtr listener);
@@ -158,7 +158,7 @@ class ServiceManager {
                          bool has_source_instance,
                          base::WeakPtr<Instance> source_instance,
                          mojom::ResolveResultPtr result,
-                         mojom::ResolveResultPtr parent);
+                         const base::Optional<std::string>& parent_name);
 
   base::WeakPtr<ServiceManager> GetWeakPtr();
 

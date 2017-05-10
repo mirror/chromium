@@ -12,10 +12,10 @@
 #include "base/stl_util.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/copy_output_request.h"
+#include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
-#include "cc/surfaces/pending_frame_observer.h"
-#include "cc/surfaces/surface_factory.h"
 #include "cc/surfaces/surface_manager.h"
+#include "cc/surfaces/surface_resource_holder_client.h"
 
 namespace cc {
 
@@ -23,18 +23,19 @@ namespace cc {
 // completely damaged the first time they're drawn from.
 static const int kFrameIndexStart = 2;
 
-Surface::Surface(const SurfaceId& id, base::WeakPtr<SurfaceFactory> factory)
+Surface::Surface(
+    const SurfaceId& id,
+    base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support)
     : surface_id_(id),
       previous_frame_surface_id_(id),
-      factory_(factory),
+      compositor_frame_sink_support_(std::move(compositor_frame_sink_support)),
+      surface_manager_(compositor_frame_sink_support_->surface_manager()),
       frame_index_(kFrameIndexStart),
       destroyed_(false) {}
 
 Surface::~Surface() {
   ClearCopyRequests();
-  for (auto& observer : observers_)
-    observer.OnSurfaceDiscarded(this);
-  observers_.Clear();
+  surface_manager_->SurfaceDiscarded(this);
 
   UnrefFrameResourcesAndRunDrawCallback(std::move(pending_frame_data_));
   UnrefFrameResourcesAndRunDrawCallback(std::move(active_frame_data_));
@@ -50,9 +51,23 @@ void Surface::SetPreviousFrameSurface(Surface* surface) {
   surface->TakeLatencyInfoFromPendingFrame(&frame.metadata.latency_info);
 }
 
+void Surface::Close() {
+  closed_ = true;
+}
+
 void Surface::QueueFrame(CompositorFrame frame,
-                         const DrawCallback& callback,
+                         const base::Closure& callback,
                          const WillDrawCallback& will_draw_callback) {
+  if (closed_) {
+    if (compositor_frame_sink_support_) {
+      ReturnedResourceArray resources;
+      TransferableResource::ReturnResources(frame.resource_list, &resources);
+      compositor_frame_sink_support_->ReturnResources(resources);
+    }
+    callback.Run();
+    return;
+  }
+
   TakeLatencyInfoFromPendingFrame(&frame.metadata.latency_info);
 
   base::Optional<FrameData> previous_pending_frame_data =
@@ -63,16 +78,35 @@ void Surface::QueueFrame(CompositorFrame frame,
 
   // Receive and track the resources referenced from the CompositorFrame
   // regardless of whether it's pending or active.
-  factory_->ReceiveFromChild(frame.resource_list);
+  compositor_frame_sink_support_->ReceiveFromChild(frame.resource_list);
 
   bool is_pending_frame = !blocking_surfaces_.empty();
 
   if (is_pending_frame) {
+    // Reject CompositorFrames submitted to surfaces referenced from this
+    // CompositorFrame as fallbacks. This saves some CPU cycles to allow
+    // children to catch up to the parent.
+    base::flat_set<FrameSinkId> frame_sink_ids_for_dependencies;
+    for (const SurfaceId& surface_id : frame.metadata.activation_dependencies)
+      frame_sink_ids_for_dependencies.insert(surface_id.frame_sink_id());
+    for (const SurfaceId& surface_id : frame.metadata.referenced_surfaces) {
+      // A surface ID in |referenced_surfaces| that has a corresponding surface
+      // ID in |activation_dependencies| with the same frame sink ID is said to
+      // be a fallback surface that can be used in place of the primary surface
+      // if the deadline passes before the dependency becomes available.
+      bool is_fallback_surface =
+          frame_sink_ids_for_dependencies.count(surface_id.frame_sink_id()) > 0;
+      if (is_fallback_surface) {
+        Surface* surface = surface_manager_->GetSurfaceForId(surface_id);
+        DCHECK(surface);
+        surface->Close();
+      }
+    }
     pending_frame_data_ =
         FrameData(std::move(frame), callback, will_draw_callback);
     // Ask the surface manager to inform |this| when its dependencies are
     // resolved.
-    factory_->manager()->RequestSurfaceResolution(this);
+    surface_manager_->RequestSurfaceResolution(this);
   } else {
     // If there are no blockers, then immediately activate the frame.
     ActivateFrame(FrameData(std::move(frame), callback, will_draw_callback));
@@ -119,14 +153,6 @@ void Surface::NotifySurfaceIdAvailable(const SurfaceId& surface_id) {
   ActivatePendingFrame();
 }
 
-void Surface::AddObserver(PendingFrameObserver* observer) {
-  observers_.AddObserver(observer);
-}
-
-void Surface::RemoveObserver(PendingFrameObserver* observer) {
-  observers_.RemoveObserver(observer);
-}
-
 void Surface::ActivatePendingFrameForDeadline() {
   if (!pending_frame_data_ ||
       !pending_frame_data_->frame.metadata.can_activate_before_dependencies) {
@@ -140,7 +166,7 @@ void Surface::ActivatePendingFrameForDeadline() {
 }
 
 Surface::FrameData::FrameData(CompositorFrame&& frame,
-                              const DrawCallback& draw_callback,
+                              const base::Closure& draw_callback,
                               const WillDrawCallback& will_draw_callback)
     : frame(std::move(frame)),
       draw_callback(draw_callback),
@@ -162,7 +188,7 @@ void Surface::ActivatePendingFrame() {
 // deadline has hit and the frame was forcibly activated by the display
 // compositor.
 void Surface::ActivateFrame(FrameData frame_data) {
-  DCHECK(factory_);
+  DCHECK(compositor_frame_sink_support_);
 
   // Save root pass copy requests.
   std::vector<std::unique_ptr<CopyOutputRequest>> old_copy_requests;
@@ -188,23 +214,23 @@ void Surface::ActivateFrame(FrameData frame_data) {
 
   UnrefFrameResourcesAndRunDrawCallback(std::move(previous_frame_data));
 
-  for (auto& observer : observers_)
-    observer.OnSurfaceActivated(this);
+  compositor_frame_sink_support_->OnSurfaceActivated(this);
 }
 
 void Surface::UpdateBlockingSurfaces(bool has_previous_pending_frame,
                                      const CompositorFrame& current_frame) {
   // If there is no SurfaceDependencyTracker installed then the |current_frame|
   // does not block on anything.
-  if (!factory_->manager()->dependency_tracker()) {
+  if (!surface_manager_->dependency_tracker()) {
     blocking_surfaces_.clear();
     return;
   }
 
   base::flat_set<SurfaceId> new_blocking_surfaces;
 
-  for (const SurfaceId& surface_id : current_frame.metadata.embedded_surfaces) {
-    Surface* surface = factory_->manager()->GetSurfaceForId(surface_id);
+  for (const SurfaceId& surface_id :
+       current_frame.metadata.activation_dependencies) {
+    Surface* surface = surface_manager_->GetSurfaceForId(surface_id);
     // If a referenced surface does not have a corresponding active frame in the
     // display compositor, then it blocks this frame.
     if (!surface || !surface->HasActiveFrame())
@@ -229,10 +255,8 @@ void Surface::UpdateBlockingSurfaces(bool has_previous_pending_frame,
 
     // If there is a change in the dependency set, then inform observers.
     if (!added_dependencies.empty() || !removed_dependencies.empty()) {
-      for (auto& observer : observers_) {
-        observer.OnSurfaceDependenciesChanged(this, added_dependencies,
-                                              removed_dependencies);
-      }
+      surface_manager_->SurfaceDependenciesChanged(this, added_dependencies,
+                                                   removed_dependencies);
     }
   }
 
@@ -272,8 +296,8 @@ void Surface::TakeLatencyInfo(std::vector<ui::LatencyInfo>* latency_info) {
 
 void Surface::RunDrawCallback() {
   if (active_frame_data_ && !active_frame_data_->draw_callback.is_null()) {
-    DrawCallback callback = active_frame_data_->draw_callback;
-    active_frame_data_->draw_callback = DrawCallback();
+    base::Closure callback = active_frame_data_->draw_callback;
+    active_frame_data_->draw_callback = base::Closure();
     callback.Run();
   }
 }
@@ -302,7 +326,7 @@ void Surface::SatisfyDestructionDependencies(
 
 void Surface::UnrefFrameResourcesAndRunDrawCallback(
     base::Optional<FrameData> frame_data) {
-  if (!frame_data || !factory_)
+  if (!frame_data || !compositor_frame_sink_support_)
     return;
 
   ReturnedResourceArray resources;
@@ -311,7 +335,7 @@ void Surface::UnrefFrameResourcesAndRunDrawCallback(
   // No point in returning same sync token to sender.
   for (auto& resource : resources)
     resource.sync_token.Clear();
-  factory_->UnrefResources(resources);
+  compositor_frame_sink_support_->UnrefResources(resources);
 
   if (!frame_data->draw_callback.is_null())
     frame_data->draw_callback.Run();

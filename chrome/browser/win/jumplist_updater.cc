@@ -24,7 +24,7 @@ namespace {
 // requires three items: the absolute path to an application, an argument
 // string, and a title string.
 bool AddShellLink(base::win::ScopedComPtr<IObjectCollection> collection,
-                  const std::wstring& application_path,
+                  const base::string16& application_path,
                   scoped_refptr<ShellLinkItem> item) {
   // Create an IShellLink object.
   base::win::ScopedComPtr<IShellLink> link;
@@ -44,7 +44,7 @@ bool AddShellLink(base::win::ScopedComPtr<IObjectCollection> collection,
   // arguments and set it as the arguments of this IShellLink object.
   // We also exit this function when this call fails because it isn't useful to
   // add a shortcut that cannot open the given page.
-  std::wstring arguments(item->GetArguments());
+  base::string16 arguments(item->GetArguments());
   if (!arguments.empty()) {
     result = link->SetArguments(arguments.c_str());
     if (FAILED(result))
@@ -63,7 +63,7 @@ bool AddShellLink(base::win::ScopedComPtr<IObjectCollection> collection,
   // shortcut which doesn't have titles.
   // So, we should use the IPropertyStore interface to set its title.
   base::win::ScopedComPtr<IPropertyStore> property_store;
-  result = link.QueryInterface(property_store.Receive());
+  result = link.CopyTo(property_store.Receive());
   if (FAILED(result))
     return false;
 
@@ -89,7 +89,7 @@ ShellLinkItem::ShellLinkItem()
 
 ShellLinkItem::~ShellLinkItem() {}
 
-std::wstring ShellLinkItem::GetArguments() const {
+base::string16 ShellLinkItem::GetArguments() const {
   return command_line_.GetArgumentsString();
 }
 
@@ -100,10 +100,8 @@ base::CommandLine* ShellLinkItem::GetCommandLine() {
 
 // JumpListUpdater
 
-JumpListUpdater::JumpListUpdater(const std::wstring& app_user_model_id)
-    : app_user_model_id_(app_user_model_id),
-      user_max_items_(0) {
-}
+JumpListUpdater::JumpListUpdater(const base::string16& app_user_model_id)
+    : app_user_model_id_(app_user_model_id), user_max_items_(0) {}
 
 JumpListUpdater::~JumpListUpdater() {
 }
@@ -196,14 +194,14 @@ bool JumpListUpdater::AddTasks(const ShellLinkItemList& link_items) {
   // interface to retrieve each item in the list. So, we retrieve the
   // IObjectArray interface from the EnumerableObjectCollection object.
   base::win::ScopedComPtr<IObjectArray> object_array;
-  result = collection.QueryInterface(object_array.Receive());
+  result = collection.CopyTo(object_array.Receive());
   if (FAILED(result))
     return false;
 
   return SUCCEEDED(destination_list_->AddUserTasks(object_array.Get()));
 }
 
-bool JumpListUpdater::AddCustomCategory(const std::wstring& category_name,
+bool JumpListUpdater::AddCustomCategory(const base::string16& category_name,
                                         const ShellLinkItemList& link_items,
                                         size_t max_items) {
   // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
@@ -246,7 +244,7 @@ bool JumpListUpdater::AddCustomCategory(const std::wstring& category_name,
   // It seems the ICustomDestinationList::AppendCategory() function just
   // replaces all items in the given category with the ones in the new list.
   base::win::ScopedComPtr<IObjectArray> object_array;
-  result = collection.QueryInterface(object_array.Receive());
+  result = collection.CopyTo(object_array.Receive());
   if (FAILED(result))
     return false;
 

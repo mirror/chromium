@@ -42,8 +42,6 @@ const char kCapability_UserID[] = "service_manager:user_id";
 const char kCapability_ClientProcess[] = "service_manager:client_process";
 const char kCapability_InstanceName[] = "service_manager:instance_name";
 const char kCapability_AllUsers[] = "service_manager:all_users";
-const char kCapability_InstancePerChild[] =
-    "service_manager:instance_per_child";
 const char kCapability_ServiceManager[] = "service_manager:service_manager";
 
 bool Succeeded(mojom::ConnectResult result) {
@@ -94,21 +92,26 @@ InterfaceSet GetInterfacesToExpose(const InterfaceProviderSpec& source_spec,
   return exposed_interfaces;
 }
 
-}  // namespace
-
-Identity CreateServiceManagerIdentity() {
-  return Identity(service_manager::mojom::kServiceName, mojom::kRootUserID);
-}
-
 Identity CreateCatalogIdentity() {
   return Identity(catalog::mojom::kServiceName, mojom::kRootUserID);
 }
 
-InterfaceProviderSpec GetPermissiveInterfaceProviderSpec() {
+InterfaceProviderSpec CreatePermissiveInterfaceProviderSpec() {
   InterfaceProviderSpec spec;
   InterfaceSet interfaces;
   interfaces.insert("*");
-  spec.requires["*"] = interfaces;
+  spec.requires["*"] = std::move(interfaces);
+  return spec;
+}
+
+const InterfaceProviderSpec& GetPermissiveInterfaceProviderSpec() {
+  CR_DEFINE_STATIC_LOCAL(InterfaceProviderSpec, spec,
+                         (CreatePermissiveInterfaceProviderSpec()));
+  return spec;
+}
+
+const InterfaceProviderSpec& GetEmptyInterfaceProviderSpec() {
+  CR_DEFINE_STATIC_LOCAL(InterfaceProviderSpec, spec, ());
   return spec;
 }
 
@@ -139,6 +142,12 @@ bool AllowsInterface(const Identity& source,
   return allowed;
 }
 
+}  // namespace
+
+Identity CreateServiceManagerIdentity() {
+  return Identity(service_manager::mojom::kServiceName, mojom::kRootUserID);
+}
+
 // Encapsulates a connection to an instance of a service, tracked by the
 // Service Manager.
 class ServiceManager::Instance
@@ -150,11 +159,11 @@ class ServiceManager::Instance
  public:
   Instance(service_manager::ServiceManager* service_manager,
            const Identity& identity,
-           const InterfaceProviderSpecMap& interface_provider_specs)
+           InterfaceProviderSpecMap interface_provider_specs)
       : service_manager_(service_manager),
         id_(GenerateUniqueID()),
         identity_(identity),
-        interface_provider_specs_(interface_provider_specs),
+        interface_provider_specs_(std::move(interface_provider_specs)),
         allow_any_application_(GetConnectionSpec().requires.count("*") == 1),
         pid_receiver_binding_(this),
         control_binding_(this),
@@ -198,14 +207,10 @@ class ServiceManager::Instance
     }
 
     std::unique_ptr<ConnectParams> params(std::move(*in_params));
-    InterfaceProviderSpecMap source_specs;
-    InterfaceProviderSpec source_connection_spec;
     Instance* source =
         service_manager_->GetExistingInstance(params->source());
-    if (source) {
-      source_specs = source->interface_provider_specs_;
-      source_connection_spec = source->GetConnectionSpec();
-    }
+    const InterfaceProviderSpec& source_connection_spec =
+        source ? source->GetConnectionSpec() : GetEmptyInterfaceProviderSpec();
 
     if (!AllowsInterface(params->source(), source_connection_spec, identity_,
                          GetConnectionSpec(), params->interface_name())) {
@@ -276,7 +281,9 @@ class ServiceManager::Instance
   }
   const InterfaceProviderSpec& GetSpec(const std::string& spec) const {
     auto it = interface_provider_specs_.find(spec);
-    return it != interface_provider_specs_.end() ? it->second : empty_spec_;
+    return it != interface_provider_specs_.end()
+               ? it->second
+               : GetEmptyInterfaceProviderSpec();
   }
 
   const Identity& identity() const { return identity_; }
@@ -517,7 +524,7 @@ class ServiceManager::Instance
   }
 
   mojom::ConnectResult ValidateConnectionSpec(const Identity& target) {
-    InterfaceProviderSpec connection_spec = GetConnectionSpec();
+    const InterfaceProviderSpec& connection_spec = GetConnectionSpec();
     // TODO(beng): Need to do the following additional policy validation of
     // whether this instance is allowed to connect using:
     // - non-null client process info.
@@ -614,7 +621,6 @@ class ServiceManager::Instance
   const uint32_t id_;
   Identity identity_;
   const InterfaceProviderSpecMap interface_provider_specs_;
-  const InterfaceProviderSpec empty_spec_;
   const bool allow_any_application_;
   std::unique_ptr<ServiceProcessLauncher> runner_;
   mojom::ServicePtr service_;
@@ -702,10 +708,10 @@ ServiceManager::ServiceManager(
   spec.requires[catalog::mojom::kServiceName].insert(
       "service_manager:resolver");
   InterfaceProviderSpecMap specs;
-  specs[mojom::kServiceManager_ConnectorSpec] = spec;
+  specs[mojom::kServiceManager_ConnectorSpec] = std::move(spec);
 
-  service_manager_instance_ =
-      CreateInstance(Identity(), CreateServiceManagerIdentity(), specs);
+  service_manager_instance_ = CreateInstance(
+      Identity(), CreateServiceManagerIdentity(), std::move(specs));
   service_manager_instance_->StartWithService(std::move(service));
   singletons_.insert(service_manager::mojom::kServiceName);
   service_context_.reset(new ServiceContext(
@@ -743,7 +749,7 @@ void ServiceManager::SetServiceOverrides(
 
 void ServiceManager::SetInstanceQuitCallback(
     base::Callback<void(const Identity&)> callback) {
-  instance_quit_callback_ = callback;
+  instance_quit_callback_ = std::move(callback);
 }
 
 void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
@@ -794,10 +800,11 @@ void ServiceManager::InitCatalog(mojom::ServicePtr catalog) {
       "service_manager::mojom::Resolver");
   spec.provides["control"].insert("catalog::mojom::CatalogControl");
   InterfaceProviderSpecMap specs;
-  specs[mojom::kServiceManager_ConnectorSpec] = spec;
+  specs[mojom::kServiceManager_ConnectorSpec] = std::move(spec);
 
-  Instance* instance = CreateInstance(
-      CreateServiceManagerIdentity(), CreateCatalogIdentity(), specs);
+  Instance* instance =
+      CreateInstance(CreateServiceManagerIdentity(), CreateCatalogIdentity(),
+                     std::move(specs));
   singletons_.insert(catalog::mojom::kServiceName);
   instance->StartWithService(std::move(catalog));
 }
@@ -941,10 +948,10 @@ bool ServiceManager::ConnectToExistingInstance(
 ServiceManager::Instance* ServiceManager::CreateInstance(
     const Identity& source,
     const Identity& target,
-    const InterfaceProviderSpecMap& specs) {
+    InterfaceProviderSpecMap specs) {
   CHECK(target.user_id() != mojom::kInheritUserID);
 
-  auto instance = base::MakeUnique<Instance>(this, target, specs);
+  auto instance = base::MakeUnique<Instance>(this, target, std::move(specs));
   Instance* raw_instance = instance.get();
 
   instances_.insert(std::make_pair(raw_instance, std::move(instance)));
@@ -1007,11 +1014,12 @@ void ServiceManager::OnServiceFactoryLost(const Identity& which) {
   service_factories_.erase(it);
 }
 
-void ServiceManager::OnGotResolvedName(std::unique_ptr<ConnectParams> params,
-                                       bool has_source_instance,
-                                       base::WeakPtr<Instance> source_instance,
-                                       mojom::ResolveResultPtr result,
-                                       mojom::ResolveResultPtr parent) {
+void ServiceManager::OnGotResolvedName(
+    std::unique_ptr<ConnectParams> params,
+    bool has_source_instance,
+    base::WeakPtr<Instance> source_instance,
+    mojom::ResolveResultPtr result,
+    const base::Optional<std::string>& parent_name) {
   // If this request was originated by a specific Instance and that Instance is
   // no longer around, we ignore this response.
   if (has_source_instance && !source_instance)
@@ -1025,14 +1033,15 @@ void ServiceManager::OnGotResolvedName(std::unique_ptr<ConnectParams> params,
     return;
   }
 
-  std::string instance_name = params->target().instance();
+  const std::string& instance_name = params->target().instance();
 
   // |result->interface_provider_specs| can be empty when there is no manifest.
-  InterfaceProviderSpec connection_spec = GetPermissiveInterfaceProviderSpec();
   auto it = result->interface_provider_specs.find(
       mojom::kServiceManager_ConnectorSpec);
-  if (it != result->interface_provider_specs.end())
-    connection_spec = it->second;
+  const InterfaceProviderSpec& connection_spec =
+      it != result->interface_provider_specs.end()
+          ? it->second
+          : GetPermissiveInterfaceProviderSpec();
 
   const Identity original_target(params->target());
   const std::string user_id =
@@ -1046,8 +1055,6 @@ void ServiceManager::OnGotResolvedName(std::unique_ptr<ConnectParams> params,
   // requested application may already be running.
   if (ConnectToExistingInstance(&params))
     return;
-
-  Identity source = params->source();
 
   // Services that request "all_users" class from the Service Manager are
   // allowed to field connection requests from any user. They also run with a
@@ -1063,8 +1070,11 @@ void ServiceManager::OnGotResolvedName(std::unique_ptr<ConnectParams> params,
     source_identity_for_creation = params->source();
   }
 
-  Instance* instance = CreateInstance(source_identity_for_creation,
-                                      target, result->interface_provider_specs);
+  bool result_interface_provider_specs_empty =
+      result->interface_provider_specs.empty();
+  Instance* instance =
+      CreateInstance(source_identity_for_creation, target,
+                     std::move(result->interface_provider_specs));
 
   // Below are various paths through which a new Instance can be bound to a
   // Service proxy.
@@ -1084,7 +1094,7 @@ void ServiceManager::OnGotResolvedName(std::unique_ptr<ConnectParams> params,
     // anything more.
     // TODO(beng): There may be some cases where it's valid to have an empty
     // spec, so we should probably include a return value in |result|.
-    if (result->interface_provider_specs.empty()) {
+    if (result_interface_provider_specs_empty) {
       LOG(ERROR)
           << "Error: The catalog was unable to read a manifest for service \""
           << result->name << "\".";
@@ -1093,35 +1103,26 @@ void ServiceManager::OnGotResolvedName(std::unique_ptr<ConnectParams> params,
       return;
     }
 
-    if (parent) {
+    if (parent_name) {
       // This service is provided by another service via a ServiceFactory.
-      std::string target_user_id = target.user_id();
+      const std::string* target_user_id = &target.user_id();
       std::string factory_instance_name = instance_name;
 
-      auto spec_iter = parent->interface_provider_specs.find(
-          mojom::kServiceManager_ConnectorSpec);
-      if (spec_iter != parent->interface_provider_specs.end() &&
-              HasCapability(spec_iter->second, kCapability_InstancePerChild)) {
-        // If configured to start a new instance, create a random instance name
-        // for the factory so that we don't reuse an existing process.
-        factory_instance_name = base::GenerateGUID();
-      } else {
-        // Use the original user ID so the existing embedder factory can
-        // be found and used to create the new service.
-        target_user_id = original_target.user_id();
-        Identity packaged_service_target(target);
-        packaged_service_target.set_user_id(original_target.user_id());
-        instance->set_identity(packaged_service_target);
-      }
+      // Use the original user ID so the existing embedder factory can
+      // be found and used to create the new service.
+      target_user_id = &original_target.user_id();
+      Identity packaged_service_target(target);
+      packaged_service_target.set_user_id(original_target.user_id());
+      instance->set_identity(packaged_service_target);
       instance->StartWithService(std::move(service));
 
-      Identity factory(parent->name, target_user_id, factory_instance_name);
+      Identity factory(*parent_name, *target_user_id, factory_instance_name);
       CreateServiceWithFactory(factory, target.name(), std::move(request));
     } else {
       base::FilePath package_path;
       if (!service_overrides_ || !service_overrides_->GetExecutablePathOverride(
             target.name(), &package_path)) {
-        package_path = result->package_path;
+        package_path = std::move(result->package_path);
       }
       DCHECK(!package_path.empty());
 

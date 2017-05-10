@@ -213,7 +213,9 @@ Press Ctrl+Alt+Z to disable.
       <message name="IDS_ASH_STATUS_TRAY_MESSAGE_OUT_OF_USERS" desc="The error message when all the users are added into multi-profile session.">
         All available users have already been added to this session.
       </message>
-
+      <message name="IDS_ASH_STATUS_TRAY_NIGHT_LIGHT" desc="The label used for the button in the status tray to toggle the Night Light feature (which controls the color temperature of the screen) on or off.">
+        Toggle Night Light
+      </message>
       <message name="IDS_ASH_STATUS_TRAY_CAST" desc="The label used as the header in the cast popup.">
         Cast screen
       </message>
@@ -1029,6 +1031,12 @@ Press Search or Shift to cancel.
                desc="Notification message to tell users that they just pressed the Search+Shift+H shortcut to toggle High Contrast Mode, and that pressing it again will toggle it off.">
         High Contrast Mode enabled. Press Search+Shift+H again to toggle it off.
       </message>
+
+      <!-- Tray scale strings -->
+      <message name="IDS_ASH_STATUS_TRAY_SCALE" desc="The label used in scale setting detailed page of ash tray popup.">
+        Display scale settings
+      </message>
+      <message name="IDS_ASH_STATUS_TRAY_SCALE_SLIDER" desc="The accessible text for the scale slider">Display scale</message>
     </messages>
   </release>
 </grit>

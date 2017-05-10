@@ -70,6 +70,7 @@ class VrShell : public device::PresentingGvrDelegate,
           jobject obj,
           ui::WindowAndroid* window,
           bool for_web_vr,
+          bool in_cct,
           VrShellDelegate* delegate,
           gvr_context* gvr_api,
           bool reprojected_rendering);
@@ -93,6 +94,7 @@ class VrShell : public device::PresentingGvrDelegate,
                     bool enabled);
   bool GetWebVrMode(JNIEnv* env,
                     const base::android::JavaParamRef<jobject>& obj);
+  void OnFullscreenChanged(bool enabled);
   void OnLoadProgressChanged(JNIEnv* env,
                              const base::android::JavaParamRef<jobject>& obj,
                              double progress);
@@ -110,6 +112,7 @@ class VrShell : public device::PresentingGvrDelegate,
                     jboolean incognito,
                     jint id);
   void OnContentPaused(bool paused);
+  void NavigateBack();
   base::android::ScopedJavaGlobalRef<jobject> TakeContentSurface(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
@@ -128,7 +131,6 @@ class VrShell : public device::PresentingGvrDelegate,
 
   void ContentSurfaceChanged(jobject surface);
   void GvrDelegateReady();
-  void AppButtonGesturePerformed(UiInterface::Direction direction);
 
   void ContentPhysicalBoundsChanged(
       JNIEnv* env,
@@ -183,7 +185,6 @@ class VrShell : public device::PresentingGvrDelegate,
 
   bool vr_shell_enabled_;
 
-  std::unique_ptr<UiInterface> ui_;
   bool content_paused_ = false;
   bool webvr_mode_ = false;
 
@@ -203,6 +204,7 @@ class VrShell : public device::PresentingGvrDelegate,
 
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   std::unique_ptr<VrGLThread> gl_thread_;
+  UiInterface* ui_;
   bool reprojected_rendering_;
 
   jobject content_surface_ = nullptr;

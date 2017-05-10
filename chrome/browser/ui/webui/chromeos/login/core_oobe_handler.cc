@@ -252,6 +252,11 @@ void CoreOobeHandler::ReloadContent(const base::DictionaryValue& dictionary) {
   CallJSOrDefer("reloadContent", dictionary);
 }
 
+void CoreOobeHandler::ReloadEulaContent(
+    const base::DictionaryValue& dictionary) {
+  CallJSOrDefer("reloadEulaContent", dictionary);
+}
+
 void CoreOobeHandler::ShowControlBar(bool show) {
   CallJSOrDefer("showControlBar", show);
 }
@@ -480,7 +485,7 @@ void CoreOobeHandler::HandleHeaderBarVisible() {
   if (login_display_host)
     login_display_host->SetStatusAreaVisible(true);
   if (ScreenLocker::default_screen_locker())
-    ScreenLocker::default_screen_locker()->web_ui()->OnHeaderBarVisible();
+    ScreenLocker::default_screen_locker()->delegate()->OnHeaderBarVisible();
 }
 
 void CoreOobeHandler::HandleRaiseTabKeyEvent(bool reverse) {

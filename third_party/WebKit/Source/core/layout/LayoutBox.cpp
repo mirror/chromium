@@ -75,9 +75,6 @@ namespace blink {
 // Used by flexible boxes when flexing this element and by table cells.
 typedef WTF::HashMap<const LayoutBox*, LayoutUnit> OverrideSizeMap;
 
-static OverrideSizeMap* g_extra_inline_offset_map = nullptr;
-static OverrideSizeMap* g_extra_block_offset_map = nullptr;
-
 // Size of border belt for autoscroll. When mouse pointer in border belt,
 // autoscroll is started.
 static const int kAutoscrollBeltSize = 20;
@@ -124,7 +121,6 @@ PaintLayerType LayoutBox::LayerTypeRequired() const {
 void LayoutBox::WillBeDestroyed() {
   ClearOverrideSize();
   ClearContainingBlockOverrideSize();
-  ClearExtraInlineAndBlockOffests();
 
   if (IsOutOfFlowPositioned())
     LayoutBlock::RemovePositionedObject(this);
@@ -338,7 +334,7 @@ void LayoutBox::StyleDidChange(StyleDifference diff,
       // The overflow clip paint property depends on border sizes through
       // overflowClipRect(), and border radii, so we update properties on
       // border size or radii change.
-      if (!old_style->Border().SizeEquals(new_style.Border()) ||
+      if (!old_style->BorderSizeEquals(new_style) ||
           !old_style->RadiiEqual(new_style))
         SetNeedsPaintPropertyUpdate();
     }
@@ -1177,11 +1173,11 @@ bool LayoutBox::MapVisualRectToContainer(
     const LayoutObject* ancestor,
     VisualRectFlags visual_rect_flags,
     TransformState& transform_state) const {
-  bool preserve3D = container_object->Style()->Preserves3D();
+  bool container_preserve_3d = container_object->Style()->Preserves3D();
 
   TransformState::TransformAccumulation accumulation =
-      preserve3D ? TransformState::kAccumulateTransform
-                 : TransformState::kFlattenTransform;
+      container_preserve_3d ? TransformState::kAccumulateTransform
+                            : TransformState::kFlattenTransform;
 
   // If there is no transform on this box, adjust for container offset and
   // container scrolling, then apply container clip.
@@ -1195,32 +1191,45 @@ bool LayoutBox::MapVisualRectToContainer(
     return true;
   }
 
-  // Otherwise, apply the following:
-  // 1. Transform.
-  // 2. Container offset.
-  // 3. Container scroll offset.
-  // 4. Perspective applied by container.
-  // 5. Transform flattening.
-  // 6. Expansion for pixel snapping.
-  // 7. Container clip.
+  // Otherwise, do the following:
+  // 1. Expand for pixel snapping.
+  // 2. Generate transformation matrix combining, in this order
+  //    a) transform,
+  //    b) container offset,
+  //    c) container scroll offset,
+  //    d) perspective applied by container.
+  // 3. Apply transform Transform+flattening.
+  // 4. Apply container clip.
 
-  // 1. Transform.
+  // 1. Expand for pixel snapping.
+  // Use EnclosingBoundingBox because we cannot properly compute pixel
+  // snapping for painted elements within the transform since we don't know
+  // the desired subpixel accumulation at this point, and the transform may
+  // include a scale. This only makes sense for non-preserve3D.
+  if (!StyleRef().Preserves3D()) {
+    transform_state.Flatten();
+    transform_state.SetQuad(
+        FloatQuad(transform_state.LastPlanarQuad().EnclosingBoundingBox()));
+  }
+
+  // 2. Generate transformation matrix.
+  // a) Transform.
   TransformationMatrix transform;
   if (Layer() && Layer()->Transform())
     transform.Multiply(Layer()->CurrentTransform());
 
-  // 2. Container offset.
+  // b) Container offset.
   transform.PostTranslate(container_offset.X().ToFloat(),
                           container_offset.Y().ToFloat());
 
-  // 3. Container scroll offset.
+  // c) Container scroll offset.
   if (container_object->IsBox() && container_object != ancestor &&
       container_object->HasOverflowClip()) {
     IntSize offset = -ToLayoutBox(container_object)->ScrolledContentOffset();
     transform.PostTranslate(offset.Width(), offset.Height());
   }
 
-  // 4. Perspective applied by container.
+  // d) Perspective applied by container.
   if (container_object && container_object->HasLayer() &&
       container_object->Style()->HasPerspective()) {
     // Perspective on the container affects us, so we have to factor it in here.
@@ -1237,21 +1246,12 @@ bool LayoutBox::MapVisualRectToContainer(
     transform = perspective_matrix * transform;
   }
 
-  // 5. Transform flattening.
+  // 3. Apply transform and flatten.
   transform_state.ApplyTransform(transform, accumulation);
-
-  // 6. Expansion for pixel snapping.
-  // Use enclosingBoundingBox because we cannot properly compute pixel
-  // snapping for painted elements within the transform since we don't know
-  // the desired subpixel accumulation at this point, and the transform may
-  // include a scale.
-  if (!preserve3D) {
+  if (!container_preserve_3d)
     transform_state.Flatten();
-    transform_state.SetQuad(
-        FloatQuad(transform_state.LastPlanarQuad().EnclosingBoundingBox()));
-  }
 
-  // 7. Container clip.
+  // 4. Apply container clip.
   if (container_object->IsBox() && container_object != ancestor &&
       container_object->HasClipRelatedProperty()) {
     return ToLayoutBox(container_object)
@@ -1443,35 +1443,6 @@ void LayoutBox::ClearOverrideContainingBlockContentLogicalHeight() {
     return;
   EnsureRareData().has_override_containing_block_content_logical_height_ =
       false;
-}
-
-LayoutUnit LayoutBox::ExtraInlineOffset() const {
-  return g_extra_inline_offset_map ? g_extra_inline_offset_map->at(this)
-                                   : LayoutUnit();
-}
-
-LayoutUnit LayoutBox::ExtraBlockOffset() const {
-  return g_extra_block_offset_map ? g_extra_block_offset_map->at(this)
-                                  : LayoutUnit();
-}
-
-void LayoutBox::SetExtraInlineOffset(LayoutUnit inline_offest) {
-  if (!g_extra_inline_offset_map)
-    g_extra_inline_offset_map = new OverrideSizeMap;
-  g_extra_inline_offset_map->Set(this, inline_offest);
-}
-
-void LayoutBox::SetExtraBlockOffset(LayoutUnit block_offest) {
-  if (!g_extra_block_offset_map)
-    g_extra_block_offset_map = new OverrideSizeMap;
-  g_extra_block_offset_map->Set(this, block_offest);
-}
-
-void LayoutBox::ClearExtraInlineAndBlockOffests() {
-  if (g_extra_inline_offset_map)
-    g_extra_inline_offset_map->erase(this);
-  if (g_extra_block_offset_map)
-    g_extra_block_offset_map->erase(this);
 }
 
 LayoutUnit LayoutBox::AdjustBorderBoxLogicalWidthForBoxSizing(
@@ -3896,13 +3867,28 @@ void LayoutBox::ComputeInlineStaticDistance(
   if (!logical_left.IsAuto() || !logical_right.IsAuto())
     return;
 
+  LayoutObject* parent = child->Parent();
+  TextDirection parent_direction = parent->Style()->Direction();
+
+  // This method is using EnclosingBox() which is wrong for absolutely
+  // positioned grid items, as they rely on the grid area. So for grid items if
+  // both "left" and "right" properties are "auto", we can consider that one of
+  // them (depending on the direction) is simply "0".
+  if (parent->IsLayoutGrid() && parent == child->ContainingBlock()) {
+    if (parent_direction == TextDirection::kLtr)
+      logical_left.SetValue(kFixed, 0);
+    else
+      logical_right.SetValue(kFixed, 0);
+    return;
+  }
+
   // For multicol we also need to keep track of the block position, since that
   // determines which column we're in and thus affects the inline position.
   LayoutUnit static_block_position = child->Layer()->StaticBlockPosition();
 
   // FIXME: The static distance computation has not been patched for mixed
   // writing modes yet.
-  if (child->Parent()->Style()->Direction() == TextDirection::kLtr) {
+  if (parent_direction == TextDirection::kLtr) {
     LayoutUnit static_position = child->Layer()->StaticInlinePosition() -
                                  container_block->BorderLogicalLeft();
     for (LayoutObject* curr = child->Parent(); curr && curr != container_block;
@@ -4077,9 +4063,6 @@ void LayoutBox::ComputePositionedLogicalWidth(
       computed_values.margins_.end_ = min_values.margins_.end_;
     }
   }
-
-  if (!Style()->HasStaticInlinePosition(is_horizontal))
-    computed_values.position_ += ExtraInlineOffset();
 
   computed_values.extent_ += borders_plus_padding;
 }
@@ -4485,9 +4468,6 @@ void LayoutBox::ComputePositionedLogicalHeight(
       computed_values.margins_.after_ = min_values.margins_.after_;
     }
   }
-
-  if (!Style()->HasStaticBlockPosition(IsHorizontalWritingMode()))
-    computed_values.position_ += ExtraBlockOffset();
 
   // Set final height value.
   computed_values.extent_ += borders_plus_padding;
@@ -5060,10 +5040,10 @@ void LayoutBox::AddOverflowFromChild(const LayoutBox& child,
 
   // Only propagate layout overflow from the child if the child isn't clipping
   // its overflow.  If it is, then its overflow is internal to it, and we don't
-  // care about it. layoutOverflowRectForPropagation takes care of this and just
+  // care about it. LayoutOverflowRectForPropagation takes care of this and just
   // propagates the border box rect instead.
   LayoutRect child_layout_overflow_rect =
-      child.LayoutOverflowRectForPropagation(StyleRef());
+      child.LayoutOverflowRectForPropagation();
   child_layout_overflow_rect.Move(delta);
   AddLayoutOverflow(child_layout_overflow_rect);
 
@@ -5074,7 +5054,7 @@ void LayoutBox::AddOverflowFromChild(const LayoutBox& child,
   if (child.HasSelfPaintingLayer())
     return;
   LayoutRect child_visual_overflow_rect =
-      child.VisualOverflowRectForPropagation(StyleRef());
+      child.VisualOverflowRectForPropagation();
   child_visual_overflow_rect.Move(delta);
   AddContentsVisualOverflow(child_visual_overflow_rect);
 }
@@ -5272,45 +5252,38 @@ PaintLayer* LayoutBox::EnclosingFloatPaintingLayer() const {
   return nullptr;
 }
 
-LayoutRect LayoutBox::LogicalVisualOverflowRectForPropagation(
-    const ComputedStyle& parent_style) const {
-  LayoutRect rect = VisualOverflowRectForPropagation(parent_style);
-  if (!parent_style.IsHorizontalWritingMode())
+LayoutRect LayoutBox::LogicalVisualOverflowRectForPropagation() const {
+  LayoutRect rect = VisualOverflowRectForPropagation();
+  if (!Parent()->StyleRef().IsHorizontalWritingMode())
     return rect.TransposedRect();
   return rect;
 }
 
 DISABLE_CFI_PERF
-LayoutRect LayoutBox::VisualOverflowRectForPropagation(
-    const ComputedStyle& parent_style) const {
-  // If the writing modes of the child and parent match, then we don't have to
-  // do anything fancy. Just return the result.
-  LayoutRect rect = VisualOverflowRect();
-  if (parent_style.GetWritingMode() == Style()->GetWritingMode())
+LayoutRect LayoutBox::RectForOverflowPropagation(const LayoutRect& rect) const {
+  // If the child and parent are in the same blocks direction, then we don't
+  // have to do anything fancy. Just return the rect.
+  if (Parent()->StyleRef().IsFlippedBlocksWritingMode() ==
+      StyleRef().IsFlippedBlocksWritingMode())
     return rect;
 
-  // We are putting ourselves into our parent's coordinate space. If there is a
-  // flipped block mismatch in a particular axis, then we have to flip the rect
-  // along that axis.
-  if (IsFlippedBlocksWritingMode(Style()->GetWritingMode()) ||
-      IsFlippedBlocksWritingMode(parent_style.GetWritingMode()))
-    rect.SetX(Size().Width() - rect.MaxX());
-
-  return rect;
+  // Convert the rect into parent's blocks direction by flipping along the y
+  // axis.
+  LayoutRect result = rect;
+  result.SetX(Size().Width() - rect.MaxX());
+  return result;
 }
 
 DISABLE_CFI_PERF
-LayoutRect LayoutBox::LogicalLayoutOverflowRectForPropagation(
-    const ComputedStyle& parent_style) const {
-  LayoutRect rect = LayoutOverflowRectForPropagation(parent_style);
-  if (!parent_style.IsHorizontalWritingMode())
+LayoutRect LayoutBox::LogicalLayoutOverflowRectForPropagation() const {
+  LayoutRect rect = LayoutOverflowRectForPropagation();
+  if (!Parent()->StyleRef().IsHorizontalWritingMode())
     return rect.TransposedRect();
   return rect;
 }
 
 DISABLE_CFI_PERF
-LayoutRect LayoutBox::LayoutOverflowRectForPropagation(
-    const ComputedStyle& parent_style) const {
+LayoutRect LayoutBox::LayoutOverflowRectForPropagation() const {
   // Only propagate interior layout overflow if we don't clip it.
   LayoutRect rect = BorderBoxRect();
   // We want to include the margin, but only when it adds height. Quirky margins
@@ -5340,19 +5313,7 @@ LayoutRect LayoutBox::LayoutOverflowRectForPropagation(
     FlipForWritingMode(rect);
   }
 
-  // If the writing modes of the child and parent match, then we don't have to
-  // do anything fancy. Just return the result.
-  if (parent_style.GetWritingMode() == Style()->GetWritingMode())
-    return rect;
-
-  // We are putting ourselves into our parent's coordinate space. If there is a
-  // flipped block mismatch in a particular axis, then we have to flip the rect
-  // along that axis.
-  if (IsFlippedBlocksWritingMode(Style()->GetWritingMode()) ||
-      IsFlippedBlocksWritingMode(parent_style.GetWritingMode()))
-    rect.SetX(Size().Width() - rect.MaxX());
-
-  return rect;
+  return RectForOverflowPropagation(rect);
 }
 
 DISABLE_CFI_PERF

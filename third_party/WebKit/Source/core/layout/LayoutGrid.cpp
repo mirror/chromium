@@ -253,19 +253,8 @@ void LayoutGrid::UpdateBlockLayout(bool relayout_children) {
     // we need to clear any override size set previously, so it doesn't
     // interfere in current layout execution.
     for (auto* child = FirstInFlowChildBox(); child;
-         child = child->NextInFlowSiblingBox()) {
+         child = child->NextInFlowSiblingBox())
       child->ClearOverrideSize();
-      if (!IsOrthogonalChild(*child) ||
-          (!SizesLogicalWidthToFitContent(StyleRef().LogicalWidth()) &&
-           !StyleRef().LogicalWidth().IsIntrinsicOrAuto()))
-        continue;
-      // Additionally, we may need to clear containingBlock override sizes and
-      // force a layout of the grid items to ensure we get the same result when
-      // grid's intrinsic size is computed again in the updateLogicalWidth call
-      // bellow.
-      child->ClearContainingBlockOverrideSize();
-      child->ForceLayout();
-    }
 
     UpdateLogicalWidth();
 
@@ -1263,16 +1252,17 @@ void LayoutGrid::LayoutPositionedObjects(bool relayout_children,
 
     child->SetOverrideContainingBlockContentLogicalWidth(column_breadth);
     child->SetOverrideContainingBlockContentLogicalHeight(row_breadth);
-    child->SetExtraInlineOffset(column_offset);
-    child->SetExtraBlockOffset(row_offset);
 
-    if (child->Parent() == this) {
-      PaintLayer* child_layer = child->Layer();
-      child_layer->SetStaticInlinePosition(BorderStart() + column_offset);
-      child_layer->SetStaticBlockPosition(BorderBefore() + row_offset);
-    }
+    // Mark for layout as we're resetting the position before and we relay in
+    // generic layout logic for positioned items in order to get the offsets
+    // properly resolved.
+    child->SetNeedsLayout(LayoutInvalidationReason::kGridChanged,
+                          kMarkOnlyThis);
 
     LayoutPositionedObject(child, relayout_children, info);
+
+    child->SetLogicalLocation(LayoutPoint(child->LogicalLeft() + column_offset,
+                                          child->LogicalTop() + row_offset));
   }
 }
 
@@ -1364,11 +1354,8 @@ void LayoutGrid::OffsetAndBreadthForPositionedChild(
   breadth = std::max(end - start, LayoutUnit());
   offset = start;
 
-  if (is_for_columns && !StyleRef().IsLeftToRightDirection() &&
-      !child.StyleRef().HasStaticInlinePosition(
-          child.IsHorizontalWritingMode())) {
-    // If the child doesn't have a static inline position (i.e. "left" and/or
-    // "right" aren't "auto", we need to calculate the offset from the left
+  if (is_for_columns && !StyleRef().IsLeftToRightDirection()) {
+    // We always want to calculate the static position from the left
     // (even if we're in RTL).
     if (end_is_auto) {
       offset = LayoutUnit();

@@ -67,8 +67,7 @@
     },
     {
       name: "AccessibilityObjectModel",
-      settable_from_internals: true,
-      status: "test",
+      status: "experimental",
     },
     {
       name: "AllowContentInitiatedDataUrlNavigations",
@@ -546,6 +545,9 @@
       name: "LoadingWithMojo",
     },
     {
+      name: "LocationHardReload",
+    },
+    {
       name: "LongTaskObserver",
       status: "stable",
     },
@@ -825,6 +827,10 @@
     // crbug.com/417782 tracks enabling this by default.
     {
       name: "RootLayerScrolling",
+    },
+    {
+      name: "RTCRtpSender",
+      status: "experimental",
     },
     {
       name: "ScriptedSpeech",

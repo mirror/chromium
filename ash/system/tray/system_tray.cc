@@ -22,11 +22,13 @@
 #include "ash/system/brightness/tray_brightness.h"
 #include "ash/system/cast/tray_cast.h"
 #include "ash/system/date/tray_system_info.h"
+#include "ash/system/display_scale/tray_scale.h"
 #include "ash/system/enterprise/tray_enterprise.h"
 #include "ash/system/ime/tray_ime_chromeos.h"
 #include "ash/system/media_security/multi_profile_media_tray_item.h"
 #include "ash/system/network/tray_network.h"
 #include "ash/system/network/tray_vpn.h"
+#include "ash/system/night_light/tray_night_light.h"
 #include "ash/system/power/power_status.h"
 #include "ash/system/power/tray_power.h"
 #include "ash/system/screen_security/screen_capture_tray_item.h"
@@ -127,8 +129,8 @@ class SystemBubbleWrapper {
                 TrayBubbleView::InitParams* init_params,
                 bool is_persistent) {
     DCHECK(anchor);
-    LoginStatus login_status =
-        Shell::Get()->system_tray_delegate()->GetUserLoginStatus();
+    const LoginStatus login_status =
+        Shell::Get()->session_controller()->login_status();
     bubble_->InitView(anchor, login_status, init_params);
     bubble_->bubble_view()->set_anchor_view_insets(anchor_insets);
     bubble_wrapper_.reset(new TrayBubbleWrapper(tray, bubble_->bubble_view()));
@@ -271,8 +273,12 @@ void SystemTray::CreateItems(SystemTrayDelegate* delegate) {
   AddTrayItem(base::MakeUnique<MultiProfileMediaTrayItem>(this));
   tray_audio_ = new TrayAudio(this);
   AddTrayItem(base::WrapUnique(tray_audio_));
+  tray_scale_ = new TrayScale(this);
+  AddTrayItem(base::WrapUnique(tray_scale_));
   AddTrayItem(base::MakeUnique<TrayBrightness>(this));
   AddTrayItem(base::MakeUnique<TrayCapsLock>(this));
+  tray_night_light_ = new TrayNightLight(this);
+  AddTrayItem(base::WrapUnique(tray_night_light_));
   // TODO(jamescook): Remove this when mus has support for display management
   // and we have a DisplayManager equivalent. See http://crbug.com/548429
   std::unique_ptr<SystemTrayItem> tray_rotation_lock =
@@ -293,9 +299,8 @@ void SystemTray::AddTrayItem(std::unique_ptr<SystemTrayItem> item) {
   SystemTrayItem* item_ptr = item.get();
   items_.push_back(std::move(item));
 
-  SystemTrayDelegate* delegate = Shell::Get()->system_tray_delegate();
-  views::View* tray_item =
-      item_ptr->CreateTrayView(delegate->GetUserLoginStatus());
+  views::View* tray_item = item_ptr->CreateTrayView(
+      Shell::Get()->session_controller()->login_status());
   item_ptr->UpdateAfterShelfAlignmentChange();
 
   if (tray_item) {
@@ -433,13 +438,8 @@ void SystemTray::ShowItems(const std::vector<SystemTrayItem*>& items,
                            BubbleCreationType creation_type,
                            bool persistent) {
   // No system tray bubbles in kiosk mode.
-  SystemTrayDelegate* system_tray_delegate =
-      Shell::Get()->system_tray_delegate();
-  if (system_tray_delegate->GetUserLoginStatus() == LoginStatus::KIOSK_APP ||
-      system_tray_delegate->GetUserLoginStatus() ==
-          LoginStatus::ARC_KIOSK_APP) {
+  if (Shell::Get()->session_controller()->IsKioskSession())
     return;
-  }
 
   // Destroy any existing bubble and create a new one.
   SystemTrayBubble::BubbleType bubble_type =

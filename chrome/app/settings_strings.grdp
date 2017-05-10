@@ -921,6 +921,9 @@
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADVANCED_PROTOCOL" desc="Label for the CUPS printer protocol in the Advanced section in the printer details page.">
       Protocol
     </message>
+    <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADVANCED_URI" desc="Label for the CUPS printer URI (uniform resource identifier) in the Advanced section in the printer details page.">
+      URI
+    </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_DETAILS_NAME" desc="Lable for the CUPS printer name in the printer details page.">
       Name
     </message>
@@ -974,9 +977,6 @@
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_FOUND_PRINTER" desc="The printer-found message shown in the manually add printer dialog.">
       Printer found
-    </message>
-    <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_SELECT_MANUFACTURER_MODEL" desc="The message shown in the select manufacturer and model dialog.">
-      Could not detect your printer model. Select a manufacturer and model from the list.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_MANUFACTURER" desc="Label for the dropdown menu to select a manufacturer for the printer.">
       Manufacturer
@@ -2349,6 +2349,9 @@
     <message name="IDS_SETTINGS_PEOPLE_LOCK_SCREEN_TITLE" desc="Text on the people page which opens up the quick unlock subpage and the title of the quick unlock subpage.">
       Screen lock
     </message>
+    <message name="IDS_SETTINGS_PEOPLE_LOCK_SCREEN_OPTIONS" desc="Text on the lock screen which is the subheader for the screen locking options.">
+      Screen lock options
+    </message>
     <message name="IDS_SETTINGS_PEOPLE_LOCK_SCREEN_PASSWORD_ONLY" desc="Only the account password can be used to unlock the device.">
       Password only
     </message>
@@ -2369,6 +2372,9 @@
     </message>
     <message name="IDS_SETTINGS_PEOPLE_LOCK_SCREEN_EDIT_FINGERPRINTS_DESCRIPTION" desc="Secondary text on the lock screen which opens up the fingerprint subpage.">
       Set up a faster way to unlock your device
+    </message>
+    <message name="IDS_SETTINGS_PEOPLE_LOCK_SCREEN_FINGERPRINT_SETUP_BUTTON" desc="Text on the lock screen button which opens up the fingerprint subpage.">
+      Set up
     </message>
     <message name="IDS_SETTINGS_PEOPLE_LOCK_SCREEN_NUM_FINGERPRINTS" desc="Text on the lock screen which tells users how many fingerprints they have enrolled.">
       <ph name="NUM_FINGERPRINTS">$1<ex>1</ex></ph> fingerprints set up

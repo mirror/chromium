@@ -7478,6 +7478,7 @@ I don't think this site should be blocked!
         <message name="IDS_OPTIONS_PASSWORDS_AUTOLOGIN" desc="The label of the 'autologinEnabled' checkbox">
           Offer to sign in to Google sites automatically with this account
         </message>
+        <!-- TODO(718146) Move autofill strings to autofill_strings.grd -->
         <message name="IDS_OPTIONS_AUTOFILL_ENABLE" desc="The label of the 'Ask me to enable Autofill' radio button">
           Enable Autofill to fill out web forms in a single click.
         </message>
@@ -7547,6 +7548,12 @@ I don't think this site should be blocked!
         </message>
         <message name="IDS_AUTOFILL_FIELD_LABEL_EXPIRATION_YEAR" desc="The label of the Expiration date entry.">
           Expiration year
+        </message>
+        <message name="IDS_AUTOFILL_FIELD_LABEL_BILLING_ADDRESS" desc="The label of the Billing Address chooser.">
+          Billing address
+        </message>
+        <message name="IDS_AUTOFILL_BUTTON_LABEL_ADD_BILLING_ADDRESS" desc="The label of the button to add a new billing address.">
+          Add billing address
         </message>
 
         <!-- Extension settings -->
@@ -12093,13 +12100,13 @@ read aloud to screenreader users to announce that a completion is available.">
       Chrome has blocked parts of this site to protect you from potentially deceptive content.
     </message>
 
-    <message name="IDS_SUBRESOURCE_FILTER_HEADER" desc="Header for the subresource filter setting on the Content Settings dialog.">
+    <message name="IDS_SUBRESOURCE_FILTER_HEADER" desc="Header for the subresource filter setting on the Content Settings dialog." translateable="false">
        Subresource Filter
     </message>
-    <message name="IDS_SUBRESOURCE_FILTER_ALLOW_RADIO" desc="A radio button on the Content Settings dialog to allow subresource filter use.">
+    <message name="IDS_SUBRESOURCE_FILTER_ALLOW_RADIO" desc="A radio button on the Content Settings dialog to allow subresource filter use." translateable="false">
       Allow the Subresource Filter to perform filtering
     </message>
-    <message name="IDS_SUBRESOURCE_FILTER_BLOCK_RADIO" desc="A radio button on the Content Settings dialog to block subresource filter use on all sites.">
+    <message name="IDS_SUBRESOURCE_FILTER_BLOCK_RADIO" desc="A radio button on the Content Settings dialog to block subresource filter use on all sites." translateable="false">
       Do not allow Subresource Filter to perform filtering
     </message>
     <if expr="is_win">
