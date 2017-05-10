@@ -19,68 +19,82 @@
       `AuthorDate`)
 
 ### If the alert is for a roll, or has multiple commits listed:
- * Use a bisect to try and determine a more precise commit.
-    * Except don't. Bisects for these alerts [are currently broken](https://bugs.chromium.org/p/chromium/issues/detail?id=678338).
-    * Until this is fixed, just file a bug and assign to agrieve@.
+ * Bisects [will not help you](https://bugs.chromium.org/p/chromium/issues/detail?id=678338).
+ * If you do not have the bandwidth to run the command locally, just file a bug
+   and leave it untriaged.
+ * If you can afford to run a fire-and-forget command locally, use a
+   [local Android checkout](https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md)
+   along with [`//tools/binary_size/diagnose_bloat.py`](https://chromium.googlesource.com/chromium/src/+/master/tools/binary_size/README.md)
+   to build all commits locally and find the culprit.
+
+Example:
+
+     tools/binary_size/diagnose_bloat.py AFTER_REV --reference-rev BEFORE_REV --subrepo v8 --all
 
 ### What to do once the commit is identified:
- * If the code seems to justify the size increase:
-    * Annotate the code review with the following (replacing **bold** parts):
-       > FYI - this added **20kb** to Chrome on Android. No action is required
-       > (unless you can think of an obvious way to reduce the overhead).
-       >
-       > Link to size graph:
-[https://chromeperf.appspot.com/report?sid=cfc29eed1238fd38fb5e6cf83bdba6c619be621b606e03e5dfc2e99db14c418b&rev=**440074**](https://chromeperf.appspot.com/report?sid=cfc29eed1238fd38fb5e6cf83bdba6c619be621b606e03e5dfc2e99db14c418b&rev=440074)
- * If the code might not justify the size increase:
-    * File a bug and assign to the author to follow-up.
-        * Change the bug's title from X% to XXkb
-        * Paste in link to commit or review URL that is at fault.
-        * Paste in link to [https://chromium.googlesource.com/chromium/src/+/master/tools/perf/docs/apk_size_regressions.md#Debugging-Apk-Size-Increase](https://chromium.googlesource.com/chromium/src/+/master/tools/perf/docs/apk_size_regressions.md#Debugging-Apk-Size-Increase).
-        * Remove label: `Restrict-View-Google`
-        * TODO(agrieve): [https://github.com/catapult-project/catapult/issues/3150](Change bug template to match these instructions)
+If the code seems to justify the size increase:
+ * Annotate the code review with the following (replacing **bold** parts):
+    > FYI - this added **20kb** to Chrome on Android. No action is required
+    > (unless you can think of an obvious way to reduce the overhead).
+    >
+    > Link to size graph:
+[https://chromeperf.appspot.com/report?sid=a097e74b1aa288511afb4cb616efe0f95ba4d347ad61d5e835072f23450938ba&rev=**440074**](https://chromeperf.appspot.com/report?sid=cfc29eed1238fd38fb5e6cf83bdba6c619be621b606e03e5dfc2e99db14c418b&rev=440074)
+
+
+If the code might not justify the size increase:
+ * File a bug (TODO(agrieve):
+[https://github.com/catapult-project/catapult/issues/3150](Make this template automatic)).
+    * Change the bug's title from X% to XXkb
+    * Remove label: `Restrict-View-Google`
+    * Assign to commit author.
+    * Set description to (replacing **bold** parts):
+      > Alert caused by "**First line of commit message**"
+      > Commit: abc123abc123abc123abc123abc123abc123abcd
+      > Link to size graph:
+[https://chromeperf.appspot.com/report?sid=a097e74b1aa288511afb4cb616efe0f95ba4d347ad61d5e835072f23450938ba&rev=**440074**](https://chromeperf.appspot.com/report?sid=cfc29eed1238fd38fb5e6cf83bdba6c619be621b606e03e5dfc2e99db14c418b&rev=440074)
+      >
+      > How to debug this size regressions is documented at:
+https://chromium.googlesource.com/chromium/src/+/master/tools/perf/docs/apk_size_regressions.md#Debugging-Apk-Size-Increase
 
 # Debugging Apk Size Increase
 
-## Step 1: Identify where the extra bytes came from
+## Step 1: Identify What Grew
 
-Figure out which file within the .apk increased by looking at the size graphs
-showing the breakdowns.
+Figure out which file within the .apk increased (native library, dex file,
+pak files, etc) by looking at the breakdown in the size graphs linked to in the
+bug (if it was not linked in the bug, see above).
 
- * Refer to the chromeperf link that should have been posted to your code
-   review (see above).
- * Alternatively, refer to [go/chrome-binary-size](https://goto.google.com/chrome-binary-size) (*googler only*).
+## Step 2: Analyze
 
-## Step 2: Reproduce build results locally
+If the growth is from strings within `.grd` files:
 
-### Option 1: Build Locally
- 1. Follow the normal [Android build instructions](https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md).
- 1. Ensure you're using the same GN args as the bots by looking at the `generate_build_files` step of the build:
-    * https://luci-logdog.appspot.com/v/?s=chrome%2Fbb%2Fchromium.perf%2FAndroid_Builder%2F**134505**%2F%2B%2Frecipes%2Fsteps%2Fgenerate_build_files%2F0%2Fstdout
- 3. Save artifacts you'll need for diffing:
+ * There is likely nothing that can be done. Translations are expensive.
+ * Close as `Won't Fix`.
 
-```shell
-    mv out/Release/lib.unstripped out/Release/lib.unstripped.withchange
-    mv out/Release/apks out/Release/apks.withchange
-```
+If the growth is from images, ensure they are optimized:
 
-### Option 2: Download artifacts from perf jobs (Googlers only)**
- 1. Replace the bolded part of the following URL with the git commit hash:
-  [https://storage.cloud.google.com/chrome-perf/Android%20Builder/full-build-linux_**HASH**.zip](https://storage.cloud.google.com/chrome-perf/Android%20Builder/full-build-linux_**HASH**.zip)
+  * Would it be [smaller as a VectorDrawable](https://codereview.chromium.org/2857893003/)?
+  * If it's lossy, consider [using webp](https://codereview.chromium.org/2615243002/).
+  * Ensure you've optimized with
+    [tools/resources/optimize-png-files.sh](https://cs.chromium.org/chromium/src/tools/resources/optimize-png-files.sh).
+  * There is some [Googler-specific guidance](https://goto.google.com/clank/engineering/best-practices/adding-image-assets) as well.
 
-## Step 3: Analyze
+If the growth is from native code:
 
- * If the growth is from native code:
-    * Refer to techniques used in [crbug.com/681991](https://bugs.chromium.org/p/chromium/issues/detail?id=681991)
-      and [crbug.com/680973](https://bugs.chromium.org/p/chromium/issues/detail?id=680973).
- * If the growth is from java code:
-    * Use [tools/android/dexdiffer/dexdiffer.py](https://cs.chromium.org/chromium/src/tools/android/dexdiffer/dexdiffer.py).
-        * This currently just shows a list of symbols added / removed rather than
-          taking into account method body sizes.
-        * Enhancements to this tool tracked at
-          [crbug/678044](https://bugs.chromium.org/p/chromium/issues/detail?id=678044).
- * If the growth is from images, ensure they are optimized:
-    * Would it be smaller as a VectorDrawable?
-    * If it's lossy, consider using webp.
-    * Ensure you've optimized with
-      [tools/resources/optimize-png-files.sh](https://cs.chromium.org/chromium/src/tools/resources/optimize-png-files.sh).
-    * There is some [Googler-specific guidance](https://goto.google.com/clank/engineering/best-practices/adding-image-assets) as well.
+ * Use [//tools/binary_size/diagnose_bloat.py](https://chromium.googlesource.com/chromium/src/+/master/tools/binary_size/README.md)
+to show a diff of ELF symbols.
+ * Paste the diff into the bug.
+ * If the diff looks reasonable, close as `Won't Fix`.
+ * Otherwise, try to refactor a bit (e.g.
+ [move code out of templates](https://bugs.chromium.org/p/chromium/issues/detail?id=716393))
+
+If the growth is from java code:
+
+ * Use [tools/android/dexdiffer/dexdiffer.py](https://cs.chromium.org/chromium/src/tools/android/dexdiffer/dexdiffer.py).
+    * This currently just shows a list of symbols added / removed rather than
+      taking into account method body sizes.
+    * Enhancements to this tool tracked at
+      [crbug/678044](https://bugs.chromium.org/p/chromium/issues/detail?id=678044).
+
+If you would like assistance with a regression:
+ * Feel free to email [binary-size@chromium.org](https://groups.google.com/a/chromium.org/forum/#!forum/binary-size).
