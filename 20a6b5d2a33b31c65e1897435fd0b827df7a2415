@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52a06bba_60e6f407",
+        "filename": "tools/perf/docs/apk_size_regressions.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-05-10T19:33:05Z",
+      "side": 1,
+      "message": "I wonder if we should add a note here that it\u0027s ineffective to create a bug and not assign it to anyone? Since then it\u0027s more likely that one of us will miss it and it might be forgotten.",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "20a6b5d2a33b31c65e1897435fd0b827df7a2415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
