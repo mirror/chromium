@@ -15,6 +15,25 @@ Comparator::Comparator(ComparatorType type, uint32_t value)
 
 Comparator::~Comparator() = default;
 
+bool Comparator::MeetsCriteria(uint32_t v) const {
+  switch (type) {
+    case ANY:
+      return true;
+    case LESS_THAN:
+      return v < value;
+    case GREATER_THAN:
+      return v > value;
+    case LESS_THAN_OR_EQUAL:
+      return v <= value;
+    case GREATER_THAN_OR_EQUAL:
+      return v >= value;
+    case EQUAL:
+      return v == value;
+    case NOT_EQUAL:
+      return v != value;
+  }
+}
+
 EventConfig::EventConfig() : window(0), storage(0) {}
 
 EventConfig::EventConfig(const std::string& name,
