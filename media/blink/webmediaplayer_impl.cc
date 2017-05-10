@@ -1282,7 +1282,7 @@ void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
 }
 
 void WebMediaPlayerImpl::OnProgress() {
-  DVLOG(1) << __func__;
+  DVLOG(4) << __func__;
   if (highest_ready_state_ < ReadyState::kReadyStateHaveFutureData) {
     // Reset the preroll attempt clock.
     preroll_attempt_pending_ = true;
