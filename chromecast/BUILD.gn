@@ -179,6 +179,12 @@ cast_test_group("cast_tests") {
         gtest_excludes += [ "TimeFormattingTest.*" ]
       }
     }
+    if (is_msan) {
+      # Temporary disable MemoryDumpManagerTest.TestBackgroundTracingSetup
+      # since it occasionally makes base_unittests take ~1 hour to complete
+      # (b/38199619, crbug/721072).
+      gtest_excludes = [ "MemoryDumpManagerTest.TestBackgroundTracingSetup" ]
+    }
   }
   filters += [ base_unittests_filter ]
 
