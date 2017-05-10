@@ -44,8 +44,8 @@ class TestModel : public Model {
 
   bool IsCurrentlyShowing() const override { return false; }
 
-  const Event& GetEvent(const std::string& event_name) override {
-    return empty_event_;
+  const Event* GetEvent(const std::string& event_name) const override {
+    return &empty_event_;
   }
 
   void IncrementEvent(const std::string& event_name) override {}
