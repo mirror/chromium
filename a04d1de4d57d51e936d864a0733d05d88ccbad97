@@ -22,6 +22,30 @@
       "revId": "a04d1de4d57d51e936d864a0733d05d88ccbad97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5f7116_0537a667",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-10T12:08:53Z",
+      "side": 1,
+      "message": "\u003e I assume there\u0027s also going to be a browser process interface exposed to the renderer for receiving requests to perform spellchecking on text. \n\nYes, and it\u0027s the subject of another patch.\n\n\u003e How do you plan to name that interface? For example:\n\u003e\n\u003e interface PleaseNameMe {\n\u003e   CheckSpelling(string text) \u003d\u003e (array\u003cSpellcheckResult\u003e spellcheck_results);\n\u003e };\n\nSpellCheckHost per https://codereview.chromium.org/2857353002",
+      "parentUuid": "00122c07_9c16e1ab",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "a04d1de4d57d51e936d864a0733d05d88ccbad97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
