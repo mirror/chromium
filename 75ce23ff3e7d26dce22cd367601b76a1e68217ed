@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a7b0ce1_3a6bd56a",
+        "filename": "components/feature_engagement_tracker/internal/model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-10T18:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45be9068_cc2578aa",
+      "revId": "75ce23ff3e7d26dce22cd367601b76a1e68217ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eebffaa_7147483e",
         "filename": "components/feature_engagement_tracker/internal/model_impl_unittest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3b6205b7_19e4eaeb",
+        "filename": "components/feature_engagement_tracker/internal/model_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-10T18:05:58Z",
+      "side": 1,
+      "message": "It could, but I would have to know whether WriteEvent was ever called, and if had not been called yet, the GetLastWrittenEvent() should return nullptr. Leaving as it is currently after discussing offline.",
+      "parentUuid": "8eebffaa_7147483e",
+      "revId": "75ce23ff3e7d26dce22cd367601b76a1e68217ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ade9a2e8_9030f8ca",
         "filename": "components/feature_engagement_tracker/internal/never_condition_validator_unittest.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "75ce23ff3e7d26dce22cd367601b76a1e68217ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5be1e9_2ade041f",
+        "filename": "components/feature_engagement_tracker/internal/never_condition_validator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-10T18:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ade9a2e8_9030f8ca",
+      "revId": "75ce23ff3e7d26dce22cd367601b76a1e68217ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
