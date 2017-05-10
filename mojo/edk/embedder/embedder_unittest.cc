@@ -27,7 +27,7 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/named_platform_handle.h"
 #include "mojo/edk/embedder/named_platform_handle_utils.h"
-#include "mojo/edk/embedder/pending_process_connection.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/test_embedder.h"
 #include "mojo/edk/system/test_utils.h"
@@ -141,30 +141,23 @@ TEST_F(EmbedderTest, ChannelsHandlePassing) {
 }
 
 TEST_F(EmbedderTest, PipeSetup) {
-  // Ensures that a pending process connection's message pipe can be claimed by
-  // the host process itself.
-  PendingProcessConnection process;
-  std::string pipe_token;
-  ScopedMessagePipeHandle parent_mp = process.CreateMessagePipe(&pipe_token);
-  ScopedMessagePipeHandle child_mp = CreateChildMessagePipe(pipe_token);
-
-  const std::string kHello = "hello";
-  WriteMessage(parent_mp.get().value(), kHello);
-
-  EXPECT_EQ(kHello, ReadMessage(child_mp.get().value()));
+  OutgoingBrokerClientInvitation inv;
+  auto p0 = inv.AttachMessagePipe("x");
+  auto p1 = CreateChildMessagePipe("x");
+  WriteMessage(p0.get().value(), "hey");
+  EXPECT_EQ("hey", ReadMessage(p1.get().value()));
 }
 
 TEST_F(EmbedderTest, PipeSetup_LaunchDeath) {
   PlatformChannelPair pair;
 
-  PendingProcessConnection process;
-  std::string pipe_token;
-  ScopedMessagePipeHandle parent_mp = process.CreateMessagePipe(&pipe_token);
-  process.Connect(base::GetCurrentProcessHandle(),
+  OutgoingBrokerClientInvitation invitation;
+  ScopedMessagePipeHandle parent_mp = invitation.AttachMessagePipe("unused");
+  invitation.Send(base::GetCurrentProcessHandle(),
                   ConnectionParams(pair.PassServerHandle()));
 
-  // Close the remote end, simulating child death before the child connects to
-  // the reserved port.
+  // Close the remote end, simulating child death before the child extracts the
+  // attached message pipe.
   ignore_result(pair.PassClientHandle());
 
   EXPECT_EQ(MOJO_RESULT_OK, WaitForSignals(parent_mp.get().value(),
@@ -174,13 +167,12 @@ TEST_F(EmbedderTest, PipeSetup_LaunchDeath) {
 TEST_F(EmbedderTest, PipeSetup_LaunchFailure) {
   PlatformChannelPair pair;
 
-  auto process = base::MakeUnique<PendingProcessConnection>();
-  std::string pipe_token;
-  ScopedMessagePipeHandle parent_mp = process->CreateMessagePipe(&pipe_token);
+  auto invitation = base::MakeUnique<OutgoingBrokerClientInvitation>();
+  ScopedMessagePipeHandle parent_mp = invitation->AttachMessagePipe("unused");
 
-  // Ensure that if a PendingProcessConnection goes away before Connect() is
-  // called, any message pipes associated with it detect peer closure.
-  process.reset();
+  // Ensure that if an OutgoingBrokerClientInvitation goes away before Send() is
+  // called, any message pipes attachde to it detect peer closure.
+  invitation.reset();
 
   EXPECT_EQ(MOJO_RESULT_OK, WaitForSignals(parent_mp.get().value(),
                                            MOJO_HANDLE_SIGNAL_PEER_CLOSED));
