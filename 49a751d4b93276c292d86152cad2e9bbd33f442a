@@ -104,6 +104,75 @@
       "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef274076_4cffcef4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-05-10T07:30:32Z",
+      "side": 1,
+      "message": "Please add this here:\n\nif (loading_control_task_queue_) {\n loading_control_task_queue_-\u003eUnregisterTaskQueue();\n loading_control_task_queue_-\u003eSetBlameContext(nullptr);\n}",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1942f15a_31ead91b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-05-10T07:30:32Z",
+      "side": 1,
+      "message": "Please add this here:\n if (loading_control_task_queue_) {\n    state-\u003eSetString(\"loading_control_task_queue\",\n                     PointerToId(loading_control_task_queue_.get()));\n  }",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 7
+      },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0deca2f7_59bb0ad4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-05-10T07:30:32Z",
+      "side": 1,
+      "message": "Please add this here:\n\nif (loading_control_queue_enabled_voter_)\n  loading_control_queue_enabled_voter_-\u003eSetQueueEnabled(!frame_suspended);",
+      "range": {
+        "startLine": 292,
+        "startChar": 21,
+        "endLine": 292,
+        "endChar": 36
+      },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
