@@ -12,8 +12,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/time/time.h"
 #include "components/feature_engagement_tracker/internal/editable_configuration.h"
 #include "components/feature_engagement_tracker/internal/in_memory_store.h"
 #include "components/feature_engagement_tracker/internal/never_storage_validator.h"
@@ -138,15 +140,24 @@ class TestModelImpl : public ModelImpl {
       : ModelImpl(std::move(store),
                   std::move(configuration),
                   std::move(storage_validator)),
-        current_day_(0) {}
+        current_day_(0),
+        use_real_current_day_(false) {}
   ~TestModelImpl() override {}
 
-  uint32_t GetCurrentDay() override { return current_day_; }
+  uint32_t GetCurrentDay() const override {
+    if (use_real_current_day_)
+      return ModelImpl::GetCurrentDay();
+
+    return current_day_;
+  }
 
   void SetCurrentDay(uint32_t current_day) { current_day_ = current_day; }
 
+  void SetUseRealCurrentDay(bool use_real) { use_real_current_day_ = use_real; }
+
  private:
   uint32_t current_day_;
+  bool use_real_current_day_;
 };
 
 class ModelImplTest : public ::testing::Test {
@@ -383,6 +394,22 @@ TEST_F(ModelImplTest, ShowState) {
 
   model_->SetIsCurrentlyShowing(false);
   EXPECT_FALSE(model_->IsCurrentlyShowing());
+}
+
+TEST_F(ModelImplTest, TestGetCurrentDay) {
+  // Use the time of the current host.
+  model_->SetUseRealCurrentDay(true);
+
+  // Calculate the expected number of days since epoch.
+  base::Time now = base::Time::Now();
+  base::Time epoch = base::Time::UnixEpoch();
+  base::TimeDelta delta = now - epoch;
+  // This will fail if the delta is not within the limits of uint32_t.
+  uint32_t expected_delta_days = base::checked_cast<uint32_t>(delta.InDays());
+
+  // The expected number of days should match what the Model yields.
+  uint32_t days_since_epoch = model_->GetCurrentDay();
+  EXPECT_EQ(expected_delta_days, days_since_epoch);
 }
 
 TEST_F(LoadFailingModelImplTest, FailedInitializeInformsCaller) {
