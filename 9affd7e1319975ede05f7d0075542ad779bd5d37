@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2b177be_399d3e9d",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-10T13:06:27Z",
+      "side": 1,
+      "message": "Maybe rename, since it\u0027s also called if it didn\u0027t complete?",
+      "range": {
+        "startLine": 109,
+        "startChar": 47,
+        "endLine": 109,
+        "endChar": 78
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6fde969_bac71ad0",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-10T13:06:27Z",
+      "side": 1,
+      "message": "Is it necessary? Skipping this might be useful for testing (devices which support SAML can do the SAML flow, which doesn\u0027t, can do Tier 1, based on server changes).",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 56
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249f4c21_8936a7bd",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-10T13:06:27Z",
+      "side": 1,
+      "message": "I\u0027d rather check that auth_session_id_ is not empty (not even a debug-only check), because without this we can get into infinite request loop creating maybe infinite accounts.",
+      "range": {
+        "startLine": 134,
+        "startChar": 8,
+        "endLine": 134,
+        "endChar": 24
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bcf38a_c85a52dc",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-10T13:06:27Z",
+      "side": 1,
+      "message": "I think this might be called early (and cancelling the flow) if the page uses Javascript to redirect.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 67
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4e115e_0297b258",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-10T13:06:27Z",
+      "side": 1,
+      "message": "This won\u0027t be exactly the same, but some pattern",
+      "range": {
+        "startLine": 225,
+        "startChar": 6,
+        "endLine": 225,
+        "endChar": 37
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac5122e_43973095",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-10T13:06:27Z",
+      "side": 1,
+      "message": "nit: Update this comment",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf7ee47_138f959e",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-10T13:06:27Z",
+      "side": 1,
+      "message": "Add some extra to the end, and only check the beginning",
+      "range": {
+        "startLine": 49,
+        "startChar": 36,
+        "endLine": 49,
+        "endChar": 57
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
