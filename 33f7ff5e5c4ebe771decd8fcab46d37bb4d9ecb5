@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6436ac32_c1cf206b",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-11T00:01:19Z",
+      "side": 1,
+      "message": "Why does this need a PostTask?  If it\u0027s required, please put a comment explaining it, since it isn\u0027t obvious.",
+      "revId": "33f7ff5e5c4ebe771decd8fcab46d37bb4d9ecb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e120c7_d33bb057",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-11T00:01:19Z",
+      "side": 1,
+      "message": "Are you sure we can\u0027t get a DidStartProvisionalLoad before getting here?  This looks it could lead to flaky timeouts.\n\nMaybe this should be in a if (!contents-\u003eGetController().GetVisibleEntry()) block to be safe?  (Same below.)",
+      "revId": "33f7ff5e5c4ebe771decd8fcab46d37bb4d9ecb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
