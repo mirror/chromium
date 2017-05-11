@@ -749,9 +749,8 @@ void FrameView::AdjustViewSize() {
   const IntSize& size = rect.Size();
 
   const IntPoint origin(-rect.X(), -rect.Y());
-  if (ScrollOrigin() != origin) {
+  if (ScrollOrigin() != origin)
     SetScrollOrigin(origin);
-  }
 
   SetContentsSize(size);
 }
