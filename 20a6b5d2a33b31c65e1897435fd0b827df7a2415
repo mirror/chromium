@@ -22,6 +22,30 @@
       "revId": "20a6b5d2a33b31c65e1897435fd0b827df7a2415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08ef026_1987a3be",
+        "filename": "tools/perf/docs/apk_size_regressions.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-11T01:26:32Z",
+      "side": 1,
+      "message": "I\u0027m hoping that when sheriffs don\u0027t run the tool themselves but do file bugs, one of us will come across it from being emailed when it was filed, or from doing periodic regression bug purges.",
+      "parentUuid": "52a06bba_60e6f407",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "20a6b5d2a33b31c65e1897435fd0b827df7a2415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
