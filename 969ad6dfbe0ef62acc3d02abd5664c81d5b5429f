@@ -16,6 +16,24 @@
       "revId": "969ad6dfbe0ef62acc3d02abd5664c81d5b5429f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e8f993_c7eaa01f",
+        "filename": "buildbucket.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-05-11T19:35:32Z",
+      "side": 1,
+      "message": "Surprise, it actually doesn\u0027t matter! But thanks for the consistency :)",
+      "parentUuid": "818c8165_c620800e",
+      "revId": "969ad6dfbe0ef62acc3d02abd5664c81d5b5429f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
