@@ -89,9 +89,12 @@ void BlockPainter::PaintOverflowControlsIfNeeded(
                             DisplayItem::kClipScrollbarsToBoxBounds,
                             PixelSnappedIntRect(clip_rect));
     }
+    LayoutPoint adjusted_paint_offset(paint_offset);
+    adjusted_paint_offset.Move(LayoutSize(layout_block_.BorderLeft(),
+                                          layout_block_.BorderTop()));
     ScrollableAreaPainter(*layout_block_.Layer()->GetScrollableArea())
         .PaintOverflowControls(
-            paint_info.context, RoundedIntPoint(paint_offset),
+            paint_info.context, RoundedIntPoint(adjusted_paint_offset),
             paint_info.GetCullRect(), false /* paintingOverlayControls */);
   }
 }

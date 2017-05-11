@@ -267,8 +267,8 @@ static int CornerStart(const LayoutBox& box,
                        int max_x,
                        int thickness) {
   if (box.ShouldPlaceBlockDirectionScrollbarOnLogicalLeft())
-    return min_x + box.StyleRef().BorderLeftWidth();
-  return max_x - thickness - box.StyleRef().BorderRightWidth();
+    return min_x; // + box.StyleRef().BorderLeftWidth();
+  return max_x - thickness; // - box.StyleRef().BorderRightWidth();
 }
 
 static IntRect CornerRect(const LayoutBox& box,
@@ -295,7 +295,7 @@ static IntRect CornerRect(const LayoutBox& box,
   }
   return IntRect(
       CornerStart(box, bounds.X(), bounds.MaxX(), horizontal_thickness),
-      bounds.MaxY() - vertical_thickness - box.StyleRef().BorderBottomWidth(),
+      bounds.MaxY() - vertical_thickness, // - box.StyleRef().BorderBottomWidth(),
       horizontal_thickness, vertical_thickness);
 }
 
@@ -309,9 +309,13 @@ IntRect PaintLayerScrollableArea::ScrollCornerRect() const {
   bool has_vertical_bar = VerticalScrollbar();
   bool has_resizer = Box().Style()->Resize() != RESIZE_NONE;
   if ((has_horizontal_bar && has_vertical_bar) ||
-      (has_resizer && (has_horizontal_bar || has_vertical_bar)))
+      (has_resizer && (has_horizontal_bar || has_vertical_bar))) {
+    IntSize border_offset = PixelSnappedIntSize(
+        LayoutSize(Box().BorderLeft(), Box().BorderTop()), Box().Location());
+    IntRect bounds(IntPoint(border_offset), VisibleContentRect().Size());
     return CornerRect(Box(), HorizontalScrollbar(), VerticalScrollbar(),
-                      Box().PixelSnappedBorderBoxRect());
+                      bounds);
+  }
   return IntRect();
 }
 
@@ -536,7 +540,8 @@ IntRect PaintLayerScrollableArea::VisibleContentRect(
             : 0;
   }
 
-  IntSize border_size =
+  IntSize border_size;
+  border_size =
       PixelSnappedIntSize(LayoutSize(Box().BorderLeft() + Box().BorderRight(),
                                      Box().BorderTop() + Box().BorderBottom()),
                           Box().Location());
@@ -555,13 +560,15 @@ void PaintLayerScrollableArea::VisibleSizeChanged() {
 }
 
 int PaintLayerScrollableArea::VisibleHeight() const {
-  int border_size = SnapSizeToPixel(Box().BorderTop() + Box().BorderBottom(),
+  int border_size = 0;
+  border_size = SnapSizeToPixel(Box().BorderTop() + Box().BorderBottom(),
                                     Box().Location().Y());
   return Layer()->size().Height() - border_size;
 }
 
 int PaintLayerScrollableArea::VisibleWidth() const {
-  int border_size = SnapSizeToPixel(Box().BorderLeft() + Box().BorderRight(),
+  int border_size = 0;
+  border_size = SnapSizeToPixel(Box().BorderLeft() + Box().BorderRight(),
                                     Box().Location().X());
   return Layer()->size().Width() - border_size;
 }
