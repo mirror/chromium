@@ -7,8 +7,24 @@
 #include <memory>
 #include <utility>
 
+#include "base/debug/alias.h"
+#include "base/debug/dump_without_crashing.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/string_util.h"
 #include "base/values.h"
+
+namespace {
+void ReportUnderlayWrite(const std::string& key) {
+  LOG(ERROR) << "Write to underlying profile's user prefs: " << key;
+  // TODO(tibell): Temporary instrumentation to find any writes to the underlay
+  // (there shouldn't be any) so the support for underlay writes can be
+  // completely removed and replaced by a CHECK failure in the future.
+  char key_copy[256];
+  base::strlcpy(key_copy, key.c_str(), arraysize(key_copy));
+  base::debug::Alias(&key_copy);
+  base::debug::DumpWithoutCrashing();
+}
+}  // namespace
 
 OverlayUserPrefStore::OverlayUserPrefStore(
     PersistentPrefStore* underlay)
@@ -62,8 +78,10 @@ std::unique_ptr<base::DictionaryValue> OverlayUserPrefStore::GetValues() const {
 
 bool OverlayUserPrefStore::GetMutableValue(const std::string& key,
                                            base::Value** result) {
-  if (!ShallBeStoredInOverlay(key))
+  if (!ShallBeStoredInOverlay(key)) {
+    ReportUnderlayWrite(key);
     return underlay_->GetMutableValue(key, result);
+  }
 
   if (overlay_.GetValue(key, result))
     return true;
@@ -82,6 +100,7 @@ void OverlayUserPrefStore::SetValue(const std::string& key,
                                     std::unique_ptr<base::Value> value,
                                     uint32_t flags) {
   if (!ShallBeStoredInOverlay(key)) {
+    ReportUnderlayWrite(key);
     underlay_->SetValue(key, std::move(value), flags);
     return;
   }
@@ -94,6 +113,7 @@ void OverlayUserPrefStore::SetValueSilently(const std::string& key,
                                             std::unique_ptr<base::Value> value,
                                             uint32_t flags) {
   if (!ShallBeStoredInOverlay(key)) {
+    ReportUnderlayWrite(key);
     underlay_->SetValueSilently(key, std::move(value), flags);
     return;
   }
@@ -103,6 +123,7 @@ void OverlayUserPrefStore::SetValueSilently(const std::string& key,
 
 void OverlayUserPrefStore::RemoveValue(const std::string& key, uint32_t flags) {
   if (!ShallBeStoredInOverlay(key)) {
+    ReportUnderlayWrite(key);
     underlay_->RemoveValue(key, flags);
     return;
   }
