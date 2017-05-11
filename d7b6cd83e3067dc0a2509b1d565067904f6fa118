@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "620dfe8a_e0ba01dc",
+        "filename": "gpu/command_buffer/client/cmd_buffer_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-11T23:43:48Z",
+      "side": 1,
+      "message": "Is it simpler given that we need service_on_old_buffer_ below (see explanation)?",
+      "parentUuid": "726bad07_7ca0881b",
+      "revId": "d7b6cd83e3067dc0a2509b1d565067904f6fa118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39d69c8c_d730160d",
         "filename": "gpu/command_buffer/client/cmd_buffer_helper.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-11T23:15:05Z",
       "side": 1,
       "message": "Is this change to ensure that Finish() waits for the buffer to be set on the service?  Why?",
+      "revId": "d7b6cd83e3067dc0a2509b1d565067904f6fa118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ecd7e7_5b467c7e",
+        "filename": "gpu/command_buffer/client/cmd_buffer_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-11T23:43:48Z",
+      "side": 1,
+      "message": "An example:\n1. SetBuffer() -\u003e put_ \u003d cached_get_offset_ \u003d 0\n2. Add commands, put_ \u003d 20, Flush(20)\n3. SetBuffer() -\u003e put_ \u003d cached_get_offset_ \u003d 0\n4. Finish() -\u003e we want to finish all the commands that were enqueued in #2, so we need #3 to have happened (we didn\u0027t track where the get pointer should have ended up in step 2, and it\u0027s a transient state anyway since #3 will reset it). Basically it doesn\u0027t make sense to compare put_ to get_ unless they reference the same buffer. Once they do, we want to make sure they\u0027re equal as a post condition (unless error).",
+      "parentUuid": "39d69c8c_d730160d",
       "revId": "d7b6cd83e3067dc0a2509b1d565067904f6fa118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
