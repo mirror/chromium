@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "89d7aafc_7c0e82f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-11T15:47:40Z",
+      "side": 1,
+      "message": "Associated bug number?",
+      "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1acc70c2_50b62c5a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-11T15:47:40Z",
+      "side": 1,
+      "message": "Mind one-line comments about what each of these means? Not entirely obvious to me.",
+      "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632e7420_19155738",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-11T15:47:40Z",
+      "side": 1,
+      "message": "kSerializeInline? Or am I misunderstanding?",
+      "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfc7c0fa_5dd720d2",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
         "patchSetId": 8
@@ -19,6 +70,23 @@
         "endLine": 104,
         "endChar": 51
       },
+      "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b81e526_be365b0c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-11T15:47:40Z",
+      "side": 1,
+      "message": "nit: \"this-\u003e\" should be unnecessary",
       "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
