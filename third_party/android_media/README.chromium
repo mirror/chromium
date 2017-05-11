@@ -16,4 +16,7 @@ https://android.googlesource.com/platform/development/+/master/samples/Support4D
 
 
 Local Modifications:
+ - refactored uses of TransportController, TransportMediator, and
+   TransportStateListener, which were all deprecated in support library 25.3.0.
+ - minor bug fixes
 The only changes are some minor bug fixes.

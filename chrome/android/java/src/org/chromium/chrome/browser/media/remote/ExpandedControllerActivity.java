@@ -11,8 +11,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.media.TransportMediator;
-import android.support.v4.media.TransportPerformer;
+import android.support.v4.media.session.MediaControllerCompat;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -48,14 +48,14 @@ public class ExpandedControllerActivity
     private MediaRouteController mMediaRouteController;
     private RemoteVideoInfo mVideoInfo;
     private String mScreenName;
-    private TransportMediator mTransportMediator;
+    private MediaControllerCompat mMediaControllerCompat;
 
     /**
      * Handle actions from on-screen media controls.
      */
-    private TransportPerformer mTransportPerformer = new TransportPerformer() {
+    private MediaSessionCompat.Callback mSessionCompatCallback = new MediaSessionCompat.Callback() {
         @Override
-        public void onStart() {
+        public void onPlay() {
             if (mMediaRouteController == null) return;
             mMediaRouteController.resume();
             RecordCastAction.recordFullscreenControlsAction(
@@ -80,42 +80,12 @@ public class ExpandedControllerActivity
         }
 
         @Override
-        public long onGetDuration() {
-            if (mMediaRouteController == null) return 0;
-            return mMediaRouteController.getDuration();
-        }
-
-        @Override
-        public long onGetCurrentPosition() {
-            if (mMediaRouteController == null) return 0;
-            return mMediaRouteController.getPosition();
-        }
-
-        @Override
         public void onSeekTo(long pos) {
             if (mMediaRouteController == null) return;
             mMediaRouteController.seekTo(pos);
             RecordCastAction.recordFullscreenControlsAction(
                     RecordCastAction.FULLSCREEN_CONTROLS_SEEK,
                     mMediaRouteController.getMediaStateListener() != null);
-        }
-
-        @Override
-        public boolean onIsPlaying() {
-            if (mMediaRouteController == null) return false;
-            return mMediaRouteController.isPlaying();
-        }
-
-        @Override
-        public int onGetTransportControlFlags() {
-            int flags = TransportMediator.FLAG_KEY_MEDIA_REWIND
-                    | TransportMediator.FLAG_KEY_MEDIA_FAST_FORWARD;
-            if (mMediaRouteController != null && mMediaRouteController.isPlaying()) {
-                flags |= TransportMediator.FLAG_KEY_MEDIA_PAUSE;
-            } else {
-                flags |= TransportMediator.FLAG_KEY_MEDIA_PLAY;
-            }
-            return flags;
         }
     };
 
@@ -162,11 +132,13 @@ public class ExpandedControllerActivity
 
         // Create transport controller to control video, giving the callback
         // interface to receive actions from.
-        mTransportMediator = new TransportMediator(this, mTransportPerformer);
+        MediaSessionCompat mediaSessionCompat = new MediaSessionCompat(this, "");
+        mediaSessionCompat.setCallback(mSessionCompatCallback);
+        mMediaControllerCompat = new MediaControllerCompat(this, mediaSessionCompat);
 
         // Create and initialize the media control UI.
         mMediaController = (MediaController) findViewById(R.id.cast_media_controller);
-        mMediaController.setMediaPlayer(mTransportMediator);
+        mMediaController.setMediaPlayer(mMediaControllerCompat);
 
         View button = getLayoutInflater().inflate(R.layout.cast_controller_media_route_button,
                 rootView, false);
