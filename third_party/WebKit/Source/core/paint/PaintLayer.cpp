@@ -850,7 +850,7 @@ void PaintLayer::UpdateLayerPosition() {
 #endif
 }
 
-void PaintLayer::UpdateSizeAndScrollingAfterLayout() {
+bool PaintLayer::UpdateSize() {
   bool did_resize = false;
   if (IsRootLayer() && RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
     const IntSize new_size = GetLayoutObject().GetDocument().View()->Size();
@@ -866,6 +866,11 @@ void PaintLayer::UpdateSizeAndScrollingAfterLayout() {
     did_resize = new_size != size_;
     size_ = new_size;
   }
+  return did_resize;
+}
+
+void PaintLayer::UpdateSizeAndScrollingAfterLayout() {
+  bool did_resize = UpdateSize();
   if (GetLayoutObject().HasOverflowClip()) {
     scrollable_area_->UpdateAfterLayout();
     if (did_resize)
