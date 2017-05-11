@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2277ccd5_19b76395",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-11T15:50:47Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think we usually do colon after header.",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 14
+      },
+      "revId": "bc2d78bfd25340bdae8663a5dc3dadf5c0d5b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b39d15f_e679798d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-11T15:50:47Z",
+      "side": 1,
+      "message": "Nit: `ChannelId`s to `Channel`s",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 16
+      },
+      "revId": "bc2d78bfd25340bdae8663a5dc3dadf5c0d5b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf3a245_33cac1b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-11T15:50:47Z",
+      "side": 1,
+      "message": "Nit: I\u0027d use Chrome instead of Clank here.",
+      "range": {
+        "startLine": 41,
+        "startChar": 59,
+        "endLine": 41,
+        "endChar": 64
+      },
+      "revId": "bc2d78bfd25340bdae8663a5dc3dadf5c0d5b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
