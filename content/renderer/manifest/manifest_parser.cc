@@ -126,7 +126,8 @@ base::NullableString16 ManifestParser::ParseString(
 
   if (trim == Trim)
     base::TrimWhitespace(value, base::TRIM_ALL, &value);
-  return base::NullableString16(value, false);
+  return base::NullableString16(value.substr(0, Manifest::kMaxIPCStringLength),
+                                false);
 }
 
 int64_t ManifestParser::ParseColor(
