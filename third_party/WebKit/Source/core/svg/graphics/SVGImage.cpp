@@ -430,12 +430,10 @@ sk_sp<PaintRecord> SVGImage::PaintRecordForCurrentFrame(const FloatRect& bounds,
   // avoid setting timers from the latter.
   FlushPendingTimelineRewind();
 
-  IntRect int_bounds(EnclosingIntRect(bounds));
-  PaintRecordBuilder builder(int_bounds, nullptr, nullptr,
-                             paint_controller_.get());
+  PaintRecordBuilder builder(bounds, nullptr, nullptr, paint_controller_.get());
 
   view->UpdateAllLifecyclePhasesExceptPaint();
-  view->Paint(builder.Context(), CullRect(int_bounds));
+  view->Paint(builder.Context(), CullRect(bounds));
   DCHECK(!view->NeedsLayout());
 
   if (canvas) {
@@ -471,7 +469,7 @@ void SVGImage::DrawInternal(PaintCanvas* canvas,
     transform.Scale(scale.Width(), scale.Height());
 
     canvas->save();
-    canvas->clipRect(EnclosingIntRect(dst_rect));
+    canvas->clipRect(dst_rect);
     canvas->concat(AffineTransformToSkMatrix(transform));
     PaintRecordForCurrentFrame(src_rect, url, canvas);
     canvas->restore();
