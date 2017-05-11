@@ -65,10 +65,10 @@ void FragmentPositionUpdated(const NGPhysicalFragment& fragment) {
 // Similar to FragmentPositionUpdated but for floats.
 // - Updates layout object's geometric information.
 // - Creates legacy FloatingObject and attached it to the provided parent.
-void FloatingObjectPositionedUpdated(NGFloatingObject* ng_floating_object,
+void FloatingObjectPositionedUpdated(const NGPositionedFloat& positioned_float,
                                      LayoutBox* parent) {
   NGPhysicalBoxFragment* box_fragment =
-      ToNGPhysicalBoxFragment(ng_floating_object->fragment.Get());
+      ToNGPhysicalBoxFragment(positioned_float.fragment.Get());
   FragmentPositionUpdated(*box_fragment);
 
   LayoutBox* layout_box = ToLayoutBox(box_fragment->GetLayoutObject());
@@ -78,7 +78,7 @@ void FloatingObjectPositionedUpdated(NGFloatingObject* ng_floating_object,
     FloatingObject* floating_object =
         ToLayoutBlockFlow(parent)->InsertFloatingObject(*layout_box);
     floating_object->SetIsInPlacedTree(false);
-    floating_object->SetX(ng_floating_object->left_offset);
+    floating_object->SetX(positioned_float.left_offset);
     floating_object->SetY(box_fragment->TopOffset());
     floating_object->SetIsPlaced(true);
     floating_object->SetIsInPlacedTree(true);
@@ -222,32 +222,11 @@ LayoutObject* NGBlockNode::GetLayoutObject() const {
   return layout_box_;
 }
 
-static bool ShouldHandleByInlineContext(LayoutObject* child) {
-  DCHECK(child);
-  // The spec isn't clear about whether floats/OOF should be in inline
-  // formatting context or in block formatting context.
-  // Prefer inline formatting context because 1) floats/OOF at the beginning
-  // and in the middle of inline should be handled in the same code, and 2)
-  // it matches to the LayoutObject tree.
-  for (; child; child = child->NextSibling()) {
-    if (child->IsInline())
-      return true;
-    if (child->IsFloating() || child->IsOutOfFlowPositioned())
-      continue;
-    return false;
-  }
-  // All children are either float or OOF.
-  // TODO(kojii): Should this be handled in block context or inline context?
-  // If we handle in inline, we can remove all code for floats/OOF from block
-  // layout, but it may change semantics and causes incorrectness?
-  return false;
-}
-
 NGLayoutInputNode* NGBlockNode::FirstChild() {
   if (!first_child_) {
     LayoutObject* child = layout_box_->SlowFirstChild();
     if (child) {
-      if (ShouldHandleByInlineContext(child)) {
+      if (layout_box_->ChildrenInline()) {
         first_child_ =
             new NGInlineNode(child, ToLayoutNGBlockFlow(layout_box_));
       } else {
@@ -302,9 +281,9 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
 
   // We may still have unpositioned floats when we reach the root box.
   if (!layout_box_->Parent()) {
-    for (const RefPtr<NGFloatingObject>& floating_object :
+    for (const NGPositionedFloat& positioned_float :
          fragment->PositionedFloats()) {
-      FloatingObjectPositionedUpdated(floating_object.Get(), layout_box_);
+      FloatingObjectPositionedUpdated(positioned_float, layout_box_);
     }
   }
 
@@ -312,11 +291,10 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
     if (child_fragment->IsPlaced())
       FragmentPositionUpdated(ToNGPhysicalBoxFragment(*child_fragment));
 
-    for (const RefPtr<NGFloatingObject>& floating_object :
+    for (const NGPositionedFloat& positioned_float :
          ToNGPhysicalBoxFragment(child_fragment.Get())->PositionedFloats()) {
       FloatingObjectPositionedUpdated(
-          floating_object.Get(),
-          ToLayoutBox(child_fragment->GetLayoutObject()));
+          positioned_float, ToLayoutBox(child_fragment->GetLayoutObject()));
     }
   }
 

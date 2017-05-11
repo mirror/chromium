@@ -74,6 +74,7 @@
 #include "ash/system/locale/locale_notification_controller.h"
 #include "ash/system/network/sms_observer.h"
 #include "ash/system/network/vpn_list.h"
+#include "ash/system/night_light/night_light_controller.h"
 #include "ash/system/power/power_event_observer.h"
 #include "ash/system/power/power_status.h"
 #include "ash/system/power/video_activity_notifier.h"
@@ -85,6 +86,7 @@
 #include "ash/system/tray/system_tray_delegate.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/touch/ash_touch_transform_controller.h"
+#include "ash/tray_action/tray_action.h"
 #include "ash/utility/screenshot_controller.h"
 #include "ash/virtual_keyboard_controller.h"
 #include "ash/wallpaper/wallpaper_controller.h"
@@ -318,6 +320,11 @@ bool Shell::ShouldUseIMEService() {
               switches::kUseIMEService));
 }
 
+// static
+void Shell::RegisterPrefs(PrefRegistrySimple* registry) {
+  NightLightController::RegisterPrefs(registry);
+}
+
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
     views::Widget* widget) {
   // Use translucent-style window frames for dialogs.
@@ -523,7 +530,7 @@ void Shell::NotifyPinnedStateChanged(WmWindow* pinned_window) {
 }
 
 void Shell::NotifyVirtualKeyboardActivated(bool activated,
-                                           WmWindow* root_window) {
+                                           aura::Window* root_window) {
   for (auto& observer : shell_observers_)
     observer.OnVirtualKeyboardStateChanged(activated, root_window);
 }
@@ -561,11 +568,14 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       media_controller_(base::MakeUnique<MediaController>()),
       new_window_controller_(base::MakeUnique<NewWindowController>()),
       session_controller_(base::MakeUnique<SessionController>()),
+      night_light_controller_(
+          base::MakeUnique<NightLightController>(session_controller_.get())),
       shelf_controller_(base::MakeUnique<ShelfController>()),
       shell_delegate_(std::move(shell_delegate)),
       shutdown_controller_(base::MakeUnique<ShutdownController>()),
       system_tray_controller_(base::MakeUnique<SystemTrayController>()),
       system_tray_notifier_(base::MakeUnique<SystemTrayNotifier>()),
+      tray_action_(base::MakeUnique<TrayAction>()),
       vpn_list_(base::MakeUnique<VpnList>()),
       window_cycle_controller_(base::MakeUnique<WindowCycleController>()),
       window_selector_controller_(base::MakeUnique<WindowSelectorController>()),

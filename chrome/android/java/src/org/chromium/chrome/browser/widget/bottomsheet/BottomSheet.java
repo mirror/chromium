@@ -46,6 +46,7 @@ import org.chromium.chrome.browser.widget.FadingBackgroundView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController.ContentType;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.ui.UiUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -339,6 +340,9 @@ public class BottomSheet
             @SheetState
             int targetState = getTargetSheetState(
                     getSheetOffsetFromBottom() + getFlingDistance(-velocityY), -velocityY);
+            if (targetState == SHEET_STATE_PEEK) {
+                mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_SWIPE);
+            }
             setSheetState(targetState, true);
             mIsScrolling = false;
 
@@ -434,6 +438,9 @@ public class BottomSheet
                 @SheetState
                 int targetState = getTargetSheetState(getSheetOffsetFromBottom(), currentVelocity);
 
+                if (targetState == SHEET_STATE_PEEK) {
+                    mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_SWIPE);
+                }
                 setSheetState(targetState, true);
             }
         }
@@ -510,8 +517,15 @@ public class BottomSheet
                 mContainerHeight = bottom - top;
                 updateSheetDimensions();
 
-                cancelAnimation();
-                setSheetState(mCurrentState, false);
+                // If we are in the middle of a touch event stream (i.e. scrolling while keyboard is
+                // up) don't set the sheet state. Instead allow the gesture detector to position the
+                // sheet and make sure the keyboard hides.
+                if (mIsScrolling) {
+                    UiUtils.hideKeyboard(BottomSheet.this);
+                } else {
+                    cancelAnimation();
+                    setSheetState(mCurrentState, false);
+                }
 
                 if (!mHasRootLayoutOccurred && mTabModelSelector != null
                         && mTabModelSelector.isTabStateInitialized()) {
@@ -576,6 +590,7 @@ public class BottomSheet
         }
 
         // In all non-native cases, minimize the sheet.
+        mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_NAVIGATION);
         setSheetState(SHEET_STATE_PEEK, true);
 
         assert mTabModelSelector != null;
@@ -633,6 +648,9 @@ public class BottomSheet
      * @param content The {@link BottomSheetContent} to show.
      */
     public void showContent(final BottomSheetContent content) {
+        // If an animation is already running, end it.
+        if (mContentSwapAnimatorSet != null) mContentSwapAnimatorSet.end();
+
         // If the desired content is already showing, do nothing.
         if (mSheetContent == content) return;
 
@@ -644,9 +662,6 @@ public class BottomSheet
                 ? mSheetContent.getToolbarView()
                 : mDefaultToolbarView;
         View oldContent = mSheetContent != null ? mSheetContent.getContentView() : null;
-
-        // If an animation is already running, end it.
-        if (mContentSwapAnimatorSet != null) mContentSwapAnimatorSet.end();
 
         List<Animator> animators = new ArrayList<>();
         mContentSwapAnimatorSet = new AnimatorSet();
@@ -1111,6 +1126,7 @@ public class BottomSheet
 
     @Override
     public void onFadingViewClick() {
+        mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_TAP_SCRIM);
         setSheetState(SHEET_STATE_PEEK, true);
     }
 

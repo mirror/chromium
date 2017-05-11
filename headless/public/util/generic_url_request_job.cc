@@ -21,21 +21,10 @@
 #include "net/base/upload_bytes_element_reader.h"
 #include "net/cookies/cookie_store.h"
 #include "net/http/http_response_headers.h"
+#include "net/http/http_util.h"
 #include "net/url_request/url_request_context.h"
 
 namespace headless {
-namespace {
-
-// True if the request method is "safe" (per section 4.2.1 of RFC 7231).
-bool IsMethodSafe(const std::string& method) {
-  return method == "GET" || method == "HEAD" || method == "OPTIONS" ||
-         method == "TRACE";
-}
-
-// Keep in sync with X_DevTools_Request_Id defined in HTTPNames.json5.
-const char kDevtoolsRequestId[] = "X-DevTools-Request-Id";
-
-}  // namespace
 
 uint64_t GenericURLRequestJob::next_request_id_ = 0;
 
@@ -66,9 +55,6 @@ void GenericURLRequestJob::SetExtraRequestHeaders(
     const net::HttpRequestHeaders& headers) {
   DCHECK(origin_task_runner_->RunsTasksOnCurrentThread());
   extra_request_headers_ = headers;
-
-  // TODO(alexclarke): Remove kDevtoolsRequestId
-  extra_request_headers_.RemoveHeader(kDevtoolsRequestId);
 }
 
 void GenericURLRequestJob::Start() {
@@ -97,7 +83,7 @@ void GenericURLRequestJob::PrepareCookies(const GURL& rewritten_url,
             net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
       options.set_same_site_cookie_mode(
           net::CookieOptions::SameSiteCookieMode::INCLUDE_STRICT_AND_LAX);
-    } else if (IsMethodSafe(request_->method())) {
+    } else if (net::HttpUtil::IsMethodSafe(request_->method())) {
       options.set_same_site_cookie_mode(
           net::CookieOptions::SameSiteCookieMode::INCLUDE_LAX);
     }
@@ -205,16 +191,9 @@ int GenericURLRequestJob::GetFrameTreeNodeId() const {
   if (content::ResourceRequestInfo::GetRenderFrameForRequest(
           request_, &render_process_id, &render_frame_routing_id) &&
       render_process_id != -1) {
-    if (headless_browser_context_) {
-      return static_cast<HeadlessBrowserContextImpl*>(headless_browser_context_)
-          ->GetFrameTreeNodeId(render_process_id, render_frame_routing_id);
-    }
-    // TODO(alexclarke): Remove this.
-    content::RenderFrameHost* render_frame_host =
-        content::RenderFrameHost::FromID(render_process_id,
-                                         render_frame_routing_id);
-    DCHECK(render_frame_host);
-    return render_frame_host->GetFrameTreeNodeId();
+    DCHECK(headless_browser_context_);
+    return static_cast<HeadlessBrowserContextImpl*>(headless_browser_context_)
+        ->GetFrameTreeNodeId(render_process_id, render_frame_routing_id);
   }
   // ResourceRequestInfo::GetFrameTreeNodeId is only set for browser side
   // navigations.

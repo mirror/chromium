@@ -68,6 +68,8 @@ void HeadlessShell::OnStart(HeadlessBrowser* browser) {
       browser_->CreateBrowserContextBuilder();
   // TODO(eseckler): These switches should also affect BrowserContexts that
   // are created via DevTools later.
+  DeterministicHttpProtocolHandler* http_handler;
+  DeterministicHttpProtocolHandler* https_handler;
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDeterministicFetch)) {
     deterministic_dispatcher_.reset(
@@ -77,13 +79,22 @@ void HeadlessShell::OnStart(HeadlessBrowser* browser) {
     protocol_handlers[url::kHttpScheme] =
         base::MakeUnique<DeterministicHttpProtocolHandler>(
             deterministic_dispatcher_.get(), browser->BrowserIOThread());
+    http_handler = static_cast<DeterministicHttpProtocolHandler*>(
+        protocol_handlers[url::kHttpScheme].get());
     protocol_handlers[url::kHttpsScheme] =
         base::MakeUnique<DeterministicHttpProtocolHandler>(
             deterministic_dispatcher_.get(), browser->BrowserIOThread());
+    https_handler = static_cast<DeterministicHttpProtocolHandler*>(
+        protocol_handlers[url::kHttpsScheme].get());
 
     context_builder.SetProtocolHandlers(std::move(protocol_handlers));
   }
   browser_context_ = context_builder.Build();
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDeterministicFetch)) {
+    http_handler->SetHeadlessBrowserContext(browser_context_);
+    https_handler->SetHeadlessBrowserContext(browser_context_);
+  }
   browser_->SetDefaultBrowserContext(browser_context_);
 
   HeadlessWebContents::Builder builder(
@@ -361,7 +372,10 @@ void HeadlessShell::OnScreenshotCaptured(
 
 void HeadlessShell::PrintToPDF() {
   devtools_client_->GetPage()->GetExperimental()->PrintToPDF(
-      page::PrintToPDFParams::Builder().Build(),
+      page::PrintToPDFParams::Builder()
+          .SetDisplayHeaderFooter(true)
+          .SetPrintBackground(true)
+          .Build(),
       base::Bind(&HeadlessShell::OnPDFCreated, weak_factory_.GetWeakPtr()));
 }
 

@@ -22,11 +22,13 @@
 #include "ash/system/brightness/tray_brightness.h"
 #include "ash/system/cast/tray_cast.h"
 #include "ash/system/date/tray_system_info.h"
+#include "ash/system/display_scale/tray_scale.h"
 #include "ash/system/enterprise/tray_enterprise.h"
 #include "ash/system/ime/tray_ime_chromeos.h"
 #include "ash/system/media_security/multi_profile_media_tray_item.h"
 #include "ash/system/network/tray_network.h"
 #include "ash/system/network/tray_vpn.h"
+#include "ash/system/night_light/tray_night_light.h"
 #include "ash/system/power/power_status.h"
 #include "ash/system/power/tray_power.h"
 #include "ash/system/screen_security/screen_capture_tray_item.h"
@@ -271,8 +273,12 @@ void SystemTray::CreateItems(SystemTrayDelegate* delegate) {
   AddTrayItem(base::MakeUnique<MultiProfileMediaTrayItem>(this));
   tray_audio_ = new TrayAudio(this);
   AddTrayItem(base::WrapUnique(tray_audio_));
+  tray_scale_ = new TrayScale(this);
+  AddTrayItem(base::WrapUnique(tray_scale_));
   AddTrayItem(base::MakeUnique<TrayBrightness>(this));
   AddTrayItem(base::MakeUnique<TrayCapsLock>(this));
+  tray_night_light_ = new TrayNightLight(this);
+  AddTrayItem(base::WrapUnique(tray_night_light_));
   // TODO(jamescook): Remove this when mus has support for display management
   // and we have a DisplayManager equivalent. See http://crbug.com/548429
   std::unique_ptr<SystemTrayItem> tray_rotation_lock =

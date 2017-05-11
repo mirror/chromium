@@ -301,12 +301,14 @@ int QuicChromiumClientSession::Handle::RequestStream(
   return stream_request_->StartRequest(callback);
 }
 
-QuicChromiumClientStream* QuicChromiumClientSession::Handle::ReleaseStream() {
+std::unique_ptr<QuicChromiumClientStream::Handle>
+QuicChromiumClientSession::Handle::ReleaseStream(
+    QuicChromiumClientStream::Delegate* delegate) {
   DCHECK(stream_request_);
 
-  auto* stream = stream_request_->ReleaseStream();
+  auto handle = stream_request_->ReleaseStream(delegate);
   stream_request_.reset();
-  return stream;
+  return handle;
 }
 
 int QuicChromiumClientSession::Handle::WaitForHandshakeConfirmation(
@@ -375,12 +377,13 @@ int QuicChromiumClientSession::StreamRequest::StartRequest(
   return rv;
 }
 
-QuicChromiumClientStream*
-QuicChromiumClientSession::StreamRequest::ReleaseStream() {
+std::unique_ptr<QuicChromiumClientStream::Handle>
+QuicChromiumClientSession::StreamRequest::ReleaseStream(
+    QuicChromiumClientStream::Delegate* delegate) {
   DCHECK(stream_);
   QuicChromiumClientStream* stream = stream_;
   stream_ = nullptr;
-  return stream;
+  return stream->CreateHandle(delegate);
 }
 
 void QuicChromiumClientSession::StreamRequest::OnRequestCompleteSuccess(

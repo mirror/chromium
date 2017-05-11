@@ -80,6 +80,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kWebPaymentsModifiers,
     &kWebPaymentsSingleAppUiSkip,
     &kWebVRCardboardSupport,
+    &kXGEOVisibleNetworks,
     &ntp_snippets::kIncreasedVisibility,
     &ntp_snippets::kForeignSessionsSuggestionsFeature,
     &ntp_snippets::kNotificationsFeature,
@@ -206,7 +207,7 @@ const base::Feature kUserMediaScreenCapturing{
     "UserMediaScreenCapturing", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kVideoPersistence{"VideoPersistence",
-                                      base::FEATURE_ENABLED_BY_DEFAULT};
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kWebPaymentsModifiers{"WebPaymentsModifiers",
                                           base::FEATURE_DISABLED_BY_DEFAULT};
@@ -216,6 +217,9 @@ const base::Feature kWebPaymentsSingleAppUiSkip{
 
 const base::Feature kWebVRCardboardSupport{
     "WebVRCardboardSupport", base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kXGEOVisibleNetworks{"XGEOVisibleNetworks",
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 static jboolean IsInitialized(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   return !!base::FeatureList::GetInstance();

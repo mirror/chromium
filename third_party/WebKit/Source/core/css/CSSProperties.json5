@@ -69,6 +69,14 @@
       value_type: "str"
     },
 
+    // - field_size
+    // Number of bits needed to store this field. Only used for storage_only
+    // fields. If specified, the field will be stored as bit field. Otherwise
+    // it will be stored as a normal data member.
+    field_size: {
+      valid_type: "int",
+    },
+
     // - field_template
     // Affects how the interface to this field is generated.
     // TODO(sashab, meade): Remove this once TypedOM types are specified for
@@ -545,6 +553,10 @@
       custom_all: true,
       is_descriptor: true,
       priority: "High",
+      field_template: "storage_only",
+      type_name: "float",
+      default_value: "1.0",
+      field_group: "visual",
     },
 
     {
@@ -682,6 +694,11 @@
       interpolable: true,
       keywords: ["thin", "medium", "thick"],
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      type_name: "unsigned",
+      field_size : 26,
+      default_value: "WidthToFixedPoint(3)",
+      field_group: "surround",
     },
     {
       name: "border-collapse",
@@ -743,6 +760,11 @@
       interpolable: true,
       keywords: ["thin", "medium", "thick"],
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      type_name: "unsigned",
+      field_size : 26,
+      default_value: "WidthToFixedPoint(3)",
+      field_group: "surround",
     },
     {
       name: "border-right-color",
@@ -764,6 +786,11 @@
       interpolable: true,
       keywords: ["thin", "medium", "thick"],
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      type_name: "unsigned",
+      field_size : 26,
+      default_value: "WidthToFixedPoint(3)",
+      field_group: "surround",
     },
     {
       name: "border-top-color",
@@ -808,6 +835,11 @@
       keywords: ["thin", "medium", "thick"],
       supports_percentage: true,
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      type_name: "unsigned",
+      field_size : 26,
+      default_value: "WidthToFixedPoint(3)",
+      field_group: "surround",
     },
     {
       name: "bottom",
@@ -892,6 +924,10 @@
       converter: "ConvertClip",
       custom_all: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/LengthBox",
+      default_value: "LengthBox()",
+      field_group: "visual",
     },
     {
       name: "clip-path",

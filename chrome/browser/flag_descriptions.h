@@ -252,6 +252,13 @@ extern const char kTopChromeMdMaterial[];
 // Top Chrome material hybrid design option (for touchscreens).
 extern const char kTopChromeMdMaterialHybrid[];
 
+// Title of the flag which enables site details in MD settings.
+extern const char kSiteDetails[];
+
+// Description of the flag which enables or disables site details in MD
+// settings.
+extern const char kSiteDetailsDescription[];
+
 // Title of the flag which enables the site settings all sites list and site
 // details.
 extern const char kSiteSettings[];
@@ -1911,13 +1918,6 @@ extern const char kAccountConsistencyName[];
 // jar.
 extern const char kAccountConsistencyDescription[];
 
-// Title for the flag to enable the new gaia password-separated sign in flow.
-extern const char kEnablePasswordSeparatedSigninFlowName[];
-
-// Description for the flag to enable the new gaia password-separated sign in
-// flow.
-extern const char kEnablePasswordSeparatedSigninFlowDescription[];
-
 // Title for the flag to enable the google profile information
 extern const char kGoogleProfileInfoName[];
 
@@ -2814,6 +2814,12 @@ extern const char kAndroidPaymentAppsName[];
 // Description for the flag to enable third party Android payment apps
 extern const char kAndroidPaymentAppsDescription[];
 
+// Name of the flag to enable Service Worker payment apps
+extern const char kServiceWorkerPaymentAppsName[];
+
+// Description for the flag to enable Service Worker payment apps
+extern const char kServiceWorkerPaymentAppsDescription[];
+
 #endif  // defined(OS_ANDROID)
 
 // Name for the flag to enable feature policy.
@@ -3352,6 +3358,12 @@ extern const char kOmniboxDisplayTitleForCurrentUrlName[];
 // for current URL.
 extern const char kOmniboxDisplayTitleForCurrentUrlDescription[];
 
+// Name of the Omnibox UI vertical margin flag.
+extern const char kOmniboxUIVerticalMarginName[];
+
+// Description of the Omnibox UI vertical margin flag.
+extern const char kOmniboxUIVerticalMarginDescription[];
+
 // Name of the flag that forces Network Quality Estimator (NQE) to always
 // return the specified effective connection type.
 extern const char kForceEffectiveConnectionTypeName[];
@@ -3390,6 +3402,10 @@ extern const char kLocationHardReloadName[];
 // Description of the about: flag for experimental location.reload() to trigger
 // a hard-reload.
 extern const char kLocationHardReloadDescription[];
+
+// Name and description for the capture-thumbnail-on-load-finished flag.
+extern const char kCaptureThumbnailOnLoadFinishedName[];
+extern const char kCaptureThumbnailOnLoadFinishedDescription[];
 
 }  // namespace flag_descriptions
 

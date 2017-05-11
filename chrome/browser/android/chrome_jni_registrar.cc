@@ -95,6 +95,7 @@
 #include "chrome/browser/android/rappor/rappor_service_bridge.h"
 #include "chrome/browser/android/recently_closed_tabs_bridge.h"
 #include "chrome/browser/android/rlz/revenue_stats.h"
+#include "chrome/browser/android/rlz/rlz_ping_handler.h"
 #include "chrome/browser/android/search_geolocation/search_geolocation_disclosure_tab_helper.h"
 #include "chrome/browser/android/service_tab_launcher.h"
 #include "chrome/browser/android/sessions/session_tab_helper_android.h"
@@ -159,6 +160,7 @@
 #include "chrome/browser/ui/android/infobars/grouped_permission_infobar.h"
 #include "chrome/browser/ui/android/infobars/infobar_android.h"
 #include "chrome/browser/ui/android/infobars/infobar_container_android.h"
+#include "chrome/browser/ui/android/infobars/reader_mode_infobar.h"
 #include "chrome/browser/ui/android/infobars/simple_confirm_infobar_builder.h"
 #include "chrome/browser/ui/android/infobars/translate_compact_infobar.h"
 #include "chrome/browser/ui/android/infobars/translate_infobar.h"
@@ -388,6 +390,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"RapporServiceBridge", rappor::RegisterRapporServiceBridge},
     {"RecentlyClosedBridge", RecentlyClosedTabsBridge::Register},
     {"RecordCastAction", remote_media::RegisterRecordCastAction},
+    {"ReaderModeInfoBar", RegisterReaderModeInfoBar},
     {"ReaderModeSceneLayer", RegisterReaderModeSceneLayer},
     {"RemoteMediaPlayerBridge",
      remote_media::RemoteMediaPlayerBridge::RegisterRemoteMediaPlayerBridge},
@@ -395,6 +398,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"ResourcePrefetchPredictor",
      predictors::RegisterResourcePrefetchPredictor},
     {"RevenueStats", chrome::android::RegisterRevenueStats},
+    {"RlzPingHandler", chrome::android::RegisterRlzPingHandler},
     {"SafeBrowsing", safe_browsing::android::RegisterBrowserJNI},
     {"SceneLayer", RegisterSceneLayer},
     {"ScreenshotTask", chrome::android::RegisterScreenshotTask},

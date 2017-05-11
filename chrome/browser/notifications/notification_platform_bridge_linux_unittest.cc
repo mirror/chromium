@@ -44,6 +44,16 @@ ACTION_P(OnGetCapabilities, capabilities) {
   return response;
 }
 
+ACTION_P(OnGetServerInformation, spec_version) {
+  dbus::Response* response = dbus::Response::CreateEmpty().release();
+  dbus::MessageWriter writer(response);
+  writer.AppendString("");  // name
+  writer.AppendString("");  // vendor
+  writer.AppendString("");  // version
+  writer.AppendString(spec_version);
+  return response;
+}
+
 ACTION_P(OnNotify, id) {
   // The "Notify" message must have type (susssasa{sv}i).
   // https://developer.gnome.org/notification-spec/#command-notify
@@ -142,6 +152,10 @@ class NotificationPlatformBridgeLinuxTest : public testing::Test {
                 MockCallMethodAndBlock(Calls("GetCapabilities"), _))
         .WillOnce(OnGetCapabilities(std::vector<std::string>()));
 
+    EXPECT_CALL(*mock_notification_proxy_.get(),
+                MockCallMethodAndBlock(Calls("GetServerInformation"), _))
+        .WillOnce(OnGetServerInformation("1.2"));
+
     EXPECT_CALL(
         *mock_notification_proxy_.get(),
         ConnectToSignal(kFreedesktopNotificationsName, "ActionInvoked", _, _))
@@ -151,9 +165,6 @@ class NotificationPlatformBridgeLinuxTest : public testing::Test {
                 ConnectToSignal(kFreedesktopNotificationsName,
                                 "NotificationClosed", _, _))
         .WillOnce(RegisterSignalCallback(&notification_closed_callback_));
-
-    notification_bridge_linux_ =
-        base::WrapUnique(new NotificationPlatformBridgeLinux(mock_bus_));
   }
 
   void TearDown() override {
@@ -166,6 +177,11 @@ class NotificationPlatformBridgeLinuxTest : public testing::Test {
   }
 
  protected:
+  void CreateNotificationBridgeLinux() {
+    notification_bridge_linux_ =
+        base::WrapUnique(new NotificationPlatformBridgeLinux(mock_bus_));
+  }
+
   content::TestBrowserThreadBundle thread_bundle_;
 
   scoped_refptr<dbus::MockBus> mock_bus_;
@@ -180,18 +196,21 @@ class NotificationPlatformBridgeLinuxTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeLinuxTest);
 };
 
-TEST_F(NotificationPlatformBridgeLinuxTest, SetUpAndTearDown) {}
+TEST_F(NotificationPlatformBridgeLinuxTest, SetUpAndTearDown) {
+  CreateNotificationBridgeLinux();
+}
 
 TEST_F(NotificationPlatformBridgeLinuxTest, NotifyAndCloseFormat) {
   EXPECT_CALL(*mock_notification_proxy_.get(),
               MockCallMethodAndBlock(Calls("Notify"), _))
       .WillOnce(OnNotify(1));
-  notification_bridge_linux_->Display(NotificationCommon::PERSISTENT, "", "",
-                                      false,
-                                      CreateNotification("id1", "", "", ""));
-
   EXPECT_CALL(*mock_notification_proxy_.get(),
               MockCallMethodAndBlock(Calls("CloseNotification"), _))
       .WillOnce(OnCloseNotification());
+
+  CreateNotificationBridgeLinux();
+  notification_bridge_linux_->Display(NotificationCommon::PERSISTENT, "", "",
+                                      false,
+                                      CreateNotification("id1", "", "", ""));
   notification_bridge_linux_->Close("", "");
 }

@@ -510,7 +510,8 @@ bool URLDataManagerBackend::HasPendingJob(
 
 bool URLDataManagerBackend::StartRequest(const net::URLRequest* request,
                                          URLRequestChromeJob* job) {
-  // NOTE: this duplicates code in web_ui_url_loader_factory.cc's URLLoaderImpl.
+  // NOTE: this duplicates code in web_ui_url_loader_factory.cc's
+  // StartURLLoader.
   if (!CheckURLIsValid(request->url()))
     return false;
 
@@ -698,6 +699,13 @@ void URLDataManagerBackend::URLToRequestPath(const GURL& url,
 
   if (offset < static_cast<int>(spec.size()))
     path->assign(spec.substr(offset));
+}
+
+std::vector<std::string> URLDataManagerBackend::GetWebUISchemes() {
+  std::vector<std::string> schemes;
+  schemes.push_back(kChromeUIScheme);
+  GetContentClient()->browser()->GetAdditionalWebUISchemes(&schemes);
+  return schemes;
 }
 
 namespace {

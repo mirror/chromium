@@ -15,6 +15,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/strings/string16.h"
 #include "base/synchronization/lock.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "base/timer/timer.h"
@@ -151,27 +152,65 @@ class JumpList : public sessions::TabRestoreServiceObserver,
   void OnFaviconDataAvailable(
       const favicon_base::FaviconImageResult& image_result);
 
-  // Callback for TopSites that notifies when the "Most
-  // Visited" list is available. This function updates the ShellLinkItemList
-  // objects and send another query that retrieves a favicon for each URL in
-  // the list.
+  // Callback for TopSites that notifies when the "Most Visited" list is
+  // available. This function updates the ShellLinkItemList objects and
+  // begins the process of fetching favicons for the URLs.
   void OnMostVisitedURLsAvailable(
       const history::MostVisitedURLList& data);
 
   // Callback for changes to the incognito mode availability pref.
   void OnIncognitoAvailabilityChanged();
 
-  // Helper for RunUpdate() that determines its parameters.
+  // Posts tasks to update the JumpList and delete any obsolete JumpList related
+  // folders.
   void PostRunUpdate();
-
-  // Called on a timer to invoke RunUpdateJumpList() after
-  // requests storms have subsided.
-  void DeferredRunUpdate();
 
   // history::TopSitesObserver implementation.
   void TopSitesLoaded(history::TopSites* top_sites) override;
   void TopSitesChanged(history::TopSites* top_sites,
                        ChangeReason change_reason) override;
+
+  // Called on a timer to update the most visited URLs after requests storms
+  // have subsided.
+  void DeferredTopSitesChanged();
+
+  // Called on a timer to update the "Recently Closed" category of JumpList
+  // after requests storms have subsided.
+  void DeferredTabRestoreServiceChanged();
+
+  // Creates at most |max_items| icon files in |icon_dir| for the
+  // asynchrounously loaded icons stored in |item_list|.
+  void CreateIconFiles(const base::FilePath& icon_dir,
+                       const ShellLinkItemList& item_list,
+                       size_t max_items);
+
+  // Updates icon files in |icon_dir|, which includes deleting old icons and
+  // creating at most |slot_limit| new icons for |page_list|.
+  void UpdateIconFiles(const base::FilePath& icon_dir,
+                       const ShellLinkItemList& page_list,
+                       size_t slot_limit);
+
+  // Updates the jumplist, once all the data has been fetched. This method calls
+  // UpdateJumpList() to do most of the work.
+  void RunUpdateJumpList(
+      IncognitoModePrefs::Availability incognito_availability,
+      const base::string16& app_id,
+      const base::FilePath& profile_dir,
+      base::RefCountedData<JumpListData>* ref_counted_data);
+
+  // Updates the application JumpList, which consists of 1) delete old icon
+  // files; 2) create new icon files; 3) notify the OS. This method is called
+  // from RunUpdateJumpList().
+  // Note that any timeout error along the way results in the old jumplist being
+  // left as-is, while any non-timeout error results in the old jumplist being
+  // left as-is, but without icon files.
+  bool UpdateJumpList(const base::string16& app_id,
+                      const base::FilePath& profile_dir,
+                      const ShellLinkItemList& most_visited_pages,
+                      const ShellLinkItemList& recently_closed_pages,
+                      bool most_visited_pages_have_updates,
+                      bool recently_closed_pages_have_updates,
+                      IncognitoModePrefs::Availability incognito_availability);
 
   // Tracks FaviconService tasks.
   base::CancelableTaskTracker cancelable_task_tracker_;
@@ -183,10 +222,15 @@ class JumpList : public sessions::TabRestoreServiceObserver,
   std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
 
   // App id to associate with the jump list.
-  std::wstring app_id_;
+  base::string16 app_id_;
 
-  // Timer for requesting delayed updates of the jumplist.
-  base::OneShotTimer timer_;
+  // Timer for requesting delayed updates of the "Most Visited" category of
+  // jumplist.
+  base::OneShotTimer timer_most_visited_;
+
+  // Timer for requesting delayed updates of the "Recently Closed" category of
+  // jumplist.
+  base::OneShotTimer timer_recently_closed_;
 
   // Holds data that can be accessed from multiple threads.
   scoped_refptr<base::RefCountedData<JumpListData>> jumplist_data_;

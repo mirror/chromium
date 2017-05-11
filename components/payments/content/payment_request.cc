@@ -8,15 +8,19 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "components/payments/content/can_make_payment_query_factory.h"
 #include "components/payments/content/origin_security_checker.h"
 #include "components/payments/content/payment_details_validation.h"
 #include "components/payments/content/payment_request_web_contents_manager.h"
+#include "components/payments/core/can_make_payment_query.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 
 namespace payments {
 
 PaymentRequest::PaymentRequest(
+    content::RenderFrameHost* render_frame_host,
     content::WebContents* web_contents,
     std::unique_ptr<PaymentRequestDelegate> delegate,
     PaymentRequestWebContentsManager* manager,
@@ -26,6 +30,7 @@ PaymentRequest::PaymentRequest(
       delegate_(std::move(delegate)),
       manager_(manager),
       binding_(this, std::move(request)),
+      frame_origin_(GURL(render_frame_host->GetLastCommittedURL()).GetOrigin()),
       observer_for_testing_(observer_for_testing),
       journey_logger_(delegate_->IsIncognito(),
                       web_contents_->GetLastCommittedURL(),
@@ -48,17 +53,28 @@ void PaymentRequest::Init(mojom::PaymentRequestClientPtr client,
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   client_ = std::move(client);
 
-  if (!OriginSecurityChecker::IsOriginSecure(
-          delegate_->GetLastCommittedURL())) {
+  const GURL last_committed_url = delegate_->GetLastCommittedURL();
+  if (!OriginSecurityChecker::IsOriginSecure(last_committed_url)) {
     LOG(ERROR) << "Not in a secure origin";
     OnConnectionTerminated();
     return;
   }
 
-  if (OriginSecurityChecker::IsSchemeCryptographic(
-          delegate_->GetLastCommittedURL()) &&
-      !delegate_->IsSslCertificateValid()) {
+  bool allowed_origin =
+      OriginSecurityChecker::IsSchemeCryptographic(last_committed_url) ||
+      OriginSecurityChecker::IsOriginLocalhostOrFile(last_committed_url);
+  if (!allowed_origin) {
+    LOG(ERROR) << "Only localhost, file://, and cryptographic scheme origins "
+                  "allowed";
+  }
+
+  bool invalid_ssl =
+      OriginSecurityChecker::IsSchemeCryptographic(last_committed_url) &&
+      !delegate_->IsSslCertificateValid();
+  if (invalid_ssl)
     LOG(ERROR) << "SSL certificate is not valid";
+
+  if (!allowed_origin || invalid_ssl) {
     // Don't show UI. Resolve .canMakepayment() with "false". Reject .show()
     // with "NotSupportedError".
     spec_ = base::MakeUnique<PaymentRequestSpec>(
@@ -95,6 +111,14 @@ void PaymentRequest::Init(mojom::PaymentRequestClientPtr client,
 void PaymentRequest::Show() {
   if (!client_.is_bound() || !binding_.is_bound()) {
     LOG(ERROR) << "Attempted Show(), but binding(s) missing.";
+    OnConnectionTerminated();
+    return;
+  }
+
+  // A tab can display only one PaymentRequest UI at a time.
+  if (!manager_->CanShow(this)) {
+    LOG(ERROR) << "A PaymentRequest UI is already showing";
+    client_->OnError(mojom::PaymentErrorReason::USER_CANCEL);
     OnConnectionTerminated();
     return;
   }
@@ -148,14 +172,30 @@ void PaymentRequest::Complete(mojom::PaymentComplete result) {
 }
 
 void PaymentRequest::CanMakePayment() {
-  // TODO(crbug.com/704676): Implement a quota policy for this method.
-  // PaymentRequest.canMakePayments() never returns false in incognito mode.
-  client_->OnCanMakePayment(
-      delegate_->IsIncognito() || state()->CanMakePayment()
-          ? mojom::CanMakePaymentQueryResult::CAN_MAKE_PAYMENT
-          : mojom::CanMakePaymentQueryResult::CANNOT_MAKE_PAYMENT);
-  journey_logger_.SetCanMakePaymentValue(delegate_->IsIncognito() ||
-                                         state()->CanMakePayment());
+  bool can_make_payment = state()->CanMakePayment();
+  if (delegate_->IsIncognito()) {
+    client_->OnCanMakePayment(
+        mojom::CanMakePaymentQueryResult::CAN_MAKE_PAYMENT);
+    journey_logger_.SetCanMakePaymentValue(true);
+  } else if (CanMakePaymentQueryFactory::GetInstance()
+                 ->GetForContext(web_contents_->GetBrowserContext())
+                 ->CanQuery(frame_origin_, spec()->stringified_method_data())) {
+    client_->OnCanMakePayment(
+        can_make_payment
+            ? mojom::CanMakePaymentQueryResult::CAN_MAKE_PAYMENT
+            : mojom::CanMakePaymentQueryResult::CANNOT_MAKE_PAYMENT);
+    journey_logger_.SetCanMakePaymentValue(can_make_payment);
+  } else if (OriginSecurityChecker::IsOriginLocalhostOrFile(frame_origin_)) {
+    client_->OnCanMakePayment(
+        can_make_payment
+            ? mojom::CanMakePaymentQueryResult::WARNING_CAN_MAKE_PAYMENT
+            : mojom::CanMakePaymentQueryResult::WARNING_CANNOT_MAKE_PAYMENT);
+    journey_logger_.SetCanMakePaymentValue(can_make_payment);
+  } else {
+    client_->OnCanMakePayment(
+        mojom::CanMakePaymentQueryResult::QUERY_QUOTA_EXCEEDED);
+  }
+
   if (observer_for_testing_)
     observer_for_testing_->OnCanMakePaymentCalled();
 }
@@ -190,6 +230,8 @@ void PaymentRequest::UserCancelled() {
   // We close all bindings and ask to be destroyed.
   client_.reset();
   binding_.Close();
+  if (observer_for_testing_)
+    observer_for_testing_->OnConnectionTerminated();
   manager_->DestroyRequest(this);
 }
 
@@ -202,6 +244,8 @@ void PaymentRequest::OnConnectionTerminated() {
   client_.reset();
   binding_.Close();
   delegate_->CloseDialog();
+  if (observer_for_testing_)
+    observer_for_testing_->OnConnectionTerminated();
   manager_->DestroyRequest(this);
 }
 

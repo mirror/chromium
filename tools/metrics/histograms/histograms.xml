@@ -3815,6 +3815,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The autofill state related to a submitted form.</summary>
 </histogram>
 
+<histogram name="Autofill.HasModifiedProfile.CreditCardFormSubmission"
+    enum="Boolean">
+  <owner>csashi@google.com</owner>
+  <owner>jsaul@google.com</owner>
+  <owner>sebsg@chromium.org</owner>
+  <summary>
+    Whether user modified an address profile shortly before submitting a credit
+    card form.
+  </summary>
+</histogram>
+
 <histogram name="Autofill.IcuCollatorCreationSuccess" enum="BooleanSuccess">
   <owner>mathp@chromium.org</owner>
   <summary>
@@ -22439,6 +22450,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>True if Chrome will try to use DirectComposition overlays.</summary>
 </histogram>
 
+<histogram name="GPU.DirectComposition.OverlaySupportFlags"
+    enum="OverlaySupportFlag">
+  <owner>jbauman@chromium.org</owner>
+  <summary>
+    These are the flags explaining how well overlays are supported on the
+    current display. The is recorded for every connected display when creating a
+    DirectComposition view context.
+  </summary>
+</histogram>
+
 <histogram name="GPU.DirectComposition.OverlaysUsed" enum="BooleanOverlayUsage">
   <owner>jbauman@chromium.org</owner>
   <summary>Whether or not a frame displays an overlay.</summary>
@@ -31956,9 +31977,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>elawrence@chromium.org</owner>
   <owner>estark@chromium.org</owner>
   <summary>
-    The scheme of the URL for each main-frame navigation that goes to a
-    different page. Transitions like fragment change or history.pushState are
-    excluded.
+    The scheme of the URL for each main-frame navigation that replaces a
+    document object. This is not reported for reference fragment navigations,
+    pushState/replaceState or same page history navigation.
   </summary>
 </histogram>
 
@@ -31967,9 +31988,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>elawrence@chromium.org</owner>
   <owner>estark@chromium.org</owner>
   <summary>
-    The scheme of the URL for each main-frame navigation that goes to a
-    different page while in incognito. Transitions like fragment change or
-    history.pushState are excluded.
+    The scheme of the URL for each main-frame navigation that replaces a
+    document object while in incognito. This is not reported for reference
+    fragment navigations, pushState/replaceState or same page history
+    navigation.
   </summary>
 </histogram>
 
@@ -49980,6 +50002,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PDF.LoadStatus" enum="PDFLoadStatus">
+  <owner>tommycli@chromium.org</owner>
+  <summary>
+    Tracks what happens when Chrome tries to load a PDF. This metric tracks all
+    cases, but is focused on measuring failed PDF embeds, which occur if the
+    user is on Android, or if PDF plugin is disabled.
+  </summary>
+</histogram>
+
 <histogram name="Pepper.Graphics3DHasShareGroup" units="BooleanShareGroup">
   <owner>jbauman@chromium.org</owner>
   <summary>
@@ -63937,6 +63968,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Search.ContextualSearchAllCapsResultsSeen"
     enum="ContextualSearchResultsSeen">
+  <obsolete>
+    Deprecated 05/2017 because it's no longer ever used.
+  </obsolete>
   <owner>donnd@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
   <summary>
@@ -64578,6 +64612,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Search.ContextualSearchResultsSeenSelectionWasUrl"
     enum="ContextualSearchSeenByGesture">
+  <obsolete>
+    Deprecated 05/2017 because it's no longer ever used.
+  </obsolete>
   <owner>donnd@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
   <summary>
@@ -69907,15 +69944,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="SSL.CertificateErrorReportOutcome"
-    enum="CertificateReportOutcome">
-  <owner>meacer@chromium.org</owner>
-  <summary>
-    Users can opt in to send reports of certificate validation errors to Google.
-    This records the outcome whenever Chrome sends such a report.
-  </summary>
-</histogram>
-
 <histogram name="SSL.ExpectCTReportFailure" enum="NetErrorCodes">
   <obsolete>
     Deprecated as of 07/2016. Replaced with SSL.ExpectCTReportFailure2.
@@ -74810,15 +74838,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Tabs.StateTransfer.Time" units="ms">
+  <obsolete>
+    Deprecated as of 4/2017.
+  </obsolete>
   <owner>kouhei@chromium.org</owner>
   <owner>tzik@chromium.org</owner>
   <summary>
     Tabs.StateTransfer.TimeA_B measures the time a tab was in state A before it
     transferred to state B.
   </summary>
-  <details>
-    kouhei@ and tzik@ will remove some variation of these once M46 hits stable.
-  </details>
 </histogram>
 
 <histogram name="Tabs.SwitchFromCloseLatency" units="ms">
@@ -78996,6 +79024,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The length of a WebAPK session (launch/foregrounding to backgrounding) in
     milliseconds.
+  </summary>
+</histogram>
+
+<histogram name="WebApk.Update.GooglePlayUpdateResult"
+    enum="WebApkGooglePlayInstallResult">
+  <owner>hanxi@chromium.org</owner>
+  <owner>pkotwicz@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>
+    Records whether updating a WebAPK from Google Play succeeded. If not,
+    records the reason that the update failed.
   </summary>
 </histogram>
 

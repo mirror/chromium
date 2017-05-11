@@ -144,7 +144,7 @@ cr.define('print_preview', function() {
     this.tracker_ = new EventTracker();
 
     this.addEventListeners_();
-  };
+  }
 
   /**
    * Event types dispatched by the preview generator.
@@ -347,7 +347,7 @@ cr.define('print_preview', function() {
           Math.round(event.pageLayout.marginBottom),
           Math.round(event.pageLayout.marginLeft));
 
-      var o = print_preview.ticket_items.CustomMargins.Orientation;
+      var o = print_preview.ticket_items.CustomMarginsOrientation;
       var pageSize = new print_preview.Size(
           event.pageLayout.contentWidth +
               margins.get(o.LEFT) + margins.get(o.RIGHT),
