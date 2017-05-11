@@ -46,6 +46,30 @@
       "revId": "5a291d60a6ace6547d1653ffa531e7e12cdc9725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8de54fa_3bd9d026",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-11T20:03:15Z",
+      "side": 0,
+      "message": "It might be working ok with the local gas, but if we use bundled binutils, we want to use the bundled binutils. We want to have a hermetic build and not rely on system tools.\n\nIs not using linux_use_bundled_binutils an option for you?\n\n(These: https://cs.chromium.org/search/?q\u003dfno-integrated-as+package:%5Echromium$\u0026type\u003dcs)",
+      "parentUuid": "eb21d6cc_7f432c70",
+      "range": {
+        "startLine": 420,
+        "startChar": 21,
+        "endLine": 420,
+        "endChar": 25
+      },
+      "revId": "5a291d60a6ace6547d1653ffa531e7e12cdc9725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
