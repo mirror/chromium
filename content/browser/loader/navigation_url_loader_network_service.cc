@@ -204,7 +204,7 @@ void NavigationURLLoaderNetworkService::StartURLRequest(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   mojom::URLLoaderClientPtr url_loader_client_ptr_to_pass;
-  binding_.Bind(&url_loader_client_ptr_to_pass);
+  binding_.Bind(mojo::MakeRequest(&url_loader_client_ptr_to_pass));
 
   mojom::URLLoaderFactory* factory = nullptr;
   // This |factory_ptr| will be destroyed when it goes out of scope. Because
