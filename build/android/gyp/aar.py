@@ -30,7 +30,7 @@ def _IsManifestEmpty(manifest_str):
   doc = ElementTree.fromstring(manifest_str)
   for node in doc:
     if node.tag == 'application':
-      if len(node):
+      if len(node) and any(n.tag != 'meta-data' for n in node):
         return False
     elif node.tag != 'uses-sdk':
       return False
