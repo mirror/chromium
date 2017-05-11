@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58b8a524_55c2e252",
+        "filename": "cc/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-11T16:41:21Z",
+      "side": 1,
+      "message": "In multithreaded mode, ...?",
+      "revId": "b1036d4834fb4a2abfa5af3e40030f2fe70d2ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4482b052_02fe7d6d",
+        "filename": "cc/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-11T16:41:21Z",
+      "side": 1,
+      "message": "accompanied",
+      "revId": "b1036d4834fb4a2abfa5af3e40030f2fe70d2ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f427c30f_f3135922",
+        "filename": "cc/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-11T16:41:21Z",
+      "side": 1,
+      "message": "\"at least\" appears twice",
+      "revId": "b1036d4834fb4a2abfa5af3e40030f2fe70d2ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
