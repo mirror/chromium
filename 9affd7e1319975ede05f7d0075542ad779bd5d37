@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "190fee9c_1b1991ec",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-11T12:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2b177be_399d3e9d",
+      "range": {
+        "startLine": 109,
+        "startChar": 47,
+        "endLine": 109,
+        "endChar": 78
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6fde969_bac71ad0",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532c7977_26a50ba5",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-11T12:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6fde969_bac71ad0",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 56
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fbbdf760_f2b0507a",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-11T12:43:16Z",
+      "side": 1,
+      "message": "Done. I\u0027ll do all checks in InitiateSamlFlow, though.",
+      "parentUuid": "249f4c21_8936a7bd",
+      "range": {
+        "startLine": 134,
+        "startChar": 8,
+        "endLine": 134,
+        "endChar": 24
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89bcf38a_c85a52dc",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-10T13:06:27Z",
       "side": 1,
       "message": "I think this might be called early (and cancelling the flow) if the page uses Javascript to redirect.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 67
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efdf48b6_e7683c98",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-11T12:43:16Z",
+      "side": 1,
+      "message": "Is there any way we could test this? Otherwise, we\u0027ll just fix it later when we run into it.",
+      "parentUuid": "89bcf38a_c85a52dc",
       "range": {
         "startLine": 201,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ab509e6f_4df42161",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-11T12:43:16Z",
+      "side": 1,
+      "message": "I wonder whether I should check if url.path() starts with server_url.path()?",
+      "parentUuid": "ed4e115e_0297b258",
+      "range": {
+        "startLine": 225,
+        "startChar": 6,
+        "endLine": 225,
+        "endChar": 37
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ac5122e_43973095",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0004d7c8_9a54298f",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-11T12:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ac5122e_43973095",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cf7ee47_138f959e",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45f7360_ac6d5206",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-11T12:43:16Z",
+      "side": 1,
+      "message": "Done. But this URL isn\u0027t actually checked in the fetcher, but the one AD FS redirects to in the end. I\u0027ve added some stuff to it, though.",
+      "parentUuid": "2cf7ee47_138f959e",
+      "range": {
+        "startLine": 49,
+        "startChar": 36,
+        "endLine": 49,
+        "endChar": 57
+      },
+      "revId": "9affd7e1319975ede05f7d0075542ad779bd5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
