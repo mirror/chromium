@@ -217,9 +217,7 @@ component("gpu") {
     # TODO(xhwang): This is needed for AVDA to access the CDM directly.
     # Remove this dependency after VDAs are also running as part of the mojo
     # media service. See http://crbug.com/522298
-    if (mojo_media_host == "gpu") {
-      deps += [ "//media/mojo/services" ]
-    }
+    deps += [ "//media/mojo/services" ]
   }
 
   if (is_chromeos || is_win) {
