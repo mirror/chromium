@@ -559,6 +559,8 @@ PaymentSheetViewController::CreatePaymentSheetSummaryRow() {
 
   const std::vector<mojom::PaymentItemPtr>& items =
       spec()->details().display_items;
+
+  bool is_mixed_currency = spec()->IsMixedCurrency();
   // The inline items section contains the first 2 display items of the
   // request's details, followed by a label indicating "N more items..." if
   // there are more than 2 items in the details. The total label and amount
@@ -571,8 +573,16 @@ PaymentSheetViewController::CreatePaymentSheetSummaryRow() {
     summary->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     layout->AddView(summary.release());
 
-    layout->AddView(new views::Label(
-        spec()->GetFormattedCurrencyAmount(items[i]->amount->value)));
+    base::string16 item_amount;
+    if (is_mixed_currency) {
+      item_amount = l10n_util::GetStringFUTF16(
+          IDS_PAYMENT_REQUEST_ORDER_SUMMARY_SHEET_TOTAL_FORMAT,
+          base::UTF8ToUTF16(spec()->GetFormattedCurrencyCode(items[i]->amount)),
+          spec()->GetFormattedCurrencyAmount(items[i]->amount));
+    } else {
+      item_amount = spec()->GetFormattedCurrencyAmount(items[i]->amount);
+    }
+    layout->AddView(new views::Label(item_amount));
   }
 
   int hidden_item_count = items.size() - kMaxNumberOfItemsShown;
@@ -595,9 +605,10 @@ PaymentSheetViewController::CreatePaymentSheetSummaryRow() {
   layout->AddView(
       CreateBoldLabel(l10n_util::GetStringFUTF16(
                           IDS_PAYMENT_REQUEST_ORDER_SUMMARY_SHEET_TOTAL_FORMAT,
-                          base::UTF8ToUTF16(spec()->GetFormattedCurrencyCode()),
+                          base::UTF8ToUTF16(spec()->GetFormattedCurrencyCode(
+                              spec()->details().total->amount)),
                           spec()->GetFormattedCurrencyAmount(
-                              spec()->details().total->amount->value)))
+                              spec()->details().total->amount)))
           .release());
 
   inline_summary->SetLayoutManager(layout.release());
@@ -870,10 +881,10 @@ PaymentSheetViewController::CreateShippingOptionRow() {
           current_update_reason_ ==
                   PaymentRequestSpec::UpdateReason::SHIPPING_OPTION
               ? CreateCheckingSpinnerView()
-              : CreateShippingOptionLabel(selected_option,
-                                          spec()->GetFormattedCurrencyAmount(
-                                              selected_option->amount->value),
-                                          /*emphasize_label=*/false);
+              : CreateShippingOptionLabel(
+                    selected_option,
+                    spec()->GetFormattedCurrencyAmount(selected_option->amount),
+                    /*emphasize_label=*/false);
       return builder.Id(DialogViewID::PAYMENT_SHEET_SHIPPING_OPTION_SECTION)
           .CreateWithChevron(std::move(option_row_content), nullptr);
     } else {
