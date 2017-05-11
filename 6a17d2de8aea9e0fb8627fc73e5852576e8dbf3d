@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a938bdcd_882d8ac5",
+        "filename": "third_party/WebKit/Source/core/svg/graphics/SVGImage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-11T21:50:52Z",
+      "side": 1,
+      "message": "specifically, this line won\u0027t compile without converting bounds to an IntRect.",
+      "revId": "6a17d2de8aea9e0fb8627fc73e5852576e8dbf3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
