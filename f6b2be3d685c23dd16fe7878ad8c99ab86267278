@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eb0963c_e48d7e04",
+        "filename": "mojo/public/cpp/bindings/associated_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-05-11T23:57:42Z",
+      "side": 0,
+      "message": "This overload knows that the request side will be used locally, so it is able to set the version number for the ptr_info.\n\nThat being said, I think it is fine to remove, because (1) we usually don\u0027t need to worry about versioning; (2) there is nothing preventing the user from calling a different overload without setting version in ptr_info, even if the ptr_info is created locally.",
+      "revId": "f6b2be3d685c23dd16fe7878ad8c99ab86267278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
