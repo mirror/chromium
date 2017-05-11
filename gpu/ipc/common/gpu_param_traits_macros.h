@@ -41,8 +41,6 @@ IPC_STRUCT_TRAITS_END()
 IPC_ENUM_TRAITS_MAX_VALUE(gpu::GpuStreamPriority, gpu::GpuStreamPriority::LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(gpu::MemoryAllocation::PriorityCutoff,
                           gpu::MemoryAllocation::CUTOFF_LAST)
-IPC_ENUM_TRAITS_MAX_VALUE(gpu::error::ContextLostReason,
-                          gpu::error::kContextLostReasonLast)
 IPC_ENUM_TRAITS_MIN_MAX_VALUE(gpu::CollectInfoResult,
                               gpu::kCollectInfoNone,
                               gpu::kCollectInfoFatalFailure)
