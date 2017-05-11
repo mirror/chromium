@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6acd71f2_c7546ccf",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-05-11T13:29:58Z",
+      "side": 1,
+      "message": "nit:  Isn\u0027t this defined anywhere already. Not a biggie just thought you might want to avoid defining the n-th name for 200 :)",
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
