@@ -3,11 +3,11 @@
 These currently focus on Android and Linux platforms. However, some great tools
 for Windows exist and are documented here:
 
-https://www.chromium.org/developers/windows-binary-sizes
+ * https://www.chromium.org/developers/windows-binary-sizes
 
 There is also a dedicated mailing-list for binary size discussions:
 
-https://groups.google.com/a/chromium.org/forum/#!forum/binary-size
+ * https://groups.google.com/a/chromium.org/forum/#!forum/binary-size
 
 [TOC]
 
@@ -31,11 +31,11 @@ and Linux (although Linux symbol diffs have issues, as noted below).
     # Build and diff HEAD^ and HEAD.
     tools/binary_size/diagnose_bloat.py HEAD
 
-    # Diff OTHERREV and REV using downloaded build artifacts.
-    tools/binary_size/diagnose_bloat.py REV --reference-rev OTHERREV --cloud
+    # Diff BEFORE_REV and AFTER_REV using build artifacts downloaded from perf bots.
+    tools/binary_size/diagnose_bloat.py AFTER_REV --reference-rev BEFORE_REV --cloud
 
-    # Build and diff all contiguous revs in range OTHERREV..REV for src/v8.
-    tools/binary_size/diagnose_bloat.py REV --reference-rev OTHERREV --subrepo v8 --all
+    # Build and diff all contiguous revs in range BEFORE_REV..AFTER_REV for src/v8.
+    tools/binary_size/diagnose_bloat.py AFTER_REV --reference-rev BEFORE_REV --subrepo v8 --all
 
     # Display detailed usage info (there are many options).
     tools/binary_size/diagnose_bloat.py -h
@@ -46,7 +46,11 @@ Collect, archive, and analyze Chrome's binary size.
 Supports Android and Linux (although Linux
 [has issues](https://bugs.chromium.org/p/chromium/issues/detail?id=717550)).
 
-`.size` files are archived on perf bots as well as on official builders.
+`.size` files are archived on perf builders so that regressions can be quickly
+analyzed (via `diagnose_bloat.py --cloud`).
+
+`.size` files are archived on official builders so that symbols can be diff'ed
+between milestones.
 
 ### Technical Details
 
@@ -107,7 +111,16 @@ Supports Android and Linux (although Linux
 
   * Some heuristics for matching up before/after symbols.
 
-### Usage: `archive`
+#### Is Super Size a Generic Tool?
+
+No. Most of the logic is would could work for any ELF executable. However, being
+a generic tool is not a goal. Some examples of existing Chrome-specific logic:
+
+  * Assumes `.ninja` build rules are available.
+  * Heuristic for locating `.so` given `.apk`.
+  * Roadmap includes `.pak` file analysis.
+
+### Usage: archive
 
 Collect size information and dump it into a `.size` file.
 
@@ -127,7 +140,7 @@ Example:
     ninja -C out/Release -j 1000 chrome
     tools/binary_size/supersize archive chrome.size --elf-file out/Release/chrome -v
 
-### Usage: `html_report`
+### Usage: html_report
 
 Creates an interactive size breakdown (by source path) as a stand-alone html
 report.
@@ -137,7 +150,7 @@ Example:
     tools/binary_size/supersize html_report chrome.size --report-dir size-report -v
     xdg-open size-report/index.html
 
-### Usage: `console`
+### Usage: console
 
 Starts a Python interpreter where you can run custom queries.
 
@@ -149,7 +162,7 @@ Example:
     # Enters a Python REPL (it will print more guidance).
     tools/binary_size/supersize console chrome.size
 
-### Usage: `diff`
+### Usage: diff
 
 A convenience command equivalent to: `console before.size after.size --query='Print(Diff(size_info1, size_info2))'`
 
