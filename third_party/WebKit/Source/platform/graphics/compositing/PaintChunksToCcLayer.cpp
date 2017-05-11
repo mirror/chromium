@@ -183,8 +183,9 @@ static void AppendDisplayItemToCcDisplayItemList(
     cc::DisplayItemList* list) {
   DCHECK(DisplayItem::IsDrawingType(display_item.GetType()));
   if (DisplayItem::IsDrawingType(display_item.GetType())) {
-    sk_sp<const PaintRecord> record =
-        static_cast<const DrawingDisplayItem&>(display_item).GetPaintRecord();
+    const auto& drawing_display_item =
+        static_cast<const DrawingDisplayItem&>(display_item);
+    sk_sp<const PaintRecord> record = drawing_display_item.GetPaintRecord();
     if (!record)
       return;
     // In theory we would pass the bounds of the record, previously done as:
@@ -193,8 +194,8 @@ static void AppendDisplayItemToCcDisplayItemList(
     // to raster in a different space than that of the visual rects. We'll be
     // reworking visual rects further for SPv2, so for now we just pass a
     // visual rect large enough to make sure items raster.
-    list->CreateAndAppendDrawingItem<cc::DrawingDisplayItem>(g_large_rect,
-                                                             std::move(record));
+    list->CreateAndAppendDrawingItem<cc::DrawingDisplayItem>(
+        g_large_rect, std::move(record), drawing_display_item.CullRect());
   }
 }
 

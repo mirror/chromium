@@ -175,6 +175,7 @@ class PLATFORM_EXPORT PaintController {
   void AppendDebugDrawingAfterCommit(
       const DisplayItemClient&,
       sk_sp<PaintRecord>,
+      const FloatRect& cull_rect,
       const LayoutSize& offset_from_layout_object);
 
   void ShowDebugData() const { ShowDebugDataInternal(false); }
