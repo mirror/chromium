@@ -13,13 +13,16 @@ namespace blink {
 
 PassRefPtr<PaintRecordPattern> PaintRecordPattern::Create(
     sk_sp<PaintRecord> record,
+    const FloatRect& cull_rect,
     RepeatMode repeat_mode) {
-  return AdoptRef(new PaintRecordPattern(std::move(record), repeat_mode));
+  return AdoptRef(
+      new PaintRecordPattern(std::move(record), cull_rect, repeat_mode));
 }
 
 PaintRecordPattern::PaintRecordPattern(sk_sp<PaintRecord> record,
+                                       const FloatRect& cull_rect,
                                        RepeatMode mode)
-    : Pattern(mode), tile_record_(std::move(record)) {
+    : Pattern(mode), tile_record_(std::move(record)), cull_rect_(cull_rect) {
   // All current clients use RepeatModeXY, so we only support this mode for now.
   DCHECK(IsRepeatXY());
 
@@ -30,11 +33,9 @@ PaintRecordPattern::~PaintRecordPattern() {}
 
 sk_sp<PaintShader> PaintRecordPattern::CreateShader(
     const SkMatrix& local_matrix) {
-  SkRect tile_bounds = tile_record_->cullRect();
-
-  return MakePaintShaderRecord(tile_record_, SkShader::kRepeat_TileMode,
-                               SkShader::kRepeat_TileMode, &local_matrix,
-                               &tile_bounds);
+  return MakePaintShaderRecord(tile_record_, cull_rect_,
+                               SkShader::kRepeat_TileMode,
+                               SkShader::kRepeat_TileMode, &local_matrix);
 }
 
 }  // namespace blink

@@ -17,7 +17,10 @@ namespace cc {
 class CC_PAINT_EXPORT DrawingDisplayItem : public DisplayItem {
  public:
   DrawingDisplayItem();
-  explicit DrawingDisplayItem(sk_sp<const PaintRecord> record);
+  // TODO(danakj): When PaintRecorder is always taking a (w,h) instead of a
+  // rect, then this could also become a (w,h).
+  explicit DrawingDisplayItem(sk_sp<const PaintRecord> record,
+                              const SkRect& cull_rect);
   explicit DrawingDisplayItem(const DrawingDisplayItem& item);
   ~DrawingDisplayItem() override;
 
@@ -25,6 +28,7 @@ class CC_PAINT_EXPORT DrawingDisplayItem : public DisplayItem {
   int ApproximateOpCount() const;
 
   const sk_sp<const PaintRecord> picture;
+  SkRect cull_rect;
 };
 
 }  // namespace cc

@@ -15,7 +15,9 @@
 
 namespace cc {
 
-RecordPaintCanvas::RecordPaintCanvas(PaintOpBuffer* buffer) : buffer_(buffer) {
+RecordPaintCanvas::RecordPaintCanvas(PaintOpBuffer* buffer,
+                                     const SkRect& cull_rect)
+    : buffer_(buffer), cull_rect_(cull_rect) {
   DCHECK(buffer_);
 }
 
@@ -355,14 +357,14 @@ SkNoDrawCanvas* RecordPaintCanvas::GetCanvas() {
   if (canvas_)
     return &*canvas_;
 
-  SkIRect rect = buffer_->cullRect().roundOut();
+  SkIRect rect = cull_rect_.roundOut();
   canvas_.emplace(rect.right(), rect.bottom());
 
   // This is part of the "recording canvases have a size, but why" dance.
   // By creating a canvas of size (right x bottom) and then clipping it,
   // It makes getDeviceClipBounds return the original cull rect, which code
   // in GraphicsContextCanvas on Mac expects.  (Just creating an SkNoDrawCanvas
-  // with the cull_rect makes a canvas of size (width x height) instead
+  // with the cull rect makes a canvas of size (width x height) instead
   // which is incorrect.  SkRecorder cheats with private resetForNextCanvas.
   canvas_->clipRect(SkRect::Make(rect), SkClipOp::kIntersect, false);
   return &*canvas_;
