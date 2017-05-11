@@ -40,9 +40,19 @@ void BrowsingDataCounter::Init(PrefService* pref_service,
   OnInitialized();
 }
 
+void BrowsingDataCounter::InitWithoutPref(const Callback& callback) {
+  DCHECK(!initialized_);
+  callback_ = callback;
+  clear_browsing_data_tab_ = ClearBrowsingDataTab::ADVANCED;
+  initialized_ = true;
+  OnInitialized();
+}
+
 void BrowsingDataCounter::OnInitialized() {}
 
 base::Time BrowsingDataCounter::GetPeriodStart() {
+  if (period_.GetPrefName().empty())
+    return base::Time();
   return CalculateBeginDeleteTime(static_cast<TimePeriod>(*period_));
 }
 
