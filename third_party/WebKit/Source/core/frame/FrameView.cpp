@@ -558,19 +558,6 @@ void FrameView::SetFrameRect(const IntRect& frame_rect) {
 
   needs_scrollbars_update_ |= width_changed || height_changed;
 
-  // If this is not the main frame, then we got here via
-  // LayoutPart::UpdateGeometryInternal.  In that case, we can't clamp the
-  // scroll offset yet, because we still need to run UpdateLayout(), so our
-  // clamping boundaries may yet change.
-  if (GetFrame().IsMainFrame()) {
-    if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-      if (LayoutView* lv = GetLayoutView())
-        lv->GetScrollableArea()->ClampScrollOffsetAfterOverflowChange();
-    } else {
-      AdjustScrollOffsetFromUpdateScrollbars();
-    }
-  }
-
   FrameRectsChanged();
 
   UpdateParentScrollableAreaSet();
@@ -1675,14 +1662,26 @@ void FrameView::ViewportSizeChanged(bool width_changed, bool height_changed) {
   bool root_layer_scrolling_enabled =
       RuntimeEnabledFeatures::rootLayerScrollingEnabled();
 
-  if (LayoutViewItem layout_view = this->GetLayoutViewItem()) {
-    if (layout_view.UsesCompositing()) {
+  if (LayoutView* layout_view = this->GetLayoutView()) {
+    // If this is the main frame, we might have got here by hiding/showing the
+    // top controls.  In that case, layout won't be triggered, so we need to
+    // clamp the scroll offset here.
+    if (GetFrame().IsMainFrame()) {
       if (root_layer_scrolling_enabled) {
-        layout_view.Layer()->SetNeedsCompositingInputsUpdate();
+        layout_view->GetScrollableArea()
+            ->ClampScrollOffsetAfterOverflowChange();
+      } else {
+        AdjustScrollOffsetFromUpdateScrollbars();
+      }
+    }
+
+    if (layout_view->UsesCompositing()) {
+      if (root_layer_scrolling_enabled) {
+        layout_view->Layer()->SetNeedsCompositingInputsUpdate();
         if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
           SetNeedsPaintPropertyUpdate();
       } else {
-        layout_view.Compositor()->FrameViewDidChangeSize();
+        layout_view->Compositor()->FrameViewDidChangeSize();
       }
     }
   }

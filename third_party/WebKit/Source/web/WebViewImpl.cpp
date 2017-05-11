@@ -1821,7 +1821,7 @@ void WebViewImpl::UpdateICBAndResizeViewport() {
   if (MainFrameImpl()->GetFrameView()) {
     MainFrameImpl()->GetFrameView()->SetInitialViewportSize(icb_size);
     if (!MainFrameImpl()->GetFrameView()->NeedsLayout())
-      ResizeFrameView(MainFrameImpl());
+      resize_viewport_anchor_->ResizeFrameView(MainFrameSize());
   }
 }
 
@@ -3646,11 +3646,6 @@ void WebViewImpl::DidCommitLoad(bool is_new_navigation,
   EndActiveFlingAnimation();
 }
 
-void WebViewImpl::ResizeFrameView(WebLocalFrameImpl* webframe) {
-  if (webframe == MainFrame())
-    resize_viewport_anchor_->ResizeFrameView(MainFrameSize());
-}
-
 void WebViewImpl::ResizeAfterLayout(WebLocalFrameImpl* webframe) {
   LocalFrame* frame = webframe->GetFrame();
   if (!client_ || !client_->CanUpdateLayout() || !frame->IsMainFrame())
@@ -3673,7 +3668,7 @@ void WebViewImpl::ResizeAfterLayout(WebLocalFrameImpl* webframe) {
   if (GetPageScaleConstraintsSet().ConstraintsDirty())
     RefreshPageScaleFactorAfterLayout();
 
-  ResizeFrameView(webframe);
+  resize_viewport_anchor_->ResizeFrameView(MainFrameSize());
 }
 
 void WebViewImpl::LayoutUpdated(WebLocalFrameImpl* webframe) {
