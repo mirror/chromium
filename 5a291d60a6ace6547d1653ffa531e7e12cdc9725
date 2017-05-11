@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24705a31_5e0d32e3",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-11T19:38:22Z",
+      "side": 0,
+      "message": "gcc needs this to call gas. clang needs this for targets that don\u0027t use the integrated assembler.",
+      "range": {
+        "startLine": 420,
+        "startChar": 21,
+        "endLine": 420,
+        "endChar": 25
+      },
+      "revId": "5a291d60a6ace6547d1653ffa531e7e12cdc9725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
