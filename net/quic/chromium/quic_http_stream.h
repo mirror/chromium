@@ -69,9 +69,11 @@ class NET_EXPORT_PRIVATE QuicHttpStream
   void SetPriority(RequestPriority priority) override;
 
   // QuicChromiumClientStream::Delegate implementation
-  void OnHeadersAvailable(const SpdyHeaderBlock& headers,
-                          size_t frame_len) override;
+  void OnInitialHeadersAvailable(const SpdyHeaderBlock& headers,
+                                 size_t frame_len) override;
   void OnDataAvailable() override;
+  void OnTrailingHeadersAvailable(const SpdyHeaderBlock& headers,
+                                  size_t frame_len) override;
   void OnClose() override;
   void OnError(int error) override;
 
@@ -79,6 +81,9 @@ class NET_EXPORT_PRIVATE QuicHttpStream
   bool CheckVary(const SpdyHeaderBlock& client_request,
                  const SpdyHeaderBlock& promise_request,
                  const SpdyHeaderBlock& promise_response) override;
+  // TODO(rch): QuicClientPushPromiseIndex::Delegate is part of shared code.
+  // Figure out how to make the QuicHttpStream receive a Handle in this
+  // case instead of a QuicSpdyStream.
   void OnRendezvousResult(QuicSpdyStream* stream) override;
 
   static HttpResponseInfo::ConnectionInfo ConnectionInfoFromQuicVersion(
@@ -150,7 +155,7 @@ class NET_EXPORT_PRIVATE QuicHttpStream
 
   HttpServerProperties* http_server_properties_;  // Unowned.
 
-  QuicChromiumClientStream* stream_;  // Non-owning.
+  std::unique_ptr<QuicChromiumClientStream::Handle> stream_;
 
   // The following three fields are all owned by the caller and must
   // outlive this object, according to the HttpStream contract.

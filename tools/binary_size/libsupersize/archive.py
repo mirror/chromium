@@ -323,6 +323,11 @@ def _AddSymbolAliases(raw_symbols, aliases_by_address):
       replacements.append((i, name_list))
       num_new_symbols += len(name_list) - 1
 
+  if float(num_new_symbols) / len(raw_symbols) < .1:
+    logging.warning('Number of aliases is oddly low (%.0f%%). It should '
+                    'usually be around 25%%. Ensure --tool-prefix is correct.',
+                    float(num_new_symbols) / len(raw_symbols) * 100)
+
   # Step 2: Create new symbols as siblings to each existing one.
   logging.debug('Creating %d aliases', num_new_symbols)
   src_cursor_end = len(raw_symbols)
@@ -549,7 +554,16 @@ def _SectionSizesFromElf(elf_path, tool_prefix):
 def _ArchFromElf(elf_path, tool_prefix):
   args = [tool_prefix + 'readelf', '-h', elf_path]
   stdout = subprocess.check_output(args)
-  return re.search('Machine:\s*(\S+)', stdout).group(1)
+  machine = re.search('Machine:\s*(.+)', stdout).group(1)
+  if machine == 'Intel 80386':
+    return 'x86'
+  if machine == 'Advanced Micro Devices X86-64':
+    return 'x64'
+  elif machine == 'ARM':
+    return 'arm'
+  elif machine == 'AArch64':
+    return 'arm64'
+  return machine
 
 
 def _ParseGnArgs(args_path):
@@ -592,8 +606,8 @@ def AddArguments(parser):
   parser.add_argument('--no-source-paths', action='store_true',
                       help='Do not use .ninja files to map '
                            'object_path -> source_path')
-  parser.add_argument('--tool-prefix', default='',
-                      help='Path prefix for c++filt.')
+  parser.add_argument('--tool-prefix',
+                      help='Path prefix for c++filt, nm, readelf.')
   parser.add_argument('--output-directory',
                       help='Path to the root build directory.')
 
@@ -664,9 +678,10 @@ def Run(args, parser):
 
       packed_section_name = None
       architecture = metadata[models.METADATA_ELF_ARCHITECTURE]
-      if architecture == 'ARM':
+      # Packing occurs enabled only arm32 & arm64.
+      if architecture == 'arm':
         packed_section_name = '.rel.dyn'
-      elif architecture == 'AArch64':
+      elif architecture == 'arm64':
         packed_section_name = '.rela.dyn'
 
       if packed_section_name:

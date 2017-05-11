@@ -232,7 +232,9 @@ FrameView* FrameView::Create(LocalFrame& frame, const IntSize& initial_size) {
 }
 
 FrameView::~FrameView() {
-  ASSERT(has_been_disposed_);
+#if DCHECK_IS_ON()
+  DCHECK(has_been_disposed_);
+#endif
 }
 
 DEFINE_TRACE(FrameView) {
@@ -747,9 +749,8 @@ void FrameView::AdjustViewSize() {
   const IntSize& size = rect.Size();
 
   const IntPoint origin(-rect.X(), -rect.Y());
-  if (ScrollOrigin() != origin) {
+  if (ScrollOrigin() != origin)
     SetScrollOrigin(origin);
-  }
 
   SetContentsSize(size);
 }
@@ -992,7 +993,7 @@ inline void FrameView::ForceLayoutParentViewIfNeeded() {
 
   // Synchronously enter layout, to layout the view containing the host
   // object/embed/iframe.
-  ASSERT(frame_view);
+  DCHECK(frame_view);
   frame_view->UpdateLayout();
 }
 
@@ -1110,7 +1111,7 @@ void FrameView::PerformLayout(bool in_subtree_layout) {
     ScheduleOrthogonalWritingModeRootsForLayout();
   }
 
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPerformLayout);
 
   // performLayout is the actual guts of layout().
@@ -1181,9 +1182,9 @@ void FrameView::ScheduleOrPerformPostLayoutTasks() {
 
 void FrameView::UpdateLayout() {
   // We should never layout a Document which is not in a LocalFrame.
-  ASSERT(frame_);
+  DCHECK(frame_);
   ASSERT(frame_->View() == this);
-  ASSERT(frame_->GetPage());
+  DCHECK(frame_->GetPage());
 
   ScriptForbiddenScope forbid_script;
 
@@ -1330,7 +1331,7 @@ void FrameView::UpdateLayout() {
       UpdateLayout();
     }
 
-    ASSERT(layout_subtree_root_list_.IsEmpty());
+    DCHECK(layout_subtree_root_list_.IsEmpty());
   }  // Reset m_layoutSchedulingEnabled to its previous value.
   CheckDoesNotNeedLayout();
 
@@ -1390,7 +1391,7 @@ void FrameView::DeprecatedInvalidateTree(
 
   RELEASE_ASSERT(!GetLayoutViewItem().IsNull());
   LayoutViewItem root_for_paint_invalidation = GetLayoutViewItem();
-  ASSERT(!root_for_paint_invalidation.NeedsLayout());
+  DCHECK(!root_for_paint_invalidation.NeedsLayout());
 
   TRACE_EVENT1("blink", "FrameView::invalidateTree", "root",
                root_for_paint_invalidation.DebugName().Ascii());
@@ -1541,10 +1542,10 @@ void FrameView::UpdateGeometries() {
 }
 
 void FrameView::AddPartToUpdate(LayoutEmbeddedObject& object) {
-  ASSERT(IsInPerformLayout());
+  DCHECK(IsInPerformLayout());
   // Tell the DOM element that it needs a FrameViewBase update.
   Node* node = object.GetNode();
-  ASSERT(node);
+  DCHECK(node);
   if (isHTMLObjectElement(*node) || isHTMLEmbedElement(*node))
     ToHTMLPlugInElement(node)->SetNeedsPluginUpdate(true);
 
@@ -1608,7 +1609,7 @@ bool FrameView::ContentsInCompositedLayer() const {
 }
 
 void FrameView::AddBackgroundAttachmentFixedObject(LayoutObject* object) {
-  ASSERT(!background_attachment_fixed_objects_.Contains(object));
+  DCHECK(!background_attachment_fixed_objects_.Contains(object));
 
   background_attachment_fixed_objects_.insert(object);
   if (ScrollingCoordinator* scrolling_coordinator =
@@ -1625,7 +1626,7 @@ void FrameView::AddBackgroundAttachmentFixedObject(LayoutObject* object) {
 }
 
 void FrameView::RemoveBackgroundAttachmentFixedObject(LayoutObject* object) {
-  ASSERT(background_attachment_fixed_objects_.Contains(object));
+  DCHECK(background_attachment_fixed_objects_.Contains(object));
 
   background_attachment_fixed_objects_.erase(object);
   if (ScrollingCoordinator* scrolling_coordinator =
@@ -1788,8 +1789,8 @@ bool FrameView::InvalidateViewportConstrainedObjects() {
        *viewport_constrained_objects_) {
     LayoutObject* layout_object = viewport_constrained_object;
     LayoutItem layout_item = LayoutItem(layout_object);
-    ASSERT(layout_item.Style()->HasViewportConstrainedPosition());
-    ASSERT(layout_item.HasLayer());
+    DCHECK(layout_item.Style()->HasViewportConstrainedPosition());
+    DCHECK(layout_item.HasLayer());
     PaintLayer* layer = LayoutBoxModel(layout_item).Layer();
 
     if (layer->IsPaintInvalidationContainer())
@@ -1842,7 +1843,7 @@ void FrameView::ScrollContentsSlowPath() {
   // all of the objects.
   // FIXME: Find out what are enough to invalidate in slow path scrolling.
   // crbug.com/451090#9.
-  ASSERT(!GetLayoutViewItem().IsNull());
+  DCHECK(!GetLayoutViewItem().IsNull());
   if (ContentsInCompositedLayer())
     GetLayoutViewItem()
         .Layer()
@@ -1854,7 +1855,7 @@ void FrameView::ScrollContentsSlowPath() {
 
   if (ContentsInCompositedLayer()) {
     IntRect update_rect = VisibleContentRect();
-    ASSERT(!GetLayoutViewItem().IsNull());
+    DCHECK(!GetLayoutViewItem().IsNull());
     // FIXME: We should not allow paint invalidation out of paint invalidation
     // state. crbug.com/457415
     DisablePaintInvalidationStateAsserts disabler;
@@ -1906,7 +1907,7 @@ void FrameView::ProcessUrlFragment(const KURL& url,
 
 bool FrameView::ProcessUrlFragmentHelper(const String& name,
                                          UrlFragmentBehavior behavior) {
-  ASSERT(frame_->GetDocument());
+  DCHECK(frame_->GetDocument());
 
   if (behavior == kUrlFragmentScroll &&
       !frame_->GetDocument()->IsRenderingReady()) {
@@ -1959,7 +1960,7 @@ bool FrameView::ProcessUrlFragmentHelper(const String& name,
 }
 
 void FrameView::SetFragmentAnchor(Node* anchor_node) {
-  ASSERT(anchor_node);
+  DCHECK(anchor_node);
   fragment_anchor_ = anchor_node;
 
   // We need to update the layout tree before scrolling.
@@ -2013,7 +2014,7 @@ IntSize FrameView::GetLayoutSize(
 }
 
 void FrameView::SetLayoutSize(const IntSize& size) {
-  ASSERT(!LayoutSizeFixedToFrameSize());
+  DCHECK(!LayoutSizeFixedToFrameSize());
 
   SetLayoutSizeInternal(size);
 }
@@ -2115,7 +2116,7 @@ void FrameView::UpdateCompositedSelectionIfNeeded() {
   TRACE_EVENT0("blink", "FrameView::updateCompositedSelectionIfNeeded");
 
   Page* page = GetFrame().GetPage();
-  ASSERT(page);
+  DCHECK(page);
 
   CompositedSelection selection;
   LocalFrame* focused_frame = page->GetFocusController().FocusedFrame();
@@ -2525,7 +2526,7 @@ bool FrameView::UpdatePlugins() {
 }
 
 void FrameView::UpdatePluginsTimerFired(TimerBase*) {
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   for (unsigned i = 0; i < kMaxUpdatePluginsIterations; ++i) {
     if (UpdatePlugins())
       return;
@@ -2533,7 +2534,7 @@ void FrameView::UpdatePluginsTimerFired(TimerBase*) {
 }
 
 void FrameView::FlushAnyPendingPostLayoutTasks() {
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   if (post_layout_tasks_timer_.IsActive())
     PerformPostLayoutTasks();
   if (update_plugins_timer_.IsActive()) {
@@ -2543,7 +2544,7 @@ void FrameView::FlushAnyPendingPostLayoutTasks() {
 }
 
 void FrameView::ScheduleUpdatePluginsIfNecessary() {
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   if (update_plugins_timer_.IsActive() || part_update_set_.IsEmpty())
     return;
   update_plugins_timer_.StartOneShot(0, BLINK_FROM_HERE);
@@ -2553,18 +2554,18 @@ void FrameView::PerformPostLayoutTasks() {
   // FIXME: We can reach here, even when the page is not active!
   // http/tests/inspector/elements/html-link-import.html and many other
   // tests hit that case.
-  // We should ASSERT(isActive()); or at least return early if we can!
+  // We should DCHECK(isActive()); or at least return early if we can!
 
   // Always called before or after performLayout(), part of the highest-level
   // layout() call.
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   TRACE_EVENT0("blink,benchmark", "FrameView::performPostLayoutTasks");
 
   post_layout_tasks_timer_.Stop();
 
   frame_->Selection().DidLayout();
 
-  ASSERT(frame_->GetDocument());
+  DCHECK(frame_->GetDocument());
 
   FontFaceSet::DidLayout(*frame_->GetDocument());
   // Cursor update scheduling is done by the local root, which is the main frame
@@ -2590,17 +2591,17 @@ void FrameView::PerformPostLayoutTasks() {
 }
 
 bool FrameView::WasViewportResized() {
-  ASSERT(frame_);
+  DCHECK(frame_);
   LayoutViewItem layout_view_item = this->GetLayoutViewItem();
   if (layout_view_item.IsNull())
     return false;
-  ASSERT(layout_view_item.Style());
+  DCHECK(layout_view_item.Style());
   return (GetLayoutSize(kIncludeScrollbars) != last_viewport_size_ ||
           layout_view_item.Style()->Zoom() != last_zoom_factor_);
 }
 
 void FrameView::SendResizeEventIfNeeded() {
-  ASSERT(frame_);
+  DCHECK(frame_);
 
   LayoutViewItem layout_view_item = this->GetLayoutViewItem();
   if (layout_view_item.IsNull() || layout_view_item.GetDocument().Printing())
@@ -3260,7 +3261,7 @@ void FrameView::PaintTree() {
          (!GetFrame().Tree().Parent()->IsLocalFrame()));
 
   LayoutViewItem view = GetLayoutViewItem();
-  ASSERT(!view.IsNull());
+  DCHECK(!view.IsNull());
   ForAllNonThrottledFrameViews([](FrameView& frame_view) {
     frame_view.Lifecycle().AdvanceTo(DocumentLifecycle::kInPaint);
   });
@@ -3814,7 +3815,7 @@ void FrameView::RemoveResizerArea(LayoutBox& resizer_box) {
 }
 
 void FrameView::AddScrollableArea(ScrollableArea* scrollable_area) {
-  ASSERT(scrollable_area);
+  DCHECK(scrollable_area);
   if (!scrollable_areas_)
     scrollable_areas_ = new ScrollableAreaSet;
   scrollable_areas_->insert(scrollable_area);
@@ -3835,7 +3836,7 @@ void FrameView::RemoveScrollableArea(ScrollableArea* scrollable_area) {
 }
 
 void FrameView::AddAnimatingScrollableArea(ScrollableArea* scrollable_area) {
-  ASSERT(scrollable_area);
+  DCHECK(scrollable_area);
   if (!animating_scrollable_areas_)
     animating_scrollable_areas_ = new ScrollableAreaSet;
   animating_scrollable_areas_->insert(scrollable_area);
@@ -4286,7 +4287,7 @@ void FrameView::UpdateScrollbarGeometry() {
 
 bool FrameView::AdjustScrollbarExistence(
     ComputeScrollbarExistenceOption option) {
-  ASSERT(in_update_scrollbars_);
+  DCHECK(in_update_scrollbars_);
 
   // If we came in here with the view already needing a layout, then go ahead
   // and do that first.  (This will be the common case, e.g., when the page
@@ -4930,8 +4931,11 @@ void FrameView::UpdateViewportIntersectionsForSubtree(
 
   for (Frame* child = frame_->Tree().FirstChild(); child;
        child = child->Tree().NextSibling()) {
-    if (!child->IsLocalFrame())
+    if (child->IsRemoteFrame()) {
+      if (RemoteFrameView* view = ToRemoteFrame(child)->View())
+        view->UpdateRemoteViewportIntersection();
       continue;
+    }
     if (FrameView* view = ToLocalFrame(child)->View())
       view->UpdateViewportIntersectionsForSubtree(target_state);
   }

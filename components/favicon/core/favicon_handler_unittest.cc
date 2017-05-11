@@ -17,11 +17,13 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_task_environment.h"
+#include "base/test/test_simple_task_runner.h"
 #include "components/favicon/core/favicon_driver.h"
 #include "components/favicon/core/test/mock_favicon_service.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
+#include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/layout.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/favicon_size.h"
@@ -53,25 +55,35 @@ MATCHER_P2(ImageSizeIs, width, height, "") {
   return arg.Size() == gfx::Size(width, height);
 }
 
-// Fill the given bmp with some test data.
-SkBitmap CreateBitmapWithEdgeSize(int size) {
+// |arg| is a gfx::Image.
+MATCHER_P(ImageColorIs, expected_color, "") {
+  SkBitmap bitmap = arg.AsBitmap();
+  if (bitmap.empty()) {
+    *result_listener << "expected color but no bitmap data available";
+    return false;
+  }
+
+  SkColor actual_color = bitmap.getColor(1, 1);
+  if (actual_color != expected_color) {
+    *result_listener << "expected color "
+                     << base::StringPrintf("%08X", expected_color)
+                     << " but actual color is "
+                     << base::StringPrintf("%08X", actual_color);
+    return false;
+  }
+  return true;
+}
+
+SkBitmap CreateBitmapWithEdgeSize(int size, SkColor color) {
   SkBitmap bmp;
   bmp.allocN32Pixels(size, size);
-
-  unsigned char* src_data =
-      reinterpret_cast<unsigned char*>(bmp.getAddr32(0, 0));
-  for (int i = 0; i < size * size; i++) {
-    src_data[i * 4 + 0] = static_cast<unsigned char>(i % 255);
-    src_data[i * 4 + 1] = static_cast<unsigned char>(i % 255);
-    src_data[i * 4 + 2] = static_cast<unsigned char>(i % 255);
-    src_data[i * 4 + 3] = static_cast<unsigned char>(i % 255);
-  }
+  bmp.eraseColor(color);
   return bmp;
 }
 
 // Fill the given data buffer with valid png data.
-std::vector<unsigned char> FillBitmapWithEdgeSize(int size) {
-  SkBitmap bitmap = CreateBitmapWithEdgeSize(size);
+std::vector<unsigned char> FillBitmapWithEdgeSize(int size, SkColor color) {
+  SkBitmap bitmap = CreateBitmapWithEdgeSize(size, color);
   std::vector<unsigned char> output;
   gfx::PNGCodec::EncodeBGRASkBitmap(bitmap, false, &output);
   return output;
@@ -81,9 +93,10 @@ std::vector<FaviconRawBitmapResult> CreateRawBitmapResult(
     const GURL& icon_url,
     favicon_base::IconType icon_type = FAVICON,
     bool expired = false,
-    int edge_size = gfx::kFaviconSize) {
+    int edge_size = gfx::kFaviconSize,
+    SkColor color = SK_ColorRED) {
   scoped_refptr<base::RefCountedBytes> data(new base::RefCountedBytes());
-  data->data() = FillBitmapWithEdgeSize(edge_size);
+  data->data() = FillBitmapWithEdgeSize(edge_size, color);
   FaviconRawBitmapResult bitmap_result;
   bitmap_result.expired = expired;
   bitmap_result.bitmap_data = data;
@@ -125,21 +138,23 @@ class FakeImageDownloader {
     return download_id;
   }
 
-  void Add(const GURL& icon_url, const IntVector& sizes) {
-    AddWithOriginalSizes(icon_url, sizes, sizes);
-  }
-
-  void AddWithOriginalSizes(const GURL& icon_url,
-                            const IntVector& sizes,
-                            const IntVector& original_sizes) {
+  void Add(const GURL& icon_url,
+           const IntVector& sizes,
+           const IntVector& original_sizes,
+           SkColor color) {
     DCHECK_EQ(sizes.size(), original_sizes.size());
     Response response;
     response.http_status_code = 200;
     for (int size : sizes) {
       response.original_bitmap_sizes.push_back(gfx::Size(size, size));
-      response.bitmaps.push_back(CreateBitmapWithEdgeSize(size));
+      response.bitmaps.push_back(CreateBitmapWithEdgeSize(size, color));
     }
     responses_[icon_url] = response;
+  }
+
+  // Simpler overload of the function above.
+  void Add(const GURL& icon_url, const IntVector& sizes) {
+    Add(icon_url, sizes, sizes, SK_ColorRED);
   }
 
   void AddError(const GURL& icon_url, int http_status_code) {
@@ -229,7 +244,8 @@ class MockDelegate : public FaviconHandler::Delegate {
 // particular URL, the callback is called with empty database results.
 class FakeFaviconService {
  public:
-  FakeFaviconService() = default;
+  FakeFaviconService()
+      : manual_callback_task_runner_(new base::TestSimpleTaskRunner()) {}
 
   // Stores favicon with bitmap data in |results| at |page_url| and |icon_url|.
   void Store(const GURL& page_url,
@@ -272,6 +288,28 @@ class FakeFaviconService {
     return GetFaviconForPageOrIconURL(icon_url, callback, tracker);
   }
 
+  // Disables automatic callback for |url|. This is useful for emulating a
+  // DB lookup taking a long time. The callback for
+  // GetFaviconForPageOrIconURL() will be stored in |manual_callback_|.
+  void SetRunCallbackManuallyForUrl(const GURL& url) {
+    manual_callback_url_ = url;
+  }
+
+  // Returns whether an ongoing lookup exists for a url previously selected
+  // via SetRunCallbackManuallyForUrl().
+  bool HasPendingManualCallback() {
+    return manual_callback_task_runner_->HasPendingTask();
+  }
+
+  // Triggers the response for a lookup previously selected for manual
+  // triggering via SetRunCallbackManuallyForUrl().
+  bool RunCallbackManually() {
+    if (!HasPendingManualCallback())
+      return false;
+    manual_callback_task_runner_->RunPendingTasks();
+    return true;
+  }
+
  private:
   base::CancelableTaskTracker::TaskId GetFaviconForPageOrIconURL(
       const GURL& page_or_icon_url,
@@ -279,13 +317,30 @@ class FakeFaviconService {
       base::CancelableTaskTracker* tracker) {
     db_requests_.push_back(page_or_icon_url);
 
-    return tracker->PostTask(base::ThreadTaskRunnerHandle::Get().get(),
-                             FROM_HERE,
-                             base::Bind(callback, results_[page_or_icon_url]));
+    base::Closure bound_callback =
+        base::Bind(callback, results_[page_or_icon_url]);
+
+    if (page_or_icon_url != manual_callback_url_) {
+      return tracker->PostTask(base::ThreadTaskRunnerHandle::Get().get(),
+                               FROM_HERE, bound_callback);
+    }
+
+    // We use PostTaskAndReply() to cause |callback| being run in the current
+    // TaskRunner.
+    return tracker->PostTaskAndReply(manual_callback_task_runner_.get(),
+                                     FROM_HERE, base::Bind(&base::DoNothing),
+                                     bound_callback);
   }
 
   std::map<GURL, std::vector<favicon_base::FaviconRawBitmapResult>> results_;
   URLVector db_requests_;
+
+  // URL to disable automatic callbacks for.
+  GURL manual_callback_url_;
+
+  // Callback for GetFaviconForPageOrIconURL() request for
+  // |manual_callback_url_|.
+  scoped_refptr<base::TestSimpleTaskRunner> manual_callback_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeFaviconService);
 };
@@ -422,24 +477,35 @@ TEST_F(FaviconHandlerTest, UpdateFaviconMappingsAndFetch) {
 // - FaviconService::GetFaviconForPageURL() callback returns before
 //   FaviconHandler::OnUpdateFaviconURL() is called.
 TEST_F(FaviconHandlerTest, DownloadUnknownFaviconIfCandidatesSlower) {
+  // Defer the database lookup completion to control the exact timing.
+  favicon_service_.fake()->SetRunCallbackManuallyForUrl(kPageURL);
+
+  EXPECT_CALL(favicon_service_, SetFavicons(_, _, _, _)).Times(0);
+  EXPECT_CALL(delegate_, OnFaviconUpdated(_, _, _, _, _)).Times(0);
+
+  FaviconHandler handler(&favicon_service_, &delegate_,
+                         FaviconDriverObserver::NON_TOUCH_16_DIP);
+  handler.FetchFavicon(kPageURL);
+  base::RunLoop().RunUntilIdle();
+  // Database lookup for |kPageURL| is ongoing.
+  ASSERT_TRUE(favicon_service_.fake()->HasPendingManualCallback());
+  // Causes FaviconService lookups be faster than OnUpdateFaviconURL().
+  ASSERT_TRUE(favicon_service_.fake()->RunCallbackManually());
+  ASSERT_TRUE(VerifyAndClearExpectations());
+
   EXPECT_CALL(favicon_service_, SetFavicons(kPageURL, kIconURL16x16, FAVICON,
                                             ImageSizeIs(16, 16)));
   EXPECT_CALL(delegate_, OnFaviconUpdated(
                              kPageURL, FaviconDriverObserver::NON_TOUCH_16_DIP,
                              kIconURL16x16, /*icon_url_changed=*/true, _));
-
-  FaviconHandler handler(&favicon_service_, &delegate_,
-                         FaviconDriverObserver::NON_TOUCH_16_DIP);
-  handler.FetchFavicon(kPageURL);
-  // Causes FaviconService lookups be faster than OnUpdateFaviconURL().
-  base::RunLoop().RunUntilIdle();
+  // Feed in favicons now that the database lookup is completed.
   handler.OnUpdateFaviconURL(kPageURL,
                              {FaviconURL(kIconURL16x16, FAVICON, kEmptySizes)});
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL16x16));
   EXPECT_THAT(favicon_service_.fake()->db_requests(),
-              ElementsAre(kPageURL, kIconURL16x16));
+              ElementsAre(kIconURL16x16));
+  EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL16x16));
 }
 
 // Test that the FaviconHandler process finishes when:
@@ -448,20 +514,34 @@ TEST_F(FaviconHandlerTest, DownloadUnknownFaviconIfCandidatesSlower) {
 // - FaviconService::GetFaviconForPageURL() callback returns after
 //   FaviconHandler::OnUpdateFaviconURL() is called.
 TEST_F(FaviconHandlerTest, DownloadUnknownFaviconIfCandidatesFaster) {
-  EXPECT_CALL(favicon_service_, SetFavicons(kPageURL, kIconURL16x16, FAVICON,
-                                            ImageSizeIs(16, 16)));
-  EXPECT_CALL(delegate_, OnFaviconUpdated(_, _, kIconURL16x16, _, _));
+  // Defer the database lookup completion to control the exact timing.
+  favicon_service_.fake()->SetRunCallbackManuallyForUrl(kPageURL);
+
+  EXPECT_CALL(favicon_service_, SetFavicons(_, _, _, _)).Times(0);
+  EXPECT_CALL(delegate_, OnFaviconUpdated(_, _, _, _, _)).Times(0);
 
   FaviconHandler handler(&favicon_service_, &delegate_,
                          FaviconDriverObserver::NON_TOUCH_16_DIP);
   handler.FetchFavicon(kPageURL);
-  ASSERT_THAT(favicon_service_.fake()->db_requests(), ElementsAre(kPageURL));
-
-  // Feed in favicons without processing posted tasks (RunUntilIdle()).
+  base::RunLoop().RunUntilIdle();
+  // Feed in favicons before completing the database lookup.
   handler.OnUpdateFaviconURL(kPageURL,
                              {FaviconURL(kIconURL16x16, FAVICON, kEmptySizes)});
+
+  ASSERT_TRUE(VerifyAndClearExpectations());
+  // Database lookup for |kPageURL| is ongoing.
+  ASSERT_TRUE(favicon_service_.fake()->HasPendingManualCallback());
+
+  EXPECT_CALL(favicon_service_, SetFavicons(kPageURL, kIconURL16x16, FAVICON,
+                                            ImageSizeIs(16, 16)));
+  EXPECT_CALL(delegate_, OnFaviconUpdated(_, _, kIconURL16x16, _, _));
+
+  // Complete the lookup for |kPageURL|.
+  ASSERT_TRUE(favicon_service_.fake()->RunCallbackManually());
   base::RunLoop().RunUntilIdle();
 
+  EXPECT_THAT(favicon_service_.fake()->db_requests(),
+              ElementsAre(kIconURL16x16));
   EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL16x16));
 }
 
@@ -501,22 +581,33 @@ TEST_F(FaviconHandlerTest, DownloadBookmarkedFaviconInIncognito) {
 // Test that the icon is redownloaded if the icon cached for the page URL
 // expired.
 TEST_F(FaviconHandlerTest, RedownloadExpiredPageUrlFavicon) {
+  const GURL kIconURL("http://www.google.com/favicon");
+  const SkColor kOldColor = SK_ColorBLUE;
+  const SkColor kNewColor = SK_ColorGREEN;
+
   favicon_service_.fake()->Store(
-      kPageURL, kIconURL16x16,
-      CreateRawBitmapResult(kIconURL16x16, FAVICON, /*expired=*/true));
+      kPageURL, kIconURL,
+      CreateRawBitmapResult(kIconURL, FAVICON, /*expired=*/true,
+                            gfx::kFaviconSize, kOldColor));
 
-  // TODO(crbug.com/700811): It would be nice if we could check whether the two
-  // OnFaviconUpdated() calls are called with different gfx::Images (as opposed
-  // to calling OnFaviconUpdated() with the expired gfx::Image both times).
-  EXPECT_CALL(delegate_, OnFaviconUpdated(_, _, kIconURL16x16, _, _)).Times(2);
-  EXPECT_CALL(favicon_service_, SetFavicons(_, kIconURL16x16, _, _));
+  delegate_.fake_downloader().Add(kIconURL, IntVector{gfx::kFaviconSize},
+                                  IntVector{gfx::kFaviconSize}, kNewColor);
 
-  RunHandlerWithSimpleFaviconCandidates({kIconURL16x16});
-  // We know from the |kPageUrl| database request that |kIconURL16x16| has
-  // expired. A second request for |kIconURL16x16| should not have been made
-  // because it is redundant.
+  EXPECT_CALL(favicon_service_,
+              SetFavicons(_, kIconURL, _, ImageColorIs(kNewColor)));
+
+  InSequence seq;
+  EXPECT_CALL(delegate_,
+              OnFaviconUpdated(_, _, kIconURL, _, ImageColorIs(kOldColor)));
+  EXPECT_CALL(delegate_,
+              OnFaviconUpdated(_, _, kIconURL, _, ImageColorIs(kNewColor)));
+
+  RunHandlerWithSimpleFaviconCandidates({kIconURL});
+  // We know from the |kPageUrl| database request that |kIconURL| has expired. A
+  // second request for |kIconURL| should not have been made because it is
+  // redundant.
   EXPECT_THAT(favicon_service_.fake()->db_requests(), ElementsAre(kPageURL));
-  EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL16x16));
+  EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL));
 }
 
 // Test that FaviconHandler requests the new data when:
@@ -545,22 +636,26 @@ TEST_F(FaviconHandlerTest, UpdateAndDownloadFavicon) {
 // - The invalid data is not sent to the UI.
 // - The icon is redownloaded.
 TEST_F(FaviconHandlerTest, FaviconInHistoryInvalid) {
+  const GURL kIconURL("http://www.google.com/favicon");
+
+  delegate_.fake_downloader().Add(kIconURL, IntVector{gfx::kFaviconSize},
+                                  IntVector{gfx::kFaviconSize}, SK_ColorBLUE);
+
   // Set non empty but invalid data.
   std::vector<FaviconRawBitmapResult> bitmap_result =
-      CreateRawBitmapResult(kIconURL16x16);
+      CreateRawBitmapResult(kIconURL);
   // Empty bitmap data is invalid.
   bitmap_result[0].bitmap_data = new base::RefCountedBytes();
 
-  favicon_service_.fake()->Store(kPageURL, kIconURL16x16, bitmap_result);
+  favicon_service_.fake()->Store(kPageURL, kIconURL, bitmap_result);
 
-  // TODO(crbug.com/700811): It would be nice if we could check the image
-  // being published to rule out invalid data.
-  EXPECT_CALL(delegate_, OnFaviconUpdated(_, _, kIconURL16x16, _, _));
+  EXPECT_CALL(delegate_,
+              OnFaviconUpdated(_, _, kIconURL, _, ImageColorIs(SK_ColorBLUE)));
 
-  RunHandlerWithSimpleFaviconCandidates({kIconURL16x16});
+  RunHandlerWithSimpleFaviconCandidates({kIconURL});
 
   EXPECT_THAT(favicon_service_.fake()->db_requests(), ElementsAre(kPageURL));
-  EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL16x16));
+  EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL));
 }
 
 // Test that no downloads are done if a user visits a page which changed its
@@ -655,9 +750,46 @@ TEST_F(FaviconHandlerTest, UpdateDuringDownloading) {
   EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL3));
 }
 
+// Test that sending an icon URL update different to the previous icon URL
+// update during a database lookup ignores the first icon URL and processes the
+// second.
+TEST_F(FaviconHandlerTest, UpdateDuringDatabaseLookup) {
+  const GURL kIconURL1 = kIconURL16x16;
+  const GURL kIconURL2 = kIconURL64x64;
+
+  // Defer the lookup completion such that RunUntilIdle() doesn't complete the
+  // lookup.
+  favicon_service_.fake()->SetRunCallbackManuallyForUrl(kIconURL1);
+
+  delegate_.fake_downloader().Add(kIconURL1, IntVector{16});
+  delegate_.fake_downloader().Add(kIconURL2, IntVector{64});
+
+  std::unique_ptr<FaviconHandler> handler =
+      RunHandlerWithSimpleFaviconCandidates(URLVector{kIconURL1});
+
+  ASSERT_TRUE(VerifyAndClearExpectations());
+  ASSERT_TRUE(favicon_service_.fake()->HasPendingManualCallback());
+
+  // SetFavicons() and OnFaviconUpdated() should be called for the new icon URL
+  // and not |kIconURL1|.
+  EXPECT_CALL(favicon_service_, SetFavicons(_, kIconURL2, _, _));
+  EXPECT_CALL(delegate_, OnFaviconUpdated(_, _, kIconURL2, _, _));
+
+  handler->OnUpdateFaviconURL(kPageURL,
+                              {FaviconURL(kIconURL2, FAVICON, kEmptySizes)});
+
+  // Finalizes the DB lookup, which should be thrown away as the favicon URLs
+  // were updated.
+  EXPECT_TRUE(favicon_service_.fake()->RunCallbackManually());
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_THAT(favicon_service_.fake()->db_requests(), ElementsAre(kIconURL2));
+  EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL2));
+}
+
 // Test that sending an icon URL update identical to the previous icon URL
-// update is a no-op.
-TEST_F(FaviconHandlerTest, UpdateSameIconURLsWhileProcessingShouldBeNoop) {
+// update during image download is a no-op.
+TEST_F(FaviconHandlerTest, UpdateSameIconURLsWhileDownloadingShouldBeNoop) {
   const GURL kSlowLoadingIconURL("http://www.google.com/slow_favicon");
 
   const std::vector<FaviconURL> favicon_urls = {
@@ -682,6 +814,8 @@ TEST_F(FaviconHandlerTest, UpdateSameIconURLsWhileProcessingShouldBeNoop) {
   // despite the ongoing download.
   handler->OnUpdateFaviconURL(kPageURL, favicon_urls);
   base::RunLoop().RunUntilIdle();
+  EXPECT_THAT(favicon_service_.fake()->db_requests(), IsEmpty());
+  EXPECT_THAT(delegate_.downloads(), IsEmpty());
 
   // Complete the download.
   EXPECT_CALL(favicon_service_, SetFavicons(_, _, _, _));
@@ -689,6 +823,40 @@ TEST_F(FaviconHandlerTest, UpdateSameIconURLsWhileProcessingShouldBeNoop) {
   EXPECT_TRUE(delegate_.fake_downloader().RunCallbackManually());
   base::RunLoop().RunUntilIdle();
   EXPECT_THAT(delegate_.downloads(), IsEmpty());
+}
+
+// Test that sending an icon URL update identical to the previous icon URL
+// update during a database lookup is a no-op.
+TEST_F(FaviconHandlerTest, UpdateSameIconURLsWhileDatabaseLookupShouldBeNoop) {
+  const std::vector<FaviconURL> favicon_urls = {
+      FaviconURL(kIconURL64x64, FAVICON, kEmptySizes),
+  };
+
+  favicon_service_.fake()->SetRunCallbackManuallyForUrl(kIconURL64x64);
+
+  std::unique_ptr<FaviconHandler> handler = RunHandlerWithCandidates(
+      FaviconDriverObserver::NON_TOUCH_16_DIP, favicon_urls);
+
+  // Ongoing database lookup.
+  ASSERT_THAT(favicon_service_.fake()->db_requests(),
+              ElementsAre(kPageURL, kIconURL64x64));
+  ASSERT_THAT(delegate_.downloads(), IsEmpty());
+  ASSERT_TRUE(VerifyAndClearExpectations());
+  ASSERT_TRUE(favicon_service_.fake()->HasPendingManualCallback());
+
+  // Calling OnUpdateFaviconURL() with the same icon URLs should have no effect,
+  // despite the ongoing DB lookup.
+  handler->OnUpdateFaviconURL(kPageURL, favicon_urls);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_THAT(favicon_service_.fake()->db_requests(), IsEmpty());
+  EXPECT_THAT(delegate_.downloads(), IsEmpty());
+
+  // Complete the lookup.
+  EXPECT_CALL(favicon_service_, SetFavicons(_, _, _, _));
+  EXPECT_CALL(delegate_, OnFaviconUpdated(_, _, _, _, _));
+  EXPECT_TRUE(favicon_service_.fake()->RunCallbackManually());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_THAT(delegate_.downloads(), ElementsAre(kIconURL64x64));
 }
 
 // Test that calling OnUpdateFaviconUrl() with the same icon URLs as before is a
@@ -1004,10 +1172,10 @@ TEST_F(FaviconHandlerTest, TestFaviconWasScaledAfterDownload) {
   const int kOriginalSize1 = kMaximalSize + 1;
   const int kOriginalSize2 = kMaximalSize + 2;
 
-  delegate_.fake_downloader().AddWithOriginalSizes(
-      kIconURL1, IntVector{kMaximalSize}, IntVector{kOriginalSize1});
-  delegate_.fake_downloader().AddWithOriginalSizes(
-      kIconURL2, IntVector{kMaximalSize}, IntVector{kOriginalSize2});
+  delegate_.fake_downloader().Add(kIconURL1, IntVector{kMaximalSize},
+                                  IntVector{kOriginalSize1}, SK_ColorBLUE);
+  delegate_.fake_downloader().Add(kIconURL2, IntVector{kMaximalSize},
+                                  IntVector{kOriginalSize2}, SK_ColorBLUE);
 
   // Verify the best bitmap was selected (although smaller than |kIconURL2|)
   // and that it was scaled down to |kMaximalSize|.

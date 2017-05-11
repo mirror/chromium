@@ -7,9 +7,10 @@
 #import <ChromeWebView/cwv_export.h>
 #import <UIKit/UIKit.h>
 
+@class CWVScrollView;
+@class CWVTranslationController;
 @class CWVWebViewConfiguration;
 @protocol CWVUIDelegate;
-@protocol CWVTranslateDelegate;
 @protocol CWVNavigationDelegate;
 
 // A web view component (like WKWebView) which uses iOS Chromium's web view
@@ -28,11 +29,11 @@ CWV_EXPORT
 // This web view's navigation delegate.
 @property(nonatomic, weak) id<CWVNavigationDelegate> navigationDelegate;
 
+// This web view's translation controller.
+@property(nonatomic, readonly) CWVTranslationController* translationController;
+
 // This web view's UI delegate
 @property(nonatomic, weak) id<CWVUIDelegate> UIDelegate;
-
-// A delegate for the translation feature.
-@property(nonatomic, weak) id<CWVTranslateDelegate> translationDelegate;
 
 // Whether or not this web view can go backwards or forwards.
 @property(nonatomic, readonly) BOOL canGoBack;
@@ -56,6 +57,9 @@ CWV_EXPORT
 // completes, it remains at 1.0 until a new navigation starts, at which point it
 // is reset to 0.0.
 @property(nonatomic, readonly) double estimatedProgress;
+
+// The scroll view associated with the web view.
+@property(nonatomic, readonly) CWVScrollView* scrollView;
 
 // The User Agent product string used to build the full User Agent.
 + (NSString*)userAgentProduct;

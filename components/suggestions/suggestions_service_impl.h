@@ -12,6 +12,7 @@
 
 #include "base/callback.h"
 #include "base/callback_list.h"
+#include "base/compiler_specific.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -87,6 +88,12 @@ class SuggestionsServiceImpl : public SuggestionsService,
  private:
   friend class SuggestionsServiceTest;
   FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest, FetchSuggestionsData);
+  FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest, IgnoresNoopSyncChange);
+  FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest,
+                           IgnoresUninterestingSyncChange);
+  FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest, DoesNotFetchOnStartup);
+  FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest,
+                           FetchSuggestionsDataSyncNotInitializedEnabled);
   FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest,
                            FetchSuggestionsDataSyncDisabled);
   FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest,
@@ -100,9 +107,35 @@ class SuggestionsServiceImpl : public SuggestionsService,
   FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest, ClearBlacklist);
   FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest, UndoBlacklistURL);
   FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest,
+                           UndoBlacklistURLFailsIfNotInBlacklist);
+  FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest,
+                           UndoBlacklistURLFailsIfAlreadyCandidate);
+  FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest,
                            GetBlacklistedUrlBlacklistRequest);
   FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest, UpdateBlacklistDelay);
   FRIEND_TEST_ALL_PREFIXES(SuggestionsServiceTest, CheckDefaultTimeStamps);
+
+  // Establishes the different sync states that matter to SuggestionsService.
+  enum SyncState {
+    // State: Sync service is not initialized, yet not disabled. History sync
+    //     state is unknown (since not initialized).
+    // Behavior: Do not issue server requests, but serve from cache if
+    //     available.
+    NOT_INITIALIZED_ENABLED,
+
+    // State: Sync service is initialized, sync is enabled and history sync is
+    //     enabled.
+    // Behavior: Update suggestions from the server on FetchSuggestionsData().
+    INITIALIZED_ENABLED_HISTORY,
+
+    // State: Sync service is disabled or history sync is disabled.
+    // Behavior: Do not issue server requests. Clear the cache. Serve empty
+    //     suggestions.
+    SYNC_OR_HISTORY_SYNC_DISABLED,
+  };
+
+  // The action that should be taken as the result of a RefreshSyncState call.
+  enum RefreshAction { NO_ACTION, FETCH_SUGGESTIONS, CLEAR_SUGGESTIONS };
 
   // Helpers to build the various suggestions URLs. These are static members
   // rather than local functions in the .cc file to make them accessible to
@@ -111,6 +144,13 @@ class SuggestionsServiceImpl : public SuggestionsService,
   static std::string BuildSuggestionsBlacklistURLPrefix();
   static GURL BuildSuggestionsBlacklistURL(const GURL& candidate_url);
   static GURL BuildSuggestionsBlacklistClearURL();
+
+  // Computes the appropriate SyncState from |sync_service_|.
+  SyncState ComputeSyncState() const;
+
+  // Re-computes |sync_state_| from the sync service. Returns the action that
+  // should be taken in response.
+  RefreshAction RefreshSyncState() WARN_UNUSED_RESULT;
 
   // syncer::SyncServiceObserver implementation.
   void OnStateChanged(syncer::SyncService* sync) override;
@@ -172,6 +212,8 @@ class SuggestionsServiceImpl : public SuggestionsService,
   syncer::SyncService* sync_service_;
   ScopedObserver<syncer::SyncService, syncer::SyncServiceObserver>
       sync_service_observer_;
+
+  SyncState sync_state_;
 
   net::URLRequestContextGetter* url_request_context_;
 

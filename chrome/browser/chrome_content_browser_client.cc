@@ -118,7 +118,6 @@
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/installer/util/google_update_settings.h"
-#include "chromeos/chromeos_constants.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/browsing_data/core/browsing_data_utils.h"
@@ -246,6 +245,7 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chromeos/chromeos_constants.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/user_manager/user_manager.h"
 #include "mash/public/interfaces/launchable.mojom.h"
@@ -3226,8 +3226,8 @@ void ChromeContentBrowserClient::ExposeInterfacesToFrame(
     content::WebContents* web_contents =
         content::WebContents::FromRenderFrameHost(render_frame_host);
     if (web_contents) {
-      registry->AddInterface(base::Bind(
-          payments::CreatePaymentRequestForWebContents, web_contents));
+      registry->AddInterface(base::Bind(payments::CreatePaymentRequest,
+                                        render_frame_host, web_contents));
     }
   }
 #endif

@@ -62,6 +62,8 @@ extern const base::Feature kBrowserTouchBar;
 extern const base::Feature kTabStripKeyboardFocus;
 #endif  // defined(OS_MACOSX)
 
+extern const base::Feature kCaptureThumbnailOnLoadFinished;
+
 extern const base::Feature kCheckInstallabilityForBannerOnLoad;
 
 #if defined(OS_WIN)
@@ -163,6 +165,8 @@ extern const base::Feature kRunAllFlashInAllowMode;
 extern const base::Feature kSafeSearchUrlReporting;
 
 extern const base::Feature kSimplifiedFullscreenUI;
+
+extern const base::Feature kSiteDetails;
 
 #if defined(SYZYASAN)
 extern const base::Feature kSyzyasanDeferredFree;

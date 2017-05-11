@@ -157,7 +157,6 @@
 #endif  // !defined(OS_CHROMEOS)
 
 #if defined(USE_AURA)
-#include "chrome/browser/ui/views/theme_profile_key.h"
 #include "ui/aura/client/window_parenting_client.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
@@ -2089,13 +2088,6 @@ void BrowserView::InitViews() {
   GetWidget()->SetNativeWindowProperty(Profile::kProfileKey,
                                        browser_->profile());
 
-#if defined(USE_AURA)
-  // Stow a pointer to the browser's original profile onto the window handle so
-  // that windows will be styled with the appropriate NativeTheme.
-  SetThemeProfileForWindow(GetNativeWindow(),
-                           browser_->profile()->GetOriginalProfile());
-#endif
-
   LoadAccelerators();
 
   contents_web_view_ = new ContentsWebView(browser_->profile());
@@ -2692,6 +2684,11 @@ bool BrowserView::IsImmersiveModeEnabled() {
 
 gfx::Rect BrowserView::GetTopContainerBoundsInScreen() {
   return top_container_->GetBoundsInScreen();
+}
+
+void BrowserView::DestroyAnyExclusiveAccessBubble() {
+  exclusive_access_bubble_.reset();
+  new_back_shortcut_bubble_.reset();
 }
 
 extensions::ActiveTabPermissionGranter*

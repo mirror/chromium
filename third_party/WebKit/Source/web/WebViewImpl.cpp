@@ -3680,11 +3680,6 @@ void WebViewImpl::LayoutUpdated(WebLocalFrameImpl* webframe) {
   LocalFrame* frame = webframe->GetFrame();
   if (!client_ || !frame->IsLocalRoot())
     return;
-  // Relayout immediately to avoid violating the rule that needsLayout()
-  // isn't set at the end of a layout.
-  FrameView* view = frame->View();
-  if (view->NeedsLayout())
-    view->UpdateLayout();
 
   UpdatePageOverlays();
 

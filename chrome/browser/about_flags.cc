@@ -966,6 +966,29 @@ const FeatureEntry::Choice kEnableHeapProfilingChoices[] = {
      switches::kEnableHeapProfiling,
      switches::kEnableHeapProfilingTaskProfiler}};
 
+const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin4px[] = {
+    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "4"}};
+const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin8px[] = {
+    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "8"}};
+const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin12px[] = {
+    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "12"}};
+const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin16px[] = {
+    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "16"}};
+const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin20px[] = {
+    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "20"}};
+
+const FeatureEntry::FeatureVariation kOmniboxUIVerticalMarginVariations[] = {
+    {"4px vertical margin", kOmniboxUIVerticalMargin4px,
+     arraysize(kOmniboxUIVerticalMargin4px), nullptr},
+    {"8px vertical margin", kOmniboxUIVerticalMargin8px,
+     arraysize(kOmniboxUIVerticalMargin8px), nullptr},
+    {"12px vertical margin", kOmniboxUIVerticalMargin12px,
+     arraysize(kOmniboxUIVerticalMargin12px), nullptr},
+    {"16px vertical margin", kOmniboxUIVerticalMargin16px,
+     arraysize(kOmniboxUIVerticalMargin16px), nullptr},
+    {"20px vertical margin", kOmniboxUIVerticalMargin20px,
+     arraysize(kOmniboxUIVerticalMargin20px), nullptr}};
+
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
 // The first line of the entry is the internal name.
@@ -1210,6 +1233,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"top-chrome-md", flag_descriptions::kTopChromeMd,
      flag_descriptions::kTopChromeMdDescription, kOsDesktop,
      MULTI_VALUE_TYPE(kTopChromeMaterialDesignChoices)},
+    {"enable-site-details", flag_descriptions::kSiteDetails,
+     flag_descriptions::kSiteDetailsDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kSiteDetails)},
     {"enable-site-settings", flag_descriptions::kSiteSettings,
      flag_descriptions::kSiteSettingsDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kEnableSiteSettings)},
@@ -1581,11 +1607,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAccountConsistencyDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kEnableAccountConsistency)},
 #endif
-    {"enable-password-separated-signin-flow",
-     flag_descriptions::kEnablePasswordSeparatedSigninFlowName,
-     flag_descriptions::kEnablePasswordSeparatedSigninFlowDescription,
-     kOsMac | kOsWin | kOsLinux,
-     FEATURE_VALUE_TYPE(switches::kUsePasswordSeparatedSigninFlow)},
 #if BUILDFLAG(ENABLE_APP_LIST)
     {"reset-app-list-install-state",
      flag_descriptions::kResetAppListInstallStateName,
@@ -2433,6 +2454,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"android-payment-apps", flag_descriptions::kAndroidPaymentAppsName,
      flag_descriptions::kAndroidPaymentAppsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kAndroidPaymentApps)},
+    {"service-worker-payment-apps",
+     flag_descriptions::kServiceWorkerPaymentAppsName,
+     flag_descriptions::kServiceWorkerPaymentAppsDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(features::kServiceWorkerPaymentApps)},
 #endif  // OS_ANDROID
 #if defined(OS_CHROMEOS)
     {"disable-eol-notification", flag_descriptions::kEolNotificationName,
@@ -2835,6 +2860,13 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(switches::kShowCertLink)},
 #endif
 
+    {"omnibox-ui-vertical-margin",
+     flag_descriptions::kOmniboxUIVerticalMarginName,
+     flag_descriptions::kOmniboxUIVerticalMarginDescription, kOsDesktop,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(omnibox::kUIExperiments,
+                                    kOmniboxUIVerticalMarginVariations,
+                                    "OmniboxUIVerticalMarginVariations")},
+
     {"use-suggestions-even-if-few",
      flag_descriptions::kUseSuggestionsEvenIfFewFeatureName,
      flag_descriptions::kUseSuggestionsEvenIfFewFeatureDescription, kOsAll,
@@ -2843,6 +2875,11 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-location-hard-reload", flag_descriptions::kLocationHardReloadName,
      flag_descriptions::kLocationHardReloadDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kLocationHardReload)},
+
+    {"capture-thumbnail-on-load-finished",
+     flag_descriptions::kCaptureThumbnailOnLoadFinishedName,
+     flag_descriptions::kCaptureThumbnailOnLoadFinishedDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kCaptureThumbnailOnLoadFinished)},
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
