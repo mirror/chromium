@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "726bad07_7ca0881b",
+        "filename": "gpu/command_buffer/client/cmd_buffer_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-05-11T23:15:05Z",
+      "side": 1,
+      "message": "nit: cached_get_offset_ should already be 0 if service_on_old_buffer_, so could just do\n\nif (state.set_get_buffer_count \u003d\u003d set_get_buffer_count_)\n  cached_get_offset_ \u003d state.get_offset;",
+      "revId": "d7b6cd83e3067dc0a2509b1d565067904f6fa118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d69c8c_d730160d",
+        "filename": "gpu/command_buffer/client/cmd_buffer_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-05-11T23:15:05Z",
+      "side": 1,
+      "message": "Is this change to ensure that Finish() waits for the buffer to be set on the service?  Why?",
+      "revId": "d7b6cd83e3067dc0a2509b1d565067904f6fa118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
