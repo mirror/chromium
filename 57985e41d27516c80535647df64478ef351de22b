@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d88cd08_406b27e3",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-11T20:01:19Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment above this block to say that in a mixed currency situation, we always display the currency symbol",
+      "range": {
+        "startLine": 576,
+        "startChar": 10,
+        "endLine": 576,
+        "endChar": 18
+      },
+      "revId": "57985e41d27516c80535647df64478ef351de22b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de0ec59_3db41d6e",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-11T20:01:19Z",
+      "side": 1,
+      "message": "erm, this function is suddenly much more obscure! Let\u0027s add a comment: create a currency formatter for |currency_code|, or if already created, returning the cached version.",
+      "range": {
+        "startLine": 232,
+        "startChar": 26,
+        "endLine": 232,
+        "endChar": 31
+      },
+      "revId": "57985e41d27516c80535647df64478ef351de22b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02314347_940eb78c",
+        "filename": "components/payments/content/payment_request_spec.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-11T20:01:19Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment that there is one cached per currency symbol",
+      "revId": "57985e41d27516c80535647df64478ef351de22b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
