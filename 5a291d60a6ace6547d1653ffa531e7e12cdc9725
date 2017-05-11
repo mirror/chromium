@@ -70,6 +70,30 @@
       "revId": "5a291d60a6ace6547d1653ffa531e7e12cdc9725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d1e932_6b1deae4",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1122985
+      },
+      "writtenOn": "2017-05-11T20:28:56Z",
+      "side": 0,
+      "message": "I can disable linux_use_bundled_binutils locally of course, though this changes the default for debug_fission (and I often forget this fact).  Alternative fix for that over here:\nhttps://chromium-review.googlesource.com/c/503011/\n\n\u003e https://cs.chromium.org/search/?q\u003dfno-integrated-as+package:%5Echromium$\u0026type\u003dcs\n\nThat bug only mentions clang android, and those configs their own -B flag, it looks like this one isn\u0027t needed to fix that?  (It might take me a while to setup this build env locally to confirm, triggered a couple of android trybots in case they show the issue.)\n\nRe the desire to have a hermetic build, perhaps this is best done as a parameter in the gcc_toolchain template?",
+      "parentUuid": "e8de54fa_3bd9d026",
+      "range": {
+        "startLine": 420,
+        "startChar": 21,
+        "endLine": 420,
+        "endChar": 25
+      },
+      "revId": "5a291d60a6ace6547d1653ffa531e7e12cdc9725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
