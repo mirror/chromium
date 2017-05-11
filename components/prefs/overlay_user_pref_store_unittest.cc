@@ -150,62 +150,6 @@ TEST_F(OverlayUserPrefStoreTest, ModifyDictionaries) {
   EXPECT_TRUE(Value::Equals(modify, static_cast<DictionaryValue*>(modified)));
 }
 
-// Here we consider a global preference that is not overlayed.
-TEST_F(OverlayUserPrefStoreTest, GlobalPref) {
-  PrefStoreObserverMock obs;
-  overlay_->AddObserver(&obs);
-
-  const Value* value = NULL;
-
-  // Check that underlay first value is reported.
-  underlay_->SetValue(regular_key, base::WrapUnique(new Value(42)),
-                      WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  obs.VerifyAndResetChangedKey(regular_key);
-
-  // Check that underlay overwriting is reported.
-  underlay_->SetValue(regular_key, base::WrapUnique(new Value(43)),
-                      WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  obs.VerifyAndResetChangedKey(regular_key);
-
-  // Check that we get this value from the overlay
-  EXPECT_TRUE(overlay_->GetValue(regular_key, &value));
-  EXPECT_TRUE(base::Value(43).Equals(value));
-
-  // Check that overwriting change in overlay is reported.
-  overlay_->SetValue(regular_key, base::WrapUnique(new Value(44)),
-                     WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  obs.VerifyAndResetChangedKey(regular_key);
-
-  // Check that we get this value from the overlay and the underlay.
-  EXPECT_TRUE(overlay_->GetValue(regular_key, &value));
-  EXPECT_TRUE(base::Value(44).Equals(value));
-  EXPECT_TRUE(underlay_->GetValue(regular_key, &value));
-  EXPECT_TRUE(base::Value(44).Equals(value));
-
-  // Check that overlay remove is reported.
-  overlay_->RemoveValue(regular_key,
-                        WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  obs.VerifyAndResetChangedKey(regular_key);
-
-  // Check that value was removed from overlay and underlay
-  EXPECT_FALSE(overlay_->GetValue(regular_key, &value));
-  EXPECT_FALSE(underlay_->GetValue(regular_key, &value));
-
-  // Check respecting of silence.
-  overlay_->SetValueSilently(regular_key, base::WrapUnique(new Value(46)),
-                             WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  EXPECT_TRUE(obs.changed_keys.empty());
-
-  overlay_->RemoveObserver(&obs);
-
-  // Check successful unsubscription.
-  underlay_->SetValue(regular_key, base::WrapUnique(new Value(47)),
-                      WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  overlay_->SetValue(regular_key, base::WrapUnique(new Value(48)),
-                     WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  EXPECT_TRUE(obs.changed_keys.empty());
-}
-
 // Check that mutable values are removed correctly.
 TEST_F(OverlayUserPrefStoreTest, ClearMutableValues) {
   // Set in overlay and underlay the same preference.
