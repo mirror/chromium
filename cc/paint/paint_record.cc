@@ -9,16 +9,18 @@
 
 namespace cc {
 
-sk_sp<SkPicture> ToSkPicture(sk_sp<PaintRecord> record) {
+sk_sp<SkPicture> ToSkPicture(sk_sp<PaintRecord> record,
+                             const SkRect& cull_rect) {
   SkPictureRecorder recorder;
-  SkCanvas* canvas = recorder.beginRecording(record->cullRect());
+  SkCanvas* canvas = recorder.beginRecording(cull_rect);
   record->playback(canvas);
   return recorder.finishRecordingAsPicture();
 }
 
-sk_sp<const SkPicture> ToSkPicture(sk_sp<const PaintRecord> record) {
+sk_sp<const SkPicture> ToSkPicture(sk_sp<const PaintRecord> record,
+                                   const SkRect& cull_rect) {
   SkPictureRecorder recorder;
-  SkCanvas* canvas = recorder.beginRecording(record->cullRect());
+  SkCanvas* canvas = recorder.beginRecording(cull_rect);
   record->playback(canvas);
   return recorder.finishRecordingAsPicture();
 }

@@ -17,10 +17,14 @@ namespace cc {
 using PaintRecord = PaintOpBuffer;
 
 // TODO(enne): Remove these if possible, they are really expensive.
-CC_PAINT_EXPORT sk_sp<SkPicture> ToSkPicture(sk_sp<PaintRecord> record);
+// TODO(danakj): When PaintRecorder is always taking a (w,h) instead of a rect,
+// then this could also become a (w,h).
+CC_PAINT_EXPORT sk_sp<SkPicture> ToSkPicture(sk_sp<PaintRecord> record,
+                                             const SkRect& cull_rect);
 
 CC_PAINT_EXPORT sk_sp<const SkPicture> ToSkPicture(
-    sk_sp<const PaintRecord> record);
+    sk_sp<const PaintRecord> record,
+    const SkRect& cull_rect);
 
 }  // namespace cc
 

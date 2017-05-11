@@ -8,7 +8,7 @@
 #include "base/compiler_specific.h"
 #include "platform/PlatformExport.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/geometry/FloatPoint.h"
+#include "platform/geometry/FloatRect.h"
 #include "platform/graphics/paint/DisplayItem.h"
 #include "platform/graphics/paint/PaintRecord.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
@@ -21,10 +21,12 @@ class PLATFORM_EXPORT DrawingDisplayItem final : public DisplayItem {
   DrawingDisplayItem(const DisplayItemClient& client,
                      Type type,
                      sk_sp<const PaintRecord> record,
+                     const FloatRect& cull_rect,
                      bool known_to_be_opaque = false)
       : DisplayItem(client, type, sizeof(*this)),
         record_(record && record->approximateOpCount() ? std::move(record)
                                                        : nullptr),
+        cull_rect_(cull_rect),
         known_to_be_opaque_(known_to_be_opaque) {
     DCHECK(IsDrawingType(type));
   }
@@ -35,6 +37,7 @@ class PLATFORM_EXPORT DrawingDisplayItem final : public DisplayItem {
   bool DrawsContent() const override;
 
   const sk_sp<const PaintRecord>& GetPaintRecord() const { return record_; }
+  FloatRect CullRect() const { return cull_rect_; }
 
   bool KnownToBeOpaque() const {
     DCHECK(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
@@ -50,6 +53,7 @@ class PLATFORM_EXPORT DrawingDisplayItem final : public DisplayItem {
   bool Equals(const DisplayItem& other) const final;
 
   sk_sp<const PaintRecord> record_;
+  FloatRect cull_rect_;
 
   // True if there are no transparent areas. Only used for SlimmingPaintV2.
   const bool known_to_be_opaque_;

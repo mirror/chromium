@@ -1297,7 +1297,7 @@ void GraphicsLayer::CheckPaintUnderInvalidations(
   recorder.getRecordingCanvas()->drawBitmap(new_bitmap, rect.X(), rect.Y());
   sk_sp<PaintRecord> record = recorder.finishRecordingAsPicture();
   GetPaintController().AppendDebugDrawingAfterCommit(
-      *this, record, OffsetFromLayoutObjectWithSubpixelAccumulation());
+      *this, record, rect, OffsetFromLayoutObjectWithSubpixelAccumulation());
 }
 
 }  // namespace blink
