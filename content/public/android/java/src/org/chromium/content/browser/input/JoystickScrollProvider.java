@@ -193,7 +193,7 @@ public class JoystickScrollProvider {
     /**
      * Removes noise from joystick motion events.
      */
-    private static float getFilteredAxisValue(MotionEvent event, int axis) {
+    public static float getFilteredAxisValue(MotionEvent event, int axis) {
         float axisValWithNoise = event.getAxisValue(axis);
         if (axisValWithNoise > JOYSTICK_SCROLL_DEADZONE
                 || axisValWithNoise < -JOYSTICK_SCROLL_DEADZONE) {

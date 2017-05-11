@@ -36,6 +36,7 @@ import android.view.accessibility.AccessibilityNodeProvider;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
 import org.chromium.base.ObserverList.RewindableIterator;
 import org.chromium.base.TraceEvent;
@@ -923,9 +924,10 @@ public class ContentViewCore
      * @param velocityX fling speed in x-axis.
      * @param velocityY fling speed in y-axis.
      */
-    public void flingViewport(long timeMs, int velocityX, int velocityY) {
+    public void flingViewport(long timeMs, float velocityX, float velocityY) {
         if (mNativeContentViewCore == 0) return;
         nativeFlingCancel(mNativeContentViewCore, timeMs);
+        if (velocityX == 0 && velocityY == 0) return;
         nativeScrollBegin(mNativeContentViewCore, timeMs, 0, 0, velocityX, velocityY, true);
         nativeFlingStart(mNativeContentViewCore, timeMs, 0, 0, velocityX, velocityY, true);
     }
@@ -1348,10 +1350,19 @@ public class ContentViewCore
                     }
             }
         } else if ((event.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
-            if (getJoystickScrollProvider().onMotion(event)
-                    || getJoystickZoomProvider().onMotion(event)) {
+            float velocityX =
+                    JoystickScrollProvider.getFilteredAxisValue(event, MotionEvent.AXIS_X);
+            float velocityY =
+                    JoystickScrollProvider.getFilteredAxisValue(event, MotionEvent.AXIS_Y);
+            Log.w("ContentViewCore", "CR flingViewport: [" + velocityX + "," + velocityY + "]");
+            flingViewport(event.getEventTime(), -velocityX, -velocityY);
+
+            if (/* getJoystickScrollProvider().onMotion(event)
+                    || */ getJoystickZoomProvider()
+                            .onMotion(event)) {
                 return true;
             }
+            return true;
         }
         return mContainerViewInternals.super_onGenericMotionEvent(event);
     }

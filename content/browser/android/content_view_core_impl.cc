@@ -885,6 +885,9 @@ void ContentViewCoreImpl::FlingStart(JNIEnv* env,
   event.data.fling_start.velocity_y = vy / dpi_scale();
   event.data.fling_start.target_viewport = target_viewport;
 
+  if (target_viewport)
+    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
+
   SendGestureEvent(event);
 }
 
