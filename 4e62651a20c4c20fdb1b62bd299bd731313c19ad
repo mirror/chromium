@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56c0f89b_b0bd684a",
+        "filename": "cc/surfaces/referenced_surface_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-11T14:55:35Z",
+      "side": 1,
+      "message": "This long ?: statement is rather unweildly. You could use a base::Optional to make it an if/else, which might read better. Worth a shot?",
+      "revId": "4e62651a20c4c20fdb1b62bd299bd731313c19ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef34b83_5e367df5",
+        "filename": "cc/surfaces/referenced_surface_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-11T14:55:35Z",
+      "side": 1,
+      "message": "swap() should use ADL to find its namespace, no std::\n\nhttp://www.cplusplus.com/reference/algorithm/swap/:\n\nMany components of the standard library (within std) call swap in an unqualified manner to allow custom overloads for non-fundamental types to be called instead of this generic version: Custom overloads of swap declared in the same namespace as the type for which they are provided get selected through argument-dependent lookup over this generic version.",
+      "revId": "4e62651a20c4c20fdb1b62bd299bd731313c19ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1290c766_49f7609f",
+        "filename": "cc/surfaces/referenced_surface_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-11T14:55:35Z",
+      "side": 1,
+      "message": "fwiw, the name in a TODO is to be someone who can explain the TODO, not the person who is going to do it. with that, it\u0027s rare to see the name in it change :)",
+      "revId": "4e62651a20c4c20fdb1b62bd299bd731313c19ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4d597b_52f805fb",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-11T14:55:35Z",
+      "side": 1,
+      "message": "more candidates for flat map/set in this class for another CL :)",
+      "revId": "4e62651a20c4c20fdb1b62bd299bd731313c19ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
