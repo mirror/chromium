@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4d8e38c5_925697dc",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-05-11T21:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acc70c2_50b62c5a",
+      "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "632e7420_19155738",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
         "patchSetId": 8
@@ -47,6 +65,24 @@
       "writtenOn": "2017-05-11T15:47:40Z",
       "side": 1,
       "message": "kSerializeInline? Or am I misunderstanding?",
+      "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8ed68d_1b595eea",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-05-11T21:27:02Z",
+      "side": 1,
+      "message": "I\u0027m thinking \"serialize\" means \"to bytes\". This is in contrast to  \"transfer\".",
+      "parentUuid": "632e7420_19155738",
       "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "3a7c79aa_7294dcf6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-05-11T21:27:02Z",
+      "side": 1,
+      "message": "This type (SerializedScriptValue) is a user of the WasmSerializationPolicy, and it chooses the default to be kTransfer.",
+      "parentUuid": "bfc7c0fa_5dd720d2",
+      "range": {
+        "startLine": 104,
+        "startChar": 42,
+        "endLine": 104,
+        "endChar": 51
+      },
+      "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b81e526_be365b0c",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
         "patchSetId": 8
@@ -90,6 +150,24 @@
       "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d99496_24b860fb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-05-11T21:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b81e526_be365b0c",
+      "revId": "7b24b2d86521aa1ced55af47f0dc01878b74380c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
