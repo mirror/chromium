@@ -44,9 +44,11 @@ PassRefPtr<Pattern> Pattern::CreateImagePattern(PassRefPtr<Image> tile_image,
   return ImagePattern::Create(std::move(tile_image), repeat_mode);
 }
 
-PassRefPtr<Pattern> Pattern::CreatePaintRecordPattern(sk_sp<PaintRecord> record,
-                                                      RepeatMode repeat_mode) {
-  return PaintRecordPattern::Create(std::move(record), repeat_mode);
+PassRefPtr<Pattern> Pattern::CreatePaintRecordPattern(
+    sk_sp<PaintRecord> record,
+    const FloatRect& cull_rect,
+    RepeatMode repeat_mode) {
+  return PaintRecordPattern::Create(std::move(record), cull_rect, repeat_mode);
 }
 
 Pattern::Pattern(RepeatMode repeat_mode, int64_t external_memory_allocated)

@@ -43,7 +43,8 @@ PaintRecorder::~PaintRecorder() {
 #endif
   const auto& item =
       context_.list_->CreateAndAppendDrawingItem<cc::DrawingDisplayItem>(
-          bounds_in_layer_, context_.recorder_->finishRecordingAsPicture());
+          bounds_in_layer_, context_.recorder_->finishRecordingAsPicture(),
+          gfx::RectToSkRect(gfx::Rect(bounds_in_layer_.size())));
   if (cache_)
     cache_->SetCache(item);
 }
