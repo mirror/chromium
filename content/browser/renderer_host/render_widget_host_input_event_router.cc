@@ -308,6 +308,7 @@ void RenderWidgetHostInputEventRouter::RouteGestureEvent(
     case blink::kWebGestureDeviceTouchpad:
       RouteTouchpadGestureEvent(root_view, event, latency);
       break;
+    case blink::kWebGestureDeviceSyntheticAutoscroll:
     case blink::kWebGestureDeviceTouchscreen:
       RouteTouchscreenGestureEvent(root_view, event, latency);
       break;
