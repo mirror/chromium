@@ -22,6 +22,30 @@
       "revId": "5a291d60a6ace6547d1653ffa531e7e12cdc9725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb21d6cc_7f432c70",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1122985
+      },
+      "writtenOn": "2017-05-11T19:55:40Z",
+      "side": 0,
+      "message": "Without this, GCC will just use its default binutils path, and that seems to be working OK.\n\nWhich clang targets don\u0027t use the integrated assembler?  Perhaps we could split this into a separate arg?",
+      "parentUuid": "24705a31_5e0d32e3",
+      "range": {
+        "startLine": 420,
+        "startChar": 21,
+        "endLine": 420,
+        "endChar": 25
+      },
+      "revId": "5a291d60a6ace6547d1653ffa531e7e12cdc9725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
