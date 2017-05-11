@@ -17,6 +17,7 @@
 #include "ui/events/gestures/fling_curve.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/geometry/vector2d.h"
+#include "ui/gfx/geometry/vector2d_f.h"
 
 #if defined(OS_ANDROID)
 #include "ui/events/android/scroller.h"
@@ -25,11 +26,47 @@
 using blink::WebGestureCurve;
 
 namespace ui {
+
+class EVENTS_BASE_EXPORT FixedVelocityCurve : public GestureCurve {
+ public:
+  FixedVelocityCurve(const gfx::Vector2dF& velocity,
+                     base::TimeTicks start_timestamp)
+      : velocity_(velocity), start_timestamp_(start_timestamp) {}
+  ~FixedVelocityCurve() override {}
+
+  // GestureCurve implementation.
+  bool ComputeScrollOffset(base::TimeTicks time,
+                           gfx::Vector2dF* offset,
+                           gfx::Vector2dF* velocity) override {
+    *velocity = velocity_;
+
+    const float kConstantMultiplier = 5000.0f;
+    float multiplier =
+        (time - start_timestamp_).InSecondsF() * kConstantMultiplier;
+    *offset =
+        gfx::Vector2dF(velocity_.x() * multiplier, velocity_.y() * multiplier);
+    return true;
+  }
+
+ private:
+  const gfx::Vector2dF velocity_;
+  const base::TimeTicks start_timestamp_;
+
+  DISALLOW_COPY_AND_ASSIGN(FixedVelocityCurve);
+};
+
 namespace {
 
 std::unique_ptr<GestureCurve> CreateDefaultPlatformCurve(
+    blink::WebGestureDevice device_source,
     const gfx::Vector2dF& initial_velocity) {
   DCHECK(!initial_velocity.IsZero());
+  if (device_source == blink::kWebGestureDeviceSyntheticAutoscroll) {
+    LOG(ERROR) << "CR Creating fixed velocity curve";
+    return base::MakeUnique<FixedVelocityCurve>(initial_velocity,
+                                                base::TimeTicks());
+  }
+
 #if defined(OS_ANDROID)
   auto scroller = base::MakeUnique<Scroller>(Scroller::Config());
   scroller->Fling(0,
@@ -52,12 +89,13 @@ std::unique_ptr<GestureCurve> CreateDefaultPlatformCurve(
 // static
 std::unique_ptr<WebGestureCurve>
 WebGestureCurveImpl::CreateFromDefaultPlatformCurve(
+    blink::WebGestureDevice device_source,
     const gfx::Vector2dF& initial_velocity,
     const gfx::Vector2dF& initial_offset,
     bool on_main_thread) {
   return std::unique_ptr<WebGestureCurve>(new WebGestureCurveImpl(
-      CreateDefaultPlatformCurve(initial_velocity), initial_offset,
-      on_main_thread ? ThreadType::MAIN : ThreadType::IMPL));
+      CreateDefaultPlatformCurve(device_source, initial_velocity),
+      initial_offset, on_main_thread ? ThreadType::MAIN : ThreadType::IMPL));
 }
 
 // static

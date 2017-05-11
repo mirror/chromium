@@ -921,12 +921,15 @@ public class ContentViewCore
      * @param timeMs the current time.
      * @param velocityX fling speed in x-axis.
      * @param velocityY fling speed in y-axis.
+     * @param fromGamepad fling speed in y-axis.
      */
-    public void flingViewport(long timeMs, int velocityX, int velocityY) {
+    public void flingViewport(long timeMs, float velocityX, float velocityY, boolean fromGamepad) {
         if (mNativeContentViewCore == 0) return;
         nativeFlingCancel(mNativeContentViewCore, timeMs);
+        if (velocityX == 0 && velocityY == 0) return;
         nativeScrollBegin(mNativeContentViewCore, timeMs, 0, 0, velocityX, velocityY, true);
-        nativeFlingStart(mNativeContentViewCore, timeMs, 0, 0, velocityX, velocityY, true);
+        nativeFlingStart(
+                mNativeContentViewCore, timeMs, 0, 0, velocityX, velocityY, true, fromGamepad);
     }
 
     /**
@@ -1326,6 +1329,16 @@ public class ContentViewCore
     }
 
     /**
+     * Removes noise from joystick motion events.
+     */
+    private static float getFilteredAxisValue(MotionEvent event, int axis) {
+        final float kJoystickScrollDeadzone = 0.2f;
+        float axisValWithNoise = event.getAxisValue(axis);
+        if (Math.abs(axisValWithNoise) > kJoystickScrollDeadzone) return axisValWithNoise;
+        return 0f;
+    }
+
+    /**
      * @see View#onGenericMotionEvent(MotionEvent)
      */
     public boolean onGenericMotionEvent(MotionEvent event) {
@@ -1347,10 +1360,11 @@ public class ContentViewCore
                     }
             }
         } else if ((event.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
-            if (getJoystickScrollProvider().onMotion(event)
-                    || getJoystickZoomProvider().onMotion(event)) {
-                return true;
-            }
+            float velocityX = getFilteredAxisValue(event, MotionEvent.AXIS_X);
+            float velocityY = getFilteredAxisValue(event, MotionEvent.AXIS_Y);
+            flingViewport(event.getEventTime(), -velocityX, -velocityY, true);
+            getJoystickZoomProvider().onMotion(event);
+            return true;
         }
         return mContainerViewInternals.super_onGenericMotionEvent(event);
     }
@@ -2414,7 +2428,7 @@ public class ContentViewCore
             float deltaX, float deltaY);
 
     private native void nativeFlingStart(long nativeContentViewCoreImpl, long timeMs, float x,
-            float y, float vx, float vy, boolean targetViewport);
+            float y, float vx, float vy, boolean targetViewport, boolean fromGamepad);
 
     private native void nativeFlingCancel(long nativeContentViewCoreImpl, long timeMs);
 
