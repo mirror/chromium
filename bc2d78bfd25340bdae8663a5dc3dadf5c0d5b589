@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "2e45a581_9db13845",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-05-11T15:58:36Z",
+      "side": 1,
+      "message": "nit: no leading space",
+      "revId": "bc2d78bfd25340bdae8663a5dc3dadf5c0d5b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b39d15f_e679798d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
         "patchSetId": 3
@@ -65,6 +82,63 @@
         "endLine": 41,
         "endChar": 64
       },
+      "revId": "bc2d78bfd25340bdae8663a5dc3dadf5c0d5b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170f155a_3dc4862b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-05-11T15:58:36Z",
+      "side": 1,
+      "message": "nit: no leading space",
+      "range": {
+        "startLine": 85,
+        "startChar": 31,
+        "endLine": 85,
+        "endChar": 32
+      },
+      "revId": "bc2d78bfd25340bdae8663a5dc3dadf5c0d5b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7111308a_2994362d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-05-11T15:58:36Z",
+      "side": 1,
+      "message": "When would lines 80-85 be applicable? It seems odd to suggest that it\u0027s fine to be inconsistent, maybe remove this until there\u0027s an actual user? (I imagine that there could be stuff like supervised users or admin policies that need this, though.)",
+      "revId": "bc2d78bfd25340bdae8663a5dc3dadf5c0d5b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554fe740_f0cd191d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-05-11T15:58:36Z",
+      "side": 1,
+      "message": "nit: no leading space",
       "revId": "bc2d78bfd25340bdae8663a5dc3dadf5c0d5b589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
