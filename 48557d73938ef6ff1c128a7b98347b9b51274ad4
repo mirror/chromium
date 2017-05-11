@@ -33,6 +33,75 @@
       "revId": "48557d73938ef6ff1c128a7b98347b9b51274ad4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e32dab_e0e66c69",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-11T14:46:36Z",
+      "side": 1,
+      "message": "Since we no longer have a version that inlines the scripts, might as well call this parameter \"include_scripts\"",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "48557d73938ef6ff1c128a7b98347b9b51274ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99b8ed4_9fe7d657",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-11T14:46:36Z",
+      "side": 1,
+      "message": "Since the java side is just converting this to byte[] to send through a stream, it would be more efficient to return a byte[] here using ToJavaByteArray()",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 47
+      },
+      "revId": "48557d73938ef6ff1c128a7b98347b9b51274ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592f2aef_eb527287",
+        "filename": "components/about_ui/credit_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-11T14:46:36Z",
+      "side": 1,
+      "message": "this is never called. Might as well remove it.",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "48557d73938ef6ff1c128a7b98347b9b51274ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
