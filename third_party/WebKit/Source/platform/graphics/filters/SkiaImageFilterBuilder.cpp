@@ -105,11 +105,11 @@ sk_sp<SkImageFilter> TransformColorSpace(sk_sp<SkImageFilter> input,
 }
 
 void BuildSourceGraphic(FilterEffect* source_graphic,
-                        sk_sp<PaintRecord> record) {
+                        sk_sp<PaintRecord> record,
+                        const FloatRect& cull_rect) {
   DCHECK(record);
-  SkRect cull_rect = record->cullRect();
   sk_sp<SkImageFilter> filter =
-      SkPictureImageFilter::Make(ToSkPicture(record), cull_rect);
+      SkPictureImageFilter::Make(ToSkPicture(record, cull_rect));
   PopulateSourceGraphicImageFilters(source_graphic, std::move(filter),
                                     source_graphic->OperatingColorSpace());
 }
@@ -125,7 +125,7 @@ sk_sp<SkImageFilter> BuildBoxReflectFilter(const BoxReflection& reflection,
     // raster the mask to a bitmap, then encode it in an SkImageSource, which
     // can be serialized.
     SkBitmap bitmap;
-    const SkRect cull_rect = mask_record->cullRect();
+    const SkRect cull_rect = reflection.MaskBounds();
     if (static_cast<float>(cull_rect.width()) *
             static_cast<float>(cull_rect.height()) <
         kMaxMaskBufferSize) {
@@ -140,7 +140,7 @@ sk_sp<SkImageFilter> BuildBoxReflectFilter(const BoxReflection& reflection,
       // SkXfermodeImageFilter can choose an excessively large size if the
       // mask is smaller than the filtered contents (due to overflow).
       // http://skbug.com/5210
-      SkImageFilter::CropRect crop_rect(mask_record->cullRect());
+      SkImageFilter::CropRect crop_rect(cull_rect);
       masked_input = SkXfermodeImageFilter::Make(
           SkBlendMode::kSrcIn,
           SkOffsetImageFilter::Make(cull_rect.x(), cull_rect.y(),
@@ -149,11 +149,12 @@ sk_sp<SkImageFilter> BuildBoxReflectFilter(const BoxReflection& reflection,
     } else {
       // If the buffer is excessively big, give up and make an
       // SkPictureImageFilter anyway, even if it might not render.
-      SkImageFilter::CropRect crop_rect(mask_record->cullRect());
-      masked_input = SkXfermodeImageFilter::Make(
-          SkBlendMode::kSrcOver,
-          SkPictureImageFilter::Make(ToSkPicture(std::move(mask_record))),
-          input, &crop_rect);
+      SkImageFilter::CropRect crop_rect(cull_rect);
+      masked_input =
+          SkXfermodeImageFilter::Make(SkBlendMode::kSrcOver,
+                                      SkPictureImageFilter::Make(ToSkPicture(
+                                          std::move(mask_record), cull_rect)),
+                                      input, &crop_rect);
     }
   } else {
     masked_input = input;
