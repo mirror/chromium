@@ -549,9 +549,6 @@ void InputHandlerProxy::RecordMainThreadScrollingReasons(
   static const char* kWheelHistogramName =
       "Renderer4.MainThreadWheelScrollReason";
 
-  DCHECK(device == blink::kWebGestureDeviceTouchpad ||
-         device == blink::kWebGestureDeviceTouchscreen);
-
   if (device != blink::kWebGestureDeviceTouchpad &&
       device != blink::kWebGestureDeviceTouchscreen) {
     return;
@@ -609,9 +606,6 @@ void InputHandlerProxy::RecordMainThreadScrollingReasons(
 void InputHandlerProxy::RecordScrollingThreadStatus(
     blink::WebGestureDevice device,
     uint32_t reasons) {
-  DCHECK(device == blink::kWebGestureDeviceTouchpad ||
-         device == blink::kWebGestureDeviceTouchscreen);
-
   if (device != blink::kWebGestureDeviceTouchpad &&
       device != blink::kWebGestureDeviceTouchscreen) {
     return;
@@ -964,6 +958,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
       }
       break;
     case blink::kWebGestureDeviceTouchscreen:
+    case blink::kWebGestureDeviceSyntheticAutoscroll:
       if (!gesture_scroll_on_impl_thread_) {
         scroll_status.thread = cc::InputHandler::SCROLL_ON_MAIN_THREAD;
         scroll_status.main_thread_scrolling_reasons =
@@ -1596,7 +1591,8 @@ bool InputHandlerProxy::ScrollBy(const WebFloatSize& increment,
     case blink::kWebGestureDeviceTouchpad:
       did_scroll = TouchpadFlingScroll(clipped_increment);
       break;
-    case blink::kWebGestureDeviceTouchscreen: {
+    case blink::kWebGestureDeviceTouchscreen:
+    case blink::kWebGestureDeviceSyntheticAutoscroll: {
       clipped_increment = ToClientScrollIncrement(clipped_increment);
       cc::ScrollStateData scroll_state_data;
       scroll_state_data.delta_x = clipped_increment.width;

@@ -883,12 +883,16 @@ void ContentViewCoreImpl::FlingStart(JNIEnv* env,
                                      jfloat y,
                                      jfloat vx,
                                      jfloat vy,
-                                     jboolean target_viewport) {
+                                     jboolean target_viewport,
+                                     jboolean from_gamepad) {
   WebGestureEvent event =
       MakeGestureEvent(WebInputEvent::kGestureFlingStart, time_ms, x, y);
   event.data.fling_start.velocity_x = vx / dpi_scale();
   event.data.fling_start.velocity_y = vy / dpi_scale();
   event.data.fling_start.target_viewport = target_viewport;
+
+  if (from_gamepad)
+    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
 
   SendGestureEvent(event);
 }
