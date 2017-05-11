@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e51e39a5_5fe3c623",
+        "filename": "mojo/edk/embedder/incoming_broker_client_invitation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-05-11T15:45:57Z",
+      "side": 1,
+      "message": "Nit: couldn\u0027t you use base::MakeUnique? (same below)",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "463e7faae890116a207a0ca9e68d45ee0976abfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
