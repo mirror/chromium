@@ -37,7 +37,7 @@ namespace service_manager {
 class Connector {
  public:
   using StartServiceCallback =
-      base::Callback<void(mojom::ConnectResult, const Identity& identity)>;
+      base::OnceCallback<void(mojom::ConnectResult, const Identity& identity)>;
 
   class TestApi {
    public:
@@ -59,8 +59,8 @@ class Connector {
     // Register a callback to be run with the result of an attempt to start a
     // service. This will be run in response to calls to StartService() or
     // BindInterface().
-    void SetStartServiceCallback(const StartServiceCallback& callback) {
-      connector_->SetStartServiceCallback(callback);
+    void SetStartServiceCallback(StartServiceCallback callback) {
+      connector_->SetStartServiceCallback(std::move(callback));
     }
 
    private:
@@ -136,7 +136,7 @@ class Connector {
                                 const std::string& interface_name,
                                 const TestApi::Binder& binder);
   void ClearBinderOverrides();
-  void SetStartServiceCallback(const StartServiceCallback& callback);
+  void SetStartServiceCallback(StartServiceCallback callback);
   void ResetStartServiceCallback();
 
   bool BindConnectorIfNecessary();

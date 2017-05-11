@@ -46,23 +46,23 @@ void Instance::BindCatalog(mojom::CatalogRequest request) {
 }
 
 void Instance::ResolveServiceName(const std::string& service_name,
-                                  const ResolveServiceNameCallback& callback) {
+                                  ResolveServiceNameCallback callback) {
   DCHECK(system_cache_);
 
   // TODO(beng): per-user catalogs.
   const Entry* entry = system_cache_->GetEntry(service_name);
   if (entry) {
-    callback.Run(service_manager::mojom::ResolveResult::From(entry),
-                 GetNameFromEntry(entry->parent()));
+    std::move(callback).Run(service_manager::mojom::ResolveResult::From(entry),
+                            GetNameFromEntry(entry->parent()));
     return;
   } else if (service_manifest_provider_) {
     auto manifest = service_manifest_provider_->GetManifest(service_name);
     if (manifest) {
       auto entry = Entry::Deserialize(*manifest);
       if (entry) {
-        callback.Run(service_manager::mojom::ResolveResult::From(
-                         const_cast<const Entry*>(entry.get())),
-                     GetNameFromEntry(entry->parent()));
+        std::move(callback).Run(service_manager::mojom::ResolveResult::From(
+                                    const_cast<const Entry*>(entry.get())),
+                                GetNameFromEntry(entry->parent()));
 
         bool added = system_cache_->AddRootEntry(std::move(entry));
         DCHECK(added);
@@ -74,7 +74,7 @@ void Instance::ResolveServiceName(const std::string& service_name,
   }
 
   LOG(ERROR) << "Unable to locate service manifest for " << service_name;
-  callback.Run(nullptr, base::nullopt);
+  std::move(callback).Run(nullptr, base::nullopt);
 }
 
 void Instance::GetEntries(const base::Optional<std::vector<std::string>>& names,

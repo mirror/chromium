@@ -125,8 +125,8 @@ void Connector::ClearBinderOverrides() {
 }
 
 void Connector::SetStartServiceCallback(
-    const Connector::StartServiceCallback& callback) {
-  start_service_callback_ = callback;
+    Connector::StartServiceCallback callback) {
+  start_service_callback_ = std::move(callback);
 }
 
 void Connector::ResetStartServiceCallback() {
@@ -158,8 +158,9 @@ bool Connector::BindConnectorIfNecessary() {
 
 void Connector::RunStartServiceCallback(mojom::ConnectResult result,
                                         const Identity& user_id) {
+  // TODO(tzik): Check if it's OK to clobber |start_service_callback_| here.
   if (!start_service_callback_.is_null())
-    start_service_callback_.Run(result, user_id);
+    std::move(start_service_callback_).Run(result, user_id);
 }
 
 }  // namespace service_manager
