@@ -17,9 +17,9 @@
 package org.chromium.third_party.android.media;
 
 import android.content.Context;
-import android.support.v4.media.TransportController;
-import android.support.v4.media.TransportMediator;
-import android.support.v4.media.TransportStateListener;
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.MediaControllerCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,8 +43,7 @@ import java.util.Locale;
  * supportv4, with tiny bug fixes.
  */
 public class MediaController extends FrameLayout {
-
-    private TransportController mController;
+    private MediaControllerCompat mControllerCompat;
     private Context mContext;
     private ViewGroup mProgressGroup;
     private SeekBar mProgressBar;
@@ -62,14 +61,11 @@ public class MediaController extends FrameLayout {
     private ImageButton mNextButton;
     private ImageButton mPrevButton;
 
-    private TransportStateListener mStateListener = new TransportStateListener() {
+    private MediaControllerCompat.Callback mStateCallback = new MediaControllerCompat.Callback() {
         @Override
-        public void onPlayingChanged(TransportController controller) {
-            updatePausePlay();
-        }
-        @Override
-        public void onTransportControlsChanged(TransportController controller) {
-            updateButtons();
+        public void onPlaybackStateChanged(PlaybackStateCompat state) {
+            updatePausePlay(state);
+            updateButtons(state);
         }
     };
 
@@ -93,32 +89,32 @@ public class MediaController extends FrameLayout {
         this(context, true);
     }
 
-    public void setMediaPlayer(TransportController controller) {
+    public void setMediaPlayer(MediaControllerCompat controllerCompat) {
         if (getWindowToken() != null) {
-            if (mController != null) {
-                mController.unregisterStateListener(mStateListener);
+            if (mControllerCompat != null) {
+                mControllerCompat.unregisterCallback(mStateCallback);
             }
-            if (controller != null) {
-                controller.registerStateListener(mStateListener);
+            if (controllerCompat != null) {
+                controllerCompat.registerCallback(mStateCallback);
             }
         }
-        mController = controller;
-        updatePausePlay();
+        mControllerCompat = controllerCompat;
+        updatePausePlay(mControllerCompat.getPlaybackState());
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (mController != null) {
-            mController.registerStateListener(mStateListener);
+        if (mControllerCompat != null) {
+            mControllerCompat.registerCallback(mStateCallback);
         }
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (mController != null) {
-            mController.unregisterStateListener(mStateListener);
+        if (mControllerCompat != null) {
+            mControllerCompat.unregisterCallback(mStateCallback);
         }
     }
 
@@ -173,38 +169,37 @@ public class MediaController extends FrameLayout {
      * Disable pause or seek buttons if the stream cannot be paused or seeked.
      * This requires the control interface to be a MediaPlayerControlExt
      */
-    void updateButtons() {
-        int flags = mController.getTransportControlFlags();
+    void updateButtons(PlaybackStateCompat playbackState) {
+        long flags = playbackState.getActions();
         boolean enabled = isEnabled();
         if (mPauseButton != null) {
-            boolean needPlayPauseButton = (flags & TransportMediator.FLAG_KEY_MEDIA_PAUSE) != 0 ||
-                                          (flags & TransportMediator.FLAG_KEY_MEDIA_PLAY) != 0;
+            boolean needPlayPauseButton = (flags & PlaybackStateCompat.ACTION_PLAY_PAUSE) != 0;
             mPauseButton.setEnabled(enabled && needPlayPauseButton);
         }
         if (mRewButton != null) {
-            mRewButton.setEnabled(enabled &&
-                                  (flags & TransportMediator.FLAG_KEY_MEDIA_REWIND) != 0);
+            mRewButton.setEnabled(enabled && (flags & PlaybackStateCompat.ACTION_REWIND) != 0);
         }
         if (mFfwdButton != null) {
-            mFfwdButton.setEnabled(enabled &&
-                    (flags & TransportMediator.FLAG_KEY_MEDIA_FAST_FORWARD) != 0);
+            mFfwdButton.setEnabled(
+                    enabled && (flags & PlaybackStateCompat.ACTION_FAST_FORWARD) != 0);
         }
         if (mPrevButton != null) {
-            mShowPrev = (flags & TransportMediator.FLAG_KEY_MEDIA_PREVIOUS) != 0
+            mShowPrev = (flags & PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS) != 0
                     || mPrevListener != null;
             mPrevButton.setEnabled(enabled && mShowPrev);
         }
         if (mNextButton != null) {
-            mShowNext = (flags & TransportMediator.FLAG_KEY_MEDIA_NEXT) != 0
-                    || mNextListener != null;
+            mShowNext =
+                    (flags & PlaybackStateCompat.ACTION_SKIP_TO_NEXT) != 0 || mNextListener != null;
             mNextButton.setEnabled(enabled && mShowNext);
         }
     }
 
     public void refresh() {
-        updateProgress();
-        updateButtons();
-        updatePausePlay();
+        PlaybackStateCompat playbackState = mControllerCompat.getPlaybackState();
+        updateProgress(playbackState);
+        updateButtons(playbackState);
+        updatePausePlay(playbackState);
     }
 
     private String stringForTime(int timeMs) {
@@ -223,11 +218,16 @@ public class MediaController extends FrameLayout {
     }
 
     public long updateProgress() {
-        if (mController == null || mDragging) {
+        return updateProgress(mControllerCompat.getPlaybackState());
+    }
+
+    public long updateProgress(PlaybackStateCompat playbackState) {
+        if (mControllerCompat == null || mDragging) {
             return 0;
         }
-        long position = mController.getCurrentPosition();
-        long duration = mController.getDuration();
+        long position = playbackState.getPosition();
+        long duration =
+                mControllerCompat.getMetadata().getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
         if (duration <= 0) {
             // If there is no valid duration, hide the progress bar and time indicators.
             if (mProgressGroup != null) mProgressGroup.setVisibility(View.INVISIBLE);
@@ -237,7 +237,9 @@ public class MediaController extends FrameLayout {
             long pos = 1000L * position / duration;
             mProgressBar.setProgress( (int) pos);
 
-            int percent = mController.getBufferPercentage();
+            int percent = (int) (mControllerCompat.getPlaybackState().getBufferedPosition()
+                    / mControllerCompat.getMetadata().getLong(
+                              MediaMetadataCompat.METADATA_KEY_DURATION));
             mProgressBar.setSecondaryProgress(percent * 10);
         }
 
@@ -256,11 +258,11 @@ public class MediaController extends FrameLayout {
         }
     };
 
-    private void updatePausePlay() {
+    private void updatePausePlay(PlaybackStateCompat playbackState) {
         if (mPauseButton == null)
             return;
 
-        if (mController.isPlaying()) {
+        if (playbackState.getState() == PlaybackStateCompat.STATE_PLAYING) {
             mPauseButton.setImageResource(android.R.drawable.ic_media_pause);
         } else {
             mPauseButton.setImageResource(android.R.drawable.ic_media_play);
@@ -268,12 +270,12 @@ public class MediaController extends FrameLayout {
     }
 
     private void doPauseResume() {
-        if (mController.isPlaying()) {
-            mController.pausePlaying();
+        if (mControllerCompat.getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING) {
+            mControllerCompat.getTransportControls().pause();
         } else {
-            mController.startPlaying();
+            mControllerCompat.getTransportControls().play();
         }
-        updatePausePlay();
+        updatePausePlay(mControllerCompat.getPlaybackState());
     }
 
     // There are two scenarios that can trigger the seekbar listener to trigger:
@@ -301,25 +303,26 @@ public class MediaController extends FrameLayout {
                 return;
             }
 
-            long duration = mController.getDuration();
+            long duration = mControllerCompat.getMetadata().getLong(
+                    MediaMetadataCompat.METADATA_KEY_DURATION);
             long newposition = (duration * progress) / 1000L;
-            mController.seekTo((int) newposition);
-            if (mCurrentTime != null)
-                mCurrentTime.setText(stringForTime( (int) newposition));
+            mControllerCompat.getTransportControls().seekTo((int) newposition);
+            if (mCurrentTime != null) mCurrentTime.setText(stringForTime((int) newposition));
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar bar) {
             mDragging = false;
-            updateProgress();
-            updatePausePlay();
+            PlaybackStateCompat playbackState = mControllerCompat.getPlaybackState();
+            updateProgress(playbackState);
+            updatePausePlay(playbackState);
         }
     };
 
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        updateButtons();
+        updateButtons(mControllerCompat.getPlaybackState());
     }
 
     @Override
@@ -337,9 +340,9 @@ public class MediaController extends FrameLayout {
     private View.OnClickListener mRewListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            long pos = mController.getCurrentPosition();
+            long pos = mControllerCompat.getPlaybackState().getPosition();
             pos -= 5000; // milliseconds
-            mController.seekTo(pos);
+            mControllerCompat.getTransportControls().seekTo(pos);
             updateProgress();
         }
     };
@@ -347,9 +350,9 @@ public class MediaController extends FrameLayout {
     private View.OnClickListener mFfwdListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            long pos = mController.getCurrentPosition();
+            long pos = mControllerCompat.getPlaybackState().getPosition();
             pos += 15000; // milliseconds
-            mController.seekTo(pos);
+            mControllerCompat.getTransportControls().seekTo(pos);
             updateProgress();
         }
     };
