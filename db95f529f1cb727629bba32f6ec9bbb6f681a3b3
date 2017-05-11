@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d21a5f8_e6ee5e9e",
+        "filename": "mojo/edk/embedder/outgoing_broker_client_invitation.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-11T05:33:52Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 69,
+        "startChar": 14,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "db95f529f1cb727629bba32f6ec9bbb6f681a3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
