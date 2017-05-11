@@ -42,12 +42,11 @@ class MockDumpProvider : public base::trace_event::MemoryDumpProvider {
 
 class MemoryTracingTest : public ContentBrowserTest {
  public:
-  void DoRequestGlobalDump(
-      const MemoryDumpType& dump_type,
-      const MemoryDumpLevelOfDetail& level_of_detail,
-      const base::trace_event::GlobalMemoryDumpCallback& cb) {
-    MemoryDumpManager::GetInstance()->RequestGlobalDump(dump_type,
-                                                        level_of_detail, cb);
+  void DoRequestGlobalDump(const MemoryDumpType& dump_type,
+                           const MemoryDumpLevelOfDetail& level_of_detail,
+                           base::trace_event::GlobalMemoryDumpCallback cb) {
+    MemoryDumpManager::GetInstance()->RequestGlobalDump(
+        dump_type, level_of_detail, std::move(cb));
   }
 
   // Used as callback argument for MemoryDumpManager::RequestGlobalDump():
@@ -79,15 +78,15 @@ class MemoryTracingTest : public ContentBrowserTest {
       const MemoryDumpLevelOfDetail& level_of_detail,
       const base::Closure& closure) {
     uint32_t request_index = next_request_index_++;
-    base::trace_event::GlobalMemoryDumpCallback callback = base::Bind(
+    base::trace_event::GlobalMemoryDumpCallback callback = base::BindOnce(
         &MemoryTracingTest::OnGlobalMemoryDumpDone, base::Unretained(this),
         base::ThreadTaskRunnerHandle::Get(), closure, request_index);
     if (from_renderer_thread) {
       PostTaskToInProcessRendererAndWait(base::Bind(
           &MemoryTracingTest::DoRequestGlobalDump, base::Unretained(this),
-          dump_type, level_of_detail, callback));
+          dump_type, level_of_detail, base::Passed(&callback)));
     } else {
-      DoRequestGlobalDump(dump_type, level_of_detail, callback);
+      DoRequestGlobalDump(dump_type, level_of_detail, std::move(callback));
     }
   }
 

@@ -35,8 +35,8 @@ class MockCoordinator : public Coordinator, public mojom::Coordinator {
 
   void RequestGlobalMemoryDump(
       const base::trace_event::MemoryDumpRequestArgs& args,
-      const RequestGlobalMemoryDumpCallback& callback) override {
-    callback.Run(args.dump_guid, true);
+      RequestGlobalMemoryDumpCallback callback) override {
+    std::move(callback).Run(args.dump_guid, true);
   }
 
  private:

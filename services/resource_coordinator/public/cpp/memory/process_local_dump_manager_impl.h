@@ -60,7 +60,7 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
   // NOTE: Use MemoryDumpManager::RequestGlobalDump() to request gobal dump.
   void RequestGlobalMemoryDump(
       const base::trace_event::MemoryDumpRequestArgs& args,
-      const base::trace_event::GlobalMemoryDumpCallback& callback);
+      base::trace_event::GlobalMemoryDumpCallback callback);
 
   Config config() { return config_; }
   void SetAsNonCoordinatorForTesting();
@@ -75,11 +75,11 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
   // The ProcessLocalDumpManager interface. The coordinator calls this.
   void RequestProcessMemoryDump(
       const base::trace_event::MemoryDumpRequestArgs& args,
-      const RequestProcessMemoryDumpCallback& callback) override;
+      RequestProcessMemoryDumpCallback callback) override;
 
   // A proxy callback for updating |pending_memory_dump_guid_|.
   void MemoryDumpCallbackProxy(
-      const base::trace_event::GlobalMemoryDumpCallback& callback,
+      base::trace_event::GlobalMemoryDumpCallback callback,
       uint64_t dump_guid,
       bool success);
 

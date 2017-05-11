@@ -41,10 +41,10 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
 
   struct QueuedMemoryDumpRequest {
     QueuedMemoryDumpRequest(const base::trace_event::MemoryDumpRequestArgs args,
-                            const RequestGlobalMemoryDumpCallback callback);
+                            RequestGlobalMemoryDumpCallback callback);
     ~QueuedMemoryDumpRequest();
     const base::trace_event::MemoryDumpRequestArgs args;
-    const RequestGlobalMemoryDumpCallback callback;
+    RequestGlobalMemoryDumpCallback callback;
   };
 
   ~CoordinatorImpl() override;
@@ -58,7 +58,7 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   // failed. This is in the mojom::Coordinator interface.
   void RequestGlobalMemoryDump(
       const base::trace_event::MemoryDumpRequestArgs& args,
-      const RequestGlobalMemoryDumpCallback& callback) override;
+      RequestGlobalMemoryDumpCallback callback) override;
 
   // Called when a process-local manager gets disconnected.
   void UnregisterProcessLocalDumpManager(
