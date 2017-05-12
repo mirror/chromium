@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26b81612_d5a10908",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-05-12T22:30:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1178434a_e042e0f1",
+      "revId": "66904a695a057add78e7a1720068a7f6a25b6ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42d9362d_3f5a09cc",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8e3362b9_ae6f5c3d",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-05-12T22:30:34Z",
+      "side": 1,
+      "message": "OK.  I noticed a preexisting problem that routing of \"target_viewport\" events was already wrong, and currently SyntheticAutoscroll events are always target_viewport.  I added a routing case for that, and I put a NOTREACHED for the non-target-viewport case for now.",
+      "parentUuid": "42d9362d_3f5a09cc",
+      "revId": "66904a695a057add78e7a1720068a7f6a25b6ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b064ab7_d2dff49c",
         "filename": "ui/events/blink/input_handler_proxy.cc",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-05-12T13:41:55Z",
       "side": 1,
       "message": "So this gets complicated. In that this variable will probably always be false. Because I believe you aren\u0027t generated a GestureScrollBegin when you are generating the fling? So that gesture_scroll_on_impl_thread is only determined in the Begin phase it will likely send gamepad scrolling to the main thread which isn\u0027t ideal at all.",
+      "revId": "66904a695a057add78e7a1720068a7f6a25b6ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c5d112_a2d21972",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-05-12T22:30:34Z",
+      "side": 1,
+      "message": "OK, I added a ScrollBegin on the Java side.  I guess this shows main-thread gamepad flings work fine as I didn\u0027t notice the problem.  I had omitted the ScrollBegin because these are target_viewport flings that don\u0027t require hit testing anyway, but since it\u0027s apparently not used just for hittest, I added it back.",
+      "parentUuid": "4b064ab7_d2dff49c",
       "revId": "66904a695a057add78e7a1720068a7f6a25b6ac7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
