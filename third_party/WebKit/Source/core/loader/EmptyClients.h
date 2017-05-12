@@ -52,6 +52,7 @@
 #include "platform/wtf/Forward.h"
 #include "public/platform/WebFocusType.h"
 #include "public/platform/WebScreenInfo.h"
+#include "public/platform/WebURLLoader.h"
 #include "v8/include/v8.h"
 
 /*
@@ -374,6 +375,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
       WebApplicationCacheHostClient*) override;
 
   TextCheckerClient& GetTextCheckerClient() const override;
+  std::unique_ptr<WebURLLoader> CreateURLLoader() override { return nullptr; }
 
  protected:
   EmptyLocalFrameClient() {}
