@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.concurrent.Callable;
 
 /**
  * Content provider for the OSS licenses file.
@@ -30,6 +31,8 @@ public class LicenseContentProvider
     public static final String LICENSES_URI_SUFFIX = "LicenseContentProvider/webview_licenses";
     public static final String LICENSES_CONTENT_TYPE = "text/html";
     private static final String TAG = "LicenseCP";
+
+    public static Callable<byte[]> licenseProvider;
 
     @Override
     public boolean onCreate() {
@@ -47,15 +50,28 @@ public class LicenseContentProvider
     @Override
     public void writeDataToPipe(
             ParcelFileDescriptor output, Uri uri, String mimeType, Bundle opts, String filename) {
-        try (InputStream in = getContext().getAssets().open(filename);
-                OutputStream out = new FileOutputStream(output.getFileDescriptor());) {
-            byte[] buf = new byte[8192];
-            int size = -1;
-            while ((size = in.read(buf)) != -1) {
-                out.write(buf, 0, size);
+        try (OutputStream out = new FileOutputStream(output.getFileDescriptor())) {
+            if (licenseProvider != null) {
+                // This is the case for Monochrome where the licenses are from
+                // a Brotli compressed file instead of the assets.
+                try {
+                    out.write(licenseProvider.call());
+                } catch (Exception e1) {
+                    throw new RuntimeException(e1);
+                }
+            } else {
+                try (InputStream in = getContext().getAssets().open(filename)) {
+                    byte[] buf = new byte[8192];
+                    int size = -1;
+                    while ((size = in.read(buf)) != -1) {
+                        out.write(buf, 0, size);
+                    }
+                } catch (IOException e2) {
+                    Log.e(TAG, "Failed to open the license file", e2);
+                }
             }
         } catch (IOException e) {
-            Log.e(TAG, "Failed to read the license file", e);
+            Log.e(TAG, "Failed to write the license file", e);
         }
     }
 
