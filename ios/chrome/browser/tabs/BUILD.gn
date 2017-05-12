@@ -18,13 +18,15 @@ source_set("tabs") {
     "tab_private.h",
     "tab_snapshotting_delegate.h",
   ]
+  public_deps = [
+    "//ios/web",
+  ]
   deps = [
     "//components/sessions",
     "//components/signin/ios/browser",
     "//components/sync_sessions",
     "//ios/chrome/browser/web:sad_tab_tab_helper_delegate",
     "//ios/net",
-    "//ios/web",
     "//ios/web:user_agent",
     "//ui/base",
   ]
@@ -34,8 +36,6 @@ source_set("tabs") {
 source_set("tabs_internal") {
   sources = [
     "tab_model.mm",
-    "tab_model_synced_window_delegate.mm",
-    "tab_model_synced_window_delegate_getter.mm",
   ]
   deps = [
     ":tabs",
@@ -134,6 +134,8 @@ source_set("tabs_internal_arc") {
     "tab_model_observers_bridge.mm",
     "tab_model_selected_tab_observer.h",
     "tab_model_selected_tab_observer.mm",
+    "tab_model_synced_window_delegate.mm",
+    "tab_model_synced_window_delegate_getter.mm",
     "tab_model_web_state_list_delegate.h",
     "tab_model_web_state_list_delegate.mm",
     "tab_parenting_observer.h",

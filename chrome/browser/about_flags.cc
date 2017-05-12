@@ -354,7 +354,7 @@ const FeatureEntry::Choice kEnableGpuRasterizationChoices[] = {
 const FeatureEntry::Choice kColorCorrectRenderingChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
     {flags_ui::kGenericExperimentChoiceEnabled,
-     cc::switches::kEnableColorCorrectRendering, ""},
+     switches::kEnableColorCorrectRendering, ""},
     {flags_ui::kGenericExperimentChoiceDisabled, "", ""},
 };
 
@@ -693,14 +693,13 @@ const FeatureEntry::Choice kSSLVersionMaxChoices[] = {
 };
 
 #if !defined(OS_ANDROID)
-const FeatureEntry::Choice kEnableDefaultMediaSessionChoices[] = {
-    {flag_descriptions::kEnableDefaultMediaSessionDisabled, "", ""},
-    {flag_descriptions::kEnableDefaultMediaSessionEnabled,
-     switches::kEnableDefaultMediaSession, ""},
+const FeatureEntry::Choice kEnableAudioFocusChoices[] = {
+    {flag_descriptions::kEnableAudioFocusDisabled, "", ""},
+    {flag_descriptions::kEnableAudioFocusEnabled, switches::kEnableAudioFocus,
+     ""},
 #if BUILDFLAG(ENABLE_PLUGINS)
-    {flag_descriptions::kEnableDefaultMediaSessionEnabledDuckFlash,
-     switches::kEnableDefaultMediaSession,
-     switches::kEnableDefaultMediaSessionDuckFlash},
+    {flag_descriptions::kEnableAudioFocusEnabledDuckFlash,
+     switches::kEnableAudioFocus, switches::kEnableAudioFocusDuckFlash},
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 };
 #endif  // !defined(OS_ANDROID)
@@ -714,9 +713,9 @@ const FeatureEntry::Choice kAutoplayPolicyChoices[] = {
     {flag_descriptions::kAutoplayPolicyUserGestureRequired,
      switches::kAutoplayPolicy, switches::autoplay::kUserGestureRequiredPolicy},
 #else
-    {flag_descriptions::kAutoplayPolicyCrossOriginUserGestureRequired,
+    {flag_descriptions::kAutoplayPolicyUserGestureRequiredForCrossOrigin,
      switches::kAutoplayPolicy,
-     switches::autoplay::kCrossOriginUserGestureRequiredPolicy},
+     switches::autoplay::kUserGestureRequiredForCrossOriginPolicy},
 #endif
 };
 
@@ -967,15 +966,15 @@ const FeatureEntry::Choice kEnableHeapProfilingChoices[] = {
      switches::kEnableHeapProfilingTaskProfiler}};
 
 const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin4px[] = {
-    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "4"}};
+    {OmniboxFieldTrial::kUIVerticalMarginParam, "4"}};
 const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin8px[] = {
-    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "8"}};
+    {OmniboxFieldTrial::kUIVerticalMarginParam, "8"}};
 const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin12px[] = {
-    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "12"}};
+    {OmniboxFieldTrial::kUIVerticalMarginParam, "12"}};
 const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin16px[] = {
-    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "16"}};
+    {OmniboxFieldTrial::kUIVerticalMarginParam, "16"}};
 const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin20px[] = {
-    {OmniboxFieldTrial::kUIExperimentsVerticalMarginParam, "20"}};
+    {OmniboxFieldTrial::kUIVerticalMarginParam, "20"}};
 
 const FeatureEntry::FeatureVariation kOmniboxUIVerticalMarginVariations[] = {
     {"4px vertical margin", kOmniboxUIVerticalMargin4px,
@@ -1898,6 +1897,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-offline-previews", flag_descriptions::kEnableOfflinePreviewsName,
      flag_descriptions::kEnableOfflinePreviewsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(previews::features::kOfflinePreviews)},
+    {"enable-client-lo-fi", flag_descriptions::kEnableClientLoFiName,
+     flag_descriptions::kEnableClientLoFiDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(previews::features::kClientLoFi)},
 #endif  // OS_ANDROID
     {"allow-insecure-localhost", flag_descriptions::kAllowInsecureLocalhost,
      flag_descriptions::kAllowInsecureLocalhostDescription, kOsAll,
@@ -2267,6 +2269,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableContentSuggestionsSettingsDescription,
      kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kContentSuggestionsSettings)},
+    {"enable-content-suggestions-show-summary",
+     flag_descriptions::kEnableContentSuggestionsShowSummaryName,
+     flag_descriptions::kEnableContentSuggestionsShowSummaryDescription,
+     kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kContentSuggestionsShowSummary)},
     {"enable-ntp-remote-suggestions",
      flag_descriptions::kEnableNtpRemoteSuggestionsName,
      flag_descriptions::kEnableNtpRemoteSuggestionsDescription, kOsAndroid,
@@ -2534,10 +2541,9 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kEnumerateAudioDevices)},
 #endif  // OS_CHROMEOS
 #if !defined(OS_ANDROID)
-    {"enable-default-media-session",
-     flag_descriptions::kEnableDefaultMediaSessionName,
-     flag_descriptions::kEnableDefaultMediaSessionDescription, kOsDesktop,
-     MULTI_VALUE_TYPE(kEnableDefaultMediaSessionChoices)},
+    {"enable-audio-focus", flag_descriptions::kEnableAudioFocusName,
+     flag_descriptions::kEnableAudioFocusDescription, kOsDesktop,
+     MULTI_VALUE_TYPE(kEnableAudioFocusChoices)},
 #endif  // !OS_ANDROID
 #if defined(OS_ANDROID)
     {"modal-permission-prompts", flag_descriptions::kModalPermissionPromptsName,
@@ -2863,7 +2869,7 @@ const FeatureEntry kFeatureEntries[] = {
     {"omnibox-ui-vertical-margin",
      flag_descriptions::kOmniboxUIVerticalMarginName,
      flag_descriptions::kOmniboxUIVerticalMarginDescription, kOsDesktop,
-     FEATURE_WITH_PARAMS_VALUE_TYPE(omnibox::kUIExperiments,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(omnibox::kUIExperimentVerticalMargin,
                                     kOmniboxUIVerticalMarginVariations,
                                     "OmniboxUIVerticalMarginVariations")},
 
@@ -2880,6 +2886,29 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kCaptureThumbnailOnLoadFinishedName,
      flag_descriptions::kCaptureThumbnailOnLoadFinishedDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kCaptureThumbnailOnLoadFinished)},
+
+#if defined(OS_WIN)
+    {"enable-d3d-vsync", flag_descriptions::kEnableD3DVsync,
+     flag_descriptions::kEnableD3DVsyncDescription, kOsWin,
+     FEATURE_VALUE_TYPE(features::kD3DVsync)},
+#endif  // defined(OS_WIN)
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+    {"use-google-local-ntp", flag_descriptions::kUseGoogleLocalNtpName,
+     flag_descriptions::kUseGoogleLocalNtpDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kUseGoogleLocalNtp)},
+
+    {"one-google-bar-on-local-ntp",
+     flag_descriptions::kOneGoogleBarOnLocalNtpName,
+     flag_descriptions::kOneGoogleBarOnLocalNtpDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kOneGoogleBarOnLocalNtp)},
+#endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
+
+#if defined(OS_MACOSX)
+    {"mac-rtl", flag_descriptions::kMacRTLName,
+     flag_descriptions::kMacRTLDescription, kOsMac,
+     FEATURE_VALUE_TYPE(features::kMacRTL)},
+#endif  // defined(OS_MACOSX)
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

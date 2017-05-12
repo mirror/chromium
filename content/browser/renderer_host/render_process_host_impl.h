@@ -37,7 +37,7 @@
 #include "ipc/ipc_channel_proxy.h"
 #include "ipc/ipc_platform_file.h"
 #include "media/media_features.h"
-#include "mojo/edk/embedder/pending_process_connection.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
@@ -72,10 +72,12 @@ class PermissionServiceContext;
 class PeerConnectionTrackerHost;
 class PushMessagingManager;
 class RenderFrameMessageFilter;
+class RenderProcessHostFactory;
 class RenderWidgetHelper;
 class RenderWidgetHost;
 class RenderWidgetHostImpl;
 class ResourceMessageFilter;
+class SiteInstanceImpl;
 class StoragePartition;
 class StoragePartitionImpl;
 
@@ -253,6 +255,13 @@ class CONTENT_EXPORT RenderProcessHostImpl
       RenderProcessHost* process,
       const GURL& url);
 
+  // Returns a suitable RenderProcessHost to use for |site_instance|. Depending
+  // on the SiteInstance's ProcessReusePolicy and its url, this may be an
+  // existing RenderProcessHost or a new one.
+  static RenderProcessHost* GetProcessHostForSiteInstance(
+      BrowserContext* browser_context,
+      SiteInstanceImpl* site_instance);
+
   static base::MessageLoop* GetInProcessRendererThreadForTesting();
 
   // This forces a renderer that is running "in process" to shut down.
@@ -291,6 +300,13 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void OnAudioStreamAdded() override;
   void OnAudioStreamRemoved() override;
   int get_audio_stream_count_for_testing() const { return audio_stream_count_; }
+
+  // Sets the global factory used to create new RenderProcessHosts.  It may be
+  // nullptr, in which case the default RenderProcessHost will be created (this
+  // is the behavior if you don't call this function).  The factory must be set
+  // back to nullptr before it's destroyed; ownership is not transferred.
+  static void set_render_process_host_factory(
+      const RenderProcessHostFactory* rph_factory);
 
  protected:
   // A proxy for our IPC::Channel that lives on the IO thread.
@@ -389,6 +405,12 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // GpuSwitchingObserver implementation.
   void OnGpuSwitched() override;
 
+  // Returns the default subframe RenderProcessHost to use for |site_instance|.
+  static RenderProcessHost* GetDefaultSubframeProcessHost(
+      BrowserContext* browser_context,
+      SiteInstanceImpl* site_instance,
+      bool is_for_guests_only);
+
 #if BUILDFLAG(ENABLE_WEBRTC)
   void OnRegisterAecDumpConsumer(int id);
   void OnUnregisterAecDumpConsumer(int id);
@@ -437,7 +459,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
         BrowserThread::GetTaskRunnerForThread(BrowserThread::UI));
   }
 
-  std::unique_ptr<mojo::edk::PendingProcessConnection> pending_connection_;
+  std::unique_ptr<mojo::edk::OutgoingBrokerClientInvitation>
+      broker_client_invitation_;
 
   std::unique_ptr<ChildConnection> child_connection_;
   int connection_filter_id_ =
@@ -484,6 +507,10 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // Whether this process currently has backgrounded priority. Tracked so that
   // UpdateProcessPriority() can avoid redundantly setting the priority.
   bool is_process_backgrounded_;
+  // Same as |pending_views_| but keep this in sync with value passed to
+  // |child_process_launcher_|, so need a separate state. This is used to
+  // compute process priority on some platforms.
+  bool boost_priority_for_pending_views_;
 
   // Used to allow a RenderWidgetHost to intercept various messages on the
   // IO thread.

@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "base/containers/flat_set.h"
 #include "base/memory/ptr_util.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/surface.h"
@@ -47,7 +48,8 @@ class SurfaceManagerRefTest : public testing::Test {
 
   // Destroy Surface with |surface_id|.
   void DestroySurface(const SurfaceId& surface_id) {
-    GetCompositorFrameSinkSupport(surface_id.frame_sink_id()).EvictFrame();
+    GetCompositorFrameSinkSupport(surface_id.frame_sink_id())
+        .EvictCurrentSurface();
   }
 
   CompositorFrameSinkSupport& GetCompositorFrameSinkSupport(
@@ -81,13 +83,13 @@ class SurfaceManagerRefTest : public testing::Test {
   }
 
   // Returns all the references where |surface_id| is the parent.
-  const SurfaceManager::SurfaceIdSet& GetReferencesFrom(
+  const base::flat_set<SurfaceId>& GetReferencesFrom(
       const SurfaceId& surface_id) {
     return manager().parent_to_child_refs_[surface_id];
   }
 
   // Returns all the references where |surface_id| is the child.
-  const SurfaceManager::SurfaceIdSet& GetReferencesFor(
+  const base::flat_set<SurfaceId>& GetReferencesFor(
       const SurfaceId& surface_id) {
     return manager().child_to_parent_refs_[surface_id];
   }
@@ -110,7 +112,7 @@ class SurfaceManagerRefTest : public testing::Test {
   }
   void TearDown() override {
     for (auto& support : supports_)
-      support.second->EvictFrame();
+      support.second->EvictCurrentSurface();
     supports_.clear();
     manager_.reset();
   }

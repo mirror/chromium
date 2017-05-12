@@ -40,6 +40,7 @@
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/GraphicsLayer.h"
+#include "platform/graphics/TouchAction.h"
 #include "platform/heap/Handle.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/Compiler.h"
@@ -522,7 +523,6 @@ class WEB_EXPORT WebViewImpl final
   void RefreshPageScaleFactorAfterLayout();
   IntSize ContentsSize() const;
 
-  void ResizeFrameView(WebLocalFrameImpl* webframe);
   void UpdateICBAndResizeViewport();
   void ResizeViewWhileAnchored(float browser_controls_height,
                                bool browser_controls_shrink_layout);

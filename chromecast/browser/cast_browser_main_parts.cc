@@ -225,14 +225,14 @@ DefaultCommandLineSwitch g_default_switches[] = {
 #else
     // GPU shader disk cache disabling is largely to conserve disk space.
     {switches::kDisableGpuShaderDiskCache, ""},
-    // Enable media sessions by default (even on non-Android platforms).
-    {switches::kEnableDefaultMediaSession, ""},
+    // Enable audio focus by default (even on non-Android platforms).
+    {switches::kEnableAudioFocus, ""},
 #endif
 #if BUILDFLAG(IS_CAST_AUDIO_ONLY)
+    {switches::kDisableGpu, ""},
 #if defined(OS_ANDROID)
     {switches::kDisableGLDrawingForTests, ""},
-#else
-    {switches::kDisableGpu, ""},
+    {switches::kSkipGpuDataLoading, ""},
 #endif  // defined(OS_ANDROID)
 #endif  // BUILDFLAG(IS_CAST_AUDIO_ONLY)
 #if defined(OS_LINUX)

@@ -7,8 +7,11 @@
 #include <utility>
 
 #include "base/memory/weak_ptr.h"
+#include "base/strings/utf_string_conversions.h"
 #include "components/payments/mojom/payment_request.mojom.h"
+#include "components/strings/grit/components_strings.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/l10n/l10n_util.h"
 
 namespace payments {
 
@@ -281,22 +284,150 @@ TEST_F(PaymentRequestSpecTest, ShippingOptionsSelection) {
   RecreateSpecWithOptionsAndDetails(std::move(options), std::move(details));
 
   EXPECT_EQ("option:2", spec()->selected_shipping_option()->id);
+  EXPECT_TRUE(spec()->selected_shipping_option_error().empty());
 
+  // Call updateWith with option:1 now selected.
   std::vector<mojom::PaymentShippingOptionPtr> new_shipping_options;
   mojom::PaymentShippingOptionPtr new_option =
       mojom::PaymentShippingOption::New();
   new_option->id = "option:1";
-  new_option->selected = false;
-  shipping_options.push_back(std::move(new_option));
+  new_option->selected = true;
+  new_shipping_options.push_back(std::move(new_option));
   mojom::PaymentShippingOptionPtr new_option2 =
       mojom::PaymentShippingOption::New();
   new_option2->id = "option:2";
-  new_option2->selected = true;
+  new_option2->selected = false;
   new_shipping_options.push_back(std::move(new_option2));
   mojom::PaymentDetailsPtr new_details = mojom::PaymentDetails::New();
   new_details->shipping_options = std::move(new_shipping_options);
 
   spec()->UpdateWith(std::move(new_details));
+
+  EXPECT_EQ("option:1", spec()->selected_shipping_option()->id);
+  EXPECT_TRUE(spec()->selected_shipping_option_error().empty());
+}
+
+// Test that the last shipping option is selected, even in the case of
+// updateWith.
+TEST_F(PaymentRequestSpecTest, ShippingOptionsSelection_NoOptionsAtAll) {
+  // No options are provided at first.
+  mojom::PaymentOptionsPtr options = mojom::PaymentOptions::New();
+  options->request_shipping = true;
+  RecreateSpecWithOptionsAndDetails(std::move(options),
+                                    mojom::PaymentDetails::New());
+
+  // No option selected, but no error either (the flow just started and no
+  // address has been selected yet).
+  EXPECT_EQ(nullptr, spec()->selected_shipping_option());
+  EXPECT_TRUE(spec()->selected_shipping_option_error().empty());
+
+  // Call updateWith with still no options.
+  spec()->UpdateWith(mojom::PaymentDetails::New());
+
+  // Now it's more serious. No option selected, but there is a generic error.
+  EXPECT_EQ(nullptr, spec()->selected_shipping_option());
+  EXPECT_EQ(
+      l10n_util::GetStringUTF16(IDS_PAYMENTS_UNSUPPORTED_SHIPPING_ADDRESS),
+      spec()->selected_shipping_option_error());
+
+  // Call updateWith with still no options, but a customized error string.
+  mojom::PaymentDetailsPtr details = mojom::PaymentDetails::New();
+  details->error = "No can do shipping.";
+  spec()->UpdateWith(std::move(details));
+
+  // No option selected, but there is an error provided by the mercahnt.
+  EXPECT_EQ(nullptr, spec()->selected_shipping_option());
+  EXPECT_EQ(base::ASCIIToUTF16("No can do shipping."),
+            spec()->selected_shipping_option_error());
+}
+
+TEST_F(PaymentRequestSpecTest, SingleCurrencyWithoutDisplayItems) {
+  mojom::PaymentDetailsPtr details = mojom::PaymentDetails::New();
+  mojom::PaymentItemPtr total = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr amount = mojom::PaymentCurrencyAmount::New();
+  amount->currency = "USD";
+  total->amount = std::move(amount);
+  details->total = std::move(total);
+
+  RecreateSpecWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                    std::move(details));
+  // If the request only has a total, it must not have mixed currencies.
+  EXPECT_FALSE(spec()->IsMixedCurrency());
+}
+
+TEST_F(PaymentRequestSpecTest, SingleCurrencyWithDisplayItems) {
+  mojom::PaymentDetailsPtr details = mojom::PaymentDetails::New();
+  mojom::PaymentItemPtr total = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr amount = mojom::PaymentCurrencyAmount::New();
+  amount->currency = "USD";
+  total->amount = std::move(amount);
+  details->total = std::move(total);
+
+  mojom::PaymentItemPtr display_item = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr display_amount =
+      mojom::PaymentCurrencyAmount::New();
+  display_amount->currency = "USD";
+  display_item->amount = std::move(display_amount);
+  details->display_items.push_back(std::move(display_item));
+
+  RecreateSpecWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                    std::move(details));
+  // Both the total and the display item have matching currency codes, this
+  // isn't a mixed currency case.
+  EXPECT_FALSE(spec()->IsMixedCurrency());
+}
+
+TEST_F(PaymentRequestSpecTest, MultipleCurrenciesWithOneDisplayItem) {
+  mojom::PaymentDetailsPtr details = mojom::PaymentDetails::New();
+  mojom::PaymentItemPtr total = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr amount = mojom::PaymentCurrencyAmount::New();
+  amount->currency = "USD";
+  total->amount = std::move(amount);
+  details->total = std::move(total);
+
+  mojom::PaymentItemPtr display_item = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr display_amount =
+      mojom::PaymentCurrencyAmount::New();
+  display_amount->currency = "CAD";
+  display_item->amount = std::move(display_amount);
+  details->display_items.push_back(std::move(display_item));
+
+  RecreateSpecWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                    std::move(details));
+
+  // The display item currency and the total's currency don't match, this is a
+  // mixed currencies case.
+  EXPECT_TRUE(spec()->IsMixedCurrency());
+}
+
+TEST_F(PaymentRequestSpecTest, MultipleCurrenciesWithTwoDisplayItem) {
+  mojom::PaymentDetailsPtr details = mojom::PaymentDetails::New();
+  mojom::PaymentItemPtr total = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr amount = mojom::PaymentCurrencyAmount::New();
+  amount->currency = "USD";
+  total->amount = std::move(amount);
+  details->total = std::move(total);
+
+  mojom::PaymentItemPtr display_item1 = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr display_amount1 =
+      mojom::PaymentCurrencyAmount::New();
+  display_amount1->currency = "CAD";
+  display_item1->amount = std::move(display_amount1);
+  details->display_items.push_back(std::move(display_item1));
+
+  mojom::PaymentItemPtr display_item2 = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr display_amount2 =
+      mojom::PaymentCurrencyAmount::New();
+  display_amount2->currency = "USD";
+  display_item2->amount = std::move(display_amount2);
+  details->display_items.push_back(std::move(display_item2));
+
+  RecreateSpecWithOptionsAndDetails(mojom::PaymentOptions::New(),
+                                    std::move(details));
+
+  // At least one of the display items has a different currency, this is a mixed
+  // currency case.
+  EXPECT_TRUE(spec()->IsMixedCurrency());
 }
 
 }  // namespace payments

@@ -267,20 +267,6 @@ def get_waterfall_config():
          ]
       }
     ])
-
-  waterfall = add_tester(
-    waterfall, 'Win Zenbook Perf', 'win-zenbook', 'win',
-    swarming=[
-      {
-       'gpu': '8086:161e',
-       'os': 'Windows-10-10240',
-       'pool': 'Chrome-perf',
-       'device_ids': [
-           'build30-b1', 'build31-b1',
-           'build32-b1', 'build33-b1', 'build34-b1'
-          ]
-      }
-    ])
   waterfall = add_tester(
     waterfall, 'Win 10 High-DPI Perf', 'win-high-dpi', 'win',
     swarming=[
@@ -458,7 +444,10 @@ def get_waterfall_config():
        'pool': 'Chrome-perf',
        'device_ids': [
            'build4-b1', 'build5-b1', 'build6-b1', 'build7-b1', 'build8-b1'
-          ]
+          ],
+       'perf_tests': [
+         ('performance_browser_tests', 'build8-b1')
+       ]
       }
     ])
   waterfall = add_tester(
@@ -472,7 +461,10 @@ def get_waterfall_config():
        'device_ids': [
            'build128-b1', 'build129-b1',
            'build130-b1', 'build131-b1', 'build132-b1'
-          ]
+          ],
+       'perf_tests': [
+         ('performance_browser_tests', 'build132-b1')
+       ]
       }
     ])
   waterfall = add_tester(
@@ -486,7 +478,10 @@ def get_waterfall_config():
        'device_ids': [
            'build123-b1', 'build124-b1',
            'build125-b1', 'build126-b1', 'build127-b1'
-          ]
+          ],
+       'perf_tests': [
+         ('performance_browser_tests', 'build126-b1')
+       ]
       }
     ])
   waterfall = add_tester(
@@ -674,19 +669,15 @@ def generate_telemetry_tests(name, tester_config, benchmarks,
     for dimension in tester_config['swarming_dimensions']:
       device = None
       sharding_map = benchmark_sharding_map.get(name, None)
-      if not sharding_map:
+      device = sharding_map.get(benchmark.Name(), None)
+      if device is None:
         raise ValueError('No sharding map for benchmark %r found. Please'
                          ' disable the benchmark with @Disabled(\'all\'), and'
                          ' file a bug with Speed>Benchmarks>Waterfall'
                          ' component and cc martiniss@ and nednguyen@ to'
                          ' execute the benchmark on the waterfall.' % (
-                             name))
+                             benchmark.Name()))
 
-      device = sharding_map.get(benchmark.Name(), None)
-
-      if device is None:
-        raise Exception('Device affinity for benchmark %s not found'
-          % benchmark.Name())
       swarming_dimensions.append(get_swarming_dimension(
           dimension, device))
 
@@ -848,8 +839,7 @@ NON_TELEMETRY_BENCHMARKS = {
     'load_library_perf_tests': BenchmarkMetadata(None, None, False),
     'media_perftests': BenchmarkMetadata('crouleau@chromium.org', None, False),
     'performance_browser_tests': BenchmarkMetadata(
-        'hubbe@chromium.org, justinlin@chromium.org, miu@chromium.org', None,
-        False)
+        'miu@chromium.org', None, False)
 }
 
 

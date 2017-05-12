@@ -547,8 +547,8 @@ int OmniboxResultView::GetDisplayOffset(
   if (match.type != AutocompleteMatchType::SEARCH_SUGGEST_TAIL)
     return 0;
 
-  const base::string16& input_text =
-      base::UTF8ToUTF16(match.GetAdditionalInfo(kACMatchPropertyInputText));
+  const base::string16& input_text = base::UTF8ToUTF16(
+      match.GetAdditionalInfo(kACMatchPropertySuggestionText));
   int contents_start_index = 0;
   base::StringToInt(match.GetAdditionalInfo(kACMatchPropertyContentsStartIndex),
                     &contents_start_index);
@@ -727,8 +727,8 @@ int OmniboxResultView::GetVerticalMargin() const {
   // adequately sized touch target.
   using Md = ui::MaterialDesignController;
   const int kIconVerticalPad = base::GetFieldTrialParamByFeatureAsInt(
-      omnibox::kUIExperiments,
-      OmniboxFieldTrial::kUIExperimentsVerticalMarginParam,
+      omnibox::kUIExperimentVerticalMargin,
+      OmniboxFieldTrial::kUIVerticalMarginParam,
       Md::GetMode() == Md::MATERIAL_HYBRID ? 8 : 4);
   const int min_height = LocationBarView::kIconWidth + 2 * kIconVerticalPad;
 

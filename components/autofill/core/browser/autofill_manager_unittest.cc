@@ -183,7 +183,7 @@ class TestPersonalDataManager : public PersonalDataManager {
   void AddCreditCard(const CreditCard& credit_card) override {
     std::unique_ptr<CreditCard> local_credit_card =
         base::MakeUnique<CreditCard>(credit_card);
-    local_credit_card->set_modification_date(base::Time::Now());
+    local_credit_card->set_modification_date(AutofillClock::Now());
     local_credit_cards_.push_back(std::move(local_credit_card));
   }
 
@@ -231,7 +231,7 @@ class TestPersonalDataManager : public PersonalDataManager {
   void AddServerCreditCard(const CreditCard& credit_card) {
     std::unique_ptr<CreditCard> server_credit_card =
         base::MakeUnique<CreditCard>(credit_card);
-    server_credit_card->set_modification_date(base::Time::Now());
+    server_credit_card->set_modification_date(AutofillClock::Now());
     server_credit_cards_.push_back(std::move(server_credit_card));
   }
 
@@ -309,7 +309,8 @@ class TestPersonalDataManager : public PersonalDataManager {
                             "04", "2999", "1");
     credit_card->set_guid("00000000-0000-0000-0000-000000000004");
     credit_card->set_use_count(10);
-    credit_card->set_use_date(base::Time::Now() - base::TimeDelta::FromDays(5));
+    credit_card->set_use_date(AutofillClock::Now() -
+                              base::TimeDelta::FromDays(5));
     credit_cards->push_back(std::move(credit_card));
 
     credit_card = base::MakeUnique<CreditCard>();
@@ -318,7 +319,8 @@ class TestPersonalDataManager : public PersonalDataManager {
                             "10", "2998", "1");
     credit_card->set_guid("00000000-0000-0000-0000-000000000005");
     credit_card->set_use_count(5);
-    credit_card->set_use_date(base::Time::Now() - base::TimeDelta::FromDays(4));
+    credit_card->set_use_date(AutofillClock::Now() -
+                              base::TimeDelta::FromDays(4));
     credit_cards->push_back(std::move(credit_card));
 
     credit_card = base::MakeUnique<CreditCard>();
@@ -1961,7 +1963,8 @@ TEST_F(AutofillManagerTest, GetCreditCardSuggestions_RepeatedObfuscatedNumber) {
                           "5231567890123456",  // Mastercard
                           "05", "2999", "1");
   credit_card.set_guid("00000000-0000-0000-0000-000000000007");
-  credit_card.set_use_date(base::Time::Now() - base::TimeDelta::FromDays(15));
+  credit_card.set_use_date(AutofillClock::Now() -
+                           base::TimeDelta::FromDays(15));
   autofill_manager_->AddCreditCard(credit_card);
 
   // Set up our form data.
@@ -4671,7 +4674,6 @@ TEST_F(AutofillManagerTest, UploadCreditCard) {
 
   // Server did not send a server_id, expect copy of card is not stored.
   EXPECT_TRUE(autofill_manager_->GetCreditCards().empty());
-
   // Verify that the correct histogram entry (and only that) was logged.
   ExpectUniqueCardUploadDecision(histogram_tester,
                                  AutofillMetrics::UPLOAD_OFFERED);
@@ -4680,6 +4682,10 @@ TEST_F(AutofillManagerTest, UploadCreditCard) {
   // Verify the histogram entry for recent profile modification.
   histogram_tester.ExpectUniqueSample(
       "Autofill.HasModifiedProfile.CreditCardFormSubmission", true, 1);
+  // Verify that UMA for "DaysSincePreviousUse" was not logged because we
+  // modified the profile.
+  histogram_tester.ExpectTotalCount(
+      "Autofill.DaysSincePreviousUseAtSubmission.Profile", 0);
 }
 
 TEST_F(AutofillManagerTest, UploadCreditCardAndSaveCopy) {
@@ -4973,7 +4979,207 @@ TEST_F(AutofillManagerTest, UploadCreditCard_NoCvcFieldOnForm) {
   FormSubmitted(credit_card_form);
   EXPECT_FALSE(autofill_manager_->credit_card_was_uploaded());
 
-  // Verify that the correct histogram entries were logged.
+  // Verify that the correct histogram entry (and only that) was logged.
+  ExpectUniqueCardUploadDecision(histogram_tester,
+                                 AutofillMetrics::CVC_FIELD_NOT_FOUND);
+  // Verify that the correct UKM was logged.
+  ExpectCardUploadDecisionUkm(AutofillMetrics::CVC_FIELD_NOT_FOUND);
+}
+
+#if defined(OS_ANDROID)
+#define MAYBE_UploadCreditCard_NoCvcFieldOnForm_InvalidCvcInNonCvcField \
+  DISABLED_UploadCreditCard_NoCvcFieldOnForm_InvalidCvcInNonCvcField
+#else
+#define MAYBE_UploadCreditCard_NoCvcFieldOnForm_InvalidCvcInNonCvcField \
+  UploadCreditCard_NoCvcFieldOnForm_InvalidCvcInNonCvcField
+#endif
+TEST_F(AutofillManagerTest,
+       MAYBE_UploadCreditCard_NoCvcFieldOnForm_InvalidCvcInNonCvcField) {
+  EnableUkmLogging();
+  autofill_manager_->set_credit_card_upload_enabled(true);
+
+  // Remove the profiles that were created in the TestPersonalDataManager
+  // constructor because they would result in conflicting names that would
+  // prevent the upload.
+  personal_data_.ClearAutofillProfiles();
+
+  // Create, fill and submit an address form in order to establish a recent
+  // profile which can be selected for the upload request.
+  FormData address_form;
+  test::CreateTestAddressFormData(&address_form);
+  FormsSeen({address_form});
+  ManuallyFillAddressForm("Flo", "Master", "77401", "US", &address_form);
+  FormSubmitted(address_form);
+
+  // Set up our credit card form data. Note that CVC field is missing.
+  FormData credit_card_form;
+  credit_card_form.name = ASCIIToUTF16("MyForm");
+  credit_card_form.origin = GURL("https://myform.com/form.html");
+  credit_card_form.action = GURL("https://myform.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Card Number", "cardnumber", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Expiration Month", "ccmonth", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Expiration Year", "ccyear", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Random Field", "random", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+
+  FormsSeen({credit_card_form});
+
+  // Enter an invalid cvc in "Random Field" and submit.
+  credit_card_form.fields[0].value = ASCIIToUTF16("Flo Master");
+  credit_card_form.fields[1].value = ASCIIToUTF16("4111111111111111");
+  credit_card_form.fields[2].value = ASCIIToUTF16("11");
+  credit_card_form.fields[3].value = ASCIIToUTF16("2017");
+  credit_card_form.fields[4].value = ASCIIToUTF16("1234");
+
+  base::HistogramTester histogram_tester;
+
+  // Upload should not happen because user did not provide CVC.
+  EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
+  FormSubmitted(credit_card_form);
+  EXPECT_FALSE(autofill_manager_->credit_card_was_uploaded());
+
+  // Verify that the correct histogram entry (and only that) was logged.
+  ExpectUniqueCardUploadDecision(histogram_tester,
+                                 AutofillMetrics::CVC_FIELD_NOT_FOUND);
+  // Verify that the correct UKM was logged.
+  ExpectCardUploadDecisionUkm(AutofillMetrics::CVC_FIELD_NOT_FOUND);
+}
+
+#if defined(OS_ANDROID)
+#define MAYBE_UploadCreditCard_NoCvcFieldOnForm_CvcInNonCvcField \
+  DISABLED_UploadCreditCard_NoCvcFieldOnForm_CvcInNonCvcField
+#else
+#define MAYBE_UploadCreditCard_NoCvcFieldOnForm_CvcInNonCvcField \
+  UploadCreditCard_NoCvcFieldOnForm_CvcInNonCvcField
+#endif
+TEST_F(AutofillManagerTest,
+       MAYBE_UploadCreditCard_NoCvcFieldOnForm_CvcInNonCvcField) {
+  EnableUkmLogging();
+  autofill_manager_->set_credit_card_upload_enabled(true);
+
+  // Remove the profiles that were created in the TestPersonalDataManager
+  // constructor because they would result in conflicting names that would
+  // prevent the upload.
+  personal_data_.ClearAutofillProfiles();
+
+  // Create, fill and submit an address form in order to establish a recent
+  // profile which can be selected for the upload request.
+  FormData address_form;
+  test::CreateTestAddressFormData(&address_form);
+  FormsSeen({address_form});
+  ManuallyFillAddressForm("Flo", "Master", "77401", "US", &address_form);
+  FormSubmitted(address_form);
+
+  // Set up our credit card form data. Note that CVC field is missing.
+  FormData credit_card_form;
+  credit_card_form.name = ASCIIToUTF16("MyForm");
+  credit_card_form.origin = GURL("https://myform.com/form.html");
+  credit_card_form.action = GURL("https://myform.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Card Number", "cardnumber", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Expiration Month", "ccmonth", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Expiration Year", "ccyear", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Random Field", "random", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+
+  FormsSeen({credit_card_form});
+
+  // Enter an invalid cvc in "Random Field" and submit.
+  credit_card_form.fields[0].value = ASCIIToUTF16("Flo Master");
+  credit_card_form.fields[1].value = ASCIIToUTF16("4111111111111111");
+  credit_card_form.fields[2].value = ASCIIToUTF16("11");
+  credit_card_form.fields[3].value = ASCIIToUTF16("2017");
+  credit_card_form.fields[4].value = ASCIIToUTF16("123");
+
+  base::HistogramTester histogram_tester;
+
+  // Upload should not happen because user did not provide CVC.
+  EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
+  FormSubmitted(credit_card_form);
+  EXPECT_FALSE(autofill_manager_->credit_card_was_uploaded());
+
+  // Verify that the correct histogram entry (and only that) was logged.
+  ExpectUniqueCardUploadDecision(
+      histogram_tester,
+      AutofillMetrics::FOUND_POSSIBLE_CVC_VALUE_IN_NON_CVC_FIELD);
+  // Verify that the correct UKM was logged.
+  ExpectCardUploadDecisionUkm(
+      AutofillMetrics::FOUND_POSSIBLE_CVC_VALUE_IN_NON_CVC_FIELD);
+}
+
+#if defined(OS_ANDROID)
+#define MAYBE_UploadCreditCard_NoCvcFieldOnForm_CvcInAddressField \
+  DISABLED_UploadCreditCard_NoCvcFieldOnForm_CvcInAddressField
+#else
+#define MAYBE_UploadCreditCard_NoCvcFieldOnForm_CvcInAddressField \
+  UploadCreditCard_NoCvcFieldOnForm_CvcInAddressField
+#endif
+TEST_F(AutofillManagerTest,
+       MAYBE_UploadCreditCard_NoCvcFieldOnForm_CvcInAddressField) {
+  EnableUkmLogging();
+  autofill_manager_->set_credit_card_upload_enabled(true);
+
+  // Remove the profiles that were created in the TestPersonalDataManager
+  // constructor because they would result in conflicting names that would
+  // prevent the upload.
+  personal_data_.ClearAutofillProfiles();
+
+  // Create, fill and submit an address form in order to establish a recent
+  // profile which can be selected for the upload request.
+  FormData address_form;
+  test::CreateTestAddressFormData(&address_form);
+  FormsSeen({address_form});
+  ManuallyFillAddressForm("Flo", "Master", "77401", "US", &address_form);
+  FormSubmitted(address_form);
+
+  // Set up our credit card form data. Note that CVC field is missing.
+  FormData credit_card_form;
+  credit_card_form.name = ASCIIToUTF16("MyForm");
+  credit_card_form.origin = GURL("https://myform.com/form.html");
+  credit_card_form.action = GURL("https://myform.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Card Number", "cardnumber", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Expiration Month", "ccmonth", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Expiration Year", "ccyear", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+  test::CreateTestFormField("Address Line 1", "addr1", "", "text", &field);
+  credit_card_form.fields.push_back(field);
+
+  FormsSeen({credit_card_form});
+
+  // Enter an invalid cvc in "Random Field" and submit.
+  credit_card_form.fields[0].value = ASCIIToUTF16("Flo Master");
+  credit_card_form.fields[1].value = ASCIIToUTF16("4111111111111111");
+  credit_card_form.fields[2].value = ASCIIToUTF16("11");
+  credit_card_form.fields[3].value = ASCIIToUTF16("2017");
+  credit_card_form.fields[4].value = ASCIIToUTF16("123");
+
+  base::HistogramTester histogram_tester;
+
+  // Upload should not happen because user did not provide CVC.
+  EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
+  FormSubmitted(credit_card_form);
+  EXPECT_FALSE(autofill_manager_->credit_card_was_uploaded());
+
+  // Verify that the correct histogram entry (and only that) was logged.
   ExpectUniqueCardUploadDecision(histogram_tester,
                                  AutofillMetrics::CVC_FIELD_NOT_FOUND);
   // Verify that the correct UKM was logged.
@@ -5874,10 +6080,14 @@ TEST_F(AutofillManagerTest,
   // Set up our credit card form data.
   FormData credit_card_form;
   CreateTestCreditCardFormData(&credit_card_form, true, false);
-  FormsSeen(std::vector<FormData>(1, credit_card_form));
+  FormsSeen({credit_card_form});
 
   // Edit the data, but use yet another name, and submit.
   credit_card_form.fields[0].value = ASCIIToUTF16("Bob Master");
+  FormsSeen({credit_card_form});
+
+  // Edit the credit card form and submit.
+  credit_card_form.fields[0].value = ASCIIToUTF16("Flo Master");
   credit_card_form.fields[1].value = ASCIIToUTF16("4111111111111111");
   credit_card_form.fields[2].value = ASCIIToUTF16("11");
   credit_card_form.fields[3].value = ASCIIToUTF16("2017");
@@ -5893,6 +6103,54 @@ TEST_F(AutofillManagerTest,
   // Verify that the correct histogram entry (and only that) was logged.
   ExpectUniqueCardUploadDecision(
       histogram_tester, AutofillMetrics::UPLOAD_NOT_OFFERED_CONFLICTING_NAMES);
+}
+
+TEST_F(AutofillManagerTest, UploadCreditCard_LogPreviousUseDate) {
+  // Create the test clock and set the time to a specific value.
+  TestAutofillClock test_clock;
+  test_clock.SetNow(kArbitraryTime);
+
+  personal_data_.ClearAutofillProfiles();
+  autofill_manager_->set_credit_card_upload_enabled(true);
+
+  // Create, fill and submit an address form in order to establish a recent
+  // profile which can be selected for the upload request.
+  FormData address_form;
+  test::CreateTestAddressFormData(&address_form);
+  FormsSeen({address_form});
+  ManuallyFillAddressForm("Flo", "Master", "77401", "US", &address_form);
+  FormSubmitted(address_form);
+  const std::vector<AutofillProfile*>& profiles =
+      personal_data_.GetProfilesToSuggest();
+  ASSERT_EQ(1U, profiles.size());
+
+  // Advance the current time and simulate use of the address profile.
+  test_clock.SetNow(kMuchLaterTime);
+  profiles[0]->RecordAndLogUse();
+
+  // Set up our credit card form data.
+  FormData credit_card_form;
+  CreateTestCreditCardFormData(&credit_card_form, true, false);
+  FormsSeen({credit_card_form});
+
+  // Edit the credit card form and submit.
+  credit_card_form.fields[0].value = ASCIIToUTF16("Flo Master");
+  credit_card_form.fields[1].value = ASCIIToUTF16("4111111111111111");
+  credit_card_form.fields[2].value = ASCIIToUTF16("11");
+  credit_card_form.fields[3].value = ASCIIToUTF16("2017");
+  credit_card_form.fields[4].value = ASCIIToUTF16("123");
+
+  base::HistogramTester histogram_tester;
+
+  EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
+  FormSubmitted(credit_card_form);
+  EXPECT_TRUE(autofill_manager_->credit_card_was_uploaded());
+
+  // Verify that UMA for "DaysSincePreviousUse" is logged.
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.DaysSincePreviousUseAtSubmission.Profile",
+      (kMuchLaterTime - kArbitraryTime).InDays(),
+      /*expected_count=*/1);
 }
 
 TEST_F(AutofillManagerTest, UploadCreditCard_UploadDetailsFails) {

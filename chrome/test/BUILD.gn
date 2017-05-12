@@ -24,6 +24,8 @@ import("//v8/gni/v8.gni")
 
 if (is_android) {
   import("//build/config/android/rules.gni")
+} else {
+  include_js_tests = !(is_asan || is_msan || is_tsan)
 }
 
 # This target exists to reference other test executables to bring these files
@@ -471,7 +473,6 @@ if (!is_android) {
       "//chrome/browser",
       "//chrome/browser/devtools",
       "//chrome/renderer",
-      "//chrome/test/data/webui:interactive_ui_tests_js_webui",
       "//components/resources",
       "//components/sync",
       "//components/sync:test_support_model",
@@ -495,6 +496,10 @@ if (!is_android) {
       "//ui/resources:ui_test_pak",
       "//ui/web_dialogs:test_support",
     ]
+
+    if (include_js_tests) {
+      deps += [ "//chrome/test/data/webui:interactive_ui_tests_js_webui" ]
+    }
 
     # TODO(rockot) bug 505926: The chrome_extensions_interactive_uitests target
     # should be deleted and this line removed. See the
@@ -1730,7 +1735,6 @@ test("browser_tests") {
       "//chrome:strings",
       "//chrome/browser",
       "//chrome/renderer",
-      "//chrome/test/data/webui:browser_tests_js_webui",
       "//chrome/test/media_router:media_router_browsertests",
       "//components/autofill/content/browser:risk_proto",
       "//components/autofill/content/renderer:test_support",
@@ -1779,6 +1783,10 @@ test("browser_tests") {
       "//ui/web_dialogs:test_support",
       "//v8",
     ]
+
+    if (include_js_tests) {
+      deps += [ "//chrome/test/data/webui:browser_tests_js_webui" ]
+    }
 
     # Runtime dependencies
     data_deps += [
@@ -1990,6 +1998,7 @@ test("browser_tests") {
         "../browser/ui/views/payments/payment_request_data_url_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_app_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_response_browsertest.cc",
+        "../browser/ui/views/payments/payment_request_use_stats_browsertest.cc",
         "../browser/ui/views/payments/payment_sheet_view_controller_browsertest.cc",
         "../browser/ui/views/payments/shipping_address_editor_view_controller_browsertest.cc",
         "../browser/ui/views/payments/shipping_option_view_controller_browsertest.cc",
@@ -3086,6 +3095,7 @@ test("unit_tests") {
     "../browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/from_gws_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/google_captcha_observer_unittest.cc",
+    "../browser/page_load_metrics/observers/lofi_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/media_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
     "../browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
@@ -3664,10 +3674,12 @@ test("unit_tests") {
       "../common/media_router/mojo/media_router_struct_traits_unittest.cc",
       "../utility/media_router/dial_device_description_parser_impl_unittest.cc",
     ]
-    deps += [
-      "//chrome/test/data/webui:unit_tests_js",
-      "//components/bubble:test_support",
-    ]
+    deps += [ "//components/bubble:test_support" ]
+
+    if (include_js_tests) {
+      deps += [ "//chrome/test/data/webui:unit_tests_js" ]
+    }
+
     data += [
       "$root_out_dir/test_data/chrome/browser/resources/print_preview/",
       "$root_out_dir/test_data/chrome/renderer/resources/extensions/",
@@ -3802,6 +3814,7 @@ test("unit_tests") {
       "../browser/extensions/blacklist_check_unittest.cc",
       "../browser/extensions/blacklist_state_fetcher_unittest.cc",
       "../browser/extensions/bookmark_app_helper_unittest.cc",
+      "../browser/extensions/chrome_app_icon_unittest.cc",
       "../browser/extensions/chrome_app_sorting_unittest.cc",
       "../browser/extensions/chrome_component_extension_resource_manager_unittest.cc",
       "../browser/extensions/chrome_content_browser_client_extensions_part_unittest.cc",
@@ -4089,7 +4102,10 @@ test("unit_tests") {
       "../browser/ui/input_method/input_method_engine_unittest.cc",
     ]
   }
-  if (!is_android && !is_chromeos) {
+
+  if (is_android || is_chromeos) {
+    sources += [ "../browser/media/protected_media_identifier_permission_context_unittest.cc" ]
+  } else {
     sources += [
       "../browser/net/disk_cache_dir_policy_handler_unittest.cc",
       "//chrome/browser/profiles/profile_list_desktop_unittest.cc",

@@ -47,9 +47,7 @@ const struct gfx::VectorIcon& getSecurityIcon(int level) {
       return ui::kInfoOutlineIcon;
     case SecurityLevel::SECURE:
     case SecurityLevel::EV_SECURE:
-      // TODO(cjgrant): Use the lock icon when available.
-      // return ui::kLockIcon;
-      return ui::kInfoOutlineIcon;
+      return ui::kLockIcon;
     case SecurityLevel::SECURE_WITH_POLICY_INSTALLED_CERT:
     case SecurityLevel::DANGEROUS:
     default:
@@ -62,10 +60,6 @@ const struct gfx::VectorIcon& getSecurityIcon(int level) {
 UrlBarTexture::UrlBarTexture() : security_level_(SecurityLevel::DANGEROUS) {}
 
 UrlBarTexture::~UrlBarTexture() = default;
-
-void UrlBarTexture::SetHover(bool hover) {
-  hover_ = hover;
-}
 
 void UrlBarTexture::SetURL(const GURL& gurl) {
   gurl_ = gurl;
@@ -98,7 +92,8 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
   SkVector left_corners[4] = {rounded_corner, {0, 0}, {0, 0}, rounded_corner};
   round_rect.setRectRadii({0, 0, kHeight, kHeight}, left_corners);
   SkPaint paint;
-  paint.setColor(hover_ ? kBackgroundHover : kBackground);
+  paint.setColor((GetDrawFlags() & FLAG_HOVER) ? kBackgroundHover
+                                               : kBackground);
   canvas->drawRRect(round_rect, paint);
 
   // URL area.

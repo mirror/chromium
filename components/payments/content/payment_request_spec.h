@@ -87,15 +87,15 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
   // not supported at all, or specified directly in supportedMethods.
   bool IsMethodSupportedThroughBasicCard(const std::string& method_name);
 
-  // Uses CurrencyFormatter to format |amount| with the currency symbol for this
-  // request's currency. Will use currency of the "total" display item, because
-  // all items are supposed to have the same currency in a given request.
-  base::string16 GetFormattedCurrencyAmount(const std::string& amount);
+  // Uses CurrencyFormatter to format the value of |currency_amount| with the
+  // currency symbol for its currency.
+  base::string16 GetFormattedCurrencyAmount(
+      const mojom::PaymentCurrencyAmountPtr& currency_amount);
 
-  // Uses CurrencyFormatter to get the formatted currency code for this
-  // request's currency. Will use currency of the "total" display item, because
-  // all items are supposed to have the same currency in a given request.
-  std::string GetFormattedCurrencyCode();
+  // Uses CurrencyFormatter to get the formatted currency code for
+  // |currency_amount|'s currency.
+  std::string GetFormattedCurrencyCode(
+      const mojom::PaymentCurrencyAmountPtr& currency_amount);
 
   mojom::PaymentShippingOption* selected_shipping_option() const {
     return selected_shipping_option_;
@@ -110,6 +110,8 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
 
   void StartWaitingForUpdateWith(UpdateReason reason);
 
+  bool IsMixedCurrency() const;
+
  private:
   friend class PaymentRequestDialogView;
   void add_observer_for_testing(Observer* observer_for_testing) {
@@ -121,10 +123,13 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
   void PopulateValidatedMethodData(
       const std::vector<mojom::PaymentMethodDataPtr>& method_data);
 
-  // Updates the selected_shipping_option based on the data passed to this
+  // Updates the |selected_shipping_option| based on the data passed to this
   // payment request by the website. This will set selected_shipping_option_ to
-  // the last option marked selected in the options array.
-  void UpdateSelectedShippingOption();
+  // the last option marked selected in the options array. If no options are
+  // provided and this method is called |after_update|, it means the merchant
+  // doesn't ship to this location. In this case,
+  // |selected_shipping_option_error_| will be set.
+  void UpdateSelectedShippingOption(bool after_update);
 
   // Will notify all observers that the spec has changed.
   void NotifyOnSpecUpdated();
@@ -145,7 +150,8 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
   mojom::PaymentShippingOption* selected_shipping_option_;
   base::string16 selected_shipping_option_error_;
 
-  std::unique_ptr<CurrencyFormatter> currency_formatter_;
+  // One currency formatter is instantiated and cached per currency code.
+  std::map<std::string, CurrencyFormatter> currency_formatters_;
 
   // A list/set of supported basic card networks. The list is used to keep the
   // order in which they were specified by the merchant. The set is used for

@@ -354,7 +354,7 @@ void SelectionController::UpdateSelectionForMouseDrag(
 
   const PositionWithAffinity& raw_target_position =
       PositionRespectingEditingBoundary(
-          Selection().ComputeVisibleSelectionInDOMTreeDeprecated().Start(),
+          Selection().ComputeVisibleSelectionInDOMTree().Start(),
           hit_test_result.LocalPoint(), target);
   VisiblePositionInFlatTree target_position = CreateVisiblePosition(
       FromPositionInDOMTree<EditingInFlatTreeStrategy>(raw_target_position));
@@ -921,7 +921,7 @@ bool SelectionController::HandleMouseReleaseEvent(
     handled = true;
   }
 
-  Selection().NotifyLayoutObjectOfSelectionChange(kUserTriggered);
+  Selection().NotifyTextControlOfSelectionChange(kUserTriggered);
 
   Selection().SelectFrameElementInParentIfFullySelected();
 

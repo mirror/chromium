@@ -15,6 +15,10 @@ mojom("fake_bluetooth_interfaces") {
     "test/fake_bluetooth.mojom",
   ]
 
+  public_deps = [
+    ":interfaces",
+  ]
+
   use_once_callback = true
 }
 
@@ -33,6 +37,4 @@ mojom("experimental_interfaces") {
     "//chrome/browser:*",
     "//chrome/browser/ui:*",
   ]
-
-  use_once_callback = true
 }

@@ -2,8 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "build/build_config.h"
 #include "media/base/media_switches.h"
+#include "base/command_line.h"
+#include "build/build_config.h"
 #include "ppapi/features/features.h"
 
 namespace switches {
@@ -67,18 +68,29 @@ const char kWaveOutBuffers[] = "waveout-buffers";
 const char kUseCras[] = "use-cras";
 #endif
 
+// For automated testing of protected content, this switch allows specific
+// domains (e.g. example.com) to skip asking the user for permission to share
+// their personal identifier. In this context, domain does not include the
+// port number. This flag will have no effect if user-data-dir is not set and
+// will not affect the user's content settings.
+// Reference: http://crbug.com/718608
+// Example:
+// --unsafely-allow-protected-media-identifier-for-domain=a.com,b.ca
+// --user-data-dir=/test/only/profile/dir
+const char kUnsafelyAllowProtectedMediaIdentifierForDomain[] =
+    "unsafely-allow-protected-media-identifier-for-domain";
+
 #if !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
-// Use a media session for each tabs in a way that two tabs can't play on top of
-// each other. This is different from the Media Session API as it is enabling a
-// default behaviour for the browser. The allowed values are: "" (empty),
-// |kEnableDefaultMediaSessionDuckFlash|.
-const char kEnableDefaultMediaSession[] = "enable-default-media-session";
+// Enable a internal audio focus management between tabs in such a way that two
+// tabs can't  play on top of each other.
+// The allowed values are: "" (empty) or |kEnableAudioFocusDuckFlash|.
+const char kEnableAudioFocus[] = "enable-audio-focus";
 #endif  // !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
 
 #if BUILDFLAG(ENABLE_PLUGINS)
-// This value is used as an option for |kEnableDefaultMediaSession|. Flash will
+// This value is used as an option for |kEnableAudioFocus|. Flash will
 // be ducked when losing audio focus.
-const char kEnableDefaultMediaSessionDuckFlash[] = "duck-flash";
+const char kEnableAudioFocusDuckFlash[] = "duck-flash";
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 
 #if BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
@@ -146,16 +158,16 @@ const char kIgnoreAutoplayRestrictionsForTests[] =
 
 namespace autoplay {
 
-// Autoplay policy to require a user gesture in ordor to play for cross origin
-// iframes.
-const char kCrossOriginUserGestureRequiredPolicy[] =
-    "cross-origin-user-gesture-required";
-
 // Autoplay policy that does not require any user gesture.
 const char kNoUserGestureRequiredPolicy[] = "no-user-gesture-required";
 
 // Autoplay policy to require a user gesture in order to play.
 const char kUserGestureRequiredPolicy[] = "user-gesture-required";
+
+// Autoplay policy to require a user gesture in ordor to play for cross origin
+// iframes.
+const char kUserGestureRequiredForCrossOriginPolicy[] =
+    "user-gesture-required-for-cross-origin";
 
 }  // namespace autoplay
 
@@ -254,5 +266,22 @@ const base::Feature kD3D11VideoDecoding{"D3D11VideoDecoding",
 const base::Feature kMediaFoundationH264Encoding{
     "MediaFoundationH264Encoding", base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_WIN)
+
+std::string GetEffectiveAutoplayPolicy(const base::CommandLine& command_line) {
+  // |kIgnoreAutoplayRestrictionsForTests| overrides all other settings.
+  if (command_line.HasSwitch(switches::kIgnoreAutoplayRestrictionsForTests))
+    return switches::autoplay::kNoUserGestureRequiredPolicy;
+
+  // Return the autoplay policy set in teh command line, if any.
+  if (command_line.HasSwitch(switches::kAutoplayPolicy))
+    return command_line.GetSwitchValueASCII(switches::kAutoplayPolicy);
+
+  // The default value is platform dependant.
+#if defined(OS_ANDROID)
+  return switches::autoplay::kUserGestureRequiredPolicy;
+#else
+  return switches::autoplay::kNoUserGestureRequiredPolicy;
+#endif
+}
 
 }  // namespace media

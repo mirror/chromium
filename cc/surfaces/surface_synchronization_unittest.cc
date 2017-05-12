@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/containers/flat_set.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/surface_id.h"
 #include "cc/surfaces/surface_manager.h"
@@ -82,7 +83,7 @@ class SurfaceSynchronizationTest : public testing::Test,
   SurfaceManager& surface_manager() { return surface_manager_; }
 
   // Returns all the references where |surface_id| is the parent.
-  const SurfaceManager::SurfaceIdSet& GetChildReferences(
+  const base::flat_set<SurfaceId>& GetChildReferences(
       const SurfaceId& surface_id) {
     return surface_manager().parent_to_child_refs_[surface_id];
   }
@@ -644,8 +645,8 @@ TEST_F(SurfaceSynchronizationTest, EvictSurfaceWithPendingFrame) {
               UnorderedElementsAre(child_id2));
 
   // Evict child_support1's current Surface.
-  // TODO(fsamuel): EvictFrame => EvictCurrentSurface.
-  child_support1().EvictFrame();
+  // TODO(fsamuel): EvictCurrentSurface => EvictCurrentSurface.
+  child_support1().EvictCurrentSurface();
 
   // The parent Surface should immediately activate.
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
@@ -1045,7 +1046,7 @@ TEST_F(SurfaceSynchronizationTest, SurfaceResurrection) {
 
   // Attempt to destroy the child surface. The surface must still exist since
   // the parent needs it but it will be marked as destroyed.
-  child_support1().EvictFrame();
+  child_support1().EvictCurrentSurface();
   surface = surface_manager().GetSurfaceForId(child_id);
   EXPECT_NE(nullptr, surface);
   EXPECT_TRUE(surface->destroyed());
@@ -1083,7 +1084,7 @@ TEST_F(SurfaceSynchronizationTest, LocalSurfaceIdIsReusable) {
                                          MakeCompositorFrame());
 
   // Destroy the surface.
-  child_support1().EvictFrame();
+  child_support1().EvictCurrentSurface();
   EXPECT_EQ(nullptr, surface_manager().GetSurfaceForId(child_id));
 
   // Submit another frame with the same local surface id. This should work fine

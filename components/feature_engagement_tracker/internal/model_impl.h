@@ -39,9 +39,9 @@ class ModelImpl : public Model {
       const base::Feature& feature) const override;
   void SetIsCurrentlyShowing(bool is_showing) override;
   bool IsCurrentlyShowing() const override;
-  const Event& GetEvent(const std::string& event_name) override;
-  void IncrementEvent(const std::string& event_name) override;
-  uint32_t GetCurrentDay() override;
+  const Event* GetEvent(const std::string& event_name) const override;
+  void IncrementEvent(const std::string& event_name,
+                      uint32_t current_day) override;
 
  private:
   // Callback for loading the underlying store.

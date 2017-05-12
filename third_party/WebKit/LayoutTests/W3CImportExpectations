@@ -15,7 +15,6 @@
 # directories that are imported but not run are listed in NeverFixTests.
 
 external/wpt/2dcontext [ Skip ]
-external/wpt/DOM-parsing [ Skip ]
 ## Owners: jsbell@chromium.org
 # external/wpt/FileAPI [ Pass ]
 ## Owners: jsbell@chromium.org
@@ -330,7 +329,8 @@ external/wpt/performance-timeline [ Skip ]
 # external/wpt/pointerevents [ Pass ]
 ## Owners: chongz@chromium.org
 # external/wpt/pointerlock [ Pass ]
-external/wpt/presentation-api [ Skip ]
+## Owners: media-dev@chromium.org
+# external/wpt/presentation-api [ Pass ]
 ## Owners: blink-network-dev@chromium.org
 # external/wpt/progress-events [ Pass ]
 external/wpt/proximity [ Skip ]
@@ -347,13 +347,14 @@ external/wpt/resources/docs [ Skip ]
 external/wpt/resources/examples [ Skip ]
 external/wpt/resources/webidl2/README.md [ Skip ]
 external/wpt/resources/webidl2/test [ Skip ]
-external/wpt/screen-orientation [ Skip ]
+## Owners: mlamouri@chromium.org
+# external/wpt/screen-orientation [ Pass ]
 ## Owners: mkwst@chromium.org
 # external/wpt/secure-contexts [ Pass ]
 ## Owners: dom-dev@chromium.org
 # external/wpt/selection [ Pass ]
-external/wpt/selectors [ Skip ]
-external/wpt/selectors-api [ Skip ]
+## Owners: style-dev@chromium.org
+# external/wpt/selectors [ Pass ]
 external/wpt/serve [ Skip ]
 external/wpt/serve.py [ Skip ]
 external/wpt/server-side.md [ Skip ]
@@ -404,7 +405,8 @@ external/wpt/webgl [ Skip ]
 # external/wpt/webstorage [ Pass ]
 ## Owners: foolip@chromium.org,maksim.sisov@intel.com
 # external/wpt/webvtt [ Pass ]
-external/wpt/web-nfc [ Skip ]
+## Owners: alexander.shalamov@intel.com,kenneth.r.christiansen@intel.com,rijubrata.bhaumik@intel.com
+# external/wpt/web-nfc [ Pass ]
 ## Owners: worker-dev@chromium.org
 # external/wpt/workers [ Pass ]
 

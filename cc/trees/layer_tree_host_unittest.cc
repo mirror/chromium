@@ -1180,6 +1180,95 @@ class LayerTreeHostTestPropertyTreesChangedSync : public LayerTreeHostTest {
 
 SINGLE_THREAD_TEST_F(LayerTreeHostTestPropertyTreesChangedSync);
 
+class LayerTreeHostTestAnimationFilterMutatedNotUsingLayerLists
+    : public LayerTreeHostTest {
+ public:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->use_layer_lists = false;
+  }
+
+ protected:
+  void SetupTree() override {
+    root_ = Layer::Create();
+    layer_tree_host()->SetRootLayer(root_);
+    LayerTreeHostTest::SetupTree();
+  }
+
+  void BeginTest() override {
+    FilterOperations filters;
+    EXPECT_EQ(FilterOperations(), root_->filters());
+    filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+    layer_tree_host()->SetElementFilterMutated(
+        root_->element_id(), ElementListType::ACTIVE, filters);
+    // When not using layer lists, filters are just stored directly on the
+    // layer.
+    EXPECT_EQ(filters, root_->filters());
+    EndTest();
+  }
+
+  void AfterTest() override {}
+
+ private:
+  scoped_refptr<Layer> root_;
+};
+
+SINGLE_THREAD_TEST_F(LayerTreeHostTestAnimationFilterMutatedNotUsingLayerLists);
+
+class LayerTreeHostTestAnimationFilterMutatedUsingLayerLists
+    : public LayerTreeHostTest {
+ public:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->use_layer_lists = true;
+  }
+
+ protected:
+  void SetupTree() override {
+    root_ = Layer::Create();
+    layer_tree_host()->SetRootLayer(root_);
+    LayerTreeHostTest::SetupTree();
+  }
+
+  void BeginTest() override {
+    // Insert a dummy effect node to observe its mutation. This would
+    // normally have been created by PaintArtifactCompositor.
+    int effect_node_id =
+        layer_tree_host()->property_trees()->effect_tree.Insert(
+            EffectNode(), EffectTree::kInvalidNodeId);
+    layer_tree_host()
+        ->property_trees()
+        ->element_id_to_effect_node_index[root_->element_id()] = effect_node_id;
+
+    EXPECT_EQ(FilterOperations(), root_->filters());
+    EXPECT_EQ(FilterOperations(),
+              layer_tree_host()
+                  ->property_trees()
+                  ->effect_tree.FindNodeFromElementId(root_->element_id())
+                  ->filters);
+
+    FilterOperations filters;
+    filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+    layer_tree_host()->SetElementFilterMutated(
+        root_->element_id(), ElementListType::ACTIVE, filters);
+
+    // When using layer lists, we don't have to store the filters on the layer.
+    EXPECT_EQ(FilterOperations(), root_->filters());
+    // The filter should have been set directly on the effect node instead.
+    EXPECT_EQ(filters,
+              layer_tree_host()
+                  ->property_trees()
+                  ->effect_tree.FindNodeFromElementId(root_->element_id())
+                  ->filters);
+    EndTest();
+  }
+
+  void AfterTest() override {}
+
+ private:
+  scoped_refptr<Layer> root_;
+};
+
+SINGLE_THREAD_TEST_F(LayerTreeHostTestAnimationFilterMutatedUsingLayerLists);
+
 class LayerTreeHostTestEffectTreeSync : public LayerTreeHostTest {
  protected:
   void SetupTree() override {
@@ -1377,8 +1466,8 @@ class LayerTreeHostTestTransformTreeDamageIsUpdated : public LayerTreeHostTest {
 
     root_->SetBounds(gfx::Size(50, 50));
 
-    // Make sure child is registerd for animation.
-    child_->SetElementId(ElementId(2, 0));
+    // Make sure child is registered for animation.
+    child_->SetElementId(ElementId(2));
 
     // Make sure child and grand_child have transform nodes.
     gfx::Transform rotation;
@@ -2480,15 +2569,16 @@ class LayerTreeHostTestStartPageScaleAnimation : public LayerTreeHostTest {
         break;
       case 1:
         EXPECT_EQ(1.f, impl->active_tree()->current_page_scale_factor());
+        // Once the animation starts, an ImplFrame will be requested. However,
+        // main frames may be happening in the mean-time due to high-latency
+        // mode. If one happens before the next impl frame, then the source
+        // frame number may increment twice instead of just once.
         break;
       case 2:
+      case 3:
         EXPECT_EQ(1.25f, impl->active_tree()->current_page_scale_factor());
         EndTest();
         break;
-      case 3:
-        break;
-      default:
-        NOTREACHED();
     }
   }
 

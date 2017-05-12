@@ -14,7 +14,6 @@
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/debug/alias.h"
-#include "base/debug/crash_logging.h"
 #include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/i18n/rtl.h"
@@ -626,14 +625,6 @@ void RenderViewImpl::Initialize(
   if (command_line.HasSwitch(switches::kStatsCollectionController))
     stats_collection_observer_.reset(new StatsCollectionObserver(this));
 
-  // Debug cases of https://crbug.com/575245.
-  base::debug::SetCrashKeyValue("rvinit_view_id",
-                                base::IntToString(GetRoutingID()));
-  base::debug::SetCrashKeyValue("rvinit_proxy_id",
-                                base::IntToString(params.proxy_routing_id));
-  base::debug::SetCrashKeyValue(
-      "rvinit_main_frame_id", base::IntToString(params.main_frame_routing_id));
-
   webview()->SetDisplayMode(display_mode_);
   webview()->GetSettings()->SetPreferCompositingToLCDTextEnabled(
       PreferCompositingToLCDText(compositor_deps_, device_scale_factor_));
@@ -1006,8 +997,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   web_view->SetIgnoreViewportTagScaleLimits(prefs.force_enable_zoom);
   settings->SetAutoZoomFocusedNodeToLegibleScale(true);
   settings->SetDoubleTapToZoomEnabled(prefs.double_tap_to_zoom_enabled);
-  settings->SetMediaPlaybackRequiresUserGesture(
-      prefs.user_gesture_required_for_media_playback);
   settings->SetMediaPlaybackGestureWhitelistScope(
       blink::WebString::FromUTF8(prefs.media_playback_gesture_whitelist_scope));
   settings->SetDefaultVideoPosterURL(
@@ -1059,10 +1048,22 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
       prefs.embedded_media_experience_enabled);
   settings->SetDoNotUpdateSelectionOnMutatingSelectionRange(
       prefs.do_not_update_selection_on_mutating_selection_range);
-#else   // defined(OS_ANDROID)
-  settings->SetCrossOriginMediaPlaybackRequiresUserGesture(
-      prefs.cross_origin_media_playback_requires_user_gesture);
 #endif  // defined(OS_ANDROID)
+
+  switch (prefs.autoplay_policy) {
+    case AutoplayPolicy::kNoUserGestureRequired:
+      settings->SetAutoplayPolicy(
+          WebSettings::AutoplayPolicy::kNoUserGestureRequired);
+      break;
+    case AutoplayPolicy::kUserGestureRequired:
+      settings->SetAutoplayPolicy(
+          WebSettings::AutoplayPolicy::kUserGestureRequired);
+      break;
+    case AutoplayPolicy::kUserGestureRequiredForCrossOrigin:
+      settings->SetAutoplayPolicy(
+          WebSettings::AutoplayPolicy::kUserGestureRequiredForCrossOrigin);
+      break;
+  }
 
   settings->SetViewportEnabled(prefs.viewport_enabled);
   settings->SetViewportMetaEnabled(prefs.viewport_meta_enabled);

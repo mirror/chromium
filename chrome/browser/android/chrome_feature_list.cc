@@ -53,6 +53,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kChromeHomeFeature,
     &kChromeHomeExpandButton,
     &kContentSuggestionsSettings,
+    &kContentSuggestionsShowSummary,
     &kContextualSearchSingleActions,
     &kContextualSearchUrlActions,
     &kCustomContextMenu,
@@ -112,7 +113,7 @@ const base::Feature kAndroidPayIntegrationV2{"AndroidPayIntegrationV2",
                                              base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kAndroidPaymentApps{"AndroidPaymentApps",
-                                        base::FEATURE_DISABLED_BY_DEFAULT};
+                                        base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kCCTBackgroundTab{"CCTBackgroundTab",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
@@ -132,11 +133,14 @@ const base::Feature kChromeHomeExpandButton{"ChromeHomeExpandButton",
 const base::Feature kContentSuggestionsSettings{
     "ContentSuggestionsSettings", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kContentSuggestionsShowSummary{
+    "ContentSuggestionsShowSummary", base::FEATURE_ENABLED_BY_DEFAULT};
+
 const base::Feature kContextualSearchSingleActions{
     "ContextualSearchSingleActions", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kContextualSearchUrlActions{
-    "ContextualSearchUrlActions", base::FEATURE_DISABLED_BY_DEFAULT};
+    "ContextualSearchUrlActions", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kCustomContextMenu{"CustomContextMenu",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
@@ -207,7 +211,7 @@ const base::Feature kUserMediaScreenCapturing{
     "UserMediaScreenCapturing", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kVideoPersistence{"VideoPersistence",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kWebPaymentsModifiers{"WebPaymentsModifiers",
                                           base::FEATURE_DISABLED_BY_DEFAULT};

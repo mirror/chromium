@@ -3711,6 +3711,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Autofill.DaysSincePreviousUseAtSubmission.Profile"
+    units="days">
+  <owner>csashi@google.com</owner>
+  <owner>jsaul@google.com</owner>
+  <owner>sebsg@chromium.org</owner>
+  <summary>
+    Logs the number of days between most recent use without modification and the
+    penultimate use of the profile when submitting a credit card form.
+  </summary>
+</histogram>
+
 <histogram name="Autofill.DeveloperEngagement"
     enum="AutofillDeveloperEngagement">
   <owner>isherman@chromium.org</owner>
@@ -9532,6 +9543,36 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Cryptohome.DircryptoMigrationFailedErrorCode"
+    enum="PlatformFileError">
+  <owner>kinaba@chromium.org</owner>
+  <summary>
+    The error code of file operation by which the user home directory migration
+    from ecryptfs to ext4-crypto has failed. This is logged once the migration
+    encounters a file I/O error.
+  </summary>
+</histogram>
+
+<histogram name="Cryptohome.DircryptoMigrationFailedOperationType"
+    enum="DircryptoMigrationFailedOperationType">
+  <owner>kinaba@chromium.org</owner>
+  <summary>
+    The type of file operation at which the user home directory migration from
+    ecryptfs to ext4-crypto has failed. This is logged once the migration
+    encounters a file I/O error.
+  </summary>
+</histogram>
+
+<histogram name="Cryptohome.DircryptoMigrationFailedPathType"
+    enum="DircryptoMigrationFailedPathType">
+  <owner>kinaba@chromium.org</owner>
+  <summary>
+    The category of the path where the user home directory migration from
+    ecryptfs to ext4-crypto has failed. This is logged once the migration
+    encounters a file I/O error.
+  </summary>
+</histogram>
+
 <histogram name="Cryptohome.DircryptoMigrationStartStatus"
     enum="DircryptoMigrationStartStatus">
   <owner>dspaid@chromium.org</owner>
@@ -10365,6 +10406,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="DataReductionProxy.Quic.DefaultAlternativeProxy"
     enum="DataReductionProxyQuicDefaultAlternativeProxy">
+  <obsolete>
+    Deprecated in 5/2017, since the experiment to use default QUIC alternative
+    proxy was deprecated.
+  </obsolete>
   <owner>tbansal@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -11861,6 +11906,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Histogram comparing the various types of diagnostic test failures when
     diagnostic tests are run.  Note that some types of test failures cause the
     rest of the tests to be skipped.
+  </summary>
+</histogram>
+
+<histogram name="Dialog.Create" enum="BooleanCreated">
+  <owner>pdyson@chromium.org</owner>
+  <summary>
+    Counts the number times dialog boxes are created using a particular parent
+    class.
   </summary>
 </histogram>
 
@@ -20964,6 +21017,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Records the source that requested showing the feedback app.</summary>
 </histogram>
 
+<histogram name="FileBrowser.ChangeDirectory" enum="FileManagerRootType">
+  <owner>yamaguchi@chromium.com</owner>
+  <summary>
+    Chrome OS File Browser: Counts the number of directory-changed events,
+    bucketed by the RootType of the directory newly displayed.
+  </summary>
+</histogram>
+
 <histogram name="FileBrowser.CloudImport.UserAction"
     enum="CloudImportUserAction">
   <owner>smckay@google.com</owner>
@@ -25183,6 +25244,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="InvalidationNetworkChannel">
   <owner>pavely@chromium.org</owner>
   <summary>Network channel used for invalidations.</summary>
+</histogram>
+
+<histogram name="IOS.MailtoURLRewritten" enum="Boolean">
+  <owner>pkl@chromium.org</owner>
+  <summary>
+    Counts the times when a mailto: URL is tapped by user and whether the URL
+    has been rewritten for an available native Mail client app or not.
+  </summary>
 </histogram>
 
 <histogram name="IOS.ShareExtension.ReceivedEntriesCount" units="files">
@@ -29541,6 +29610,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Memory.Experimental.Browser.PrivateMemoryFootprint.MacOS"
+    units="MB">
+  <owner>erikchen@chromium.org</owner>
+  <summary>
+    A rough estimate of the private memory footprint of the browser process.
+  </summary>
+</histogram>
+
 <histogram name="Memory.Experimental.Browser.PurgedMemory" units="MB">
   <owner>bashi@chromium.org</owner>
   <summary>
@@ -29567,6 +29644,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Memory.Experimental.Extension.PrivateMemoryFootprint.MacOS"
+    units="MB">
+  <owner>erikchen@chromium.org</owner>
+  <summary>
+    A rough estimate of the private memory footprint of an extension process.
+  </summary>
+</histogram>
+
 <histogram name="Memory.Experimental.Gpu.PhysicalFootprint.MacOS" units="MB">
   <owner>erikchen@chromium.org</owner>
   <summary>
@@ -29574,6 +29659,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     to correctly account for OpenGL memory usage.  This metric also has flaws
     and is not intended for permanent use.  It's an emergency measure added to
     help debug https://crbug.com/713854.  Recorded once per UMA ping.
+  </summary>
+</histogram>
+
+<histogram name="Memory.Experimental.Gpu.PrivateMemoryFootprint.MacOS"
+    units="MB">
+  <owner>erikchen@chromium.org</owner>
+  <summary>
+    A rough estimate of the private memory footprint of the GPU process.
   </summary>
 </histogram>
 
@@ -29590,6 +29683,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of loads in a main frame during the lifetime of a render process
     (excludes extensions). Emitted when the processes quits.
+  </summary>
+</histogram>
+
+<histogram name="Memory.Experimental.Renderer.PrivateMemoryFootprint.MacOS"
+    units="MB">
+  <owner>erikchen@chromium.org</owner>
+  <summary>
+    A rough estimate of the private memory footprint of a renderer process.
   </summary>
 </histogram>
 
@@ -32708,6 +32809,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="NCN.GetActiveNetworkInfoResult"
     enum="NCNGetActiveNetworkInfoResult">
+  <obsolete>
+    Deprecated 05/2017 in Issue 677365.
+  </obsolete>
   <owner>pauljensen@chromium.org</owner>
   <owner>tbansal@chromium.org</owner>
   <summary>
@@ -33606,6 +33710,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Net.ConnectionUsedSSLDeprecatedCipherFallback2"
     enum="BooleanDeprecatedCiphers">
+  <obsolete>
+    Removed May 2017.
+  </obsolete>
   <owner>davidben@chromium.org</owner>
   <summary>
     For each successful HTTPS request, whether it used the deprecated cipher
@@ -42403,6 +42510,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="NewTabPage.ContentSuggestions.Notifications.AutoOptOuts"
+    enum="ContentSuggestionsNotificationsOptOut">
+  <owner>sfiera@chromium.org</owner>
+  <summary>
+    Android: The number of times a user opted out, keyed by method: IMPLICIT
+    (user ignored enough notifications consecutively that we think they're not
+    interested), or EXPLICIT (via explicit setting).
+  </summary>
+</histogram>
+
 <histogram name="NewTabPage.ContentSuggestions.Notifications.Impressions"
     enum="ContentSuggestionsNotificationsImpression">
   <owner>sfiera@chromium.org</owner>
@@ -42410,16 +42527,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Android: The number of notifications that were shown, keyed by category. One
     bucket counts the server-provided ARTICLES category; the other counts
     everything else.
-  </summary>
-</histogram>
-
-<histogram name="NewTabPage.ContentSuggestions.Notifications.OptOuts"
-    enum="ContentSuggestionsNotificationsOptOut">
-  <owner>sfiera@chromium.org</owner>
-  <summary>
-    Android: The number of times a user opted out, keyed by method: IMPLICIT
-    (user ignored enough notifications consecutively that we think they're not
-    interested), or EXPLICIT (via explicit setting).
   </summary>
 </histogram>
 
@@ -43061,6 +43168,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The amount of time spent waiting for the offline page model to return which
     New Tab Page URLs are available offline.
+  </summary>
+</histogram>
+
+<histogram name="NewTabPage.OneGoogleBar.RequestLatency" units="ms">
+  <owner>treib@chromium.org</owner>
+  <summary>
+    The time it took until a request from the New Tab page for the OneGoogleBar
+    script was served. Recorded only on the local NTP.
   </summary>
 </histogram>
 
@@ -44431,6 +44546,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>tbansal@chromium.org</owner>
   <summary>
     Ratio of the estimated RTT to the actual RTT observation multiplied by 100.
+  </summary>
+</histogram>
+
+<histogram name="NQE.RenderThreadNotified" enum="BooleanHit">
+  <owner>tbansal@chromium.org</owner>
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Count of the number of times renderers were notified of the changes in the
+    network quality estimator. This metric makes sense to compare in frequency
+    relative to other events like the number of page loads or the number of
+    renderers seen.  It is expected that we will see at least 1 notification per
+    renderer (on average), and less than 100.
   </summary>
 </histogram>
 
@@ -47482,6 +47609,29 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Events related to Google CAPTCHA pages being seen by users.</summary>
 </histogram>
 
+<histogram name="PageLoad.Clients.LoFi.Experimental.Bytes.Network.LoFi"
+    units="KB">
+  <owner>bengr@chromium.org</owner>
+  <owner>ryansturm@chromium.org</owner>
+  <summary>
+    The number of network kilobytes (not including headers) that LoFi resources
+    used in a page load that had at least one LoFi resource. Recorded per page
+    load when the user navigates away, hides the tab, or backgrounds the app.
+  </summary>
+</histogram>
+
+<histogram
+    name="PageLoad.Clients.LoFi.Experimental.CompletedResources.Network.LoFi"
+    units="KB">
+  <owner>bengr@chromium.org</owner>
+  <owner>ryansturm@chromium.org</owner>
+  <summary>
+    The number of network LoFi resources in a page load that had at least one
+    LoFi resource. Recorded per page load when the user navigates away, hides
+    the tab, or backgrounds the app.
+  </summary>
+</histogram>
+
 <histogram name="PageLoad.Clients.SubresourceFilter.ActivationDecision"
     enum="SubresourceFilterActivationDecision">
   <owner>bmcquade@chromium.org</owner>
@@ -49651,6 +49801,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The type (e.g. signup, login, change password) of all submitted password
     forms on non-secure pages. This is logged on form submission, but doesn't
     require that the password manager saves.
+  </summary>
+</histogram>
+
+<histogram name="PasswordManager.SuccessfulSubmissionIndicatorEvent"
+    enum="SubmissionIndicatorEvent">
+  <owner>dvadym@chromium.org</owner>
+  <owner>engedy@chromium.org</owner>
+  <summary>
+    The type of event that the Password Manager used for detecting a password
+    form submission. Recorded for each successful password form submission.
   </summary>
 </histogram>
 
@@ -64012,6 +64172,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Search.ContextualSearchBlacklistSeen"
     enum="ContextualSearchBlacklistSeen">
+  <obsolete>
+    Discontinued on 5/2017 due to experiment being completed.
+  </obsolete>
   <owner>donnd@chromium.org</owner>
   <owner>pedrosimonetti@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
@@ -64710,6 +64873,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Search.ContextualSearchStartedWithCapitalResultsSeen"
     enum="ContextualSearchResultsSeen">
+  <obsolete>
+    Removed 05/2017 because the data is no longer needed.
+  </obsolete>
   <owner>donnd@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
   <summary>
@@ -70292,6 +70458,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Startup.BrowserMessageLoopStart.To.MainNavigationStart"
+    units="ms">
+  <owner>asvitkine@chromium.org</owner>
+  <summary>
+    Time between Startup.BrowserMessageLoopStartTime and
+    Startup.FirstWebContents.MainNavigationStart. Recorded explicitly to allow
+    easy breakdown of Startup.FirstWebContents.MainNavigationStart when
+    diagnosing issues.
+  </summary>
+</histogram>
+
+<histogram name="Startup.BrowserMessageLoopStart.To.NonEmptyPaint2" units="ms">
+  <owner>asvitkine@chromium.org</owner>
+  <summary>
+    Time between Startup.BrowserMessageLoopStartTime and
+    Startup.FirstWebContents.NonEmptyPaint2. Recorded explicitly to allow easy
+    breakdown of Startup.FirstWebContents.NonEmptyPaint2 when diagnosing issues.
+  </summary>
+</histogram>
+
 <histogram name="Startup.BrowserMessageLoopStartHardFaultCount" units="faults">
   <owner>chrisha@chromium.org</owner>
   <owner>fdoray@chromium.org</owner>
@@ -70332,7 +70518,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Startup.BrowserMessageLoopStartTime">
+<histogram name="Startup.BrowserMessageLoopStartTime" units="ms">
   <owner>fdoray@chromium.org</owner>
   <summary>
     Time from browser startup to the start of the main thread's message loop.
@@ -71239,6 +71425,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true" name="Storage.Blob.SizeEvictedToDiskInKB" units="KB">
+  <owner>ssid@chromium.org</owner>
+  <summary>Records the total size of in-memory blobs evicted to disk.</summary>
+</histogram>
+
 <histogram name="Storage.Blob.StorageSizeAfterAppend" units="KB">
   <owner>dmurph@chromium.org</owner>
   <summary>
@@ -71456,6 +71647,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SubresourceFilter.DocumentLoad.ActivationComputingDelay"
+    units="microseconds">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    Records the total time the activation state navigation throttle within a
+    document is delayed while calculating activation. Recorded at resume time.
+  </summary>
+</histogram>
+
+<histogram
+    name="SubresourceFilter.DocumentLoad.ActivationComputingDelay.MainFrame"
+    units="microseconds">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    Records the total time the activation state navigation throttle within a
+    main frame document is delayed while calculating activation. Recorded at
+    resume time.
+  </summary>
+</histogram>
+
 <histogram name="SubresourceFilter.DocumentLoad.ActivationState"
     enum="SubresourceFilterActivationState">
   <owner>engedy@chromium.org</owner>
@@ -71516,6 +71727,27 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Whenever a document load is committed in a main frame or subframe and
     subresource filtering should be activated, records whether the filtering
     rules are available.
+  </summary>
+</histogram>
+
+<histogram name="SubresourceFilter.DocumentLoad.SubframeFilteringDelay.Allowed"
+    units="microseconds">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    Records the total time a subframe navigation was delayed while calculating
+    whether it should be disallowed or not. Logged for all navigations that were
+    allowed.
+  </summary>
+</histogram>
+
+<histogram
+    name="SubresourceFilter.DocumentLoad.SubframeFilteringDelay.Disallowed"
+    units="microseconds">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    Records the total time a subframe navigation was delayed while calculating
+    whether it should be disallowed or not. Logged for all navigations that were
+    disallowed.
   </summary>
 </histogram>
 
@@ -79027,6 +79259,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true" name="WebApk.ShellApkVersion">
+  <owner>hanxi@chromium.org</owner>
+  <owner>pkotwicz@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>
+    Records WebAPK &quot;Shell APK version&quot; when the WebAPK is launched.
+    The &quot;Shell APK version&quot; is documented in shell_apk_version.gni
+  </summary>
+</histogram>
+
 <histogram name="WebApk.Update.GooglePlayUpdateResult"
     enum="WebApkGooglePlayInstallResult">
   <owner>hanxi@chromium.org</owner>
@@ -85250,6 +85492,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="DesktopIOSPromotion.VariationSigninReason"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="DialogTypes" separator="." ordering="prefix">
+  <suffix name="DialogDelegateView"
+      label="Counts dialog boxes created using DialogDelegateView. These are
+             a subset of those created with DialogDelegate."/>
+  <suffix name="BubbleDialogDelegateView"
+      label="Counts dialog boxes created using BubbleDialogDelegateView.
+             These are a subset of those created with DialogDelegateView
+             (which, in turn, are a subset of those created with
+             DialogDelegate)."/>
+  <affected-histogram name="Dialog.Create"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="DiskUsagePerUserCount" separator=".">
   <suffix name="1User" label="Only 1 user exists on device."/>
   <suffix name="2Users" label="2 users exist on device."/>
@@ -86440,6 +86694,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
              backend database."/>
   <suffix name="BudgetManager"
       label="Database for storing budget information for origins."/>
+  <suffix name="FeatureEngagementTrackerStore"
+      label="Databases for FeatureEngagementTracker"/>
   <affected-histogram name="LevelDB.Open"/>
 </histogram_suffixes>
 
@@ -88240,6 +88496,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="OOBE.ErrorScreensTime.Update"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="NewTabPage.OneGoogleBar.RequestLatency" separator=".">
+  <suffix name="Success" label="Successfully fetched OneGoogleBar"/>
+  <suffix name="Failure" label="Failed to fetch OneGoogleBar"/>
+  <affected-histogram name="NewTabPage.OneGoogleBar.RequestLatency"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="NewTabPageIconTypes" separator=".">
   <suffix name="IconsColor"
       label="Icons using a fallback color (favicon resolution too low)."/>
@@ -89115,6 +89377,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram
       name="PageLoad.PaintTiming.ParseStartToFirstContentfulPaint"/>
   <affected-histogram name="PageLoad.ParseTiming.NavigationToParseStart"/>
+  <affected-histogram name="PageLoad.ParseTiming.ParseDuration"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="PageLoadMetricsClientsLoFi" separator="."
+    ordering="prefix">
+  <suffix name="Clients.LoFi"
+      label="PageLoadMetrics that are a result of a navigation caused by a
+             tab restore."/>
+  <affected-histogram
+      name="PageLoad.DocumentTiming.NavigationToLoadEventFired"/>
+  <affected-histogram name="PageLoad.Experimental.Bytes.Network"/>
+  <affected-histogram name="PageLoad.Experimental.CompletedResources.Network"/>
+  <affected-histogram
+      name="PageLoad.Experimental.PaintTiming.NavigationToFirstMeaningfulPaint"/>
+  <affected-histogram
+      name="PageLoad.PaintTiming.NavigationToFirstContentfulPaint"/>
+  <affected-histogram name="PageLoad.PaintTiming.NavigationToFirstImagePaint"/>
+  <affected-histogram name="PageLoad.ParseTiming.ParseBlockedOnScriptLoad"/>
   <affected-histogram name="PageLoad.ParseTiming.ParseDuration"/>
 </histogram_suffixes>
 
@@ -91551,6 +91831,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram
       name="LibraryLoader.PercentageOfResidentCodeBeforePrefetch"/>
   <affected-histogram name="Startup.BrowserMainToRendererMain"/>
+  <affected-histogram
+      name="Startup.BrowserMessageLoopStart.To.MainNavigationStart"/>
+  <affected-histogram name="Startup.BrowserMessageLoopStart.To.NonEmptyPaint2"/>
   <affected-histogram name="Startup.BrowserMessageLoopStartTime"/>
   <affected-histogram name="Startup.BrowserMessageLoopStartTimeFromMainEntry"/>
   <affected-histogram
@@ -91623,6 +91906,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="CacheEntry" label="Appending a cache entry."/>
   <affected-histogram name="Storage.BlobItemSize"/>
   <affected-histogram name="Storage.BlobItemSize.BlobSlice"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="Storage.BlobEvictReason" separator=".">
+  <suffix name="OnMemoryPressure"
+      label="Eviction was triggered because of memory pressure signal."/>
+  <suffix name="SizeExceededMaxDiskSpace"
+      label="Eviction was triggered because the total size exceeded maximum
+             available disk space"/>
+  <suffix name="SizeExceededInMemoryLimit"
+      label="Eviction was triggered because the total size exceeded maximum
+             in memory size allwed"/>
+  <affected-histogram name="Storage.Blob.SizeEvictedToDiskInKB"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="StunPingInternal" separator=".">
@@ -92055,6 +92350,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
              displaying WebVR contents."/>
   <affected-histogram name="VRSessionTime"/>
   <affected-histogram name="VRSessionVideoTime"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="WebApkType">
+  <suffix name="BrowserApk" label="Installed by Chrome"/>
+  <suffix name="UnboundApk" label="Not installed by Chrome"/>
+  <affected-histogram name="WebApk.ShellApkVersion"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="WebFontFamily">

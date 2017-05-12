@@ -3,9 +3,12 @@
 # found in the LICENSE file.
 
 import("//build/config/ios/rules.gni")
+import("//build/config/locales.gni")
 import("//build/config/mac/base_rules.gni")
 import("//build/mac/tweak_info_plist.gni")
 import("//ios/build/chrome_build.gni")
+import("//ios/chrome/extension_repack.gni")
+import("//ios/chrome/tools/strings/generate_localizable_strings.gni")
 
 tweak_info_plist("tweak_info_plist") {
   info_plist = "Info.plist"
@@ -40,9 +43,13 @@ source_set("search_widget") {
     "search_widget_view.mm",
     "search_widget_view_controller.h",
     "search_widget_view_controller.mm",
+    "ui_util.h",
+    "ui_util.mm",
   ]
 
   deps = [
+    ":resources",
+    ":system_strings",
     "//base",
     "//components/open_from_clipboard:open_from_clipboard_impl",
     "//ios/chrome/common/app_group",
@@ -67,4 +74,43 @@ source_set("unit_tests") {
     "//testing/gtest",
   ]
   configs += [ "//build/config/compiler:enable_arc" ]
+}
+
+bundle_data("resources") {
+  visibility = [ ":*" ]
+  sources = [
+    "resources/quick_action_camera_search.png",
+    "resources/quick_action_camera_search@2x.png",
+    "resources/quick_action_camera_search@3x.png",
+    "resources/quick_action_incognito_search.png",
+    "resources/quick_action_incognito_search@2x.png",
+    "resources/quick_action_incognito_search@3x.png",
+    "resources/quick_action_search.png",
+    "resources/quick_action_search@2x.png",
+    "resources/quick_action_search@3x.png",
+    "resources/quick_action_voice_search.png",
+    "resources/quick_action_voice_search@2x.png",
+    "resources/quick_action_voice_search@3x.png",
+  ]
+  outputs = [
+    "{{bundle_resources_dir}}/{{source_file_part}}",
+  ]
+}
+
+extension_repack_all_locales("packed_resources") {
+  extension = "search_widget_extension"
+  input_locales = ios_packed_locales
+  output_locales = ios_packed_locales_as_mac_outputs
+}
+
+generate_localizable_strings("system_strings") {
+  visibility = [ ":*" ]
+  _packed_resources_target = ":packed_resources"
+  config_file = "search_widget_extension_localize_strings_config.plist"
+  datapack_dir = get_label_info(_packed_resources_target, "target_gen_dir")
+  packed_locales = ios_packed_locales_as_mac_outputs
+  output_filenames = [ "Localizable.strings" ]
+  deps = [
+    _packed_resources_target,
+  ]
 }

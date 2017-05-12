@@ -128,36 +128,4 @@ bool DocumentMarkerListEditor::ShiftMarkers(MarkerList* list,
   return did_shift_marker;
 }
 
-void DocumentMarkerListEditor::AddMarkerAndMergeOverlapping(
-    MarkerList* list,
-    const DocumentMarker* marker) {
-  RenderedDocumentMarker* const rendered_marker =
-      RenderedDocumentMarker::Create(*marker);
-  if (list->IsEmpty() || list->back()->EndOffset() < marker->StartOffset()) {
-    list->push_back(rendered_marker);
-    return;
-  }
-
-  auto first_overlapping = std::lower_bound(
-      list->begin(), list->end(), rendered_marker,
-      [](const Member<RenderedDocumentMarker>& marker_in_list,
-         const DocumentMarker* marker_to_insert) {
-        return marker_in_list->EndOffset() < marker_to_insert->StartOffset();
-      });
-
-  size_t index = first_overlapping - list->begin();
-  list->insert(index, rendered_marker);
-  const auto inserted = list->begin() + index;
-  first_overlapping = inserted + 1;
-  // TODO(rlanday): optimize this loop so it runs in O(N) time and not O(N^2)
-  for (const auto i = first_overlapping;
-       i != list->end() && (*i)->StartOffset() <= (*inserted)->EndOffset();) {
-    (*inserted)->SetStartOffset(
-        std::min((*inserted)->StartOffset(), (*i)->StartOffset()));
-    (*inserted)->SetEndOffset(
-        std::max((*inserted)->EndOffset(), (*i)->EndOffset()));
-    list->erase(i - list->begin());
-  }
-}
-
 }  // namespace blink

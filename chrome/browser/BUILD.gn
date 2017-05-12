@@ -8,6 +8,7 @@ import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//build/split_static_library.gni")
 import("//chrome/common/features.gni")
+import("//components/offline_pages/features/features.gni")
 import("//components/os_crypt/features.gni")
 import("//components/spellcheck/spellcheck_build_features.gni")
 import("//device/vr/features/features.gni")
@@ -44,6 +45,7 @@ if (is_win) {
       "netapi32.lib",
       "ndfapi.lib",  # Used by browser/net/net_error_diagnostics_dialog_win.h
       "pdh.lib",  # Used by browser/private_working_set_snapshot.h
+      "msi.lib",  # Used by browser/conflicts/msi_util_win.h
     ]
     ldflags = [
       "/DELAYLOAD:ndfapi.dll",
@@ -261,6 +263,7 @@ split_static_library("browser") {
     "component_updater/supervised_user_whitelist_installer.h",
     "component_updater/sw_reporter_installer_win.cc",
     "component_updater/sw_reporter_installer_win.h",
+    "conflicts/module_database_observer_win.h",
     "conflicts/module_database_win.cc",
     "conflicts/module_database_win.h",
     "conflicts/module_event_sink_impl_win.cc",
@@ -271,6 +274,8 @@ split_static_library("browser") {
     "conflicts/module_info_win.h",
     "conflicts/module_inspector_win.cc",
     "conflicts/module_inspector_win.h",
+    "conflicts/msi_util_win.cc",
+    "conflicts/msi_util_win.h",
     "content_settings/chrome_content_settings_utils.cc",
     "content_settings/chrome_content_settings_utils.h",
     "content_settings/cookie_settings_factory.cc",
@@ -828,6 +833,8 @@ split_static_library("browser") {
     "page_load_metrics/observers/https_engagement_metrics/https_engagement_service.h",
     "page_load_metrics/observers/https_engagement_metrics/https_engagement_service_factory.cc",
     "page_load_metrics/observers/https_engagement_metrics/https_engagement_service_factory.h",
+    "page_load_metrics/observers/lofi_page_load_metrics_observer.cc",
+    "page_load_metrics/observers/lofi_page_load_metrics_observer.h",
     "page_load_metrics/observers/media_page_load_metrics_observer.cc",
     "page_load_metrics/observers/media_page_load_metrics_observer.h",
     "page_load_metrics/observers/no_state_prefetch_page_load_metrics_observer.cc",
@@ -1323,6 +1330,8 @@ split_static_library("browser") {
     "sync/supervised_user_signin_manager_wrapper.h",
     "sync/sync_startup_tracker.cc",
     "sync/sync_startup_tracker.h",
+    "sync/user_event_service_factory.cc",
+    "sync/user_event_service_factory.h",
     "tab_contents/navigation_metrics_recorder.cc",
     "tab_contents/navigation_metrics_recorder.h",
     "tab_contents/tab_util.cc",
@@ -1519,14 +1528,7 @@ split_static_library("browser") {
     "//components/ntp_snippets",
     "//components/ntp_tiles",
     "//components/offline_items_collection/core",
-    "//components/offline_pages/content",
-    "//components/offline_pages/content/background_loader",
-    "//components/offline_pages/core",
-    "//components/offline_pages/core/background:background_offliner",
-    "//components/offline_pages/core/downloads:offline_pages_ui_adapter",
-    "//components/offline_pages/core/prefetch",
-    "//components/offline_pages/core/recent_tabs",
-    "//components/offline_pages/core/request_header:request_header",
+    "//components/offline_pages/features:features",
     "//components/omnibox/browser",
     "//components/os_crypt",
     "//components/packed_ct_ev_whitelist",
@@ -1583,6 +1585,7 @@ split_static_library("browser") {
     "//components/translate/core/browser",
     "//components/translate/core/common",
     "//components/ukm:observers",
+    "//components/ukm/debug_page",
     "//components/undo",
     "//components/update_client",
     "//components/upload_list",
@@ -2111,6 +2114,77 @@ split_static_library("browser") {
       "//third_party/adobe/flash:flapper_version_h",
     ]
   }
+
+  if (enable_offline_pages) {
+    sources += [
+      "android/offline_pages/background_loader_offliner.cc",
+      "android/offline_pages/background_loader_offliner.h",
+      "android/offline_pages/background_scheduler_bridge.cc",
+      "android/offline_pages/background_scheduler_bridge.h",
+      "android/offline_pages/downloads/offline_page_download_bridge.cc",
+      "android/offline_pages/downloads/offline_page_download_bridge.h",
+      "android/offline_pages/downloads/offline_page_infobar_delegate.cc",
+      "android/offline_pages/downloads/offline_page_infobar_delegate.h",
+      "android/offline_pages/downloads/offline_page_notification_bridge.cc",
+      "android/offline_pages/downloads/offline_page_notification_bridge.h",
+      "android/offline_pages/downloads/resource_throttle.cc",
+      "android/offline_pages/downloads/resource_throttle.h",
+      "android/offline_pages/offline_page_bookmark_observer.cc",
+      "android/offline_pages/offline_page_bookmark_observer.h",
+      "android/offline_pages/offline_page_bridge.cc",
+      "android/offline_pages/offline_page_bridge.h",
+      "android/offline_pages/offline_page_info_handler.cc",
+      "android/offline_pages/offline_page_info_handler.h",
+      "android/offline_pages/offline_page_mhtml_archiver.cc",
+      "android/offline_pages/offline_page_mhtml_archiver.h",
+      "android/offline_pages/offline_page_model_factory.cc",
+      "android/offline_pages/offline_page_model_factory.h",
+      "android/offline_pages/offline_page_request_interceptor.cc",
+      "android/offline_pages/offline_page_request_interceptor.h",
+      "android/offline_pages/offline_page_request_job.cc",
+      "android/offline_pages/offline_page_request_job.h",
+      "android/offline_pages/offline_page_tab_helper.cc",
+      "android/offline_pages/offline_page_tab_helper.h",
+      "android/offline_pages/offline_page_utils.cc",
+      "android/offline_pages/offline_page_utils.h",
+      "android/offline_pages/offliner_helper.cc",
+      "android/offline_pages/offliner_helper.h",
+      "android/offline_pages/prefetch/prefetch_background_task.cc",
+      "android/offline_pages/prefetch/prefetch_background_task.h",
+      "android/offline_pages/prerender_adapter.cc",
+      "android/offline_pages/prerender_adapter.h",
+      "android/offline_pages/prerendering_loader.cc",
+      "android/offline_pages/prerendering_loader.h",
+      "android/offline_pages/prerendering_offliner.cc",
+      "android/offline_pages/prerendering_offliner.h",
+      "android/offline_pages/recent_tab_helper.cc",
+      "android/offline_pages/recent_tab_helper.h",
+      "android/offline_pages/request_coordinator_factory.cc",
+      "android/offline_pages/request_coordinator_factory.h",
+    ]
+    deps += [
+      "//components/offline_pages/content",
+      "//components/offline_pages/content/background_loader",
+      "//components/offline_pages/core",
+      "//components/offline_pages/core/background:background_offliner",
+      "//components/offline_pages/core/downloads:offline_pages_ui_adapter",
+      "//components/offline_pages/core/prefetch",
+      "//components/offline_pages/core/recent_tabs",
+      "//components/offline_pages/core/request_header:request_header",
+    ]
+  }
+
+  # Used to build test harness locally. The harness is used manually to
+  # produce multiple offline pages to evaluate quality of the snapshots.
+  if (enable_offline_pages_harness) {
+    sources += [
+      "android/offline_pages/evaluation/evaluation_test_scheduler.cc",
+      "android/offline_pages/evaluation/evaluation_test_scheduler.h",
+      "android/offline_pages/evaluation/offline_page_evaluation_bridge.cc",
+      "android/offline_pages/evaluation/offline_page_evaluation_bridge.h",
+    ]
+  }
+
   if (safe_browsing_mode != 0) {
     # "Safe Browsing Basic" files used for safe browsing in full mode
     # (safe_browsing=1) and mobile (=2)
@@ -2835,6 +2909,8 @@ split_static_library("browser") {
       "android/intent_helper.h",
       "android/large_icon_bridge.cc",
       "android/large_icon_bridge.h",
+      "android/locale/locale_manager.cc",
+      "android/locale/locale_manager.h",
       "android/locale/special_locale_handler.cc",
       "android/locale/special_locale_handler.h",
       "android/location_settings.h",
@@ -2872,50 +2948,6 @@ split_static_library("browser") {
       "android/ntp/recent_tabs_page_prefs.h",
       "android/ntp/suggestions_event_reporter_bridge.cc",
       "android/ntp/suggestions_event_reporter_bridge.h",
-      "android/offline_pages/background_loader_offliner.cc",
-      "android/offline_pages/background_loader_offliner.h",
-      "android/offline_pages/background_scheduler_bridge.cc",
-      "android/offline_pages/background_scheduler_bridge.h",
-      "android/offline_pages/downloads/offline_page_download_bridge.cc",
-      "android/offline_pages/downloads/offline_page_download_bridge.h",
-      "android/offline_pages/downloads/offline_page_infobar_delegate.cc",
-      "android/offline_pages/downloads/offline_page_infobar_delegate.h",
-      "android/offline_pages/downloads/offline_page_notification_bridge.cc",
-      "android/offline_pages/downloads/offline_page_notification_bridge.h",
-      "android/offline_pages/downloads/resource_throttle.cc",
-      "android/offline_pages/downloads/resource_throttle.h",
-      "android/offline_pages/offline_page_bookmark_observer.cc",
-      "android/offline_pages/offline_page_bookmark_observer.h",
-      "android/offline_pages/offline_page_bridge.cc",
-      "android/offline_pages/offline_page_bridge.h",
-      "android/offline_pages/offline_page_info_handler.cc",
-      "android/offline_pages/offline_page_info_handler.h",
-      "android/offline_pages/offline_page_mhtml_archiver.cc",
-      "android/offline_pages/offline_page_mhtml_archiver.h",
-      "android/offline_pages/offline_page_model_factory.cc",
-      "android/offline_pages/offline_page_model_factory.h",
-      "android/offline_pages/offline_page_request_interceptor.cc",
-      "android/offline_pages/offline_page_request_interceptor.h",
-      "android/offline_pages/offline_page_request_job.cc",
-      "android/offline_pages/offline_page_request_job.h",
-      "android/offline_pages/offline_page_tab_helper.cc",
-      "android/offline_pages/offline_page_tab_helper.h",
-      "android/offline_pages/offline_page_utils.cc",
-      "android/offline_pages/offline_page_utils.h",
-      "android/offline_pages/offliner_helper.cc",
-      "android/offline_pages/offliner_helper.h",
-      "android/offline_pages/prefetch/prefetch_background_task.cc",
-      "android/offline_pages/prefetch/prefetch_background_task.h",
-      "android/offline_pages/prerender_adapter.cc",
-      "android/offline_pages/prerender_adapter.h",
-      "android/offline_pages/prerendering_loader.cc",
-      "android/offline_pages/prerendering_loader.h",
-      "android/offline_pages/prerendering_offliner.cc",
-      "android/offline_pages/prerendering_offliner.h",
-      "android/offline_pages/recent_tab_helper.cc",
-      "android/offline_pages/recent_tab_helper.h",
-      "android/offline_pages/request_coordinator_factory.cc",
-      "android/offline_pages/request_coordinator_factory.h",
       "android/omnibox/answers_image_bridge.cc",
       "android/omnibox/answers_image_bridge.h",
       "android/omnibox/autocomplete_controller_android.cc",
@@ -3209,16 +3241,6 @@ split_static_library("browser") {
         "supervised_user/child_accounts/child_account_feedback_reporter_android.h",
         "supervised_user/child_accounts/child_account_service_android.cc",
         "supervised_user/child_accounts/child_account_service_android.h",
-      ]
-    }
-
-    # Used for testing only, should not be shipped to end users.
-    if (!is_official_build) {
-      sources += [
-        "android/offline_pages/evaluation/evaluation_test_scheduler.cc",
-        "android/offline_pages/evaluation/evaluation_test_scheduler.h",
-        "android/offline_pages/evaluation/offline_page_evaluation_bridge.cc",
-        "android/offline_pages/evaluation/offline_page_evaluation_bridge.h",
       ]
     }
   } else {
@@ -4151,6 +4173,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/infobar/InstantAppsInfoBarDelegate.java",
       "../android/java/src/org/chromium/chrome/browser/infobar/PermissionInfoBar.java",
       "../android/java/src/org/chromium/chrome/browser/infobar/PermissionUpdateInfoBarDelegate.java",
+      "../android/java/src/org/chromium/chrome/browser/infobar/PreviewsInfoBar.java",
       "../android/java/src/org/chromium/chrome/browser/infobar/ReaderModeInfoBar.java",
       "../android/java/src/org/chromium/chrome/browser/infobar/SearchGeolocationDisclosureInfoBar.java",
       "../android/java/src/org/chromium/chrome/browser/infobar/SimpleConfirmInfoBarBuilder.java",
@@ -4161,6 +4184,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/infobar/UpdatePasswordInfoBar.java",
       "../android/java/src/org/chromium/chrome/browser/instantapps/InstantAppsSettings.java",
       "../android/java/src/org/chromium/chrome/browser/invalidation/InvalidationServiceFactory.java",
+      "../android/java/src/org/chromium/chrome/browser/locale/LocaleManager.java",
       "../android/java/src/org/chromium/chrome/browser/locale/SpecialLocaleHandler.java",
       "../android/java/src/org/chromium/chrome/browser/media/cdm/MediaDrmCredentialManager.java",
       "../android/java/src/org/chromium/chrome/browser/media/remote/RecordCastAction.java",

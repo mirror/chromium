@@ -964,15 +964,15 @@ String AXLayoutObject::GetText() const {
 
     UChar mask_character = 0;
     switch (style->TextSecurity()) {
-      case TSNONE:
+      case ETextSecurity::kNone:
         break;  // Fall through to the non-password branch.
-      case TSDISC:
+      case ETextSecurity::kDisc:
         mask_character = kBulletCharacter;
         break;
-      case TSCIRCLE:
+      case ETextSecurity::kCircle:
         mask_character = kWhiteBulletCharacter;
         break;
-      case TSSQUARE:
+      case ETextSecurity::kSquare:
         mask_character = kBlackSquareCharacter;
         break;
     }
@@ -1035,9 +1035,9 @@ TextStyle AXLayoutObject::GetTextStyle() const {
     text_style |= kTextStyleBold;
   if (style->GetFontDescription().Style() == kFontStyleItalic)
     text_style |= kTextStyleItalic;
-  if (style->GetTextDecoration() == kTextDecorationUnderline)
+  if (style->GetTextDecoration() == TextDecoration::kUnderline)
     text_style |= kTextStyleUnderline;
-  if (style->GetTextDecoration() == kTextDecorationLineThrough)
+  if (style->GetTextDecoration() == TextDecoration::kLineThrough)
     text_style |= kTextStyleLineThrough;
 
   return static_cast<TextStyle>(text_style);
@@ -1084,23 +1084,30 @@ AXObject* AXLayoutObject::NextOnLine() const {
   if (!GetLayoutObject())
     return nullptr;
 
-  InlineBox* inline_box = nullptr;
-  if (GetLayoutObject()->IsLayoutInline())
-    inline_box = ToLayoutInline(GetLayoutObject())->LastLineBox();
-  else if (GetLayoutObject()->IsText())
-    inline_box = ToLayoutText(GetLayoutObject())->LastTextBox();
-
-  if (!inline_box)
-    return nullptr;
-
   AXObject* result = nullptr;
-  for (InlineBox* next = inline_box->NextOnLine(); next;
-       next = next->NextOnLine()) {
-    LayoutObject* layout_object =
-        LineLayoutAPIShim::LayoutObjectFrom(next->GetLineLayoutItem());
-    result = AxObjectCache().GetOrCreate(layout_object);
-    if (result)
-      break;
+  if (GetLayoutObject()->IsListMarker()) {
+    AXObject* next_sibling = RawNextSibling();
+    if (!next_sibling || !next_sibling->Children().size())
+      return nullptr;
+    result = next_sibling->Children()[0].Get();
+  } else {
+    InlineBox* inline_box = nullptr;
+    if (GetLayoutObject()->IsLayoutInline())
+      inline_box = ToLayoutInline(GetLayoutObject())->LastLineBox();
+    else if (GetLayoutObject()->IsText())
+      inline_box = ToLayoutText(GetLayoutObject())->LastTextBox();
+
+    if (!inline_box)
+      return nullptr;
+
+    for (InlineBox* next = inline_box->NextOnLine(); next;
+         next = next->NextOnLine()) {
+      LayoutObject* layout_object =
+          LineLayoutAPIShim::LayoutObjectFrom(next->GetLineLayoutItem());
+      result = AxObjectCache().GetOrCreate(layout_object);
+      if (result)
+        break;
+    }
   }
 
   // A static text node might span multiple lines. Try to return the first

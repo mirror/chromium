@@ -18,8 +18,8 @@
 #include "content/public/common/renderer_preferences.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_model.h"
-#include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/search_box_model.h"
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/widget/widget.h"
@@ -83,7 +83,7 @@ SearchAnswerWebContentsDelegate::SearchAnswerWebContentsDelegate(
           content::WebContents::Create(content::WebContents::CreateParams(
               profile,
               content::SiteInstance::Create(profile)))),
-      answer_server_url_(switches::AnswerServerUrl()) {
+      answer_server_url_(features::AnswerServerUrl()) {
   content::RendererPreferences* renderer_prefs =
       web_contents_->GetMutableRendererPrefs();
   renderer_prefs->can_accept_load_drops = false;
@@ -95,6 +95,8 @@ SearchAnswerWebContentsDelegate::SearchAnswerWebContentsDelegate(
   web_contents_->SetDelegate(this);
   web_view_->set_owned_by_client();
   web_view_->SetWebContents(web_contents_.get());
+  if (features::IsAnswerCardDarkRunEnabled())
+    web_view_->SetFocusBehavior(views::View::FocusBehavior::NEVER);
 
   model->AddObserver(this);
 }
@@ -153,7 +155,8 @@ void SearchAnswerWebContentsDelegate::Update() {
 void SearchAnswerWebContentsDelegate::UpdatePreferredSize(
     content::WebContents* web_contents,
     const gfx::Size& pref_size) {
-  web_view_->SetPreferredSize(pref_size);
+  if (!features::IsAnswerCardDarkRunEnabled())
+    web_view_->SetPreferredSize(pref_size);
   if (!answer_loaded_time_.is_null()) {
     UMA_HISTOGRAM_TIMES("SearchAnswer.ResizeAfterLoadTime",
                         base::TimeTicks::Now() - answer_loaded_time_);
@@ -209,12 +212,19 @@ void SearchAnswerWebContentsDelegate::DidFinishNavigation(
     return;
   }
 
-  const net::HttpResponseHeaders* headers =
-      navigation_handle->GetResponseHeaders();
-  if (!headers || headers->response_code() != net::HTTP_OK ||
-      !headers->HasHeaderValue("has_answer", "true")) {
-    RecordRequestResult(SearchAnswerRequestResult::REQUEST_RESULT_NO_ANSWER);
-    return;
+  if (!features::IsAnswerCardDarkRunEnabled()) {
+    const net::HttpResponseHeaders* headers =
+        navigation_handle->GetResponseHeaders();
+    if (!headers || headers->response_code() != net::HTTP_OK ||
+        !headers->HasHeaderValue("has_answer", "true")) {
+      RecordRequestResult(SearchAnswerRequestResult::REQUEST_RESULT_NO_ANSWER);
+      return;
+    }
+  } else {
+    // In the dark run mode, every other "server response" contains a card.
+    dark_run_received_answer_ = !dark_run_received_answer_;
+    if (!dark_run_received_answer_)
+      return;
   }
 
   received_answer_ = true;

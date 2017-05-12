@@ -45,6 +45,9 @@ const char kLitePageFallbackFieldTrial[] =
     "DataCompressionProxyLitePageFallback";
 const char kLoFiFlagFieldTrial[] = "DataCompressionProxyLoFiFlag";
 
+const char kBlackListTransitionFieldTrial[] =
+    "DataReductionProxyPreviewsBlackListTransition";
+
 const char kTrustedSpdyProxyFieldTrialName[] = "DataReductionTrustedSpdyProxy";
 
 // Default URL for retrieving the Data Reduction Proxy configuration.
@@ -60,7 +63,7 @@ const char kServerExperimentsFieldTrial[] =
     "DataReductionProxyServerExperiments";
 
 // LitePage black list version.
-const char kLitePageBlacklistVersion[] = "lite-page-blacklist-version";
+const char kLitePageBlackListVersion[] = "lite-page-blacklist-version";
 
 bool IsIncludedInFieldTrial(const std::string& name) {
   return base::StartsWith(FieldTrialList::FindFullName(name), kEnabled,
@@ -240,17 +243,16 @@ bool IsIncludedInQuicFieldTrial() {
   return true;
 }
 
-const char* GetQuicFieldTrialName() {
-  return kQuicFieldTrial;
-}
-
-bool IsZeroRttQuicEnabled() {
-  if (!IsIncludedInQuicFieldTrial())
-    return false;
+bool IsQuicEnabledForNonCoreProxies() {
+  DCHECK(IsIncludedInQuicFieldTrial());
   std::map<std::string, std::string> params;
   variations::GetVariationParams(GetQuicFieldTrialName(), &params);
   return GetStringValueForVariationParamWithDefaultValue(
-             params, "enable_zero_rtt", "false") == "true";
+             params, "enable_quic_non_core_proxies", "false") == "true";
+}
+
+const char* GetQuicFieldTrialName() {
+  return kQuicFieldTrial;
 }
 
 bool IsBrotliAcceptEncodingEnabled() {
@@ -269,6 +271,12 @@ bool IsConfigClientEnabled() {
   return !base::StartsWith(
       base::FieldTrialList::FindFullName("DataReductionProxyConfigService"),
       kDisabled, base::CompareCase::SENSITIVE);
+}
+
+bool IsBlackListEnabledForServerPreviews() {
+  return base::StartsWith(
+      base::FieldTrialList::FindFullName(kBlackListTransitionFieldTrial),
+      kEnabled, base::CompareCase::SENSITIVE);
 }
 
 GURL GetConfigServiceURL() {
@@ -319,7 +327,7 @@ bool ShouldForceEnableDataReductionProxy() {
 int LitePageVersion() {
   return GetFieldTrialParameterAsInteger(
       data_reduction_proxy::params::GetLoFiFieldTrialName(),
-      kLitePageBlacklistVersion, 0, 0);
+      kLitePageBlackListVersion, 0, 0);
 }
 
 int GetFieldTrialParameterAsInteger(const std::string& group,

@@ -456,21 +456,6 @@
             ]
         }
     ],
-    "ContextualSearch": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Expected",
-                    "enable_features": [
-                        "ContextualSearchUrlActions"
-                    ]
-                }
-            ]
-        }
-    ],
     "CopylessPaste": [
         {
             "platforms": [
@@ -1510,11 +1495,10 @@
             ],
             "experiments": [
                 {
-                    "name": "EnabledSoftFetchesChromeReader_Rest",
+                    "name": "Enabled-ChromeReader",
                     "params": {
                         "soft_fetching_interval_hours-fallback-active_ntp_user": "10",
-                        "soft_fetching_interval_hours-fallback-active_suggestions_consumer": "1",
-                        "soft_fetching_interval_hours-fallback-rare_ntp_user": "4",
+                        "soft_fetching_interval_hours-wifi-active_ntp_user": "6",
                         "user_classifier_active_consumer_clicks_at_least_once_per_hours": "96",
                         "user_classifier_rare_user_opens_ntp_at_most_once_per_hours": "66"
                     },
@@ -1773,7 +1757,7 @@
             ],
             "experiments": [
                 {
-                    "name": "PrerenderDisabled",
+                    "name": "PrerenderDisabled_R2",
                     "params": {
                         "instant_mode": "simple_load",
                         "mode": "simple_load",
@@ -2909,24 +2893,6 @@
             ]
         }
     ],
-    "SpeculativeResourcePrefetchingValidation": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Prefetching",
-                    "params": {
-                        "mode": "prefetching"
-                    },
-                    "enable_features": [
-                        "SpeculativeResourcePrefetching"
-                    ]
-                }
-            ]
-        }
-    ],
     "StrictSecureCookies": [
         {
             "platforms": [
@@ -2956,9 +2922,7 @@
                 {
                     "name": "EnabledForPhishingSites",
                     "params": {
-                        "activation_lists": "phishing_interstitial",
-                        "activation_scope": "activation_list",
-                        "activation_state": "enabled"
+                        "enable_presets": "liverun_on_phishing_sites"
                     },
                     "enable_features": [
                         "SubresourceFilter"
@@ -3054,26 +3018,6 @@
                     "name": "TokenBinding",
                     "enable_features": [
                         "token-binding"
-                    ]
-                }
-            ]
-        }
-    ],
-    "TranslateRankerLogging": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "TranslateRankerLogging",
-                    "enable_features": [
-                        "TranslateRankerLogging"
                     ]
                 }
             ]

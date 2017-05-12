@@ -224,7 +224,10 @@ static CSSValue* ValueForPositionOffset(const ComputedStyle& style,
   if (offset.IsAuto() && layout_object) {
     // If the property applies to a positioned element and the resolved value of
     // the display property is not none, the resolved value is the used value.
-    if (layout_object->IsInFlowPositioned()) {
+    // Position offsets have special meaning for position sticky so we return
+    // auto when offset.isAuto() on a sticky position object:
+    // https://crbug.com/703816.
+    if (layout_object->IsRelPositioned()) {
       // If e.g. left is auto and right is not auto, then left's computed value
       // is negative right. So we get the opposite length unit and see if it is
       // auto.
@@ -1133,14 +1136,15 @@ static LayoutRect SizingBox(const LayoutObject* layout_object) {
              : box->ComputedCSSContentBoxRect();
 }
 
-static CSSValue* RenderTextDecorationFlagsToCSSValue(int text_decoration) {
+static CSSValue* RenderTextDecorationFlagsToCSSValue(
+    TextDecoration text_decoration) {
   // Blink value is ignored.
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
-  if (text_decoration & kTextDecorationUnderline)
+  if (EnumHasFlags(text_decoration, TextDecoration::kUnderline))
     list->Append(*CSSIdentifierValue::Create(CSSValueUnderline));
-  if (text_decoration & kTextDecorationOverline)
+  if (EnumHasFlags(text_decoration, TextDecoration::kOverline))
     list->Append(*CSSIdentifierValue::Create(CSSValueOverline));
-  if (text_decoration & kTextDecorationLineThrough)
+  if (EnumHasFlags(text_decoration, TextDecoration::kLineThrough))
     list->Append(*CSSIdentifierValue::Create(CSSValueLineThrough));
 
   if (!list->length())
@@ -1181,27 +1185,30 @@ static CSSValue* ValueForTextDecorationSkip(
 
 static CSSValue* TouchActionFlagsToCSSValue(TouchAction touch_action) {
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
-  if (touch_action == kTouchActionAuto) {
+  if (touch_action == TouchAction::kTouchActionAuto) {
     list->Append(*CSSIdentifierValue::Create(CSSValueAuto));
-  } else if (touch_action == kTouchActionNone) {
+  } else if (touch_action == TouchAction::kTouchActionNone) {
     list->Append(*CSSIdentifierValue::Create(CSSValueNone));
-  } else if (touch_action == kTouchActionManipulation) {
+  } else if (touch_action == TouchAction::kTouchActionManipulation) {
     list->Append(*CSSIdentifierValue::Create(CSSValueManipulation));
   } else {
-    if ((touch_action & kTouchActionPanX) == kTouchActionPanX)
+    if ((touch_action & TouchAction::kTouchActionPanX) ==
+        TouchAction::kTouchActionPanX)
       list->Append(*CSSIdentifierValue::Create(CSSValuePanX));
-    else if (touch_action & kTouchActionPanLeft)
+    else if (touch_action & TouchAction::kTouchActionPanLeft)
       list->Append(*CSSIdentifierValue::Create(CSSValuePanLeft));
-    else if (touch_action & kTouchActionPanRight)
+    else if (touch_action & TouchAction::kTouchActionPanRight)
       list->Append(*CSSIdentifierValue::Create(CSSValuePanRight));
-    if ((touch_action & kTouchActionPanY) == kTouchActionPanY)
+    if ((touch_action & TouchAction::kTouchActionPanY) ==
+        TouchAction::kTouchActionPanY)
       list->Append(*CSSIdentifierValue::Create(CSSValuePanY));
-    else if (touch_action & kTouchActionPanUp)
+    else if (touch_action & TouchAction::kTouchActionPanUp)
       list->Append(*CSSIdentifierValue::Create(CSSValuePanUp));
-    else if (touch_action & kTouchActionPanDown)
+    else if (touch_action & TouchAction::kTouchActionPanDown)
       list->Append(*CSSIdentifierValue::Create(CSSValuePanDown));
 
-    if ((touch_action & kTouchActionPinchZoom) == kTouchActionPinchZoom)
+    if ((touch_action & TouchAction::kTouchActionPinchZoom) ==
+        TouchAction::kTouchActionPinchZoom)
       list->Append(*CSSIdentifierValue::Create(CSSValuePinchZoom));
   }
 

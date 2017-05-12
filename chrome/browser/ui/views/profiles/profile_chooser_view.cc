@@ -1102,6 +1102,9 @@ views::View* ProfileChooserView::CreateTutorialView(
   views::View* view = new views::View();
   view->set_background(views::Background::CreateSolidBackground(
       profiles::kAvatarTutorialBackgroundColor));
+  view->SetBorder(views::CreateEmptyBorder(
+      views::kButtonVEdgeMarginNew, views::kButtonHEdgeMarginNew,
+      views::kButtonVEdgeMarginNew, views::kButtonHEdgeMarginNew));
   views::GridLayout* layout = CreateSingleColumnLayout(
       view, kFixedMenuWidth - 2 * views::kButtonHEdgeMarginNew);
   // Creates a second column set for buttons and links.
@@ -1112,10 +1115,6 @@ views::View* ProfileChooserView::CreateTutorialView(
       1, views::kUnrelatedControlHorizontalSpacing);
   button_columns->AddColumn(views::GridLayout::TRAILING,
       views::GridLayout::CENTER, 0, views::GridLayout::USE_PREF, 0, 0);
-  layout->SetInsets(views::kButtonVEdgeMarginNew,
-                    views::kButtonHEdgeMarginNew,
-                    views::kButtonVEdgeMarginNew,
-                    views::kButtonHEdgeMarginNew);
 
   // Adds title and close button if needed.
   const SkColor kTitleAndButtonTextColor = SK_ColorWHITE;
@@ -1530,7 +1529,7 @@ views::View* ProfileChooserView::CreateOptionsView(bool display_lock,
   if (display_lock) {
     lock_button_ = new BackgroundColorHoverButton(
         this, l10n_util::GetStringUTF16(IDS_PROFILES_PROFILE_SIGNOUT_BUTTON),
-        gfx::CreateVectorIcon(kLockIcon, kIconSize, gfx::kChromeIconGrey));
+        gfx::CreateVectorIcon(ui::kLockIcon, kIconSize, gfx::kChromeIconGrey));
     layout->StartRow(1, 0);
     layout->AddView(lock_button_);
   } else if (!is_guest) {
@@ -1560,7 +1559,8 @@ views::View* ProfileChooserView::CreateSupervisedUserDisclaimerView() {
   int horizontal_margin = kMenuEdgeMargin;
   views::GridLayout* layout =
       CreateSingleColumnLayout(view, kFixedMenuWidth - 2 * horizontal_margin);
-  layout->SetInsets(0, horizontal_margin, kMenuEdgeMargin, horizontal_margin);
+  view->SetBorder(views::CreateEmptyBorder(0, horizontal_margin,
+                                           kMenuEdgeMargin, horizontal_margin));
 
   views::Label* disclaimer = new views::Label(
       avatar_menu_->GetSupervisedUserInformation());
@@ -1678,10 +1678,9 @@ views::View* ProfileChooserView::CreateAccountRemovalView() {
   views::View* view = new views::View();
   views::GridLayout* layout = CreateSingleColumnLayout(
       view, kFixedAccountRemovalViewWidth - 2 * views::kButtonHEdgeMarginNew);
-  layout->SetInsets(0,
-                    views::kButtonHEdgeMarginNew,
-                    views::kButtonVEdgeMarginNew,
-                    views::kButtonHEdgeMarginNew);
+  view->SetBorder(views::CreateEmptyBorder(0, views::kButtonHEdgeMarginNew,
+                                           views::kButtonVEdgeMarginNew,
+                                           views::kButtonHEdgeMarginNew));
 
   const std::string& primary_account = SigninManagerFactory::GetForProfile(
       browser_->profile())->GetAuthenticatedAccountId();

@@ -1,0 +1,15 @@
+ChromeVariationsConfigurationTest.*
+ComparatorTest.*
+ConditionValidatorResultTest.*
+EditableConfigurationTest.*
+FailingInitFeatureEngagementTrackerImplTest.*
+FeatureConfigStorageValidatorTest.*
+FeatureEngagementTrackerImplTest.*
+InMemoryStoreTest.*
+LoadFailingModelImplTest.*
+ModelImplTest.*
+NeverConditionValidatorTest.*
+OnceConditionValidatorTest.*
+PersistentStoreTest.*
+SingleInvalidConfigurationTest.*
+SystemTimeProviderTest.*

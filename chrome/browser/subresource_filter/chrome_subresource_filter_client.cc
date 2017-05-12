@@ -7,6 +7,7 @@
 #include <string>
 #include <utility>
 
+#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/browser_process.h"
@@ -52,9 +53,8 @@ void ChromeSubresourceFilterClient::MaybeAppendNavigationThrottles(
     content::NavigationHandle* navigation_handle,
     std::vector<std::unique_ptr<content::NavigationThrottle>>* throttles) {
   // Don't add any throttles if the feature isn't enabled at all.
-  if (subresource_filter::GetActiveConfigurations()
-          ->the_one_and_only()
-          .activation_scope == subresource_filter::ActivationScope::NO_SITES) {
+  if (!base::FeatureList::IsEnabled(
+          subresource_filter::kSafeBrowsingSubresourceFilter)) {
     return;
   }
 
@@ -116,12 +116,23 @@ void ChromeSubresourceFilterClient::ToggleNotificationVisibility(
   }
 }
 
-bool ChromeSubresourceFilterClient::ShouldSuppressActivation(
-    content::NavigationHandle* navigation_handle) {
+bool ChromeSubresourceFilterClient::OnPageActivationComputed(
+    content::NavigationHandle* navigation_handle,
+    bool activated) {
   const GURL& url(navigation_handle->GetURL());
-  return navigation_handle->IsInMainFrame() &&
-         (whitelisted_hosts_.find(url.host()) != whitelisted_hosts_.end() ||
-          settings_manager_->GetSitePermission(url) == CONTENT_SETTING_BLOCK);
+  DCHECK(navigation_handle->IsInMainFrame());
+
+  // If the site is no longer activated, clear the metadata. This is to maintain
+  // the invariant that metadata implies activated.
+  if (!activated && url.SchemeIsHTTPOrHTTPS())
+    settings_manager_->ClearSiteMetadata(url);
+
+  // Return whether the activation should be whitelisted.
+  return whitelisted_hosts_.count(url.host()) ||
+         settings_manager_->GetSitePermission(url) == CONTENT_SETTING_BLOCK;
+  // TODO(csharrison): Consider setting the metadata to an empty dict here if
+  // the site is activated and not whitelisted. Need to be careful about various
+  // edge cases like |should_suppress_notification| and DRYRUN activation.
 }
 
 void ChromeSubresourceFilterClient::WhitelistByContentSettings(

@@ -178,7 +178,6 @@ class PaymentRequestRowBorderPainter : public views::Painter {
 }  // namespace
 
 int GetActualDialogWidth() {
-  constexpr int kDialogMinWidth = 512;
   static int actual_width =
       views::LayoutProvider::Get()->GetSnappedDialogWidth(kDialogMinWidth);
   return actual_width;
@@ -195,9 +194,9 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
   constexpr int kHeaderTopVerticalInset = 14;
   constexpr int kHeaderBottomVerticalInset = 8;
   constexpr int kHeaderHorizontalInset = 16;
-  // Top, left, bottom, right.
-  layout->SetInsets(kHeaderTopVerticalInset, kHeaderHorizontalInset,
-                    kHeaderBottomVerticalInset, kHeaderHorizontalInset);
+  container->SetBorder(views::CreateEmptyBorder(
+      kHeaderTopVerticalInset, kHeaderHorizontalInset,
+      kHeaderBottomVerticalInset, kHeaderHorizontalInset));
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   // A column for the optional back arrow.
@@ -305,9 +304,10 @@ std::unique_ptr<views::View> GetShippingAddressLabelWithMissingInfo(
   std::unique_ptr<views::View> base_label =
       GetShippingAddressLabel(type, locale, profile, /*disabled_state=*/false);
 
-  base_label->AddChildView(GetLabelForMissingInformation(
-                               comp.GetStringForMissingShippingFields(profile))
-                               .release());
+  base::string16 missing = comp.GetStringForMissingShippingFields(profile);
+  if (!missing.empty()) {
+    base_label->AddChildView(GetLabelForMissingInformation(missing).release());
+  }
   return base_label;
 }
 
@@ -339,15 +339,18 @@ std::unique_ptr<views::View> GetContactInfoLabel(
   std::unique_ptr<views::View> base_label =
       GetBaseProfileLabel(type, name, phone, email);
 
-  base_label->AddChildView(GetLabelForMissingInformation(
-                               comp.GetStringForMissingContactFields(profile))
-                               .release());
+  base::string16 missing = comp.GetStringForMissingContactFields(profile);
+  if (!missing.empty()) {
+    base_label->AddChildView(GetLabelForMissingInformation(missing).release());
+  }
   return base_label;
 }
 
-std::unique_ptr<views::Border> CreatePaymentRequestRowBorder(SkColor color) {
+std::unique_ptr<views::Border> CreatePaymentRequestRowBorder(
+    SkColor color,
+    const gfx::Insets& insets) {
   return views::CreateBorderPainter(
-      base::MakeUnique<PaymentRequestRowBorderPainter>(color), gfx::Insets());
+      base::MakeUnique<PaymentRequestRowBorderPainter>(color), insets);
 }
 
 std::unique_ptr<views::Label> CreateBoldLabel(const base::string16& text) {

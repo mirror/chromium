@@ -39,6 +39,7 @@
 #include "core/dom/Fullscreen.h"
 #include "core/dom/Node.h"
 #include "core/events/UIEventWithKeyState.h"
+#include "core/exported/WebFileChooserCompletionImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
@@ -74,6 +75,7 @@
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/GraphicsLayer.h"
+#include "platform/graphics/TouchAction.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Optional.h"
@@ -102,7 +104,6 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebSettings.h"
 #include "public/web/WebTextDirection.h"
-#include "public/web/WebTouchAction.h"
 #include "public/web/WebUserGestureIndicator.h"
 #include "public/web/WebUserGestureToken.h"
 #include "public/web/WebViewClient.h"
@@ -118,11 +119,11 @@
 #include "web/LocalFileSystemClient.h"
 #include "web/NavigatorContentUtilsClientImpl.h"
 #include "web/PopupMenuImpl.h"
-#include "web/WebFileChooserCompletionImpl.h"
 #include "web/WebFrameWidgetImpl.h"
 #include "web/WebInputEventConversion.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebPluginContainerImpl.h"
+#include "web/WebRemoteFrameImpl.h"
 #include "web/WebSettingsImpl.h"
 
 namespace blink {
@@ -556,24 +557,27 @@ void ChromeClientImpl::InvalidateRect(const IntRect& update_rect) {
     web_view_->InvalidateRect(update_rect);
 }
 
-void ChromeClientImpl::ScheduleAnimation(LocalFrame* frame) {
-  frame = &frame->LocalFrameRoot();
+void ChromeClientImpl::ScheduleAnimation(
+    const PlatformFrameView* platform_frame_view) {
+  DCHECK(platform_frame_view->IsFrameView());
+  LocalFrame& frame =
+      ToFrameView(platform_frame_view)->GetFrame().LocalFrameRoot();
   // If the frame is still being created, it might not yet have a WebWidget.
   // FIXME: Is this the right thing to do? Is there a way to avoid having
   // a local frame root that doesn't have a WebWidget? During initialization
   // there is no content to draw so this call serves no purpose.
-  if (WebLocalFrameImpl::FromFrame(frame) &&
-      WebLocalFrameImpl::FromFrame(frame)->FrameWidget())
-    WebLocalFrameImpl::FromFrame(frame)->FrameWidget()->ScheduleAnimation();
+  if (WebLocalFrameImpl::FromFrame(&frame) &&
+      WebLocalFrameImpl::FromFrame(&frame)->FrameWidget())
+    WebLocalFrameImpl::FromFrame(&frame)->FrameWidget()->ScheduleAnimation();
 }
 
 IntRect ChromeClientImpl::ViewportToScreen(
     const IntRect& rect_in_viewport,
-    const FrameViewBase* frame_view_base) const {
+    const PlatformFrameView* platform_frame_view) const {
   WebRect screen_rect(rect_in_viewport);
 
-  DCHECK(frame_view_base->IsFrameView());
-  const FrameView* view = ToFrameView(frame_view_base);
+  DCHECK(platform_frame_view->IsFrameView());
+  const FrameView* view = ToFrameView(platform_frame_view);
   LocalFrame& frame = view->GetFrame().LocalFrameRoot();
 
   WebWidgetClient* client =
@@ -954,6 +958,11 @@ WebLocalFrameBase* ChromeClientImpl::GetWebLocalFrameBase(LocalFrame* frame) {
   return WebLocalFrameImpl::FromFrame(frame);
 }
 
+WebRemoteFrameBase* ChromeClientImpl::GetWebRemoteFrameBase(
+    RemoteFrame& frame) {
+  return WebRemoteFrameImpl::FromFrame(frame);
+}
+
 void ChromeClientImpl::SetEventListenerProperties(
     LocalFrame* frame,
     WebEventListenerClass event_class,
@@ -1057,7 +1066,7 @@ void ChromeClientImpl::SetTouchAction(LocalFrame* frame,
     return;
 
   if (WebWidgetClient* client = widget->Client())
-    client->SetTouchAction(static_cast<WebTouchAction>(touch_action));
+    client->SetTouchAction(static_cast<TouchAction>(touch_action));
 }
 
 bool ChromeClientImpl::RequestPointerLock(LocalFrame* frame) {

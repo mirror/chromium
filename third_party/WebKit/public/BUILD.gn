@@ -19,6 +19,7 @@ group("blink") {
   ]
   deps = [
     "//third_party/WebKit/Source/core",
+    "//third_party/WebKit/Source/modules",
     "//third_party/WebKit/Source/platform",
     "//third_party/WebKit/Source/web",
   ]
@@ -335,6 +336,7 @@ source_set("blink_headers") {
     "platform/WebThread.h",
     "platform/WebThreadSafeData.h",
     "platform/WebTimeRange.h",
+    "platform/WebTouchAction.h",
     "platform/WebTouchEvent.h",
     "platform/WebTouchPoint.h",
     "platform/WebTraceLocation.h",
@@ -592,7 +594,6 @@ source_set("blink_headers") {
     "web/WebTextDecorationType.h",
     "web/WebTextDirection.h",
     "web/WebTextInputType.h",
-    "web/WebTouchAction.h",
     "web/WebTreeScopeType.h",
     "web/WebUserGestureIndicator.h",
     "web/WebUserGestureToken.h",
@@ -747,6 +748,9 @@ mojom("mojo_bindings") {
   export_class_attribute_blink = "BLINK_PLATFORM_EXPORT"
   export_define_blink = "BLINK_PLATFORM_IMPLEMENTATION=1"
   export_header_blink = "third_party/WebKit/public/platform/WebCommon.h"
+
+  # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
+  use_once_callback = false
 }
 
 mojom("android_mojo_bindings") {
@@ -771,6 +775,9 @@ mojom("android_mojo_bindings") {
   export_class_attribute_blink = "BLINK_PLATFORM_EXPORT"
   export_define_blink = "BLINK_PLATFORM_IMPLEMENTATION=1"
   export_header_blink = "third_party/WebKit/public/platform/WebCommon.h"
+
+  # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
+  use_once_callback = false
 }
 
 # The offscreen_canvas_mojo_bindings is separated from the rest of mojom files
@@ -793,7 +800,6 @@ mojom("offscreen_canvas_mojo_bindings") {
   export_class_attribute_blink = "BLINK_PLATFORM_EXPORT"
   export_define_blink = "BLINK_PLATFORM_IMPLEMENTATION=1"
   export_header_blink = "third_party/WebKit/public/platform/WebCommon.h"
-  use_once_callback = true
 }
 
 group("generate_mojo_bindings") {

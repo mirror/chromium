@@ -91,6 +91,7 @@
 #include "ui/gfx/color_space.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/gfx/switches.h"
 #include "ui/native_theme/native_theme_features.h"
 #include "url/url_constants.h"
 
@@ -283,8 +284,10 @@ bool RenderViewHostImpl::CreateRenderView(
   // https://crbug.com/575245.
   // TODO(creis): Remove this once we've found the cause.
   if (main_frame_routing_id_ != MSG_ROUTING_NONE &&
-      proxy_route_id != MSG_ROUTING_NONE)
+      proxy_route_id != MSG_ROUTING_NONE) {
+    NOTREACHED() << "Don't set both main_frame_routing_id_ and proxy_route_id";
     base::debug::DumpWithoutCrashing();
+  }
 
   GetWidget()->set_renderer_initialized(true);
 
@@ -437,22 +440,21 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
       command_line.HasSwitch(switches::kHistoryEntryRequiresUserGesture);
 
 #if defined(OS_ANDROID)
-  // On Android, user gestures are normally required, unless that requirement
-  // is disabled with a command-line switch or the equivalent field trial is
-  // is set to "Enabled".
-  prefs.user_gesture_required_for_media_playback =
-      !command_line.HasSwitch(switches::kIgnoreAutoplayRestrictionsForTests) &&
-      command_line.GetSwitchValueASCII(switches::kAutoplayPolicy) !=
-          switches::autoplay::kNoUserGestureRequiredPolicy;
-
   prefs.progress_bar_completion = GetProgressBarCompletionPolicy();
 
   prefs.use_solid_color_scrollbars = true;
-#else  // defined(OS_ANDROID)
-  prefs.cross_origin_media_playback_requires_user_gesture =
-      command_line.GetSwitchValueASCII(switches::kAutoplayPolicy) ==
-      switches::autoplay::kCrossOriginUserGestureRequiredPolicy;
 #endif  // defined(OS_ANDROID)
+
+  std::string autoplay_policy = media::GetEffectiveAutoplayPolicy(command_line);
+  if (autoplay_policy == switches::autoplay::kNoUserGestureRequiredPolicy) {
+    prefs.autoplay_policy = AutoplayPolicy::kNoUserGestureRequired;
+  } else if (autoplay_policy ==
+             switches::autoplay::kUserGestureRequiredPolicy) {
+    prefs.autoplay_policy = AutoplayPolicy::kUserGestureRequired;
+  } else if (autoplay_policy ==
+             switches::autoplay::kUserGestureRequiredForCrossOriginPolicy) {
+    prefs.autoplay_policy = AutoplayPolicy::kUserGestureRequiredForCrossOrigin;
+  }
 
   const std::string touch_enabled_switch =
       command_line.HasSwitch(switches::kTouchEventFeatureDetection)
@@ -512,7 +514,7 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
       command_line.HasSwitch(switches::kMainFrameResizesAreOrientationChanges);
 
   prefs.color_correct_rendering_enabled =
-      command_line.HasSwitch(cc::switches::kEnableColorCorrectRendering);
+      command_line.HasSwitch(switches::kEnableColorCorrectRendering);
 
   prefs.color_correct_rendering_default_mode_enabled =
       command_line.HasSwitch(

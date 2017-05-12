@@ -106,6 +106,9 @@ mojom("tab_socket") {
   sources = [
     "lib/tab_socket.mojom",
   ]
+
+  # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
+  use_once_callback = false
 }
 
 grit("resources") {
@@ -321,7 +324,7 @@ static_library("headless_lib") {
   ]
 
   if (enable_basic_printing) {
-    public_deps += [ "//skia" ]
+    public_deps += [ "//components/printing/browser" ]
   }
 
   deps = [
@@ -352,10 +355,7 @@ static_library("headless_lib") {
   }
 
   if (enable_basic_printing) {
-    deps += [
-      "//components/printing/browser",
-      "//components/printing/renderer",
-    ]
+    deps += [ "//components/printing/renderer" ]
   }
 
   if (headless_use_embedded_resources) {

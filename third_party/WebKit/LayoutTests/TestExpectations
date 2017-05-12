@@ -7,7 +7,6 @@ Bug(intentional) harness-tests/timeout.html [ Timeout ]
 crbug.com/706118 external/wpt/css/css-scoping-1 [ Skip ]
 crbug.com/706118 external/wpt/css/css-shapes-1 [ Skip ]
 crbug.com/706118 external/wpt/css/css-text-3 [ Skip ]
-crbug.com/706118 external/wpt/css/css-text-decor-3 [ Skip ]
 crbug.com/706118 external/wpt/css/css-writing-modes-3 [ Skip ]
 
 # ====== Oilpan-only failures from here ======
@@ -125,6 +124,9 @@ crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [
 crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-path-context-clip.html [ Crash ]
 crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Timeout ]
 crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-path-context-clip.html [ Timeout ]
+
+# This test fails only when spv2 is enabled.
+crbug.com/719533 compositing/overflow/absolute-element-in-isolated-composited-ancestor.html [ Failure ]
 
 # ====== Paint team owned tests to here ======
 
@@ -272,7 +274,6 @@ crbug.com/711807 external/wpt/css/CSS2/normal-flow/width-inherit-001.xht [ Skip 
 # LayoutNG - is a new layout system for Blink.
 
 ### external/wpt/css/CSS2/floats-clear
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/adjacent-floats-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-002.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-005.xht [ Skip ]
@@ -291,11 +292,7 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-floa
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-float-004.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-float-005.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-float-006.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-float-007.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-float-008.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-float-009.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-003.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-006.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-001a.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-002.xht [ Skip ]
@@ -312,7 +309,6 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-appl
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-013.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-014.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-015.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-non-replaced-height-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-non-replaced-width-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-non-replaced-width-002.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-non-replaced-width-003.xht [ Skip ]
@@ -340,7 +336,6 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-repl
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floating-replaced-height-008.xht [ Skip ]
 crbug.com/719615 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-002.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-003.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-004.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-005.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-006.xht [ Skip ]
@@ -369,7 +364,6 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-113
 crbug.com/719620 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-114.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-117.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-120.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-123.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-126.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-127.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-128.xht [ Skip ]
@@ -415,7 +409,6 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-col
 crbug.com/719620 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-placement-vertical-001a.xht [ Skip ]
 crbug.com/719620 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-placement-vertical-001b.xht [ Skip ]
 crbug.com/719620 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-placement-vertical-001c.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-placement-vertical-003.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-001-left-overflow.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-001-right-overflow.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-002-left-overflow.xht [ Skip ]
@@ -435,6 +428,7 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-top-
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-top-below-inline-002l.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-top-below-inline-002r.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-top-below-inline-003l.xht [ Skip ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-top-below-inline-003r.xht [ Skip ]
 
 ### external/wpt/css/CSS2/positioning
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-height-002.xht [ Skip ]
@@ -546,7 +540,6 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-00
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-absolute-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-absolute-004.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-absolute-006.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-absolute-007.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-002.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-003.xht [ Skip ]
@@ -970,8 +963,6 @@ crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/empty-clear-blocks
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/line-beside-float-complex-margin-collapsing.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-creates-block-formatting-context.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-getting-layout-set.html [ Skip ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-with-float-child-collapsed-margins.html [ Skip ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-with-float-child.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-with-float-children.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-with-float-descendants.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-with-overflow-hidden-and-float-child.html [ Skip ]
@@ -1114,7 +1105,6 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/logical-bottom-exceeds-layou
 crbug.com/635619 virtual/layout_ng/fast/block/float/marquee-shrink-to-avoid-floats.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/max-width-clear-float-with-overflow-hidden.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/multiple-float-positioning.html [ Skip ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/narrow-after-wide.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/negative-margin-clear.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/negative-margin-on-element-avoiding-floats-with-margin-on-parent.html [ Skip ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/negative-margin-on-element-avoiding-floats.html [ Skip ]
@@ -1505,27 +1495,27 @@ crbug.com/719008 virtual/mojo-loading/http/tests/inspector/sources/debugger/asyn
 #crbug.com/306730 external/wpt/css/css-text-3/line-break/line-break-normal-025.xht [ Failure ]
 #crbug.com/306730 external/wpt/css/css-text-3/line-break/line-break-strict-018.xht [ Failure ]
 
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-color-001.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-above-left-001.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-above-left-002.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-above-right-001.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-above-right-002.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-below-left-001.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-below-left-002.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-below-right-001.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-below-right-002.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-001.html [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-002.html [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-006.html [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-007.html [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-008.html [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-010.html [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-012.html [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-021.html [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-filled-001.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-open-001.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-shape-001.xht [ Failure ]
-#crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-string-001.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-color-001.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-above-left-001.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-above-left-002.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-above-right-001.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-above-right-002.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-below-left-001.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-below-left-002.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-below-right-001.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-position-below-right-002.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-001.html [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-002.html [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-006.html [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-007.html [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-008.html [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-010.html [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-012.html [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-021.html [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-filled-001.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-open-001.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-shape-001.xht [ Failure ]
+crbug.com/666657 external/wpt/css/css-text-decor-3/text-emphasis-style-string-001.xht [ Failure ]
 
 #crbug.com/505151 external/wpt/css/css-writing-modes-3/abs-pos-non-replaced-icb-vlr-003.xht [ Failure ]
 #crbug.com/505151 external/wpt/css/css-writing-modes-3/abs-pos-non-replaced-icb-vlr-005.xht [ Failure ]
@@ -2023,9 +2013,6 @@ crbug.com/521124 crbug.com/410145 [ Win7 ] virtual/sharedarraybuffer/fast/css/fo
 # Temporary, until we stop use_system_harfbuzz on Linux including non-official builds
 crbug.com/462689 [ Linux ] fast/text/unicode-variation-selector.html [ Failure ]
 
-# Temporary, until WebAXObjectProxy support lands.
-crbug.com/421771 accessibility/inline-text-box-next-on-line.html [ Skip ]
-
 # Disabled briefly until test runner support lands.
 crbug.com/479533 accessibility/show-context-menu.html [ Skip ]
 crbug.com/479533 accessibility/show-context-menu-shadowdom.html [ Skip ]
@@ -2288,14 +2275,9 @@ crbug.com/705125 http/tests/w3c/webperf/submission/Intel/user-timing/test_user_t
 crbug.com/705125 virtual/mojo-loading/http/tests/w3c/webperf/submission/Intel/user-timing/test_user_timing_clearMarks.html [ Failure ]
 crbug.com/705125 virtual/mojo-loading/http/tests/security/cors-rfc1918/addressspace-document-appcache.html [ Failure ]
 crbug.com/705125 virtual/mojo-loading/http/tests/security/cors-rfc1918/addressspace-document-csp-appcache.html [ Failure ]
+crbug.com/705125 http/tests/security/suborigins/crossorigin/suborigin-cors-xhr-failure-output.php [ Failure Pass ]
+crbug.com/705125 virtual/mojo-loading/http/tests/security/suborigins/crossorigin/suborigin-cors-xhr-failure-output.php [ Failure Pass ]
 
-# This test breaks when the feature introduced in the bug is enabled. We keep
-# this tested without the feature by using the virtual test. See
-# virtual/stable/http/tests/sendbeacon/beacon-cross-origin-redirect-blob-expected.txt
-crbug.com/490015 http/tests/sendbeacon/beacon-cross-origin-redirect-blob.html [ Skip ]
-crbug.com/490015 virtual/mojo-loading/http/tests/sendbeacon/beacon-cross-origin-redirect-blob.html [ Skip ]
-# This test doesn't need to be run with the stable release mode.
-crbug.com/490015 virtual/stable/http/tests/sendbeacon/beacon-blob-with-non-simple-type.html [ Skip ]
 # This test fails with the stable release mode.
 crbug.com/694958 virtual/stable/http/tests/navigation/same-and-different-back.html [ Skip ]
 
@@ -2394,27 +2376,32 @@ crbug.com/711529 http/tests/permissions/test-query.html [ Timeout ]
 crbug.com/713587 external/wpt/css/css-ui-3/caret-color-006.html [ Skip ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/compat/webkit-text-fill-color-property-005.html [ Failure ]
+crbug.com/626703 external/wpt/eventsource/eventsource-request-cancellation.htm [ Timeout ]
+crbug.com/626703 external/wpt/http/basic-auth-cache-test.html [ Timeout ]
+crbug.com/626703 external/wpt/notifications/constructor-basic.html [ Timeout ]
+crbug.com/626703 external/wpt/notifications/constructor-invalid.html [ Timeout ]
+crbug.com/626703 external/wpt/notifications/event-onclose.html [ Timeout ]
+crbug.com/626703 external/wpt/notifications/event-onshow.html [ Timeout ]
+crbug.com/626703 external/wpt/notifications/instance.html [ Timeout ]
+crbug.com/626703 external/wpt/notifications/lang.html [ Timeout ]
+crbug.com/626703 external/wpt/secure-contexts/basic-dedicated-worker.html [ Timeout ]
+crbug.com/626703 external/wpt/secure-contexts/basic-dedicated-worker.https.html [ Timeout ]
+crbug.com/626703 external/wpt/secure-contexts/basic-popup-and-iframe-tests.html [ Timeout ]
+crbug.com/626703 external/wpt/secure-contexts/basic-popup-and-iframe-tests.https.html [ Timeout ]
+crbug.com/626703 external/wpt/secure-contexts/basic-shared-worker.html [ Timeout ]
+crbug.com/626703 external/wpt/secure-contexts/basic-shared-worker.https.html [ Timeout ]
+crbug.com/626703 external/wpt/secure-contexts/shared-worker-insecure-first.https.html [ Timeout ]
+crbug.com/626703 external/wpt/secure-contexts/shared-worker-secure-first.https.html [ Timeout ]
+crbug.com/626703 external/wpt/webauthn/interfaces.https.html [ Timeout ]
+crbug.com/626703 external/wpt/webauthn/makecredential-badargs-accountinformation.https.html [ Timeout ]
+crbug.com/626703 external/wpt/webauthn/makecredential-badargs-attestationchallenge.https.html [ Timeout ]
+crbug.com/626703 external/wpt/webauthn/makecredential-badargs-cryptoparameters.https.html [ Timeout ]
+crbug.com/626703 external/wpt/websockets/Create-Secure-extensions-empty.htm [ Timeout ]
 crbug.com/626703 external/wpt/media-source/mediasource-appendbuffer-quota-exceeded.html [ Timeout ]
 crbug.com/626703 external/wpt/media-source/mediasource-avtracks.html [ Failure Crash ]
 crbug.com/626703 external/wpt/media-source/mediasource-duration.html [ Failure ]
 crbug.com/626703 external/wpt/media-source/mediasource-getvideoplaybackquality.html [ Timeout Failure ]
-crbug.com/626703 external/wpt/compat/webkit-text-fill-color-property-005.html [ Failure ]
-crbug.com/626703 external/wpt/console/console-count-logging-manual.html [ Skip ]
-crbug.com/626703 external/wpt/notifications/body-basic-manual.html [ Skip ]
-crbug.com/626703 external/wpt/notifications/body-empty-manual.html [ Skip ]
-crbug.com/626703 external/wpt/notifications/constructor-basic.html [ Timeout ]
-crbug.com/626703 external/wpt/notifications/constructor-invalid.html [ Timeout ]
-crbug.com/626703 external/wpt/notifications/event-onclick-manual.html [ Skip ]
-crbug.com/626703 external/wpt/notifications/event-onclose.html [ Timeout ]
-crbug.com/626703 external/wpt/notifications/event-onerror-default-manual.html [ Skip ]
-crbug.com/626703 external/wpt/notifications/event-onshow.html [ Timeout ]
-crbug.com/626703 external/wpt/notifications/icon-basic-manual.html [ Skip ]
-crbug.com/626703 external/wpt/notifications/icon-empty-manual.html [ Skip ]
-crbug.com/626703 external/wpt/notifications/instance.html [ Timeout ]
-crbug.com/626703 external/wpt/notifications/lang.html [ Timeout ]
-crbug.com/626703 external/wpt/notifications/requestPermission-granted-manual.html [ Skip ]
-crbug.com/626703 external/wpt/notifications/tag-different-manual.html [ Skip ]
-crbug.com/626703 external/wpt/notifications/tag-same-manual.html [ Skip ]
 crbug.com/626703 external/wpt/webaudio/the-audio-api/the-audioparam-interface/retrospective-exponentialRampToValueAtTime.html [ Timeout ]
 crbug.com/626703 external/wpt/webaudio/the-audio-api/the-audioparam-interface/retrospective-linearRampToValueAtTime.html [ Timeout ]
 crbug.com/626703 external/wpt/webaudio/the-audio-api/the-audioparam-interface/retrospective-setTargetAtTime.html [ Timeout ]
@@ -2794,7 +2781,6 @@ crbug.com/626703 external/wpt/webvtt/rendering/cues-with-video/processing-model/
 crbug.com/626703 external/wpt/webvtt/rendering/cues-with-video/processing-model/size_50.html [ Failure ]
 crbug.com/626703 external/wpt/webvtt/rendering/cues-with-video/processing-model/too_many_cues.html [ Failure ]
 crbug.com/626703 external/wpt/webvtt/rendering/cues-with-video/processing-model/too_many_cues_wrapped.html [ Failure ]
-crbug.com/626703 external/wpt/service-workers/service-worker/registration-useCache.https.html [ Timeout ]
 crbug.com/626703 external/wpt/html/semantics/embedded-content/the-iframe-element/cross_origin_parentage.html [ Timeout ]
 crbug.com/626703 external/wpt/html/semantics/scripting-1/the-script-element/async_007.htm [ Timeout ]
 crbug.com/626703 external/wpt/html/semantics/scripting-1/the-script-element/async_010.htm [ Timeout ]
@@ -2872,6 +2858,14 @@ crbug.com/713732 virtual/mojo-loading/http/tests/serviceworker/chromium/frame-de
 crbug.com/626703 external/wpt/workers/opaque-origin.html [ Failure Crash Timeout ]
 crbug.com/626703 external/wpt/html/rendering/non-replaced-elements/margin-collapsing-quirks/multicol-quirks-mode.html [ Pass Crash ]
 crbug.com/626703 external/wpt/html/rendering/non-replaced-elements/margin-collapsing-quirks/multicol-standards-mode.html [ Pass Crash ]
+crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-1.htm [ Crash Pass ]
+crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-2.htm [ Crash Pass ]
+crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-3.htm [ Crash Pass ]
+crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-4.htm [ Crash Pass ]
+crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-5.htm [ Crash Pass ]
+crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-6.htm [ Crash Pass ]
+crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-7.htm [ Crash Pass ]
+crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-9.htm [ Crash Pass ]
 
 # Manual tests that have not been automated.
 crbug.com/626703 external/wpt/fullscreen/api/element-request-fullscreen-two-iframes-manual.html [ Timeout ]
@@ -2975,10 +2969,8 @@ crbug.com/655458 external/wpt/html-media-capture/capture_video_user-manual.html 
 crbug.com/655458 external/wpt/mediacapture-image/idlharness.html [ Skip ]
 crbug.com/655458 external/wpt/html/semantics/tabular-data/processing-model-1/span-limits.html [ Skip ]
 crbug.com/655458 external/wpt/css/css-transforms-2/transform3d-scale-007.html [ Skip ]
-crbug.com/655458 external/wpt/WebCryptoAPI/derive_bits_keys/test_pbkdf2.html [ Skip ]
 crbug.com/655458 external/wpt/WebCryptoAPI/idlharness.html [ Skip ]
 crbug.com/655458 external/wpt/WebCryptoAPI/idlharness.https.html [ Skip ]
-crbug.com/655458 external/wpt/WebCryptoAPI/derive_bits_keys/test_hkdf.html [ Skip ]
 crbug.com/655458 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-OAEP.https.html [ Skip ]
 crbug.com/655458 external/wpt/web-animations/interfaces/AnimationTimeline/document-timeline.html [ Skip ]
 
@@ -3085,7 +3077,8 @@ crbug.com/657646 [ Win ] fast/text/font-stretch-variant.html [ Failure Pass ]
 crbug.com/657646 [ Win ] fast/text/drawBidiText.html [ Failure Pass ]
 crbug.com/657646 [ Win ] fast/text/font-features/caps-native-synthesis.html [ Failure Pass ]
 
-crbug.com/664450 inspector/console/console-on-animation-worklet.html [ Skip ]
+crbug.com/664450 http/tests/inspector/console/console-on-animation-worklet.html [ Skip ]
+crbug.com/664450 virtual/mojo-loading/http/tests/inspector/console/console-on-animation-worklet.html [ Skip ]
 
 # Fail when run with --enable-wptserve due to data: URLs treated as cross-origin: (crbug.com/508730)
 crbug.com/508730 external/wpt/dom/nodes/Document-contentType/contentType/contenttype_datauri_01.html [ Failure ]
@@ -3130,6 +3123,8 @@ crbug.com/595993 external/wpt/service-workers/service-worker/request-end-to-end.
 crbug.com/619427 [ Mac Linux ] fast/overflow/overflow-height-float-not-removed-crash3.html [ Pass Failure ]
 
 crbug.com/667371 inspector/elements/styles-1/color-aware-property-value-edit.html [ Pass Failure ]
+
+crbug.com/617168 [ Linux ] fast/text/shaping/same-script-different-lang.html [ NeedsRebaseline ]
 
 # [css-ui] Imported tests from W3C suite.
 crbug.com/669473 external/wpt/css/css-ui-3/box-sizing-014.html [ Failure ]
@@ -3257,7 +3252,7 @@ crbug.com/689781 virtual/sharedarraybuffer/http/tests/media/media-source/mediaso
 
 crbug.com/701445 external/wpt/dom/events/EventListener-invoke-legacy.html [ Timeout Pass ]
 
-crbug.com/718394 virtual/enable_asmjs/http/tests/asmjs/asm-warnings.html [ NeedsRebaseline ]
+crbug.com/718394 virtual/enable_asmjs/http/tests/asmjs/asm-warnings.html [ NeedsManualRebaseline ]
 
 # When WebAssembly is exposed in V8 (soon), this test has the wrong number of expected Object.getOwnPropertyNames() for global object.
 
@@ -3339,6 +3334,16 @@ crbug.com/714862 [ Android ] tables/mozilla/collapsing_borders/bug41262-3.html [
 # Sheriff failure 2017-05-05
 crbug.com/703533 [ Mac ] shapedetection/detection-security-test.html  [ Crash Pass Timeout ]
 
+# Sheriff failures 2017-05-11
+crbug.com/720511 [ Linux ] http/tests/misc/non-utf8-header-name.php [ Skip ]
+crbug.com/720511 [ Linux ] http/tests/security/contentSecurityPolicy/directive-parsing-03.html [ Failure Pass Timeout ]
+crbug.com/720511 [ Linux ] http/tests/security/contentSecurityPolicy/source-list-parsing-04.html [ Failure Pass Timeout ]
+crbug.com/720511 [ Linux ] http/tests/security/document-domain-canonicalizes.html [ Failure Pass Timeout ]
+crbug.com/720511 [ Linux ] virtual/mojo-loading/http/tests/misc/non-utf8-header-name.php [ Skip ]
+crbug.com/720511 [ Linux ] virtual/mojo-loading/http/tests/security/contentSecurityPolicy/directive-parsing-03.html [ Failure Pass Timeout ]
+crbug.com/720511 [ Linux ] virtual/mojo-loading/http/tests/security/contentSecurityPolicy/source-list-parsing-04.html [ Failure Pass Timeout ]
+crbug.com/720511 [ Linux ] virtual/mojo-loading/http/tests/security/document-domain-canonicalizes.html [ Failure Pass Timeout ]
+
 # Tests to be run only under virtual/experimental-canvas-features/
 crbug.com/682753 fast/canvas-experimental [ Skip ]
 
@@ -3375,8 +3380,6 @@ crbug.com/716569 [ Android ] tables/mozilla_expected_failures/bugs/bug1055-2.htm
 crbug.com/716569 [ Android ] tables/mozilla_expected_failures/bugs/bug2479-5.html [ Failure ]
 
 # Layout Tests on Swarming (Windows) - https://crbug.com/717347
-crbug.com/718717 [ Win ] fast/css-grid-layout/grid-self-baseline-two-dimensional.html [ Failure Pass Timeout ]
-crbug.com/718717 [ Win ] fast/css-grid-layout/grid-align-justify-stretch-with-orthogonal-flows.html [ Failure Pass Timeout ]
 crbug.com/719298 [ Win ] fast/dnd/dropEffect-for-effectAllowed.html [ Failure Pass Timeout ]
 crbug.com/719299 [ Win ] external/wpt/css/css-ui-3/outline-004.html [ Failure Pass Timeout ]
 

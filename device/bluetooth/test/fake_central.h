@@ -23,6 +23,13 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
  public:
   FakeCentral(mojom::CentralState state, mojom::FakeCentralRequest request);
 
+  // FakeCentral overrides:
+  void SimulatePreconnectedPeripheral(
+      const std::string& address,
+      const std::string& name,
+      const std::vector<device::BluetoothUUID>& known_service_uuids,
+      SimulatePreconnectedPeripheralCallback callback) override;
+
   // BluetoothAdapter overrides:
   std::string GetAddress() const override;
   std::string GetName() const override;
