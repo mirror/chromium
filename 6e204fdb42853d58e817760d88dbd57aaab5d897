@@ -16,6 +16,24 @@
       "revId": "6e204fdb42853d58e817760d88dbd57aaab5d897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3249b381_8ecd5350",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/PaymentRequestUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-12T21:06:02Z",
+      "side": 1,
+      "message": "My experimentation on JellyBean shows that screenshot and thumbnail restrictions are for the lifetime of the editors only. Each one of those is in a separate Dialog instance, so that could be the reason why it\u0027s working as I intended. See video:\n\nhttps://drive.google.com/open?id\u003d0BwnAxYoFTeYPVG1wZmxqSi1nRzA",
+      "parentUuid": "5bbb68fa_bb49ba17",
+      "revId": "6e204fdb42853d58e817760d88dbd57aaab5d897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
