@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bbb68fa_bb49ba17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/PaymentRequestUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-05-12T15:54:25Z",
+      "side": 1,
+      "message": "Windows are for the lifetime of an activity.  This is preventing screenshots forever.  Seems like there should be something that re-enables them once this view is dismissed.\n\nAlso this doesn\u0027t just disable screenshots, it also prevents our thumbnail from appearing in Android recents.  You should also verify on older devices that you are allowed to clear this once set as I thought there were issues with that.\n\nFor preferences, it is likely fine because each preference is shown in its own activity and the window shouldn\u0027t be shared.",
+      "revId": "6e204fdb42853d58e817760d88dbd57aaab5d897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
