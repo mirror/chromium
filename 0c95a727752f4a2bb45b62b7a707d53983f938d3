@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea02d6ac_549fb991",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-12T17:15:01Z",
+      "side": 1,
+      "message": "nit: SAML?",
+      "range": {
+        "startLine": 33,
+        "startChar": 38,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95be5e9_5b31fab2",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-12T17:15:01Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 5
+      },
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6acd71f2_c7546ccf",
         "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
         "patchSetId": 4
@@ -13,6 +59,167 @@
       "writtenOn": "2017-05-11T13:29:58Z",
       "side": 1,
       "message": "nit:  Isn\u0027t this defined anywhere already. Not a biggie just thought you might want to avoid defining the n-th name for 200 :)",
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf91c25b_dc5ba57d",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-12T17:15:01Z",
+      "side": 1,
+      "message": "nit: Be consistent with capitalization in comments. SAML.",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 140,
+        "endChar": 24
+      },
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3277ee3_d9e0d909",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-12T17:15:01Z",
+      "side": 1,
+      "message": "Add braces to the rest of the cases, for consistency.",
+      "range": {
+        "startLine": 149,
+        "startChar": 47,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df365f4_aca83813",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-12T17:15:01Z",
+      "side": 1,
+      "message": "nit: DCHECK. https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#CHECK_DCHECK_and-NOTREACHED",
+      "range": {
+        "startLine": 188,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 7
+      },
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e710aa03_dba052e3",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-12T17:15:01Z",
+      "side": 1,
+      "message": "Please mention who owns this and/or its lifetime.",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 9
+      },
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24974ed_3449880a",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-12T17:15:01Z",
+      "side": 1,
+      "message": "nit: ARC",
+      "range": {
+        "startLine": 410,
+        "startChar": 3,
+        "endLine": 410,
+        "endChar": 6
+      },
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024027eb_21c4243a",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-12T17:15:01Z",
+      "side": 1,
+      "message": "not your fault, but nit: ARC",
+      "range": {
+        "startLine": 414,
+        "startChar": 56,
+        "endLine": 414,
+        "endChar": 59
+      },
+      "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35213b78_70bb5a49",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-12T17:15:01Z",
+      "side": 1,
+      "message": "0u?",
+      "range": {
+        "startLine": 478,
+        "startChar": 12,
+        "endLine": 478,
+        "endChar": 34
+      },
       "revId": "0c95a727752f4a2bb45b62b7a707d53983f938d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
