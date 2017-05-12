@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a99a7d2_d0dca76f",
+        "filename": "device/hid/hid_service_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-12T21:55:49Z",
+      "side": 1,
+      "message": "nit, but always good to keep different cleanup changes separate when they\u0027re large enough. Also, a chance to leave a comment.",
+      "range": {
+        "startLine": 103,
+        "startChar": 61,
+        "endLine": 103,
+        "endChar": 64
+      },
+      "revId": "38710b083a9e1c9d48a27f98f2d37f7bcb36036a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
