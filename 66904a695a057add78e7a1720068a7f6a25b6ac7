@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1178434a_e042e0f1",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-05-12T13:41:55Z",
+      "side": 1,
+      "message": "I think the reasonable thing to do here is actually use an array of booleans that matches the gesture length. ie; I presume that something non-android related might start this gamepad gesture fling and we\u0027d ideally not have webviews broken for that.",
+      "revId": "66904a695a057add78e7a1720068a7f6a25b6ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d9362d_3f5a09cc",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-05-12T13:41:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right is it? Is a gamepad a direct manipulation device? ie; the RouteTouchscreenGestureEvent tracks who the target is (from the touch start) and route events to that target. If it is likely we should change the name of the method I guess but I presume that the routing is in fact wrong.",
+      "revId": "66904a695a057add78e7a1720068a7f6a25b6ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b064ab7_d2dff49c",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-05-12T13:41:55Z",
+      "side": 1,
+      "message": "So this gets complicated. In that this variable will probably always be false. Because I believe you aren\u0027t generated a GestureScrollBegin when you are generating the fling? So that gesture_scroll_on_impl_thread is only determined in the Begin phase it will likely send gamepad scrolling to the main thread which isn\u0027t ideal at all.",
+      "revId": "66904a695a057add78e7a1720068a7f6a25b6ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
