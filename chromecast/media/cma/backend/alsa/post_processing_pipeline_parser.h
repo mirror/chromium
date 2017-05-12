@@ -61,6 +61,7 @@ class PostProcessingPipelineParser {
   base::ListValue* GetPipelineByKey(const std::string& key);
 
   std::unique_ptr<base::DictionaryValue> config_dict_;
+  base::DictionaryValue* postprocessor_config_;
 
   DISALLOW_COPY_AND_ASSIGN(PostProcessingPipelineParser);
 };

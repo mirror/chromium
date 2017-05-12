@@ -36,6 +36,8 @@ namespace media {
 
 namespace {
 
+const char kCastAudioFilePath[] = "/etc/cast_audio.json";
+
 const float kDefaultMediaDbFS = -25.0f;
 const float kDefaultAlarmDbFS = -20.0f;
 const float kDefaultCommunicationDbFS = -25.0f;
@@ -45,17 +47,9 @@ const float kMinDbFS = -120.0f;
 const char kKeyMediaDbFS[] = "dbfs.media";
 const char kKeyAlarmDbFS[] = "dbfs.alarm";
 const char kKeyCommunicationDbFS[] = "dbfs.communication";
-
-struct LevelToDb {
-  float level;
-  float db;
-};
-
-const LevelToDb kVolumeMap[] = {{0.0f, kMinDbFS},
-                                {0.01f, -58.0f},
-                                {0.090909f, -48.0f},
-                                {0.818182f, -8.0f},
-                                {1.0f, 0.0f}};
+const char kKeyVolumeMap[] = "volume_map";
+const char kKeyLevel[] = "level";
+const char kKeyDb[] = "db";
 
 float DbFsToScale(float db) {
   if (db <= kMinDbFS) {
@@ -75,6 +69,118 @@ std::string ContentTypeToDbFSKey(AudioContentType type) {
   }
 }
 
+class VolumeMap {
+ public:
+  VolumeMap() {
+    auto cast_audio_config =
+        DeserializeJsonFromFile(base::FilePath(kCastAudioFilePath));
+    base::DictionaryValue* cast_audio_dict;
+    if (!cast_audio_config ||
+        !cast_audio_config->GetAsDictionary(&cast_audio_dict)) {
+      LOG(WARNING) << "No cast audio config found; using default volume map.";
+      volume_map_.insert(volume_map_.end(), kDefaultVolumeMap,
+                         kDefaultVolumeMap + arraysize(kDefaultVolumeMap));
+      return;
+    }
+
+    base::ListValue* volume_map_list;
+    if (!config_dict_->GetList(kKeyVolumeMap, &volume_map_list)) {
+      LOG(WARNING) << "No volume map found; using default volume map.";
+      volume_map_.insert(volume_map_.end(), kDefaultVolumeMap,
+                         kDefaultVolumeMap + arraysize(kDefaultVolumeMap));
+      return;
+    }
+
+    double prev_level = -1.0;
+    for (size_t i = 0; i < volume_map_list->GetSize(); ++i) {
+      base::DictionaryValue* volume_map_entry;
+      CHECK(volume_map_list->GetDictionary(i, &volume_map_entry));
+
+      double level;
+      CHECK(volume_map_entry->GetDouble(kKeyLevel, &level));
+      CHECK_GE(level, 0.0);
+      CHECK_LE(level, 1.0);
+      CHECK_GT(level, prev_level);
+      prev_level = level;
+
+      double db;
+      CHECK(volume_map_entry->GetDouble(kKeyDb, &db));
+      CHECK_LE(db, 0.0);
+      if (level == 1.0) {
+        CHECK_EQ(db, 0.0);
+      }
+
+      volume_map_.push_back({level, db});
+    }
+
+    if (volume_map_.empty()) {
+      LOG(WARNING) << "No entries in volume map; using default volume map.";
+      volume_map_.insert(volume_map_.end(), kDefaultVolumeMap,
+                         kDefaultVolumeMap + arraysize(kDefaultVolumeMap));
+      return;
+    }
+
+    if (volume_map_[0].level > 0.0) {
+      volume_map_.push_front({0.0, kMinDbFS});
+    }
+
+    if (volume_map_.rbegin()->level < 1.0) {
+      volume_map_.push_back({1.0, 0.0});
+    }
+  }
+
+  float VolumeToDbFS(float volume) {
+    if (volume <= volume_map_[0].level) {
+      return volume_map_[0].db;
+    }
+    for (size_t i = 1; i < volume_map_.size(); ++i) {
+      if (volume < volume_map_[i].level) {
+        const float x_diff = volume_map_[i].level - volume_map_[i - 1].level;
+        const float y_diff = volume_map_[i].db - volume_map_[i - 1].db;
+
+        return volume_map_[i - 1].db +
+               (volume - volume_map_[i - 1].level) * y_diff / x_diff;
+      }
+    }
+    return volume_map_[volume_map_.size() - 1].db;
+  }
+
+  // static
+  float DbFSToVolume(float db) {
+    if (db <= volume_map_[0].db) {
+      return volume_map_[0].level;
+    }
+    for (size_t i = 1; i < volume_map_.size(); ++i) {
+      if (db < volume_map_[i].db) {
+        const float x_diff = volume_map_[i].db - volume_map_[i - 1].db;
+        const float y_diff = volume_map_[i].level - volume_map_[i - 1].level;
+
+        return volume_map_[i - 1].level +
+               (db - volume_map_[i - 1].db) * y_diff / x_diff;
+      }
+    }
+    return volume_map_[volume_map_.size() - 1].level;
+  }
+
+ private:
+  struct LevelToDb {
+    float level;
+    float db;
+  };
+
+  constexpr LevelToDb kDefaultVolumeMap[] = {{0.0f, kMinDbFS},
+                                             {0.01f, -58.0f},
+                                             {0.090909f, -48.0f},
+                                             {0.818182f, -8.0f},
+                                             {1.0f, 0.0f}};
+
+  std::vector<LevelToDb> volume_map_;
+
+  DISALLOW_COPY_AND_ASSIGN(VolumeMap);
+};
+
+base::LazyInstance<VolumeMap>::Leaky g_volume_map = LAZY_INSTANCE_INITIALIZER;
+
 class VolumeControlInternal : public AlsaVolumeControl::Delegate {
  public:
   VolumeControlInternal()
@@ -82,6 +188,9 @@ class VolumeControlInternal : public AlsaVolumeControl::Delegate {
         initialize_complete_event_(
             base::WaitableEvent::ResetPolicy::MANUAL,
             base::WaitableEvent::InitialState::NOT_SIGNALED) {
+    // Load volume map to check that the config file is correct.
+    g_volume_map.Get();
+
     stored_values_.SetDouble(kKeyMediaDbFS, kDefaultMediaDbFS);
     stored_values_.SetDouble(kKeyAlarmDbFS, kDefaultAlarmDbFS);
     stored_values_.SetDouble(kKeyCommunicationDbFS, kDefaultCommunicationDbFS);
@@ -335,36 +444,12 @@ void VolumeControl::SetOutputLimit(AudioContentType type, float limit) {
 
 // static
 float VolumeControl::VolumeToDbFS(float volume) {
-  if (volume <= kVolumeMap[0].level) {
-    return kVolumeMap[0].db;
-  }
-  for (size_t i = 1; i < arraysize(kVolumeMap); ++i) {
-    if (volume < kVolumeMap[i].level) {
-      const float x_diff = kVolumeMap[i].level - kVolumeMap[i - 1].level;
-      const float y_diff = kVolumeMap[i].db - kVolumeMap[i - 1].db;
-
-      return kVolumeMap[i - 1].db +
-             (volume - kVolumeMap[i - 1].level) * y_diff / x_diff;
-    }
-  }
-  return kVolumeMap[arraysize(kVolumeMap) - 1].db;
+  return g_volume_map.Get().VolumeToDbFS(volume);
 }
 
 // static
 float VolumeControl::DbFSToVolume(float db) {
-  if (db <= kVolumeMap[0].db) {
-    return kVolumeMap[0].level;
-  }
-  for (size_t i = 1; i < arraysize(kVolumeMap); ++i) {
-    if (db < kVolumeMap[i].db) {
-      const float x_diff = kVolumeMap[i].db - kVolumeMap[i - 1].db;
-      const float y_diff = kVolumeMap[i].level - kVolumeMap[i - 1].level;
-
-      return kVolumeMap[i - 1].level +
-             (db - kVolumeMap[i - 1].db) * y_diff / x_diff;
-    }
-  }
-  return kVolumeMap[arraysize(kVolumeMap) - 1].level;
+  return g_volume_map.Get().DbFSToVolume(db);
 }
 
 }  // namespace media
