@@ -51,7 +51,7 @@ TEST(BackgroundServiceManagerTest, MAYBE_Basic) {
   base::MessageLoop message_loop;
   mojom::ServicePtr service;
   ServiceContext service_context(base::MakeUnique<ServiceImpl>(),
-                                 mojom::ServiceRequest(&service));
+                                 mojo::MakeRequest(&service));
   background_service_manager.RegisterService(
       Identity(kTestName, mojom::kRootUserID), std::move(service), nullptr);
 
@@ -80,7 +80,7 @@ TEST(BackgroundServiceManagerTest, SetInstanceQuitCallback) {
   base::MessageLoop message_loop;
   mojom::ServicePtr service;
   ServiceContext service_context(base::MakeUnique<ServiceImpl>(),
-                                 mojom::ServiceRequest(&service));
+                                 mojo::MakeRequest(&service));
   background_service_manager.RegisterService(
       Identity(kTestName, mojom::kRootUserID), std::move(service), nullptr);
 
