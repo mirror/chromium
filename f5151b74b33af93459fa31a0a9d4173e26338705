@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c71d078c_d5dc6afe",
+        "filename": "ios/chrome/browser/ui/settings/accounts_collection_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-05-12T18:47:40Z",
+      "side": 1,
+      "message": "Do you have a preference between linebreaks like this vs. using a local variable for the matcher?\n\nThere are also some cases below where the parameter to ButtonWithAccessibilityLabel is too long, and forces another break.",
+      "range": {
+        "startLine": 124,
+        "startChar": 59,
+        "endLine": 124,
+        "endChar": 60
+      },
+      "revId": "f5151b74b33af93459fa31a0a9d4173e26338705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9809926_62dbc707",
+        "filename": "ios/chrome/browser/ui/settings/accounts_collection_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-05-12T18:47:40Z",
+      "side": 1,
+      "message": "I realize this is inconsistent with the next line, but it\u0027s for illustration. Do you prefer all helpers within the method be C-Style? Objective-C? Or do you not care that much?\n\nWe have tests that do both. I kind of thing Objective-C looks better since it\u0027s more consistent with the EG code, but we have a lot of C-style helpers and I don\u0027t think it\u0027s worth the churn to fix.",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 37
+      },
+      "revId": "f5151b74b33af93459fa31a0a9d4173e26338705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
