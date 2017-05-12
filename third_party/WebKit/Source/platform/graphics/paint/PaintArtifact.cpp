@@ -33,7 +33,7 @@ void ComputeChunkBoundsAndOpaqueness(const DisplayItemList& display_items,
           // TODO(pdr): It may be too conservative to round in to the
           // enclosedIntRect.
           SkIRect conservative_rounded_rect;
-          const SkRect& cull_rect = record->cullRect();
+          const SkRect& cull_rect = drawing.CullRect();
           cull_rect.roundIn(&conservative_rounded_rect);
           known_to_be_opaque_region.op(conservative_rounded_rect,
                                        SkRegion::kUnion_Op);
