@@ -265,7 +265,7 @@ class IntegerAccessorImpl : public sample::IntegerAccessor {
 TEST_F(BindingTest, SetInterfacePtrVersion) {
   IntegerAccessorImpl impl;
   sample::IntegerAccessorPtr ptr;
-  Binding<sample::IntegerAccessor> binding(&impl, &ptr);
+  Binding<sample::IntegerAccessor> binding(&impl, MakeRequest(&ptr));
   EXPECT_EQ(3u, ptr.version());
 }
 
