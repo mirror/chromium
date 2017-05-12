@@ -11,7 +11,7 @@
 #include "base/callback_forward.h"
 
 namespace profiles {
-// Constants for the categories in ProfileCategoryStats
+// Constants for the categories in ProfileCategoryStats.
 extern const char kProfileStatisticsBrowsingHistory[];
 extern const char kProfileStatisticsPasswords[];
 extern const char kProfileStatisticsBookmarks[];

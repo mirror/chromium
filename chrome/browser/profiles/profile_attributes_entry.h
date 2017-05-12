@@ -87,16 +87,6 @@ class ProfileAttributesEntry {
   // Returns the index of the default icon used by the profile.
   size_t GetAvatarIconIndex() const;
 
-  // Browsing statistics of the profile.
-  bool HasStatsBrowsingHistory() const;
-  int GetStatsBrowsingHistory() const;
-  bool HasStatsPasswords() const;
-  int GetStatsPasswords() const;
-  bool HasStatsBookmarks() const;
-  int GetStatsBookmarks() const;
-  bool HasStatsSettings() const;
-  int GetStatsSettings() const;
-
   void SetName(const base::string16& name);
   void SetShortcutName(const base::string16& name);
   void SetActiveTimeToNow();

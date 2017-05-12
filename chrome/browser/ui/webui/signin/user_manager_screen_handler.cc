@@ -606,40 +606,26 @@ void UserManagerScreenHandler::HandleRemoveUserWarningLoadStats(
   Profile* profile = g_browser_process->profile_manager()->
       GetProfileByPath(profile_path);
 
-  if (!profile)
-    return;
-
-  if (!chrome::FindAnyBrowser(profile, true)) {
-    // If no windows are open for that profile, the statistics in
-    // ProfileAttributesStorage are up to date. The statistics in
-    // ProfileAttributesStorage are returned because the copy in user_pod_row.js
-    // may be outdated. However, if some statistics are missing in
-    // ProfileAttributesStorage (i.e. |item.success| is false), then the actual
-    // statistics are queried instead.
-    base::DictionaryValue return_value;
-    profiles::ProfileCategoryStats stats =
-        ProfileStatistics::GetProfileStatisticsFromAttributesStorage(
-            profile_path);
-    bool stats_success = true;
-    for (const auto& item : stats) {
-      std::unique_ptr<base::DictionaryValue> stat(new base::DictionaryValue);
-      stat->SetIntegerWithoutPathExpansion("count", item.count);
-      stat->SetBooleanWithoutPathExpansion("success", item.success);
-      return_value.SetWithoutPathExpansion(item.category, std::move(stat));
-      stats_success &= item.success;
-    }
-    if (stats_success) {
-      web_ui()->CallJavascriptFunctionUnsafe("updateRemoveWarningDialog",
-                                             base::Value(profile_path.value()),
-                                             return_value);
-      return;
-    }
+  LOG(ERROR) << "user manager: " << !!profile;
+  if (profile) {
+    GatherStatistics(profile_path, profile);
+  } else {
+    g_browser_process->profile_manager()->LoadProfileByPath(
+        profile_path, false,
+        base::Bind(&UserManagerScreenHandler::GatherStatistics,
+                   weak_ptr_factory_.GetWeakPtr(), profile_path));
   }
+}
 
-  ProfileStatisticsFactory::GetForProfile(profile)->GatherStatistics(
-      base::Bind(
-          &UserManagerScreenHandler::RemoveUserDialogLoadStatsCallback,
-          weak_ptr_factory_.GetWeakPtr(), profile_path));
+void UserManagerScreenHandler::GatherStatistics(
+    const base::FilePath& profile_path,
+    Profile* profile) {
+  LOG(ERROR) << "loaded: " << !!profile;
+  if (profile) {
+    ProfileStatisticsFactory::GetForProfile(profile)->GatherStatistics(
+        base::Bind(&UserManagerScreenHandler::RemoveUserDialogLoadStatsCallback,
+                   weak_ptr_factory_.GetWeakPtr(), profile_path));
+  }
 }
 
 void UserManagerScreenHandler::RemoveUserDialogLoadStatsCallback(
@@ -949,19 +935,8 @@ void UserManagerScreenHandler::SendUserList() {
     profile_value->SetBoolean(kKeyIsDesktop, true);
     profile_value->SetString(kKeyAvatarUrl, GetAvatarImage(entry));
 
-    profiles::ProfileCategoryStats stats =
-        ProfileStatistics::GetProfileStatisticsFromAttributesStorage(
-            profile_path);
-    std::unique_ptr<base::DictionaryValue> stats_dict(
-        new base::DictionaryValue);
-    for (const auto& item : stats) {
-      std::unique_ptr<base::DictionaryValue> stat(new base::DictionaryValue);
-      stat->SetIntegerWithoutPathExpansion("count", item.count);
-      stat->SetBooleanWithoutPathExpansion("success", item.success);
-      stats_dict->SetWithoutPathExpansion(item.category, std::move(stat));
-    }
-    profile_value->SetWithoutPathExpansion(kKeyStatistics,
-                                           std::move(stats_dict));
+    profile_value->SetWithoutPathExpansion(
+        kKeyStatistics, base::MakeUnique<base::DictionaryValue>());
 
     // GetProfileByPath returns a pointer if the profile is fully loaded, NULL
     // otherwise.

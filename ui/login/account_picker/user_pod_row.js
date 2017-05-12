@@ -1755,7 +1755,7 @@ cr.define('login', function() {
       var total_count = 0;
       var num_stats_loaded = 0;
       for (var key in stats_elements) {
-        if (this.user.statistics[key].success) {
+        if (this.user.statistics[key] && this.user.statistics[key].success) {
           var count = this.user.statistics[key].count;
           stats_elements[key].textContent = count;
           total_count += count;

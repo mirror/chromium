@@ -108,16 +108,6 @@ class ProfileInfoCache : public ProfileInfoInterface,
 
   size_t GetAvatarIconIndexOfProfileAtIndex(size_t index) const;
 
-  // Statistics
-  bool HasStatsBrowsingHistoryOfProfileAtIndex(size_t index) const;
-  int GetStatsBrowsingHistoryOfProfileAtIndex(size_t index) const;
-  bool HasStatsPasswordsOfProfileAtIndex(size_t index) const;
-  int GetStatsPasswordsOfProfileAtIndex(size_t index) const;
-  bool HasStatsBookmarksOfProfileAtIndex(size_t index) const;
-  int GetStatsBookmarksOfProfileAtIndex(size_t index) const;
-  bool HasStatsSettingsOfProfileAtIndex(size_t index) const;
-  int GetStatsSettingsOfProfileAtIndex(size_t index) const;
-
   void SetProfileActiveTimeAtIndex(size_t index);
   // Warning: This will re-sort profiles and thus may change indices!
   void SetNameOfProfileAtIndex(size_t index, const base::string16& name);

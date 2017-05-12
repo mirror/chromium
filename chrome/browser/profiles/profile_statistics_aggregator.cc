@@ -94,7 +94,7 @@ void ProfileStatisticsAggregator::StartAggregator() {
 
   // Initiate bookmark counting.
   bookmarks::BookmarkModel* bookmark_model =
-      BookmarkModelFactory::GetForBrowserContextIfExists(profile_);
+      BookmarkModelFactory::GetForBrowserContext(profile_);
   if (bookmark_model) {
     AddCounter(
         base::MakeUnique<browsing_data::BookmarkCounter>(bookmark_model));
@@ -104,8 +104,9 @@ void ProfileStatisticsAggregator::StartAggregator() {
 
   // Initiate history counting (async).
   history::HistoryService* history_service =
-      HistoryServiceFactory::GetForProfileWithoutCreating(profile_);
-
+      HistoryServiceFactory::GetForProfile(profile_,
+                                           ServiceAccessType::EXPLICIT_ACCESS);
+  LOG(ERROR) << "has history service" << (history_service != nullptr);
   if (history_service) {
     history_service->GetHistoryCount(
         base::Time(),
@@ -163,10 +164,6 @@ void ProfileStatisticsAggregator::StatisticsCallback(
     stats_callback.Run(profile_category_stats_);
   }
 
-  if (result.success) {
-    ProfileStatistics::SetProfileStatisticsToAttributesStorage(
-        profile_path_, datum.category, result.count);
-  }
   if (profile_category_stats_.size() == kProfileStatCategories) {
     if (!done_callback_.is_null())
       done_callback_.Run();
