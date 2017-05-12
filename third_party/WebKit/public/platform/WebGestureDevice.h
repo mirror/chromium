@@ -32,6 +32,7 @@ enum WebGestureDevice {
   kWebGestureDeviceUninitialized,
   kWebGestureDeviceTouchpad,
   kWebGestureDeviceTouchscreen,
+  kWebGestureDeviceSyntheticAutoscroll,
 };
 
 }  // namespace blink
