@@ -40,19 +40,19 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '452a7a248be8b9e190bb45570930437516f99d41',
+  'skia_revision': 'df3a371c904c2e3e1d3d9201b7dfc0d080e5f12a',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'b53bc92f91bda182c9eb33b6c28e766e6fdbe702',
+  'v8_revision': '041e67fe01d8be05dd9d56514dd2b88be273ef21',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
-  'swarming_revision': '11e31afa5d330756ff87aa12064bb5d032896cb5',
+  'swarming_revision': 'a941a089ff1000403078b74cb628eb430f07d271',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': 'b4cf5656260cc6a7a0bff2543c5c29310d05bb02',
+  'angle_revision': '82830edeacade1dd52ba8bc2338ecb195641c5e3',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
@@ -60,11 +60,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
-  'swiftshader_revision': 'f34d1ace76a7e384685ebc5395141295cf1c618f',
+  'swiftshader_revision': '9ed48bae7a2ff600712a0b8672f2b7d5f33b453b',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '8a6fdadccd2eedf332ae3a72f0149c1b40cb5bd9',
+  'pdfium_revision': '3c58aa0bf51c64eb126be165e7478e70fbb68043',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -72,7 +72,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling BoringSSL
   # and whatever else without interference from each other.
-  'boringssl_revision': 'ddfcc6a60bec2040b4c3668d76c0f2455ecb5594',
+  'boringssl_revision': '1e5cb820de99c754b57ab4321e1456ac6bdc1a78',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling google-toolbox-for-mac
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '9e43159fc62c2ba87c5dd5202e38aeb5e207bb68',
+  'catapult_revision': '2cbeef5c42f565dfe0dfb19f77e9134ebdd8944a',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -232,7 +232,7 @@ deps = {
     Var('chromium_git') + '/native_client/src/third_party/scons-2.0.1.git' + '@' + '1c1550e17fc26355d08627fbdec13d8291227067',
 
   'src/third_party/webrtc':
-    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + 'd6b3a364ad022e96c4b5347f674abb426d69d75d', # commit position 18023
+    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + 'b2a88552d51ffeb5f3159f65fafa12cab912c4de', # commit position 18079
 
   'src/third_party/openmax_dl':
     Var('chromium_git') + '/external/webrtc/deps/third_party/openmax.git' + '@' +  Var('openmax_dl_revision'),
@@ -1020,7 +1020,7 @@ hooks = [
     'action': ['python',
                'src/build/get_syzygy_binaries.py',
                '--output-dir=src/third_party/syzygy/binaries',
-               '--revision=0d286578ad6231aa26298963182119a8f7d6d9af',
+               '--revision=dbb218b6d05ff1c17a4d86252b10880c2d8ebe08',
                '--overwrite',
                '--copy-dia-binaries',
     ],
@@ -1074,13 +1074,6 @@ hooks = [
                 "-u",
                 "--bucket", "v8-wasm-asmjs-fuzzer",
                 "-s", "src/v8/test/fuzzer/wasm_asmjs.tar.gz.sha1",
-    ],
-  },
-  {
-    'name': 'clang_format_merge_driver',
-    'pattern': '.',
-    'action': [ 'python',
-                'src/tools/clang_format_merge_driver/install_git_hook.py',
     ],
   },
   {

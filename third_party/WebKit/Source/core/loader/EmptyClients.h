@@ -45,6 +45,7 @@
 #include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntRect.h"
+#include "platform/graphics/TouchAction.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/text/TextCheckerClient.h"
@@ -169,10 +170,10 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
   bool TabsToLinks() override { return false; }
 
   void InvalidateRect(const IntRect&) override {}
-  void ScheduleAnimation(LocalFrame*) override {}
+  void ScheduleAnimation(const PlatformFrameView*) override {}
 
   IntRect ViewportToScreen(const IntRect& r,
-                           const FrameViewBase*) const override {
+                           const PlatformFrameView*) const override {
     return r;
   }
   float WindowToViewportScalar(const float s) const override { return s; }

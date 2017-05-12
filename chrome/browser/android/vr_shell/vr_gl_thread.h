@@ -50,6 +50,8 @@ class VrGLThread : public base::Thread,
   void ProcessContentGesture(
       std::unique_ptr<blink::WebInputEvent> event) override;
   void ForceExitVr() override;
+  void ExitPresent() override;
+  void ExitFullscreen() override;
   void RunVRDisplayInfoCallback(
       const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
       device::mojom::VRDisplayInfoPtr* info) override;

@@ -15,15 +15,21 @@
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/browser/histogram_internals_url_loader.h"
 #include "content/browser/resource_context_impl.h"
+#include "content/browser/webui/network_error_url_loader.h"
 #include "content/browser/webui/url_data_manager_backend.h"
 #include "content/browser/webui/url_data_source_impl.h"
+#include "content/common/network_service.mojom.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/zlib/google/compression_utils.h"
 #include "ui/base/template_expressions.h"
 
@@ -84,15 +90,7 @@ void ReadData(scoped_refptr<ResourceResponse> headers,
   uint32_t output_size =
       gzipped ? compression::GetUncompressedSize(input) : bytes->size();
 
-  MojoCreateDataPipeOptions options;
-  options.struct_size = sizeof(MojoCreateDataPipeOptions);
-  options.flags = MOJO_CREATE_DATA_PIPE_OPTIONS_FLAG_NONE;
-  options.element_num_bytes = 1;
-  options.capacity_num_bytes = output_size;
-  mojo::DataPipe data_pipe(options);
-
-  DCHECK(data_pipe.producer_handle.is_valid());
-  DCHECK(data_pipe.consumer_handle.is_valid());
+  mojo::DataPipe data_pipe(output_size);
 
   void* buffer = nullptr;
   uint32_t num_bytes = output_size;
@@ -112,14 +110,7 @@ void ReadData(scoped_refptr<ResourceResponse> headers,
   CHECK_EQ(result, MOJO_RESULT_OK);
 
   client->OnStartLoadingResponseBody(std::move(data_pipe.consumer_handle));
-
-  ResourceRequestCompletionStatus request_complete_data;
-  request_complete_data.error_code = net::OK;
-  request_complete_data.exists_in_cache = false;
-  request_complete_data.completion_time = base::TimeTicks::Now();
-  request_complete_data.encoded_data_length = output_size;
-  request_complete_data.encoded_body_length = output_size;
-  client->OnComplete(request_complete_data);
+  client->OnComplete(ResourceRequestCompletionStatus(output_size));
 }
 
 void DataAvailable(scoped_refptr<ResourceResponse> headers,
@@ -239,6 +230,14 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
                             const ResourceRequest& request,
                             mojom::URLLoaderClientPtr client) override {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    if (request.url.host_piece() == kChromeUINetworkViewCacheHost) {
+      mojom::NetworkServicePtr network_service;
+      ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
+          mojom::kNetworkServiceName, &network_service);
+      network_service->HandleViewCacheRequest(request, std::move(client));
+      return;
+    }
+
     if (request.url.host_piece() == kChromeUIBlobInternalsHost) {
       BrowserThread::PostTask(
           BrowserThread::IO, FROM_HERE,
@@ -246,6 +245,17 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
               &StartBlobInternalsURLLoader, request, client.PassInterface(),
               base::Unretained(
                   ChromeBlobStorageContext::GetFor(browser_context_))));
+      return;
+    }
+
+    if (request.url.host_piece() == kChromeUINetworkErrorHost ||
+        request.url.host_piece() == kChromeUIDinoHost) {
+      StartNetworkErrorsURLLoader(request, std::move(client));
+      return;
+    }
+
+    if (request.url.host_piece() == kChromeUIHistogramHost) {
+      StartHistogramInternalsURLLoader(request, std::move(client));
       return;
     }
 

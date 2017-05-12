@@ -69,7 +69,7 @@ const base::Feature kBackspaceGoesBackFeature {
 // Enables or disables whether permission prompts are automatically blocked
 // after the user has explicitly dismissed them too many times.
 const base::Feature kBlockPromptsIfDismissedOften{
-    "BlockPromptsIfDismissedOften", base::FEATURE_DISABLED_BY_DEFAULT};
+    "BlockPromptsIfDismissedOften", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enables or disables whether permission prompts are automatically blocked
 // after the user has ignored them too many times.
@@ -180,6 +180,11 @@ const base::Feature kLinuxObsoleteSystemIsEndOfTheLine{
 const base::Feature kLsdPermissionPrompt{"LsdPermissionPrompt",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
+#if defined(OS_MACOSX)
+// Enables RTL layout in macOS top chrome.
+const base::Feature kMacRTL{"MacRTL", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 // Enables or disables the Material Design version of chrome://bookmarks.
 const base::Feature kMaterialDesignBookmarks{"MaterialDesignBookmarks",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
@@ -243,6 +248,12 @@ const base::Feature kNativeNotifications{"NativeNotifications",
 // pages that the user downloaded for later use.
 const base::Feature kOfflinePageDownloadSuggestionsFeature{
     "NTPOfflinePageDownloadSuggestions", base::FEATURE_ENABLED_BY_DEFAULT};
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+// Enables or disabled the OneGoogleBar on the local NTP.
+const base::Feature kOneGoogleBarOnLocalNtp{"OneGoogleBarOnLocalNtp",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
 
 // Enables Permissions Blacklisting via Safe Browsing.
 const base::Feature kPermissionsBlacklist{
@@ -317,6 +328,10 @@ const base::Feature kSiteDetails{"SiteDetails",
 const base::Feature kSyzyasanDeferredFree{"SyzyasanDeferredFree",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
+
+// Enables using the local NTP if Google is the default search engine.
+const base::Feature kUseGoogleLocalNtp{"UseGoogleLocalNtp",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Experiment to use grouped permission infobars which could show and handle
 // multiple permission requests.

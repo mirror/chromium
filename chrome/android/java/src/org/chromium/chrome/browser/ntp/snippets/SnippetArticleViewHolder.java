@@ -27,6 +27,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.download.ui.DownloadFilter;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
@@ -284,7 +285,7 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
         // When article's description is empty, we do not want empty space.
         if (mArticle != null && TextUtils.isEmpty(mArticle.mPreviewText)) return false;
 
-        return true;
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.CONTENT_SUGGESTIONS_SHOW_SUMMARY);
     }
 
     private boolean shouldShowThumbnail(int horizontalStyle, int verticalStyle, int layout) {
@@ -356,7 +357,7 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
             mArticle.setThumbnailBitmap(null);
             Bitmap thumbnail = mThumbnailProvider.getThumbnail(mImageCallback);
             if (thumbnail == null || thumbnail.isRecycled()) return;
-            mArticle.setThumbnailBitmap(thumbnail);
+            mArticle.setThumbnailBitmap(mUiDelegate.getReferencePool().put(thumbnail));
             setThumbnailFromBitmap(thumbnail);
 
             return;
@@ -371,8 +372,9 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
 
         // mThumbnailView's visibility is modified in updateLayout().
         if (mThumbnailView.getVisibility() != View.VISIBLE) return;
-        if (mArticle.getThumbnailBitmap() != null && !mArticle.getThumbnailBitmap().isRecycled()) {
-            setThumbnailFromBitmap(mArticle.getThumbnailBitmap());
+        Bitmap thumbnail = mArticle.getThumbnailBitmap();
+        if (thumbnail != null && !thumbnail.isRecycled()) {
+            setThumbnailFromBitmap(thumbnail);
             return;
         }
 
@@ -418,7 +420,7 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
                 thumbnail, targetSize, targetSize, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
 
         // Store the bitmap to skip the download task next time we display this snippet.
-        snippet.setThumbnailBitmap(scaledThumbnail);
+        snippet.setThumbnailBitmap(mUiDelegate.getReferencePool().put(scaledThumbnail));
 
         // Cross-fade between the placeholder and the thumbnail. We cross-fade because the incoming
         // image may have transparency and we don't want the previous image showing up behind.

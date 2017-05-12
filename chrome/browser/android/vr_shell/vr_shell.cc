@@ -405,6 +405,18 @@ void VrShell::GvrDelegateReady() {
   delegate_provider_->SetPresentingDelegate(this, gvr_api_);
 }
 
+void VrShell::OnPhysicalBackingSizeChanged(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents,
+    jint width,
+    jint height) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  gfx::Size size(width, height);
+  web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+}
+
 void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,
                                            const JavaParamRef<jobject>& object,
                                            jint width,
@@ -425,9 +437,6 @@ void VrShell::DoUiAction(const UiAction action,
                          const base::DictionaryValue* arguments) {
   // Actions that can be handled natively.
   switch (action) {
-    case EXIT_PRESENT:
-      delegate_provider_->ExitWebVRPresent();
-      return;
     default:
       break;
   }
@@ -485,6 +494,16 @@ void VrShell::ContentWasShown() {
 void VrShell::ForceExitVr() {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_forceExitVr(env, j_vr_shell_.obj());
+}
+
+void VrShell::ExitPresent() {
+  delegate_provider_->ExitWebVRPresent();
+}
+
+void VrShell::ExitFullscreen() {
+  if (web_contents_ && web_contents_->IsFullscreen()) {
+    web_contents_->ExitFullscreen(false);
+  }
 }
 
 void VrShell::OnVRVsyncProviderRequest(

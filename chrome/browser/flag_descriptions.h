@@ -1360,6 +1360,12 @@ extern const char kEnableOfflinePreviewsName[];
 // Describes an about:flags experiment to enable offline page previews.
 extern const char kEnableOfflinePreviewsDescription[];
 
+// An about:flags experiment title to enable client-side Lo-Fi previews.
+extern const char kEnableClientLoFiName[];
+
+// Describes an about:flags experiment to enable client-side Lo-Fi previews.
+extern const char kEnableClientLoFiDescription[];
+
 #endif  // defined(OS_ANDROID)
 
 // Name of about:flags option for LCD text.
@@ -2606,6 +2612,13 @@ extern const char kEnableContentSuggestionsSettingsName[];
 // suggestions.
 extern const char kEnableContentSuggestionsSettingsDescription[];
 
+// Name for the flag to enable showing the summary for content suggestions.
+extern const char kEnableContentSuggestionsShowSummaryName[];
+
+// Description for the flag to enable showing the summary for content
+// suggestions.
+extern const char kEnableContentSuggestionsShowSummaryDescription[];
+
 // Name for the flag to enable server-side suggestions on the New Tab Page.
 extern const char kEnableNtpRemoteSuggestionsName[];
 
@@ -2881,20 +2894,20 @@ extern const char kExpensiveBackgroundTimerThrottlingDescription[];
 
 #if !defined(OS_ANDROID)
 
-// Name for the flag to enable default MediaSession on desktop
-extern const char kEnableDefaultMediaSessionName[];
+// Name for the flag to enable audio focus on desktop.
+extern const char kEnableAudioFocusName[];
 
-// Desciption for the flag to enable default MediaSession on desktop
-extern const char kEnableDefaultMediaSessionDescription[];
+// Desciption for the flag to enable audio focus on desktop.
+extern const char kEnableAudioFocusDescription[];
 
-// Option for disabling the default MediaSession
-extern const char kEnableDefaultMediaSessionDisabled[];
+// Option for disabling audio focus on desktop.
+extern const char kEnableAudioFocusDisabled[];
 
-// Option for enabling the default MediaSession
-extern const char kEnableDefaultMediaSessionEnabled[];
+// Option for enabling audio focus on desktop.
+extern const char kEnableAudioFocusEnabled[];
 
-// Option for enabling the default MediaSession with Flash
-extern const char kEnableDefaultMediaSessionEnabledDuckFlash[];
+// Option for enabling audio focus with Flash support on desktop.
+extern const char kEnableAudioFocusEnabledDuckFlash[];
 
 #endif  // !defined(OS_ANDROID)
 
@@ -3342,7 +3355,7 @@ extern const char kAutoplayPolicyDescription[];
 
 // Description of the autoplay policy that requires a user gesture on cross
 // origin iframes.
-extern const char kAutoplayPolicyCrossOriginUserGestureRequired[];
+extern const char kAutoplayPolicyUserGestureRequiredForCrossOrigin[];
 
 // Description of the autoplay policy that has no user gesture requirements.
 extern const char kAutoplayPolicyNoUserGestureRequired[];
@@ -3406,6 +3419,36 @@ extern const char kLocationHardReloadDescription[];
 // Name and description for the capture-thumbnail-on-load-finished flag.
 extern const char kCaptureThumbnailOnLoadFinishedName[];
 extern const char kCaptureThumbnailOnLoadFinishedDescription[];
+
+#if defined(OS_WIN)
+
+// Name and description of the flag that enables D3D v-sync.
+extern const char kEnableD3DVsync[];
+extern const char kEnableD3DVsyncDescription[];
+
+#endif  // defined(OS_WIN)
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+
+// Name and description for the flag to use the local NTP if Google is the
+// default search engine.
+extern const char kUseGoogleLocalNtpName[];
+extern const char kUseGoogleLocalNtpDescription[];
+
+// Name and description for the flag to show a OneGoogleBar on the local NTP.
+extern const char kOneGoogleBarOnLocalNtpName[];
+extern const char kOneGoogleBarOnLocalNtpDescription[];
+
+#endif
+
+#if defined(OS_MACOSX)
+
+// Name and description of the flag that enables RTL in
+// Cocoa browser.
+extern const char kMacRTLName[];
+extern const char kMacRTLDescription[];
+
+#endif  // defined(OS_MACOSX)
 
 }  // namespace flag_descriptions
 

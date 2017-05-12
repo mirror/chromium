@@ -8,6 +8,7 @@
 #include "base/strings/stringprintf.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebFrameScheduler.h"
+#include "platform/scheduler/base/trace_helper.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
@@ -82,12 +83,6 @@ base::TimeDelta GetInitialBudget(
   if (initial_budget == -1.0)
     return kDefaultMaxBackgroundBudgetLevel;
   return base::TimeDelta::FromSecondsD(initial_budget);
-}
-
-std::string PointerToId(void* pointer) {
-  return base::StringPrintf(
-      "0x%" PRIx64,
-      static_cast<uint64_t>(reinterpret_cast<uintptr_t>(pointer)));
 }
 
 }  // namespace
@@ -268,8 +263,7 @@ void WebViewSchedulerImpl::GrantVirtualTimeBudget(
     std::unique_ptr<WTF::Closure> budget_exhausted_callback) {
   virtual_time_budget_expired_task_handle_ =
       virtual_time_control_task_queue_->PostDelayedCancellableTask(
-          BLINK_FROM_HERE, std::move(budget_exhausted_callback),
-          budget.InMilliseconds());
+          BLINK_FROM_HERE, std::move(budget_exhausted_callback), budget);
 }
 
 void WebViewSchedulerImpl::AudioStateChanged(bool is_audio_playing) {
@@ -329,7 +323,8 @@ void WebViewSchedulerImpl::AsValueInto(
 
   state->BeginDictionary("frame_schedulers");
   for (WebFrameSchedulerImpl* frame_scheduler : frame_schedulers_) {
-    state->BeginDictionaryWithCopiedName(PointerToId(frame_scheduler));
+    state->BeginDictionaryWithCopiedName(
+        trace_helper::PointerToString(frame_scheduler));
     frame_scheduler->AsValueInto(state);
     state->EndDictionary();
   }

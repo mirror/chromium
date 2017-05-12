@@ -132,9 +132,6 @@ public class WebappActivity extends FullScreenActivity {
         getActivityTab().addObserver(createTabObserver());
         getActivityTab().getTabWebContentsDelegateAndroid().setDisplayMode(
                 mWebappInfo.displayMode());
-        if (mWebappInfo.displayMode() == WebDisplayMode.FULLSCREEN) {
-            enterImmersiveMode();
-        }
     }
 
     @Override
@@ -265,7 +262,7 @@ public class WebappActivity extends FullScreenActivity {
             });
         }
 
-        asyncSetImmersive(ENTER_IMMERSIVE_MODE_DELAY_MILLIS);
+        asyncSetImmersive(0);
     }
 
     /**
@@ -356,6 +353,10 @@ public class WebappActivity extends FullScreenActivity {
     }
 
     private void initializeWebappData() {
+        if (mWebappInfo.displayMode() == WebDisplayMode.FULLSCREEN) {
+            enterImmersiveMode();
+        }
+
         final int backgroundColor = ColorUtils.getOpaqueColor(mWebappInfo.backgroundColor(
                 ApiCompatibilityUtils.getColor(getResources(), R.color.webapp_default_bg)));
 
@@ -619,8 +620,13 @@ public class WebappActivity extends FullScreenActivity {
 
         int taskDescriptionColor =
                 ApiCompatibilityUtils.getColor(getResources(), R.color.default_primary_color);
+
+        // Don't use the brand color for the status bars if we're in display: fullscreen. This works
+        // around an issue where the status bars go transparent and can't be seen on top of the page
+        // content when users swipe them in or they appear because the on-screen keyboard was
+        // triggered.
         int statusBarColor = Color.BLACK;
-        if (mBrandColor != null) {
+        if (mBrandColor != null && mWebappInfo.displayMode() != WebDisplayMode.FULLSCREEN) {
             taskDescriptionColor = mBrandColor;
             statusBarColor = ColorUtils.getDarkenedColorForStatusBar(mBrandColor);
         }

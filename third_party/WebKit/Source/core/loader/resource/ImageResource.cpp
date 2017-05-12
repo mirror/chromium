@@ -134,7 +134,8 @@ class ImageResource::ImageResourceFactory : public ResourceFactory {
   Resource* Create(const ResourceRequest& request,
                    const ResourceLoaderOptions& options,
                    const String&) const override {
-    return new ImageResource(request, options, ImageResourceContent::Create(),
+    return new ImageResource(request, options,
+                             ImageResourceContent::CreateNotStarted(),
                              fetch_params_->GetPlaceholderImageRequestType() ==
                                  FetchParameters::kAllowPlaceholder);
   }
@@ -183,7 +184,7 @@ bool ImageResource::CanReuse(const FetchParameters& params) const {
 
 ImageResource* ImageResource::Create(const ResourceRequest& request) {
   return new ImageResource(request, ResourceLoaderOptions(),
-                           ImageResourceContent::Create(), false);
+                           ImageResourceContent::CreateNotStarted(), false);
 }
 
 ImageResource::ImageResource(const ResourceRequest& resource_request,
@@ -494,7 +495,20 @@ void ImageResource::ReloadIfLoFiOrPlaceholderImage(
 
   SetCachePolicyBypassingCache();
 
-  SetPreviewsStateNoTransform();
+  // The reloaded image should not use any previews transformations.
+  WebURLRequest::PreviewsState previews_state_for_reload =
+      WebURLRequest::kPreviewsNoTransform;
+
+  if (policy == kReloadIfNeeded && (GetResourceRequest().GetPreviewsState() &
+                                    WebURLRequest::kClientLoFiOn)) {
+    // If the image attempted to use Client LoFi, but encountered a decoding
+    // error and is being automatically reloaded, then also set the appropriate
+    // PreviewsState bit for that. This allows the embedder to count the
+    // bandwidth used for this reload against the data savings of the initial
+    // response.
+    previews_state_for_reload |= WebURLRequest::kClientLoFiAutoReload;
+  }
+  SetPreviewsState(previews_state_for_reload);
 
   if (placeholder_option_ != PlaceholderOption::kDoNotReloadPlaceholder)
     ClearRangeRequestHeader();

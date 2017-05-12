@@ -357,7 +357,8 @@ class Port(object):
         def error_handler(script_error):
             local_error.exit_code = script_error.exit_code
 
-        _log.warn('DISPLAY = %s', self.host.environ.get('DISPLAY', ''))
+        if self.host.platform.is_linux():
+            _log.debug('DISPLAY = %s', self.host.environ.get('DISPLAY', ''))
         output = self._executive.run_command(cmd, error_handler=error_handler)
         if local_error.exit_code:
             _log.error('System dependencies check failed.')
@@ -870,21 +871,18 @@ class Port(object):
         self._filesystem.write_binary_file(baseline_path, data)
 
     # TODO(qyearsley): Update callers to create a finder and call it instead
-    # of these next three routines (which should be protected).
-    def webkit_base(self):
-        return self._webkit_finder.webkit_base()
-
+    # of these next two routines (which should be protected).
     def path_from_chromium_base(self, *comps):
         return self._webkit_finder.path_from_chromium_base(*comps)
+
+    def perf_tests_dir(self):
+        return self._webkit_finder.perf_tests_dir()
 
     def layout_tests_dir(self):
         custom_layout_tests_dir = self.get_option('layout_tests_directory')
         if custom_layout_tests_dir:
             return custom_layout_tests_dir
         return self._webkit_finder.layout_tests_dir()
-
-    def perf_tests_dir(self):
-        return self._webkit_finder.perf_tests_dir()
 
     def skipped_layout_tests(self, _):
         # TODO(qyearsley): Remove this method.

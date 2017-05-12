@@ -47,16 +47,16 @@ class Model {
   virtual bool IsCurrentlyShowing() const = 0;
 
   // Retrieves the Event object for the event with the given name. If the event
-  // is not found, an empty event will be returned. Calling this before the
+  // is not found, a nullptr will be returned. Calling this before the
   // Model has finished initializing will result in undefined behavior.
-  virtual const Event& GetEvent(const std::string& event_name) = 0;
+  virtual const Event* GetEvent(const std::string& event_name) const = 0;
 
   // Increments the counter for today for how many times the event has happened.
   // If the event has never happened before, the Event object will be created.
-  virtual void IncrementEvent(const std::string& event_name) = 0;
-
-  // Returns the number of days since epoch (1970-01-01) in the local timezone.
-  virtual uint32_t GetCurrentDay() = 0;
+  // The |current_day| should be the number of days since UNIX epoch (see
+  // TimeProvider::GetCurrentDay()).
+  virtual void IncrementEvent(const std::string& event_name,
+                              uint32_t current_day) = 0;
 
  protected:
   Model() = default;

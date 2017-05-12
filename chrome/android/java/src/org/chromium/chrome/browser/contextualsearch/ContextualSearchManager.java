@@ -24,7 +24,6 @@ import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.PanelState;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelContentViewDelegate;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanel;
-import org.chromium.chrome.browser.contextualsearch.ContextualSearchBlacklist.BlacklistReason;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchInternalStateController.InternalState;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchSelectionController.SelectionType;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler;
@@ -1311,13 +1310,6 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
                 // TODO(donnd): remove this complication when we get an ACK message from
                 // selectWordAroundCaret (see crbug.com/435778).
                 if (type == SelectionType.TAP) {
-                    // Make sure we have a context -- we'll need one to show the UI.
-                    if (mContext == null) {
-                        // Some unknown failure happened, hide the UI.
-                        hideContextualSearch(StateChangeReason.UNKNOWN);
-                        return;
-                    }
-
                     mInternalStateController.notifyFinishedWorkOn(
                             InternalState.START_SHOWING_TAP_UI);
                 } else {
@@ -1357,13 +1349,6 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
                 hideContextualSearch(StateChangeReason.BASE_PAGE_TAP);
             }
         }
-    }
-
-    @Override
-    public void handleSelectionSuppression(BlacklistReason reason) {
-        if (mIsAccessibilityModeEnabled) return;
-
-        if (mSearchPanel != null) mSearchPanel.getPanelMetrics().setBlacklistReason(reason);
     }
 
     @Override
@@ -1477,12 +1462,15 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
             @Override
             public void resolveSearchTerm() {
                 mInternalStateController.notifyStartingWorkOn(InternalState.RESOLVING);
+
                 String selection = mSelectionController.getSelectedText();
                 assert !TextUtils.isEmpty(selection);
                 mNetworkCommunicator.startSearchTermResolutionRequest(selection);
+                // If the we were unable to start the resolve, we've hidden the UI and set the
+                // context to null.
+                if (mContext == null) return;
 
                 // Update the UI to show the resolve is in progress.
-                assert mContext != null;
                 assert mContext.getTextContentFollowingSelection() != null;
                 mSearchPanel.setContextDetails(
                         selection, mContext.getTextContentFollowingSelection());

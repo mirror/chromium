@@ -40,6 +40,8 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
 #include "components/data_reduction_proxy/core/common/lofi_decider.h"
 #include "components/data_reduction_proxy/proto/client_config.pb.h"
+#include "components/previews/core/previews_decider.h"
+#include "components/previews/core/previews_experiments.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
@@ -134,6 +136,7 @@ class TestLoFiDecider : public LoFiDecider {
  public:
   TestLoFiDecider()
       : should_be_client_lofi_(false),
+        should_be_client_lofi_auto_reload_(false),
         should_request_lofi_resource_(false),
         ignore_is_using_data_reduction_proxy_check_(false) {}
   ~TestLoFiDecider() override {}
@@ -148,6 +151,10 @@ class TestLoFiDecider : public LoFiDecider {
 
   void SetIsUsingClientLoFi(bool should_be_client_lofi) {
     should_be_client_lofi_ = should_be_client_lofi;
+  }
+
+  void SetIsClientLoFiAutoReload(bool should_be_client_lofi_auto_reload) {
+    should_be_client_lofi_auto_reload_ = should_be_client_lofi_auto_reload;
   }
 
   void MaybeSetAcceptTransformHeader(
@@ -198,12 +205,18 @@ class TestLoFiDecider : public LoFiDecider {
     return should_be_client_lofi_;
   }
 
+  bool IsClientLoFiAutoReloadRequest(
+      const net::URLRequest& request) const override {
+    return should_be_client_lofi_auto_reload_;
+  }
+
   void ignore_is_using_data_reduction_proxy_check() {
     ignore_is_using_data_reduction_proxy_check_ = true;
   }
 
  private:
   bool should_be_client_lofi_;
+  bool should_be_client_lofi_auto_reload_;
   bool should_request_lofi_resource_;
   bool ignore_is_using_data_reduction_proxy_check_;
 };
@@ -225,6 +238,27 @@ class TestLoFiUIService : public LoFiUIService {
   bool on_lofi_response_;
 };
 
+class TestPreviewsDecider : public previews::PreviewsDecider {
+ public:
+  TestPreviewsDecider() {}
+  ~TestPreviewsDecider() override {}
+  // previews::PreviewsDecider:
+  bool ShouldAllowPreviewAtECT(
+      const net::URLRequest& request,
+      previews::PreviewsType type,
+      net::EffectiveConnectionType effective_connection_type_threshold)
+      const override {
+    return true;
+  }
+
+  // Same as ShouldAllowPreviewAtECT, but uses the previews default
+  // EffectiveConnectionType.
+  bool ShouldAllowPreview(const net::URLRequest& request,
+                          previews::PreviewsType type) const override {
+    return true;
+  }
+};
+
 enum ProxyTestConfig { USE_SECURE_PROXY, USE_INSECURE_PROXY, BYPASS_PROXY };
 
 class DataReductionProxyNetworkDelegateTest : public testing::Test {
@@ -232,6 +266,8 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
   DataReductionProxyNetworkDelegateTest()
       : context_(true),
         context_storage_(&context_),
+        lofi_decider_(nullptr),
+        lofi_ui_service_(nullptr),
         ssl_socket_data_provider_(net::ASYNC, net::OK) {
     ssl_socket_data_provider_.next_proto = net::kProtoHTTP11;
     ssl_socket_data_provider_.cert = net::ImportCertFromFile(
@@ -839,6 +875,9 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       base::TrimString(kOtherProxy, "/", &proxy);
     data_reduction_proxy_info.UseNamedProxy(proxy);
 
+    // Needed as a parameter, but functionality is not tested.
+    TestPreviewsDecider test_previews_decider;
+
     {
       // Main frame loaded. Lo-Fi should be used.
       net::HttpRequestHeaders headers;
@@ -848,15 +887,16 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       std::unique_ptr<net::URLRequest> fake_request = context()->CreateRequest(
           GURL(kTestURL), net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
       fake_request->SetLoadFlags(net::LOAD_MAIN_FRAME_DEPRECATED);
-      lofi_decider()->SetIsUsingLoFi(
-          config()->ShouldEnableLoFi(*fake_request.get()));
+      lofi_decider()->SetIsUsingLoFi(config()->ShouldEnableLoFi(
+          *fake_request.get(), &test_previews_decider));
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
 
       VerifyHeaders(tests[i].is_data_reduction_proxy, true, headers);
       VerifyDataReductionProxyData(
           *fake_request, tests[i].is_data_reduction_proxy,
-          config()->ShouldEnableLoFi(*fake_request.get()));
+          config()->ShouldEnableLoFi(*fake_request.get(),
+                                     &test_previews_decider));
     }
 
     {
@@ -930,13 +970,14 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       std::unique_ptr<net::URLRequest> fake_request = context()->CreateRequest(
           GURL(kTestURL), net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
       fake_request->SetLoadFlags(net::LOAD_MAIN_FRAME_DEPRECATED);
-      lofi_decider()->SetIsUsingLoFi(
-          config()->ShouldEnableLoFi(*fake_request.get()));
+      lofi_decider()->SetIsUsingLoFi(config()->ShouldEnableLoFi(
+          *fake_request.get(), &test_previews_decider));
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
       VerifyDataReductionProxyData(
           *fake_request, tests[i].is_data_reduction_proxy,
-          config()->ShouldEnableLoFi(*fake_request.get()));
+          config()->ShouldEnableLoFi(*fake_request.get(),
+                                     &test_previews_decider));
     }
   }
 }
@@ -1227,8 +1268,10 @@ TEST_F(DataReductionProxyNetworkDelegateTest, NetHistograms) {
           switches::kDataReductionProxyLoFiValueAlwaysOn);
     }
 
-    lofi_decider()->SetIsUsingLoFi(
-        config()->ShouldEnableLoFi(*fake_request.get()));
+    // Needed as a parameter, but functionality is not tested.
+    TestPreviewsDecider test_previews_decider;
+    lofi_decider()->SetIsUsingLoFi(config()->ShouldEnableLoFi(
+        *fake_request.get(), &test_previews_decider));
 
     fake_request = (FetchURLRequest(GURL(kTestURL), nullptr, response_headers,
                                     kResponseContentLength, 0));
@@ -1651,6 +1694,186 @@ TEST_F(DataReductionProxyNetworkDelegateTest, ECTHeaderEnabledWithoutVary) {
   // When the ECT is set to a different value, the response should still be
   // served from the cache.
   FetchURLRequestAndVerifyECTHeader(effective_connection_types[1], true, true);
+}
+
+class DataReductionProxyNetworkDelegateClientLoFiTest : public testing::Test {
+ public:
+  DataReductionProxyNetworkDelegateClientLoFiTest() : baseline_savings_(0) {}
+  ~DataReductionProxyNetworkDelegateClientLoFiTest() override;
+
+  void Reset() {
+    drp_test_context_.reset();
+    mock_socket_factory_.reset();
+    context_storage_.reset();
+
+    context_.reset(new net::TestURLRequestContext(true));
+    context_storage_.reset(new net::URLRequestContextStorage(context_.get()));
+    mock_socket_factory_.reset(new net::MockClientSocketFactory());
+    context_->set_client_socket_factory(mock_socket_factory_.get());
+
+    drp_test_context_ =
+        DataReductionProxyTestContext::Builder()
+            .WithURLRequestContext(context_.get())
+            .WithMockClientSocketFactory(mock_socket_factory_.get())
+            .Build();
+
+    drp_test_context_->AttachToURLRequestContext(context_storage_.get());
+    context_->Init();
+    base::RunLoop().RunUntilIdle();
+
+    baseline_savings_ =
+        drp_test_context()->settings()->GetTotalHttpContentLengthSaved();
+  }
+
+  void SetUpLoFiDecider(bool is_client_lofi_image,
+                        bool is_client_lofi_auto_reload) const {
+    std::unique_ptr<TestLoFiDecider> lofi_decider(new TestLoFiDecider());
+    lofi_decider->SetIsUsingClientLoFi(is_client_lofi_image);
+    lofi_decider->SetIsClientLoFiAutoReload(is_client_lofi_auto_reload);
+    drp_test_context_->io_data()->set_lofi_decider(
+        std::unique_ptr<LoFiDecider>(std::move(lofi_decider)));
+  }
+
+  int64_t GetSavings() const {
+    return drp_test_context()->settings()->GetTotalHttpContentLengthSaved() -
+           baseline_savings_;
+  }
+
+  net::TestURLRequestContext* context() const { return context_.get(); }
+  net::MockClientSocketFactory* mock_socket_factory() const {
+    return mock_socket_factory_.get();
+  }
+  DataReductionProxyTestContext* drp_test_context() const {
+    return drp_test_context_.get();
+  }
+
+ private:
+  base::MessageLoopForIO loop;
+  std::unique_ptr<net::TestURLRequestContext> context_;
+  std::unique_ptr<net::URLRequestContextStorage> context_storage_;
+  std::unique_ptr<net::MockClientSocketFactory> mock_socket_factory_;
+  std::unique_ptr<DataReductionProxyTestContext> drp_test_context_;
+  int64_t baseline_savings_;
+};
+
+DataReductionProxyNetworkDelegateClientLoFiTest::
+    ~DataReductionProxyNetworkDelegateClientLoFiTest() {}
+
+TEST_F(DataReductionProxyNetworkDelegateClientLoFiTest, DataSavingsNonDRP) {
+  const char kSimple200ResponseHeaders[] =
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Length: 140\r\n\r\n";
+
+  const struct {
+    const char* headers;
+    size_t response_length;
+    bool is_client_lofi_image;
+    bool is_client_lofi_auto_reload;
+    int64_t expected_savings;
+  } tests[] = {
+      // 200 responses shouldn't see any savings.
+      {kSimple200ResponseHeaders, 140, false, false, 0},
+      {kSimple200ResponseHeaders, 140, true, false, 0},
+
+      // Client Lo-Fi Auto-reload responses should see negative savings.
+      {kSimple200ResponseHeaders, 140, false, true,
+       -(static_cast<int64_t>(sizeof(kSimple200ResponseHeaders) - 1) + 140)},
+      {kSimple200ResponseHeaders, 140, true, true,
+       -(static_cast<int64_t>(sizeof(kSimple200ResponseHeaders) - 1) + 140)},
+
+      // A range response that doesn't use Client Lo-Fi shouldn't see any
+      // savings.
+      {"HTTP/1.1 206 Partial Content\r\n"
+       "Content-Range: bytes 0-2047/10000\r\n"
+       "Content-Length: 2048\r\n\r\n",
+       2048, false, false, 0},
+
+      // A Client Lo-Fi range response should see savings based on the
+      // Content-Range header.
+      {"HTTP/1.1 206 Partial Content\r\n"
+       "Content-Range: bytes 0-2047/10000\r\n"
+       "Content-Length: 2048\r\n\r\n",
+       2048, true, false, 10000 - 2048},
+
+      // A Client Lo-Fi range response should see savings based on the
+      // Content-Range header, which in this case is 0 savings because the range
+      // response contained the entire resource.
+      {"HTTP/1.1 206 Partial Content\r\n"
+       "Content-Range: bytes 0-999/1000\r\n"
+       "Content-Length: 1000\r\n\r\n",
+       1000, true, false, 0},
+
+      // Client Lo-Fi range responses that don't have a Content-Range with the
+      // full resource length shouldn't see any savings.
+      {"HTTP/1.1 206 Partial Content\r\n"
+       "Content-Length: 2048\r\n\r\n",
+       2048, true, false, 0},
+      {"HTTP/1.1 206 Partial Content\r\n"
+       "Content-Range: bytes 0-2047/*\r\n"
+       "Content-Length: 2048\r\n\r\n",
+       2048, true, false, 0},
+      {"HTTP/1.1 206 Partial Content\r\n"
+       "Content-Range: invalid_content_range\r\n"
+       "Content-Length: 2048\r\n\r\n",
+       2048, true, false, 0},
+  };
+
+  for (const auto& test : tests) {
+    Reset();
+    SetUpLoFiDecider(test.is_client_lofi_image,
+                     test.is_client_lofi_auto_reload);
+
+    std::string response_body(test.response_length, 'a');
+    net::MockRead reads[] = {net::MockRead(test.headers),
+                             net::MockRead(response_body.c_str()),
+                             net::MockRead(net::ASYNC, net::OK)};
+    net::StaticSocketDataProvider socket(reads, arraysize(reads), nullptr, 0);
+    mock_socket_factory()->AddSocketDataProvider(&socket);
+
+    net::TestDelegate test_delegate;
+    std::unique_ptr<net::URLRequest> request = context()->CreateRequest(
+        GURL("http://example.com"), net::RequestPriority::IDLE, &test_delegate);
+
+    request->Start();
+    base::RunLoop().RunUntilIdle();
+
+    EXPECT_EQ(test.expected_savings, GetSavings()) << (&test - tests);
+  }
+}
+
+TEST_F(DataReductionProxyNetworkDelegateClientLoFiTest, DataSavingsThroughDRP) {
+  Reset();
+  drp_test_context()->EnableDataReductionProxyWithSecureProxyCheckSuccess();
+  SetUpLoFiDecider(true, false);
+
+  const char kHeaders[] =
+      "HTTP/1.1 206 Partial Content\r\n"
+      "Content-Range: bytes 0-2047/10000\r\n"
+      "Content-Length: 2048\r\n"
+      "Via: 1.1 Chrome-Compression-Proxy\r\n"
+      "X-Original-Content-Length: 3000\r\n\r\n";
+
+  std::string response_body(2048, 'a');
+  net::MockRead reads[] = {net::MockRead(kHeaders),
+                           net::MockRead(response_body.c_str()),
+                           net::MockRead(net::ASYNC, net::OK)};
+  net::StaticSocketDataProvider socket(reads, arraysize(reads), nullptr, 0);
+  mock_socket_factory()->AddSocketDataProvider(&socket);
+
+  net::TestDelegate test_delegate;
+  std::unique_ptr<net::URLRequest> request = context()->CreateRequest(
+      GURL("http://example.com"), net::RequestPriority::IDLE, &test_delegate);
+
+  request->Start();
+  base::RunLoop().RunUntilIdle();
+
+  // Since the Data Reduction Proxy is enabled, the length of the raw headers
+  // should be used in the estimated original size. The X-OCL should be ignored.
+  EXPECT_EQ(static_cast<int64_t>(net::HttpUtil::AssembleRawHeaders(
+                                     kHeaders, sizeof(kHeaders) - 1)
+                                     .size() +
+                                 10000 - request->GetTotalReceivedBytes()),
+            GetSavings());
 }
 
 }  // namespace

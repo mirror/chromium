@@ -106,9 +106,9 @@ TEST_F(ImageBitmapTest, ImageResourceConsistency) {
   const ImageBitmapOptions default_options;
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::Create());
-  ImageResourceContent* image =
-      ImageResourceContent::Create(StaticBitmapImage::Create(image_).Get());
-  image_element->SetImageResource(image);
+  ImageResourceContent* image = ImageResourceContent::CreateLoaded(
+      StaticBitmapImage::Create(image_).Get());
+  image_element->SetImageForTest(image);
 
   Optional<IntRect> crop_rect =
       IntRect(0, 0, image_->width(), image_->height());
@@ -149,8 +149,9 @@ TEST_F(ImageBitmapTest, ImageResourceConsistency) {
 TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
   HTMLImageElement* image = HTMLImageElement::Create(*Document::Create());
   ImageResourceContent* original_image_resource =
-      ImageResourceContent::Create(StaticBitmapImage::Create(image_).Get());
-  image->SetImageResource(original_image_resource);
+      ImageResourceContent::CreateLoaded(
+          StaticBitmapImage::Create(image_).Get());
+  image->SetImageForTest(original_image_resource);
 
   const ImageBitmapOptions default_options;
   Optional<IntRect> crop_rect =
@@ -163,9 +164,9 @@ TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
   ASSERT_NE(image_bitmap->BitmapImage()->ImageForCurrentFrame(),
             original_image_resource->GetImage()->ImageForCurrentFrame());
 
-  ImageResourceContent* new_image_resource =
-      ImageResourceContent::Create(StaticBitmapImage::Create(image2_).Get());
-  image->SetImageResource(new_image_resource);
+  ImageResourceContent* new_image_resource = ImageResourceContent::CreateLoaded(
+      StaticBitmapImage::Create(image2_).Get());
+  image->SetImageForTest(new_image_resource);
 
   {
     ASSERT_NE(image_bitmap->BitmapImage()->ImageForCurrentFrame(),
@@ -241,8 +242,9 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionHTMLImageElement) {
                     image->width() * raster_image_info.bytesPerPixel(), 5, 5);
 
   ImageResourceContent* original_image_resource =
-      ImageResourceContent::Create(StaticBitmapImage::Create(image).Get());
-  image_element->SetImageResource(original_image_resource);
+      ImageResourceContent::CreateLoaded(
+          StaticBitmapImage::Create(image).Get());
+  image_element->SetImageForTest(original_image_resource);
 
   Optional<IntRect> crop_rect = IntRect(0, 0, image->width(), image->height());
 
@@ -352,8 +354,9 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageBitmap) {
                     image->width() * raster_image_info.bytesPerPixel(), 5, 5);
 
   ImageResourceContent* source_image_resource =
-      ImageResourceContent::Create(StaticBitmapImage::Create(image).Get());
-  image_element->SetImageResource(source_image_resource);
+      ImageResourceContent::CreateLoaded(
+          StaticBitmapImage::Create(image).Get());
+  image_element->SetImageForTest(source_image_resource);
 
   Optional<IntRect> crop_rect = IntRect(0, 0, image->width(), image->height());
   ImageBitmapOptions options =

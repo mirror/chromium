@@ -46,6 +46,7 @@
 #include "platform/fonts/FontSmoothingMode.h"
 #include "platform/fonts/TextRenderingMode.h"
 #include "platform/graphics/GraphicsTypes.h"
+#include "platform/graphics/TouchAction.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/text/TextRun.h"
 #include "platform/text/WritingMode.h"
@@ -1282,21 +1283,21 @@ template <>
 inline TextDecoration CSSIdentifierValue::ConvertTo() const {
   switch (value_id_) {
     case CSSValueNone:
-      return kTextDecorationNone;
+      return TextDecoration::kNone;
     case CSSValueUnderline:
-      return kTextDecorationUnderline;
+      return TextDecoration::kUnderline;
     case CSSValueOverline:
-      return kTextDecorationOverline;
+      return TextDecoration::kOverline;
     case CSSValueLineThrough:
-      return kTextDecorationLineThrough;
+      return TextDecoration::kLineThrough;
     case CSSValueBlink:
-      return kTextDecorationBlink;
+      return TextDecoration::kBlink;
     default:
       break;
   }
 
   NOTREACHED();
-  return kTextDecorationNone;
+  return TextDecoration::kNone;
 }
 
 template <>
@@ -1371,16 +1372,16 @@ template <>
 inline CSSIdentifierValue::CSSIdentifierValue(ETextSecurity e)
     : CSSValue(kIdentifierClass) {
   switch (e) {
-    case TSNONE:
+    case ETextSecurity::kNone:
       value_id_ = CSSValueNone;
       break;
-    case TSDISC:
+    case ETextSecurity::kDisc:
       value_id_ = CSSValueDisc;
       break;
-    case TSCIRCLE:
+    case ETextSecurity::kCircle:
       value_id_ = CSSValueCircle;
       break;
-    case TSSQUARE:
+    case ETextSecurity::kSquare:
       value_id_ = CSSValueSquare;
       break;
   }
@@ -1390,19 +1391,19 @@ template <>
 inline ETextSecurity CSSIdentifierValue::ConvertTo() const {
   switch (value_id_) {
     case CSSValueNone:
-      return TSNONE;
+      return ETextSecurity::kNone;
     case CSSValueDisc:
-      return TSDISC;
+      return ETextSecurity::kDisc;
     case CSSValueCircle:
-      return TSCIRCLE;
+      return ETextSecurity::kCircle;
     case CSSValueSquare:
-      return TSSQUARE;
+      return ETextSecurity::kSquare;
     default:
       break;
   }
 
   NOTREACHED();
-  return TSNONE;
+  return ETextSecurity::kNone;
 }
 
 template <>
@@ -2974,31 +2975,31 @@ template <>
 inline TouchAction CSSIdentifierValue::ConvertTo() const {
   switch (value_id_) {
     case CSSValueNone:
-      return kTouchActionNone;
+      return TouchAction::kTouchActionNone;
     case CSSValueAuto:
-      return kTouchActionAuto;
+      return TouchAction::kTouchActionAuto;
     case CSSValuePanLeft:
-      return kTouchActionPanLeft;
+      return TouchAction::kTouchActionPanLeft;
     case CSSValuePanRight:
-      return kTouchActionPanRight;
+      return TouchAction::kTouchActionPanRight;
     case CSSValuePanX:
-      return kTouchActionPanX;
+      return TouchAction::kTouchActionPanX;
     case CSSValuePanUp:
-      return kTouchActionPanUp;
+      return TouchAction::kTouchActionPanUp;
     case CSSValuePanDown:
-      return kTouchActionPanDown;
+      return TouchAction::kTouchActionPanDown;
     case CSSValuePanY:
-      return kTouchActionPanY;
+      return TouchAction::kTouchActionPanY;
     case CSSValueManipulation:
-      return kTouchActionManipulation;
+      return TouchAction::kTouchActionManipulation;
     case CSSValuePinchZoom:
-      return kTouchActionPinchZoom;
+      return TouchAction::kTouchActionPinchZoom;
     default:
       break;
   }
 
   NOTREACHED();
-  return kTouchActionNone;
+  return TouchAction::kTouchActionNone;
 }
 
 template <>

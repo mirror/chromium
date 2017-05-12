@@ -60,6 +60,7 @@
 #include "ipc/ipc_sync_channel.h"
 #include "ipc/ipc_sync_message_filter.h"
 #include "mojo/edk/embedder/embedder.h"
+#include "mojo/edk/embedder/incoming_broker_client_invitation.h"
 #include "mojo/edk/embedder/named_platform_channel_pair.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
@@ -233,7 +234,8 @@ base::LazyInstance<QuitClosure>::DestructorAtExit g_quit_closure =
     LAZY_INSTANCE_INITIALIZER;
 #endif
 
-void InitializeMojoIPCChannel() {
+std::unique_ptr<mojo::edk::IncomingBrokerClientInvitation>
+InitializeMojoIPCChannel() {
   mojo::edk::ScopedPlatformHandle platform_channel;
 #if defined(OS_WIN)
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -255,8 +257,11 @@ void InitializeMojoIPCChannel() {
   // Mojo isn't supported on all child process types.
   // TODO(crbug.com/604282): Support Mojo in the remaining processes.
   if (!platform_channel.is_valid())
-    return;
-  mojo::edk::SetParentPipeHandle(std::move(platform_channel));
+    return nullptr;
+
+  return mojo::edk::IncomingBrokerClientInvitation::Accept(
+      mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
+                                  std::move(platform_channel)));
 }
 
 class ChannelBootstrapFilter : public ConnectionFilter {
@@ -308,6 +313,7 @@ ChildThreadImpl::Options::Builder::InBrowserProcess(
     const InProcessChildThreadParams& params) {
   options_.browser_process_io_runner = params.io_runner();
   options_.in_process_service_request_token = params.service_request_token();
+  options_.broker_client_invitation = params.broker_client_invitation();
   return *this;
 }
 
@@ -381,7 +387,8 @@ scoped_refptr<base::SingleThreadTaskRunner> ChildThreadImpl::GetIOTaskRunner() {
   return ChildProcess::current()->io_task_runner();
 }
 
-void ChildThreadImpl::ConnectChannel() {
+void ChildThreadImpl::ConnectChannel(
+    mojo::edk::IncomingBrokerClientInvitation* invitation) {
   std::string channel_token;
   mojo::ScopedMessagePipeHandle handle;
   if (!IsInBrowserProcess()) {
@@ -393,7 +400,7 @@ void ChildThreadImpl::ConnectChannel() {
     // TODO(rockot): Remove all paths which lead to this branch. The Channel
     // connection should always be established by a service manager connection
     // from the browser. http://crbug.com/623396.
-    handle = mojo::edk::CreateChildMessagePipe(channel_token);
+    handle = invitation->ExtractMessagePipe(channel_token);
   } else {
     DCHECK(service_manager_connection_);
     IPC::mojom::ChannelBootstrapPtr bootstrap;
@@ -413,7 +420,7 @@ void ChildThreadImpl::Init(const Options& options) {
   g_lazy_tls.Pointer()->Set(this);
   on_channel_error_called_ = false;
   message_loop_ = base::MessageLoop::current();
-#ifdef IPC_MESSAGE_LOG_ENABLED
+#if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
   // We must make sure to instantiate the IPC Logger *before* we create the
   // channel, otherwise we can get a callback on the IO thread which creates
   // the logger, and the logger does not like being created on the IO thread.
@@ -423,31 +430,35 @@ void ChildThreadImpl::Init(const Options& options) {
   channel_ =
       IPC::SyncChannel::Create(this, ChildProcess::current()->io_task_runner(),
                                ChildProcess::current()->GetShutDownEvent());
-#ifdef IPC_MESSAGE_LOG_ENABLED
+#if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
   if (!IsInBrowserProcess())
     IPC::Logging::GetInstance()->SetIPCSender(this);
 #endif
 
+  std::unique_ptr<mojo::edk::IncomingBrokerClientInvitation> invitation;
+  mojo::ScopedMessagePipeHandle service_request_pipe;
   if (!IsInBrowserProcess()) {
-    // Don't double-initialize IPC support in single-process mode.
     mojo_ipc_support_.reset(new mojo::edk::ScopedIPCSupport(
         GetIOTaskRunner(), mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST));
-    InitializeMojoIPCChannel();
-  }
-  std::string service_request_token;
-  if (!IsInBrowserProcess()) {
-    service_request_token =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-        switches::kServiceRequestChannelToken);
+    invitation = InitializeMojoIPCChannel();
+
+    std::string service_request_token =
+        base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+            switches::kServiceRequestChannelToken);
+    if (!service_request_token.empty() && invitation) {
+      service_request_pipe =
+          invitation->ExtractMessagePipe(service_request_token);
+    }
   } else {
-    service_request_token = options.in_process_service_request_token;
+    service_request_pipe =
+        options.broker_client_invitation->ExtractInProcessMessagePipe(
+            options.in_process_service_request_token);
   }
-  if (!service_request_token.empty()) {
-    mojo::ScopedMessagePipeHandle handle =
-        mojo::edk::CreateChildMessagePipe(service_request_token);
-    DCHECK(handle.is_valid());
+
+  if (service_request_pipe.is_valid()) {
     service_manager_connection_ = ServiceManagerConnection::Create(
-        mojo::MakeRequest<service_manager::mojom::Service>(std::move(handle)),
+        mojo::MakeRequest<service_manager::mojom::Service>(
+            std::move(service_request_pipe)),
         GetIOTaskRunner());
   }
 
@@ -516,7 +527,7 @@ void ChildThreadImpl::Init(const Options& options) {
     channel_->AddFilter(startup_filter);
   }
 
-  ConnectChannel();
+  ConnectChannel(invitation.get());
 
   // This must always be done after ConnectChannel, because ConnectChannel() may
   // add a ConnectionFilter to the connection.
@@ -554,7 +565,7 @@ void ChildThreadImpl::Init(const Options& options) {
 }
 
 ChildThreadImpl::~ChildThreadImpl() {
-#ifdef IPC_MESSAGE_LOG_ENABLED
+#if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
   IPC::Logging::GetInstance()->SetIPCSender(NULL);
 #endif
 
@@ -680,7 +691,7 @@ bool ChildThreadImpl::OnMessageReceived(const IPC::Message& msg) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(ChildThreadImpl, msg)
     IPC_MESSAGE_HANDLER(ChildProcessMsg_Shutdown, OnShutdown)
-#if defined(IPC_MESSAGE_LOG_ENABLED)
+#if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
     IPC_MESSAGE_HANDLER(ChildProcessMsg_SetIPCLoggingEnabled,
                         OnSetIPCLoggingEnabled)
 #endif
@@ -747,7 +758,7 @@ void ChildThreadImpl::OnShutdown() {
   base::MessageLoop::current()->QuitWhenIdle();
 }
 
-#if defined(IPC_MESSAGE_LOG_ENABLED)
+#if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
 void ChildThreadImpl::OnSetIPCLoggingEnabled(bool enable) {
   if (enable)
     IPC::Logging::GetInstance()->Enable();

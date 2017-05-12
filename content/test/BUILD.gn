@@ -169,6 +169,8 @@ static_library("test_support") {
     "mock_leveldb_database.h",
     "mock_permission_manager.cc",
     "mock_permission_manager.h",
+    "mock_platform_notification_service.cc",
+    "mock_platform_notification_service.h",
     "mock_render_process.cc",
     "mock_render_process.h",
     "mock_ssl_host_state_delegate.cc",
@@ -463,16 +465,12 @@ mojom("content_test_mojo_bindings") {
     "../public/test/test_service.mojom",
     "test_browser_associated_interfaces.mojom",
   ]
-
-  use_once_callback = true
 }
 
 mojom("web_ui_test_mojo_bindings") {
   sources = [
     "data/web_ui_test_mojo_bindings.mojom",
   ]
-
-  use_once_callback = true
 }
 
 static_library("layouttest_support") {
@@ -701,6 +699,7 @@ test("content_browsertests") {
     "../browser/web_contents/web_contents_view_aura_browsertest.cc",
     "../browser/web_contents_binding_set_browsertest.cc",
     "../browser/webkit_browsertest.cc",
+    "../browser/webui/web_ui_browsertest.cc",
     "../browser/webui/web_ui_mojo_browsertest.cc",
     "../browser/zoom_browsertest.cc",
     "../child/site_isolation_stats_gatherer_browsertest.cc",

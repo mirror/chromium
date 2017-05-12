@@ -408,29 +408,23 @@ TEST_F(DataReductionProxyParamsTest, QuicFieldTrial) {
   const struct {
     std::string trial_group_name;
     bool expected_enabled;
-    std::string zero_rtt_param;
-    bool expected_zero_rtt;
     bool enable_warmup_url;
     bool expect_warmup_url_enabled;
     std::string warmup_url;
   } tests[] = {
-      {"Enabled", true, "true", true, true, true, std::string()},
-      {"Enabled", true, "true", true, false, false, std::string()},
-      {"Enabled_Control", true, "true", true, true, true, std::string()},
-      {"Enabled_Control", true, "false", false, true, true, std::string()},
-      {"Enabled_Control", true, std::string(), false, true, true,
-       std::string()},
-      {"Control", false, "true", false, true, true, std::string()},
-      {"Disabled", false, "false", false, true, false, std::string()},
-      {"enabled", true, "false", false, true, true, std::string()},
-      {"Enabled", true, "true", true, true, true, "example.com/test.html"},
-      {std::string(), true, "true", false, false, false, std::string()},
+      {"Enabled", true, true, true, std::string()},
+      {"Enabled", true, false, false, std::string()},
+      {"Enabled_Control", true, true, true, std::string()},
+      {"Control", false, true, true, std::string()},
+      {"Disabled", false, true, false, std::string()},
+      {"enabled", true, true, true, std::string()},
+      {"Enabled", true, true, true, "example.com/test.html"},
+      {std::string(), true, false, false, std::string()},
   };
 
   for (const auto& test : tests) {
     variations::testing::ClearAllVariationParams();
     std::map<std::string, std::string> variation_params;
-    variation_params["enable_zero_rtt"] = test.zero_rtt_param;
     if (test.enable_warmup_url)
       variation_params["enable_warmup"] = "true";
 
@@ -445,7 +439,6 @@ TEST_F(DataReductionProxyParamsTest, QuicFieldTrial) {
                                            test.trial_group_name);
 
     EXPECT_EQ(test.expected_enabled, params::IsIncludedInQuicFieldTrial());
-    EXPECT_EQ(test.expected_zero_rtt, params::IsZeroRttQuicEnabled());
     if (!test.warmup_url.empty()) {
       EXPECT_EQ(GURL(test.warmup_url), params::GetWarmupURL());
     } else {
@@ -453,6 +446,44 @@ TEST_F(DataReductionProxyParamsTest, QuicFieldTrial) {
                 params::GetWarmupURL());
     }
     EXPECT_EQ(test.expect_warmup_url_enabled, params::FetchWarmupURLEnabled());
+  }
+}
+
+// Tests if the QUIC field trial |enable_quic_non_core_proxies| is set
+// correctly.
+TEST_F(DataReductionProxyParamsTest, QuicEnableNonCoreProxies) {
+  const struct {
+    std::string trial_group_name;
+    bool expected_enabled;
+    std::string enable_non_core_proxies;
+    bool expected_enable_non_core_proxies;
+  } tests[] = {
+      {"Enabled", true, "true", true},
+      {"Enabled", true, "false", false},
+      {"Enabled", true, std::string(), false},
+      {"Control", false, "true", false},
+      {"Disabled", false, "true", false},
+  };
+
+  for (const auto& test : tests) {
+    variations::testing::ClearAllVariationParams();
+    std::map<std::string, std::string> variation_params;
+    variation_params["enable_quic_non_core_proxies"] =
+        test.enable_non_core_proxies;
+
+    ASSERT_TRUE(variations::AssociateVariationParams(
+        params::GetQuicFieldTrialName(), test.trial_group_name,
+        variation_params));
+
+    base::FieldTrialList field_trial_list(nullptr);
+    base::FieldTrialList::CreateFieldTrial(params::GetQuicFieldTrialName(),
+                                           test.trial_group_name);
+
+    EXPECT_EQ(test.expected_enabled, params::IsIncludedInQuicFieldTrial());
+    if (params::IsIncludedInQuicFieldTrial()) {
+      EXPECT_EQ(test.expected_enable_non_core_proxies,
+                params::IsQuicEnabledForNonCoreProxies());
+    }
   }
 }
 

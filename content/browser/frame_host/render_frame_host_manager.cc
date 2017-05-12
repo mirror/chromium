@@ -2017,33 +2017,8 @@ bool RenderFrameHostManager::InitRenderFrame(
   if (existing_proxy) {
     proxy_routing_id = existing_proxy->GetRoutingID();
     CHECK_NE(proxy_routing_id, MSG_ROUTING_NONE);
-    if (!existing_proxy->is_render_frame_proxy_live()) {
-      // Calling InitRenderFrameProxy on main frames seems to be causing
-      // https://crbug.com/575245, so track down how this can happen.
-      // TODO(creis): Remove this once we've found the cause.
-      if (!frame_tree_node_->parent()) {
-        base::debug::SetCrashKeyValue(
-            "initrf_frame_id",
-            base::IntToString(render_frame_host->GetRoutingID()));
-        base::debug::SetCrashKeyValue("initrf_proxy_id",
-                                      base::IntToString(proxy_routing_id));
-        base::debug::SetCrashKeyValue(
-            "initrf_view_id",
-            base::IntToString(
-                render_frame_host->render_view_host()->GetRoutingID()));
-        base::debug::SetCrashKeyValue(
-            "initrf_main_frame_id",
-            base::IntToString(render_frame_host->render_view_host()
-                                  ->main_frame_routing_id()));
-        base::debug::SetCrashKeyValue(
-            "initrf_view_is_live",
-            render_frame_host->render_view_host()->IsRenderViewLive() ? "yes"
-                                                                      : "no");
-        base::debug::DumpWithoutCrashing();
-      }
-
+    if (!existing_proxy->is_render_frame_proxy_live())
       existing_proxy->InitRenderFrameProxy();
-    }
   }
 
   // TODO(alexmos): These crash keys are temporary to track down
@@ -2214,9 +2189,6 @@ void RenderFrameHostManager::CommitPending() {
         SetRenderFrameHost(std::move(speculative_render_frame_host_));
   }
 
-  // The process will no longer try to exit, so we can decrement the count.
-  render_frame_host_->GetProcess()->RemovePendingView();
-
   // Save off the old background color before possibly deleting the
   // old RenderWidgetHostView.
   SkColor old_background_color = SK_ColorWHITE;
@@ -2232,6 +2204,9 @@ void RenderFrameHostManager::CommitPending() {
     // In most cases, we need to show the new view.
     render_frame_host_->GetView()->Show();
   }
+  // The process will no longer try to exit, so we can decrement the count.
+  render_frame_host_->GetProcess()->RemovePendingView();
+
   if (!new_rfh_has_view) {
     // If the view is gone, then this RenderViewHost died while it was hidden.
     // We ignored the RenderProcessGone call at the time, so we should send it

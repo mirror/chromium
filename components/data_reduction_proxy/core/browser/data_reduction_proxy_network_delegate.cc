@@ -4,6 +4,7 @@
 
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.h"
 
+#include <algorithm>
 #include <limits>
 #include <utility>
 
@@ -117,18 +118,48 @@ void RecordContentLengthHistograms(bool lofi_low_header_added,
                           received_content_length);
 }
 
-// Given a |request| that went through the Data Reduction Proxy, this function
-// estimates how many bytes would have been received if the response had been
-// received directly from the origin using HTTP/1.1 with a content length of
-// |adjusted_original_content_length|.
-int64_t EstimateOriginalReceivedBytes(const net::URLRequest& request) {
+// Estimate the size of the original headers of |request|. If |used_drp| is
+// true, then it's assumed that the original request would have used HTTP/1.1,
+// otherwise it assumes that the original request would have used the same
+// protocol as |request| did. This is to account for stuff like HTTP/2 header
+// compression.
+int64_t EstimateOriginalHeaderBytes(const net::URLRequest& request,
+                                    bool used_drp) {
+  if (used_drp) {
+    // TODO(sclittle): Remove headers added by Data Reduction Proxy when
+    // computing original size. https://crbug.com/535701.
+    return request.response_headers()->raw_headers().size();
+  }
+  return std::max<int64_t>(0, request.GetTotalReceivedBytes() -
+                                  request.received_response_content_length());
+}
+
+// Given a |request| that went through the Data Reduction Proxy if |used_drp| is
+// true, this function estimates how many bytes would have been received if the
+// response had been received directly from the origin without any data saver
+// optimizations.
+int64_t EstimateOriginalReceivedBytes(const net::URLRequest& request,
+                                      bool used_drp,
+                                      const LoFiDecider* lofi_decider) {
   if (request.was_cached() || !request.response_headers())
     return request.GetTotalReceivedBytes();
 
-  // TODO(sclittle): Remove headers added by Data Reduction Proxy when computing
-  // original size. http://crbug/535701.
-  return request.response_headers()->raw_headers().size() +
-         util::CalculateEffectiveOCL(request);
+  if (lofi_decider) {
+    if (lofi_decider->IsClientLoFiAutoReloadRequest(request))
+      return 0;
+
+    int64_t first, last, length;
+    if (lofi_decider->IsClientLoFiImageRequest(request) &&
+        request.response_headers()->GetContentRangeFor206(&first, &last,
+                                                          &length) &&
+        length > request.received_response_content_length()) {
+      return EstimateOriginalHeaderBytes(request, used_drp) + length;
+    }
+  }
+
+  return used_drp ? EstimateOriginalHeaderBytes(request, used_drp) +
+                        util::CalculateEffectiveOCL(request)
+                  : request.GetTotalReceivedBytes();
 }
 
 // Verifies that the chrome proxy related request headers are set correctly.
@@ -261,6 +292,8 @@ void DataReductionProxyNetworkDelegate::OnBeforeSendHeadersInternal(
     data = DataReductionProxyData::GetDataAndCreateIfNecessary(request);
     if (data)
       data->set_used_data_reduction_proxy(true);
+
+    headers->RemoveHeader(chrome_proxy_header());
     VerifyHttpRequestHeaders(false, *headers);
     return;
   }
@@ -288,6 +321,7 @@ void DataReductionProxyNetworkDelegate::OnBeforeSendHeadersInternal(
       lofi_decider->RemoveAcceptTransformHeader(headers);
     }
     RemoveChromeProxyECTHeader(headers);
+    headers->RemoveHeader(chrome_proxy_header());
     VerifyHttpRequestHeaders(false, *headers);
     return;
   }
@@ -380,15 +414,15 @@ void DataReductionProxyNetworkDelegate::OnCompletedInternal(
                                                               net_error);
 
   net::HttpRequestHeaders request_headers;
-  bool server_lofi = data_reduction_proxy_io_data_ &&
-                     request->response_headers() &&
+  bool server_lofi = request->response_headers() &&
                      IsEmptyImagePreview(*(request->response_headers()));
   bool client_lofi =
       data_reduction_proxy_io_data_ &&
       data_reduction_proxy_io_data_->lofi_decider() &&
       data_reduction_proxy_io_data_->lofi_decider()->IsClientLoFiImageRequest(
           *request);
-  if (server_lofi || client_lofi) {
+  if ((server_lofi || client_lofi) && data_reduction_proxy_io_data_ &&
+      data_reduction_proxy_io_data_->lofi_ui_service()) {
     data_reduction_proxy_io_data_->lofi_ui_service()->OnLoFiReponseReceived(
         *request);
   } else if (data_reduction_proxy_io_data_ && request->response_headers() &&
@@ -430,7 +464,8 @@ void DataReductionProxyNetworkDelegate::OnHeadersReceivedInternal(
     const net::HttpResponseHeaders* original_response_headers,
     scoped_refptr<net::HttpResponseHeaders>* override_response_headers,
     GURL* allowed_unsafe_redirect_url) {
-  if (!original_response_headers)
+  if (!original_response_headers ||
+      original_response_headers->IsRedirect(nullptr))
     return;
   if (IsEmptyImagePreview(*original_response_headers)) {
     DataReductionProxyData* data =
@@ -440,6 +475,14 @@ void DataReductionProxyNetworkDelegate::OnHeadersReceivedInternal(
     DataReductionProxyData* data =
         DataReductionProxyData::GetDataAndCreateIfNecessary(request);
     data->set_lite_page_received(true);
+  }
+  if (data_reduction_proxy_io_data_ &&
+      data_reduction_proxy_io_data_->lofi_decider() &&
+      data_reduction_proxy_io_data_->lofi_decider()->IsClientLoFiImageRequest(
+          *request)) {
+    DataReductionProxyData* data =
+        DataReductionProxyData::GetDataAndCreateIfNecessary(request);
+    data->set_client_lofi_requested(true);
   }
 }
 
@@ -451,10 +494,11 @@ void DataReductionProxyNetworkDelegate::CalculateAndRecordDataUsage(
 
   // Estimate how many bytes would have been used if the DataReductionProxy was
   // not used, and record the data usage.
-  int64_t original_size = data_used;
-
-  if (request_type == VIA_DATA_REDUCTION_PROXY)
-    original_size = EstimateOriginalReceivedBytes(request);
+  int64_t original_size = EstimateOriginalReceivedBytes(
+      request, request_type == VIA_DATA_REDUCTION_PROXY,
+      data_reduction_proxy_io_data_
+          ? data_reduction_proxy_io_data_->lofi_decider()
+          : nullptr);
 
   std::string mime_type;
   if (request.response_headers())

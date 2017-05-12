@@ -13,6 +13,10 @@
 #include "media/media_features.h"
 #include "ppapi/features/features.h"
 
+namespace base {
+class CommandLine;
+}
+
 namespace switches {
 
 MEDIA_EXPORT extern const char kAudioBufferSize[];
@@ -45,12 +49,15 @@ MEDIA_EXPORT extern const char kWaveOutBuffers[];
 MEDIA_EXPORT extern const char kUseCras[];
 #endif
 
+MEDIA_EXPORT extern const char
+    kUnsafelyAllowProtectedMediaIdentifierForDomain[];
+
 #if !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
-MEDIA_EXPORT extern const char kEnableDefaultMediaSession[];
+MEDIA_EXPORT extern const char kEnableAudioFocus[];
 #endif  // !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
 
 #if BUILDFLAG(ENABLE_PLUGINS)
-MEDIA_EXPORT extern const char kEnableDefaultMediaSessionDuckFlash[];
+MEDIA_EXPORT extern const char kEnableAudioFocusDuckFlash[];
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 
 #if BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
@@ -81,9 +88,9 @@ MEDIA_EXPORT extern const char kIgnoreAutoplayRestrictionsForTests[];
 
 namespace autoplay {
 
-MEDIA_EXPORT extern const char kCrossOriginUserGestureRequiredPolicy[];
 MEDIA_EXPORT extern const char kNoUserGestureRequiredPolicy[];
 MEDIA_EXPORT extern const char kUserGestureRequiredPolicy[];
+MEDIA_EXPORT extern const char kUserGestureRequiredForCrossOriginPolicy[];
 
 }  // namespace autoplay
 
@@ -120,6 +127,14 @@ MEDIA_EXPORT extern const base::Feature kMediaDrmPersistentLicense;
 MEDIA_EXPORT extern const base::Feature kD3D11VideoDecoding;
 MEDIA_EXPORT extern const base::Feature kMediaFoundationH264Encoding;
 #endif  // defined(OS_WIN)
+
+// Based on a |command_line| and the current platform, returns the effective
+// autoplay policy. In other words, it will take into account the default policy
+// if none is specified via the command line and options passed for testing.
+// Returns one of the possible autoplay policy switches from the
+// switches::autoplay namespace.
+MEDIA_EXPORT std::string GetEffectiveAutoplayPolicy(
+    const base::CommandLine& command_line);
 
 }  // namespace media
 

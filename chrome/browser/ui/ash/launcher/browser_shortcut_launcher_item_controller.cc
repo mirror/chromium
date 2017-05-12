@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/ash/launcher/browser_shortcut_launcher_item_controller.h"
 
 #include <limits>
+#include <utility>
 #include <vector>
 
 #include "ash/public/cpp/window_properties.h"
@@ -183,10 +184,11 @@ void BrowserShortcutLauncherItemController::ItemSelected(
     std::unique_ptr<ui::Event> event,
     int64_t display_id,
     ash::ShelfLaunchSource source,
-    const ItemSelectedCallback& callback) {
+    ItemSelectedCallback callback) {
   if (event && (event->flags() & ui::EF_CONTROL_DOWN)) {
     chrome::NewEmptyWindow(ChromeLauncherController::instance()->profile());
-    callback.Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED, base::nullopt);
+    std::move(callback).Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED,
+                            base::nullopt);
     return;
   }
 
@@ -196,7 +198,7 @@ void BrowserShortcutLauncherItemController::ItemSelected(
   // In case of a keyboard event, we were called by a hotkey. In that case we
   // activate the next item in line if an item of our list is already active.
   if (event && event->type() == ui::ET_KEY_RELEASED) {
-    callback.Run(ActivateOrAdvanceToNextBrowser(), std::move(items));
+    std::move(callback).Run(ActivateOrAdvanceToNextBrowser(), std::move(items));
     return;
   }
 
@@ -205,14 +207,15 @@ void BrowserShortcutLauncherItemController::ItemSelected(
 
   if (!last_browser) {
     chrome::NewEmptyWindow(profile);
-    callback.Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED, base::nullopt);
+    std::move(callback).Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED,
+                            base::nullopt);
     return;
   }
 
   ash::ShelfAction action =
       ChromeLauncherController::instance()->ActivateWindowOrMinimizeIfActive(
           last_browser->window(), items.size() == 1);
-  callback.Run(action, std::move(items));
+  std::move(callback).Run(action, std::move(items));
 }
 
 ash::MenuItemList BrowserShortcutLauncherItemController::GetAppMenuItems(
@@ -358,21 +361,16 @@ bool BrowserShortcutLauncherItemController::IsBrowserRepresentedInBrowserList(
   if (!browser || !IsBrowserFromActiveUser(browser))
     return false;
 
-  // v1 App popup windows with a valid app id have their own icon.
-  if (browser->is_app() && browser->is_type_popup() &&
-      !shelf_model_
-           ->GetShelfIDForAppID(
-               web_app::GetExtensionIdFromApplicationName(browser->app_name()))
-           .IsNull()) {
-    return false;
+  // V1 App popup windows may have their own item.
+  if (browser->is_app() && browser->is_type_popup()) {
+    ash::ShelfID id(
+        web_app::GetExtensionIdFromApplicationName(browser->app_name()));
+    if (ChromeLauncherController::instance()->GetItem(id) != nullptr)
+      return false;
   }
 
-  // Settings browsers have their own icon.
-  if (IsSettingsBrowser(browser))
-    return false;
-
-  // Tabbed browser and other popup windows are all represented.
-  return true;
+  // Settings browsers have their own item; all others should be represented.
+  return !IsSettingsBrowser(browser);
 }
 
 BrowserList::BrowserVector

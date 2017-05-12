@@ -50,6 +50,7 @@
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/forms/TextControlInnerElements.h"
+#include "core/html/media/AutoplayPolicy.h"
 #include "core/layout/compositing/CompositedSelectionBound.h"
 #include "core/loader/FrameLoaderTypes.h"
 #include "core/loader/NavigationPolicy.h"
@@ -134,7 +135,6 @@
 #include "public/web/WebSpeechRecognizerClient.h"
 #include "public/web/WebTextCheckingResult.h"
 #include "public/web/WebTextDecorationType.h"
-#include "public/web/WebTouchAction.h"
 #include "public/web/WebView.h"
 
 namespace blink {
@@ -797,19 +797,6 @@ STATIC_ASSERT_ENUM(kWebCustomHandlersRegistered,
 STATIC_ASSERT_ENUM(kWebCustomHandlersDeclined,
                    NavigatorContentUtilsClient::kCustomHandlersDeclined);
 
-STATIC_ASSERT_ENUM(kWebTouchActionNone, kTouchActionNone);
-STATIC_ASSERT_ENUM(kWebTouchActionPanLeft, kTouchActionPanLeft);
-STATIC_ASSERT_ENUM(kWebTouchActionPanRight, kTouchActionPanRight);
-STATIC_ASSERT_ENUM(kWebTouchActionPanX, kTouchActionPanX);
-STATIC_ASSERT_ENUM(kWebTouchActionPanUp, kTouchActionPanUp);
-STATIC_ASSERT_ENUM(kWebTouchActionPanDown, kTouchActionPanDown);
-STATIC_ASSERT_ENUM(kWebTouchActionPanY, kTouchActionPanY);
-STATIC_ASSERT_ENUM(kWebTouchActionPan, kTouchActionPan);
-STATIC_ASSERT_ENUM(kWebTouchActionPinchZoom, kTouchActionPinchZoom);
-STATIC_ASSERT_ENUM(kWebTouchActionManipulation, kTouchActionManipulation);
-STATIC_ASSERT_ENUM(kWebTouchActionDoubleTapZoom, kTouchActionDoubleTapZoom);
-STATIC_ASSERT_ENUM(kWebTouchActionAuto, kTouchActionAuto);
-
 STATIC_ASSERT_ENUM(WebSelection::kNoSelection, kNoSelection);
 STATIC_ASSERT_ENUM(WebSelection::kCaretSelection, kCaretSelection);
 STATIC_ASSERT_ENUM(WebSelection::kRangeSelection, kRangeSelection);
@@ -886,6 +873,14 @@ STATIC_ASSERT_ENUM(WebSettings::ProgressBarCompletion::kDOMContentLoaded,
 STATIC_ASSERT_ENUM(
     WebSettings::ProgressBarCompletion::kResourcesBeforeDCLAndSameOriginIFrames,
     ProgressBarCompletion::kResourcesBeforeDCLAndSameOriginIFrames);
+
+STATIC_ASSERT_ENUM(WebSettings::AutoplayPolicy::kNoUserGestureRequired,
+                   AutoplayPolicy::Type::kNoUserGestureRequired);
+STATIC_ASSERT_ENUM(WebSettings::AutoplayPolicy::kUserGestureRequired,
+                   AutoplayPolicy::Type::kUserGestureRequired);
+STATIC_ASSERT_ENUM(
+    WebSettings::AutoplayPolicy::kUserGestureRequiredForCrossOrigin,
+    AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin);
 
 // This ensures that the version number published in
 // WebSerializedScriptValueVersion.h matches the serializer's understanding.

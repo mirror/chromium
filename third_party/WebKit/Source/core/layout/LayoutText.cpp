@@ -208,7 +208,8 @@ void LayoutText::StyleDidChange(StyleDifference diff,
   const ComputedStyle& new_style = StyleRef();
   ETextTransform old_transform =
       old_style ? old_style->TextTransform() : ETextTransform::kNone;
-  ETextSecurity old_security = old_style ? old_style->TextSecurity() : TSNONE;
+  ETextSecurity old_security =
+      old_style ? old_style->TextSecurity() : ETextSecurity::kNone;
   if (old_transform != new_style.TextTransform() ||
       old_security != new_style.TextSecurity())
     TransformText();
@@ -249,8 +250,6 @@ void LayoutText::WillBeDestroyed() {
 }
 
 void LayoutText::ExtractTextBox(InlineTextBox* box) {
-  CheckConsistency();
-
   last_text_box_ = box->PrevTextBox();
   if (box == first_text_box_)
     first_text_box_ = nullptr;
@@ -259,13 +258,9 @@ void LayoutText::ExtractTextBox(InlineTextBox* box) {
   box->SetPreviousTextBox(nullptr);
   for (InlineTextBox* curr = box; curr; curr = curr->NextTextBox())
     curr->SetExtracted();
-
-  CheckConsistency();
 }
 
 void LayoutText::AttachTextBox(InlineTextBox* box) {
-  CheckConsistency();
-
   if (last_text_box_) {
     last_text_box_->SetNextTextBox(box);
     box->SetPreviousTextBox(last_text_box_);
@@ -278,13 +273,9 @@ void LayoutText::AttachTextBox(InlineTextBox* box) {
     last = curr;
   }
   last_text_box_ = last;
-
-  CheckConsistency();
 }
 
 void LayoutText::RemoveTextBox(InlineTextBox* box) {
-  CheckConsistency();
-
   if (box == first_text_box_)
     first_text_box_ = box->NextTextBox();
   if (box == last_text_box_)
@@ -293,8 +284,6 @@ void LayoutText::RemoveTextBox(InlineTextBox* box) {
     box->NextTextBox()->SetPreviousTextBox(box->PrevTextBox());
   if (box->PrevTextBox())
     box->PrevTextBox()->SetNextTextBox(box->NextTextBox());
-
-  CheckConsistency();
 }
 
 void LayoutText::DeleteTextBoxes() {
@@ -1685,15 +1674,15 @@ void LayoutText::SetTextInternal(PassRefPtr<StringImpl> text) {
     // We use the same characters here as for list markers.
     // See the listMarkerText function in LayoutListMarker.cpp.
     switch (Style()->TextSecurity()) {
-      case TSNONE:
+      case ETextSecurity::kNone:
         break;
-      case TSCIRCLE:
+      case ETextSecurity::kCircle:
         SecureText(kWhiteBulletCharacter);
         break;
-      case TSDISC:
+      case ETextSecurity::kDisc:
         SecureText(kBulletCharacter);
         break;
-      case TSSQUARE:
+      case ETextSecurity::kSquare:
         SecureText(kBlackSquareCharacter);
     }
   }
@@ -2026,23 +2015,6 @@ unsigned LayoutText::ResolvedTextLength() const {
     len += box->Len();
   return len;
 }
-
-#if DCHECK_IS_ON()
-
-void LayoutText::CheckConsistency() const {
-#ifdef CHECK_CONSISTENCY
-  const InlineTextBox* prev = nullptr;
-  for (const InlineTextBox* child = m_firstTextBox; child;
-       child = child->nextTextBox()) {
-    DCHECK(child->getLineLayoutItem().isEqual(this));
-    DCHECK_EQ(child->prevTextBox(), prev);
-    prev = child;
-  }
-  DCHECK_EQ(prev, m_lastTextBox);
-#endif
-}
-
-#endif
 
 void LayoutText::MomentarilyRevealLastTypedCharacter(
     unsigned last_typed_character_offset) {

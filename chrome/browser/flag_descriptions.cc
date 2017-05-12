@@ -1213,6 +1213,11 @@ const char kEnableOfflinePreviewsName[] = "Offline Page Previews";
 const char kEnableOfflinePreviewsDescription[] =
     "Enable showing offline page previews on slow networks.";
 
+const char kEnableClientLoFiName[] = "Client-side Lo-Fi previews";
+
+const char kEnableClientLoFiDescription[] =
+    "Enable showing low fidelity images on some pages on slow networks.";
+
 #endif  // defined(OS_ANDROID)
 
 const char kLcdTextName[] = "LCD text antialiasing";
@@ -2383,6 +2388,12 @@ const char kEnableContentSuggestionsSettingsDescription[] =
     "If enabled, the content suggestions settings will be available from the "
     "main settings menu.";
 
+const char kEnableContentSuggestionsShowSummaryName[] =
+    "Show content suggestions summaries.";
+
+const char kEnableContentSuggestionsShowSummaryDescription[] =
+    "If enabled, the content suggestions summaries will be shown.";
+
 const char kEnableNtpRemoteSuggestionsName[] =
     "Show server-side suggestions on the New Tab page";
 
@@ -2653,16 +2664,16 @@ const char kExpensiveBackgroundTimerThrottlingDescription[] =
 
 #if !defined(OS_ANDROID)
 
-const char kEnableDefaultMediaSessionName[] = "Manage audio focus across tabs";
+const char kEnableAudioFocusName[] = "Manage audio focus across tabs";
 
-const char kEnableDefaultMediaSessionDescription[] =
+const char kEnableAudioFocusDescription[] =
     "Manage audio focus across tabs to improve the audio mixing.";
 
-const char kEnableDefaultMediaSessionDisabled[] = "Disabled";
+const char kEnableAudioFocusDisabled[] = "Disabled";
 
-const char kEnableDefaultMediaSessionEnabled[] = "Enabled";
+const char kEnableAudioFocusEnabled[] = "Enabled";
 
-const char kEnableDefaultMediaSessionEnabledDuckFlash[] =
+const char kEnableAudioFocusEnabledDuckFlash[] =
     "Enabled (Flash lowers volume when interrupted by other sound, "
     "experimental)";
 
@@ -3076,7 +3087,7 @@ const char kAutoplayPolicyNoUserGestureRequired[] =
 
 const char kAutoplayPolicyUserGestureRequired[] = "User gesture is required.";
 
-const char kAutoplayPolicyCrossOriginUserGestureRequired[] =
+const char kAutoplayPolicyUserGestureRequiredForCrossOrigin[] =
     "User gesture is required for cross-origin iframes.";
 
 const char kOmniboxDisplayTitleForCurrentUrlName[] =
@@ -3136,5 +3147,35 @@ const char kCaptureThumbnailOnLoadFinishedName[] =
 const char kCaptureThumbnailOnLoadFinishedDescription[] =
     "Capture a page thumbnail (for use on the New Tab page) when the page load "
     "finishes, in addition to other times a thumbnail may be captured.";
+
+#if defined(OS_WIN)
+
+// Name and description of the flag that enables D3D v-sync.
+const char kEnableD3DVsync[] = "D3D v-sync";
+const char kEnableD3DVsyncDescription[] =
+    "Produces v-sync signal by having D3D wait for vertical blanking interval "
+    "to occur.";
+
+#endif  // defined(OS_WIN)
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+
+const char kUseGoogleLocalNtpName[] = "Enable using the Google local NTP";
+const char kUseGoogleLocalNtpDescription[] =
+    "Use the local New Tab page if Google is the default search engine.";
+
+const char kOneGoogleBarOnLocalNtpName[] =
+    "Enable the OneGoogleBar on the local NTP";
+const char kOneGoogleBarOnLocalNtpDescription[] =
+    "Show a OneGoogleBar on the local New Tab page if Google is the default "
+    "search engine.";
+
+#endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
+
+#if defined(OS_MACOSX)
+extern const char kMacRTLName[] = "Enable RTL";
+extern const char kMacRTLDescription[] =
+    "Mirrors the UI for RTL language users";
+#endif
 
 }  // namespace flag_descriptions

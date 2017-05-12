@@ -222,6 +222,8 @@ Polymer({
    * @private
    */
   selectedManufacturerChanged_: function(manufacturer) {
+    // Reset model if manufacturer is changed.
+    this.set('newPrinter.printerModel', '');
     if (manufacturer) {
       settings.CupsPrintersBrowserProxyImpl.getInstance()
           .getCupsPrinterModelsList(manufacturer)
@@ -287,6 +289,17 @@ Polymer({
   getBaseName_: function(path) {
     return path.substring(path.lastIndexOf('/') + 1);
   },
+
+  /**
+   * @param {string} printerManufacturer
+   * @param {string} printerModel
+   * @param {string} printerPPDPath
+   * @return {boolean} Whether we have enough information to set up the printer
+   * @private
+   */
+   canAddPrinter_: function(printerManufacturer, printerModel, printerPPDPath) {
+     return !!((printerManufacturer && printerModel) || printerPPDPath);
+   },
 });
 
 Polymer({

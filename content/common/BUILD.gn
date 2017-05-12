@@ -195,7 +195,6 @@ source_set("common") {
     "input/synthetic_tap_gesture_params.h",
     "input/synthetic_web_input_event_builders.cc",
     "input/synthetic_web_input_event_builders.h",
-    "input/touch_action.h",
     "input/touch_event_stream_validator.cc",
     "input/touch_event_stream_validator.h",
     "input/web_touch_event_traits.cc",
@@ -600,10 +599,12 @@ mojom("mojo_bindings") {
     "image_downloader/image_downloader.mojom",
     "indexed_db/indexed_db.mojom",
     "leveldb_wrapper.mojom",
+    "manifest_observer.mojom",
     "media/media_devices.mojom",
     "media/renderer_audio_output_stream_factory.mojom",
     "memory_coordinator.mojom",
     "native_types.mojom",
+    "network_service.mojom",
     "push_messaging.mojom",
     "render_frame_message_filter.mojom",
     "render_message_filter.mojom",
@@ -649,5 +650,4 @@ mojom("mojo_bindings") {
   export_class_attribute = "CONTENT_EXPORT"
   export_define = "CONTENT_IMPLEMENTATION=1"
   export_header = "content/common/content_export.h"
-  use_once_callback = true
 }

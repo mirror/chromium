@@ -14,10 +14,15 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_pingback_client.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_service.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/infobars/core/infobar.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/l10n/l10n_util.h"
+
+#if defined(OS_ANDROID)
+#include "chrome/browser/ui/android/infobars/previews_infobar.h"
+#endif
 
 namespace {
 
@@ -74,11 +79,19 @@ void PreviewsInfoBarDelegate::Create(
   if (infobar_tab_helper->displayed_preview_infobar())
     return;
 
+  std::unique_ptr<PreviewsInfoBarDelegate> delegate(new PreviewsInfoBarDelegate(
+      web_contents, infobar_type, is_data_saver_user, on_dismiss_callback));
+
+#if defined(OS_ANDROID)
+  std::unique_ptr<infobars::InfoBar> infobar_ptr(
+      PreviewsInfoBar::CreateInfoBar(infobar_service, std::move(delegate)));
+#else
+  std::unique_ptr<infobars::InfoBar> infobar_ptr(
+      infobar_service->CreateConfirmInfoBar(std::move(delegate)));
+#endif
+
   infobars::InfoBar* infobar =
-      infobar_service->AddInfoBar(infobar_service->CreateConfirmInfoBar(
-          std::unique_ptr<ConfirmInfoBarDelegate>(new PreviewsInfoBarDelegate(
-              web_contents, infobar_type, is_data_saver_user,
-              on_dismiss_callback))));
+      infobar_service->AddInfoBar(std::move(infobar_ptr));
 
   if (infobar && (infobar_type == LITE_PAGE || infobar_type == LOFI)) {
     auto* data_reduction_proxy_settings =
@@ -153,7 +166,8 @@ bool PreviewsInfoBarDelegate::LinkClicked(WindowOpenDisposition disposition) {
     auto* data_reduction_proxy_settings =
         DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
             web_contents->GetBrowserContext());
-    data_reduction_proxy_settings->IncrementLoFiUserRequestsForImages();
+    if (!data_reduction_proxy::params::IsBlackListEnabledForServerPreviews())
+      data_reduction_proxy_settings->IncrementLoFiUserRequestsForImages();
     PreviewsInfoBarTabHelper* infobar_tab_helper =
         PreviewsInfoBarTabHelper::FromWebContents(web_contents);
     if (infobar_tab_helper &&
@@ -178,4 +192,8 @@ bool PreviewsInfoBarDelegate::LinkClicked(WindowOpenDisposition disposition) {
   }
 
   return true;
+}
+
+base::string16 PreviewsInfoBarDelegate::GetTimestampText() const {
+  return base::string16();
 }

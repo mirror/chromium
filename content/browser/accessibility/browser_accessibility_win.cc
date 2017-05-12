@@ -20,29 +20,22 @@ BrowserAccessibilityWin::BrowserAccessibilityWin() {
   DCHECK(SUCCEEDED(hr));
 
   browser_accessibility_com_->AddRef();
-  browser_accessibility_com_->SetOwner(this);
 
   // Set the delegate to us
   browser_accessibility_com_->Init(this);
 }
 
-BrowserAccessibilityWin::~BrowserAccessibilityWin() {}
+BrowserAccessibilityWin::~BrowserAccessibilityWin() {
+  if (browser_accessibility_com_) {
+    browser_accessibility_com_->Destroy();
+    browser_accessibility_com_ = nullptr;
+  }
+}
 
 void BrowserAccessibilityWin::UpdatePlatformAttributes() {
   GetCOM()->UpdateStep1ComputeWinAttributes();
   GetCOM()->UpdateStep2ComputeHypertext();
   GetCOM()->UpdateStep3FireEvents(false);
-}
-
-void BrowserAccessibilityWin::Destroy() {
-  if (browser_accessibility_com_) {
-    browser_accessibility_com_->SetOwner(nullptr);
-    // TODO(dougt) AXPlatformNode::Reset
-    browser_accessibility_com_->Init(nullptr);
-    browser_accessibility_com_->Release();
-    browser_accessibility_com_ = nullptr;
-  }
-  BrowserAccessibility::Destroy();
 }
 
 void BrowserAccessibilityWin::OnSubtreeWillBeDeleted() {

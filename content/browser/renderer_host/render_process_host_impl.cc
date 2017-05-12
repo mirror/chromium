@@ -124,6 +124,7 @@
 #include "content/browser/service_worker/service_worker_dispatcher_host.h"
 #include "content/browser/shared_worker/shared_worker_message_filter.h"
 #include "content/browser/shared_worker/worker_storage_partition.h"
+#include "content/browser/site_instance_impl.h"
 #include "content/browser/speech/speech_recognition_dispatcher_host.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/browser/streams/stream_context.h"
@@ -257,7 +258,17 @@
 namespace content {
 namespace {
 
+const RenderProcessHostFactory* g_render_process_host_factory_ = nullptr;
 const char kSiteProcessMapKeyName[] = "content_site_process_map";
+
+#if defined(OS_ANDROID)
+// This matches Android's ChildProcessConnection state before OnProcessLaunched.
+constexpr bool kLaunchingProcessIsBackgrounded = true;
+constexpr bool kLaunchingProcessIsBoostedForPendingView = true;
+#else
+constexpr bool kLaunchingProcessIsBackgrounded = false;
+constexpr bool kLaunchingProcessIsBoostedForPendingView = false;
+#endif
 
 #if BUILDFLAG(ENABLE_WEBRTC)
 const base::FilePath::CharType kAecDumpFileNameAddition[] =
@@ -446,6 +457,63 @@ class SessionStorageHolder : public base::SupportsUserData::Data {
   std::unique_ptr<std::map<int, SessionStorageNamespaceMap>>
       session_storage_namespaces_awaiting_close_;
   DISALLOW_COPY_AND_ASSIGN(SessionStorageHolder);
+};
+
+const void* const kDefaultSubframeProcessHostHolderKey =
+    &kDefaultSubframeProcessHostHolderKey;
+
+class DefaultSubframeProcessHostHolder : public base::SupportsUserData::Data,
+                                         public RenderProcessHostObserver {
+ public:
+  explicit DefaultSubframeProcessHostHolder(BrowserContext* browser_context)
+      : browser_context_(browser_context) {}
+  ~DefaultSubframeProcessHostHolder() override {}
+
+  // Gets the correct render process to use for this SiteInstance.
+  RenderProcessHost* GetProcessHost(SiteInstance* site_instance,
+                                    bool is_for_guests_only) {
+    StoragePartition* default_partition =
+        BrowserContext::GetDefaultStoragePartition(browser_context_);
+    StoragePartition* partition =
+        BrowserContext::GetStoragePartition(browser_context_, site_instance);
+
+    // Is this the default storage partition? If it isn't, then just give it its
+    // own non-shared process.
+    if (partition != default_partition || is_for_guests_only) {
+      RenderProcessHostImpl* host = new RenderProcessHostImpl(
+          browser_context_, static_cast<StoragePartitionImpl*>(partition),
+          is_for_guests_only);
+      host->SetIsNeverSuitableForReuse();
+      return host;
+    }
+
+    // If we already have a shared host for the default storage partition, use
+    // it.
+    if (host_)
+      return host_;
+
+    host_ = new RenderProcessHostImpl(
+        browser_context_, static_cast<StoragePartitionImpl*>(partition),
+        false /* for guests only */);
+    host_->SetIsNeverSuitableForReuse();
+    host_->AddObserver(this);
+
+    return host_;
+  }
+
+  // Implementation of RenderProcessHostObserver.
+  void RenderProcessHostDestroyed(RenderProcessHost* host) override {
+    DCHECK_EQ(host_, host);
+    host_->RemoveObserver(this);
+    host_ = nullptr;
+  }
+
+ private:
+  BrowserContext* browser_context_;
+
+  // The default subframe render process used for the default storage partition
+  // of this BrowserContext.
+  RenderProcessHostImpl* host_ = nullptr;
 };
 
 void CreateMemoryCoordinatorHandle(
@@ -706,7 +774,9 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       is_worker_ref_count_disabled_(false),
       route_provider_binding_(this),
       visible_widgets_(0),
-      is_process_backgrounded_(false),
+      is_process_backgrounded_(kLaunchingProcessIsBackgrounded),
+      boost_priority_for_pending_views_(
+          kLaunchingProcessIsBoostedForPendingView),
       id_(ChildProcessHostImpl::GenerateChildProcessUniqueId()),
       browser_context_(browser_context),
       storage_partition_impl_(storage_partition_impl),
@@ -859,7 +929,7 @@ bool RenderProcessHostImpl::Init() {
   // null, so we re-initialize it here.
   if (!channel_)
     InitializeChannelProxy();
-  DCHECK(pending_connection_);
+  DCHECK(broker_client_invitation_);
 
   // Unpause the Channel briefly. This will be paused again below if we launch a
   // real child process. Note that messages may be sent in the short window
@@ -902,6 +972,7 @@ bool RenderProcessHostImpl::Init() {
     in_process_renderer_.reset(
         g_renderer_main_thread_factory(InProcessChildThreadParams(
             BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+            broker_client_invitation_.get(),
             child_connection_->service_token())));
 
     base::Thread::Options options;
@@ -940,7 +1011,8 @@ bool RenderProcessHostImpl::Init() {
     // at this stage.
     child_process_launcher_.reset(new ChildProcessLauncher(
         base::MakeUnique<RendererSandboxedProcessLauncherDelegate>(),
-        std::move(cmd_line), GetID(), this, std::move(pending_connection_),
+        std::move(cmd_line), GetID(), this,
+        std::move(broker_client_invitation_),
         base::Bind(&RenderProcessHostImpl::OnMojoError, id_)));
     channel_->Pause();
 
@@ -987,13 +1059,15 @@ void RenderProcessHostImpl::InitializeChannelProxy() {
   }
 
   // Establish a ServiceManager connection for the new render service instance.
-  pending_connection_.reset(new mojo::edk::PendingProcessConnection);
+  broker_client_invitation_ =
+      base::MakeUnique<mojo::edk::OutgoingBrokerClientInvitation>();
   service_manager::Identity child_identity(
       mojom::kRendererServiceName,
       BrowserContext::GetServiceUserIdFor(GetBrowserContext()),
       base::StringPrintf("%d_%d", id_, instance_id_++));
-  child_connection_.reset(new ChildConnection(
-      child_identity, pending_connection_.get(), connector, io_task_runner));
+  child_connection_.reset(new ChildConnection(child_identity,
+                                              broker_client_invitation_.get(),
+                                              connector, io_task_runner));
 
   // Send an interface request to bootstrap the IPC::Channel. Note that this
   // request will happily sit on the pipe until the process is launched and
@@ -1577,7 +1651,6 @@ void RenderProcessHostImpl::ShutdownForBadMessage(
 void RenderProcessHostImpl::WidgetRestored() {
   visible_widgets_++;
   UpdateProcessPriority();
-  DCHECK(!is_process_backgrounded_);
 }
 
 void RenderProcessHostImpl::WidgetHidden() {
@@ -1587,7 +1660,6 @@ void RenderProcessHostImpl::WidgetHidden() {
 
   --visible_widgets_;
   if (visible_widgets_ == 0) {
-    DCHECK(!is_process_backgrounded_);
     UpdateProcessPriority();
   }
 }
@@ -1605,6 +1677,11 @@ void RenderProcessHostImpl::OnAudioStreamRemoved() {
   DCHECK_GT(audio_stream_count_, 0);
   --audio_stream_count_;
   UpdateProcessPriority();
+}
+
+void RenderProcessHostImpl::set_render_process_host_factory(
+    const RenderProcessHostFactory* rph_factory) {
+  g_render_process_host_factory_ = rph_factory;
 }
 
 bool RenderProcessHostImpl::IsForGuestsOnly() const {
@@ -1769,6 +1846,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDomAutomationController,
     switches::kEnableBlinkFeatures,
     switches::kEnableBrowserSideNavigation,
+    switches::kEnableColorCorrectRendering,
     switches::kEnableColorCorrectRenderingDefaultMode,
     switches::kEnableDisplayList2dCanvas,
     switches::kEnableDistanceFieldText,
@@ -1868,7 +1946,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     cc::switches::kDisableThreadedAnimation,
     cc::switches::kDisallowNonExactResourceReuse,
     cc::switches::kEnableCheckerImaging,
-    cc::switches::kEnableColorCorrectRendering,
     cc::switches::kEnableGpuBenchmarking,
     cc::switches::kEnableLayerLists,
     cc::switches::kEnableSurfaceSynchronization,
@@ -2133,7 +2210,7 @@ void RenderProcessHostImpl::OnChannelConnected(int32_t peer_pid) {
       observer.RenderProcessReady(this);
   }
 
-#if defined(IPC_MESSAGE_LOG_ENABLED)
+#if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
   Send(new ChildProcessMsg_SetIPCLoggingEnabled(
       IPC::Logging::GetInstance()->Enabled()));
 #endif
@@ -2298,11 +2375,13 @@ void RenderProcessHostImpl::Cleanup() {
 
 void RenderProcessHostImpl::AddPendingView() {
   pending_views_++;
+  UpdateProcessPriority();
 }
 
 void RenderProcessHostImpl::RemovePendingView() {
   DCHECK(pending_views_);
   pending_views_--;
+  UpdateProcessPriority();
 }
 
 void RenderProcessHostImpl::AddWidget(RenderWidgetHost* widget) {
@@ -2702,6 +2781,52 @@ void RenderProcessHostImpl::RegisterProcessHostForSite(
     map->RegisterProcess(site, process);
 }
 
+// static
+RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
+    BrowserContext* browser_context,
+    SiteInstanceImpl* site_instance) {
+  const GURL site_url = site_instance->GetSiteURL();
+  SiteInstanceImpl::ProcessReusePolicy process_reuse_policy =
+      site_instance->process_reuse_policy();
+  bool is_for_guests_only = site_url.SchemeIs(kGuestScheme);
+  RenderProcessHost* render_process_host = nullptr;
+
+  // First, attempt to reuse an existing RenderProcessHost if necessary.
+  switch (process_reuse_policy) {
+    case SiteInstanceImpl::ProcessReusePolicy::PROCESS_PER_SITE:
+      render_process_host = GetProcessHostForSite(browser_context, site_url);
+      break;
+    case SiteInstanceImpl::ProcessReusePolicy::USE_DEFAULT_SUBFRAME_PROCESS:
+      DCHECK(SiteIsolationPolicy::IsTopDocumentIsolationEnabled());
+      render_process_host = GetDefaultSubframeProcessHost(
+          browser_context, site_instance, is_for_guests_only);
+      break;
+    default:
+      break;
+  }
+
+  // If not (or if none found), see if we should reuse an existing process.
+  if (!render_process_host &&
+      ShouldTryToUseExistingProcessHost(browser_context, site_url)) {
+    render_process_host = GetExistingProcessHost(browser_context, site_url);
+  }
+
+  // Otherwise (or if that fails), create a new one.
+  if (!render_process_host) {
+    if (g_render_process_host_factory_) {
+      render_process_host =
+          g_render_process_host_factory_->CreateRenderProcessHost(
+              browser_context, site_instance);
+    } else {
+      StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
+          BrowserContext::GetStoragePartition(browser_context, site_instance));
+      render_process_host = new RenderProcessHostImpl(
+          browser_context, partition, is_for_guests_only);
+    }
+  }
+  return render_process_host;
+}
+
 void RenderProcessHostImpl::CreateSharedRendererHistogramAllocator() {
   // Create a persistent memory segment for renderer histograms only if
   // they're active in the browser.
@@ -2780,7 +2905,6 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   ResetChannelProxy();
 
   UpdateProcessPriority();
-  DCHECK(!is_process_backgrounded_);
 
   within_process_died_observer_ = true;
   NotificationService::current()->Notify(
@@ -2869,7 +2993,9 @@ void RenderProcessHostImpl::SuddenTerminationChanged(bool enabled) {
 
 void RenderProcessHostImpl::UpdateProcessPriority() {
   if (!child_process_launcher_.get() || child_process_launcher_->IsStarting()) {
-    is_process_backgrounded_ = false;
+    is_process_backgrounded_ = kLaunchingProcessIsBackgrounded;
+    boost_priority_for_pending_views_ =
+        kLaunchingProcessIsBoostedForPendingView;
     return;
   }
 
@@ -2885,16 +3011,20 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
       visible_widgets_ == 0 && audio_stream_count_ == 0 &&
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableRendererBackgrounding);
+  const bool should_background_changed =
+      is_process_backgrounded_ != should_background;
+  const bool has_pending_views = !!pending_views_;
 
-// TODO(sebsg): Remove this ifdef when https://crbug.com/537671 is fixed.
-#if !defined(OS_ANDROID)
-  if (is_process_backgrounded_ == should_background)
+  if (!should_background_changed &&
+      boost_priority_for_pending_views_ == has_pending_views) {
     return;
-#endif
+  }
 
-  TRACE_EVENT1("renderer_host", "RenderProcessHostImpl::UpdateProcessPriority",
-               "should_background", should_background);
+  TRACE_EVENT2("renderer_host", "RenderProcessHostImpl::UpdateProcessPriority",
+               "should_background", should_background, "has_pending_views",
+               has_pending_views);
   is_process_backgrounded_ = should_background;
+  boost_priority_for_pending_views_ = has_pending_views;
 
 #if defined(OS_WIN)
   // The cbstext.dll loads as a global GetMessage hook in the browser process
@@ -2912,10 +3042,14 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
   // tasks executing at lowered priority ahead of it or simply by not being
   // swiftly scheduled by the OS per the low process priority
   // (http://crbug.com/398103).
-  child_process_launcher_->SetProcessBackgrounded(should_background);
+  child_process_launcher_->SetProcessPriority(should_background,
+                                              has_pending_views);
 
-  // Notify the child process of background state.
-  Send(new ChildProcessMsg_SetProcessBackgrounded(should_background));
+  // Notify the child process of background state. Note
+  // |boost_priority_for_pending_views_| state is not sent to renderer simply
+  // due to lack of need.
+  if (should_background_changed)
+    Send(new ChildProcessMsg_SetProcessBackgrounded(should_background));
 }
 
 void RenderProcessHostImpl::OnProcessLaunched() {
@@ -2928,7 +3062,7 @@ void RenderProcessHostImpl::OnProcessLaunched() {
 
   if (child_process_launcher_) {
     DCHECK(child_process_launcher_->GetProcess().IsValid());
-    DCHECK(!is_process_backgrounded_);
+    DCHECK_EQ(kLaunchingProcessIsBackgrounded, is_process_backgrounded_);
 
     // Unpause the channel now that the process is launched. We don't flush it
     // yet to ensure that any initialization messages sent here (e.g., things
@@ -2948,16 +3082,22 @@ void RenderProcessHostImpl::OnProcessLaunched() {
     is_process_backgrounded_ =
         child_process_launcher_->GetProcess().IsProcessBackgrounded(
             MachBroker::GetInstance());
+#elif defined(OS_ANDROID)
+    // Android child process priority works differently and cannot be queried
+    // directly from base::Process.
+    DCHECK_EQ(kLaunchingProcessIsBackgrounded, is_process_backgrounded_);
 #else
     is_process_backgrounded_ =
         child_process_launcher_->GetProcess().IsProcessBackgrounded();
 #endif  // defined(OS_MACOSX)
 
-    // Disable updating process priority on startup for now as it incorrectly
-    // results in backgrounding foreground navigations until their first commit
-    // is made. A better long term solution would be to be aware of the tab's
-    // visibility at this point. https://crbug.com/560446.
-    // Except on Android for now because of https://crbug.com/601184 :-(.
+    // Disable updating process priority on startup on desktop platforms for now
+    // as it incorrectly results in backgrounding foreground navigations until
+    // their first commit is made. A better long term solution would be to be
+    // aware of the tab's visibility at this point. https://crbug.com/560446.
+    // This is still needed on Android which uses
+    // |boost_priority_for_pending_views_| and requires RenderProcessHostImpl to
+    // propagate priority changes immediately to ChildProcessLauncher.
 #if defined(OS_ANDROID)
     UpdateProcessPriority();
 #endif
@@ -3028,6 +3168,23 @@ void RenderProcessHostImpl::OnCloseACK(int old_route_id) {
 
 void RenderProcessHostImpl::OnGpuSwitched() {
   RecomputeAndUpdateWebKitPreferences();
+}
+
+// static
+RenderProcessHost* RenderProcessHostImpl::GetDefaultSubframeProcessHost(
+    BrowserContext* browser_context,
+    SiteInstanceImpl* site_instance,
+    bool is_for_guests_only) {
+  DefaultSubframeProcessHostHolder* holder =
+      static_cast<DefaultSubframeProcessHostHolder*>(
+          browser_context->GetUserData(&kDefaultSubframeProcessHostHolderKey));
+  if (!holder) {
+    holder = new DefaultSubframeProcessHostHolder(browser_context);
+    browser_context->SetUserData(kDefaultSubframeProcessHostHolderKey,
+                                 base::WrapUnique(holder));
+  }
+
+  return holder->GetProcessHost(site_instance, is_for_guests_only);
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)

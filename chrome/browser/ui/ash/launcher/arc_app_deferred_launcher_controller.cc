@@ -111,13 +111,13 @@ void ArcAppDeferredLauncherController::Close(const std::string& app_id) {
   if (it == app_controller_map_.end())
     return;
 
-  const ash::ShelfID shelf_id = owner_->GetShelfIDForAppID(shelf_app_id);
+  const ash::ShelfID shelf_id(shelf_app_id);
   const bool need_close_item =
       it->second == owner_->shelf_model()->GetShelfItemDelegate(shelf_id);
   app_controller_map_.erase(it);
   if (need_close_item)
     owner_->CloseLauncherItem(shelf_id);
-  owner_->OnAppUpdated(owner_->profile(), shelf_app_id);
+  UpdateApp(shelf_app_id);
 }
 
 void ArcAppDeferredLauncherController::OnAppReadyChanged(
@@ -168,13 +168,19 @@ base::TimeDelta ArcAppDeferredLauncherController::GetActiveTime(
   return it->second->GetActiveTime();
 }
 
+void ArcAppDeferredLauncherController::UpdateApp(const std::string& app_id) {
+  AppIconLoader* icon_loader = owner_->GetAppIconLoaderForApp(app_id);
+  if (icon_loader)
+    icon_loader->UpdateImage(app_id);
+}
+
 void ArcAppDeferredLauncherController::UpdateApps() {
   if (app_controller_map_.empty())
     return;
 
   RegisterNextUpdate();
   for (const auto pair : app_controller_map_)
-    owner_->OnAppUpdated(owner_->profile(), pair.first);
+    UpdateApp(pair.first);
 }
 
 void ArcAppDeferredLauncherController::RegisterNextUpdate() {
@@ -197,7 +203,7 @@ void ArcAppDeferredLauncherController::RegisterDeferredLaunch(
 
   const std::string shelf_app_id =
       ArcAppWindowLauncherController::GetShelfAppIdFromArcAppId(app_id);
-  const ash::ShelfID shelf_id = owner_->GetShelfIDForAppID(shelf_app_id);
+  const ash::ShelfID shelf_id(shelf_app_id);
 
   // We are allowed to apply new deferred controller only over non-active items.
   const ash::ShelfItem* item = owner_->GetItem(shelf_id);
@@ -208,7 +214,7 @@ void ArcAppDeferredLauncherController::RegisterDeferredLaunch(
       base::MakeUnique<ArcAppDeferredLauncherItemController>(
           shelf_app_id, event_flags, weak_ptr_factory_.GetWeakPtr());
   ArcAppDeferredLauncherItemController* item_controller = controller.get();
-  if (shelf_id.IsNull()) {
+  if (item == nullptr) {
     owner_->CreateAppLauncherItem(std::move(controller), ash::STATUS_RUNNING);
   } else {
     owner_->shelf_model()->SetShelfItemDelegate(shelf_id,

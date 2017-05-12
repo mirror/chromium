@@ -262,7 +262,6 @@ const char kChromeUIThemeHost[] = "theme";
 const char kChromeUIThumbnailHost[] = "thumb";
 const char kChromeUIThumbnailHost2[] = "thumb2";
 const char kChromeUIThumbnailListHost[] = "thumbnails";
-const char kChromeUITouchIconHost[] = "touch-icon";
 const char kChromeUITranslateInternalsHost[] = "translate-internals";
 const char kChromeUIUberFrameHost[] = "uber-frame";
 const char kChromeUIUberHost[] = "chrome";
@@ -824,7 +823,7 @@ const char kChooserBluetoothOverviewURL[] =
 
 const char kBluetoothAdapterOffHelpURL[] =
 #if defined(OS_CHROMEOS)
-    "chrome://settings/search#Bluetooth";
+    "chrome://settings/#Bluetooth";
 #else
     "https://support.google.com/chrome?p=bluetooth";
 #endif

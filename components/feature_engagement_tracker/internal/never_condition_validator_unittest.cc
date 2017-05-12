@@ -44,17 +44,14 @@ class TestModel : public Model {
 
   bool IsCurrentlyShowing() const override { return false; }
 
-  const Event& GetEvent(const std::string& event_name) override {
-    return empty_event_;
+  const Event* GetEvent(const std::string& event_name) const override {
+    return nullptr;
   }
 
-  void IncrementEvent(const std::string& event_name) override {}
-
-  uint32_t GetCurrentDay() override { return 0u; }
+  void IncrementEvent(const std::string& event_name, uint32_t day) override {}
 
  private:
   FeatureConfig feature_config_;
-  Event empty_event_;
 
   DISALLOW_COPY_AND_ASSIGN(TestModel);
 };
@@ -76,8 +73,10 @@ class NeverConditionValidatorTest : public ::testing::Test {
 
 TEST_F(NeverConditionValidatorTest, ShouldNeverMeetConditions) {
   scoped_feature_list_.InitWithFeatures({kTestFeatureFoo, kTestFeatureBar}, {});
-  EXPECT_FALSE(validator_.MeetsConditions(kTestFeatureFoo, model_));
-  EXPECT_FALSE(validator_.MeetsConditions(kTestFeatureBar, model_));
+  EXPECT_FALSE(
+      validator_.MeetsConditions(kTestFeatureFoo, model_, 0u).NoErrors());
+  EXPECT_FALSE(
+      validator_.MeetsConditions(kTestFeatureBar, model_, 0u).NoErrors());
 }
 
 }  // namespace feature_engagement_tracker

@@ -180,6 +180,7 @@
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/SubstituteData.h"
@@ -200,6 +201,7 @@
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebSize.h"
 #include "public/platform/WebURLError.h"
+#include "public/platform/WebURLLoader.h"
 #include "public/platform/WebVector.h"
 #include "public/web/WebAssociatedURLLoaderOptions.h"
 #include "public/web/WebAutofillClient.h"
@@ -309,7 +311,7 @@ class ChromePrintContext : public PrintContext {
     builder.Context().SetPrinting(true);
     builder.Context().BeginRecording(bounds);
     float scale = SpoolPage(builder.Context(), page_number, bounds);
-    canvas->PlaybackPaintRecord(builder.Context().EndRecording());
+    canvas->drawPicture(builder.Context().EndRecording());
     return scale;
   }
 
@@ -371,7 +373,7 @@ class ChromePrintContext : public PrintContext {
 
       current_height += page_size_in_pixels.Height() + 1;
     }
-    canvas->PlaybackPaintRecord(context.EndRecording());
+    canvas->drawPicture(context.EndRecording());
   }
 
  protected:
@@ -396,7 +398,8 @@ class ChromePrintContext : public PrintContext {
     context.ConcatCTM(transform);
     context.ClipRect(page_rect);
 
-    PaintRecordBuilder builder(bounds, &context.Canvas()->getMetaData());
+    PaintRecordBuilder builder(bounds, &context.Canvas()->getMetaData(),
+                               &context);
 
     // The local scope is so that the cache skipper is destroyed before
     // we call endRecording().
@@ -1301,10 +1304,6 @@ bool WebLocalFrameImpl::SetCompositionFromExistingText(
 
   InputMethodController& input_method_controller =
       GetFrame()->GetInputMethodController();
-  input_method_controller.CancelComposition();
-
-  if (composition_start == composition_end)
-    return true;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
@@ -1629,6 +1628,8 @@ DEFINE_TRACE(WebLocalFrameImpl) {
   visitor->Trace(print_context_);
   visitor->Trace(context_menu_node_);
   visitor->Trace(text_checker_client_);
+  WebLocalFrameBase::Trace(visitor);
+  // TODO(slangley): Call this from WebLocalFrameBase, once WebFrame is in core.
   WebFrame::TraceFrames(visitor, this);
 }
 
@@ -1702,23 +1703,48 @@ LocalFrame* WebLocalFrameImpl::CreateChildFrame(
   if (!webframe_child->Parent())
     return nullptr;
 
-  // If we're moving in the back/forward list, we might want to replace the
-  // content of this child frame with whatever was there at that point.
-  HistoryItem* child_item = nullptr;
-  if (IsBackForwardLoadType(
-          GetFrame()->Loader().GetDocumentLoader()->LoadType()) &&
-      !GetFrame()->GetDocument()->LoadEventFinished())
-    child_item = webframe_child->Client()->HistoryItemForNewChildFrame();
-
   FrameLoadRequest new_request = request;
-  FrameLoadType load_type = kFrameLoadTypeStandard;
-  if (child_item) {
-    new_request = FrameLoadRequest(
-        request.OriginDocument(), child_item->GenerateResourceRequest(
-                                      WebCachePolicy::kUseProtocolCachePolicy));
-    load_type = kFrameLoadTypeInitialHistoryLoad;
+  FrameLoadType child_load_type = kFrameLoadTypeStandard;
+  HistoryItem* child_item = nullptr;
+
+  if (!GetFrame()->GetDocument()->LoadEventFinished()) {
+    FrameLoadType load_type =
+        GetFrame()->Loader().GetDocumentLoader()->LoadType();
+    switch (load_type) {
+      case kFrameLoadTypeStandard:
+      case kFrameLoadTypeReplaceCurrentItem:
+      case kFrameLoadTypeInitialInChildFrame:
+        break;
+
+      // If we're moving in the back/forward list, we might want to replace the
+      // content of this child frame with whatever was there at that point.
+      case kFrameLoadTypeBackForward:
+      case kFrameLoadTypeInitialHistoryLoad:
+        child_item = webframe_child->Client()->HistoryItemForNewChildFrame();
+        if (child_item) {
+          child_load_type = kFrameLoadTypeInitialHistoryLoad;
+          new_request =
+              FrameLoadRequest(request.OriginDocument(),
+                               child_item->GenerateResourceRequest(
+                                   WebCachePolicy::kUseProtocolCachePolicy));
+        }
+        break;
+
+      // We're in a middle of a reload. The FrameLoadType is propagated to its
+      // children only if it is a ReloadBypassingCache, else it becomes a
+      // standard load.
+      case kFrameLoadTypeReload:
+        break;
+      case kFrameLoadTypeReloadBypassingCache:
+        child_load_type = kFrameLoadTypeReloadBypassingCache;
+        new_request.GetResourceRequest().SetCachePolicy(
+            WebCachePolicy::kBypassingCache);
+        break;
+    }
   }
-  webframe_child->GetFrame()->Loader().Load(new_request, load_type, child_item);
+
+  webframe_child->GetFrame()->Loader().Load(new_request, child_load_type,
+                                            child_item);
 
   // Note a synchronous navigation (about:blank) would have already processed
   // onload, so it is possible for the child frame to have already been
@@ -2428,6 +2454,16 @@ void WebLocalFrameImpl::SetFrameWidget(WebFrameWidgetBase* frame_widget) {
 
 WebFrameWidgetBase* WebLocalFrameImpl::FrameWidget() const {
   return frame_widget_;
+}
+
+std::unique_ptr<WebURLLoader> WebLocalFrameImpl::CreateURLLoader() {
+  DCHECK(frame_);
+  Document* document = frame_->GetDocument();
+  DCHECK(document);
+  ResourceFetcher* fetcher = document->Fetcher();
+  DCHECK(fetcher);
+
+  return fetcher->Context().CreateURLLoader();
 }
 
 void WebLocalFrameImpl::CopyImageAt(const WebPoint& pos_in_viewport) {

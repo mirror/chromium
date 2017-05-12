@@ -79,6 +79,8 @@ static void uLongLongAttributeAttributeSetter(v8::Local<v8::Value> v8Value, cons
   ALLOW_UNUSED_LOCAL(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
+  ALLOW_UNUSED_LOCAL(holder);
+
   TestTypedefs* impl = V8TestTypedefs::toImpl(holder);
 
   ExceptionState exceptionState(isolate, ExceptionState::kSetterContext, "TestTypedefs", "uLongLongAttribute");
@@ -107,6 +109,8 @@ static void domStringOrDoubleOrNullAttributeAttributeSetter(v8::Local<v8::Value>
   ALLOW_UNUSED_LOCAL(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
+  ALLOW_UNUSED_LOCAL(holder);
+
   TestTypedefs* impl = V8TestTypedefs::toImpl(holder);
 
   ExceptionState exceptionState(isolate, ExceptionState::kSetterContext, "TestTypedefs", "domStringOrDoubleOrNullAttribute");
@@ -453,15 +457,19 @@ void V8TestTypedefs::voidMethodUnionWithTypedefMethodCallback(const v8::Function
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #endif
 static const V8DOMConfiguration::AttributeConfiguration V8TestTypedefsLazyDataAttributes[] = {
-    {"tAttribute", V8ConstructorAttributeGetter, nullptr, nullptr, const_cast<WrapperTypeInfo*>(&V8TestInterface::wrapperTypeInfo), static_cast<v8::PropertyAttribute>(v8::DontEnum), V8DOMConfiguration::kOnInstance, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds},
+      { "tAttribute", V8ConstructorAttributeGetter, nullptr, const_cast<WrapperTypeInfo*>(&V8TestInterface::wrapperTypeInfo), static_cast<v8::PropertyAttribute>(v8::DontEnum), V8DOMConfiguration::kOnInstance, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds }
+    ,
 };
 #if defined(COMPONENT_BUILD) && defined(WIN32) && COMPILER(CLANG)
 #pragma clang diagnostic pop
 #endif
 
 static const V8DOMConfiguration::AccessorConfiguration V8TestTypedefsAccessors[] = {
-    {"uLongLongAttribute", V8TestTypedefs::uLongLongAttributeAttributeGetterCallback, V8TestTypedefs::uLongLongAttributeAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds},
-    {"domStringOrDoubleOrNullAttribute", V8TestTypedefs::domStringOrDoubleOrNullAttributeAttributeGetterCallback, V8TestTypedefs::domStringOrDoubleOrNullAttributeAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds},
+      { "uLongLongAttribute", V8TestTypedefs::uLongLongAttributeAttributeGetterCallback, V8TestTypedefs::uLongLongAttributeAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds }
+    ,
+
+      { "domStringOrDoubleOrNullAttribute", V8TestTypedefs::domStringOrDoubleOrNullAttributeAttributeGetterCallback, V8TestTypedefs::domStringOrDoubleOrNullAttributeAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds }
+    ,
 };
 
 static const V8DOMConfiguration::MethodConfiguration V8TestTypedefsMethods[] = {
