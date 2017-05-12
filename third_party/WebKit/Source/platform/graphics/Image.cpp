@@ -252,8 +252,8 @@ sk_sp<PaintShader> CreatePatternShader(sk_sp<const SkImage> image,
       PaintImage(std::move(image), animation_type, completion_state), 0, 0,
       &paint);
 
-  return MakePaintShaderRecord(recorder.finishRecordingAsPicture(), tmx, tmy,
-                               &shader_matrix, nullptr);
+  return MakePaintShaderRecord(recorder.finishRecordingAsPicture(), tile_rect,
+                               tmx, tmy, &shader_matrix);
 }
 
 SkShader::TileMode ComputeTileMode(float left,
