@@ -225,8 +225,18 @@ class WebGestureEvent : public WebInputEvent {
         return false;
     }
   }
-
 #endif
+
+  bool IsTargetViewport() const {
+    switch (type_) {
+      case kGestureScrollBegin:
+        return data.scroll_begin.target_viewport;
+      case kGestureFlingStart:
+        return data.fling_start.target_viewport;
+      default:
+        return false;
+    }
+  }
 };
 
 #pragma pack(pop)
