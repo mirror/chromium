@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c75fbd50_5d554a84",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/MonochromeApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-12T20:13:21Z",
+      "side": 1,
+      "message": "Since this will run on *every* start-up, it probably is better to do as torne suggested and use build rules to have a separate copy of the license provider for monochrome.\n\nSpecifically:\n\nCreate the file at:\n//chrome/android/monochrome/java/src/com/android/webview/chromium/LicenseContentProvider.java\n\nCreate an android_library for it at //chrome/android/monochrome/BUILD.gn\n\nMove:\n//android_webview/glue/java/src/com/android/webview/chromium/LicenseContentProvider.java,\n//android_webview/glue/java/src/com/android/webview/chromium/LicenseActivity.java\n\nto:\n//android_webview/webview_apk/java/src/com/android/webview/chromium/LicenseContentProvider.java\n//android_webview/webview_apk/java/src/com/android/webview/chromium/LicenseActivity.java\n\nCreate two android_library targets (one for each file) at //android_webview/webview_apk/BUILD.gn\n\nEnsure that all android_apks within //android_webview/... that included the old file, now include a dep to the new libraries.\n\nThen, have monochrome_apk have a dep to the activity in webview, but its own contentprovider.\n\nFinally, note that you\u0027ll need to move the two constants within LicenseContentProvider into the Activity class so that the activity no longer needs to import the contentprovider.",
+      "revId": "fdf30ec5515bf8bf01d46461532a8db14391d677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
