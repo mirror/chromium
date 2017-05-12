@@ -681,13 +681,14 @@ size_t PaintController::ApproximateUnsharedMemoryUsage() const {
 void PaintController::AppendDebugDrawingAfterCommit(
     const DisplayItemClient& display_item_client,
     sk_sp<PaintRecord> record,
+    const FloatRect& record_bounds,
     const LayoutSize& offset_from_layout_object) {
   DCHECK(new_display_item_list_.IsEmpty());
   DrawingDisplayItem& display_item =
       current_paint_artifact_.GetDisplayItemList()
-          .AllocateAndConstruct<DrawingDisplayItem>(display_item_client,
-                                                    DisplayItem::kDebugDrawing,
-                                                    std::move(record));
+          .AllocateAndConstruct<DrawingDisplayItem>(
+              display_item_client, DisplayItem::kDebugDrawing,
+              std::move(record), record_bounds);
   display_item.SetSkippedCache();
   // TODO(wkorman): Only compute and append visual rect for drawings.
   current_paint_artifact_.GetDisplayItemList().AppendVisualRect(
