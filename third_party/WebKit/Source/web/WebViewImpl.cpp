@@ -3673,7 +3673,7 @@ void WebViewImpl::ResizeAfterLayout(WebLocalFrameImpl* webframe) {
 
 void WebViewImpl::LayoutUpdated(WebLocalFrameImpl* webframe) {
   LocalFrame* frame = webframe->GetFrame();
-  if (!client_ || !frame->IsLocalRoot())
+  if (!client_ || !frame->IsMainFrame())
     return;
 
   UpdatePageOverlays();
