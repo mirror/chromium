@@ -20,6 +20,14 @@
   "content_scripts": [
     {
       "matches": [
+        "https://chromium-review.googlesource.com/*"
+      ],
+      "js": [
+        "gr-content.js"
+      ]
+    },
+    {
+      "matches": [
         "https://cs.chromium.org/chromium/src/*"
       ],
       "js": [
@@ -35,5 +43,5 @@
       ]
     }
   ],
-  "manifest_version": 2
+  "manifest_version": 3
 }
