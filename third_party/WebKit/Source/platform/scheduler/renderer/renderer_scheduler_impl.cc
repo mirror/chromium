@@ -9,7 +9,6 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
@@ -19,6 +18,7 @@
 #include "platform/scheduler/base/task_queue_impl.h"
 #include "platform/scheduler/base/task_queue_selector.h"
 #include "platform/scheduler/base/time_converter.h"
+#include "platform/scheduler/base/trace_helper.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
@@ -75,12 +75,6 @@ void ReportBackgroundRendererTaskLoad(base::TimeTicks time, double load) {
                            load_percentage);
   TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "RendererScheduler.BackgroundRendererLoad", load_percentage);
-}
-
-std::string PointerToId(void* pointer) {
-  return base::StringPrintf(
-      "0x%" PRIx64,
-      static_cast<uint64_t>(reinterpret_cast<uintptr_t>(pointer)));
 }
 
 }  // namespace
@@ -217,7 +211,8 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       in_idle_period_for_testing(false),
       use_virtual_time(false),
       is_audio_playing(false),
-      rail_mode_observer(nullptr) {
+      rail_mode_observer(nullptr),
+      wake_up_budget_pool(nullptr) {
   foreground_main_thread_load_tracker.Resume(now);
 }
 
@@ -336,6 +331,7 @@ scoped_refptr<TaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
   }
   loading_task_queue->AddTaskObserver(
       &GetMainThreadOnly().loading_task_cost_estimator);
+  AddQueueToWakeUpBudgetPool(loading_task_queue.get());
   return loading_task_queue;
 }
 
@@ -362,6 +358,7 @@ scoped_refptr<TaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
   }
   timer_task_queue->AddTaskObserver(
       &GetMainThreadOnly().timer_task_cost_estimator);
+  AddQueueToWakeUpBudgetPool(timer_task_queue.get());
   return timer_task_queue;
 }
 
@@ -867,7 +864,7 @@ bool RendererSchedulerImpl::ShouldYieldForHighPriorityWork() {
     case UseCase::MAIN_THREAD_GESTURE:
     case UseCase::MAIN_THREAD_CUSTOM_INPUT_HANDLING:
     case UseCase::SYNCHRONIZED_GESTURE:
-      return compositor_task_queue_->HasPendingImmediateWork() ||
+      return compositor_task_queue_->HasTaskToRunImmediately() ||
              GetMainThreadOnly().touchstart_expected_soon;
 
     case UseCase::TOUCHSTART:
@@ -1375,6 +1372,10 @@ IdleTimeEstimator* RendererSchedulerImpl::GetIdleTimeEstimatorForTesting() {
   return &GetMainThreadOnly().idle_time_estimator;
 }
 
+WakeUpBudgetPool* RendererSchedulerImpl::GetWakeUpBudgetPoolForTesting() {
+  return GetMainThreadOnly().wake_up_budget_pool;
+}
+
 void RendererSchedulerImpl::SuspendTimerQueue() {
   GetMainThreadOnly().timer_queue_suspend_count++;
   ForceUpdatePolicy();
@@ -1510,7 +1511,8 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
   state->BeginDictionary("web_view_schedulers");
   for (WebViewSchedulerImpl* web_view_scheduler :
        GetMainThreadOnly().web_view_schedulers) {
-    state->BeginDictionaryWithCopiedName(PointerToId(web_view_scheduler));
+    state->BeginDictionaryWithCopiedName(
+        trace_helper::PointerToString(web_view_scheduler));
     web_view_scheduler->AsValueInto(state.get());
     state->EndDictionary();
   }
@@ -1835,9 +1837,9 @@ void RendererSchedulerImpl::DidProcessTask(TaskQueue* task_queue,
                             static_cast<int>(TaskQueue::QueueType::COUNT));
 }
 
-void RendererSchedulerImpl::OnBeginNestedMessageLoop() {
+void RendererSchedulerImpl::OnBeginNestedRunLoop() {
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
-  seqlock_queueing_time_estimator_.data.OnBeginNestedMessageLoop();
+  seqlock_queueing_time_estimator_.data.OnBeginNestedRunLoop();
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
 }
 
@@ -1911,6 +1913,18 @@ bool RendererSchedulerImpl::ShouldDisableThrottlingBecauseOfAudio(
   return GetMainThreadOnly().last_audio_state_change.value() +
              kThrottlingDelayAfterAudioIsPlayed >
          now;
+}
+
+void RendererSchedulerImpl::AddQueueToWakeUpBudgetPool(TaskQueue* queue) {
+  if (!GetMainThreadOnly().wake_up_budget_pool) {
+    GetMainThreadOnly().wake_up_budget_pool =
+        task_queue_throttler()->CreateWakeUpBudgetPool("renderer_wake_up_pool");
+    GetMainThreadOnly().wake_up_budget_pool->SetWakeUpRate(1);
+    GetMainThreadOnly().wake_up_budget_pool->SetWakeUpDuration(
+        base::TimeDelta());
+  }
+  GetMainThreadOnly().wake_up_budget_pool->AddQueue(tick_clock()->NowTicks(),
+                                                    queue);
 }
 
 TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {

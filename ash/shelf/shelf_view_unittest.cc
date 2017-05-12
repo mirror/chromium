@@ -35,6 +35,8 @@
 #include "ash/test/shell_test_api.h"
 #include "ash/test/test_shell_delegate.h"
 #include "ash/test/test_system_tray_delegate.h"
+#include "ash/test/wallpaper_controller_test_api.h"
+#include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wm_window.h"
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
@@ -152,9 +154,9 @@ class ShelfItemSelectionTracker : public ShelfItemDelegate {
   void ItemSelected(std::unique_ptr<ui::Event> event,
                     int64_t display_id,
                     ShelfLaunchSource source,
-                    const ItemSelectedCallback& callback) override {
+                    ItemSelectedCallback callback) override {
     item_selected_count_++;
-    callback.Run(item_selected_action_, base::nullopt);
+    std::move(callback).Run(item_selected_action_, base::nullopt);
   }
   void ExecuteCommand(uint32_t command_id, int32_t event_flags) override {}
   void Close() override {}
@@ -308,14 +310,10 @@ class ShelfViewTest : public AshTestBase {
   }
 
   ShelfButton* GetButtonByID(const ShelfID& id) {
-    int index = model_->ItemIndexByID(id);
-    return test_api_->GetButton(index);
+    return test_api_->GetButton(model_->ItemIndexByID(id));
   }
 
-  ShelfItem GetItemByID(const ShelfID& id) {
-    ShelfItems::const_iterator items = model_->ItemByID(id);
-    return *items;
-  }
+  ShelfItem GetItemByID(const ShelfID& id) { return *model_->ItemByID(id); }
 
   void CheckModelIDs(
       const std::vector<std::pair<ShelfID, views::View*>>& id_map) {
@@ -634,11 +632,9 @@ class ShelfViewTest : public AshTestBase {
     return model_->items()[index].id;
   }
 
-  // Returns the center coordinates for a button. Helper function for an event
-  // generator.
+  // Returns the center point of a button. Helper function for event generators.
   gfx::Point GetButtonCenter(const ShelfID& button_id) {
-    return GetButtonCenter(
-        test_api_->GetButton(model_->ItemIndexByID(button_id)));
+    return GetButtonCenter(GetButtonByID(button_id));
   }
 
   gfx::Point GetButtonCenter(ShelfButton* button) {
@@ -1580,6 +1576,19 @@ TEST_F(ShelfViewTest, OverflowBubbleSize) {
             test_for_overflow_view.GetPreferredSize().width());
 }
 
+TEST_F(ShelfViewTest, OverflowShelfColorIsDerivedFromWallpaper) {
+  test::WallpaperControllerTestApi wallpaper_test_api(
+      Shell::Get()->wallpaper_controller());
+  const SkColor opaque_expected_color =
+      wallpaper_test_api.ApplyColorProducingWallpaper();
+
+  AddButtonsUntilOverflow();
+  test_api_->ShowOverflowBubble();
+  OverflowBubbleView* bubble_view = test_api_->overflow_bubble()->bubble_view();
+
+  EXPECT_EQ(opaque_expected_color, SkColorSetA(bubble_view->color(), 255));
+}
+
 // Check the drag insertion bounds of scrolled overflow bubble.
 TEST_F(ShelfViewTest, CheckDragInsertBoundsOfScrolledOverflowBubble) {
   UpdateDisplay("400x300");
@@ -2007,12 +2016,12 @@ class ListMenuShelfItemDelegate : public ShelfItemDelegate {
   void ItemSelected(std::unique_ptr<ui::Event> event,
                     int64_t display_id,
                     ShelfLaunchSource source,
-                    const ItemSelectedCallback& callback) override {
+                    ItemSelectedCallback callback) override {
     // Two items are needed to show a menu; the data in the items is not tested.
     std::vector<mojom::MenuItemPtr> items;
     items.push_back(mojom::MenuItem::New());
     items.push_back(mojom::MenuItem::New());
-    callback.Run(SHELF_ACTION_NONE, std::move(items));
+    std::move(callback).Run(SHELF_ACTION_NONE, std::move(items));
   }
   void ExecuteCommand(uint32_t command_id, int32_t event_flags) override {}
   void Close() override {}

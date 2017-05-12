@@ -9,6 +9,7 @@ import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.PopupWindow.OnDismissListener;
 
+import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.feature_engagement_tracker.FeatureEngagementTrackerFactory;
 import org.chromium.chrome.browser.infobar.InfoBarContainer.InfoBarContainerObserver;
@@ -33,9 +34,11 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
 
     /** Helper class to hold all relevant display parameters for an in-product help window. */
     private static class TrackerParameters {
-        public TrackerParameters(String feature, @StringRes int textId) {
+        public TrackerParameters(
+                String feature, @StringRes int textId, @StringRes int accessibilityTextId) {
             this.feature = feature;
             this.textId = textId;
+            this.accessibilityTextId = accessibilityTextId;
         }
 
         /** @see FeatureConstants */
@@ -43,6 +46,9 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
 
         @StringRes
         public int textId;
+
+        @StringRes
+        public int accessibilityTextId;
     }
 
     /** Helper class to manage state relating to a particular instance of an in-product window. */
@@ -52,6 +58,9 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
 
         /** The bubble that is currently showing the in-product help. */
         public TextBubble bubble;
+
+        /** The in-product help feature that the popup relates to. */
+        public String feature;
     }
 
     /** The state of the currently showing in-product window or {@code null} if none is showing. */
@@ -68,6 +77,12 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     @Override
     public void notifyAnimationFinished(int animationType) {}
 
+    // Calling {@link ViewAnchoredTextBubble#dismiss()} will invoke {@link #onDismiss} which will
+    // set the value of {@link #mCurrentState} to null, which is what the assert checks. Since this
+    // goes through the Android SDK, FindBugs does not see this as happening, so the FindBugs
+    // warning for a field guaranteed to be non-null being checked for null equality needs to be
+    // suppressed.
+    @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
     @Override
     public void notifyAllAnimationsFinished(Item frontInfoBar) {
         View view = frontInfoBar == null ? null : frontInfoBar.getView();
@@ -76,7 +91,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
             // Clean up any old infobar if necessary.
             if (mCurrentState.view != view) {
                 mCurrentState.bubble.dismiss();
-                mCurrentState = null;
+                assert mCurrentState == null;
             }
         }
 
@@ -93,21 +108,29 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
 
         mCurrentState = new PopupState();
         mCurrentState.view = view;
-        mCurrentState.bubble = new ViewAnchoredTextBubble(mContext, view, params.textId);
+        mCurrentState.bubble = new ViewAnchoredTextBubble(
+                mContext, view, params.textId, params.accessibilityTextId);
         mCurrentState.bubble.addOnDismissListener(this);
         mCurrentState.bubble.setDismissOnTouchInteraction(true);
         mCurrentState.bubble.show();
+        mCurrentState.feature = params.feature;
     }
 
     // InfoBarContainerObserver implementation.
     @Override
     public void onAddInfoBar(InfoBarContainer container, InfoBar infoBar, boolean isFirst) {}
 
+    // Calling {@link ViewAnchoredTextBubble#dismiss()} will invoke {@link #onDismiss} which will
+    // set the value of {@link #mCurrentState} to null, which is what the assert checks. Since this
+    // goes through the Android SDK, FindBugs does not see this as happening, so the FindBugs
+    // warning for a field guaranteed to be non-null being checked for null equality needs to be
+    // suppressed.
+    @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
     @Override
     public void onRemoveInfoBar(InfoBarContainer container, InfoBar infoBar, boolean isLast) {
         if (mCurrentState != null && infoBar.getView() == mCurrentState.view) {
             mCurrentState.bubble.dismiss();
-            mCurrentState = null;
+            assert mCurrentState == null;
         }
     }
 
@@ -117,8 +140,10 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     // PopupWindow.OnDismissListener implementation.
     @Override
     public void onDismiss() {
+        assert mCurrentState != null;
+        String feature = mCurrentState.feature;
         mCurrentState = null;
-        mTracker.dismissed();
+        mTracker.dismissed(feature);
     }
 
     private void logEvent(Item infoBar) {
@@ -134,8 +159,8 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     private TrackerParameters getTrackerParameters(Item infoBar) {
         switch (infoBar.getInfoBarIdentifier()) {
             case InfoBarIdentifier.DATA_REDUCTION_PROXY_PREVIEW_INFOBAR_DELEGATE:
-                return new TrackerParameters(
-                        FeatureConstants.DATA_SAVER_PREVIEW, R.string.iph_data_saver_preview_text);
+                return new TrackerParameters(FeatureConstants.DATA_SAVER_PREVIEW,
+                        R.string.iph_data_saver_preview_text, R.string.iph_data_saver_preview_text);
             default:
                 return null;
         }

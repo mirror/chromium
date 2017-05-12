@@ -6,9 +6,41 @@
 
 // <include src="component.js">
 // <include src="print_preview_focus_manager.js">
+//
+
+cr.exportPath('print_preview');
+
+/**
+ * States of the print preview.
+ * @enum {string}
+ * @private
+ */
+print_preview.PrintPreviewUiState_ = {
+  INITIALIZING: 'initializing',
+  READY: 'ready',
+  OPENING_PDF_PREVIEW: 'opening-pdf-preview',
+  OPENING_NATIVE_PRINT_DIALOG: 'opening-native-print-dialog',
+  PRINTING: 'printing',
+  FILE_SELECTION: 'file-selection',
+  CLOSING: 'closing',
+  ERROR: 'error'
+};
+
+/**
+ * What can happen when print preview tries to print.
+ * @enum {string}
+ * @private
+ */
+print_preview.PrintAttemptResult_ = {
+  NOT_READY: 'not-ready',
+  PRINTED: 'printed',
+  READY_WAITING_FOR_PREVIEW: 'ready-waiting-for-preview'
+};
 
 cr.define('print_preview', function() {
   'use strict';
+
+  var PrintPreviewUiState_ = print_preview.PrintPreviewUiState_;
 
   /**
    * Container class for Chromium's print preview.
@@ -270,10 +302,10 @@ cr.define('print_preview', function() {
 
     /**
      * State of the print preview UI.
-     * @type {print_preview.PrintPreview.UiState_}
+     * @type {print_preview.PrintPreviewUiState_}
      * @private
      */
-    this.uiState_ = PrintPreview.UiState_.INITIALIZING;
+    this.uiState_ = PrintPreviewUiState_.INITIALIZING;
 
     /**
      * Whether document preview generation is in progress.
@@ -288,34 +320,7 @@ cr.define('print_preview', function() {
      * @private
      */
     this.showSystemDialogBeforeNextPrint_ = false;
-  };
-
-  /**
-   * States of the print preview.
-   * @enum {string}
-   * @private
-   */
-  PrintPreview.UiState_ = {
-    INITIALIZING: 'initializing',
-    READY: 'ready',
-    OPENING_PDF_PREVIEW: 'opening-pdf-preview',
-    OPENING_NATIVE_PRINT_DIALOG: 'opening-native-print-dialog',
-    PRINTING: 'printing',
-    FILE_SELECTION: 'file-selection',
-    CLOSING: 'closing',
-    ERROR: 'error'
-  };
-
-  /**
-   * What can happen when print preview tries to print.
-   * @enum {string}
-   * @private
-   */
-  PrintPreview.PrintAttemptResult_ = {
-    NOT_READY: 'not-ready',
-    PRINTED: 'printed',
-    READY_WAITING_FOR_PREVIEW: 'ready-waiting-for-preview'
-  };
+  }
 
   PrintPreview.prototype = {
     __proto__: print_preview.Component.prototype,
@@ -377,13 +382,13 @@ cr.define('print_preview', function() {
 
       if ($('system-dialog-link')) {
         this.tracker.add(
-            $('system-dialog-link'),
+            getRequiredElement('system-dialog-link'),
             'click',
             this.openSystemPrintDialog_.bind(this));
       }
       if ($('open-pdf-in-preview-link')) {
         this.tracker.add(
-            $('open-pdf-in-preview-link'),
+            getRequiredElement('open-pdf-in-preview-link'),
             'click',
             this.onOpenPdfInPreviewLinkClick_.bind(this));
       }
@@ -529,29 +534,29 @@ cr.define('print_preview', function() {
      * @private
      */
     printDocumentOrOpenPdfPreview_: function(isPdfPreview) {
-      assert(this.uiState_ == PrintPreview.UiState_.READY,
+      assert(this.uiState_ == PrintPreviewUiState_.READY,
              'Print document request received when not in ready state: ' +
                  this.uiState_);
       if (isPdfPreview) {
-        this.uiState_ = PrintPreview.UiState_.OPENING_PDF_PREVIEW;
+        this.uiState_ = PrintPreviewUiState_.OPENING_PDF_PREVIEW;
       } else if (this.destinationStore_.selectedDestination.id ==
           print_preview.Destination.GooglePromotedId.SAVE_AS_PDF) {
-        this.uiState_ = PrintPreview.UiState_.FILE_SELECTION;
+        this.uiState_ = PrintPreviewUiState_.FILE_SELECTION;
       } else {
-        this.uiState_ = PrintPreview.UiState_.PRINTING;
+        this.uiState_ = PrintPreviewUiState_.PRINTING;
       }
       this.setIsEnabled_(false);
       this.printHeader_.isCancelButtonEnabled = true;
       var printAttemptResult = this.printIfReady_();
-      if (printAttemptResult == PrintPreview.PrintAttemptResult_.PRINTED ||
+      if (printAttemptResult == print_preview.PrintAttemptResult_.PRINTED ||
           printAttemptResult ==
-              PrintPreview.PrintAttemptResult_.READY_WAITING_FOR_PREVIEW) {
+              print_preview.PrintAttemptResult_.READY_WAITING_FOR_PREVIEW) {
         if ((this.destinationStore_.selectedDestination.isLocal &&
              !this.destinationStore_.selectedDestination.isPrivet &&
              !this.destinationStore_.selectedDestination.isExtension &&
              this.destinationStore_.selectedDestination.id !=
                  print_preview.Destination.GooglePromotedId.SAVE_AS_PDF) ||
-             this.uiState_ == PrintPreview.UiState_.OPENING_PDF_PREVIEW) {
+             this.uiState_ == PrintPreviewUiState_.OPENING_PDF_PREVIEW) {
           // Hide the dialog for now. The actual print command will be issued
           // when the preview generation is done.
           this.nativeLayer_.startHideDialog();
@@ -561,22 +566,22 @@ cr.define('print_preview', function() {
 
     /**
      * Attempts to print if needed and if ready.
-     * @return {PrintPreview.PrintAttemptResult_} Attempt result.
+     * @return {print_preview.PrintAttemptResult_} Attempt result.
      * @private
      */
     printIfReady_: function() {
       var okToPrint =
-          (this.uiState_ == PrintPreview.UiState_.PRINTING ||
-           this.uiState_ == PrintPreview.UiState_.OPENING_PDF_PREVIEW ||
-           this.uiState_ == PrintPreview.UiState_.FILE_SELECTION ||
+          (this.uiState_ == PrintPreviewUiState_.PRINTING ||
+           this.uiState_ == PrintPreviewUiState_.OPENING_PDF_PREVIEW ||
+           this.uiState_ == PrintPreviewUiState_.FILE_SELECTION ||
            this.isInKioskAutoPrintMode_) &&
           this.destinationStore_.selectedDestination &&
           this.destinationStore_.selectedDestination.capabilities;
       if (!okToPrint) {
-        return PrintPreview.PrintAttemptResult_.NOT_READY;
+        return print_preview.PrintAttemptResult_.NOT_READY;
       }
       if (this.isPreviewGenerationInProgress_) {
-        return PrintPreview.PrintAttemptResult_.READY_WAITING_FOR_PREVIEW;
+        return print_preview.PrintAttemptResult_.READY_WAITING_FOR_PREVIEW;
       }
       assert(this.printTicketStore_.isTicketValid(),
           'Trying to print with invalid ticket');
@@ -589,14 +594,14 @@ cr.define('print_preview', function() {
                     PRINT_WITH_SETTINGS_COLLAPSED);
       }
       this.nativeLayer_.startPrint(
-          this.destinationStore_.selectedDestination,
+          assert(this.destinationStore_.selectedDestination),
           this.printTicketStore_,
           this.cloudPrintInterface_,
           this.documentInfo_,
-          this.uiState_ == PrintPreview.UiState_.OPENING_PDF_PREVIEW,
+          this.uiState_ == PrintPreviewUiState_.OPENING_PDF_PREVIEW,
           this.showSystemDialogBeforeNextPrint_);
       this.showSystemDialogBeforeNextPrint_ = false;
-      return PrintPreview.PrintAttemptResult_.PRINTED;
+      return print_preview.PrintAttemptResult_.PRINTED;
     },
 
     /**
@@ -605,7 +610,7 @@ cr.define('print_preview', function() {
      */
     close_: function() {
       this.exitDocument();
-      this.uiState_ = PrintPreview.UiState_.CLOSING;
+      this.uiState_ = PrintPreviewUiState_.CLOSING;
       this.nativeLayer_.startCloseDialog();
     },
 
@@ -625,7 +630,7 @@ cr.define('print_preview', function() {
       }
       setIsVisible(getRequiredElement('system-dialog-throbber'), true);
       this.setIsEnabled_(false);
-      this.uiState_ = PrintPreview.UiState_.OPENING_NATIVE_PRINT_DIALOG;
+      this.uiState_ = PrintPreviewUiState_.OPENING_NATIVE_PRINT_DIALOG;
       this.nativeLayer_.startShowSystemDialog();
     },
 
@@ -638,10 +643,10 @@ cr.define('print_preview', function() {
      * @private
      */
     onInitialSettingsSet_: function(event) {
-      assert(this.uiState_ == PrintPreview.UiState_.INITIALIZING,
+      assert(this.uiState_ == PrintPreviewUiState_.INITIALIZING,
              'Updating initial settings when not in initializing state: ' +
                  this.uiState_);
-      this.uiState_ = PrintPreview.UiState_.READY;
+      this.uiState_ = PrintPreviewUiState_.READY;
 
       var settings = event.initialSettings;
       this.isInKioskAutoPrintMode_ = settings.isInKioskAutoPrintMode;
@@ -667,7 +672,7 @@ cr.define('print_preview', function() {
       $('document-title').innerText = settings.documentTitle;
       this.hideSystemDialogLink_ = settings.isInAppKioskMode;
       if ($('system-dialog-link')) {
-        setIsVisible($('system-dialog-link'),
+        setIsVisible(getRequiredElement('system-dialog-link'),
                      this.shouldShowSystemDialogLink_());
       }
     },
@@ -687,19 +692,19 @@ cr.define('print_preview', function() {
           event.appKioskMode);
       this.tracker.add(
           this.cloudPrintInterface_,
-          cloudprint.CloudPrintInterface.EventType.SUBMIT_DONE,
+          cloudprint.CloudPrintInterfaceEventType.SUBMIT_DONE,
           this.onCloudPrintSubmitDone_.bind(this));
       this.tracker.add(
           this.cloudPrintInterface_,
-          cloudprint.CloudPrintInterface.EventType.SEARCH_FAILED,
+          cloudprint.CloudPrintInterfaceEventType.SEARCH_FAILED,
           this.onCloudPrintError_.bind(this));
       this.tracker.add(
           this.cloudPrintInterface_,
-          cloudprint.CloudPrintInterface.EventType.SUBMIT_FAILED,
+          cloudprint.CloudPrintInterfaceEventType.SUBMIT_FAILED,
           this.onCloudPrintError_.bind(this));
       this.tracker.add(
           this.cloudPrintInterface_,
-          cloudprint.CloudPrintInterface.EventType.PRINTER_FAILED,
+          cloudprint.CloudPrintInterfaceEventType.PRINTER_FAILED,
           this.onCloudPrintError_.bind(this));
 
       this.destinationStore_.setCloudPrintInterface(this.cloudPrintInterface_);
@@ -716,11 +721,12 @@ cr.define('print_preview', function() {
      * @private
      */
     onPrintToCloud_: function(event) {
-      assert(this.uiState_ == PrintPreview.UiState_.PRINTING,
+      assert(this.uiState_ == PrintPreviewUiState_.PRINTING,
              'Document ready to be sent to the cloud when not in printing ' +
                  'state: ' + this.uiState_);
       assert(this.cloudPrintInterface_ != null,
              'Google Cloud Print is not enabled');
+      assert(this.destinationStore_.selectedDestination != null);
       this.cloudPrintInterface_.submit(
           this.destinationStore_.selectedDestination,
           this.printTicketStore_,
@@ -734,11 +740,11 @@ cr.define('print_preview', function() {
      * @private
      */
     onFileSelectionCancel_: function() {
-      assert(this.uiState_ == PrintPreview.UiState_.FILE_SELECTION,
+      assert(this.uiState_ == PrintPreviewUiState_.FILE_SELECTION,
              'File selection cancelled when not in file-selection state: ' +
                  this.uiState_);
       this.setIsEnabled_(true);
-      this.uiState_ = PrintPreview.UiState_.READY;
+      this.uiState_ = PrintPreviewUiState_.READY;
     },
 
     /**
@@ -746,12 +752,12 @@ cr.define('print_preview', function() {
      * @private
      */
     onFileSelectionComplete_: function() {
-      assert(this.uiState_ == PrintPreview.UiState_.FILE_SELECTION,
+      assert(this.uiState_ == PrintPreviewUiState_.FILE_SELECTION,
              'File selection completed when not in file-selection state: ' +
                  this.uiState_);
       this.previewArea_.showCustomMessage(
           loadTimeData.getString('printingToPDFInProgress'));
-      this.uiState_ = PrintPreview.UiState_.PRINTING;
+      this.uiState_ = PrintPreviewUiState_.PRINTING;
     },
 
     /**
@@ -760,7 +766,7 @@ cr.define('print_preview', function() {
      * @private
      */
     onCloudPrintSubmitDone_: function(event) {
-      assert(this.uiState_ == PrintPreview.UiState_.PRINTING,
+      assert(this.uiState_ == PrintPreviewUiState_.PRINTING,
              'Submited job to Google Cloud Print but not in printing state ' +
                  this.uiState_);
       this.close_();
@@ -817,7 +823,7 @@ cr.define('print_preview', function() {
     onPreviewGenerationFail_: function() {
       this.isPreviewGenerationInProgress_ = false;
       this.printHeader_.isPrintButtonEnabled = false;
-      if (this.uiState_ == PrintPreview.UiState_.PRINTING)
+      if (this.uiState_ == PrintPreviewUiState_.PRINTING)
         this.nativeLayer_.startCancelPendingPrint();
     },
 
@@ -829,7 +835,7 @@ cr.define('print_preview', function() {
     onOpenPdfInPreviewLinkClick_: function() {
       if ($('open-pdf-in-preview-link').classList.contains('disabled'))
         return;
-      assert(this.uiState_ == PrintPreview.UiState_.READY,
+      assert(this.uiState_ == PrintPreviewUiState_.READY,
              'Trying to open pdf in preview when not in ready state: ' +
                  this.uiState_);
       setIsVisible(getRequiredElement('open-preview-app-throbber'), true);
@@ -844,7 +850,7 @@ cr.define('print_preview', function() {
      * @private
      */
     onPrintButtonClick_: function() {
-      assert(this.uiState_ == PrintPreview.UiState_.READY,
+      assert(this.uiState_ == PrintPreviewUiState_.READY,
              'Trying to print when not in ready state: ' + this.uiState_);
       this.printDocumentOrOpenPdfPreview_(false /*isPdfPreview*/);
     },
@@ -911,7 +917,7 @@ cr.define('print_preview', function() {
           this.destinationStore_.selectedDestination &&
           this.printTicketStore_.isTicketValid() &&
           this.printHeader_.isPrintButtonEnabled) {
-        assert(this.uiState_ == PrintPreview.UiState_.READY,
+        assert(this.uiState_ == PrintPreviewUiState_.READY,
             'Trying to print when not in ready state: ' + this.uiState_);
         var activeElementTag = document.activeElement.tagName.toUpperCase();
         if (activeElementTag != 'BUTTON' && activeElementTag != 'SELECT' &&
@@ -931,7 +937,7 @@ cr.define('print_preview', function() {
      * @private
      */
     onSettingsInvalid_: function() {
-      this.uiState_ = PrintPreview.UiState_.ERROR;
+      this.uiState_ = PrintPreviewUiState_.ERROR;
       this.isPreviewGenerationInProgress_ = false;
       this.printHeader_.isPrintButtonEnabled = false;
       this.previewArea_.cancelTimeout();
@@ -1184,7 +1190,7 @@ cr.define('print_preview', function() {
         return true;
       var selectedDest = this.destinationStore_.selectedDestination;
       return !!selectedDest &&
-             selectedDest.origin == print_preview.Destination.Origin.LOCAL &&
+             selectedDest.origin == print_preview.DestinationOrigin.LOCAL &&
              selectedDest.id !=
                  print_preview.Destination.GooglePromotedId.SAVE_AS_PDF;
     },
@@ -1196,13 +1202,13 @@ cr.define('print_preview', function() {
      */
     onDestinationSelect_: function() {
       if ($('system-dialog-link')) {
-        setIsVisible($('system-dialog-link'),
+        setIsVisible(getRequiredElement('system-dialog-link'),
                      this.shouldShowSystemDialogLink_());
       }
       // Reset if we had a bad settings fetch since the user selected a new
       // printer.
-      if (this.uiState_ == PrintPreview.UiState_.ERROR)
-        this.uiState_ = PrintPreview.UiState_.READY;
+      if (this.uiState_ == PrintPreviewUiState_.ERROR)
+        this.uiState_ = PrintPreviewUiState_.READY;
       if (this.destinationStore_.selectedDestination &&
           this.isInKioskAutoPrintMode_) {
         this.onPrintButtonClick_();
@@ -1271,6 +1277,7 @@ cr.define('print_preview', function() {
 
 // <include src="data/page_number_set.js">
 // <include src="data/destination.js">
+// <include src="data/destination_match.js">
 // <include src="data/local_parsers.js">
 // <include src="data/cloud_parsers.js">
 // <include src="data/destination_store.js">
@@ -1344,6 +1351,11 @@ cr.define('print_preview', function() {
 // <include src="search/destination_search.js">
 // <include src="search/provisional_destination_resolver.js">
 
+/**
+ * Global instance of PrintPreview, used by browser tests.
+ * @type {print_preview.PrintPreview}
+ */
+var printPreview;
 window.addEventListener('DOMContentLoaded', function() {
   printPreview = new print_preview.PrintPreview();
   printPreview.initialize();

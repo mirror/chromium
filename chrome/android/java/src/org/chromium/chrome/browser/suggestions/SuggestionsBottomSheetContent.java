@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.DiscardableReferencePool;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.NativePageHost;
@@ -35,9 +36,6 @@ import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 
 /**
  * Provides content to be displayed inside of the Home tab of bottom sheet.
- *
- * TODO(dgn): If the bottom sheet view is not recreated across tab changes, it will have to be
- * notified of it, at least when it is pulled up on the new tab.
  */
 public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetContent {
     private static SuggestionsSource sSuggestionsSourceForTesting;
@@ -59,7 +57,8 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                 new SuggestionsNavigationDelegateImpl(activity, profile, sheet, tabModelSelector);
         mTileGroupDelegate = new TileGroupDelegateImpl(
                 activity, profile, tabModelSelector, navigationDelegate, snackbarManager);
-        mSuggestionsUiDelegate = createSuggestionsDelegate(profile, navigationDelegate, sheet);
+        mSuggestionsUiDelegate = createSuggestionsDelegate(
+                profile, navigationDelegate, sheet, activity.getReferencePool());
 
         mView = LayoutInflater.from(activity).inflate(
                 R.layout.suggestions_bottom_sheet_content, null);
@@ -92,17 +91,21 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             @Override
             public void onSheetOpened() {
                 mRecyclerView.scrollToPosition(0);
+                prepareSuggestionsForReveal(adapter);
 
-                // TODO(https://crbug.com/689962) Ensure this call does not discard all suggestions
-                // every time the sheet is opened.
-                adapter.refreshSuggestions();
-                mSuggestionsUiDelegate.getEventReporter().onSurfaceOpened();
+                mRecyclerView.getScrollEventReporter().reset();
             }
+
+            @Override
+            public void onSheetClosed() {
+                SuggestionsMetrics.recordSurfaceHidden();
+            }
+
         };
         mBottomSheet = activity.getBottomSheet();
         mBottomSheet.addObserver(mBottomSheetObserver);
-        adapter.refreshSuggestions();
-        mSuggestionsUiDelegate.getEventReporter().onSurfaceOpened();
+
+        if (mBottomSheet.isSheetOpen()) prepareSuggestionsForReveal(adapter);
 
         mShadowView = (FadingShadowView) mView.findViewById(R.id.shadow);
         mShadowView.init(
@@ -164,6 +167,13 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         return BottomSheetContentController.TYPE_SUGGESTIONS;
     }
 
+    /** Called when the UI is revlealed, prepares the list of suggestions. */
+    private void prepareSuggestionsForReveal(NewTabPageAdapter adapter) {
+        adapter.refreshSuggestions();
+        mSuggestionsUiDelegate.getEventReporter().onSurfaceOpened();
+        SuggestionsMetrics.recordSurfaceVisible();
+    }
+
     public static void setSuggestionsSourceForTesting(SuggestionsSource suggestionsSource) {
         sSuggestionsSourceForTesting = suggestionsSource;
     }
@@ -173,7 +183,8 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     private static SuggestionsUiDelegateImpl createSuggestionsDelegate(Profile profile,
-            SuggestionsNavigationDelegate navigationDelegate, NativePageHost host) {
+            SuggestionsNavigationDelegate navigationDelegate, NativePageHost host,
+            DiscardableReferencePool referencePool) {
         SnippetsBridge snippetsBridge = null;
         SuggestionsSource suggestionsSource;
         SuggestionsEventReporter eventReporter;
@@ -192,7 +203,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         }
 
         SuggestionsUiDelegateImpl delegate = new SuggestionsUiDelegateImpl(
-                suggestionsSource, eventReporter, navigationDelegate, profile, host);
+                suggestionsSource, eventReporter, navigationDelegate, profile, host, referencePool);
         if (snippetsBridge != null) delegate.addDestructionObserver(snippetsBridge);
 
         return delegate;

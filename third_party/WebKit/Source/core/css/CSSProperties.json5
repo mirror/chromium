@@ -69,6 +69,14 @@
       value_type: "str"
     },
 
+    // - field_size
+    // Number of bits needed to store this field. Only used for storage_only
+    // fields. If specified, the field will be stored as bit field. Otherwise
+    // it will be stored as a normal data member.
+    field_size: {
+      valid_type: "int",
+    },
+
     // - field_template
     // Affects how the interface to this field is generated.
     // TODO(sashab, meade): Remove this once TypedOM types are specified for
@@ -545,6 +553,10 @@
       custom_all: true,
       is_descriptor: true,
       priority: "High",
+      field_template: "storage_only",
+      type_name: "float",
+      default_value: "1.0",
+      field_group: "visual",
     },
 
     {
@@ -644,6 +656,10 @@
       name: "border-bottom-color",
       custom_all: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/graphics/Color",
+      default_value: "0",
+      field_group: "surround",
     },
     {
       name: "border-bottom-left-radius",
@@ -682,6 +698,11 @@
       interpolable: true,
       keywords: ["thin", "medium", "thick"],
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      type_name: "unsigned",
+      field_size : 26,
+      default_value: "WidthToFixedPoint(3)",
+      field_group: "surround",
     },
     {
       name: "border-collapse",
@@ -727,6 +748,10 @@
       name: "border-left-color",
       custom_all: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/graphics/Color",
+      default_value: "0",
+      field_group: "surround",
     },
     {
       name: "border-left-style",
@@ -743,11 +768,20 @@
       interpolable: true,
       keywords: ["thin", "medium", "thick"],
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      type_name: "unsigned",
+      field_size : 26,
+      default_value: "WidthToFixedPoint(3)",
+      field_group: "surround",
     },
     {
       name: "border-right-color",
       custom_all: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/graphics/Color",
+      default_value: "0",
+      field_group: "surround",
     },
     {
       name: "border-right-style",
@@ -764,11 +798,20 @@
       interpolable: true,
       keywords: ["thin", "medium", "thick"],
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      type_name: "unsigned",
+      field_size : 26,
+      default_value: "WidthToFixedPoint(3)",
+      field_group: "surround",
     },
     {
       name: "border-top-color",
       custom_all: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/graphics/Color",
+      default_value: "0",
+      field_group: "surround",
     },
     {
       name: "border-top-left-radius",
@@ -808,6 +851,11 @@
       keywords: ["thin", "medium", "thick"],
       supports_percentage: true,
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      type_name: "unsigned",
+      field_size : 26,
+      default_value: "WidthToFixedPoint(3)",
+      field_group: "surround",
     },
     {
       name: "bottom",
@@ -892,6 +940,10 @@
       converter: "ConvertClip",
       custom_all: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/LengthBox",
+      default_value: "LengthBox()",
+      field_group: "visual",
     },
     {
       name: "clip-path",
@@ -985,6 +1037,8 @@
     },
     {
       name: "d",
+      api_class: true,
+      api_methods: ["parseSingleValue"],
       converter: "ConvertPathOrNone",
       interpolable: true,
       svg: true,
@@ -1170,6 +1224,10 @@
       keywords: ["auto", "fit-content", "min-content", "max-content"],
       supports_percentage: true,
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      field_type_path: "platform/Length",
+      field_group: "box",
+      default_value: "Length()",
     },
     {
       name: "hyphens",
@@ -1377,12 +1435,20 @@
       converter: "ConvertLengthMaxSizing",
       is_descriptor: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/Length",
+      field_group: "box",
+      default_value: "Length(kMaxSizeNone)",
     },
     {
       name: "max-width",
       converter: "ConvertLengthMaxSizing",
       is_descriptor: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/Length",
+      field_group: "box",
+      default_value: "Length(kMaxSizeNone)",
     },
     {
       name: "min-height",
@@ -1390,6 +1456,10 @@
       converter: "ConvertLengthSizing",
       is_descriptor: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/Length",
+      field_group: "box",
+      default_value: "Length()",
     },
     {
       name: "min-width",
@@ -1397,6 +1467,10 @@
       converter: "ConvertLengthSizing",
       is_descriptor: true,
       interpolable: true,
+      field_template: "storage_only",
+      field_type_path: "platform/Length",
+      field_group: "box",
+      default_value: "Length()",
     },
     {
       name: "mix-blend-mode",
@@ -2444,6 +2518,10 @@
       keywords: ["auto", "fit-content", "min-content", "max-content"],
       supports_percentage: true,
       typedom_types: ["Length"],
+      field_template: "storage_only",
+      field_type_path: "platform/Length",
+      field_group: "box",
+      default_value: "Length()"
     },
     {
       name: "will-change",
@@ -2477,6 +2555,9 @@
       custom_all: true,
       interpolable: true,
       type_name: "int",
+      field_template: "storage_only",
+      field_group: "box",
+      default_value: "0"
     },
 
     // CSS logical props

@@ -402,16 +402,15 @@ void PermissionPromptImpl::SetDelegate(Delegate* delegate) {
   delegate_ = delegate;
 }
 
-void PermissionPromptImpl::Show(const std::vector<PermissionRequest*>& requests,
-                                const std::vector<bool>& values) {
+void PermissionPromptImpl::Show() {
   DCHECK(browser_);
   DCHECK(browser_->window());
 
   if (bubble_delegate_)
     bubble_delegate_->CloseBubble();
 
-  bubble_delegate_ =
-      new PermissionsBubbleDialogDelegateView(this, requests, values);
+  bubble_delegate_ = new PermissionsBubbleDialogDelegateView(
+      this, delegate_->Requests(), delegate_->AcceptStates());
 
   // Set |parent_window| because some valid anchors can become hidden.
   bubble_delegate_->set_parent_window(
@@ -445,15 +444,11 @@ void PermissionPromptImpl::Hide() {
   }
 }
 
-bool PermissionPromptImpl::IsVisible() {
-  return bubble_delegate_ != nullptr;
-}
-
 void PermissionPromptImpl::UpdateAnchorPosition() {
   DCHECK(browser_);
   DCHECK(browser_->window());
 
-  if (IsVisible()) {
+  if (bubble_delegate_) {
     bubble_delegate_->set_parent_window(
         platform_util::GetViewForWindow(browser_->window()->GetNativeWindow()));
     bubble_delegate_->UpdateAnchor(GetAnchorView(),

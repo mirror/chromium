@@ -83,8 +83,7 @@ int GetImagePathStartOfPageURL(SearchBox::ImageSourceType type,
   switch (type) {
     case SearchBox::FAVICON: {
       chrome::ParsedFaviconPath parsed;
-      return chrome::ParseFaviconPath(
-          path, favicon_base::FAVICON, &parsed) ? parsed.path_index : -1;
+      return chrome::ParseFaviconPath(path, &parsed) ? parsed.path_index : -1;
     }
     case SearchBox::LARGE_ICON: {
       LargeIconUrlParser parser;
@@ -305,7 +304,7 @@ bool SearchBox::GenerateImageURLFromTransientURL(const GURL& transient_url,
 
 void SearchBox::GetMostVisitedItems(
     std::vector<InstantMostVisitedItemIDPair>* items) const {
-  return most_visited_items_cache_.GetCurrentItems(items);
+  most_visited_items_cache_.GetCurrentItems(items);
 }
 
 bool SearchBox::GetMostVisitedItemWithID(

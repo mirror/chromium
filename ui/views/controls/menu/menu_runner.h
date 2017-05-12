@@ -85,6 +85,10 @@ class VIEWS_EXPORT MenuRunner {
     // the caller is responsible for closing the menu upon completion of the
     // drag-and-drop.
     NESTED_DRAG = 1 << 5,
+
+    // Menu with fixed anchor position, so |MenuRunner| will not attempt to
+    // adjust the anchor point. For example the context menu of shelf item.
+    FIXED_ANCHOR = 1 << 6,
   };
 
   // Creates a new MenuRunner, which may use a native menu if available.
@@ -109,7 +113,7 @@ class VIEWS_EXPORT MenuRunner {
                  MenuAnchorPosition anchor,
                  ui::MenuSourceType source_type);
 
-  // Returns true if we're in a nested message loop running the menu.
+  // Returns true if we're in a nested run loop running the menu.
   bool IsRunning() const;
 
   // Hides and cancels the menu. This does nothing if the menu is not open.

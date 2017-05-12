@@ -88,6 +88,10 @@ bool PaymentRequestState::AreRequestedMethodsSupported() const {
   return !spec_->supported_card_networks().empty();
 }
 
+std::string PaymentRequestState::GetAuthenticatedEmail() const {
+  return payment_request_delegate_->GetAuthenticatedEmail();
+}
+
 void PaymentRequestState::AddObserver(Observer* observer) {
   CHECK(observer);
   observers_.AddObserver(observer);
@@ -104,6 +108,27 @@ void PaymentRequestState::GeneratePaymentResponse() {
   response_helper_ = base::MakeUnique<PaymentResponseHelper>(
       app_locale_, spec_, selected_instrument_, payment_request_delegate_,
       selected_shipping_profile_, selected_contact_profile_, this);
+}
+
+void PaymentRequestState::RecordUseStats() {
+  if (spec_->request_shipping()) {
+    DCHECK(selected_shipping_profile_);
+    personal_data_manager_->RecordUseOf(*selected_shipping_profile_);
+  }
+
+  if (spec_->request_payer_name() || spec_->request_payer_email() ||
+      spec_->request_payer_phone()) {
+    DCHECK(selected_contact_profile_);
+
+    // If the same address was used for both contact and shipping, the stats
+    // should only be updated once.
+    if (!spec_->request_shipping() || (selected_shipping_profile_->guid() !=
+                                       selected_contact_profile_->guid())) {
+      personal_data_manager_->RecordUseOf(*selected_contact_profile_);
+    }
+  }
+
+  selected_instrument_->RecordUse();
 }
 
 void PaymentRequestState::AddAutofillPaymentInstrument(
@@ -246,11 +271,9 @@ void PaymentRequestState::SetDefaultProfileSelections() {
                    [](const std::unique_ptr<PaymentInstrument>& instrument) {
                      return instrument->IsCompleteForPayment();
                    });
-
   selected_instrument_ = first_complete_instrument == instruments.end()
                              ? nullptr
                              : first_complete_instrument->get();
-
   UpdateIsReadyToPayAndNotifyObservers();
 }
 

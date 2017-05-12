@@ -132,8 +132,7 @@ ChildProcessLauncherHelper::LaunchProcessOnLauncherThread(
 
   constexpr int param_key = 0;  // TODO(boliu): Use this.
   java_peer_.Reset(Java_ChildProcessLauncherHelper_create(
-      env, reinterpret_cast<intptr_t>(this), param_key, j_argv,
-      child_process_id(), j_file_infos));
+      env, reinterpret_cast<intptr_t>(this), param_key, j_argv, j_file_infos));
   AddRef();  // Balanced by OnChildProcessStarted.
 
   return Process();
@@ -172,13 +171,14 @@ void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
   StopChildProcess(process.process.Handle());
 }
 
-void ChildProcessLauncherHelper::SetProcessBackgroundedOnLauncherThread(
+void ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread(
     base::Process process,
-    bool background) {
+    bool background,
+    bool boost_for_pending_views) {
   JNIEnv* env = AttachCurrentThread();
   DCHECK(env);
   return Java_ChildProcessLauncherHelper_setInForeground(
-      env, java_peer_, process.Handle(), !background);
+      env, java_peer_, process.Handle(), !background, boost_for_pending_views);
 }
 
 // static

@@ -97,7 +97,9 @@ class TestPasswordProtectionService : public PasswordProtectionService {
 
   void set_incognito(bool enabled) { is_incognito_ = enabled; }
 
-  bool IsPingingEnabled() override { return true; }
+  bool IsPingingEnabled(const base::Feature& feature) override { return true; }
+
+  bool IsHistorySyncEnabled() override { return false; }
 
   LoginReputationClientResponse* latest_response() {
     return latest_response_.get();
@@ -365,7 +367,7 @@ TEST_F(PasswordProtectionServiceTest, TestGetCachedVerdicts) {
                 GURL("http://test.com/def/ghi/index.html"), &actual_verdict));
 }
 
-TEST_F(PasswordProtectionServiceTest, TestCleanUpCachedVerdicts) {
+TEST_F(PasswordProtectionServiceTest, TestRemoveCachedVerdictOnURLsDeleted) {
   ASSERT_EQ(0U, GetStoredVerdictCount());
   // Prepare 2 verdicts. One is for origin "http://foo.com", and the other is
   // for "http://bar.com".
@@ -401,6 +403,7 @@ TEST_F(PasswordProtectionServiceTest, TestCleanUpCachedVerdicts) {
       true /* all_history */, history::URLRows());
   EXPECT_EQ(0U, GetStoredVerdictCount());
 }
+
 TEST_F(PasswordProtectionServiceTest,
        TestNoRequestCreatedIfMainFrameURLIsNotValid) {
   ASSERT_EQ(0u, password_protection_service_->GetPendingRequestsCount());
@@ -423,35 +426,6 @@ TEST_F(PasswordProtectionServiceTest,
       GURL("ftp://foo.com:21"), GURL("http://foo.com/submit"),
       GURL("http://foo.com/frame"));
   EXPECT_EQ(0u, password_protection_service_->GetPendingRequestsCount());
-}
-
-TEST_F(PasswordProtectionServiceTest, TestNoRequestSentForIncognito) {
-  histograms_.ExpectTotalCount(kRequestOutcomeHistogramName, 0);
-  password_protection_service_->set_incognito(true);
-  password_protection_service_->StartRequest(
-      GURL(kTargetUrl), GURL("http://foo.com/submit"),
-      GURL("http://foo.com/frame"),
-      LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(nullptr, password_protection_service_->latest_response());
-  EXPECT_THAT(histograms_.GetAllSamples(kRequestOutcomeHistogramName),
-              testing::ElementsAre(base::Bucket(7 /* INCOGNITO */, 1)));
-}
-
-TEST_F(PasswordProtectionServiceTest,
-       TestNoRequestSentForNonExtendedReporting) {
-  histograms_.ExpectTotalCount(kRequestOutcomeHistogramName, 0);
-  password_protection_service_->set_extended_reporting(false);
-  password_protection_service_->StartRequest(
-      GURL(kTargetUrl), GURL("http://foo.com/submit"),
-      GURL("http://foo.com/frame"),
-      LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE);
-
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(nullptr, password_protection_service_->latest_response());
-  EXPECT_THAT(
-      histograms_.GetAllSamples(kRequestOutcomeHistogramName),
-      testing::ElementsAre(base::Bucket(6 /* NO_EXTENDED_REPORTING */, 1)));
 }
 
 TEST_F(PasswordProtectionServiceTest, TestNoRequestSentForWhitelistedURL) {
@@ -564,5 +538,44 @@ TEST_F(PasswordProtectionServiceTest, TestTearDownWithPendingRequests) {
 
   EXPECT_THAT(histograms_.GetAllSamples(kRequestOutcomeHistogramName),
               testing::ElementsAre(base::Bucket(2 /* CANCELED */, 1)));
+}
+
+TEST_F(PasswordProtectionServiceTest, TestCleanUpExpiredVerdict) {
+  ASSERT_EQ(0U, GetStoredVerdictCount());
+  // Prepare 4 verdicts:
+  // (1) "foo.com/abc" valid
+  // (2) "foo.com/def" expired
+  // (3) "bar.com/abc" expired
+  // (4) "bar.com/def" expired
+  base::Time now = base::Time::Now();
+  CacheVerdict(GURL("https://foo.com/abc/index.jsp"),
+               LoginReputationClientResponse::LOW_REPUTATION, 10 * 60,
+               "foo.com/abc", now);
+  CacheVerdict(GURL("https://foo.com/def/index.jsp"),
+               LoginReputationClientResponse::LOW_REPUTATION, 0, "foo.com/def",
+               now);
+  CacheVerdict(GURL("https://bar.com/abc/index.jsp"),
+               LoginReputationClientResponse::PHISHING, 0, "bar.com/abc", now);
+  CacheVerdict(GURL("https://bar.com/def/index.jsp"),
+               LoginReputationClientResponse::PHISHING, 0, "bar.com/def", now);
+  ASSERT_EQ(4U, GetStoredVerdictCount());
+
+  password_protection_service_->CleanUpExpiredVerdicts();
+
+  ASSERT_EQ(1U, GetStoredVerdictCount());
+  LoginReputationClientResponse actual_verdict;
+  // Has cached verdict for foo.com/abc.
+  EXPECT_EQ(LoginReputationClientResponse::LOW_REPUTATION,
+            password_protection_service_->GetCachedVerdict(
+                GURL("https://foo.com/abc/test.jsp"), &actual_verdict));
+  // No cached verdict for foo.com/def.
+  EXPECT_EQ(LoginReputationClientResponse::VERDICT_TYPE_UNSPECIFIED,
+            password_protection_service_->GetCachedVerdict(
+                GURL("https://foo.com/def/index.jsp"), &actual_verdict));
+  // Nothing in content setting for bar.com.
+  EXPECT_EQ(nullptr, content_setting_map_->GetWebsiteSetting(
+                         GURL("https://bar.com"), GURL(),
+                         CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION,
+                         std::string(), nullptr));
 }
 }  // namespace safe_browsing

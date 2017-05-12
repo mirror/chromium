@@ -8,7 +8,6 @@
 #include "core/layout/ng/geometry/ng_box_strut.h"
 #include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/ng_block_node.h"
-#include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_exclusion.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "core/style/ComputedStyle.h"
@@ -40,7 +39,7 @@ struct CORE_EXPORT NGFloatingObject : public RefCounted<NGFloatingObject> {
   // NGLayoutOpportunityIterator to position this floating object.
   NGLogicalSize available_size;
 
-  // To correctly position a float we need 2 offsets:
+  // To correctly **position** a float we need 2 offsets:
   // - origin_offset which represents the layout point for this float.
   // - from_offset which represents the point from where we need to calculate
   //   the relative logical offset for this float.
@@ -51,31 +50,43 @@ struct CORE_EXPORT NGFloatingObject : public RefCounted<NGFloatingObject> {
   NGLogicalOffset origin_offset;
   NGLogicalOffset from_offset;
 
-  // Calculated logical offset. It's never {@code nullopt} for a positioned
-  // float.
-  WTF::Optional<NGLogicalOffset> logical_offset;
+  // To correctly **paint** a float we need to know the BFC offset of the
+  // container to which we are attaching this float. It's used to calculate
+  // {@code paint_offset}.
+  // In most situations {@code paint_offset} equals to float's logical
+  // offset except the cases where a float needs to be re-attached to a non-zero
+  // height parent.
+  //
+  // Example:
+  //   <body>
+  //     <p style="height: 60px">Example</p>
+  //     <div id="zero-height-div"><float></div>
+  //
+  // Here the float's logical offset is 0 relative to its #zero-height-div
+  // parent. Because of the "zero height" div this float is re-attached to the
+  // 1st non-empty parent => body. To paint this float correctly we provide the
+  // modified {@code paint_offset} which is relative to the float's new
+  // parent.
+  // I.e. for our example {@code paint_offset.top} ==
+  //                      #zero-height-div's BFC offset
+  //                      - body's BFC offset + float's logical offset
+  //
+  // For code safety reasons {@code parent_bfc_block_offset} is Optional here
+  // because the block's offset can be only determined before the actual float's
+  // placement event.
+  WTF::Optional<LayoutUnit> parent_bfc_block_offset;
 
   // Writing mode of the float's constraint space.
   NGWritingMode writing_mode;
 
   RefPtr<NGPhysicalFragment> fragment;
 
-  // In the case where a legacy FloatingObject is attached to not its own
-  // parent, e.g. a float surrounded by a bunch of nested empty divs,
-  // NG float fragment's LeftOffset() cannot be used as legacy FloatingObject's
-  // left offset because that offset should be relative to the original float
-  // parent.
-  // {@code left_offset} is calculated when we know to which parent this float
-  // would be attached.
-  LayoutUnit left_offset;
-
   bool IsLeft() const { return exclusion_type == NGExclusion::kFloatLeft; }
 
   bool IsRight() const { return exclusion_type == NGExclusion::kFloatRight; }
 
   String ToString() const {
-    return String::Format("Type: '%d' Fragment: '%s'", exclusion_type,
-                          fragment->ToString().Ascii().data());
+    return String::Format("Type: '%d'", exclusion_type);
   }
 
  private:

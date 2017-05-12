@@ -61,7 +61,7 @@ const char kChromeUIGCMInternalsURL[] = "chrome://gcm-internals/";
 const char kChromeUIHelpFrameURL[] = "chrome://help-frame/";
 const char kChromeUIHelpURL[] = "chrome://help/";
 const char kChromeUIHistoryURL[] = "chrome://history/";
-const char kChromeUIHistoryFrameURL[] = "chrome://history-frame/";
+const char kDeprecatedChromeUIHistoryFrameURL[] = "chrome://history-frame/";
 const char kChromeUIIdentityInternalsURL[] = "chrome://identity-internals/";
 const char kChromeUIInspectURL[] = "chrome://inspect/";
 const char kChromeUIInstantURL[] = "chrome://instant/";
@@ -210,7 +210,7 @@ const char kChromeUIHangUIHost[] = "uithreadhang";
 const char kChromeUIHelpFrameHost[] = "help-frame";
 const char kChromeUIHelpHost[] = "help";
 const char kChromeUIHistoryHost[] = "history";
-const char kChromeUIHistoryFrameHost[] = "history-frame";
+const char kDeprecatedChromeUIHistoryFrameHost[] = "history-frame";
 const char kChromeUIIdentityInternalsHost[] = "identity-internals";
 const char kChromeUIInspectHost[] = "inspect";
 const char kChromeUIInstantHost[] = "instant";
@@ -262,7 +262,6 @@ const char kChromeUIThemeHost[] = "theme";
 const char kChromeUIThumbnailHost[] = "thumb";
 const char kChromeUIThumbnailHost2[] = "thumb2";
 const char kChromeUIThumbnailListHost[] = "thumbnails";
-const char kChromeUITouchIconHost[] = "touch-icon";
 const char kChromeUITranslateInternalsHost[] = "translate-internals";
 const char kChromeUIUberFrameHost[] = "uber-frame";
 const char kChromeUIUberHost[] = "chrome";
@@ -824,7 +823,7 @@ const char kChooserBluetoothOverviewURL[] =
 
 const char kBluetoothAdapterOffHelpURL[] =
 #if defined(OS_CHROMEOS)
-    "chrome://settings/search#Bluetooth";
+    "chrome://settings/#Bluetooth";
 #else
     "https://support.google.com/chrome?p=bluetooth";
 #endif

@@ -152,7 +152,7 @@ ContextProviderCommandBuffer::SharedProviders::~SharedProviders() = default;
 ContextProviderCommandBuffer::ContextProviderCommandBuffer(
     scoped_refptr<gpu::GpuChannelHost> channel,
     int32_t stream_id,
-    gpu::GpuStreamPriority stream_priority,
+    gpu::SchedulingPriority stream_priority,
     gpu::SurfaceHandle surface_handle,
     const GURL& active_url,
     bool automatic_flushes,
@@ -380,7 +380,8 @@ class GrContext* ContextProviderCommandBuffer::GrContext() {
   if (gr_context_)
     return gr_context_->get();
 
-  gr_context_.reset(new skia_bindings::GrContextForGLES2Interface(ContextGL()));
+  gr_context_.reset(new skia_bindings::GrContextForGLES2Interface(
+      ContextGL(), ContextCapabilities()));
   cache_controller_->SetGrContext(gr_context_->get());
 
   // If GlContext is already lost, also abandon the new GrContext.

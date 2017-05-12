@@ -189,27 +189,6 @@ size_t RegisterChromeCrashKeys() {
     {"seccomp-sigsys", kMediumSize},
 #endif
 
-    // Temporary for http://crbug.com/575245.
-    {"swapout_frame_id", kSmallSize},
-    {"swapout_proxy_id", kSmallSize},
-    {"swapout_view_id", kSmallSize},
-    {"commit_frame_id", kSmallSize},
-    {"commit_proxy_id", kSmallSize},
-    {"commit_view_id", kSmallSize},
-    {"commit_main_render_frame_id", kSmallSize},
-    {"newproxy_proxy_id", kSmallSize},
-    {"newproxy_view_id", kSmallSize},
-    {"newproxy_opener_id", kSmallSize},
-    {"newproxy_parent_id", kSmallSize},
-    {"rvinit_view_id", kSmallSize},
-    {"rvinit_proxy_id", kSmallSize},
-    {"rvinit_main_frame_id", kSmallSize},
-    {"initrf_frame_id", kSmallSize},
-    {"initrf_proxy_id", kSmallSize},
-    {"initrf_view_id", kSmallSize},
-    {"initrf_main_frame_id", kSmallSize},
-    {"initrf_view_is_live", kSmallSize},
-
     // Temporary for https://crbug.com/591478.
     {"initrf_parent_proxy_exists", kSmallSize},
     {"initrf_render_view_is_live", kSmallSize},
@@ -243,6 +222,10 @@ size_t RegisterChromeCrashKeys() {
     {"engine_params", crash_keys::kMediumSize},
     {"engine1_params", crash_keys::kMediumSize},
     {"engine2_params", crash_keys::kMediumSize},
+
+    // Temporary for http://crbug.com/703649.
+    {"field_trial_shmem_create_error", crash_keys::kSmallSize},
+    {"field_trial_shmem_map_error", crash_keys::kSmallSize},
   };
 
   // This dynamic set of keys is used for sets of key value pairs when gathering

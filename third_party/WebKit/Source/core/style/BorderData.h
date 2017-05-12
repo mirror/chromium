@@ -25,7 +25,7 @@
 #ifndef BorderData_h
 #define BorderData_h
 
-#include "core/style/BorderValue.h"
+#include "core/style/BorderStyle.h"
 #include "core/style/NinePieceImage.h"
 #include "platform/LengthSize.h"
 #include "platform/geometry/IntRect.h"
@@ -47,40 +47,6 @@ class BorderData {
 
   bool HasBorderFill() const { return image_.HasImage() && image_.Fill(); }
 
-  bool HasBorderColorReferencingCurrentColor() const {
-    return (left_.NonZero() && left_.GetColor().IsCurrentColor()) ||
-           (right_.NonZero() && right_.GetColor().IsCurrentColor()) ||
-           (top_.NonZero() && top_.GetColor().IsCurrentColor()) ||
-           (bottom_.NonZero() && bottom_.GetColor().IsCurrentColor());
-  }
-
-  float BorderLeftWidth() const {
-    if (left_.Style() == kBorderStyleNone ||
-        left_.Style() == kBorderStyleHidden)
-      return 0;
-    return left_.Width();
-  }
-
-  float BorderRightWidth() const {
-    if (right_.Style() == kBorderStyleNone ||
-        right_.Style() == kBorderStyleHidden)
-      return 0;
-    return right_.Width();
-  }
-
-  float BorderTopWidth() const {
-    if (top_.Style() == kBorderStyleNone || top_.Style() == kBorderStyleHidden)
-      return 0;
-    return top_.Width();
-  }
-
-  float BorderBottomWidth() const {
-    if (bottom_.Style() == kBorderStyleNone ||
-        bottom_.Style() == kBorderStyleHidden)
-      return 0;
-    return bottom_.Width();
-  }
-
   bool operator==(const BorderData& o) const {
     return left_ == o.left_ && right_ == o.right_ && top_ == o.top_ &&
            bottom_ == o.bottom_ && image_ == o.image_;
@@ -98,25 +64,18 @@ class BorderData {
 
   bool operator!=(const BorderData& o) const { return !(*this == o); }
 
-  bool SizeEquals(const BorderData& o) const {
-    return BorderLeftWidth() == o.BorderLeftWidth() &&
-           BorderTopWidth() == o.BorderTopWidth() &&
-           BorderRightWidth() == o.BorderRightWidth() &&
-           BorderBottomWidth() == o.BorderBottomWidth();
-  }
-
-  const BorderValue& Left() const { return left_; }
-  const BorderValue& Right() const { return right_; }
-  const BorderValue& Top() const { return top_; }
-  const BorderValue& Bottom() const { return bottom_; }
+  const BorderStyle& Left() const { return left_; }
+  const BorderStyle& Right() const { return right_; }
+  const BorderStyle& Top() const { return top_; }
+  const BorderStyle& Bottom() const { return bottom_; }
 
   const NinePieceImage& GetImage() const { return image_; }
 
  private:
-  BorderValue left_;
-  BorderValue right_;
-  BorderValue top_;
-  BorderValue bottom_;
+  BorderStyle left_;
+  BorderStyle right_;
+  BorderStyle top_;
+  BorderStyle bottom_;
 
   NinePieceImage image_;
 };

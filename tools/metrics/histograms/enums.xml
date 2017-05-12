@@ -1614,17 +1614,21 @@ uploading your change for review.  These are checked by presubmit scripts.
 
 <enum name="AutofillCardUploadDecisionMetric" type="int">
   <int value="0" label="Upload offered"/>
-  <int value="1" label="Upload not offered, no CVC detected"/>
-  <int value="2" label="Upload not offered, no address available"/>
-  <int value="3" label="Upload not offered, no name available"/>
+  <int value="1" label="CVC field not detected"/>
+  <int value="2" label="CVC value not filled in detected CVC field"/>
+  <int value="3" label="Invalid CVC value in detected CVC field"/>
   <int value="4"
-      label="Upload not offered, addresses had conflicting zip codes"/>
-  <int value="5" label="Upload not offered, no zip code available"/>
-  <int value="6" label="Upload not offered, get upload details RPC failed"/>
-  <int value="7"
-      label="Upload not offered, card and/or addresses had conflicting names"/>
-  <int value="8" label="Upload offered, no CVC detected"/>
-  <int value="9" label="Upload not offered"/>
+      label="CVC field not detected, found possible CVC value in another
+             field"/>
+  <int value="5" label="No address profile available"/>
+  <int value="6"
+      label="No recently used or recently modified address profile available"/>
+  <int value="7" label="Address profile available but without zip code"/>
+  <int value="8"
+      label="Address profiles available but had conflicting zip codes"/>
+  <int value="9" label="Name not found on card or address profiles"/>
+  <int value="10" label="Card and/or addresses had conflicting names"/>
+  <int value="11" label="Get upload details RPC failed"/>
 </enum>
 
 <enum name="AutofillCreditCardInfoBar" type="int">
@@ -2622,6 +2626,11 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="BooleanDataReductionProxy" type="int">
   <int value="0" label="Not Data Reduction Proxy"/>
   <int value="1" label="Data Reduction Proxy"/>
+</enum>
+
+<enum name="BooleanDeclarativeRules" type="int">
+  <int value="0" label="No declarative rules"/>
+  <int value="1" label="Has declarative rules"/>
 </enum>
 
 <enum name="BooleanDefault" type="int">
@@ -5276,6 +5285,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="30" label="Important site info setting"/>
   <int value="31" label="Permission autoblocker data setting"/>
   <int value="32" label="Subresource filter setting"/>
+  <int value="33" label="Subresource filter metadata"/>
 </enum>
 
 <enum name="ContentTypeParseableResult" type="int">
@@ -5383,6 +5393,9 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="ContextualSearchBlacklistSeen" type="int">
+  <obsolete>
+    Deprecated as of 5/2017. Experiment is finished.
+  </obsolete>
   <int value="0" label="None, Seen"/>
   <int value="1" label="None, Not Seen"/>
   <int value="2" label="Number, Seen"/>
@@ -6637,6 +6650,10 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="DataReductionProxyQuicDefaultAlternativeProxy" type="int">
+  <obsolete>
+    Deprecated in 5/2017, since the experiment to use default QUIC alternative
+    proxy was deprecated.
+  </obsolete>
   <int value="0" label="QUIC proxy was available"/>
   <int value="1" label="QUIC proxy was marked as broken"/>
   <int value="2"
@@ -6854,6 +6871,18 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="38" label="UKM"/>
   <int value="39" label="Payments"/>
   <int value="40" label="LargeIconService"/>
+</enum>
+
+<enum name="DeclarativeAPIFunctionType" type="int">
+  <int value="0" label="kDeclarativeContentAddRules"/>
+  <int value="1" label="kDeclarativeContentRemoveRules"/>
+  <int value="2" label="kDeclarativeContentGetRules"/>
+  <int value="3" label="kDeclarativeWebRequestAddRules"/>
+  <int value="4" label="kDeclarativeWebRequestRemoveRules"/>
+  <int value="5" label="kDeclarativeWebRequestGetRules"/>
+  <int value="6" label="kDeclarativeWebRequestWebviewAddRules"/>
+  <int value="7" label="kDeclarativeWebRequestWebviewRemoveRules"/>
+  <int value="8" label="kDeclarativeWebRequestWebviewGetRules"/>
 </enum>
 
 <enum name="DecodedImageOrientation" type="int">
@@ -7096,7 +7125,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="4" label="Scripts"/>
   <int value="5" label="Timeline"/>
   <int value="6" label="Heap profiler"/>
-  <int value="7" label="Audits"/>
+  <int value="7" label="Legacy Audits"/>
   <int value="8" label="Console"/>
   <int value="9" label="Layers"/>
   <int value="10" label="Drawer - Console"/>
@@ -7107,6 +7136,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="15" label="Drawer - Search"/>
   <int value="16" label="Security"/>
   <int value="17" label="JavaScript Profiler"/>
+  <int value="18" label="Audits"/>
 </enum>
 
 <enum name="DevToolsSetting" type="int">
@@ -7207,10 +7237,43 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="DircryptoMigrationEndStatus" type="int">
-  <int value="1" label="New migration failed"/>
+  <int value="1" label="New migration failed (generic failure)"/>
   <int value="2" label="New migration succeeded"/>
-  <int value="3" label="Resumed migration failed"/>
+  <int value="3" label="Resumed migration failed (generic failure)"/>
   <int value="4" label="Resumed migration succeeded"/>
+  <int value="5" label="New migration failed (low disk space)"/>
+  <int value="6" label="Resumed migration failed (low disk space)"/>
+  <int value="7" label="New migration failed (file error)"/>
+  <int value="8" label="Resumed migration failed (file error)"/>
+  <int value="9" label="New migration failed (file error EIO on open)"/>
+  <int value="10" label="Resumed migration failed (file error EIO on open)"/>
+</enum>
+
+<enum name="DircryptoMigrationFailedOperationType" type="int">
+  <int value="1" label="Other"/>
+  <int value="2" label="open(src_file)"/>
+  <int value="3" label="open(dest_file)"/>
+  <int value="4" label="symlink"/>
+  <int value="5" label="delete"/>
+  <int value="6" label="get-attribute"/>
+  <int value="7" label="mkdir"/>
+  <int value="8" label="readlink"/>
+  <int value="9" label="seek"/>
+  <int value="10" label="sendfile"/>
+  <int value="11" label="set-attribute"/>
+  <int value="12" label="stat"/>
+  <int value="13" label="sync"/>
+  <int value="14" label="truncate"/>
+  <int value="15" label="non fatal open(src_file)"/>
+</enum>
+
+<enum name="DircryptoMigrationFailedPathType" type="int">
+  <int value="1" label="Other"/>
+  <int value="2" label="Android Other"/>
+  <int value="3" label="Android Cache"/>
+  <int value="4" label="Downloads"/>
+  <int value="5" label="Cache"/>
+  <int value="6" label="GCache (Google Drive Cache)"/>
 </enum>
 
 <enum name="DircryptoMigrationStartStatus" type="int">
@@ -8449,11 +8512,14 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1981060640" label="en-NZ,pa"/>
   <int value="-1969945476" label="en,kk"/>
   <int value="-1968768037" label="en,be"/>
+  <int value="-1959746105" label="en-NZ,jw"/>
   <int value="-1944914110" label="en-CA,tr"/>
   <int value="-1944124391" label="en-NZ,lt"/>
+  <int value="-1940864183" label="en-AU,yue-HK"/>
   <int value="-1938634095" label="en-AU,ur"/>
   <int value="-1937334700" label="en-CA,fil"/>
   <int value="-1936297420" label="en-ZA,th"/>
+  <int value="-1919906366" label="en-US,zh-TW"/>
   <int value="-1912635719" label="en-IN,hr"/>
   <int value="-1911121699" label="en-NZ,iw"/>
   <int value="-1907190634" label="en-GB,sk"/>
@@ -8464,6 +8530,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1894796887" label="other,uz"/>
   <int value="-1893186684" label="en-CA,sq"/>
   <int value="-1888655601" label="en-AU,hmn"/>
+  <int value="-1879544540" label="other,jw"/>
   <int value="-1879363959" label="en-CA,el-Latn"/>
   <int value="-1873453878" label="en-US,ht"/>
   <int value="-1869637891" label="en-CA,te"/>
@@ -8476,6 +8543,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1858480480" label="en,su"/>
   <int value="-1848050043" label="en-AU,zh"/>
   <int value="-1844339140" label="en-NZ,bg"/>
+  <int value="-1838958165" label="en,zh-CN"/>
   <int value="-1837172785" label="en,fy"/>
   <int value="-1830369415" label="en-AU,sn"/>
   <int value="-1820239738" label="en-ZA,so"/>
@@ -8543,6 +8611,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1514197491" label="en-AU,ka"/>
   <int value="-1513794730" label="en-US,ca"/>
   <int value="-1511712239" label="en-GB,sl"/>
+  <int value="-1510059118" label="en-NZ,zh-TW"/>
   <int value="-1507434828" label="en-IN,hmn"/>
   <int value="-1498956183" label="en-CA,sk"/>
   <int value="-1496658087" label="en-NZ,cy"/>
@@ -8552,14 +8621,17 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1469669231" label="en-GB,sq"/>
   <int value="-1468074483" label="en-CA,af"/>
   <int value="-1462099981" label="en-IN,jv"/>
+  <int value="-1461074412" label="en-ZA,zh-TW"/>
   <int value="-1457647003" label="en-NZ,eu"/>
   <int value="-1450386960" label="en-CA,nl"/>
   <int value="-1446631159" label="en-NZ,el-Latn"/>
   <int value="-1422491922" label="en-US,ka"/>
   <int value="-1420298629" label="en-ZA,fy"/>
+  <int value="-1416941033" label="en-CA,zh-TW"/>
   <int value="-1416903380" label="en-ZA,be"/>
   <int value="-1403910050" label="en-ZA,pl"/>
   <int value="-1402845617" label="en-GB,fr"/>
+  <int value="-1402681073" label="other,tl"/>
   <int value="-1399351496" label="en-ZA,gl"/>
   <int value="-1398520733" label="en-US,ro"/>
   <int value="-1390125648" label="en-CA,no"/>
@@ -8585,6 +8657,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1324503751" label="other,hmn"/>
   <int value="-1310042673" label="other,it"/>
   <int value="-1309690314" label="other,nl"/>
+  <int value="-1309674747" label="en-IN,tl"/>
   <int value="-1301792573" label="en-US,pa"/>
   <int value="-1298978218" label="en-ZA,ru"/>
   <int value="-1298210853" label="en-AU,ru-Latn"/>
@@ -8613,12 +8686,14 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1207597587" label="other,bs"/>
   <int value="-1196089827" label="en-GB,te"/>
   <int value="-1194882730" label="en-CA,bs"/>
+  <int value="-1183487896" label="en,tl"/>
   <int value="-1182285832" label="en-AU,ar"/>
   <int value="-1180706012" label="en-US,ku"/>
   <int value="-1176858165" label="en-NZ,es"/>
   <int value="-1161664630" label="en-CA,so"/>
   <int value="-1150612958" label="en-GB,ml"/>
   <int value="-1149861387" label="other,el-Latn"/>
+  <int value="-1147733157" label="en-US,zh-CN"/>
   <int value="-1146067341" label="en-US,fil"/>
   <int value="-1134207512" label="en-NZ,lb"/>
   <int value="-1133970848" label="en-CA,ht"/>
@@ -8628,16 +8703,19 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1118006347" label="en-NZ,su"/>
   <int value="-1111896399" label="en-ZA,cs"/>
   <int value="-1111659918" label="en-ZA,bn"/>
+  <int value="-1110229326" label="en-IN,zh-CN"/>
   <int value="-1109349887" label="en-US,bs"/>
   <int value="-1104794613" label="en-ZA,eo"/>
   <int value="-1102200262" label="en-AU,bg"/>
   <int value="-1087479434" label="en-NZ,gu"/>
   <int value="-1086494101" label="en-IN,en"/>
+  <int value="-1085453048" label="en-NZ,tl"/>
   <int value="-1083832142" label="en-ZA,fr"/>
   <int value="-1082841040" label="en-AU,no"/>
   <int value="-1078817533" label="en-IN,ja-Latn"/>
   <int value="-1061831796" label="other,sw"/>
   <int value="-1060276304" label="en-AU,ml"/>
+  <int value="-1059536520" label="en-GB,zh-CN"/>
   <int value="-1058009879" label="en-AU,ku"/>
   <int value="-1049361969" label="en-CA,yo"/>
   <int value="-1048166271" label="en-IN,ceb"/>
@@ -8662,6 +8740,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-994546623" label="en,gd"/>
   <int value="-981430978" label="en-IN,zh-Latn"/>
   <int value="-980040557" label="en,ky"/>
+  <int value="-975362715" label="en-ZA,tl"/>
   <int value="-973176337" label="en-ZA,am"/>
   <int value="-969434649" label="en-CA,ro"/>
   <int value="-965565591" label="en-ZA,bg"/>
@@ -8687,6 +8766,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-884692633" label="en-GB,ru"/>
   <int value="-867330946" label="en-GB,sm"/>
   <int value="-858362606" label="en-IN,nl"/>
+  <int value="-857227100" label="en-IN,jw"/>
   <int value="-856399552" label="en-ZA,yi"/>
   <int value="-855471302" label="en-US,ta"/>
   <int value="-843023273" label="en-ZA,eu"/>
@@ -8747,6 +8827,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-578031600" label="en,sk"/>
   <int value="-576525627" label="en-AU,ps"/>
   <int value="-569450071" label="other,ur"/>
+  <int value="-567245265" label="en-AU,jw"/>
   <int value="-564888613" label="en-IN,eo"/>
   <int value="-562158532" label="other,zh-Latn"/>
   <int value="-560384338" label="en-CA,sd"/>
@@ -8784,6 +8865,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-449171923" label="en-IN,mk"/>
   <int value="-438919066" label="en-AU,ru"/>
   <int value="-437634847" label="other,ku"/>
+  <int value="-432262667" label="other,zh-CN"/>
   <int value="-429170059" label="en-ZA,jv"/>
   <int value="-428711284" label="other,hr"/>
   <int value="-426218528" label="en-US,lt"/>
@@ -8820,6 +8902,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-308798721" label="en-IN,sl"/>
   <int value="-307369173" label="en-US,hi-Latn"/>
   <int value="-300476925" label="en,ml"/>
+  <int value="-298058163" label="en-GB,tl"/>
+  <int value="-291300455" label="en-CA,jw"/>
   <int value="-291188106" label="en-GB,th"/>
   <int value="-289299006" label="en-US,ny"/>
   <int value="-286225855" label="en-ZA,sr"/>
@@ -8835,9 +8919,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-234681308" label="en,mt"/>
   <int value="-227668781" label="en-IN,kk"/>
   <int value="-226564202" label="en-AU,iw"/>
+  <int value="-220301883" label="en-GB,yue-HK"/>
   <int value="-212757062" label="en-ZA,mt"/>
   <int value="-212529805" label="en-CA,de"/>
   <int value="-210208396" label="en-IN,ky"/>
+  <int value="-207049992" label="en-US,tl"/>
   <int value="-195613326" label="en-US,xh"/>
   <int value="-194304961" label="en-AU,ha"/>
   <int value="-183211755" label="en-NZ,ga"/>
@@ -8847,9 +8933,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-175546622" label="en,ga"/>
   <int value="-172830708" label="en-GB,fa"/>
   <int value="-170360146" label="en-CA,fi"/>
+  <int value="-169624558" label="en-CA,zh-CN"/>
   <int value="-169367928" label="en-ZA,sw"/>
   <int value="-158046757" label="en-CA,hu"/>
   <int value="-157371194" label="en-ZA,hi-Latn"/>
+  <int value="-156478388" label="en,zh-TW"/>
   <int value="-151899928" label="en-NZ,hi"/>
   <int value="-147938422" label="en-IN,el"/>
   <int value="-145185628" label="en-CA,ps"/>
@@ -8887,6 +8975,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="571301" label="en-US,fi"/>
   <int value="2586472" label="en,hi"/>
   <int value="11142866" label="en-IN,gd"/>
+  <int value="12797257" label="en-US,yue-HK"/>
   <int value="12962928" label="en-US,hr"/>
   <int value="32976640" label="en-IN,und"/>
   <int value="34221237" label="other,haw"/>
@@ -8937,6 +9026,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="183621141" label="other,yo"/>
   <int value="189106370" label="en-US,eu"/>
   <int value="194694507" label="en-NZ,sq"/>
+  <int value="203847267" label="en-ZA,zh-CN"/>
   <int value="204011687" label="en-CA,ml"/>
   <int value="206430050" label="en-GB,es"/>
   <int value="210100759" label="en-CA,xh"/>
@@ -8951,6 +9041,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="238615518" label="en-NZ,ru-Latn"/>
   <int value="240447639" label="en-NZ,ig"/>
   <int value="241686897" label="other,co"/>
+  <int value="241878472" label="en-AU,tl"/>
   <int value="248618927" label="en-AU,el-Latn"/>
   <int value="255346854" label="en-GB,gd"/>
   <int value="262272920" label="en,sm"/>
@@ -8977,6 +9068,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="360333241" label="en,pa"/>
   <int value="360482886" label="other,km"/>
   <int value="361147661" label="en-GB,ja"/>
+  <int value="361177790" label="en-IN,yue-HK"/>
   <int value="369729502" label="en-IN,ur"/>
   <int value="374070776" label="en-GB,yo"/>
   <int value="382794171" label="other,az"/>
@@ -9009,12 +9101,14 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="469426247" label="en-NZ,da"/>
   <int value="470968744" label="en-IN,am"/>
   <int value="471525594" label="en-GB,bg-Latn"/>
+  <int value="471740150" label="en-CA,tl"/>
   <int value="477790180" label="other,bn"/>
   <int value="481497515" label="other,ga"/>
   <int value="482150171" label="en-GB,uz"/>
   <int value="484422880" label="en-IN,sw"/>
   <int value="486304785" label="en-NZ,ar"/>
   <int value="486576942" label="en-CA,et"/>
+  <int value="492739479" label="en-GB,jw"/>
   <int value="504950639" label="en-IN,pt"/>
   <int value="507474490" label="other,mr"/>
   <int value="511298624" label="en-AU,bg-Latn"/>
@@ -9037,6 +9131,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="595917413" label="en-CA,id"/>
   <int value="599526823" label="en-IN,ku"/>
   <int value="605876339" label="other,lt"/>
+  <int value="610831978" label="other,yue-HK"/>
   <int value="612847367" label="en-ZA,te"/>
   <int value="614830922" label="other,ml"/>
   <int value="616504159" label="en-GB,jv"/>
@@ -9044,6 +9139,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="624672740" label="en-GB,zh"/>
   <int value="626970505" label="en,ht"/>
   <int value="628097668" label="en-IN,sd"/>
+  <int value="639569313" label="en-NZ,yue-HK"/>
   <int value="640262038" label="en-AU,sm"/>
   <int value="641686626" label="en-US,ru"/>
   <int value="646613899" label="en-IN,sn"/>
@@ -9075,17 +9171,20 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="758976688" label="en-IN,gl"/>
   <int value="759357339" label="en,sd"/>
   <int value="762656539" label="en-US,ig"/>
+  <int value="786031713" label="en,yue-HK"/>
   <int value="794132649" label="en-IN,sv"/>
   <int value="796385096" label="en-GB,bg"/>
   <int value="796611332" label="en-ZA,kn"/>
   <int value="798691984" label="en-US,ha"/>
   <int value="799101140" label="en-IN,ny"/>
   <int value="801133153" label="en-GB,mg"/>
+  <int value="802275724" label="en-IN,zh-TW"/>
   <int value="804316451" label="other,el"/>
   <int value="807787788" label="en-ZA,gd"/>
   <int value="809250169" label="en-US,cs"/>
   <int value="816096178" label="en-GB,my"/>
   <int value="824645258" label="en-US,sk"/>
+  <int value="826118132" label="en-US,jw"/>
   <int value="826558712" label="en-ZA,sv"/>
   <int value="849084143" label="en,it"/>
   <int value="850862273" label="en-AU,de"/>
@@ -9180,6 +9279,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1168246222" label="en-US,tg"/>
   <int value="1169881078" label="en,id"/>
   <int value="1170715716" label="en-ZA,zu"/>
+  <int value="1171944607" label="en-NZ,zh-CN"/>
   <int value="1174248653" label="en-GB,zu"/>
   <int value="1175423418" label="other,ha"/>
   <int value="1175589237" label="en-IN,zh"/>
@@ -9213,6 +9313,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1292870564" label="en-ZA,ru-Latn"/>
   <int value="1300968709" label="en-GB,it"/>
   <int value="1302667839" label="en-NZ,bs"/>
+  <int value="1303482305" label="other,zh-TW"/>
   <int value="1306008814" label="en-NZ,pt"/>
   <int value="1307519081" label="other,fa"/>
   <int value="1310524684" label="en-AU,tg"/>
@@ -9232,13 +9333,16 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1375141921" label="en-NZ,mg"/>
   <int value="1375516436" label="other,jv"/>
   <int value="1377425950" label="en-NZ,az"/>
+  <int value="1378327312" label="en-AU,zh-TW"/>
   <int value="1382586179" label="en-GB,ko"/>
+  <int value="1383657387" label="en-GB,zh-TW"/>
   <int value="1384498167" label="en-CA,ja"/>
   <int value="1389280901" label="en-AU,eo"/>
   <int value="1393996692" label="en-CA,mi"/>
   <int value="1395222628" label="en-IN,lt"/>
   <int value="1398402282" label="en-GB,de"/>
   <int value="1402000053" label="en-GB,ky"/>
+  <int value="1404684826" label="en-CA,yue-HK"/>
   <int value="1416181656" label="en,ny"/>
   <int value="1418241073" label="en-NZ,sv"/>
   <int value="1420980063" label="en-AU,ro"/>
@@ -9256,6 +9360,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1473595362" label="en,et"/>
   <int value="1475867184" label="other,ps"/>
   <int value="1479752599" label="en-NZ,so"/>
+  <int value="1483792223" label="en,jw"/>
   <int value="1486918374" label="en-CA,gu"/>
   <int value="1492342066" label="en-IN,ro"/>
   <int value="1494396409" label="en-NZ,tr"/>
@@ -9299,9 +9404,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1650086272" label="en-IN,ja"/>
   <int value="1654964809" label="en-GB,ta"/>
   <int value="1658068744" label="en-ZA,si"/>
+  <int value="1668672261" label="en-AU,zh-CN"/>
   <int value="1674861874" label="en-AU,af"/>
   <int value="1674862709" label="en-AU,ko"/>
   <int value="1678320412" label="en-US,sw"/>
+  <int value="1682694795" label="en-ZA,jw"/>
   <int value="1682821330" label="en,ro"/>
   <int value="1685893517" label="en-IN,so"/>
   <int value="1688465225" label="en-NZ,gl"/>
@@ -9391,6 +9498,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2095083633" label="en-ZA,gu"/>
   <int value="2095959023" label="en-NZ,pl"/>
   <int value="2099045123" label="en-NZ,ro"/>
+  <int value="2099107983" label="en-ZA,yue-HK"/>
   <int value="2100025793" label="en-US,id"/>
   <int value="2115803061" label="en-CA,kk"/>
   <int value="2116112642" label="en-US,fr"/>
@@ -12162,6 +12270,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1170" label="WEBRTC_AUDIO_PRIVATE_SET_AUDIO_EXPERIMENTS"/>
   <int value="1171" label="AUTOTESTPRIVATE_GETPLAYSTORESTATE"/>
   <int value="1172" label="AUTOTESTPRIVATE_SETPLAYSTOREENABLED"/>
+  <int value="1173" label="APP_CURRENTWINDOWINTERNAL_SETACTIVATEONPOINTER"/>
 </enum>
 
 <enum name="ExtensionIconState" type="int">
@@ -13981,7 +14090,9 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1152" label="MediaStreamConstraintsConformant"/>
   <int value="1153" label="CSSSelectorIndirectAdjacent"/>
   <int value="1154" label="NodeRootNode (obsolete)"/>
-  <int value="1155" label="BluetoothDeviceConnectGATT"/>
+  <int value="1155"
+      label="obsolete: BluetoothDeviceConnectGATT (use
+             WebBluetoothRemoteServerConnect)"/>
   <int value="1156" label="CreateImageBitmap"/>
   <int value="1157" label="PresentationConnectionConnectEventListener"/>
   <int value="1158" label="PresentationConnectionCloseEventListener"/>
@@ -14816,6 +14927,9 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1968" label="ElementNameDOMInvalidHTMLParserValid"/>
   <int value="1969" label="ElementNameDOMValidHTMLParserInvalid"/>
   <int value="1970" label="GATTServerDisconnectedEvent"/>
+  <int value="1971" label="AnchorClickDispatchForNonConnectedNode"/>
+  <int value="1972" label="HTMLParseErrorNestedForm"/>
+  <int value="1973" label="FontShapingNotDefGlyphObserved"/>
 </enum>
 
 <enum name="FeedbackSource" type="int">
@@ -15644,6 +15758,22 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="FileManagerQuickViewWayToOpen" type="int">
   <int value="0" label="Context menu"/>
   <int value="1" label="Space key"/>
+</enum>
+
+<enum name="FileManagerRootType" type="int">
+  <int value="0" label="DOWNLOADS"/>
+  <int value="1" label="ARCHIVE"/>
+  <int value="2" label="REMOVABLE"/>
+  <int value="3" label="DRIVE"/>
+  <int value="4" label="TEAM_DRIVES_GRAND_ROOT"/>
+  <int value="5" label="TEAM_DRIVE"/>
+  <int value="6" label="MTP"/>
+  <int value="7" label="PROVIDED"/>
+  <int value="8" label="DRIVE_OTHER"/>
+  <int value="9" label="DRIVE_OFFLINE"/>
+  <int value="10" label="DRIVE_SHARED_WITH_ME"/>
+  <int value="11" label="DRIVE_RECENT"/>
+  <int value="12" label="MEDIA_VIEW"/>
 </enum>
 
 <enum name="FileManagerVolumeType" type="int">
@@ -16959,9 +17089,10 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="GeolocationSettingsDialogBackOff" type="int">
-  <int value="0" label="One week"/>
-  <int value="1" label="One month"/>
-  <int value="2" label="Three months"/>
+  <int value="0" label="No backoff"/>
+  <int value="1" label="One week"/>
+  <int value="2" label="One month"/>
+  <int value="3" label="Three months"/>
 </enum>
 
 <enum name="GeopositionErrorCode" type="int">
@@ -18719,6 +18850,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="72" label="SEARCH_GEOLOCATION_DISCLOSURE_INFOBAR_DELEGATE"/>
   <int value="73" label="AUTOMATION_INFOBAR_DELEGATE"/>
   <int value="74" label="VR_SERVICES_UPGRADE_ANDROID"/>
+  <int value="75" label="READER_MODE_INFOBAR_ANDROID"/>
 </enum>
 
 <enum name="InfoBarResponse" type="int">
@@ -20780,6 +20912,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="native notifications not supported"/>
   <int value="2" label="missing required capabilities"/>
   <int value="3" label="could not connect to signals"/>
+  <int value="4" label="incompatible spec version"/>
 </enum>
 
 <enum name="LinuxSandboxStatus" type="int">
@@ -21009,6 +21142,7 @@ from previous Chrome versions.
 
   <summary>Chrome flags that lead to chrome restart on ChromeOS.</summary>
   <int value="-2146613579" label="V8Future:disabled"/>
+  <int value="-2143961262" label="D3DVsync:disabled"/>
   <int value="-2143328006"
       label="enable-fill-on-account-select-no-highlighting"/>
   <int value="-2143113994" label="enable-ephemeral-apps-in-webstore"/>
@@ -21049,6 +21183,7 @@ from previous Chrome versions.
   <int value="-2043128632" label="enable-tab-switcher-in-document-mode"/>
   <int value="-2040471724" label="CrOSComponent:disabled"/>
   <int value="-2040115518" label="load-media-router-component-extension"/>
+  <int value="-2033225430" label="NTPMostLikelyFaviconsFromServer:disabled"/>
   <int value="-2029912304" label="StaleWhileRevalidate2:enabled"/>
   <int value="-2025367104" label="enable-material-design-ntp"/>
   <int value="-2020721975" label="smart-virtual-keyboard"/>
@@ -21078,10 +21213,12 @@ from previous Chrome versions.
   <int value="-1943507605" label="enable-new-video-renderer"/>
   <int value="-1941852572" label="floating-virtual-keyboard"/>
   <int value="-1940806558" label="enable-syncfs-directory-operation"/>
+  <int value="-1940377152" label="MacRTL:enabled"/>
   <int value="-1940291343" label="SpeculativeResourcePrefetching:enabled"/>
   <int value="-1938263248" label="enable-extension-info-dialog"/>
   <int value="-1937077699" label="http-form-warning"/>
   <int value="-1934673791" label="gl-composited-texture-quad-border"/>
+  <int value="-1933425042" label="OfflinePreviews:enabled"/>
   <int value="-1930720286" label="nacl-debug-mask"/>
   <int value="-1928198763" label="enable-async-dns"/>
   <int value="-1925117279" label="disable-quic-https"/>
@@ -21100,6 +21237,7 @@ from previous Chrome versions.
   <int value="-1880355454" label="disable-topchrome-md"/>
   <int value="-1876881908"
       label="disable-infobar-for-protected-media-identifier"/>
+  <int value="-1875383510" label="UseGoogleLocalNtp:disabled"/>
   <int value="-1874908826" label="enable-instant-search-clicks"/>
   <int value="-1874141108" label="NewOmniboxAnswerTypes:enabled"/>
   <int value="-1872989945" label="enable-webview-based-signin"/>
@@ -21188,6 +21326,7 @@ from previous Chrome versions.
   <int value="-1559789642" label="RunAllFlashInAllowMode:enabled"/>
   <int value="-1557527869" label="LoadingWithMojo:disabled"/>
   <int value="-1553477903" label="ash-disable-text-filtering-in-overview-mode"/>
+  <int value="-1549871007" label="OneGoogleBarOnLocalNtp:disabled"/>
   <int value="-1546903171" label="enable-touch-drag-drop"/>
   <int value="-1544248549" label="ArcUseAuthEndpoint:enabled"/>
   <int value="-1543316040"
@@ -21234,6 +21373,7 @@ from previous Chrome versions.
   <int value="-1391693054"
       label="ContentSuggestionsFaviconsFromNewServer:disabled"/>
   <int value="-1386966873" label="disable-mac-views-native-app-windows"/>
+  <int value="-1382671832" label="OmniboxUIExperimentVerticalMargin:enabled"/>
   <int value="-1377186702" label="DesktopIOSPromotion:disabled"/>
   <int value="-1375111024" label="enable-fixed-position-compositing"/>
   <int value="-1365503870" label="enable-simplified-fullscreen-ui"/>
@@ -21245,6 +21385,7 @@ from previous Chrome versions.
       label="disallow-autofill-sync-credential-for-reauth"/>
   <int value="-1349532167" label="enable-wifi-credential-sync"/>
   <int value="-1346722635" label="gesture-selection"/>
+  <int value="-1344375439" label="ServiceWorkerPaymentApps:disabled"/>
   <int value="-1341092934" label="enable-accelerated-overflow-scroll"/>
   <int value="-1340055960" label="enable-streamlined-hosted-apps"/>
   <int value="-1337185440" label="enable-webvr"/>
@@ -21283,6 +21424,7 @@ from previous Chrome versions.
   <int value="-1176748003"
       label="FramebustingNeedsSameOriginOrUserGesture:disabled"/>
   <int value="-1176493523" label="enable-md-extensions"/>
+  <int value="-1174267639" label="ClientLoFi:disabled"/>
   <int value="-1172572865" label="NTPShowGoogleGInOmnibox:enabled"/>
   <int value="-1172204005" label="enable-offline-auto-reload-visible-only"/>
   <int value="-1162944097" label="enable-color-correct-rendering"/>
@@ -21375,6 +21517,7 @@ from previous Chrome versions.
   <int value="-864205629" label="enable-offline-load-stale-cache"/>
   <int value="-861678473" label="disable-offer-upload-credit-cards"/>
   <int value="-861343291" label="ChromeHome:disabled"/>
+  <int value="-860534647" label="SiteDetails:enabled"/>
   <int value="-856915246" label="enable-new-audio-rendering-mixing-strategy"/>
   <int value="-856016114" label="NTPOfflinePages:disabled"/>
   <int value="-855130893" label="enable-touch-calibration-setting"/>
@@ -21400,6 +21543,7 @@ from previous Chrome versions.
   <int value="-770319039" label="enable-touch-editing"/>
   <int value="-763759697" label="enable-audio-support-for-desktop-share"/>
   <int value="-759830869" label="enable-tab-discarding"/>
+  <int value="-750175757" label="ClientLoFi:enabled"/>
   <int value="-749048160" label="enable-panels"/>
   <int value="-747463111" label="ContentSuggestionsNotifications:disabled"/>
   <int value="-746328467" label="ExpensiveBackgroundTimerThrottling:disabled"/>
@@ -21416,6 +21560,7 @@ from previous Chrome versions.
   <int value="-697751423" label="disable-quickoffice-component-app"/>
   <int value="-684900739" label="disable-merge-key-char-events"/>
   <int value="-684223908" label="enable-android-wallpapers-app"/>
+  <int value="-680589442" label="MacRTL:disabled"/>
   <int value="-667517406" label="overscroll-history-navigation"/>
   <int value="-661978438" label="enable-data-reduction-proxy-lo-fi"/>
   <int value="-660160292" label="enable-apps-show-on-first-paint"/>
@@ -21532,6 +21677,7 @@ from previous Chrome versions.
   <int value="-234687894"
       label="NonValidatingReloadOnRefreshContentV2:disabled"/>
   <int value="-231922000" label="enable-renderer-mojo-channel"/>
+  <int value="-230824955" label="NTPMostLikelyFaviconsFromServer:enabled"/>
   <int value="-216219963" label="ash-shelf-color-scheme"/>
   <int value="-213518852" label="protect-sync-credential:enabled"/>
   <int value="-213214894" label="enable-chromevox-arc-support"/>
@@ -21559,6 +21705,7 @@ from previous Chrome versions.
   <int value="-99781021" label="disable-roboto-font-ui"/>
   <int value="-89690053" label="MaterialDesignUserManager:enabled"/>
   <int value="-88822940" label="ssl-version-min"/>
+  <int value="-88273414" label="ContentSuggestionsShowSummary:enabled"/>
   <int value="-86788587" label="allow-autofill-sync-credential"/>
   <int value="-80353187" label="disable-display-color-calibration"/>
   <int value="-78035185" label="custom_summary"/>
@@ -21620,6 +21767,7 @@ from previous Chrome versions.
   <int value="121858954" label="enable-supervised-user-safesites"/>
   <int value="125581289" label="WebRtcHWVP8Encoding:disabled"/>
   <int value="125934378" label="enable-password-link"/>
+  <int value="131881947" label="D3DVsync:enabled"/>
   <int value="147373243" label="enable-deferred-image-decoding"/>
   <int value="157217034" label="enable-tab-for-desktop-share"/>
   <int value="157318016" label="AutomaticTabDiscarding:enabled"/>
@@ -21652,6 +21800,7 @@ from previous Chrome versions.
   <int value="328722396" label="NTPCondensedLayout:disabled"/>
   <int value="330138076" label="enable-clear-browsing-data-counters"/>
   <int value="332391072" label="cs-contextual-cards-bar-integration"/>
+  <int value="334802038" label="OfflinePreviews:disabled"/>
   <int value="346711293" label="enable-save-password-bubble"/>
   <int value="348854923" label="v8-cache-strategies-for-cache-storage"/>
   <int value="358399482" label="enable-high-dpi-fixed-position-compositing"/>
@@ -21661,6 +21810,7 @@ from previous Chrome versions.
   <int value="365467768" label="prefetch-search-results"/>
   <int value="368854020" label="ash-screen-rotation-animation"/>
   <int value="370486304" label="enable-origin-chip-on-srp"/>
+  <int value="371268743" label="OmniboxUIExperimentVerticalMargin:disabled"/>
   <int value="372460068" label="QuickUnlockFingerprint:disabled"/>
   <int value="377093001" label="WebRtcHWH264Encoding:disabled"/>
   <int value="379326303" label="enable-add-to-shelf"/>
@@ -21713,6 +21863,7 @@ from previous Chrome versions.
   <int value="546710806" label="disable-easy-signin"/>
   <int value="550378029" label="reset-app-list-install-state"/>
   <int value="550387510" label="NTPAssetDownloadSuggestions:disabled"/>
+  <int value="558873715" label="SiteDetails:disabled"/>
   <int value="562979188" label="DesktopIOSPromotion:enabled"/>
   <int value="567368307" label="enable-experimental-canvas-features"/>
   <int value="575394365" label="AndroidPaymentApps:disabled"/>
@@ -21736,6 +21887,7 @@ from previous Chrome versions.
   <int value="625273056" label="disable-boot-animation"/>
   <int value="628302973" label="NTPSnippets:enabled"/>
   <int value="628570445" label="AndroidAutofillAccessibility:enabled"/>
+  <int value="630244477" label="ServiceWorkerPaymentApps:enabled"/>
   <int value="630947363" label="touch-events"/>
   <int value="635971109" label="PrintPdfAsImage:disabled"/>
   <int value="636425179" label="mhtml-generator-option"/>
@@ -21806,6 +21958,7 @@ from previous Chrome versions.
   <int value="886907524" label="autoplay-policy"/>
   <int value="887011602" label="enable-spelling-auto-correct"/>
   <int value="892899792" label="MaterialDesignIncognitoNTP:disabled"/>
+  <int value="900614020" label="ContentSuggestionsShowSummary:disabled"/>
   <int value="902608487" label="AutofillUpstreamRequestCvcIfMissing:enabled"/>
   <int value="903267263" label="disable-offline-pages"/>
   <int value="908523940" label="PassiveEventListenersDueToFling:disabled"/>
@@ -21853,6 +22006,7 @@ from previous Chrome versions.
   <int value="1081546525" label="ash-enable-docked-windows"/>
   <int value="1087235172" label="file-manager-enable-new-audio-player"/>
   <int value="1090377940" label="enable-quic-https"/>
+  <int value="1094506652" label="UseGoogleLocalNtp:enabled"/>
   <int value="1095061640" label="enable-prominent-url-app-flow"/>
   <int value="1098823967" label="ash-enable-window-cycle-ui"/>
   <int value="1104948452" label="manual-enhanced-bookmarks-optout"/>
@@ -21861,7 +22015,9 @@ from previous Chrome versions.
   <int value="1108663108" label="disable-device-discovery-notifications"/>
   <int value="1113365156" label="tab-management-experiment-type-chive"/>
   <int value="1114629582" label="enable-floating-virtual-keyboard"/>
+  <int value="1116593018" label="CaptureThumbnailOnLoadFinished:disabled"/>
   <int value="1118109174" label="enable-launcher-search-provider-api"/>
+  <int value="1126061778" label="CaptureThumbnailOnLoadFinished:enabled"/>
   <int value="1127183523" label="PassiveEventListenersDueToFling:enabled"/>
   <int value="1127427821" label="OmniboxEntitySuggestions:disabled"/>
   <int value="1129888794" label="ash-touch-hud"/>
@@ -21893,6 +22049,7 @@ from previous Chrome versions.
   <int value="1210343926" label="enable-drop-sync-credential"/>
   <int value="1211284676" label="V8NoTurbo:enabled"/>
   <int value="1214455758" label="VideoRotateToFullscreen:disabled"/>
+  <int value="1215531732" label="OmniboxUIExperiments:disabled"/>
   <int value="1219628795" label="PrintScaling:disabled"/>
   <int value="1219826373" label="ServiceWorkerNavigationPreload:enabled"/>
   <int value="1220171692" label="SpeculativeLaunchServiceWorker:enabled"/>
@@ -21990,6 +22147,7 @@ from previous Chrome versions.
   <int value="1511161758" label="BackgroundLoader:enabled"/>
   <int value="1515196403" label="fast-user-switching"/>
   <int value="1517863401" label="history-entry-requires-user-gesture"/>
+  <int value="1538690515" label="OneGoogleBarOnLocalNtp:enabled"/>
   <int value="1541723759" label="ServiceWorkerNavigationPreload:disabled"/>
   <int value="1548776701" label="AllBookmarks:disabled"/>
   <int value="1548942246" label="PassiveDocumentEventListeners:disabled"/>
@@ -22058,6 +22216,7 @@ from previous Chrome versions.
   <int value="1828660283" label="enable-webfonts-intervention-trigger"/>
   <int value="1831835753" label="MaterialDesignIncognitoNTP:enabled"/>
   <int value="1838990777" label="V8Future:enabled"/>
+  <int value="1839740266" label="LocationHardReload:disabled"/>
   <int value="1844110073" label="enable-app-view"/>
   <int value="1847024354" label="enable-hotword-hardware"/>
   <int value="1852630189" label="NTPBookmarkSuggestions:disabled"/>
@@ -22070,6 +22229,7 @@ from previous Chrome versions.
   <int value="1865799183" label="javascript-harmony"/>
   <int value="1866079109" label="team-drives"/>
   <int value="1867085340" label="brotli-encoding:enabled"/>
+  <int value="1872185826" label="LocationHardReload:enabled"/>
   <int value="1874604540" label="UseSuggestionsEvenIfFew:disabled"/>
   <int value="1878331098" label="GuestViewCrossProcessFrames:enabled"/>
   <int value="1881036528" label="disable-multilingual-spellchecker"/>
@@ -22129,6 +22289,7 @@ from previous Chrome versions.
       label="enable-supervised-user-managed-bookmarks-folder"/>
   <int value="2079672348" label="ExperimentalKeyboardLockUI:disabled"/>
   <int value="2085438501" label="ChromeHome:enabled"/>
+  <int value="2089897928" label="enable-audio-focus"/>
   <int value="2093235103" label="default-tile-width"/>
   <int value="2097048479" label="disable-auto-hiding-toolbar-threshold"/>
   <int value="2098714203" label="enable-generic-sensors"/>
@@ -26122,6 +26283,13 @@ from previous Chrome versions.
   <int value="4" label="Internal error"/>
 </enum>
 
+<enum name="OverlaySupportFlag" type="int">
+  <int value="0" label="None"/>
+  <int value="1" label="Direct overlay support"/>
+  <int value="2" label="Scaling overlay support"/>
+  <int value="3" label="Direct and scaling overlay support"/>
+</enum>
+
 <enum name="OverscrollMode" type="int">
   <summary>Direction of the overscroll gesture.</summary>
   <int value="1" label="North">Scrolled from bottom towards top</int>
@@ -27032,8 +27200,8 @@ from previous Chrome versions.
   <int value="3" label="Timed out"/>
   <int value="4" label="Matched whitelist"/>
   <int value="5" label="Response already cached"/>
-  <int value="6" label="Not extended reporting user"/>
-  <int value="7" label="Incognito"/>
+  <int value="6" label="DEPRECATED: Not extended reporting user"/>
+  <int value="7" label="DEPRECATED: Incognito"/>
   <int value="8" label="Request malformed"/>
   <int value="9" label="Fetch failed"/>
   <int value="10" label="Response malformed"/>
@@ -27131,6 +27299,12 @@ from previous Chrome versions.
   <int value="0" label="Loaded Document"/>
   <int value="1" label="Has Title"/>
   <int value="2" label="Has Bookmarks"/>
+</enum>
+
+<enum name="PDFLoadStatus" type="int">
+  <int value="0" label="Loaded a full-page PDF with PDFium"/>
+  <int value="1" label="Loaded an embedded PDF with PDFium"/>
+  <int value="2" label="Showed disabled plugin placeholder for embedded PDF"/>
 </enum>
 
 <enum name="PeerConnectionCounters" type="int">
@@ -27766,6 +27940,7 @@ from previous Chrome versions.
   <int value="6" label="USB_C"/>
   <int value="7" label="USB_PD"/>
   <int value="8" label="USB_PD_DRP"/>
+  <int value="9" label="BrickID (Apple)"/>
 </enum>
 
 <enum name="PowerwashDialogViewType" type="int">
@@ -30686,6 +30861,8 @@ from previous Chrome versions.
   <int value="281" label="PPSX"/>
   <int value="282" label="SLDX"/>
   <int value="283" label="SLDM"/>
+  <int value="284" label="HTM"/>
+  <int value="285" label="HTML"/>
 </enum>
 
 <enum name="SBClientDownloadIsSignedBinary" type="int">
@@ -33355,6 +33532,15 @@ from previous Chrome versions.
   <int value="2" label="MemoryCached StyleSheetContents was reused"/>
 </enum>
 
+<enum name="SubmissionIndicatorEvent" type="int">
+  <int value="0" label="No submission"/>
+  <int value="1" label="HTML form submission"/>
+  <int value="2" label="Same document navigation"/>
+  <int value="3" label="XHR succeeded"/>
+  <int value="4" label="Frame detached"/>
+  <int value="5" label="By context menu"/>
+</enum>
+
 <enum name="SubresourceFilterActions" type="int">
   <int value="0" label="New Navigation"/>
   <int value="1" label="UI Shown"/>
@@ -33366,6 +33552,8 @@ from previous Chrome versions.
   <int value="7" label="Content setting allowed (global)"/>
   <int value="8" label="Content setting blocked (global)"/>
   <int value="9" label="Content setting wildcard update"/>
+  <int value="10" label="UI Suppressed (Smart Logic)"/>
+  <int value="11" label="Content setting blocked while UI suppressed"/>
 </enum>
 
 <enum name="SubresourceFilterActivationDecision" type="int">
@@ -33374,7 +33562,7 @@ from previous Chrome versions.
   <int value="2" label="Disabled"/>
   <int value="3" label="Unsupported scheme"/>
   <int value="4" label="URL whitelisted"/>
-  <int value="5" label="Activation list not matched"/>
+  <int value="5" label="Activation conditions not met"/>
 </enum>
 
 <enum name="SubresourceFilterActivationState" type="int">
@@ -35374,6 +35562,18 @@ from previous Chrome versions.
   <int value="1" label="Jpeg"/>
   <int value="2" label="HD Rec 709"/>
   <int value="3" label="SD Rec 601"/>
+</enum>
+
+<enum name="VideoFrameColorSpaceUMA" type="int">
+  <int value="0" label="Unknown"/>
+  <int value="1" label="UnknownRGB"/>
+  <int value="2" label="UnknownHDR"/>
+  <int value="3" label="rec601"/>
+  <int value="4" label="rec709"/>
+  <int value="5" label="JPEG"/>
+  <int value="6" label="PQ"/>
+  <int value="7" label="HLG"/>
+  <int value="8" label="scRGB"/>
 </enum>
 
 <enum name="VideoFramePixelFormat" type="int">

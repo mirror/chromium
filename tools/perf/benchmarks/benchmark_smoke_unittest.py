@@ -28,9 +28,7 @@ from benchmarks import kraken
 from benchmarks import octane
 from benchmarks import rasterize_and_record_micro
 from benchmarks import repaint
-from benchmarks import spaceport
 from benchmarks import speedometer
-from benchmarks import text_selection
 from benchmarks import v8_browsing
 
 
@@ -96,10 +94,8 @@ _BLACK_LIST_TEST_MODULES = {
     octane,  # Often fails & take long time to timeout on cq bot.
     rasterize_and_record_micro,  # Always fails on cq bot.
     repaint,  # Often fails & takes long time to timeout on cq bot.
-    spaceport,  # Takes 451 seconds.
     speedometer,  # Takes 101 seconds.
     jetstream,  # Take 206 seconds.
-    text_selection,  # Always fails on cq bot.
     kraken,  # Flaky on Android, crbug.com/626174.
     v8_browsing, # Flaky on Android, crbug.com/628368.
     battor #Flaky on android, crbug.com/618330.

@@ -291,7 +291,6 @@ TEST_F(TreeSynchronizerTest, SyncSimpleTreeAndProperties) {
 
   gfx::Size second_child_bounds = gfx::Size(25, 53);
   layer_tree_root->children()[1]->SetBounds(second_child_bounds);
-  layer_tree_root->children()[1]->SavePaintProperties();
   int second_child_id = layer_tree_root->children()[1]->id();
 
   host_->BuildPropertyTreesForTesting();
@@ -505,7 +504,7 @@ TEST_F(TreeSynchronizerTest, SynchronizeCurrentlyScrollingNode) {
   transient_scroll_layer->AddChild(scroll_clip_layer);
   scroll_clip_layer->AddChild(scroll_layer);
 
-  ElementId scroll_element_id = ElementId(5, 4);
+  ElementId scroll_element_id = ElementId(5);
   scroll_layer->SetElementId(scroll_element_id);
 
   transient_scroll_layer->SetScrollClipLayerId(
@@ -552,7 +551,7 @@ TEST_F(TreeSynchronizerTest, SynchronizeScrollTreeScrollOffsetMap) {
   scoped_refptr<Layer> transient_scroll_clip_layer = Layer::Create();
   scoped_refptr<Layer> transient_scroll_layer = Layer::Create();
 
-  ElementId scroll_element_id = ElementId(5, 4);
+  ElementId scroll_element_id = ElementId(5);
   scroll_layer->SetElementId(scroll_element_id);
 
   layer_tree_root->AddChild(transient_scroll_clip_layer);

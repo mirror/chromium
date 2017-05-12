@@ -39,6 +39,8 @@
 #include "content/common/indexed_db/indexed_db_key_path.h"
 #include "content/common/indexed_db/indexed_db_key_range.h"
 #include "content/public/browser/browser_thread.h"
+#include "net/base/load_flags.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/fileapi/file_stream_writer.h"
@@ -2556,10 +2558,36 @@ class LocalWriteClosure : public FileWriterDelegate::DelegateWriteCallback,
     DCHECK(blob_url.is_valid());
     net::URLRequestContext* request_context =
         request_context_getter->GetURLRequestContext();
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("persist_blob_to_indexed_db", R"(
+        semantics {
+          sender: "Indexed DB"
+          description:
+            "A web page's script has created a Blob (or File) object (either "
+            "directly via constructors, or by using file upload to a form, or "
+            "via a fetch()). The script has then made a request to store data "
+            "including the Blob via the Indexed DB API. As part of committing "
+            "the database transaction, the content of the Blob is being copied "
+            "into a file in the database's directory."
+          trigger:
+            "The script has made a request to store data including a Blob via "
+            "the Indexed DB API."
+          data:
+            "A Blob or File object referenced by script, either created "
+            "directly via constructors, or by using file upload to a form, or "
+            "drag/drop, or via a fetch() or other APIs that produce Blobs."
+          destination: LOCAL
+        }
+        policy {
+          cookies_allowed: false
+          setting: "This feature cannot be disabled by settings."
+          policy_exception_justification: "Not implemented."
+        })");
     std::unique_ptr<net::URLRequest> blob_request(
         request_context->CreateRequest(blob_url, net::DEFAULT_PRIORITY,
-                                       delegate.get()));
-
+                                       delegate.get(), traffic_annotation));
+    blob_request->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES |
+                               net::LOAD_DO_NOT_SEND_COOKIES);
     this->file_path_ = file_path;
     this->last_modified_ = last_modified;
 
@@ -2584,7 +2612,7 @@ class LocalWriteClosure : public FileWriterDelegate::DelegateWriteCallback,
   // If necessary, update the timestamps on the file as a final
   // step before reporting success.
   void UpdateTimeStamp() {
-    DCHECK(task_runner_->RunsTasksOnCurrentThread());
+    DCHECK(task_runner_->RunsTasksInCurrentSequence());
     if (!base::TouchFile(file_path_, last_modified_, last_modified_)) {
       // TODO(ericu): Complain quietly; timestamp's probably not vital.
     }
@@ -2593,7 +2621,7 @@ class LocalWriteClosure : public FileWriterDelegate::DelegateWriteCallback,
 
   // Create an empty file.
   void CreateEmptyFile() {
-    DCHECK(task_runner_->RunsTasksOnCurrentThread());
+    DCHECK(task_runner_->RunsTasksInCurrentSequence());
     base::File file(file_path_,
                     base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
     bool success = file.created();
@@ -4125,7 +4153,7 @@ Status IndexedDBBackingStore::Transaction::CommitPhaseOne(
     scoped_refptr<BlobWriteCallback> callback) {
   IDB_TRACE("IndexedDBBackingStore::Transaction::CommitPhaseOne");
   DCHECK(transaction_.get());
-  DCHECK(backing_store_->task_runner()->RunsTasksOnCurrentThread());
+  DCHECK(backing_store_->task_runner()->RunsTasksInCurrentSequence());
 
   Status s;
 

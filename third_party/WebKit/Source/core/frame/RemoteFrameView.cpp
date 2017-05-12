@@ -17,13 +17,12 @@ namespace blink {
 
 RemoteFrameView::RemoteFrameView(RemoteFrame* remote_frame)
     : remote_frame_(remote_frame) {
-  ASSERT(remote_frame);
+  DCHECK(remote_frame);
 }
 
 RemoteFrameView::~RemoteFrameView() {}
 
-void RemoteFrameView::SetParent(FrameViewBase* parent_frame_view_base) {
-  FrameView* parent = ToFrameView(parent_frame_view_base);
+void RemoteFrameView::SetParent(FrameView* parent) {
   if (parent == parent_)
     return;
 
@@ -59,21 +58,24 @@ void RemoteFrameView::UpdateRemoteViewportIntersection() {
   // even if there are RemoteFrame ancestors in the frame tree.
   LayoutRect rect(0, 0, frame_rect_.Width(), frame_rect_.Height());
   rect.Move(remote_frame_->OwnerLayoutObject()->ContentBoxOffset());
-  if (!remote_frame_->OwnerLayoutObject()->MapToVisualRectInAncestorSpace(
-          nullptr, rect))
-    return;
-  IntRect root_visible_rect = local_root_view->VisibleContentRect();
-  IntRect viewport_intersection(rect);
-  viewport_intersection.Intersect(root_visible_rect);
-  viewport_intersection.Move(-local_root_view->ScrollOffsetInt());
+  IntRect viewport_intersection;
+  if (remote_frame_->OwnerLayoutObject()->MapToVisualRectInAncestorSpace(
+          nullptr, rect)) {
+    IntRect root_visible_rect = local_root_view->VisibleContentRect();
+    IntRect intersected_rect(rect);
+    intersected_rect.Intersect(root_visible_rect);
+    intersected_rect.Move(-local_root_view->ScrollOffsetInt());
 
-  // Translate the intersection rect from the root frame's coordinate space
-  // to the remote frame's coordinate space.
-  viewport_intersection = ConvertFromRootFrame(viewport_intersection);
+    // Translate the intersection rect from the root frame's coordinate space
+    // to the remote frame's coordinate space.
+    viewport_intersection = ConvertFromRootFrame(intersected_rect);
+  }
+
   if (viewport_intersection != last_viewport_intersection_) {
     remote_frame_->Client()->UpdateRemoteViewportIntersection(
         viewport_intersection);
   }
+
   last_viewport_intersection_ = viewport_intersection;
 }
 
@@ -112,8 +114,6 @@ void RemoteFrameView::FrameRectsChanged() {
   if (parent_)
     new_rect = parent_->ConvertToRootFrame(parent_->ContentsToFrame(new_rect));
   remote_frame_->Client()->FrameRectsChanged(new_rect);
-
-  UpdateRemoteViewportIntersection();
 }
 
 void RemoteFrameView::Hide() {
@@ -137,16 +137,15 @@ void RemoteFrameView::SetParentVisible(bool visible) {
   remote_frame_->Client()->VisibilityChanged(self_visible_ && parent_visible_);
 }
 
-IntRect RemoteFrameView::ConvertFromContainingFrameViewBase(
-    const IntRect& parent_rect) const {
-  if (const FrameView* parent = ToFrameView(Parent())) {
-    IntRect local_rect = parent_rect;
-    local_rect.SetLocation(
-        parent->ConvertSelfToChild(this, local_rect.Location()));
-    return local_rect;
+IntRect RemoteFrameView::ConvertFromRootFrame(
+    const IntRect& rect_in_root_frame) const {
+  if (parent_) {
+    IntRect parent_rect = parent_->ConvertFromRootFrame(rect_in_root_frame);
+    parent_rect.SetLocation(
+        parent_->ConvertSelfToChild(*this, parent_rect.Location()));
+    return parent_rect;
   }
-
-  return parent_rect;
+  return rect_in_root_frame;
 }
 
 DEFINE_TRACE(RemoteFrameView) {

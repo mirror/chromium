@@ -166,7 +166,7 @@ void LayerTreeHost::InitializeProxy(std::unique_ptr<Proxy> proxy) {
 LayerTreeHost::~LayerTreeHost() {
   // Track when we're inside a main frame to see if compositor is being
   // destroyed midway which causes a crash. crbug.com/654672
-  CHECK(!inside_main_frame_);
+  DCHECK(!inside_main_frame_);
   TRACE_EVENT0("cc", "LayerTreeHostInProcess::~LayerTreeHostInProcess");
 
   // Clear any references into the LayerTreeHost.
@@ -686,7 +686,6 @@ bool LayerTreeHost::DoUpdateLayers(Layer* root_layer) {
     TRACE_EVENT0(
         TRACE_DISABLED_BY_DEFAULT("cc.debug.cdp-perf"),
         "LayerTreeHostInProcessCommon::ComputeVisibleRectsWithPropertyTrees");
-    bool can_render_to_separate_surface = true;
     PropertyTrees* property_trees = &property_trees_;
     if (!settings_.use_layer_lists) {
       // If use_layer_lists is set, then the property trees should have been
@@ -706,14 +705,10 @@ bool LayerTreeHost::DoUpdateLayers(Layer* root_layer) {
           TRACE_EVENT_SCOPE_THREAD, "property_trees",
           property_trees->AsTracedValue());
     }
-    draw_property_utils::UpdatePropertyTrees(this, property_trees,
-                                             can_render_to_separate_surface);
+    draw_property_utils::UpdatePropertyTrees(this, property_trees);
     draw_property_utils::FindLayersThatNeedUpdates(this, property_trees,
                                                    &update_layer_list);
   }
-
-  for (const auto& layer : update_layer_list)
-    layer->SavePaintProperties();
 
   bool content_is_suitable_for_gpu = true;
   bool did_paint_content =
@@ -1268,6 +1263,13 @@ void LayerTreeHost::SetMutatorsNeedRebuildPropertyTrees() {
 void LayerTreeHost::SetElementFilterMutated(ElementId element_id,
                                             ElementListType list_type,
                                             const FilterOperations& filters) {
+  if (settings_.use_layer_lists) {
+    // In SPv2 we always have property trees and can set the filter
+    // directly on the effect node.
+    property_trees_.effect_tree.OnFilterAnimated(element_id, filters);
+    return;
+  }
+
   Layer* layer = LayerByElementId(element_id);
   DCHECK(layer);
   layer->OnFilterAnimated(filters);

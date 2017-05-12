@@ -58,7 +58,9 @@
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
 #include "content/browser/websockets/websocket_manager.h"
+#include "content/browser/webui/url_data_manager_backend.h"
 #include "content/browser/webui/web_ui_controller_factory_registry.h"
+#include "content/browser/webui/web_ui_url_loader_factory.h"
 #include "content/common/accessibility_messages.h"
 #include "content/common/associated_interface_provider_impl.h"
 #include "content/common/associated_interface_registry_impl.h"
@@ -2792,12 +2794,12 @@ bool RenderFrameHostImpl::CanCommitOrigin(
     return true;
 
   // Standard URLs must match the reported origin.
-  if (url.IsStandard() && !origin.IsSameOriginWith(url::Origin(url)))
+  if (url.IsStandard() && !origin.IsSamePhysicalOriginWith(url::Origin(url)))
     return false;
 
   // A non-unique origin must be a valid URL, which allows us to safely do a
   // conversion to GURL.
-  GURL origin_url(origin.Serialize());
+  GURL origin_url = origin.GetPhysicalOrigin().GetURL();
 
   // Verify that the origin is allowed to commit in this process.
   // Note: This also handles non-standard cases for |url|, such as
@@ -3048,7 +3050,17 @@ void RenderFrameHostImpl::CommitNavigation(
   FrameMsg_CommitDataNetworkService_Params commit_data;
   commit_data.handle = handle.release();
   // TODO(scottmg): Pass a factory for SW, etc. once we have one.
-  commit_data.url_loader_factory = mojo::MessagePipeHandle();
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableNetworkService)) {
+    const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
+    if (std::find(schemes.begin(), schemes.end(), common_params.url.scheme()) !=
+        schemes.end()) {
+      commit_data.url_loader_factory = GetWebUIURLLoader(frame_tree_node_)
+                                           .PassInterface()
+                                           .PassHandle()
+                                           .release();
+    }
+  }
   Send(new FrameMsg_CommitNavigation(routing_id_, head, body_url, commit_data,
                                      common_params, request_params));
 
@@ -3721,10 +3733,10 @@ void RenderFrameHostImpl::OnMediaInterfaceFactoryConnectionError() {
 void RenderFrameHostImpl::BindWakeLockServiceRequest(
     const service_manager::BindSourceInfo& source_info,
     device::mojom::WakeLockServiceRequest request) {
-  device::mojom::WakeLockContext* wake_lock_service_context =
-      delegate_ ? delegate_->GetWakeLockServiceContext() : nullptr;
-  if (wake_lock_service_context)
-    wake_lock_service_context->GetWakeLock(std::move(request));
+  device::mojom::WakeLockService* renderer_wake_lock =
+      delegate_ ? delegate_->GetRendererWakeLock() : nullptr;
+  if (renderer_wake_lock)
+    renderer_wake_lock->AddClient(std::move(request));
 }
 
 void RenderFrameHostImpl::GetInterface(

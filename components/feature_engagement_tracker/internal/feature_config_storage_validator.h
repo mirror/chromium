@@ -10,21 +10,21 @@
 #include <unordered_set>
 
 #include "base/macros.h"
-#include "components/feature_engagement_tracker/internal/feature_list.h"
 #include "components/feature_engagement_tracker/internal/storage_validator.h"
+#include "components/feature_engagement_tracker/public/feature_list.h"
 
 namespace feature_engagement_tracker {
 class Configuration;
 struct EventConfig;
 struct FeatureConfig;
 
-// A StorageValidator that uses the FeatureConfiguration from
+// A StorageValidator that uses the FeatureConfig as the source of truth.
 class FeatureConfigStorageValidator : public StorageValidator {
  public:
   FeatureConfigStorageValidator();
   ~FeatureConfigStorageValidator() override;
 
-  // ConditionValidator implementation.
+  // StorageValidator implementation.
   bool ShouldStore(const std::string& event_name) override;
   bool ShouldKeep(const std::string& event_name,
                   uint32_t event_day,

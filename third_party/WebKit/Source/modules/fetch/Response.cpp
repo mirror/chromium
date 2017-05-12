@@ -12,7 +12,6 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8Blob.h"
 #include "bindings/core/v8/V8FormData.h"
-#include "bindings/core/v8/V8PrivateProperty.h"
 #include "bindings/core/v8/V8URLSearchParams.h"
 #include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/DOMArrayBufferView.h"
@@ -27,6 +26,7 @@
 #include "modules/fetch/FormDataBytesConsumer.h"
 #include "modules/fetch/ResponseInit.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/bindings/V8PrivateProperty.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/network/HTTPHeaderMap.h"
@@ -148,13 +148,18 @@ Response* Response::Create(ScriptState* script_state,
         new BlobBytesConsumer(execution_context, blob->GetBlobDataHandle()));
     content_type = blob->type();
   } else if (body->IsArrayBuffer()) {
-    body_buffer = new BodyStreamBuffer(
-        script_state, new FormDataBytesConsumer(
-                          V8ArrayBuffer::toImpl(body.As<v8::Object>())));
+    // Avoid calling into V8 from the following constructor parameters, which
+    // is potentially unsafe.
+    DOMArrayBuffer* array_buffer = V8ArrayBuffer::toImpl(body.As<v8::Object>());
+    body_buffer = new BodyStreamBuffer(script_state,
+                                       new FormDataBytesConsumer(array_buffer));
   } else if (body->IsArrayBufferView()) {
+    // Avoid calling into V8 from the following constructor parameters, which
+    // is potentially unsafe.
+    DOMArrayBufferView* array_buffer_view =
+        V8ArrayBufferView::toImpl(body.As<v8::Object>());
     body_buffer = new BodyStreamBuffer(
-        script_state, new FormDataBytesConsumer(
-                          V8ArrayBufferView::toImpl(body.As<v8::Object>())));
+        script_state, new FormDataBytesConsumer(array_buffer_view));
   } else if (V8FormData::hasInstance(body, isolate)) {
     RefPtr<EncodedFormData> form_data =
         V8FormData::toImpl(body.As<v8::Object>())->EncodeMultiPartFormData();

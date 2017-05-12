@@ -135,6 +135,11 @@ class PLATFORM_EXPORT Font {
                          const PaintFlags&,
                          const std::tuple<float, float>& bounds,
                          Vector<TextIntercept>&) const;
+  void GetTextIntercepts(const TextFragmentPaintInfo&,
+                         float device_scale_factor,
+                         const PaintFlags&,
+                         const std::tuple<float, float>& bounds,
+                         Vector<TextIntercept>&) const;
 
   // Glyph bounds will be the minimum rect containing all glyph strokes, in
   // coordinates using (<text run x position>, <baseline position>) as the
@@ -191,6 +196,8 @@ class PLATFORM_EXPORT Font {
     can_shape_word_by_word_ = b;
     shape_word_by_word_computed_ = true;
   }
+
+  void ReportNotDefGlyph() const;
 
  private:
   enum ForTextEmphasisOrNot { kNotForTextEmphasis, kForTextEmphasis };

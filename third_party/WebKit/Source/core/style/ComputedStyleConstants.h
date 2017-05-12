@@ -33,6 +33,11 @@
 
 namespace blink {
 
+template <typename Enum>
+inline bool EnumHasFlags(Enum v, Enum mask) {
+  return static_cast<unsigned>(v) & static_cast<unsigned>(mask);
+}
+
 // Some enums are automatically generated in ComputedStyleBaseConstants
 
 // TODO(sashab): Change these enums to enum classes with an unsigned underlying
@@ -192,7 +197,7 @@ enum EFlexDirection {
 };
 enum EFlexWrap { kFlexNoWrap, kFlexWrap, kFlexWrapReverse };
 
-enum ETextSecurity { TSNONE, TSDISC, TSCIRCLE, TSSQUARE };
+enum class ETextSecurity { kNone, kDisc, kCircle, kSquare };
 
 // CSS3 User Modify Properties
 
@@ -241,18 +246,24 @@ enum QuoteType { OPEN_QUOTE, CLOSE_QUOTE, NO_OPEN_QUOTE, NO_CLOSE_QUOTE };
 enum EAnimPlayState { kAnimPlayStatePlaying, kAnimPlayStatePaused };
 
 static const size_t kTextDecorationBits = 4;
-enum TextDecoration {
-  kTextDecorationNone = 0x0,
-  kTextDecorationUnderline = 0x1,
-  kTextDecorationOverline = 0x2,
-  kTextDecorationLineThrough = 0x4,
-  kTextDecorationBlink = 0x8
+enum class TextDecoration : unsigned {
+  kNone = 0x0,
+  kUnderline = 0x1,
+  kOverline = 0x2,
+  kLineThrough = 0x4,
+  kBlink = 0x8
 };
 inline TextDecoration operator|(TextDecoration a, TextDecoration b) {
-  return TextDecoration(int(a) | int(b));
+  return static_cast<TextDecoration>(static_cast<unsigned>(a) |
+                                     static_cast<unsigned>(b));
 }
 inline TextDecoration& operator|=(TextDecoration& a, TextDecoration b) {
-  return a = a | b;
+  return a = static_cast<TextDecoration>(static_cast<unsigned>(a) |
+                                         static_cast<unsigned>(b));
+}
+inline TextDecoration& operator^=(TextDecoration& a, TextDecoration b) {
+  return a = static_cast<TextDecoration>(static_cast<unsigned>(a) ^
+                                         static_cast<unsigned>(b));
 }
 
 enum TextDecorationStyle {
@@ -381,34 +392,6 @@ enum DraggableRegionMode {
   kDraggableRegionNoDrag
 };
 
-static const size_t kTouchActionBits = 6;
-enum TouchAction {
-  kTouchActionNone = 0x0,
-  kTouchActionPanLeft = 0x1,
-  kTouchActionPanRight = 0x2,
-  kTouchActionPanX = kTouchActionPanLeft | kTouchActionPanRight,
-  kTouchActionPanUp = 0x4,
-  kTouchActionPanDown = 0x8,
-  kTouchActionPanY = kTouchActionPanUp | kTouchActionPanDown,
-  kTouchActionPan = kTouchActionPanX | kTouchActionPanY,
-  kTouchActionPinchZoom = 0x10,
-  kTouchActionManipulation = kTouchActionPan | kTouchActionPinchZoom,
-  kTouchActionDoubleTapZoom = 0x20,
-  kTouchActionAuto = kTouchActionManipulation | kTouchActionDoubleTapZoom
-};
-inline TouchAction operator|(TouchAction a, TouchAction b) {
-  return static_cast<TouchAction>(int(a) | int(b));
-}
-inline TouchAction& operator|=(TouchAction& a, TouchAction b) {
-  return a = a | b;
-}
-inline TouchAction operator&(TouchAction a, TouchAction b) {
-  return static_cast<TouchAction>(int(a) & int(b));
-}
-inline TouchAction& operator&=(TouchAction& a, TouchAction b) {
-  return a = a & b;
-}
-
 enum EIsolation { kIsolationAuto, kIsolationIsolate };
 
 static const size_t kContainmentBits = 4;
@@ -498,6 +481,16 @@ enum ScrollSnapType {
 };
 
 enum AutoRepeatType { kNoAutoRepeat, kAutoFill, kAutoFit };
+
+// In order to conserve memory, the border width uses fixed point,
+// which can be bitpacked.  This fixed point implementation is
+// essentially the same as in LayoutUnit.  Six bits are used for the
+// fraction, which leaves 20 bits for the integer part, making 1048575
+// the largest number.
+
+static const int kBorderWidthFractionalBits = 6;
+static const int kBorderWidthDenominator = 1 << kBorderWidthFractionalBits;
+static const int kMaxForBorderWidth = ((1 << 26) - 1) / kBorderWidthDenominator;
 
 }  // namespace blink
 

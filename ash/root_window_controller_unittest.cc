@@ -11,7 +11,6 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
-#include "ash/system/tray/system_tray_delegate.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/test_session_controller_client.h"
 #include "ash/wm/system_modal_container_layout_manager.h"
@@ -19,7 +18,6 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_state_aura.h"
 #include "ash/wm/window_util.h"
-#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "ui/aura/client/focus_change_observer.h"
 #include "ui/aura/client/focus_client.h"
@@ -96,8 +94,9 @@ class DeleteOnBlurDelegate : public aura::test::TestWindowDelegate,
   DISALLOW_COPY_AND_ASSIGN(DeleteOnBlurDelegate);
 };
 
-WmLayoutManager* GetLayoutManager(RootWindowController* controller, int id) {
-  return WmWindow::Get(controller->GetContainer(id))->GetLayoutManager();
+aura::LayoutManager* GetLayoutManager(RootWindowController* controller,
+                                      int id) {
+  return controller->GetContainer(id)->layout_manager();
 }
 
 }  // namespace
@@ -387,8 +386,7 @@ TEST_F(RootWindowControllerTest, ModalContainer) {
   UpdateDisplay("600x600");
   RootWindowController* controller =
       ShellPort::Get()->GetPrimaryRootWindowController();
-  EXPECT_EQ(LoginStatus::USER,
-            Shell::Get()->system_tray_delegate()->GetUserLoginStatus());
+  EXPECT_TRUE(Shell::Get()->session_controller()->IsActiveUserSessionStarted());
   EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
             controller->GetSystemModalLayoutManager(NULL));
 
@@ -396,11 +394,10 @@ TEST_F(RootWindowControllerTest, ModalContainer) {
       CreateModalWidget(gfx::Rect(300, 10, 100, 100));
   EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
             controller->GetSystemModalLayoutManager(
-                WmWindow::Get(session_modal_widget->GetNativeWindow())));
+                session_modal_widget->GetNativeWindow()));
 
   Shell::Get()->session_controller()->LockScreenAndFlushForTest();
-  EXPECT_EQ(LoginStatus::LOCKED,
-            Shell::Get()->system_tray_delegate()->GetUserLoginStatus());
+  EXPECT_TRUE(Shell::Get()->session_controller()->IsScreenLocked());
   EXPECT_EQ(
       GetLayoutManager(controller, kShellWindowId_LockSystemModalContainer),
       controller->GetSystemModalLayoutManager(nullptr));
@@ -412,10 +409,10 @@ TEST_F(RootWindowControllerTest, ModalContainer) {
   EXPECT_EQ(
       GetLayoutManager(controller, kShellWindowId_LockSystemModalContainer),
       controller->GetSystemModalLayoutManager(
-          WmWindow::Get(lock_modal_widget->GetNativeWindow())));
+          lock_modal_widget->GetNativeWindow()));
   EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
             controller->GetSystemModalLayoutManager(
-                WmWindow::Get(session_modal_widget->GetNativeWindow())));
+                session_modal_widget->GetNativeWindow()));
 
   GetSessionControllerClient()->UnlockScreen();
 }
@@ -426,8 +423,6 @@ TEST_F(RootWindowControllerTest, ModalContainerNotLoggedInLoggedIn) {
   // Configure login screen environment.
   SessionController* session_controller = Shell::Get()->session_controller();
   SetUserLoggedIn(false);
-  EXPECT_EQ(LoginStatus::NOT_LOGGED_IN,
-            Shell::Get()->system_tray_delegate()->GetUserLoginStatus());
   EXPECT_EQ(0, session_controller->NumberOfLoggedInUsers());
   EXPECT_FALSE(session_controller->IsActiveUserSessionStarted());
 
@@ -444,14 +439,12 @@ TEST_F(RootWindowControllerTest, ModalContainerNotLoggedInLoggedIn) {
   EXPECT_EQ(
       GetLayoutManager(controller, kShellWindowId_LockSystemModalContainer),
       controller->GetSystemModalLayoutManager(
-          WmWindow::Get(login_modal_widget->GetNativeWindow())));
+          login_modal_widget->GetNativeWindow()));
   login_modal_widget->Close();
 
   // Configure user session environment.
   SetUserLoggedIn(true);
   SetSessionStarted(true);
-  EXPECT_EQ(LoginStatus::USER,
-            Shell::Get()->system_tray_delegate()->GetUserLoginStatus());
   EXPECT_EQ(1, session_controller->NumberOfLoggedInUsers());
   EXPECT_TRUE(session_controller->IsActiveUserSessionStarted());
   EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
@@ -461,7 +454,7 @@ TEST_F(RootWindowControllerTest, ModalContainerNotLoggedInLoggedIn) {
       CreateModalWidget(gfx::Rect(300, 10, 100, 100));
   EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
             controller->GetSystemModalLayoutManager(
-                WmWindow::Get(session_modal_widget->GetNativeWindow())));
+                session_modal_widget->GetNativeWindow()));
 }
 
 TEST_F(RootWindowControllerTest, ModalContainerBlockedSession) {
@@ -476,7 +469,7 @@ TEST_F(RootWindowControllerTest, ModalContainerBlockedSession) {
         CreateModalWidget(gfx::Rect(300, 10, 100, 100));
     EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
               controller->GetSystemModalLayoutManager(
-                  WmWindow::Get(session_modal_widget->GetNativeWindow())));
+                  session_modal_widget->GetNativeWindow()));
     EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
               controller->GetSystemModalLayoutManager(NULL));
     session_modal_widget->Close();
@@ -492,12 +485,12 @@ TEST_F(RootWindowControllerTest, ModalContainerBlockedSession) {
     EXPECT_EQ(
         GetLayoutManager(controller, kShellWindowId_LockSystemModalContainer),
         controller->GetSystemModalLayoutManager(
-            WmWindow::Get(lock_modal_widget->GetNativeWindow())));
+            lock_modal_widget->GetNativeWindow()));
 
     session_modal_widget = CreateModalWidget(gfx::Rect(300, 10, 100, 100));
     EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
               controller->GetSystemModalLayoutManager(
-                  WmWindow::Get(session_modal_widget->GetNativeWindow())));
+                  session_modal_widget->GetNativeWindow()));
     session_modal_widget->Close();
 
     lock_modal_widget->Close();
@@ -1071,13 +1064,14 @@ TEST_F(VirtualKeyboardRootWindowControllerTest, EnsureCaretInWorkArea) {
   keyboard_window->set_owned_by_parent(false);
   keyboard_window->SetBounds(keyboard::FullWidthKeyboardBoundsFromRootBounds(
       root_window->bounds(), keyboard_height));
+  keyboard_window->Show();
 
   ui->EnsureCaretInWorkArea();
   ASSERT_EQ(root_window->bounds().width(),
             text_input_client.caret_exclude_rect().width());
   ASSERT_EQ(keyboard_height, text_input_client.caret_exclude_rect().height());
 
-  input_method->SetFocusedTextInputClient(NULL);
+  input_method->SetFocusedTextInputClient(nullptr);
 }
 
 TEST_F(VirtualKeyboardRootWindowControllerTest,
@@ -1118,9 +1112,13 @@ TEST_F(VirtualKeyboardRootWindowControllerTest,
   keyboard_window->set_owned_by_parent(false);
   keyboard_window->SetBounds(keyboard::FullWidthKeyboardBoundsFromRootBounds(
       primary_root_window->bounds(), keyboard_height));
+  keyboard_window->Show();
 
+  ui->EnsureCaretInWorkArea();
   EXPECT_TRUE(primary_root_window->GetBoundsInScreen().Contains(
       text_input_client.caret_exclude_rect()));
+  EXPECT_EQ(primary_root_window->GetBoundsInScreen().width(),
+            text_input_client.caret_exclude_rect().width());
   EXPECT_FALSE(secondary_root_window->GetBoundsInScreen().Contains(
       text_input_client.caret_exclude_rect()));
 
@@ -1135,6 +1133,8 @@ TEST_F(VirtualKeyboardRootWindowControllerTest,
       text_input_client.caret_exclude_rect()));
   EXPECT_TRUE(secondary_root_window->GetBoundsInScreen().Contains(
       text_input_client.caret_exclude_rect()));
+  EXPECT_EQ(secondary_root_window->GetBoundsInScreen().width(),
+            text_input_client.caret_exclude_rect().width());
 
   input_method->SetFocusedTextInputClient(nullptr);
 }

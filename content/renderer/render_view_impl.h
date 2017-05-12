@@ -276,7 +276,7 @@ class CONTENT_EXPORT RenderViewImpl
   blink::WebScreenInfo GetScreenInfo() override;
   void SetToolTipText(const blink::WebString&,
                       blink::WebTextDirection hint) override;
-  void SetTouchAction(blink::WebTouchAction touchAction) override;
+  void SetTouchAction(cc::TouchAction touchAction) override;
   void ShowUnhandledTapUIIfNeeded(const blink::WebPoint& tappedPosition,
                                   const blink::WebNode& tappedNode,
                                   bool pageChanged) override;
@@ -352,7 +352,7 @@ class CONTENT_EXPORT RenderViewImpl
   int GetRoutingID() const override;
   gfx::Size GetSize() const override;
   float GetDeviceScaleFactor() const override;
-  WebPreferences& GetWebkitPreferences() override;
+  const WebPreferences& GetWebkitPreferences() override;
   void SetWebkitPreferences(const WebPreferences& preferences) override;
   blink::WebView* GetWebView() override;
   blink::WebFrameWidget* GetWebFrameWidget() override;

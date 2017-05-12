@@ -246,67 +246,6 @@ void Resource::ServiceWorkerResponseCachedMetadataHandler::SendToPlatform() {
   }
 }
 
-// This class cannot be on-heap because the first callbackHandler() call
-// instantiates the singleton object while we can call it in the
-// pre-finalization step.
-class Resource::ResourceCallback final {
- public:
-  static ResourceCallback& CallbackHandler();
-  void Schedule(Resource*);
-  void Cancel(Resource*);
-  bool IsScheduled(Resource*) const;
-
- private:
-  ResourceCallback();
-
-  void RunTask();
-  TaskHandle task_handle_;
-  HashSet<Persistent<Resource>> resources_with_pending_clients_;
-};
-
-Resource::ResourceCallback& Resource::ResourceCallback::CallbackHandler() {
-  DEFINE_STATIC_LOCAL(ResourceCallback, callback_handler, ());
-  return callback_handler;
-}
-
-Resource::ResourceCallback::ResourceCallback() {}
-
-void Resource::ResourceCallback::Schedule(Resource* resource) {
-  if (!task_handle_.IsActive()) {
-    // WTF::unretained(this) is safe because a posted task is canceled when
-    // |m_taskHandle| is destroyed on the dtor of this ResourceCallback.
-    task_handle_ =
-        Platform::Current()
-            ->CurrentThread()
-            ->Scheduler()
-            ->LoadingTaskRunner()
-            ->PostCancellableTask(
-                BLINK_FROM_HERE,
-                WTF::Bind(&ResourceCallback::RunTask, WTF::Unretained(this)));
-  }
-  resources_with_pending_clients_.insert(resource);
-}
-
-void Resource::ResourceCallback::Cancel(Resource* resource) {
-  resources_with_pending_clients_.erase(resource);
-  if (task_handle_.IsActive() && resources_with_pending_clients_.IsEmpty())
-    task_handle_.Cancel();
-}
-
-bool Resource::ResourceCallback::IsScheduled(Resource* resource) const {
-  return resources_with_pending_clients_.Contains(resource);
-}
-
-void Resource::ResourceCallback::RunTask() {
-  HeapVector<Member<Resource>> resources;
-  for (const Member<Resource>& resource : resources_with_pending_clients_)
-    resources.push_back(resource.Get());
-  resources_with_pending_clients_.clear();
-
-  for (const auto& resource : resources)
-    resource->FinishPendingClients();
-}
-
 Resource::Resource(const ResourceRequest& request,
                    Type type,
                    const ResourceLoaderOptions& options)
@@ -638,12 +577,12 @@ String Resource::ReasonNotDeletable() const {
   if (loader_) {
     if (!builder.IsEmpty())
       builder.Append(' ');
-    builder.Append("m_loader");
+    builder.Append("loader_");
   }
   if (preload_count_) {
     if (!builder.IsEmpty())
       builder.Append(' ');
-    builder.Append("m_preloadCount(");
+    builder.Append("preload_count_(");
     builder.AppendNumber(preload_count_);
     builder.Append(')');
   }
@@ -722,7 +661,16 @@ void Resource::AddClient(ResourceClient* client,
       !TypeNeedsSynchronousCacheHit(GetType()) &&
       !needs_synchronous_cache_hit_) {
     clients_awaiting_callback_.insert(client);
-    ResourceCallback::CallbackHandler().Schedule(this);
+    if (!async_finish_pending_clients_task_.IsActive()) {
+      async_finish_pending_clients_task_ =
+          Platform::Current()
+              ->CurrentThread()
+              ->Scheduler()
+              ->LoadingTaskRunner()
+              ->PostCancellableTask(BLINK_FROM_HERE,
+                                    WTF::Bind(&Resource::FinishPendingClients,
+                                              WrapWeakPersistent(this)));
+    }
     return;
   }
 
@@ -744,8 +692,10 @@ void Resource::RemoveClient(ResourceClient* client) {
   else
     clients_.erase(client);
 
-  if (clients_awaiting_callback_.IsEmpty())
-    ResourceCallback::CallbackHandler().Cancel(this);
+  if (clients_awaiting_callback_.IsEmpty() &&
+      async_finish_pending_clients_task_.IsActive()) {
+    async_finish_pending_clients_task_.Cancel();
+  }
 
   DidRemoveClientOrObserver();
 }
@@ -808,7 +758,7 @@ void Resource::FinishPendingClients() {
   //    back.
   //
   // Handle case (1) by saving a list of clients to notify. A separate list also
-  // ensure a client is either in m_clients or m_clientsAwaitingCallback.
+  // ensure a client is either in cliens_ or clients_awaiting_callback_.
   HeapVector<Member<ResourceClient>> clients_to_notify;
   CopyToVector(clients_awaiting_callback_, clients_to_notify);
 
@@ -820,16 +770,16 @@ void Resource::FinishPendingClients() {
 
     // When revalidation starts after waiting clients are scheduled and
     // before they are added here. In such cases, we just add the clients
-    // to |m_clients| without didAddClient(), as in Resource::addClient().
+    // to |clients_| without DidAddClient(), as in Resource::AddClient().
     if (!is_revalidating_)
       DidAddClient(client);
   }
 
   // It is still possible for the above loop to finish a new client
   // synchronously. If there's no client waiting we should deschedule.
-  bool scheduled = ResourceCallback::CallbackHandler().IsScheduled(this);
+  bool scheduled = async_finish_pending_clients_task_.IsActive();
   if (scheduled && clients_awaiting_callback_.IsEmpty())
-    ResourceCallback::CallbackHandler().Cancel(this);
+    async_finish_pending_clients_task_.Cancel();
 
   // Prevent the case when there are clients waiting but no callback scheduled.
   DCHECK(clients_awaiting_callback_.IsEmpty() || scheduled);
@@ -922,8 +872,8 @@ void Resource::SetCachePolicyBypassingCache() {
   resource_request_.SetCachePolicy(WebCachePolicy::kBypassingCache);
 }
 
-void Resource::SetPreviewsStateNoTransform() {
-  resource_request_.SetPreviewsState(WebURLRequest::kPreviewsNoTransform);
+void Resource::SetPreviewsState(WebURLRequest::PreviewsState previews_state) {
+  resource_request_.SetPreviewsState(previews_state);
 }
 
 void Resource::ClearRangeRequestHeader() {

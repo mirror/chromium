@@ -53,19 +53,18 @@ class ChildProcessLauncherHelper {
 
     @CalledByNative
     private static ChildProcessLauncherHelper create(long nativePointer, int paramId,
-            final String[] commandLine, int childProcessId, FileDescriptorInfo[] filesToBeMapped) {
+            final String[] commandLine, FileDescriptorInfo[] filesToBeMapped) {
         assert LauncherThread.runningOnLauncherThread();
-        return new ChildProcessLauncherHelper(
-                nativePointer, paramId, commandLine, childProcessId, filesToBeMapped);
+        return new ChildProcessLauncherHelper(nativePointer, paramId, commandLine, filesToBeMapped);
     }
 
     private ChildProcessLauncherHelper(long nativePointer, int paramId, final String[] commandLine,
-            int childProcessId, FileDescriptorInfo[] filesToBeMapped) {
+            FileDescriptorInfo[] filesToBeMapped) {
         assert LauncherThread.runningOnLauncherThread();
         mNativeChildProcessLauncherHelper = nativePointer;
 
         ChildProcessLauncher.start(ContextUtils.getApplicationContext(), paramId, commandLine,
-                childProcessId, filesToBeMapped, new ChildProcessLauncher.LaunchCallback() {
+                filesToBeMapped, new ChildProcessLauncher.LaunchCallback() {
                     @Override
                     public void onChildProcessStarted(BaseChildProcessConnection connection) {
                         mChildProcessConnection = connection;
@@ -104,10 +103,11 @@ class ChildProcessLauncherHelper {
     }
 
     @CalledByNative
-    private void setInForeground(int pid, boolean inForeground) {
+    private void setInForeground(int pid, boolean foreground, boolean boostForPendingViews) {
         assert LauncherThread.runningOnLauncherThread();
+        assert mChildProcessConnection != null;
         assert getPid() == pid;
-        ChildProcessLauncher.getBindingManager().setInForeground(pid, inForeground);
+        ChildProcessLauncher.getBindingManager().setPriority(pid, foreground, boostForPendingViews);
     }
 
     @CalledByNative
@@ -121,11 +121,10 @@ class ChildProcessLauncherHelper {
     private static int getNumberOfRendererSlots() {
         final ChildProcessCreationParams params = ChildProcessCreationParams.getDefault();
         final Context context = ContextUtils.getApplicationContext();
-        final boolean inSandbox = true;
         final String packageName =
                 params == null ? context.getPackageName() : params.getPackageName();
         try {
-            return ChildConnectionAllocator.getNumberOfServices(context, inSandbox, packageName);
+            return ChildProcessLauncher.getNumberOfSandboxedServices(context, packageName);
         } catch (RuntimeException e) {
             // Unittest packages do not declare services. Some tests require a realistic number
             // to test child process policies, so pick a high-ish number here.

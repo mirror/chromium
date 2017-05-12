@@ -328,6 +328,10 @@ int64_t WindowTreeHostManager::GetPrimaryDisplayId() {
 }
 
 aura::Window* WindowTreeHostManager::GetPrimaryRootWindow() {
+  // If |primary_tree_host_for_replace_| is set, it means |primary_display_id|
+  // is kInvalidDisplayId.
+  if (primary_tree_host_for_replace_)
+    return GetWindow(primary_tree_host_for_replace_);
   return GetRootWindowForDisplayId(primary_display_id);
 }
 
@@ -633,6 +637,8 @@ void WindowTreeHostManager::DeleteHost(AshWindowTreeHost* host_to_delete) {
   // Delete most of root window related objects, but don't delete
   // root window itself yet because the stack may be using it.
   controller->Shutdown();
+  if (primary_tree_host_for_replace_ == host_to_delete)
+    primary_tree_host_for_replace_ = nullptr;
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, controller);
 }
 
@@ -824,9 +830,9 @@ AshWindowTreeHost* WindowTreeHostManager::AddWindowTreeHostForDisplay(
   AshWindowTreeHost* ash_host =
       AshWindowTreeHost::Create(params_with_bounds).release();
   aura::WindowTreeHost* host = ash_host->AsWindowTreeHost();
-  // In mash input method is hosted by the browser process, so we don't need to
-  // create and set it here.
-  if (Shell::GetAshConfig() != Config::MASH) {
+  // When using IME service, input method is hosted by the browser process, so
+  // we don't need to create and set it here.
+  if (!Shell::ShouldUseIMEService()) {
     DCHECK(!host->has_input_method());
     if (!input_method_) {  // Singleton input method instance for Ash.
       input_method_ = ui::CreateInputMethod(this, host->GetAcceleratedWidget());

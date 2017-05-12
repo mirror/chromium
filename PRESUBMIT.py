@@ -329,6 +329,30 @@ _BANNED_CPP_FUNCTIONS = (
       True,
       (),
     ),
+    (
+      'base::NonThreadSafe',
+      (
+        'base::NonThreadSafe is deprecated.',
+      ),
+      True,
+      (),
+    ),
+    (
+      'base::SequenceChecker',
+      (
+        'Consider using SEQUENCE_CHECKER macros instead of the class directly.',
+      ),
+      False,
+      (),
+    ),
+    (
+      'base::ThreadChecker',
+      (
+        'Consider using THREAD_CHECKER macros instead of the class directly.',
+      ),
+      False,
+      (),
+    ),
 )
 
 
@@ -1266,6 +1290,8 @@ def _CheckSpamLogging(input_api, output_api):
                  r"^chrome_elf[\\\/]dll_hash[\\\/]dll_hash_main\.cc$",
                  r"^chromecast[\\\/]",
                  r"^cloud_print[\\\/]",
+                 r"^components[\\\/]browser_watcher[\\\/]"
+                     r"dump_stability_report_main_win.cc$",
                  r"^components[\\\/]html_viewer[\\\/]"
                      r"web_test_delegate_impl\.cc$",
                  # TODO(peter): Remove this exception. https://crbug.com/534537

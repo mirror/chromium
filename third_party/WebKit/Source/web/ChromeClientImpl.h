@@ -32,11 +32,12 @@
 #ifndef ChromeClientImpl_h
 #define ChromeClientImpl_h
 
+#include <memory>
 #include "core/page/ChromeClient.h"
 #include "core/page/WindowFeatures.h"
+#include "platform/graphics/TouchAction.h"
 #include "public/web/WebNavigationPolicy.h"
 #include "web/WebExport.h"
-#include <memory>
 
 namespace blink {
 
@@ -110,8 +111,9 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
   void SetStatusbarText(const String& message) override;
   bool TabsToLinks() override;
   void InvalidateRect(const IntRect&) override;
-  void ScheduleAnimation(LocalFrame*) override;
-  IntRect ViewportToScreen(const IntRect&, const FrameViewBase*) const override;
+  void ScheduleAnimation(const PlatformFrameView*) override;
+  IntRect ViewportToScreen(const IntRect&,
+                           const PlatformFrameView*) const override;
   float WindowToViewportScalar(const float) const override;
   WebScreenInfo GetScreenInfo() const override;
   WTF::Optional<IntRect> VisibleContentRectForPainting() const override;
@@ -234,6 +236,10 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
   void InstallSupplements(LocalFrame&) override;
 
   WebLayerTreeView* GetWebLayerTreeView(LocalFrame*) override;
+
+  WebLocalFrameBase* GetWebLocalFrameBase(LocalFrame*) override;
+
+  WebRemoteFrameBase* GetWebRemoteFrameBase(RemoteFrame&) override;
 
  private:
   explicit ChromeClientImpl(WebViewBase*);

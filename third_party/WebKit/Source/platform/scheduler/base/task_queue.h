@@ -37,6 +37,9 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
     // Can be called on any thread
     // All methods but SetObserver, SetTimeDomain and GetTimeDomain can be
     // called on |queue|.
+    //
+    // TODO(altimin): Make it base::Optional<base::TimeTicks> to tell
+    // observer about cancellations.
     virtual void OnQueueNextWakeUpChanged(TaskQueue* queue,
                                           base::TimeTicks next_wake_up) = 0;
   };
@@ -162,7 +165,7 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
 
   // Returns true if the queue has work that's ready to execute now.
   // NOTE: this must be called on the thread this TaskQueue was created by.
-  virtual bool HasPendingImmediateWork() const = 0;
+  virtual bool HasTaskToRunImmediately() const = 0;
 
   // Returns requested run time of next scheduled wake-up for a delayed task
   // which is not ready to run. If there are no such tasks or the queue is
@@ -220,6 +223,9 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   // blocked by it.
   virtual void RemoveFence() = 0;
 
+  virtual bool HasFence() const = 0;
+
+  // Returns true if the queue has a fence which is blocking execution of tasks.
   virtual bool BlockedByFence() const = 0;
 
   virtual void SetObserver(Observer* observer) = 0;

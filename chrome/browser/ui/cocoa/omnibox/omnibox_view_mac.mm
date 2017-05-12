@@ -386,17 +386,24 @@ void OmniboxViewMac::GetSelectionBounds(base::string16::size_type* start,
 }
 
 void OmniboxViewMac::SelectAll(bool reversed) {
-  DCHECK(!in_coalesced_update_block_);
   if (!model()->has_focus())
     return;
+
+  NSRange full_range = NSMakeRange(0, GetTextLength());
+
+  // When coalescing updates, just set the range and not the direction. It's
+  // unlikely that the direction will matter after OpenMatch() applies updates.
+  if (in_coalesced_update_block_) {
+    SetSelectedRange(full_range);
+    return;
+  }
 
   NSTextView* text_view =
       base::mac::ObjCCastStrict<NSTextView>([field_ currentEditor]);
   NSSelectionAffinity affinity =
       reversed ? NSSelectionAffinityUpstream : NSSelectionAffinityDownstream;
-  NSRange range = NSMakeRange(0, GetTextLength());
 
-  [text_view setSelectedRange:range affinity:affinity stillSelecting:NO];
+  [text_view setSelectedRange:full_range affinity:affinity stillSelecting:NO];
 }
 
 void OmniboxViewMac::RevertAll() {
@@ -817,6 +824,11 @@ bool OmniboxViewMac::OnDoCommandBySelector(SEL cmd) {
      (cmd == @selector(noop:) &&
       ([event type] == NSKeyDown || [event type] == NSKeyUp) &&
       [event keyCode] == kVK_Return)) {
+    // If the user hasn't entered any text in keyword search mode, we need to
+    // return early in order to avoid cancelling the search.
+    if (GetTextLength() == 0)
+      return true;
+
     WindowOpenDisposition disposition =
         ui::WindowOpenDispositionFromNSEvent(event);
     model()->AcceptInput(disposition, false);

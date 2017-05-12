@@ -72,7 +72,7 @@ std::unique_ptr<base::DictionaryValue> GetPrinterInfo(const Printer& printer) {
 
   printer_info->SetString("printerAddress", host);
   printer_info->SetString("printerProtocol", base::ToLowerASCII(scheme));
-  if (base::ToLowerASCII(scheme) == "lpd" && !path.empty())
+  if (!path.empty())
     printer_info->SetString("printerQueue", path.substr(1));
 
   return printer_info;
@@ -246,10 +246,12 @@ void CupsPrintersHandler::OnAddedPrinter(
     chromeos::PrinterSetupResult result_code) {
   std::string printer_name = printer->display_name();
   switch (result_code) {
-    case chromeos::PrinterSetupResult::SUCCESS:
-      PrintersManagerFactory::GetForBrowserContext(profile_)->RegisterPrinter(
-          std::move(printer));
+    case chromeos::PrinterSetupResult::SUCCESS: {
+      auto* manager = PrintersManagerFactory::GetForBrowserContext(profile_);
+      manager->PrinterInstalled(*printer);
+      manager->RegisterPrinter(std::move(printer));
       break;
+    }
     case chromeos::PrinterSetupResult::PPD_NOT_FOUND:
       LOG(WARNING) << "Could not locate requested PPD";
       break;

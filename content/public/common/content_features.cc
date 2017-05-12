@@ -9,13 +9,6 @@ namespace features {
 
 // All features in alphabetical order.
 
-// Enables the Accessibility Object Model.
-// Explainer: https://github.com/WICG/aom/blob/master/explainer.md
-// Spec: https://wicg.github.io/aom/spec/
-const base::Feature kAccessibilityObjectModel(
-    "AccessibilityObjectModel",
-    base::FEATURE_DISABLED_BY_DEFAULT);
-
 // Enables content-initiated, main frame navigations to data URLs.
 // TODO(meacer): Remove when the deprecation is complete.
 //               https://www.chromestatus.com/feature/5669602927312896
@@ -116,6 +109,11 @@ const base::Feature kLazyParseCSS{"LazyParseCSS",
 // Use Mojo IPC for resource loading.
 const base::Feature kLoadingWithMojo{"LoadingWithMojo",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Experimental feature to trigger hard-reload on Location.reload().
+// crbug.com/716339
+const base::Feature kLocationHardReload{"LocationHardReload",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
 // FeatureList definition for trials to enable the download button on
 // MediaDocument.
@@ -308,10 +306,6 @@ const base::Feature kSendBeaconThrowForBlobWithNonSimpleType{
 // crbug.com/627860
 const base::Feature kAndroidAutofillAccessibility{
     "AndroidAutofillAccessibility", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// A browsing history manager implementation for Android.
-const base::Feature kNativeAndroidHistoryManager{
-  "AndroidHistoryManager", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // FeatureList definition for the Seccomp field trial.
 const base::Feature kSeccompSandboxAndroid{"SeccompSandboxAndroid",

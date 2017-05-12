@@ -69,7 +69,7 @@ const base::Feature kBackspaceGoesBackFeature {
 // Enables or disables whether permission prompts are automatically blocked
 // after the user has explicitly dismissed them too many times.
 const base::Feature kBlockPromptsIfDismissedOften{
-    "BlockPromptsIfDismissedOften", base::FEATURE_DISABLED_BY_DEFAULT};
+    "BlockPromptsIfDismissedOften", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enables or disables whether permission prompts are automatically blocked
 // after the user has ignored them too many times.
@@ -98,6 +98,11 @@ const base::Feature kTabStripKeyboardFocus{"TabStripKeyboardFocus",
 #endif  // defined(OS_MACOSX)
 
 const base::Feature kTabsInCbd{"TabsInCBD", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Whether to capture page thumbnails when the page load finishes (in addition
+// to any other times this might happen).
+const base::Feature kCaptureThumbnailOnLoadFinished{
+    "CaptureThumbnailOnLoadFinished", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Whether to trigger app banner installability checks on page load.
 const base::Feature kCheckInstallabilityForBannerOnLoad{
@@ -175,6 +180,11 @@ const base::Feature kLinuxObsoleteSystemIsEndOfTheLine{
 const base::Feature kLsdPermissionPrompt{"LsdPermissionPrompt",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
+#if defined(OS_MACOSX)
+// Enables RTL layout in macOS top chrome.
+const base::Feature kMacRTL{"MacRTL", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 // Enables or disables the Material Design version of chrome://bookmarks.
 const base::Feature kMaterialDesignBookmarks{"MaterialDesignBookmarks",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
@@ -189,10 +199,6 @@ const base::Feature kMaterialDesignExtensions{
 extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate{
     "AcknowledgeNtpOverrideOnDeactivate", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
-
-// Enables or disables the Material Design version of chrome://history.
-const base::Feature kMaterialDesignHistory{"MaterialDesignHistory",
-                                           base::FEATURE_ENABLED_BY_DEFAULT};
 
 // The material redesign of the Incognito NTP.
 const base::Feature kMaterialDesignIncognitoNTP{
@@ -242,6 +248,12 @@ const base::Feature kNativeNotifications{"NativeNotifications",
 // pages that the user downloaded for later use.
 const base::Feature kOfflinePageDownloadSuggestionsFeature{
     "NTPOfflinePageDownloadSuggestions", base::FEATURE_ENABLED_BY_DEFAULT};
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+// Enables or disabled the OneGoogleBar on the local NTP.
+const base::Feature kOneGoogleBarOnLocalNtp{"OneGoogleBarOnLocalNtp",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
 
 // Enables Permissions Blacklisting via Safe Browsing.
 const base::Feature kPermissionsBlacklist{
@@ -304,6 +316,11 @@ const base::Feature kSafeSearchUrlReporting{"SafeSearchUrlReporting",
 const base::Feature kSimplifiedFullscreenUI{"ViewsSimplifiedFullscreenUI",
                                             base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables or disables UI in MD Settings to view content settings grouped by
+// origin.
+const base::Feature kSiteDetails{"SiteDetails",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
+
 #if defined(SYZYASAN)
 // Enable the deferred free mechanism in the syzyasan module, which helps the
 // performance by deferring some work on the critical path to a background
@@ -311,6 +328,10 @@ const base::Feature kSimplifiedFullscreenUI{"ViewsSimplifiedFullscreenUI",
 const base::Feature kSyzyasanDeferredFree{"SyzyasanDeferredFree",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
+
+// Enables using the local NTP if Google is the default search engine.
+const base::Feature kUseGoogleLocalNtp{"UseGoogleLocalNtp",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Experiment to use grouped permission infobars which could show and handle
 // multiple permission requests.

@@ -75,7 +75,8 @@ void SurfaceLayerImpl::AppendQuads(RenderPass* render_pass,
       fallback_surface_info_.id() != primary_surface_info_.id();
   if (primary && needs_fallback) {
     // Add the primary surface ID as a dependency.
-    append_quads_data->embedded_surfaces.push_back(primary_surface_info_.id());
+    append_quads_data->activation_dependencies.push_back(
+        primary_surface_info_.id());
     // We can use the same SharedQuadState as the primary SurfaceDrawQuad if
     // we don't need a different transform on the fallback.
     bool use_common_shared_quad_state =
@@ -116,7 +117,7 @@ SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
         surface_info.device_scale_factor();
   }
 
-  visible_quad_rect = gfx::ScaleToEnclosedRect(
+  visible_quad_rect = gfx::ScaleToEnclosingRect(
       visible_quad_rect, layer_to_content_scale_x, layer_to_content_scale_y);
   visible_quad_rect = gfx::IntersectRects(quad_rect, visible_quad_rect);
 

@@ -8,6 +8,7 @@
 #include <set>
 
 #include "base/callback.h"
+#include "base/feature_list.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -31,6 +32,9 @@ namespace safe_browsing {
 
 class SafeBrowsingDatabaseManager;
 class PasswordProtectionRequest;
+
+extern const base::Feature kPasswordFieldOnFocusPinging;
+extern const base::Feature kProtectedPasswordEntryPinging;
 
 // Manage password protection pings and verdicts. There is one instance of this
 // class per profile. Therefore, every PasswordProtectionService instance is
@@ -66,6 +70,9 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   void CacheVerdict(const GURL& url,
                     LoginReputationClientResponse* verdict,
                     const base::Time& receive_time);
+
+  // Removes all the expired verdicts from cache.
+  void CleanUpExpiredVerdicts();
 
   // Creates an instance of PasswordProtectionRequest and call Start() on that
   // instance. This function also insert this request object in |requests_| for
@@ -116,17 +123,25 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
       int event_tab_id,  // -1 if tab id is not available.
       LoginReputationClientRequest::Frame* frame) = 0;
 
+  void FillUserPopulation(
+      const LoginReputationClientRequest::TriggerType& request_type,
+      LoginReputationClientRequest* request_proto);
+
   virtual bool IsExtendedReporting() = 0;
+
   virtual bool IsIncognito() = 0;
 
-  // If we can send ping to Safe Browsing backend.
-  virtual bool IsPingingEnabled() = 0;
+  virtual bool IsPingingEnabled(const base::Feature& feature) = 0;
+
+  virtual bool IsHistorySyncEnabled() = 0;
 
   void CheckCsdWhitelistOnIOThread(const GURL& url, bool* check_result);
 
   // Increases "PasswordManager.PasswordReuse.MainFrameMatchCsdWhitelist" UMA
   // metric based on input.
   void OnMatchCsdWhiteListResult(const bool* match_whitelist);
+
+  HostContentSettingsMap* content_settings() const { return content_settings_; }
 
  private:
   friend class PasswordProtectionServiceTest;
@@ -138,7 +153,9 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   FRIEND_TEST_ALL_PREFIXES(PasswordProtectionServiceTest,
                            TestPathVariantsMatchCacheExpression);
   FRIEND_TEST_ALL_PREFIXES(PasswordProtectionServiceTest,
-                           TestCleanUpCachedVerdicts);
+                           TestRemoveCachedVerdictOnURLsDeleted);
+  FRIEND_TEST_ALL_PREFIXES(PasswordProtectionServiceTest,
+                           TestCleanUpExpiredVerdict);
 
   // Overridden from history::HistoryServiceObserver.
   void OnURLsDeleted(history::HistoryService* history_service,

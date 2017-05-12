@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/payments/payment_request_browsertest_base.h"
 
 #include <algorithm>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -12,6 +13,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
@@ -24,6 +26,7 @@
 #include "chrome/browser/ui/views/payments/validating_textfield.h"
 #include "chrome/browser/ui/views/payments/view_stack.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/autofill/core/browser/address_combobox_model.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
@@ -32,7 +35,9 @@
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
+#include "net/dns/mock_host_resolver.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -47,6 +52,10 @@
 
 namespace payments {
 
+namespace {
+const auto kBillingAddressType = autofill::ADDRESS_BILLING_LINE1;
+}  // namespace
+
 PersonalDataLoadedObserverMock::PersonalDataLoadedObserverMock() {}
 PersonalDataLoadedObserverMock::~PersonalDataLoadedObserverMock() {}
 
@@ -58,10 +67,18 @@ PaymentRequestBrowserTestBase::PaymentRequestBrowserTestBase(
       is_valid_ssl_(true) {}
 PaymentRequestBrowserTestBase::~PaymentRequestBrowserTestBase() {}
 
+void PaymentRequestBrowserTestBase::SetUpCommandLine(
+    base::CommandLine* command_line) {
+  // HTTPS server only serves a valid cert for localhost, so this is needed to
+  // load pages from "a.com" without an interstitial.
+  command_line->AppendSwitch(switches::kIgnoreCertificateErrors);
+}
+
 void PaymentRequestBrowserTestBase::SetUpOnMainThread() {
   // Setup the https server.
   https_server_ = base::MakeUnique<net::EmbeddedTestServer>(
       net::EmbeddedTestServer::TYPE_HTTPS);
+  host_resolver()->AddRule("a.com", "127.0.0.1");
   ASSERT_TRUE(https_server_->InitializeAndListen());
   https_server_->ServeFilesFromSourceDirectory("chrome/test/data/payments");
   https_server_->StartAcceptingConnections();
@@ -81,7 +98,12 @@ void PaymentRequestBrowserTestBase::SetUpOnMainThread() {
 }
 
 void PaymentRequestBrowserTestBase::NavigateTo(const std::string& file_path) {
-  ui_test_utils::NavigateToURL(browser(), https_server()->GetURL(file_path));
+  if (file_path.find("data:") == 0U) {
+    ui_test_utils::NavigateToURL(browser(), GURL(file_path));
+  } else {
+    ui_test_utils::NavigateToURL(browser(),
+                                 https_server()->GetURL("a.com", file_path));
+  }
 }
 
 void PaymentRequestBrowserTestBase::SetIncognito() {
@@ -100,6 +122,11 @@ void PaymentRequestBrowserTestBase::OnCanMakePaymentCalled() {
 void PaymentRequestBrowserTestBase::OnNotSupportedError() {
   if (event_observer_)
     event_observer_->Observe(DialogEvent::NOT_SUPPORTED_ERROR);
+}
+
+void PaymentRequestBrowserTestBase::OnConnectionTerminated() {
+  if (event_observer_)
+    event_observer_->Observe(DialogEvent::DIALOG_CLOSED);
 }
 
 void PaymentRequestBrowserTestBase::OnDialogOpened() {
@@ -177,11 +204,6 @@ void PaymentRequestBrowserTestBase::OnCvcPromptShown() {
     event_observer_->Observe(DialogEvent::CVC_PROMPT_SHOWN);
 }
 
-void PaymentRequestBrowserTestBase::OnWidgetDestroyed(views::Widget* widget) {
-  if (event_observer_)
-    event_observer_->Observe(DialogEvent::DIALOG_CLOSED);
-}
-
 void PaymentRequestBrowserTestBase::InvokePaymentRequestUI() {
   ResetEventObserver(DialogEvent::DIALOG_OPENED);
 
@@ -210,7 +232,8 @@ void PaymentRequestBrowserTestBase::ExpectBodyContains(
       web_contents, extract_contents_js, &contents));
   for (const std::string& expected_string : expected_strings) {
     EXPECT_NE(std::string::npos, contents.find(expected_string))
-        << "String not present: " << expected_string;
+        << "String \"" << expected_string
+        << "\" is not present in the content \"" << contents << "\"";
   }
 }
 
@@ -406,12 +429,11 @@ void PaymentRequestBrowserTestBase::CreatePaymentRequestForTest(
   DCHECK(web_contents);
   std::unique_ptr<TestChromePaymentRequestDelegate> delegate =
       base::MakeUnique<TestChromePaymentRequestDelegate>(
-          web_contents, this /* observer */, this /* widget_observer */,
-          is_incognito_, is_valid_ssl_);
+          web_contents, this /* observer */, is_incognito_, is_valid_ssl_);
   delegate_ = delegate.get();
   PaymentRequestWebContentsManager::GetOrCreateForWebContents(web_contents)
-      ->CreatePaymentRequest(web_contents, std::move(delegate),
-                             std::move(request), this);
+      ->CreatePaymentRequest(web_contents->GetMainFrame(), web_contents,
+                             std::move(delegate), std::move(request), this);
 }
 
 void PaymentRequestBrowserTestBase::ClickOnDialogViewAndWait(
@@ -557,6 +579,17 @@ void PaymentRequestBrowserTestBase::SetComboboxValue(
   combobox->OnBlur();
 }
 
+void PaymentRequestBrowserTestBase::SelectBillingAddress(
+    const std::string& billing_address_id) {
+  views::Combobox* address_combobox(static_cast<views::Combobox*>(
+      dialog_view()->GetViewByID(static_cast<int>(kBillingAddressType))));
+  ASSERT_NE(address_combobox, nullptr);
+  autofill::AddressComboboxModel* address_combobox_model(
+      static_cast<autofill::AddressComboboxModel*>(address_combobox->model()));
+  address_combobox->SetSelectedIndex(
+      address_combobox_model->GetIndexOfIdentifier(billing_address_id));
+}
+
 bool PaymentRequestBrowserTestBase::IsEditorTextfieldInvalid(
     autofill::ServerFieldType type) {
   ValidatingTextfield* textfield = static_cast<ValidatingTextfield*>(
@@ -661,3 +694,66 @@ void PaymentRequestBrowserTestBase::WaitForObservedEvent() {
 }
 
 }  // namespace payments
+
+std::ostream& operator<<(
+    std::ostream& out,
+    payments::PaymentRequestBrowserTestBase::DialogEvent event) {
+  using DialogEvent = payments::PaymentRequestBrowserTestBase::DialogEvent;
+  switch (event) {
+    case DialogEvent::DIALOG_OPENED:
+      out << "DIALOG_OPENED";
+      break;
+    case DialogEvent::DIALOG_CLOSED:
+      out << "DIALOG_CLOSED";
+      break;
+    case DialogEvent::ORDER_SUMMARY_OPENED:
+      out << "ORDER_SUMMARY_OPENED";
+      break;
+    case DialogEvent::PAYMENT_METHOD_OPENED:
+      out << "PAYMENT_METHOD_OPENED";
+      break;
+    case DialogEvent::SHIPPING_ADDRESS_SECTION_OPENED:
+      out << "SHIPPING_ADDRESS_SECTION_OPENED";
+      break;
+    case DialogEvent::SHIPPING_OPTION_SECTION_OPENED:
+      out << "SHIPPING_OPTION_SECTION_OPENED";
+      break;
+    case DialogEvent::CREDIT_CARD_EDITOR_OPENED:
+      out << "CREDIT_CARD_EDITOR_OPENED";
+      break;
+    case DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED:
+      out << "SHIPPING_ADDRESS_EDITOR_OPENED";
+      break;
+    case DialogEvent::CONTACT_INFO_EDITOR_OPENED:
+      out << "CONTACT_INFO_EDITOR_OPENED";
+      break;
+    case DialogEvent::BACK_NAVIGATION:
+      out << "BACK_NAVIGATION";
+      break;
+    case DialogEvent::BACK_TO_PAYMENT_SHEET_NAVIGATION:
+      out << "BACK_TO_PAYMENT_SHEET_NAVIGATION";
+      break;
+    case DialogEvent::CONTACT_INFO_OPENED:
+      out << "CONTACT_INFO_OPENED";
+      break;
+    case DialogEvent::EDITOR_VIEW_UPDATED:
+      out << "EDITOR_VIEW_UPDATED";
+      break;
+    case DialogEvent::CAN_MAKE_PAYMENT_CALLED:
+      out << "CAN_MAKE_PAYMENT_CALLED";
+      break;
+    case DialogEvent::ERROR_MESSAGE_SHOWN:
+      out << "ERROR_MESSAGE_SHOWN";
+      break;
+    case DialogEvent::SPEC_DONE_UPDATING:
+      out << "SPEC_DONE_UPDATING";
+      break;
+    case DialogEvent::CVC_PROMPT_SHOWN:
+      out << "CVC_PROMPT_SHOWN";
+      break;
+    case DialogEvent::NOT_SUPPORTED_ERROR:
+      out << "NOT_SUPPORTED_ERROR";
+      break;
+  }
+  return out;
+}

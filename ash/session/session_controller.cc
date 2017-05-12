@@ -5,6 +5,7 @@
 #include "ash/session/session_controller.h"
 
 #include <algorithm>
+#include <utility>
 
 #include "ash/session/session_observer.h"
 #include "ash/shell.h"
@@ -146,6 +147,15 @@ bool SessionController::IsUserChild() const {
   return active_user_type == user_manager::USER_TYPE_CHILD;
 }
 
+bool SessionController::IsKioskSession() const {
+  if (!IsActiveUserSessionStarted())
+    return false;
+
+  user_manager::UserType active_user_type = GetUserSession(0)->type;
+  return active_user_type == user_manager::USER_TYPE_KIOSK_APP ||
+         active_user_type == user_manager::USER_TYPE_ARC_KIOSK_APP;
+}
+
 void SessionController::LockScreen() {
   if (client_)
     client_->RequestLockScreen();
@@ -230,9 +240,9 @@ void SessionController::SetUserSessionOrder(
   }
 }
 
-void SessionController::StartLock(const StartLockCallback& callback) {
+void SessionController::StartLock(StartLockCallback callback) {
   DCHECK(start_lock_callback_.is_null());
-  start_lock_callback_ = callback;
+  start_lock_callback_ = std::move(callback);
 
   LockStateController* const lock_state_controller =
       Shell::Get()->lock_state_controller();
@@ -248,12 +258,13 @@ void SessionController::NotifyChromeLockAnimationsComplete() {
 }
 
 void SessionController::RunUnlockAnimation(
-    const RunUnlockAnimationCallback& callback) {
+    RunUnlockAnimationCallback callback) {
   is_unlocking_ = true;
 
   // Shell could have no instance in tests.
   if (Shell::HasInstance())
-    Shell::Get()->lock_state_controller()->OnLockScreenHide(callback);
+    Shell::Get()->lock_state_controller()->OnLockScreenHide(
+        std::move(callback));
 }
 
 void SessionController::NotifyChromeTerminating() {

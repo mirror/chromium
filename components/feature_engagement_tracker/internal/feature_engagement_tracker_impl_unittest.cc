@@ -16,6 +16,7 @@
 #include "components/feature_engagement_tracker/internal/in_memory_store.h"
 #include "components/feature_engagement_tracker/internal/never_storage_validator.h"
 #include "components/feature_engagement_tracker/internal/once_condition_validator.h"
+#include "components/feature_engagement_tracker/internal/time_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace feature_engagement_tracker {
@@ -79,6 +80,18 @@ class TestInMemoryStore : public InMemoryStore {
   DISALLOW_COPY_AND_ASSIGN(TestInMemoryStore);
 };
 
+class TestTimeProvider : public TimeProvider {
+ public:
+  TestTimeProvider() = default;
+  ~TestTimeProvider() override = default;
+
+  // TimeProvider implementation.
+  uint32_t GetCurrentDay() const override { return 0u; };
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(TestTimeProvider);
+};
+
 class FeatureEngagementTrackerImplTest : public ::testing::Test {
  public:
   FeatureEngagementTrackerImplTest() = default;
@@ -97,7 +110,8 @@ class FeatureEngagementTrackerImplTest : public ::testing::Test {
     tracker_.reset(new FeatureEngagementTrackerImpl(
         CreateStore(), std::move(configuration),
         base::MakeUnique<OnceConditionValidator>(),
-        base::MakeUnique<NeverStorageValidator>()));
+        base::MakeUnique<NeverStorageValidator>(),
+        base::MakeUnique<TestTimeProvider>()));
   }
 
  protected:
@@ -278,14 +292,14 @@ TEST_F(FeatureEngagementTrackerImplTest, TestTriggering) {
 
   // After dismissing the current in-product help, that feature can not be shown
   // again, but a different feature should.
-  tracker_->Dismissed();
+  tracker_->Dismissed(kTestFeatureFoo);
   EXPECT_FALSE(tracker_->ShouldTriggerHelpUI(kTestFeatureFoo));
   EXPECT_TRUE(tracker_->ShouldTriggerHelpUI(kTestFeatureBar));
   EXPECT_FALSE(tracker_->ShouldTriggerHelpUI(kTestFeatureQux));
 
   // After dismissing the second registered feature, no more in-product help
   // should be shown, since kTestFeatureQux is invalid.
-  tracker_->Dismissed();
+  tracker_->Dismissed(kTestFeatureBar);
   EXPECT_FALSE(tracker_->ShouldTriggerHelpUI(kTestFeatureFoo));
   EXPECT_FALSE(tracker_->ShouldTriggerHelpUI(kTestFeatureBar));
   EXPECT_FALSE(tracker_->ShouldTriggerHelpUI(kTestFeatureQux));

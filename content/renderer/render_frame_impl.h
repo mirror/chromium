@@ -433,12 +433,11 @@ class CONTENT_EXPORT RenderFrameImpl
   RenderAccessibility* GetRenderAccessibility() override;
   int GetRoutingID() override;
   blink::WebLocalFrame* GetWebFrame() override;
-  WebPreferences& GetWebkitPreferences() override;
+  const WebPreferences& GetWebkitPreferences() override;
   int ShowContextMenu(ContextMenuClient* client,
                       const ContextMenuParams& params) override;
   void CancelContextMenu(int request_id) override;
   blink::WebPlugin* CreatePlugin(
-      blink::WebFrame* frame,
       const WebPluginInfo& info,
       const blink::WebPluginParams& params,
       std::unique_ptr<PluginInstanceThrottler> throttler) override;
@@ -474,6 +473,7 @@ class CONTENT_EXPORT RenderFrameImpl
                                       v8::Local<v8::Context> context) override;
   void AddMessageToConsole(ConsoleMessageLevel level,
                            const std::string& message) override;
+  void DetachDevToolsForTest() override;
   PreviewsState GetPreviewsState() const override;
   bool IsPasting() const override;
   blink::WebPageVisibilityState GetVisibilityState() const override;
@@ -498,8 +498,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
 
   // blink::WebFrameClient implementation:
-  blink::WebPlugin* CreatePlugin(blink::WebLocalFrame* frame,
-                                 const blink::WebPluginParams& params) override;
+  blink::WebPlugin* CreatePlugin(const blink::WebPluginParams& params) override;
   blink::WebMediaPlayer* CreateMediaPlayer(
       const blink::WebMediaPlayerSource& source,
       blink::WebMediaPlayerClient* client,
@@ -761,10 +760,6 @@ class CONTENT_EXPORT RenderFrameImpl
   void PepperStopsPlayback(PepperPluginInstanceImpl* instance);
   void OnSetPepperVolume(int32_t pp_instance, double volume);
 #endif  // ENABLE_PLUGINS
-
-  mojom::URLLoaderFactory* GetURLLoaderFactory() {
-    return url_loader_factory_.get();
-  }
 
  protected:
   explicit RenderFrameImpl(const CreateParams& params);
@@ -1379,7 +1374,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // Whether or not this RenderFrame is currently pasting.
   bool is_pasting_;
 
-  // Whether we must stop creating nested message loops for modal dialogs. This
+  // Whether we must stop creating nested run loops for modal dialogs. This
   // is necessary because modal dialogs have a ScopedPageLoadDeferrer on the
   // stack that interferes with swapping out.
   bool suppress_further_dialogs_;
@@ -1456,7 +1451,7 @@ class CONTENT_EXPORT RenderFrameImpl
     blink::WebFormElement form;
     blink::WebSourceLocation source_location;
 
-    PendingNavigationInfo(const NavigationPolicyInfo& info);
+    explicit PendingNavigationInfo(const NavigationPolicyInfo& info);
   };
 
   // PlzNavigate: Contains information about a pending navigation to be sent to

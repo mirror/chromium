@@ -93,8 +93,8 @@ public class AndroidSyncSettings {
     private AndroidSyncSettings(
             Context context, SyncContentResolverDelegate syncContentResolverDelegate) {
         mApplicationContext = context.getApplicationContext();
+        mContractAuthority = mApplicationContext.getPackageName();
         mSyncContentResolverDelegate = syncContentResolverDelegate;
-        mContractAuthority = getContractAuthority();
 
         mAccount = ChromeSigninController.get().getSignedInUser();
         updateSyncability(null);
@@ -186,7 +186,7 @@ public class AndroidSyncSettings {
      */
     public static String getContractAuthority(Context context) {
         ensureInitialized(context);
-        return sInstance.getContractAuthority();
+        return sInstance.mContractAuthority;
     }
 
     /**
@@ -251,16 +251,19 @@ public class AndroidSyncSettings {
         AccountManagerHelper.get().getGoogleAccounts(new Callback<Account[]>() {
             @Override
             public void onResult(Account[] accounts) {
-                StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
-                for (Account account : accounts) {
-                    if (!account.equals(mAccount)
-                            && mSyncContentResolverDelegate.getIsSyncable(
-                                       account, mContractAuthority)
-                                    > 0) {
-                        mSyncContentResolverDelegate.setIsSyncable(account, mContractAuthority, 0);
+                synchronized (mLock) {
+                    StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
+                    for (Account account : accounts) {
+                        if (!account.equals(mAccount)
+                                && mSyncContentResolverDelegate.getIsSyncable(
+                                           account, mContractAuthority)
+                                        > 0) {
+                            mSyncContentResolverDelegate.setIsSyncable(
+                                    account, mContractAuthority, 0);
+                        }
                     }
+                    StrictMode.setThreadPolicy(oldPolicy);
                 }
-                StrictMode.setThreadPolicy(oldPolicy);
 
                 if (callback != null) callback.onResult(true);
             }
@@ -318,9 +321,5 @@ public class AndroidSyncSettings {
         for (AndroidSyncSettingsObserver observer : mObservers) {
             observer.androidSyncSettingsChanged();
         }
-    }
-
-    private String getContractAuthority() {
-        return mApplicationContext.getPackageName();
     }
 }

@@ -6,15 +6,14 @@
 #define ModulatorImpl_h
 
 #include "bindings/core/v8/ScriptModule.h"
-#include "bindings/core/v8/V8PerIsolateData.h"
 #include "core/dom/Modulator.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
+#include "platform/bindings/V8PerIsolateData.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class Document;
 class ExecutionContext;
 class ModuleMap;
 class ModuleScriptLoaderRegistry;
@@ -29,7 +28,7 @@ class WebTaskRunner;
 // components together.
 class ModulatorImpl final : public Modulator {
  public:
-  static ModulatorImpl* Create(RefPtr<ScriptState>, Document&);
+  static ModulatorImpl* Create(RefPtr<ScriptState>, ResourceFetcher*);
 
   virtual ~ModulatorImpl();
   DECLARE_TRACE();
@@ -67,7 +66,7 @@ class ModulatorImpl final : public Modulator {
   Vector<String> ModuleRequestsFromScriptModule(ScriptModule) override;
   void ExecuteModule(const ModuleScript*) override;
 
-  ModulatorImpl(RefPtr<ScriptState>, RefPtr<WebTaskRunner>, ResourceFetcher*);
+  ModulatorImpl(RefPtr<ScriptState>, ResourceFetcher*);
 
   ExecutionContext* GetExecutionContext() const;
 

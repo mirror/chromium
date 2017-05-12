@@ -499,9 +499,6 @@ const char kForceLocalNtp[]                 = "force-local-ntp";
 // prefixed with the character "t" will be treated as Trigger Variation Ids.
 const char kForceVariationIds[]             = "force-variation-ids";
 
-// Enables grouping websites by domain and filtering them by period.
-const char kHistoryEnableGroupByDomain[]    = "enable-grouped-history";
-
 // Specifies which page will be displayed in newly-opened tabs. We need this
 // for testing purposes so that the UI tests don't depend on what comes up for
 // http://google.com.
@@ -928,11 +925,12 @@ const char kWebApkServerUrl[] = "webapk-server-url";
 // Custom crosh command.
 const char kCroshCommand[] = "crosh-command";
 
+// Disables apps on the login screen. By default, they are allowed and can be
+// installed through policy.
+const char kDisableLoginScreenApps[] = "disable-login-screen-apps";
+
 // Disables native cups integration
 const char kDisableNativeCups[] = "disable-native-cups";
-
-// Enables apps on the login screen.
-const char kEnableLoginScreenApps[] = "enable-login-screen-apps";
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(USE_ASH)

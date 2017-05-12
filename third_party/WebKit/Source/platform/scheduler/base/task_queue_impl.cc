@@ -186,7 +186,7 @@ void TaskQueueImpl::UnregisterTaskQueue() {
   main_thread_only().delayed_work_queue.reset();
 }
 
-bool TaskQueueImpl::RunsTasksOnCurrentThread() const {
+bool TaskQueueImpl::RunsTasksInCurrentSequence() const {
   return base::PlatformThread::CurrentId() == thread_id_;
 }
 
@@ -355,7 +355,7 @@ void TaskQueueImpl::PushOntoImmediateIncomingQueueLocked(
     // However there's no point posting a DoWork for a blocked queue. NB we can
     // only tell if it's disabled from the main thread.
     bool queue_is_blocked =
-        RunsTasksOnCurrentThread() &&
+        RunsTasksInCurrentSequence() &&
         (!IsQueueEnabled() || main_thread_only().current_fence);
     any_thread().task_queue_manager->OnQueueHasIncomingImmediateWork(
         this, sequence_number, queue_is_blocked);
@@ -402,7 +402,7 @@ size_t TaskQueueImpl::GetNumberOfPendingTasks() const {
   return task_count;
 }
 
-bool TaskQueueImpl::HasPendingImmediateWork() const {
+bool TaskQueueImpl::HasTaskToRunImmediately() const {
   // Any work queue tasks count as immediate work.
   if (!main_thread_only().delayed_work_queue->Empty() ||
       !main_thread_only().immediate_work_queue->Empty()) {
@@ -691,6 +691,10 @@ bool TaskQueueImpl::BlockedByFence() const {
          main_thread_only().current_fence;
 }
 
+bool TaskQueueImpl::HasFence() const {
+  return !!main_thread_only().current_fence;
+}
+
 bool TaskQueueImpl::CouldTaskRun(EnqueueOrder enqueue_order) const {
   if (!IsQueueEnabled())
     return false;
@@ -817,8 +821,11 @@ void TaskQueueImpl::EnableOrDisableWithSelector(bool enable) {
     return;
 
   if (enable) {
-    if (HasPendingImmediateWork())
-      NotifyWakeUpChangedOnMainThread(base::TimeTicks());
+    if (HasPendingImmediateWork() && main_thread_only().observer) {
+      // Delayed work notification will be issued via time domain.
+      main_thread_only().observer->OnQueueNextWakeUpChanged(this,
+                                                            base::TimeTicks());
+    }
 
     ScheduleDelayedWorkInTimeDomain(main_thread_only().time_domain->Now());
 
@@ -895,14 +902,33 @@ void TaskQueueImpl::ScheduleDelayedWorkInTimeDomain(base::TimeTicks now) {
   main_thread_only().time_domain->ScheduleDelayedWork(
       this, main_thread_only().delayed_incoming_queue.top().delayed_wake_up(),
       now);
-
-  NotifyWakeUpChangedOnMainThread(
-      main_thread_only().delayed_incoming_queue.top().delayed_run_time);
 }
 
-void TaskQueueImpl::NotifyWakeUpChangedOnMainThread(base::TimeTicks wake_up) {
-  if (main_thread_only().observer)
-    main_thread_only().observer->OnQueueNextWakeUpChanged(this, wake_up);
+void TaskQueueImpl::SetScheduledTimeDomainWakeUp(
+    base::Optional<base::TimeTicks> scheduled_time_domain_wake_up) {
+  main_thread_only().scheduled_time_domain_wake_up =
+      scheduled_time_domain_wake_up;
+
+  // If queue has immediate work an appropriate notification has already
+  // been issued.
+  if (!scheduled_time_domain_wake_up || !main_thread_only().observer ||
+      HasPendingImmediateWork())
+    return;
+
+  main_thread_only().observer->OnQueueNextWakeUpChanged(
+      this, scheduled_time_domain_wake_up.value());
+}
+
+bool TaskQueueImpl::HasPendingImmediateWork() {
+  // Any work queue tasks count as immediate work.
+  if (!main_thread_only().delayed_work_queue->Empty() ||
+      !main_thread_only().immediate_work_queue->Empty()) {
+    return true;
+  }
+
+  // Finally tasks on |immediate_incoming_queue| count as immediate work.
+  base::AutoLock lock(immediate_incoming_queue_lock_);
+  return !immediate_incoming_queue().empty();
 }
 
 }  // namespace internal

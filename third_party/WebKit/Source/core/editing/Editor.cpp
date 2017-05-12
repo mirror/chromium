@@ -186,7 +186,7 @@ Editor::RevealSelectionScope::~RevealSelectionScope() {
 // |SelectionInDOMTree| instead of |VisibleSelection|.
 VisibleSelection Editor::SelectionForCommand(Event* event) {
   VisibleSelection selection =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+      GetFrame().Selection().ComputeVisibleSelectionInDOMTree();
   if (!event)
     return selection;
   // If the target is a text control, and the current selection is outside of
@@ -228,12 +228,12 @@ EditorClient& Editor::Client() const {
 }
 
 static bool IsCaretAtStartOfWrappedLine(const FrameSelection& selection) {
-  if (!selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsCaret())
+  if (!selection.ComputeVisibleSelectionInDOMTree().IsCaret())
     return false;
   if (selection.GetSelectionInDOMTree().Affinity() != TextAffinity::kDownstream)
     return false;
   const Position& position =
-      selection.ComputeVisibleSelectionInDOMTreeDeprecated().Start();
+      selection.ComputeVisibleSelectionInDOMTree().Start();
   return !InSameLine(PositionWithAffinity(position, TextAffinity::kUpstream),
                      PositionWithAffinity(position, TextAffinity::kDownstream));
 }
@@ -965,6 +965,8 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
     // Only register undo entry when combined with other commands.
     if (!last_edit_command_->GetUndoStep())
       undo_stack_->RegisterUndoStep(last_edit_command_->EnsureUndoStep());
+    last_edit_command_->EnsureUndoStep()->SetEndingSelection(
+        cmd->EnsureUndoStep()->EndingSelection());
     last_edit_command_->AppendCommandToUndoStep(cmd);
   } else {
     // Only register a new undo command if the command passed in is
@@ -1055,15 +1057,12 @@ bool Editor::InsertTextWithoutSendingTextEvent(
     bool select_inserted_text,
     TextEvent* triggering_event,
     InputEvent::InputType input_type) {
-  if (text.IsEmpty())
-    return false;
-
   const VisibleSelection& selection = SelectionForCommand(triggering_event);
   if (!selection.IsContentEditable())
     return false;
 
   GetSpellChecker().UpdateMarkersForWordsAffectedByEditing(
-      IsSpaceOrNewline(text[0]));
+      !text.IsEmpty() && IsSpaceOrNewline(text[0]));
 
   // Insert the text
   TypingCommand::InsertText(

@@ -1340,6 +1340,7 @@ interface DetectedBarcode
 interface DetectedFace
     attribute @@toStringTag
     getter boundingBox
+    getter landmarks
     method constructor
 interface DetectedText
     attribute @@toStringTag
@@ -5086,6 +5087,7 @@ interface RTCPeerConnection : EventTarget
     method getLocalStreams
     method getReceivers
     method getRemoteStreams
+    method getSenders
     method getStats
     method getStreamById
     method removeStream
@@ -5114,6 +5116,10 @@ interface RTCRtpReceiver
     getter track
     method constructor
     method getContributingSources
+interface RTCRtpSender
+    attribute @@toStringTag
+    getter track
+    method constructor
 interface RTCSessionDescription
     attribute @@toStringTag
     getter sdp
@@ -7560,7 +7566,6 @@ interface WebGL2RenderingContext
     attribute STENCIL_CLEAR_VALUE
     attribute STENCIL_FAIL
     attribute STENCIL_FUNC
-    attribute STENCIL_INDEX
     attribute STENCIL_INDEX8
     attribute STENCIL_PASS_DEPTH_FAIL
     attribute STENCIL_PASS_DEPTH_PASS
@@ -8187,7 +8192,6 @@ interface WebGLRenderingContext
     attribute STENCIL_CLEAR_VALUE
     attribute STENCIL_FAIL
     attribute STENCIL_FUNC
-    attribute STENCIL_INDEX
     attribute STENCIL_INDEX8
     attribute STENCIL_PASS_DEPTH_FAIL
     attribute STENCIL_PASS_DEPTH_PASS
@@ -8723,6 +8727,7 @@ interface webkitRTCPeerConnection : EventTarget
     method getLocalStreams
     method getReceivers
     method getRemoteStreams
+    method getSenders
     method getStats
     method getStreamById
     method removeStream

@@ -5,13 +5,13 @@
 #include "modules/time_zone_monitor/TimeZoneMonitorClient.h"
 
 #include "bindings/core/v8/V8BindingForCore.h"
-#include "bindings/core/v8/V8PerIsolateData.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "core/workers/WorkerThread.h"
 #include "platform/CrossThreadFunctional.h"
+#include "platform/bindings/V8PerIsolateData.h"
 #include "public/platform/Platform.h"
 #include "services/device/public/interfaces/constants.mojom-blink.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -55,8 +55,9 @@ void TimeZoneMonitorClient::OnTimeZoneChange(const String& time_zone_info) {
   DCHECK(IsMainThread());
 
   if (!time_zone_info.IsEmpty()) {
+    DCHECK(time_zone_info.ContainsOnlyASCII());
     icu::TimeZone* zone = icu::TimeZone::createTimeZone(
-        icu::UnicodeString::fromUTF8(time_zone_info.Utf8().data()));
+        icu::UnicodeString(time_zone_info.Ascii().data(), -1, US_INV));
     icu::TimeZone::adoptDefault(zone);
     VLOG(1) << "ICU default timezone is set to " << time_zone_info;
   }

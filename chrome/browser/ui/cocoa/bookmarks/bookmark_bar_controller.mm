@@ -864,8 +864,12 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
   const int kIconSize = 8;
   SkColor vectorIconColor = forDarkMode ? SkColorSetA(SK_ColorWHITE, 0xCC)
                                         : gfx::kChromeIconGrey;
-  return NSImageFromImageSkia(
+  NSImage* image = NSImageFromImageSkia(
       gfx::CreateVectorIcon(kOverflowChevronIcon, kIconSize, vectorIconColor));
+  if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout())
+    return cocoa_l10n_util::FlippedImage(image);
+  else
+    return image;
 }
 
 #pragma mark Private Methods
@@ -1078,6 +1082,25 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
   }
   [self updateTitleAndTooltipForButton:button];
   return button;
+}
+
+// Adds |button| to the reuse pool. It remains a child of the bookmark
+// bar to avoid the cost of readding it on reuse.
+- (void)prepareButtonForReuse:(BookmarkButton*)button {
+  // Dragged buttons unhide themselves, so position it off-screen
+  // while it's in the reuse pool.
+  CGRect buttonFrame = [button frame];
+  buttonFrame.origin.x = -10000;
+  [button setFrame:buttonFrame];
+
+  // These buttons are still children of the bar view, so they're
+  // subject to certain operations (theme update, for example) that
+  // apply to all subviews. Ensure this doesn't try to reference
+  // a stale node.
+  auto* cell = base::mac::ObjCCastStrict<BookmarkButtonCell>([button cell]);
+  [cell setBookmarkNode:nullptr];
+
+  [unusedButtonPool_ addObject:button];
 }
 
 - (void)updateTitleAndTooltipForButton:(BookmarkButton*)button {
@@ -1988,13 +2011,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   while (item != nodeIdToButtonMap_.end()) {
     if ([item->second isHidden]) {
       if ([unusedButtonPool_ count] < kMaxReusePoolSize) {
-        BookmarkButton* button = item->second.get();
-        // Dragged buttons unhide themselves, so position it off-screen
-        // while it's in the reuse pool.
-        CGRect buttonFrame = [button frame];
-        buttonFrame.origin.x = -10000;
-        [button setFrame:buttonFrame];
-        [unusedButtonPool_ addObject:button];
+        [self prepareButtonForReuse:item->second.get()];
       } else {
         [item->second setDelegate:nil];
         [item->second removeFromSuperview];

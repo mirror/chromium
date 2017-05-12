@@ -88,7 +88,7 @@ mojom::ServicePtr ServiceProcessLauncher::Start(
       child_command_line.get(), &handle_passing_info_);
 
   mojom::ServicePtr client = PassServiceRequestOnCommandLine(
-      &process_connection_, child_command_line.get());
+      &broker_client_invitation_, child_command_line.get());
 
   launch_process_runner_->PostTaskAndReply(
       FROM_HERE,
@@ -202,9 +202,10 @@ void ServiceProcessLauncher::DoLaunch(
 
     if (mojo_ipc_channel_.get()) {
       mojo_ipc_channel_->ChildProcessLaunched();
-      process_connection_.Connect(
+      broker_client_invitation_.Send(
           child_process_.Handle(),
-          mojo::edk::ConnectionParams(mojo_ipc_channel_->PassServerHandle()));
+          mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
+                                      mojo_ipc_channel_->PassServerHandle()));
     }
   }
   start_child_process_event_.Signal();

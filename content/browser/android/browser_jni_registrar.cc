@@ -24,6 +24,7 @@
 #include "content/browser/android/interstitial_page_delegate_android.h"
 #include "content/browser/android/load_url_params.h"
 #include "content/browser/android/selection_popup_controller.h"
+#include "content/browser/android/smart_selection_client.h"
 #include "content/browser/android/tracing_controller_android.h"
 #include "content/browser/android/web_contents_observer_proxy.h"
 #include "content/browser/child_process_launcher_helper_android.h"
@@ -67,6 +68,7 @@ base::android::RegistrationMethod kContentRegisteredMethods[] = {
     {"RegisterSelectionPopupController",
      content::RegisterSelectionPopupController},
     {"RenderFrameHostAndroid", content::RenderFrameHostAndroid::Register},
+    {"SmartSelectionClient", content::RegisterSmartSelectionClient},
     {"SpeechRecognizerImplAndroid",
      content::SpeechRecognizerImplAndroid::RegisterSpeechRecognizer},
     {"TracingControllerAndroid", content::RegisterTracingControllerAndroid},

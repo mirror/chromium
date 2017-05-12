@@ -9,12 +9,11 @@
 
 #include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/test/scoped_feature_list.h"
-#include "base/test/scoped_task_scheduler.h"
+#include "base/test/scoped_task_environment.h"
 #include "components/metrics/proto/translate_event.pb.h"
 #include "components/metrics/proto/ukm/source.pb.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -34,7 +33,6 @@
 namespace {
 
 using translate::kTranslateRankerEnforcement;
-using translate::kTranslateRankerLogging;
 using translate::kTranslateRankerQuery;
 using translate::kTranslateRankerDecisionOverride;
 using translate::TranslateDownloadManager;
@@ -97,7 +95,7 @@ class TranslateRankerImplTest : public ::testing::Test {
   scoped_refptr<net::TestURLRequestContextGetter> request_context_;
 
   // Sets up the task scheduling/task-runner environment for each test.
-  base::test::ScopedTaskScheduler scoped_task_scheduler_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 
   // Manages the enabling/disabling of features within the scope of a test.
   base::test::ScopedFeatureList scoped_feature_list_;
@@ -334,7 +332,6 @@ TEST_F(TranslateRankerImplTest, ShouldOfferTranslation_NoModel) {
 }
 
 TEST_F(TranslateRankerImplTest, RecordAndFlushEvents) {
-  InitFeatures({kTranslateRankerLogging}, {});
   std::unique_ptr<translate::TranslateRanker> ranker = GetRankerForTest(0.0f);
   std::vector<metrics::TranslateEventProto> flushed_events;
 
@@ -372,26 +369,7 @@ TEST_F(TranslateRankerImplTest, RecordAndFlushEvents) {
       GetTestUkmService()->GetSourceForUrl(url1.spec().c_str())->url().spec());
 }
 
-TEST_F(TranslateRankerImplTest, LoggingDisabled) {
-  InitFeatures({}, {kTranslateRankerLogging});
-  std::unique_ptr<translate::TranslateRanker> ranker = GetRankerForTest(0.0f);
-  std::vector<metrics::TranslateEventProto> flushed_events;
-
-  ranker->FlushTranslateEvents(&flushed_events);
-  EXPECT_EQ(0U, flushed_events.size());
-
-  ranker->RecordTranslateEvent(0, GURL(), &tep1_);
-  ranker->RecordTranslateEvent(1, GURL(), &tep2_);
-  ranker->RecordTranslateEvent(2, GURL(), &tep3_);
-
-  // Logging is disabled, so no events should be cached.
-  ranker->FlushTranslateEvents(&flushed_events);
-  EXPECT_EQ(0U, flushed_events.size());
-  EXPECT_EQ(0ul, GetTestUkmService()->sources_count());
-}
-
 TEST_F(TranslateRankerImplTest, LoggingDisabledViaOverride) {
-  InitFeatures({kTranslateRankerLogging}, {});
   std::unique_ptr<translate::TranslateRankerImpl> ranker =
       GetRankerForTest(0.0f);
   std::vector<metrics::TranslateEventProto> flushed_events;
@@ -403,7 +381,7 @@ TEST_F(TranslateRankerImplTest, LoggingDisabledViaOverride) {
   ranker->RecordTranslateEvent(1, GURL(), &tep2_);
   ranker->RecordTranslateEvent(2, GURL(), &tep3_);
 
-  // Logging is disabled, so no events should be cached.
+  // Logging is enabled by default, so events should be cached.
   ranker->FlushTranslateEvents(&flushed_events);
   EXPECT_EQ(3U, flushed_events.size());
 

@@ -26,15 +26,12 @@ ContactInfoEditorViewController::ContactInfoEditorViewController(
     PaymentRequestSpec* spec,
     PaymentRequestState* state,
     PaymentRequestDialogView* dialog,
+    BackNavigationType back_navigation_type,
     autofill::AutofillProfile* profile)
-    : EditorViewController(spec, state, dialog), profile_to_edit_(profile) {}
+    : EditorViewController(spec, state, dialog, back_navigation_type),
+      profile_to_edit_(profile) {}
 
 ContactInfoEditorViewController::~ContactInfoEditorViewController() {}
-
-std::unique_ptr<views::View>
-ContactInfoEditorViewController::CreateHeaderView() {
-  return base::MakeUnique<views::View>();
-}
 
 std::vector<EditorField>
 ContactInfoEditorViewController::GetFieldDefinitions() {
@@ -43,19 +40,19 @@ ContactInfoEditorViewController::GetFieldDefinitions() {
     fields.push_back(EditorField(
         autofill::NAME_FULL,
         l10n_util::GetStringUTF16(IDS_PAYMENTS_NAME_FIELD_IN_CONTACT_DETAILS),
-        EditorField::LengthHint::HINT_LONG, /*required=*/true));
+        EditorField::LengthHint::HINT_SHORT, /*required=*/true));
   }
   if (spec()->request_payer_phone()) {
     fields.push_back(EditorField(
         autofill::PHONE_HOME_WHOLE_NUMBER,
         l10n_util::GetStringUTF16(IDS_PAYMENTS_PHONE_FIELD_IN_CONTACT_DETAILS),
-        EditorField::LengthHint::HINT_LONG, /*required=*/true));
+        EditorField::LengthHint::HINT_SHORT, /*required=*/true));
   }
   if (spec()->request_payer_email()) {
     fields.push_back(EditorField(
         autofill::EMAIL_ADDRESS,
         l10n_util::GetStringUTF16(IDS_PAYMENTS_EMAIL_FIELD_IN_CONTACT_DETAILS),
-        EditorField::LengthHint::HINT_LONG, /*required=*/true));
+        EditorField::LengthHint::HINT_SHORT, /*required=*/true));
   }
   return fields;
 }

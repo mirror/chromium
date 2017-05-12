@@ -17,12 +17,16 @@
 #import "ios/web/public/web_state/context_menu_params.h"
 #import "ios/web/public/web_state/js/crw_js_injection_receiver.h"
 #import "ios/web/public/web_state/ui/crw_web_delegate.h"
+#import "ios/web/public/web_state/ui/crw_web_view_proxy.h"
+#import "ios/web/public/web_state/ui/crw_web_view_scroll_view_proxy.h"
 #import "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_delegate_bridge.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
 #import "ios/web_view/internal/cwv_html_element_internal.h"
 #import "ios/web_view/internal/cwv_navigation_action_internal.h"
+#import "ios/web_view/internal/cwv_scroll_view_internal.h"
 #import "ios/web_view/internal/cwv_web_view_configuration_internal.h"
+#import "ios/web_view/internal/translate/cwv_translation_controller_internal.h"
 #import "ios/web_view/internal/translate/web_view_translate_client.h"
 #include "ios/web_view/internal/web_view_browser_state.h"
 #import "ios/web_view/internal/web_view_java_script_dialog_presenter.h"
@@ -70,9 +74,15 @@ NSString* const kSessionStorageKey = @"sessionStorage";
 
 // Redefine the property as readwrite.
 @property(nonatomic, copy) CWVWebViewConfiguration* configuration;
-// Redefine the property as readwrite to define -setEstimatedProgress:, which
-// can be used to send KVO notification.
+// Redefine these properties as readwrite to define setters, which send KVO
+// notifications.
 @property(nonatomic, readwrite) double estimatedProgress;
+@property(nonatomic, readwrite) BOOL canGoBack;
+@property(nonatomic, readwrite) BOOL canGoForward;
+
+// Updates the availability of the back/forward navigation properties exposed
+// through |canGoBack| and |canGoForward|.
+- (void)updateNavigationAvailability;
 
 @end
 
@@ -80,11 +90,14 @@ static NSString* gUserAgentProduct = nil;
 
 @implementation CWVWebView
 
+@synthesize canGoBack = _canGoBack;
+@synthesize canGoForward = _canGoForward;
 @synthesize configuration = _configuration;
-@synthesize navigationDelegate = _navigationDelegate;
-@synthesize translationDelegate = _translationDelegate;
 @synthesize estimatedProgress = _estimatedProgress;
+@synthesize navigationDelegate = _navigationDelegate;
+@synthesize translationController = _translationController;
 @synthesize UIDelegate = _UIDelegate;
+@synthesize scrollView = _scrollView;
 
 + (NSString*)userAgentProduct {
   return gUserAgentProduct;
@@ -114,17 +127,10 @@ static NSString* gUserAgentProduct = nil;
   self = [super initWithFrame:frame];
   if (self) {
     _configuration = [configuration copy];
+    _scrollView = [[CWVScrollView alloc] init];
     [self resetWebStateWithSessionStorage:nil];
   }
   return self;
-}
-
-- (BOOL)canGoBack {
-  return _webState && _webState->GetNavigationManager()->CanGoBack();
-}
-
-- (BOOL)canGoForward {
-  return _webState && _webState->GetNavigationManager()->CanGoForward();
 }
 
 - (BOOL)isLoading {
@@ -187,17 +193,12 @@ static NSString* gUserAgentProduct = nil;
   _javaScriptDialogPresenter->SetUIDelegate(_UIDelegate);
 }
 
-- (void)setTranslationDelegate:(id<CWVTranslateDelegate>)translationDelegate {
-  _translationDelegate = translationDelegate;
-  ios_web_view::WebViewTranslateClient::FromWebState(_webState.get())
-      ->set_translate_delegate(translationDelegate);
-}
-
 // -----------------------------------------------------------------------
 // WebStateObserver implementation.
 
 - (void)webState:(web::WebState*)webState
     didStartProvisionalNavigationForURL:(const GURL&)URL {
+  [self updateNavigationAvailability];
   SEL selector = @selector(webViewDidStartProvisionalNavigation:);
   if ([_navigationDelegate respondsToSelector:selector]) {
     [_navigationDelegate webViewDidStartProvisionalNavigation:self];
@@ -210,6 +211,11 @@ static NSString* gUserAgentProduct = nil;
           respondsToSelector:@selector(webViewDidCommitNavigation:)]) {
     [_navigationDelegate webViewDidCommitNavigation:self];
   }
+}
+
+- (void)webState:(web::WebState*)webState
+    didFinishNavigation:(web::NavigationContext*)navigation {
+  [self updateNavigationAvailability];
 }
 
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
@@ -290,6 +296,16 @@ static NSString* gUserAgentProduct = nil;
   return _javaScriptDialogPresenter.get();
 }
 
+#pragma mark - Translation
+
+- (CWVTranslationController*)translationController {
+  if (!_translationController) {
+    _translationController = [[CWVTranslationController alloc] init];
+    _translationController.webState = _webState.get();
+  }
+  return _translationController;
+}
+
 #pragma mark - Preserving and Restoring State
 
 - (void)encodeRestorableStateWithCoder:(NSCoder*)coder {
@@ -341,8 +357,9 @@ static NSString* gUserAgentProduct = nil;
       base::MakeUnique<ios_web_view::WebViewJavaScriptDialogPresenter>(self,
                                                                        nullptr);
 
-  // Initialize Translate.
-  ios_web_view::WebViewTranslateClient::CreateForWebState(_webState.get());
+  _scrollView.proxy = _webState.get()->GetWebViewProxy().scrollViewProxy;
+
+  _translationController.webState = _webState.get();
 
   [self addInternalWebViewAsSubview];
 }
@@ -357,6 +374,12 @@ static NSString* gUserAgentProduct = nil;
   subview.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:subview];
+}
+
+- (void)updateNavigationAvailability {
+  self.canGoBack = _webState && _webState->GetNavigationManager()->CanGoBack();
+  self.canGoForward =
+      _webState && _webState->GetNavigationManager()->CanGoForward();
 }
 
 @end

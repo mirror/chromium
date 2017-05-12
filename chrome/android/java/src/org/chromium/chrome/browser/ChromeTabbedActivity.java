@@ -115,8 +115,10 @@ import org.chromium.chrome.browser.tabmodel.TabWindowManager;
 import org.chromium.chrome.browser.toolbar.ToolbarControlContainer;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetMetrics;
 import org.chromium.chrome.browser.widget.emptybackground.EmptyBackgroundViewWrapper;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
@@ -715,8 +717,9 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                         Profile.getLastUsedProfile());
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DOWNLOAD_HOME_FEATURE)) return;
 
-        ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(
-                this, getToolbarManager().getMenuAnchor(), R.string.iph_download_home_text);
+        ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(this,
+                getToolbarManager().getMenuAnchor(), R.string.iph_download_home_text,
+                R.string.iph_download_home_accessibility_text);
         textBubble.setDismissOnTouchInteraction(true);
         textBubble.addOnDismissListener(new OnDismissListener() {
             @Override
@@ -724,7 +727,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        tracker.dismissed();
+                        tracker.dismissed(FeatureConstants.DOWNLOAD_HOME_FEATURE);
                         getAppMenuHandler().setMenuHighlight(null);
                     }
                 });
@@ -733,6 +736,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         getAppMenuHandler().setMenuHighlight(R.id.downloads_menu_id);
         int yInsetPx =
                 getResources().getDimensionPixelOffset(R.dimen.text_bubble_menu_anchor_y_inset);
+        yInsetPx = MathUtils.flipSignIf(yInsetPx, FeatureUtilities.isChromeHomeEnabled());
         textBubble.setInsetPx(0, yInsetPx, 0, 0);
         textBubble.show();
     }
@@ -992,6 +996,8 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             if (getBottomSheet() != null) {
                 // Either a new tab is opening, a tab is being clobbered, or a tab is being brought
                 // to the front. In all scenarios, the bottom sheet should be closed.
+                getBottomSheet().getBottomSheetMetrics().setSheetCloseReason(
+                        BottomSheetMetrics.CLOSED_BY_NAVIGATION);
                 getBottomSheet().setSheetState(BottomSheet.SHEET_STATE_PEEK, true);
             }
 
@@ -1908,14 +1914,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
     @Override
     protected void setStatusBarColor(Tab tab, int color) {
         if (DeviceFormFactor.isTablet(getApplicationContext())) return;
-
-        // If Chrome Home is enabled, the super of this function is not called because it only
-        // performs unnecessary transformations on the theme color.
-        if (getBottomSheet() != null) {
-            getBottomSheet().setStatusBarColor(getWindow());
-            return;
-        }
-
         super.setStatusBarColor(tab, isInOverviewMode() ? Color.BLACK : color);
     }
 

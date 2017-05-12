@@ -49,7 +49,9 @@
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace/workspace_event_handler_aura.h"
+#include "ash/wm_display_observer.h"
 #include "ash/wm_window.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "components/user_manager/user_info_impl.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
@@ -158,6 +160,9 @@ aura::WindowTreeClient* ShellPortMash::window_tree_client() {
 }
 
 void ShellPortMash::Shutdown() {
+  if (added_display_observer_)
+    Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
+
   if (mus_state_)
     mus_state_->pointer_watcher_adapter.reset();
 
@@ -199,6 +204,10 @@ WmWindow* ShellPortMash::GetRootWindowForDisplayId(int64_t display_id) {
 
 const display::ManagedDisplayInfo& ShellPortMash::GetDisplayInfo(
     int64_t display_id) const {
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS)
+    return Shell::Get()->display_manager()->GetDisplayInfo(display_id);
+
   // TODO(mash): implement http://crbug.com/622480.
   NOTIMPLEMENTED();
   static display::ManagedDisplayInfo fake_info;
@@ -206,24 +215,47 @@ const display::ManagedDisplayInfo& ShellPortMash::GetDisplayInfo(
 }
 
 bool ShellPortMash::IsActiveDisplayId(int64_t display_id) const {
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS)
+    return Shell::Get()->display_manager()->IsActiveDisplayId(display_id);
+
   // TODO(mash): implement http://crbug.com/622480.
   NOTIMPLEMENTED();
   return true;
 }
 
 display::Display ShellPortMash::GetFirstDisplay() const {
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS) {
+    return Shell::Get()
+        ->display_manager()
+        ->software_mirroring_display_list()[0];
+  }
+
   // TODO(mash): implement http://crbug.com/622480.
   NOTIMPLEMENTED();
   return display::Screen::GetScreen()->GetPrimaryDisplay();
 }
 
 bool ShellPortMash::IsInUnifiedMode() const {
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS)
+    return Shell::Get()->display_manager()->IsInUnifiedMode();
+
   // TODO(mash): implement http://crbug.com/622480.
   NOTIMPLEMENTED();
   return false;
 }
 
 bool ShellPortMash::IsInUnifiedModeIgnoreMirroring() const {
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS) {
+    return Shell::Get()
+               ->display_manager()
+               ->current_default_multi_display_mode() ==
+           display::DisplayManager::UNIFIED;
+  }
+
   // TODO(mash): implement http://crbug.com/622480.
   NOTIMPLEMENTED();
   return false;
@@ -386,13 +418,27 @@ SessionStateDelegate* ShellPortMash::GetSessionStateDelegate() {
 }
 
 void ShellPortMash::AddDisplayObserver(WmDisplayObserver* observer) {
-  // TODO: need WmDisplayObserver support for mus. http://crbug.com/705831.
-  NOTIMPLEMENTED();
+  // TODO(sky): mash should use the same code as mus/classic and
+  // WmDisplayObserver should be removed; http://crbug.com/718860.
+  if (GetAshConfig() == Config::MASH) {
+    NOTIMPLEMENTED();
+    return;
+  }
+  if (!added_display_observer_) {
+    added_display_observer_ = true;
+    Shell::Get()->window_tree_host_manager()->AddObserver(this);
+  }
+  display_observers_.AddObserver(observer);
 }
 
 void ShellPortMash::RemoveDisplayObserver(WmDisplayObserver* observer) {
-  // TODO: need WmDisplayObserver support for mus. http://crbug.com/705831.
-  NOTIMPLEMENTED();
+  // TODO(sky): mash should use the same code as mus/classic and
+  // WmDisplayObserver should be removed; http://crbug.com/718860.
+  if (GetAshConfig() == Config::MASH) {
+    NOTIMPLEMENTED();
+    return;
+  }
+  display_observers_.RemoveObserver(observer);
 }
 
 void ShellPortMash::AddPointerWatcher(views::PointerWatcher* watcher,
@@ -489,7 +535,7 @@ std::unique_ptr<AshWindowTreeHost> ShellPortMash::CreateAshWindowTreeHost(
       window_manager_->window_manager_client()->CreateInitParamsForNewDisplay();
   aura_init_params.display_id = init_params.display_id;
   aura_init_params.display_init_params = std::move(display_params);
-  aura_init_params.use_classic_ime = true;
+  aura_init_params.use_classic_ime = !Shell::ShouldUseIMEService();
   return base::MakeUnique<AshWindowTreeHostMus>(std::move(aura_init_params));
 }
 
@@ -567,6 +613,16 @@ ShellPortMash::CreateAcceleratorController() {
   return base::MakeUnique<AcceleratorController>(
       mash_state_->accelerator_controller_delegate.get(),
       mash_state_->accelerator_controller_registrar.get());
+}
+
+void ShellPortMash::OnDisplayConfigurationChanging() {
+  for (auto& observer : display_observers_)
+    observer.OnDisplayConfigurationChanging();
+}
+
+void ShellPortMash::OnDisplayConfigurationChanged() {
+  for (auto& observer : display_observers_)
+    observer.OnDisplayConfigurationChanged();
 }
 
 }  // namespace mus

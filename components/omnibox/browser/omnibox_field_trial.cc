@@ -14,6 +14,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/sys_info.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "components/metrics/proto/omnibox_event.pb.h"
@@ -79,6 +80,10 @@ const base::Feature kZeroSuggestSwapTitleAndUrl{
 // Feature used to display the title of the current URL match.
 const base::Feature kDisplayTitleForCurrentUrl{
     "OmniboxDisplayTitleForCurrentUrl", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Feature used for the vertical margin UI experiment.
+const base::Feature kUIExperimentVerticalMargin{
+    "OmniboxUIExperimentVerticalMargin", base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace omnibox
 
@@ -448,6 +453,19 @@ float OmniboxFieldTrial::HQPExperimentalTopicalityThreshold() {
   return static_cast<float>(topicality_threshold);
 }
 
+int OmniboxFieldTrial::MaxNumHQPUrlsIndexedAtStartup() {
+  const char* param = kMaxNumHQPUrlsIndexedAtStartupOnNonLowEndDevicesParam;
+  if (base::SysInfo::IsLowEndDevice())
+    param = kMaxNumHQPUrlsIndexedAtStartupOnLowEndDevicesParam;
+  std::string param_value(variations::GetVariationParamValue(
+      kBundledExperimentFieldTrialName, param));
+  int num_urls;
+  if (base::StringToInt(param_value, &num_urls))
+    return num_urls;
+  // Default value is set to -1 for unlimited number of urls.
+  return -1;
+}
+
 bool OmniboxFieldTrial::HQPFixFewVisitsBug() {
   return variations::GetVariationParamValue(
       kBundledExperimentFieldTrialName,
@@ -725,6 +743,13 @@ const char
     OmniboxFieldTrial::kHQPExperimentalScoringTopicalityThresholdParam[] =
       "HQPExperimentalScoringTopicalityThreshold";
 
+const char
+    OmniboxFieldTrial::kMaxNumHQPUrlsIndexedAtStartupOnLowEndDevicesParam[] =
+        "MaxNumHQPUrlsIndexedAtStartupOnLowEndDevices";
+const char
+    OmniboxFieldTrial::kMaxNumHQPUrlsIndexedAtStartupOnNonLowEndDevicesParam[] =
+        "MaxNumHQPUrlsIndexedAtStartupOnNonLowEndDevices";
+
 const char OmniboxFieldTrial::kPhysicalWebZeroSuggestBaseRelevanceParam[] =
     "PhysicalWebZeroSuggestBaseRelevance";
 const char OmniboxFieldTrial::kPhysicalWebAfterTypingBaseRelevanceParam[] =
@@ -735,6 +760,8 @@ const char OmniboxFieldTrial::kZeroSuggestRedirectToChromeServerAddressParam[] =
 const char
     OmniboxFieldTrial::kZeroSuggestRedirectToChromeAdditionalFieldsParam[] =
         "ZeroSuggestRedirectToChromeAdditionalFields";
+
+const char OmniboxFieldTrial::kUIVerticalMarginParam[] = "UIVerticalMargin";
 
 // static
 int OmniboxFieldTrial::kDefaultMinimumTimeBetweenSuggestQueriesMs = 100;

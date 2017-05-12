@@ -67,8 +67,7 @@
     },
     {
       name: "AccessibilityObjectModel",
-      settable_from_internals: true,
-      status: "test",
+      status: "experimental",
     },
     {
       name: "AllowContentInitiatedDataUrlNavigations",
@@ -546,6 +545,9 @@
       name: "LoadingWithMojo",
     },
     {
+      name: "LocationHardReload",
+    },
+    {
       name: "LongTaskObserver",
       status: "stable",
     },
@@ -827,6 +829,10 @@
       name: "RootLayerScrolling",
     },
     {
+      name: "RTCRtpSender",
+      status: "experimental",
+    },
+    {
       name: "ScriptedSpeech",
       status: "stable",
     },
@@ -847,7 +853,7 @@
     },
     {
       name: "SendBeaconThrowForBlobWithNonSimpleType",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "SendMouseEventsDisabledFormControls",

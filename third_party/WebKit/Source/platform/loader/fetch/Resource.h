@@ -29,6 +29,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/SharedBuffer.h"
 #include "platform/Timer.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/instrumentation/tracing/web_process_memory_dump.h"
 #include "platform/loader/fetch/CachedMetadataHandler.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
@@ -332,9 +333,26 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual void ReloadIfLoFiOrPlaceholderImage(ResourceFetcher*,
                                               ReloadLoFiOrPlaceholderPolicy) {}
 
+  // Used to notify ImageResourceContent of the start of actual loading.
+  // JavaScript calls or client/observer notifications are disallowed inside
+  // notifyStartLoad().
+  virtual void NotifyStartLoad() {}
+
   static const char* ResourceTypeToString(
       Type,
       const AtomicString& fetch_initiator_name);
+
+  class ProhibitAddRemoveClientInScope : public AutoReset<bool> {
+   public:
+    ProhibitAddRemoveClientInScope(Resource* resource)
+        : AutoReset(&resource->is_add_remove_client_prohibited_, true) {}
+  };
+
+  class RevalidationStartForbiddenScope : public AutoReset<bool> {
+   public:
+    RevalidationStartForbiddenScope(Resource* resource)
+        : AutoReset(&resource->is_revalidation_start_forbidden_, true) {}
+  };
 
  protected:
   Resource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
@@ -389,26 +407,13 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   }
 
   void SetCachePolicyBypassingCache();
-  void SetPreviewsStateNoTransform();
+  void SetPreviewsState(WebURLRequest::PreviewsState);
   void ClearRangeRequestHeader();
 
   SharedBuffer* Data() const { return data_.Get(); }
   void ClearData();
 
-  class ProhibitAddRemoveClientInScope : public AutoReset<bool> {
-   public:
-    ProhibitAddRemoveClientInScope(Resource* resource)
-        : AutoReset(&resource->is_add_remove_client_prohibited_, true) {}
-  };
-
-  class RevalidationStartForbiddenScope : public AutoReset<bool> {
-   public:
-    RevalidationStartForbiddenScope(Resource* resource)
-        : AutoReset(&resource->is_revalidation_start_forbidden_, true) {}
-  };
-
  private:
-  class ResourceCallback;
   class CachedMetadataHandlerImpl;
   class ServiceWorkerResponseCachedMetadataHandler;
 
@@ -475,6 +480,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   double response_timestamp_;
 
   TaskRunnerTimer<Resource> cancel_timer_;
+  TaskHandle async_finish_pending_clients_task_;
 
   ResourceRequest resource_request_;
   Member<ResourceLoader> loader_;

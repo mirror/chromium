@@ -20,7 +20,7 @@ class CompositorFrameMetadata;
 
 namespace content {
 
-class DevToolsSession;
+class DevToolsAgentHostImpl;
 class RenderFrameHostImpl;
 
 namespace protocol {
@@ -32,7 +32,7 @@ class InputHandler : public DevToolsDomainHandler,
   InputHandler();
   ~InputHandler() override;
 
-  static InputHandler* FromSession(DevToolsSession* session);
+  static std::vector<InputHandler*> ForAgentHost(DevToolsAgentHostImpl* host);
 
   void Wire(UberDispatcher* dispatcher) override;
   void SetRenderFrameHost(RenderFrameHostImpl* host) override;
@@ -129,6 +129,7 @@ class InputHandler : public DevToolsDomainHandler,
       SyntheticGesture::Result result);
 
   void ClearPendingKeyAndMouseCallbacks();
+  bool PointIsWithinContents(gfx::PointF point) const;
 
   RenderFrameHostImpl* host_;
   // Callbacks for calls to Input.dispatchKey/MouseEvent that have been sent to

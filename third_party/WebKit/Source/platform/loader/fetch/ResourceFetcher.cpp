@@ -29,6 +29,7 @@
 
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/loader/fetch/FetchContext.h"
@@ -417,7 +418,7 @@ Resource* ResourceFetcher::ResourceForStaticData(
   } else {
     ArchiveResource* archive_resource =
         archive_->SubresourceForURL(params.Url());
-    // Fall back to the network if the archive doesn't contain the resource.
+    // The archive doesn't contain the resource, the request must be aborted.
     if (!archive_resource)
       return nullptr;
     data = archive_resource->Data();
@@ -431,6 +432,8 @@ Resource* ResourceFetcher::ResourceForStaticData(
                                       params.Options(), params.Charset());
   resource->SetNeedsSynchronousCacheHit(substitute_data.ForceSynchronousLoad());
   // FIXME: We should provide a body stream here.
+  resource->SetStatus(ResourceStatus::kPending);
+  resource->NotifyStartLoad();
   resource->ResponseReceived(response, nullptr);
   resource->SetDataBufferingPolicy(kBufferData);
   if (data->size())
@@ -451,6 +454,8 @@ Resource* ResourceFetcher::ResourceForBlockedRequest(
     ResourceRequestBlockedReason blocked_reason) {
   Resource* resource = factory.Create(params.GetResourceRequest(),
                                       params.Options(), params.Charset());
+  resource->SetStatus(ResourceStatus::kPending);
+  resource->NotifyStartLoad();
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
       params.Url(), blocked_reason));
   return resource;
@@ -488,23 +493,8 @@ void ResourceFetcher::UpdateMemoryCacheStats(Resource* resource,
   // dead if MemoryCache holds weak references to Resource). Currently we check
   // references to Resource from ResourceClient and |m_preloads| only, because
   // they are major sources of references.
-  if (resource && !resource->IsAlive() && !ContainsAsPreload(resource)) {
+  if (resource && !resource->IsAlive() && !preloads_.Contains(resource)) {
     DEFINE_RESOURCE_HISTOGRAM("Dead.");
-  }
-}
-
-bool ResourceFetcher::ContainsAsPreload(Resource* resource) const {
-  auto it = preloads_.find(PreloadKey(resource->Url(), resource->GetType()));
-  return it != preloads_.end() && it->value == resource;
-}
-
-void ResourceFetcher::RemovePreload(Resource* resource) {
-  auto it = preloads_.find(PreloadKey(resource->Url(), resource->GetType()));
-  if (it == preloads_.end())
-    return;
-  if (it->value == resource) {
-    resource->DecreasePreloadCount();
-    preloads_.erase(it);
   }
 }
 
@@ -539,7 +529,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
       params.GetSpeculativePreloadType(), params.IsLinkPreload()));
   InitializeResourceRequest(resource_request, factory.GetType(),
                             params.Defer());
-  network_instrumentation::resourcePrioritySet(identifier,
+  network_instrumentation::ResourcePrioritySet(identifier,
                                                resource_request.Priority());
 
   blocked_reason = Context().CanRequest(
@@ -597,41 +587,36 @@ Resource* ResourceFetcher::RequestResource(
                                     params.Options().initiator_info.name);
   }
 
+  // An URL with the "cid" scheme can only be handled by an MHTML Archive.
+  // Abort the request when there is none.
+  if (resource_request.Url().ProtocolIs(kContentIdScheme) && !archive_) {
+    return nullptr;
+  }
+
   bool is_data_url = resource_request.Url().ProtocolIsData();
   bool is_static_data = is_data_url || substitute_data.IsValid() || archive_;
   if (is_static_data) {
     resource = ResourceForStaticData(params, factory, substitute_data);
     // Abort the request if the archive doesn't contain the resource, except in
     // the case of data URLs which might have resources such as fonts that need
-    // to be decoded only on demand.  These data URLs are allowed to be
+    // to be decoded only on demand. These data URLs are allowed to be
     // processed using the normal ResourceFetcher machinery.
     if (!resource && !is_data_url && archive_)
       return nullptr;
   }
-  RevalidationPolicy policy = kLoad;
-  bool preload_found = false;
   if (!resource) {
-    resource = MatchPreload(params, factory.GetType());
-    if (resource) {
-      preload_found = true;
-      policy = kUse;
-      // If |param| is for a blocking resource and a preloaded resource is
-      // found, we may need to make it block the onload event.
-      MakePreloadedResourceBlockOnloadIfNeeded(resource, params);
-    }
+    resource =
+        GetMemoryCache()->ResourceForURL(params.Url(), GetCacheIdentifier());
   }
-  if (!preload_found) {
-    if (!resource) {
-      resource =
-          GetMemoryCache()->ResourceForURL(params.Url(), GetCacheIdentifier());
-    }
 
-    policy = DetermineRevalidationPolicy(factory.GetType(), params, resource,
-                                         is_static_data);
-    TRACE_EVENT_INSTANT1(
-        "blink", "ResourceFetcher::determineRevalidationPolicy",
-        TRACE_EVENT_SCOPE_THREAD, "revalidationPolicy", policy);
-  }
+  // If we got a preloaded resource from the cache for a non-preload request,
+  // we may need to make it block the onload event.
+  MakePreloadedResourceBlockOnloadIfNeeded(resource, params);
+
+  const RevalidationPolicy policy = DetermineRevalidationPolicy(
+      factory.GetType(), params, resource, is_static_data);
+  TRACE_EVENT_INSTANT1("blink", "ResourceFetcher::determineRevalidationPolicy",
+                       TRACE_EVENT_SCOPE_THREAD, "revalidationPolicy", policy);
 
   UpdateMemoryCacheStats(resource, policy, params, factory, is_static_data);
 
@@ -684,18 +669,12 @@ Resource* ResourceFetcher::RequestResource(
   // loading immediately. If revalidation policy was determined as |Revalidate|,
   // the resource was already initialized for the revalidation here, but won't
   // start loading.
-  if (!ResourceNeedsLoad(resource, params, policy)) {
-    if (policy != kUse)
-      InsertAsPreloadIfNecessary(resource, params, factory.GetType());
+  if (!ResourceNeedsLoad(resource, params, policy))
     return resource;
-  }
 
   if (!StartLoad(resource))
     return nullptr;
-
-  if (policy != kUse)
-    InsertAsPreloadIfNecessary(resource, params, factory.GetType());
-  scoped_resource_load_tracker.resourceLoadContinuesBeyondScope();
+  scoped_resource_load_tracker.ResourceLoadContinuesBeyondScope();
 
   DCHECK(!resource->ErrorOccurred() ||
          params.Options().synchronous_policy == kRequestSynchronously);
@@ -848,117 +827,6 @@ void ResourceFetcher::RecordResourceTimingOnRedirect(
   }
 }
 
-Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
-                                        Resource::Type type) {
-  auto it = preloads_.find(PreloadKey(params.Url(), type));
-  if (it == preloads_.end())
-    return nullptr;
-
-  Resource* resource = it->value;
-
-  RecordSriResourceIntegrityMismatchEvent(kCheckingForIntegrityMismatch);
-  if (resource->MustRefetchDueToIntegrityMetadata(params))
-    return nullptr;
-
-  if (params.IsSpeculativePreload())
-    return resource;
-  if (params.IsLinkPreload()) {
-    resource->SetLinkPreload(true);
-    return resource;
-  }
-
-  if (!IsReusableForPreloading(params, resource, false))
-    return nullptr;
-
-  resource->DecreasePreloadCount();
-  preloads_.erase(it);
-  return resource;
-}
-
-void ResourceFetcher::InsertAsPreloadIfNecessary(Resource* resource,
-                                                 const FetchParameters& params,
-                                                 Resource::Type type) {
-  if (!params.IsSpeculativePreload() && !params.IsLinkPreload())
-    return;
-  // CSP layout tests verify that preloads are subject to access checks by
-  // seeing if they are in the `preload started` list. Therefore do not add
-  // them to the list if the load is immediately denied.
-  if (resource->GetResourceError().IsAccessCheck())
-    return;
-  PreloadKey key(params.Url(), type);
-  if (preloads_.find(key) == preloads_.end()) {
-    preloads_.insert(key, resource);
-    resource->IncreasePreloadCount();
-    if (preloaded_urls_for_test_)
-      preloaded_urls_for_test_->insert(resource->Url().GetString());
-  }
-}
-
-bool ResourceFetcher::IsReusableForPreloading(const FetchParameters& params,
-                                              Resource* existing_resource,
-                                              bool is_static_data) const {
-  const ResourceRequest& request = params.GetResourceRequest();
-  // Do not load from cache if images are not enabled. There are two general
-  // cases:
-  //
-  // 1. Images are disabled. Don't ever load images, even if the image is cached
-  // or it is a data: url. In this case, we "Reload" the image, then defer it
-  // with resourceNeedsLoad() so that it never actually goes to the network.
-  //
-  // 2. Images are enabled, but not loaded automatically. In this case, we will
-  // Use cached resources or data: urls, but will similarly fall back to a
-  // deferred network load if we don't have the data available without a network
-  // request. We check allowImage() here, which is affected by m_imagesEnabled
-  // but not m_autoLoadImages, in order to allow for this differing behavior.
-  //
-  // TODO(japhet): Can we get rid of one of these settings?
-  if (existing_resource->IsImage() &&
-      !Context().AllowImage(images_enabled_, existing_resource->Url())) {
-    return false;
-  }
-
-  // Never use cache entries for downloadToFile / useStreamOnResponse requests.
-  // The data will be delivered through other paths.
-  if (request.DownloadToFile() || request.UseStreamOnResponse())
-    return false;
-
-  // Never reuse opaque responses from a service worker for requests that are
-  // not no-cors. https://crbug.com/625575
-  if (existing_resource->GetResponse().WasFetchedViaServiceWorker() &&
-      existing_resource->GetResponse().ServiceWorkerResponseType() ==
-          kWebServiceWorkerResponseTypeOpaque &&
-      request.GetFetchRequestMode() != WebURLRequest::kFetchRequestModeNoCORS) {
-    return false;
-  }
-
-  if (!is_static_data && !existing_resource->CanReuse(params))
-    return false;
-
-  // Certain requests (e.g., XHRs) might have manually set headers that require
-  // revalidation. In theory, this should be a Revalidate case. In practice, the
-  // MemoryCache revalidation path assumes a whole bunch of things about how
-  // revalidation works that manual headers violate, so punt to Reload instead.
-  //
-  // Similarly, a request with manually added revalidation headers can lead to a
-  // 304 response for a request that wasn't flagged as a revalidation attempt.
-  // Normally, successful revalidation will maintain the original response's
-  // status code, but for a manual revalidation the response code remains 304.
-  // In this case, the Resource likely has insufficient context to provide a
-  // useful cache hit or revalidation. See http://crbug.com/643659
-  if (!is_static_data &&
-      (request.IsConditional() ||
-       existing_resource->GetResponse().HttpStatusCode() == 304)) {
-    return false;
-  }
-
-  if (!is_static_data &&
-      !params.Options().CanReuseRequest(existing_resource->Options())) {
-    return false;
-  }
-
-  return true;
-}
-
 ResourceFetcher::RevalidationPolicy
 ResourceFetcher::DetermineRevalidationPolicy(
     Resource::Type type,
@@ -1010,10 +878,71 @@ ResourceFetcher::DetermineRevalidationPolicy(
     return kReload;
   }
 
-  // If |existing_resource| is not reusable as a preloaded resource, it should
-  // not be reusable as a normal resource as well.
-  if (!IsReusableForPreloading(fetch_params, existing_resource, is_static_data))
+  // We already have a preload going for this URL.
+  if (fetch_params.IsSpeculativePreload() && existing_resource->IsPreloaded())
+    return kUse;
+
+  // Do not load from cache if images are not enabled. There are two general
+  // cases:
+  //
+  // 1. Images are disabled. Don't ever load images, even if the image is cached
+  // or it is a data: url. In this case, we "Reload" the image, then defer it
+  // with resourceNeedsLoad() so that it never actually goes to the network.
+  //
+  // 2. Images are enabled, but not loaded automatically. In this case, we will
+  // Use cached resources or data: urls, but will similarly fall back to a
+  // deferred network load if we don't have the data available without a network
+  // request. We check allowImage() here, which is affected by m_imagesEnabled
+  // but not m_autoLoadImages, in order to allow for this differing behavior.
+  //
+  // TODO(japhet): Can we get rid of one of these settings?
+  if (existing_resource->IsImage() &&
+      !Context().AllowImage(images_enabled_, existing_resource->Url())) {
     return kReload;
+  }
+
+  // Never use cache entries for downloadToFile / useStreamOnResponse requests.
+  // The data will be delivered through other paths.
+  if (request.DownloadToFile() || request.UseStreamOnResponse())
+    return kReload;
+
+  // Never reuse opaque responses from a service worker for requests that are
+  // not no-cors. https://crbug.com/625575
+  if (existing_resource->GetResponse().WasFetchedViaServiceWorker() &&
+      existing_resource->GetResponse().ServiceWorkerResponseType() ==
+          kWebServiceWorkerResponseTypeOpaque &&
+      request.GetFetchRequestMode() != WebURLRequest::kFetchRequestModeNoCORS) {
+    return kReload;
+  }
+
+  if (!is_static_data && !existing_resource->CanReuse(fetch_params))
+    return kReload;
+
+  // Certain requests (e.g., XHRs) might have manually set headers that require
+  // revalidation. In theory, this should be a Revalidate case. In practice, the
+  // MemoryCache revalidation path assumes a whole bunch of things about how
+  // revalidation works that manual headers violate, so punt to Reload instead.
+  //
+  // Similarly, a request with manually added revalidation headers can lead to a
+  // 304 response for a request that wasn't flagged as a revalidation attempt.
+  // Normally, successful revalidation will maintain the original response's
+  // status code, but for a manual revalidation the response code remains 304.
+  // In this case, the Resource likely has insufficient context to provide a
+  // useful cache hit or revalidation. See http://crbug.com/643659
+  if (!is_static_data &&
+      (request.IsConditional() ||
+       existing_resource->GetResponse().HttpStatusCode() == 304)) {
+    return kReload;
+  }
+
+  if (!is_static_data &&
+      !fetch_params.Options().CanReuseRequest(existing_resource->Options())) {
+    return kReload;
+  }
+
+  // Always use preloads.
+  if (existing_resource->IsPreloaded())
+    return kUse;
 
   // If resource was populated from a SubstituteData load or data: url, use it.
   if (is_static_data)
@@ -1174,15 +1103,24 @@ int ResourceFetcher::NonblockingRequestCount() const {
   return non_blocking_loaders_.size();
 }
 
+void ResourceFetcher::PreloadStarted(Resource* resource) {
+  if (preloads_.Contains(resource))
+    return;
+  resource->IncreasePreloadCount();
+
+  preloads_.insert(resource);
+
+  if (preloaded_urls_for_test_)
+    preloaded_urls_for_test_->insert(resource->Url().GetString());
+}
+
 void ResourceFetcher::EnableIsPreloadedForTest() {
   if (preloaded_urls_for_test_)
     return;
   preloaded_urls_for_test_ = WTF::WrapUnique(new HashSet<String>);
 
-  for (const auto& pair : preloads_) {
-    Resource* resource = pair.value;
+  for (const auto& resource : preloads_)
     preloaded_urls_for_test_->insert(resource->Url().GetString());
-  }
 }
 
 bool ResourceFetcher::IsPreloadedForTest(const KURL& url) const {
@@ -1193,22 +1131,18 @@ bool ResourceFetcher::IsPreloadedForTest(const KURL& url) const {
 void ResourceFetcher::ClearPreloads(ClearPreloadsPolicy policy) {
   LogPreloadStats(policy);
 
-  Vector<PreloadKey> keys_to_be_removed;
-  for (const auto& pair : preloads_) {
-    Resource* resource = pair.value;
+  for (const auto& resource : preloads_) {
     if (policy == kClearAllPreloads || !resource->IsLinkPreload()) {
       resource->DecreasePreloadCount();
       if (resource->GetPreloadResult() == Resource::kPreloadNotReferenced)
-        GetMemoryCache()->Remove(resource);
-      keys_to_be_removed.push_back(pair.key);
+        GetMemoryCache()->Remove(resource.Get());
+      preloads_.erase(resource);
     }
   }
-  preloads_.RemoveAll(keys_to_be_removed);
 }
 
 void ResourceFetcher::WarnUnusedPreloads() {
-  for (const auto& pair : preloads_) {
-    Resource* resource = pair.value;
+  for (const auto& resource : preloads_) {
     if (resource && resource->IsLinkPreload() &&
         resource->GetPreloadResult() == Resource::kPreloadNotReferenced) {
       Context().AddConsoleMessage(
@@ -1315,8 +1249,6 @@ void ResourceFetcher::HandleLoaderError(Resource* resource,
                             resource->GetResponse().EncodedDataLength(),
                             is_internal_request);
 
-  if (error.IsCancellation())
-    RemovePreload(resource);
   resource->FinishAsError(error);
 
   HandleLoadCompletion(resource);
@@ -1333,44 +1265,59 @@ void ResourceFetcher::MoveResourceLoaderToNonBlocking(ResourceLoader* loader) {
 bool ResourceFetcher::StartLoad(Resource* resource) {
   DCHECK(resource);
   DCHECK(resource->StillNeedsLoad());
-  if (!Context().ShouldLoadNewResource(resource->GetType())) {
-    GetMemoryCache()->Remove(resource);
-    return false;
-  }
 
   ResourceRequest request(resource->GetResourceRequest());
-  ResourceResponse response;
+  ResourceLoader* loader = nullptr;
 
-  blink::probe::PlatformSendRequest probe(&Context(), resource->Identifier(),
-                                          request, response,
-                                          resource->Options().initiator_info);
+  {
+    // Forbids JavaScript/addClient/removeClient/revalidation until start()
+    // to prevent unintended state transitions.
+    Resource::ProhibitAddRemoveClientInScope
+        prohibit_add_remove_client_in_scope(resource);
+    Resource::RevalidationStartForbiddenScope
+        revalidation_start_forbidden_scope(resource);
+    ScriptForbiddenScope script_forbidden_scope;
 
-  Context().DispatchWillSendRequest(resource->Identifier(), request, response,
-                                    resource->Options().initiator_info);
+    if (!Context().ShouldLoadNewResource(resource->GetType())) {
+      GetMemoryCache()->Remove(resource);
+      return false;
+    }
 
-  // TODO(shaochuan): Saving modified ResourceRequest back to |resource|, remove
-  // once dispatchWillSendRequest() takes const ResourceRequest.
-  // crbug.com/632580
-  resource->SetResourceRequest(request);
+    ResourceResponse response;
 
-  // Resource requests from suborigins should not be intercepted by the service
-  // worker of the physical origin. This has the effect that, for now,
-  // suborigins do not work with service workers. See
-  // https://w3c.github.io/webappsec-suborigins/.
-  SecurityOrigin* source_origin = Context().GetSecurityOrigin();
-  if (source_origin && source_origin->HasSuborigin())
-    request.SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
+    blink::probe::PlatformSendRequest probe(&Context(), resource->Identifier(),
+                                            request, response,
+                                            resource->Options().initiator_info);
 
-  ResourceLoader* loader = ResourceLoader::Create(this, resource);
-  if (resource->ShouldBlockLoadEvent())
-    loaders_.insert(loader);
-  else
-    non_blocking_loaders_.insert(loader);
+    Context().DispatchWillSendRequest(resource->Identifier(), request, response,
+                                      resource->Options().initiator_info);
 
-  StorePerformanceTimingInitiatorInformation(resource);
-  resource->SetFetcherSecurityOrigin(source_origin);
+    // TODO(shaochuan): Saving modified ResourceRequest back to |resource|,
+    // remove once dispatchWillSendRequest() takes const ResourceRequest.
+    // crbug.com/632580
+    resource->SetResourceRequest(request);
 
-  loader->ActivateCacheAwareLoadingIfNeeded(request);
+    // Resource requests from suborigins should not be intercepted by the
+    // service worker of the physical origin. This has the effect that, for now,
+    // suborigins do not work with service workers. See
+    // https://w3c.github.io/webappsec-suborigins/.
+    SecurityOrigin* source_origin = Context().GetSecurityOrigin();
+    if (source_origin && source_origin->HasSuborigin())
+      request.SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
+
+    loader = ResourceLoader::Create(this, resource);
+    if (resource->ShouldBlockLoadEvent())
+      loaders_.insert(loader);
+    else
+      non_blocking_loaders_.insert(loader);
+
+    StorePerformanceTimingInitiatorInformation(resource);
+    resource->SetFetcherSecurityOrigin(source_origin);
+
+    resource->NotifyStartLoad();
+    loader->ActivateCacheAwareLoadingIfNeeded(request);
+  }
+
   loader->Start(request);
   return true;
 }
@@ -1427,7 +1374,7 @@ void ResourceFetcher::UpdateAllImageResourcePriorities() {
 
     resource->DidChangePriority(resource_load_priority,
                                 resource_priority.intra_priority_value);
-    network_instrumentation::resourcePrioritySet(resource->Identifier(),
+    network_instrumentation::ResourcePrioritySet(resource->Identifier(),
                                                  resource_load_priority);
     Context().DispatchDidChangeResourcePriority(
         resource->Identifier(), resource_load_priority,
@@ -1460,8 +1407,7 @@ void ResourceFetcher::LogPreloadStats(ClearPreloadsPolicy policy) {
   unsigned import_misses = 0;
   unsigned raws = 0;
   unsigned raw_misses = 0;
-  for (const auto& pair : preloads_) {
-    Resource* resource = pair.value;
+  for (const auto& resource : preloads_) {
     // Do not double count link rel preloads. These do not get cleared if the
     // ClearPreloadsPolicy is only clearing speculative markup preloads.
     if (resource->IsLinkPreload() &&

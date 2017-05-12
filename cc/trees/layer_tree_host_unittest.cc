@@ -1180,6 +1180,95 @@ class LayerTreeHostTestPropertyTreesChangedSync : public LayerTreeHostTest {
 
 SINGLE_THREAD_TEST_F(LayerTreeHostTestPropertyTreesChangedSync);
 
+class LayerTreeHostTestAnimationFilterMutatedNotUsingLayerLists
+    : public LayerTreeHostTest {
+ public:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->use_layer_lists = false;
+  }
+
+ protected:
+  void SetupTree() override {
+    root_ = Layer::Create();
+    layer_tree_host()->SetRootLayer(root_);
+    LayerTreeHostTest::SetupTree();
+  }
+
+  void BeginTest() override {
+    FilterOperations filters;
+    EXPECT_EQ(FilterOperations(), root_->filters());
+    filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+    layer_tree_host()->SetElementFilterMutated(
+        root_->element_id(), ElementListType::ACTIVE, filters);
+    // When not using layer lists, filters are just stored directly on the
+    // layer.
+    EXPECT_EQ(filters, root_->filters());
+    EndTest();
+  }
+
+  void AfterTest() override {}
+
+ private:
+  scoped_refptr<Layer> root_;
+};
+
+SINGLE_THREAD_TEST_F(LayerTreeHostTestAnimationFilterMutatedNotUsingLayerLists);
+
+class LayerTreeHostTestAnimationFilterMutatedUsingLayerLists
+    : public LayerTreeHostTest {
+ public:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->use_layer_lists = true;
+  }
+
+ protected:
+  void SetupTree() override {
+    root_ = Layer::Create();
+    layer_tree_host()->SetRootLayer(root_);
+    LayerTreeHostTest::SetupTree();
+  }
+
+  void BeginTest() override {
+    // Insert a dummy effect node to observe its mutation. This would
+    // normally have been created by PaintArtifactCompositor.
+    int effect_node_id =
+        layer_tree_host()->property_trees()->effect_tree.Insert(
+            EffectNode(), EffectTree::kInvalidNodeId);
+    layer_tree_host()
+        ->property_trees()
+        ->element_id_to_effect_node_index[root_->element_id()] = effect_node_id;
+
+    EXPECT_EQ(FilterOperations(), root_->filters());
+    EXPECT_EQ(FilterOperations(),
+              layer_tree_host()
+                  ->property_trees()
+                  ->effect_tree.FindNodeFromElementId(root_->element_id())
+                  ->filters);
+
+    FilterOperations filters;
+    filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+    layer_tree_host()->SetElementFilterMutated(
+        root_->element_id(), ElementListType::ACTIVE, filters);
+
+    // When using layer lists, we don't have to store the filters on the layer.
+    EXPECT_EQ(FilterOperations(), root_->filters());
+    // The filter should have been set directly on the effect node instead.
+    EXPECT_EQ(filters,
+              layer_tree_host()
+                  ->property_trees()
+                  ->effect_tree.FindNodeFromElementId(root_->element_id())
+                  ->filters);
+    EndTest();
+  }
+
+  void AfterTest() override {}
+
+ private:
+  scoped_refptr<Layer> root_;
+};
+
+SINGLE_THREAD_TEST_F(LayerTreeHostTestAnimationFilterMutatedUsingLayerLists);
+
 class LayerTreeHostTestEffectTreeSync : public LayerTreeHostTest {
  protected:
   void SetupTree() override {
@@ -1377,8 +1466,8 @@ class LayerTreeHostTestTransformTreeDamageIsUpdated : public LayerTreeHostTest {
 
     root_->SetBounds(gfx::Size(50, 50));
 
-    // Make sure child is registerd for animation.
-    child_->SetElementId(ElementId(2, 0));
+    // Make sure child is registered for animation.
+    child_->SetElementId(ElementId(2));
 
     // Make sure child and grand_child have transform nodes.
     gfx::Transform rotation;
@@ -1443,6 +1532,21 @@ class LayerTreeHostTestTransformTreeDamageIsUpdated : public LayerTreeHostTest {
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestTransformTreeDamageIsUpdated);
 
+class UpdateCountingLayer : public Layer {
+ public:
+  bool Update() override {
+    update_count_++;
+    return false;
+  }
+
+  int update_count() const { return update_count_; }
+
+ private:
+  ~UpdateCountingLayer() override = default;
+
+  int update_count_ = 0;
+};
+
 // Test that when mask layers switches layers, this gets pushed onto impl.
 // Also test that mask layer is in the layer update list even if its owning
 // layer isn't.
@@ -1451,11 +1555,11 @@ class LayerTreeHostTestSwitchMaskLayer : public LayerTreeHostTest {
   void SetupTree() override {
     scoped_refptr<Layer> root = Layer::Create();
     root->SetBounds(gfx::Size(10, 10));
-    scoped_refptr<Layer> child = Layer::Create();
-    mask_layer = Layer::Create();
-    mask_layer->SetBounds(gfx::Size(10, 10));
-    child->SetMaskLayer(mask_layer.get());
-    root->AddChild(std::move(child));
+    child_layer_ = make_scoped_refptr(new UpdateCountingLayer);
+    mask_layer_ = make_scoped_refptr(new UpdateCountingLayer);
+    mask_layer_->SetBounds(gfx::Size(10, 10));
+    child_layer_->SetMaskLayer(mask_layer_.get());
+    root->AddChild(child_layer_);
     layer_tree_host()->SetRootLayer(root);
     LayerTreeHostTest::SetupTree();
   }
@@ -1471,19 +1575,11 @@ class LayerTreeHostTestSwitchMaskLayer : public LayerTreeHostTest {
         // Root and mask layer should have the same source frame number as they
         // will be in the layer update list but the child is not as it has empty
         // bounds.
-        EXPECT_EQ(mask_layer->paint_properties().source_frame_number,
-                  layer_tree_host()
-                      ->root_layer()
-                      ->paint_properties()
-                      .source_frame_number);
-        EXPECT_NE(mask_layer->paint_properties().source_frame_number,
-                  layer_tree_host()
-                      ->root_layer()
-                      ->child_at(0)
-                      ->paint_properties()
-                      .source_frame_number);
+        EXPECT_EQ(mask_layer_->update_count(), 1);
+        EXPECT_EQ(child_layer_->update_count(), 0);
+
         layer_tree_host()->root_layer()->RemoveAllChildren();
-        layer_tree_host()->root_layer()->SetMaskLayer(mask_layer.get());
+        layer_tree_host()->root_layer()->SetMaskLayer(mask_layer_.get());
         break;
     }
   }
@@ -1507,7 +1603,8 @@ class LayerTreeHostTestSwitchMaskLayer : public LayerTreeHostTest {
 
   void AfterTest() override {}
 
-  scoped_refptr<Layer> mask_layer;
+  scoped_refptr<UpdateCountingLayer> mask_layer_;
+  scoped_refptr<UpdateCountingLayer> child_layer_;
   int index_;
 };
 
@@ -2297,7 +2394,7 @@ class LayerTreeHostTestCommit : public LayerTreeHostTest {
   }
 
   void DidActivateTreeOnThread(LayerTreeHostImpl* impl) override {
-    EXPECT_EQ(gfx::Size(20, 20), impl->DrawViewportSize());
+    EXPECT_EQ(gfx::Rect(20, 20), impl->DeviceViewport());
     EXPECT_EQ(SK_ColorGRAY, impl->active_tree()->background_color());
     EXPECT_EQ(EventListenerProperties::kPassive,
               impl->active_tree()->event_listener_properties(
@@ -2472,15 +2569,16 @@ class LayerTreeHostTestStartPageScaleAnimation : public LayerTreeHostTest {
         break;
       case 1:
         EXPECT_EQ(1.f, impl->active_tree()->current_page_scale_factor());
+        // Once the animation starts, an ImplFrame will be requested. However,
+        // main frames may be happening in the mean-time due to high-latency
+        // mode. If one happens before the next impl frame, then the source
+        // frame number may increment twice instead of just once.
         break;
       case 2:
+      case 3:
         EXPECT_EQ(1.25f, impl->active_tree()->current_page_scale_factor());
         EndTest();
         break;
-      case 3:
-        break;
-      default:
-        NOTREACHED();
     }
   }
 
@@ -2569,7 +2667,7 @@ class LayerTreeHostTestDeviceScaleFactorScalesViewportAndLayers
     EXPECT_NEAR(impl->active_tree()->device_scale_factor(), 1.5f, 0.00001f);
 
     // Device viewport is scaled.
-    EXPECT_EQ(gfx::Size(60, 60), impl->DrawViewportSize());
+    EXPECT_EQ(gfx::Rect(60, 60), impl->DeviceViewport());
 
     FakePictureLayerImpl* root = static_cast<FakePictureLayerImpl*>(
         impl->active_tree()->root_layer_for_testing());
@@ -7250,6 +7348,10 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestPaintedDeviceScaleFactor);
 // Makes sure that LocalSurfaceId is propagated to the CompositorFrameSink.
 class LayerTreeHostTestLocalSurfaceId : public LayerTreeHostTest {
  protected:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->enable_surface_synchronization = true;
+  }
+
   void BeginTest() override {
     expected_local_surface_id_ = allocator_.GenerateId();
     PostSetLocalSurfaceIdToMainThread(expected_local_surface_id_);

@@ -90,6 +90,7 @@
 #include "components/omnibox/browser/zero_suggest_provider.h"
 #include "components/password_manager/core/browser/password_bubble_experiment.h"
 #include "components/password_manager/core/browser/password_manager.h"
+#include "components/payments/core/payment_prefs.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/browser/url_blacklist_manager.h"
 #include "components/policy/core/common/policy_statistics_collector.h"
@@ -261,6 +262,7 @@
 #endif
 
 #if defined(USE_ASH)
+#include "ash/shell.h"
 #include "chrome/browser/ui/ash/chrome_launcher_prefs.h"
 #endif
 
@@ -501,6 +503,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   ntp_tiles::MostVisitedSites::RegisterProfilePrefs(registry);
   password_bubble_experiment::RegisterPrefs(registry);
   password_manager::PasswordManager::RegisterProfilePrefs(registry);
+  payments::RegisterProfilePrefs(registry);
   PrefProxyConfigTrackerImpl::RegisterProfilePrefs(registry);
   PrefsTabHelper::RegisterProfilePrefs(registry);
   Profile::RegisterProfilePrefs(registry);
@@ -643,7 +646,8 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 #endif
 
 #if defined(USE_ASH)
-  ash::launcher::RegisterChromeLauncherUserPrefs(registry);
+  RegisterChromeLauncherUserPrefs(registry);
+  ash::Shell::RegisterPrefs(registry);
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS)

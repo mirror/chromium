@@ -587,7 +587,7 @@ scoped_refptr<SyncMessageFilter> SyncChannel::CreateSyncMessageFilter() {
 }
 
 bool SyncChannel::Send(Message* message) {
-#ifdef IPC_MESSAGE_LOG_ENABLED
+#if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
   std::string name;
   Logging::GetInstance()->GetMessageText(
       message->type(), &name, message, nullptr);
@@ -674,7 +674,7 @@ void SyncChannel::WaitForReply(mojo::SyncHandleRegistry* registry,
     }
 
     if (should_pump_messages)
-      WaitForReplyWithNestedMessageLoop(context);  // Run a nested message loop.
+      WaitForReplyWithNestedMessageLoop(context);  // Run a nested run loop.
 
     break;
   }

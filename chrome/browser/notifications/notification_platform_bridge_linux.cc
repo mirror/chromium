@@ -14,12 +14,15 @@
 
 #include "base/barrier_closure.h"
 #include "base/files/file_util.h"
+#include "base/i18n/number_formatting.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/version.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/notifications/native_notification_display_service.h"
@@ -27,18 +30,44 @@
 #include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/shell_integration_linux.h"
+#include "chrome/grit/generated_resources.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_proxy.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/image/image_skia.h"
 
 namespace {
 
+// DBus name / path.
 const char kFreedesktopNotificationsName[] = "org.freedesktop.Notifications";
 const char kFreedesktopNotificationsPath[] = "/org/freedesktop/Notifications";
 
+// DBus methods.
+const char kMethodCloseNotification[] = "CloseNotification";
+const char kMethodGetCapabilities[] = "GetCapabilities";
+const char kMethodNotify[] = "Notify";
+const char kMethodGetServerInformation[] = "GetServerInformation";
+
+// DBus signals.
+const char kSignalActionInvoked[] = "ActionInvoked";
+const char kSignalNotificationClosed[] = "NotificationClosed";
+
+// Capabilities.
+const char kCapabilityActionIcons[] = "action-icons";
+const char kCapabilityActions[] = "actions";
+const char kCapabilityBody[] = "body";
+const char kCapabilityBodyHyperlinks[] = "body-hyperlinks";
+const char kCapabilityBodyImages[] = "body-images";
+const char kCapabilityBodyMarkup[] = "body-markup";
+const char kCapabilityIconMulti[] = "icon-multi";
+const char kCapabilityIconStatic[] = "icon-static";
+const char kCapabilityPersistence[] = "persistence";
+const char kCapabilitySound[] = "sound";
+
+// Button IDs.
 const char kDefaultButtonId[] = "default";
 const char kSettingsButtonId[] = "settings";
 
@@ -51,8 +80,19 @@ enum class ConnectionInitializationStatusCode {
   NATIVE_NOTIFICATIONS_NOT_SUPPORTED = 1,
   MISSING_REQUIRED_CAPABILITIES = 2,
   COULD_NOT_CONNECT_TO_SIGNALS = 3,
+  INCOMPATIBLE_SPEC_VERSION = 4,
   NUM_ITEMS
 };
+
+base::string16 CreateNotificationTitle(const Notification& notification) {
+  base::string16 title;
+  if (notification.type() == message_center::NOTIFICATION_TYPE_PROGRESS) {
+    title += base::FormatPercent(notification.progress());
+    title += base::UTF8ToUTF16(" - ");
+  }
+  title += notification.title();
+  return title;
+}
 
 gfx::Image DeepCopyImage(const gfx::Image& image) {
   if (image.IsEmpty())
@@ -334,7 +374,7 @@ class NotificationPlatformBridgeLinuxImpl
     }
 
     dbus::MethodCall get_capabilities_call(kFreedesktopNotificationsName,
-                                           "GetCapabilities");
+                                           kMethodGetCapabilities);
     std::unique_ptr<dbus::Response> capabilities_response =
         notification_proxy_->CallMethodAndBlock(
             &get_capabilities_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT);
@@ -347,17 +387,41 @@ class NotificationPlatformBridgeLinuxImpl
     }
     RecordMetricsForCapabilities();
 
+    dbus::MethodCall get_server_information_call(kFreedesktopNotificationsName,
+                                                 kMethodGetServerInformation);
+    std::unique_ptr<dbus::Response> server_information_response =
+        notification_proxy_->CallMethodAndBlock(
+            &get_server_information_call,
+            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT);
+    if (server_information_response) {
+      dbus::MessageReader reader(server_information_response.get());
+      std::string spec_version;
+      reader.PopString(&spec_version);  // name
+      reader.PopString(&spec_version);  // vendor
+      reader.PopString(&spec_version);  // version
+      reader.PopString(&spec_version);  // spec_version
+      spec_version_ = base::Version(spec_version);
+    }
+    // The minimum supported spec version is 1.1, because this was the
+    // version that added image hints.
+    if (!spec_version_.IsValid() ||
+        spec_version_ < base::Version(std::vector<uint32_t>{1, 1})) {
+      OnConnectionInitializationFinishedOnTaskRunner(
+          ConnectionInitializationStatusCode::INCOMPATIBLE_SPEC_VERSION);
+      return;
+    }
+
     connected_signals_barrier_ = base::BarrierClosure(
         2, base::Bind(&NotificationPlatformBridgeLinuxImpl::
                           OnConnectionInitializationFinishedOnTaskRunner,
                       this, ConnectionInitializationStatusCode::SUCCESS));
     notification_proxy_->ConnectToSignal(
-        kFreedesktopNotificationsName, "ActionInvoked",
+        kFreedesktopNotificationsName, kSignalActionInvoked,
         base::Bind(&NotificationPlatformBridgeLinuxImpl::OnActionInvoked, this),
         base::Bind(&NotificationPlatformBridgeLinuxImpl::OnSignalConnected,
                    this));
     notification_proxy_->ConnectToSignal(
-        kFreedesktopNotificationsName, "NotificationClosed",
+        kFreedesktopNotificationsName, kSignalNotificationClosed,
         base::Bind(&NotificationPlatformBridgeLinuxImpl::OnNotificationClosed,
                    this),
         base::Bind(&NotificationPlatformBridgeLinuxImpl::OnSignalConnected,
@@ -394,7 +458,7 @@ class NotificationPlatformBridgeLinuxImpl
       notifications_.emplace(data, base::WrapUnique(data));
     }
 
-    dbus::MethodCall method_call(kFreedesktopNotificationsName, "Notify");
+    dbus::MethodCall method_call(kFreedesktopNotificationsName, kMethodNotify);
     dbus::MessageWriter writer(&method_call);
 
     // app_name passed implicitly via desktop-entry.
@@ -405,32 +469,61 @@ class NotificationPlatformBridgeLinuxImpl
     // app_icon passed implicitly via desktop-entry.
     writer.AppendString("");
 
-    writer.AppendString(base::UTF16ToUTF8(notification->title()));
+    writer.AppendString(
+        base::UTF16ToUTF8(CreateNotificationTitle(*notification)));
 
-    writer.AppendString(base::UTF16ToUTF8(notification->message()));
+    std::string body;
+    if (base::ContainsKey(capabilities_, kCapabilityBody)) {
+      body = base::UTF16ToUTF8(notification->message());
+      const bool body_markup =
+          base::ContainsKey(capabilities_, kCapabilityBodyMarkup);
+      if (body_markup) {
+        base::ReplaceSubstringsAfterOffset(&body, 0, "&", "&amp;");
+        base::ReplaceSubstringsAfterOffset(&body, 0, "<", "&lt;");
+        base::ReplaceSubstringsAfterOffset(&body, 0, ">", "&gt;");
+      }
+      if (notification->type() == message_center::NOTIFICATION_TYPE_MULTIPLE) {
+        for (const auto& item : notification->items()) {
+          if (!body.empty())
+            body += "\n";
+          const std::string title = base::UTF16ToUTF8(item.title);
+          const std::string message = base::UTF16ToUTF8(item.message);
+          // TODO(peter): Figure out the right way to internationalize
+          // this for RTL languages.
+          if (body_markup)
+            body += "<b>" + title + "</b> " + message;
+          else
+            body += title + " - " + message;
+        }
+      }
+    }
+    writer.AppendString(body);
 
     // Even-indexed elements in this vector are action IDs passed back to
     // us in OnActionInvoked().  Odd-indexed ones contain the button text.
     std::vector<std::string> actions;
-    data->action_start = data->action_end;
-    for (const auto& button_info : notification->buttons()) {
-      // FDO notification buttons can contain either an icon or a label,
-      // but not both, and the type of all buttons must be the same (all
-      // labels or all icons), so always use labels.
-      const std::string id = base::SizeTToString(data->action_end++);
-      const std::string label = base::UTF16ToUTF8(button_info.title);
-      actions.push_back(id);
-      actions.push_back(label);
+    if (base::ContainsKey(capabilities_, kCapabilityActions)) {
+      data->action_start = data->action_end;
+      for (const auto& button_info : notification->buttons()) {
+        // FDO notification buttons can contain either an icon or a label,
+        // but not both, and the type of all buttons must be the same (all
+        // labels or all icons), so always use labels.
+        const std::string id = base::SizeTToString(data->action_end++);
+        const std::string label = base::UTF16ToUTF8(button_info.title);
+        actions.push_back(id);
+        actions.push_back(label);
+      }
+      if (notification->clickable()) {
+        // Special case: the pair ("default", "") will not add a button,
+        // but instead makes the entire notification clickable.
+        actions.push_back(kDefaultButtonId);
+        actions.push_back("");
+      }
+      // Always add a settings button.
+      actions.push_back(kSettingsButtonId);
+      actions.push_back(
+          l10n_util::GetStringUTF8(IDS_NOTIFICATION_BUTTON_SETTINGS));
     }
-    if (notification->clickable()) {
-      // Special case: the pair ("default", "") will not add a button,
-      // but instead makes the entire notification clickable.
-      actions.push_back(kDefaultButtonId);
-      actions.push_back("");
-    }
-    // Always add a settings button.
-    actions.push_back(kSettingsButtonId);
-    actions.push_back("Settings");
     writer.AppendArrayOfStrings(actions);
 
     dbus::MessageWriter hints_writer(nullptr);
@@ -460,7 +553,10 @@ class NotificationPlatformBridgeLinuxImpl
     if (icon_file) {
       dbus::MessageWriter image_path_writer(nullptr);
       hints_writer.OpenDictEntry(&image_path_writer);
-      image_path_writer.AppendString("image-path");
+      image_path_writer.AppendString(
+          spec_version_ == base::Version(std::vector<uint32_t>{1, 1})
+              ? "image_path"
+              : "image-path");
       image_path_writer.AppendVariantOfString(icon_file->file_path().value());
       hints_writer.CloseContainer(&image_path_writer);
       data->resource_files.push_back(std::move(icon_file));
@@ -469,7 +565,9 @@ class NotificationPlatformBridgeLinuxImpl
     writer.CloseContainer(&hints_writer);
 
     const int32_t kExpireTimeoutDefault = -1;
-    writer.AppendInt32(kExpireTimeoutDefault);
+    const int32_t kExpireTimeoutNever = 0;
+    writer.AppendInt32(notification->never_timeout() ? kExpireTimeoutNever
+                                                     : kExpireTimeoutDefault);
 
     std::unique_ptr<dbus::Response> response =
         notification_proxy_->CallMethodAndBlock(
@@ -494,7 +592,7 @@ class NotificationPlatformBridgeLinuxImpl
       if (data->notification_id == notification_id &&
           data->profile_id == profile_id) {
         dbus::MethodCall method_call(kFreedesktopNotificationsName,
-                                     "CloseNotification");
+                                     kMethodCloseNotification);
         dbus::MessageWriter writer(&method_call);
         writer.AppendUint32(data->dbus_id);
         notification_proxy_->CallMethodAndBlock(
@@ -644,27 +742,33 @@ class NotificationPlatformBridgeLinuxImpl
   void RecordMetricsForCapabilities() {
     // Histogram macros must be called with the same name for each
     // callsite, so we can't roll the below into a nice loop.
-    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.ActionIcons",
-                          capabilities_.count("action-icons"));
+    UMA_HISTOGRAM_BOOLEAN(
+        "Notifications.Freedesktop.Capabilities.ActionIcons",
+        base::ContainsKey(capabilities_, kCapabilityActionIcons));
     UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.Actions",
-                          capabilities_.count("actions"));
+                          base::ContainsKey(capabilities_, kCapabilityActions));
     UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.Body",
-                          capabilities_.count("body"));
+                          base::ContainsKey(capabilities_, kCapabilityBody));
     UMA_HISTOGRAM_BOOLEAN(
         "Notifications.Freedesktop.Capabilities.BodyHyperlinks",
-        capabilities_.count("body-hyperlinks"));
-    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.BodyImages",
-                          capabilities_.count("body-images"));
-    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.BodyMarkup",
-                          capabilities_.count("body-markup"));
-    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.IconMulti",
-                          capabilities_.count("icon-multi"));
-    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.IconStatic",
-                          capabilities_.count("icon-static"));
-    UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.Persistence",
-                          capabilities_.count("persistence"));
+        base::ContainsKey(capabilities_, kCapabilityBodyHyperlinks));
+    UMA_HISTOGRAM_BOOLEAN(
+        "Notifications.Freedesktop.Capabilities.BodyImages",
+        base::ContainsKey(capabilities_, kCapabilityBodyImages));
+    UMA_HISTOGRAM_BOOLEAN(
+        "Notifications.Freedesktop.Capabilities.BodyMarkup",
+        base::ContainsKey(capabilities_, kCapabilityBodyMarkup));
+    UMA_HISTOGRAM_BOOLEAN(
+        "Notifications.Freedesktop.Capabilities.IconMulti",
+        base::ContainsKey(capabilities_, kCapabilityIconMulti));
+    UMA_HISTOGRAM_BOOLEAN(
+        "Notifications.Freedesktop.Capabilities.IconStatic",
+        base::ContainsKey(capabilities_, kCapabilityIconStatic));
+    UMA_HISTOGRAM_BOOLEAN(
+        "Notifications.Freedesktop.Capabilities.Persistence",
+        base::ContainsKey(capabilities_, kCapabilityPersistence));
     UMA_HISTOGRAM_BOOLEAN("Notifications.Freedesktop.Capabilities.Sound",
-                          capabilities_.count("sound"));
+                          base::ContainsKey(capabilities_, kCapabilitySound));
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -687,6 +791,8 @@ class NotificationPlatformBridgeLinuxImpl
   dbus::ObjectProxy* notification_proxy_ = nullptr;
 
   std::unordered_set<std::string> capabilities_;
+
+  base::Version spec_version_;
 
   base::Closure connected_signals_barrier_;
 

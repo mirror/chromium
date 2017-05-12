@@ -18,6 +18,7 @@ import android.view.View;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.CommandLine;
+import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.Log;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
@@ -41,6 +42,7 @@ import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrlServiceObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsEventReporter;
 import org.chromium.chrome.browser.suggestions.SuggestionsEventReporterBridge;
+import org.chromium.chrome.browser.suggestions.SuggestionsMetrics;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegate;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegateImpl;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegateImpl;
@@ -177,8 +179,9 @@ public class NewTabPage
         public NewTabPageManagerImpl(SuggestionsSource suggestionsSource,
                 SuggestionsEventReporter eventReporter,
                 SuggestionsNavigationDelegate navigationDelegate, Profile profile,
-                NativePageHost nativePageHost) {
-            super(suggestionsSource, eventReporter, navigationDelegate, profile, nativePageHost);
+                NativePageHost nativePageHost, DiscardableReferencePool referencePool) {
+            super(suggestionsSource, eventReporter, navigationDelegate, profile, nativePageHost,
+                    referencePool);
         }
 
         @Override
@@ -321,8 +324,8 @@ public class NewTabPage
         SuggestionsNavigationDelegateImpl navigationDelegate =
                 new SuggestionsNavigationDelegateImpl(
                         activity, profile, nativePageHost, tabModelSelector);
-        mNewTabPageManager = new NewTabPageManagerImpl(
-                mSnippetsBridge, eventReporter, navigationDelegate, profile, nativePageHost);
+        mNewTabPageManager = new NewTabPageManagerImpl(mSnippetsBridge, eventReporter,
+                navigationDelegate, profile, nativePageHost, activity.getReferencePool());
         mTileGroupDelegate = new NewTabPageTileGroupDelegate(
                 activity, profile, tabModelSelector, navigationDelegate);
 
@@ -343,7 +346,7 @@ public class NewTabPage
 
             @Override
             public void onHidden(Tab tab) {
-                if (mIsLoaded) recordNTPInteractionTime();
+                if (mIsLoaded) recordNTPHidden();
             }
 
             @Override
@@ -496,11 +499,14 @@ public class NewTabPage
     private void recordNTPShown() {
         mLastShownTimeNs = System.nanoTime();
         RecordUserAction.record("MobileNTPShown");
+        SuggestionsMetrics.recordSurfaceVisible();
     }
 
-    private void recordNTPInteractionTime() {
+    /** Records UMA for the NTP being hidden and the time spent on it. */
+    private void recordNTPHidden() {
         RecordHistogram.recordMediumTimesHistogram(
                 "NewTabPage.TimeSpent", System.nanoTime() - mLastShownTimeNs, TimeUnit.NANOSECONDS);
+        SuggestionsMetrics.recordSurfaceHidden();
     }
 
     /**
@@ -548,7 +554,7 @@ public class NewTabPage
         assert !mIsDestroyed;
         assert !ViewCompat
                 .isAttachedToWindow(getView()) : "Destroy called before removed from window";
-        if (mIsLoaded && !mTab.isHidden()) recordNTPInteractionTime();
+        if (mIsLoaded && !mTab.isHidden()) recordNTPHidden();
 
         if (mSnippetsBridge != null) {
             mSnippetsBridge.onDestroy();
@@ -611,5 +617,10 @@ public class NewTabPage
     @Override
     public void captureThumbnail(Canvas canvas) {
         mNewTabPageView.captureThumbnail(canvas);
+    }
+
+    @VisibleForTesting
+    public NewTabPageManager getManagerForTesting() {
+        return mNewTabPageManager;
     }
 }

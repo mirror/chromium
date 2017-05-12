@@ -10,6 +10,7 @@ import json
 import tempfile
 import os
 import sys
+import urllib
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.abspath(os.path.join(
@@ -96,7 +97,15 @@ def action_cell(action, data, html_class):
   }
 
 
-def logs_cell(result):
+def flakiness_dashbord_link(test_name, suite_name):
+  url_args = urllib.urlencode([
+      ('testType', suite_name),
+      ('tests', test_name)])
+  return ('https://test-results.appspot.com/'
+         'dashboards/flakiness_dashboard.html#%s' % url_args)
+
+
+def logs_cell(result, test_name, suite_name):
   """Formats result logs data for processing in jinja template."""
   link_list = []
   for name, href in result.get('links', {}).iteritems():
@@ -104,7 +113,10 @@ def logs_cell(result):
         data=name,
         href=href,
         target=LinkTarget.NEW_TAB))
-
+  link_list.append(link(
+      data='flakiness',
+      href=flakiness_dashbord_link(test_name, suite_name),
+      target=LinkTarget.NEW_TAB))
   if link_list:
     return links_cell(link_list)
   else:
@@ -127,7 +139,7 @@ def status_class(status):
   return status
 
 
-def create_test_table(results_dict, cs_base_url):
+def create_test_table(results_dict, cs_base_url, suite_name):
   """Format test data for injecting into HTML table."""
 
   header_row = [
@@ -150,18 +162,18 @@ def create_test_table(results_dict, cs_base_url):
                      data=test_name)],
             rowspan=len(test_results),
             html_class='left %s' % test_name
-        )]                                        # test_name
+        )]                                          # test_name
       else:
         test_run = []
 
       test_run.extend([
           cell(data=result['status'] or 'UNKNOWN',
-                                                  # status
+                                                    # status
                html_class=('center %s' %
                   status_class(result['status']))),
-          cell(data=result['elapsed_time_ms']),   # elapsed_time_ms
-          logs_cell(result),                      # logs
-          pre_cell(data=result['output_snippet'], # output_snippet
+          cell(data=result['elapsed_time_ms']),     # elapsed_time_ms
+          logs_cell(result, test_name, suite_name), # logs
+          pre_cell(data=result['output_snippet'],   # output_snippet
                    html_class='left'),
       ])
       test_runs.append(test_run)
@@ -252,10 +264,21 @@ def create_suite_table(results_dict):
           footer_row)
 
 
-def results_to_html(results_dict, cs_base_url):
+def feedback_url(result_details_link):
+  url_args = urllib.urlencode([
+      ('labels', 'Pri-2,Type-Bug,Restrict-View-Google'),
+      ('summary', 'Result Details Feedback:'),
+      ('components', 'Test>Android'),
+      ('comment', 'Please check out: %s' % result_details_link)])
+  return 'https://bugs.chromium.org/p/chromium/issues/entry?%s' % url_args
+
+
+def results_to_html(results_dict, cs_base_url, bucket, test_name,
+                    builder_name, build_number):
   """Convert list of test results into html format."""
 
-  test_rows_header, test_rows = create_test_table(results_dict, cs_base_url)
+  test_rows_header, test_rows = create_test_table(results_dict, cs_base_url,
+                                                  test_name)
   suite_rows_header, suite_rows, suite_row_footer = create_suite_table(
       results_dict)
 
@@ -274,11 +297,20 @@ def results_to_html(results_dict, cs_base_url):
 
   main_template = JINJA_ENVIRONMENT.get_template(
       os.path.join('template', 'main.html'))
-  return main_template.render(  #  pylint: disable=no-member
-      {'tb_values': [suite_table_values, test_table_values]})
+  dest = google_storage_helper.unique_name(
+      '%s_%s_%s' % (test_name, builder_name, build_number))
+
+  result_details_link = google_storage_helper.get_url_link(
+      dest, '%s/html' % bucket)
+
+  return (main_template.render(  #  pylint: disable=no-member
+      {'tb_values': [suite_table_values, test_table_values],
+       'feedback_url': feedback_url(result_details_link)
+      }), dest, result_details_link)
 
 
-def result_details(json_path, cs_base_url):
+def result_details(json_path, cs_base_url, bucket, test_name,
+                   builder_name, build_number):
   """Get result details from json path and then convert results to html."""
 
   with open(json_path) as json_file:
@@ -291,19 +323,16 @@ def result_details(json_path, cs_base_url):
   for testsuite_run in json_object['per_iteration_data']:
     for test, test_runs in testsuite_run.iteritems():
       results_dict[test].extend(test_runs)
-  return results_to_html(results_dict, cs_base_url)
+  return results_to_html(results_dict, cs_base_url, bucket,
+                         test_name, builder_name, build_number)
 
 
-def upload_to_google_bucket(html, test_name, builder_name, build_number,
-                            bucket):
+def upload_to_google_bucket(html, bucket, dest):
   with tempfile.NamedTemporaryFile(suffix='.html') as temp_file:
     temp_file.write(html)
     temp_file.flush()
-
     return google_storage_helper.upload(
-        name=google_storage_helper.unique_name(
-            '%s_%s_%s' % (test_name, builder_name, build_number),
-            suffix='.html'),
+        name=dest,
         filepath=temp_file.name,
         bucket='%s/html' % bucket,
         content_type='text/html',
@@ -380,11 +409,18 @@ def main():
   if not os.path.exists(json_file):
     raise IOError('--json-file %s not found.' % json_file)
 
-  result_html_string = result_details(json_file, args.cs_base_url)
-  result_details_link = upload_to_google_bucket(
+  # Link to result details presentation page is a part of the page.
+  result_html_string, dest, result_details_link = result_details(
+      json_file, args.cs_base_url, args.bucket,
+      args.test_name, builder_name, build_number)
+
+  result_details_link_2 = upload_to_google_bucket(
       result_html_string.encode('UTF-8'),
-      args.test_name, builder_name,
-      build_number, args.bucket)
+      args.bucket, dest)
+
+  assert result_details_link == result_details_link_2, (
+      'Result details link do not match. The link returned by get_url_link'
+      ' should be the same as that returned by upload.')
 
   if args.output_json:
     with open(json_file) as original_json_file:

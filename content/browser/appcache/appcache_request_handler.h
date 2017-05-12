@@ -17,6 +17,7 @@
 #include "content/browser/appcache/appcache_host.h"
 #include "content/browser/appcache/appcache_service_impl.h"
 #include "content/common/content_export.h"
+#include "content/common/url_loader_factory.mojom.h"
 #include "content/public/common/resource_type.h"
 
 namespace net {
@@ -25,9 +26,12 @@ class URLRequest;
 }  // namespace net
 
 namespace content {
+class AppCacheJob;
+class AppCacheNavigationHandleCore;
 class AppCacheRequest;
 class AppCacheRequestHandlerTest;
 class AppCacheURLRequestJob;
+class ResourceContext;
 
 // An instance is created for each net::URLRequest. The instance survives all
 // http transactions involved in the processing of its net::URLRequest, and is
@@ -43,12 +47,11 @@ class CONTENT_EXPORT AppCacheRequestHandler
   ~AppCacheRequestHandler() override;
 
   // These are called on each request intercept opportunity.
-  AppCacheURLRequestJob* MaybeLoadResource(
-      net::NetworkDelegate* network_delegate);
-  AppCacheURLRequestJob* MaybeLoadFallbackForRedirect(
+  AppCacheJob* MaybeLoadResource(net::NetworkDelegate* network_delegate);
+  AppCacheJob* MaybeLoadFallbackForRedirect(
       net::NetworkDelegate* network_delegate,
       const GURL& location);
-  AppCacheURLRequestJob* MaybeLoadFallbackForResponse(
+  AppCacheJob* MaybeLoadFallbackForResponse(
       net::NetworkDelegate* network_delegate);
 
   void GetExtraResponseInfo(int64_t* cache_id, GURL* manifest_url);
@@ -68,6 +71,20 @@ class CONTENT_EXPORT AppCacheRequestHandler
     return IsResourceTypeFrame(type) ||
            type == RESOURCE_TYPE_SHARED_WORKER;
   }
+
+  // PlzNavigate and --enable-network-service.
+  // Checks whether the |resource_request| can be served out of the AppCache
+  // and invokes the |callback| accordingly. If the request can be served
+  // out of the AppCache, we could return a URLLoaderFactory which can serve
+  // requests out of the AppCache to the callback, or we could create the
+  // loader right there. At this point we are leaning towards the latter.
+  static void InitializeForNavigationNetworkService(
+      std::unique_ptr<ResourceRequest> resource_request,
+      ResourceContext* resource_context,
+      AppCacheNavigationHandleCore* navigation_handle_core,
+      ResourceType resource_type,
+      base::Callback<void(mojom::URLLoaderFactoryPtrInfo,
+                          std::unique_ptr<ResourceRequest>)> callback);
 
  private:
   friend class AppCacheHost;
@@ -98,9 +115,9 @@ class CONTENT_EXPORT AppCacheRequestHandler
   // restarting, so can correctly continue to handle the request.
   void OnPrepareToRestart();
 
-  // Helper method to create an AppCacheURLRequestJob and populate job_.
+  // Helper method to create an AppCacheJob and populate job_.
   // Caller takes ownership of returned value.
-  std::unique_ptr<AppCacheURLRequestJob> CreateJob(
+  std::unique_ptr<AppCacheJob> CreateJob(
       net::NetworkDelegate* network_delegate);
 
   // Helper to retrieve a pointer to the storage object.
@@ -113,7 +130,7 @@ class CONTENT_EXPORT AppCacheRequestHandler
   // Main-resource loading -------------------------------------
   // Frame and SharedWorker main resources are handled here.
 
-  std::unique_ptr<AppCacheURLRequestJob> MaybeLoadMainResource(
+  std::unique_ptr<AppCacheJob> MaybeLoadMainResource(
       net::NetworkDelegate* network_delegate);
 
   // AppCacheStorage::Delegate methods
@@ -128,7 +145,7 @@ class CONTENT_EXPORT AppCacheRequestHandler
   // Sub-resource loading -------------------------------------
   // Dedicated worker and all manner of sub-resources are handled here.
 
-  std::unique_ptr<AppCacheURLRequestJob> MaybeLoadSubResource(
+  std::unique_ptr<AppCacheJob> MaybeLoadSubResource(
       net::NetworkDelegate* network_delegate);
   void ContinueMaybeLoadSubResource();
 
@@ -177,7 +194,7 @@ class CONTENT_EXPORT AppCacheRequestHandler
   // 1) Before request has started a job.
   // 2) Request is not being handled by appcache.
   // 3) Request has been cancelled, and the job killed.
-  base::WeakPtr<AppCacheURLRequestJob> job_;
+  base::WeakPtr<AppCacheJob> job_;
 
   // During a cross site navigation, we transfer ownership the AppcacheHost
   // from the old processes structures over to the new structures.

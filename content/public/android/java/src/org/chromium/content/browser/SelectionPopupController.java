@@ -131,8 +131,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private SelectionClient mSelectionClient;
 
     // The classificaton result of the selected text if the selection exists and
-    // ContextSelectionProvider was able to classify it, otherwise null.
-    private ContextSelectionProvider.Result mClassificationResult;
+    // SmartSelectionProvider was able to classify it, otherwise null.
+    private SmartSelectionProvider.Result mClassificationResult;
 
     // The resource ID for Assist menu item.
     private int mAssistMenuItemId;
@@ -174,7 +174,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         };
 
         mSelectionClient =
-                ContextSelectionClient.create(new ContextSelectionCallback(), window, webContents);
+                SmartSelectionClient.create(new SmartSelectionCallback(), window, webContents);
 
         // TODO(timav): Use android.R.id.textAssist for the Assist item id once we switch to
         // Android O SDK and remove |mAssistMenuItemId|.
@@ -387,9 +387,13 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         }
     }
 
-    void setScrollInProgress(boolean inProgress) {
-        mScrollInProgress = inProgress;
-        hideActionMode(inProgress);
+    void setScrollInProgress(boolean touchScrollInProgress, boolean scrollInProgress) {
+        mScrollInProgress = scrollInProgress;
+
+        // The active fling count reflected in |scrollInProgress| isn't reliable with WebView,
+        // so only use the active touch scroll signal for hiding. The fling animation
+        // movement will naturally hide the ActionMode by invalidating its content rect.
+        hideActionMode(touchScrollInProgress);
     }
 
     /**
@@ -931,12 +935,13 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 mSelectionRect.set(left, top, right, bottom);
                 mHasSelection = true;
                 mUnselectAllOnDismiss = true;
-                if (mSelectionClient == null || !mSelectionClient.sendsSelectionPopupUpdates()) {
-                    showActionModeOrClearOnFailure();
-                } else {
+                if (mSelectionClient != null
+                        && mSelectionClient.requestSelectionPopupUpdates(true /* suggest */)) {
                     // Rely on |mSelectionClient| sending a classification request and the request
                     // always calling onClassified() callback.
                     mPendingShowActionMode = true;
+                } else {
+                    showActionModeOrClearOnFailure();
                 }
                 break;
 
@@ -953,6 +958,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 mHasSelection = false;
                 mUnselectAllOnDismiss = false;
                 mSelectionRect.setEmpty();
+                if (mSelectionClient != null) mSelectionClient.cancelAllRequests();
                 finishActionMode();
                 break;
 
@@ -961,11 +967,13 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 break;
 
             case SelectionEventType.SELECTION_HANDLE_DRAG_STOPPED:
-                if (mSelectionClient == null || !mSelectionClient.sendsSelectionPopupUpdates()) {
+                if (mSelectionClient != null
+                        && mSelectionClient.requestSelectionPopupUpdates(false /* suggest */)) {
+                    // Rely on |mSelectionClient| sending a classification request and the request
+                    // always calling onClassified() callback.
+                } else {
                     hideActionMode(false);
                 }
-                // Otherwise rely on |mSelectionClient| sending a classification request and the
-                // request always calling onClassified() callback.
                 break;
 
             case SelectionEventType.INSERTION_HANDLE_SHOWN:
@@ -1094,10 +1102,10 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
     }
 
-    // The callback class that delivers result from a ContextSelectionClient.
-    private class ContextSelectionCallback implements ContextSelectionProvider.ResultCallback {
+    // The callback class that delivers result from a SmartSelectionClient.
+    private class SmartSelectionCallback implements SmartSelectionProvider.ResultCallback {
         @Override
-        public void onClassified(ContextSelectionProvider.Result result) {
+        public void onClassified(SmartSelectionProvider.Result result) {
             // If the selection does not exist any more, discard |result|.
             if (!mHasSelection) {
                 assert !mHidden;

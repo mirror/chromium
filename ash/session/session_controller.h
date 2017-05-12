@@ -91,6 +91,10 @@ class ASH_EXPORT SessionController
   // Returns true if the current user is a child account.
   bool IsUserChild() const;
 
+  // Returns true if the current user session is a kiosk session (either
+  // chrome app kiosk or ARC kiosk).
+  bool IsKioskSession() const;
+
   // Locks the screen. The locking happens asynchronously.
   void LockScreen();
 
@@ -116,9 +120,9 @@ class ASH_EXPORT SessionController
   void UpdateUserSession(mojom::UserSessionPtr user_session) override;
   void SetUserSessionOrder(
       const std::vector<uint32_t>& user_session_order) override;
-  void StartLock(const StartLockCallback& callback) override;
+  void StartLock(StartLockCallback callback) override;
   void NotifyChromeLockAnimationsComplete() override;
-  void RunUnlockAnimation(const RunUnlockAnimationCallback& callback) override;
+  void RunUnlockAnimation(RunUnlockAnimationCallback callback) override;
   void NotifyChromeTerminating() override;
 
   // Test helpers.

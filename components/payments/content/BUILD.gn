@@ -4,6 +4,8 @@
 
 static_library("content") {
   sources = [
+    "can_make_payment_query_factory.cc",
+    "can_make_payment_query_factory.h",
     "payment_request.cc",
     "payment_request.h",
     "payment_request_dialog.h",
@@ -20,8 +22,10 @@ static_library("content") {
   deps = [
     ":utils",
     "//components/autofill/core/browser",
+    "//components/keyed_service/content",
     "//components/payments/core",
     "//components/payments/mojom",
+    "//components/prefs",
     "//components/strings:components_strings_grit",
     "//content/public/browser",
     "//mojo/public/cpp/bindings",
@@ -85,6 +89,7 @@ source_set("unit_tests") {
     "//components/payments/core",
     "//components/payments/core:test_support",
     "//components/payments/mojom",
+    "//components/strings:components_strings_grit",
     "//content/test:test_support",
     "//net:test_support",
     "//testing/gtest",

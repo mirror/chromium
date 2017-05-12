@@ -23,13 +23,13 @@ void CreateDWriteFactory(IDWriteFactory** factory) {
   base::win::ScopedComPtr<IUnknown> factory_unknown;
   HRESULT hr =
       DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory),
-                          factory_unknown.Receive());
+                          factory_unknown.GetAddressOf());
   if (FAILED(hr)) {
     base::debug::Alias(&hr);
     CHECK(false);
     return;
   }
-  factory_unknown.QueryInterface<IDWriteFactory>(factory);
+  factory_unknown.CopyTo(factory);
 }
 
 void MaybeInitializeDirectWrite() {
@@ -44,7 +44,7 @@ void MaybeInitializeDirectWrite() {
   }
 
   base::win::ScopedComPtr<IDWriteFactory> factory;
-  CreateDWriteFactory(factory.Receive());
+  CreateDWriteFactory(factory.GetAddressOf());
 
   if (!factory)
     return;

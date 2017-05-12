@@ -362,13 +362,6 @@ function assert_properties_equal(properties, expected_properties) {
   }
 }
 
-// Generates a string of size |size|.
-function generate_string(size, char) {
-  // When passing an array of n undefined's to String the resulting string
-  // has size n - 1.
-  return char.repeat(size);
-}
-
 class EventCatcher {
   constructor(object, event) {
     this.eventFired = false;
@@ -421,4 +414,29 @@ function generateRequestDeviceArgsWithServices(services = ['heart_rate']) {
     filters: [{ services: services, name: 'Name', namePrefix: 'Pre' }],
     optionalServices: ['heart_rate']
   }];
+}
+
+function setUpPreconnectedDevice({
+  address = '00:00:00:00:00:00', name = 'LE Device', knownServiceUUIDs = []}) {
+  return navigator.bluetooth.test.simulateCentral({state: 'powered-on'})
+    .then(fake_central => fake_central.simulatePreconnectedPeripheral({
+      address: address,
+      name: name,
+      knownServiceUUIDs: knownServiceUUIDs,
+    }));
+}
+
+function setUpHealthThermometerAndHeartRateDevices() {
+  return navigator.bluetooth.test.simulateCentral({state: 'powered-on'})
+   .then(fake_central => Promise.all([
+     fake_central.simulatePreconnectedPeripheral({
+       address: '09:09:09:09:09:09',
+       name: 'Health Thermometer',
+       knownServiceUUIDs: ['generic_access', 'health_thermometer'],
+     }),
+     fake_central.simulatePreconnectedPeripheral({
+       address: '08:08:08:08:08:08',
+       name: 'Heart Rate',
+       knownServiceUUIDs: ['generic_access', 'heart_rate'],
+     })]));
 }

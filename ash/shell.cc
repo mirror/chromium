@@ -16,6 +16,7 @@
 #include "ash/accessibility_delegate.h"
 #include "ash/app_list/app_list_delegate_impl.h"
 #include "ash/ash_constants.h"
+#include "ash/ash_switches.h"
 #include "ash/aura/shell_port_classic.h"
 #include "ash/autoclick/autoclick_controller.h"
 #include "ash/cast_config_controller.h"
@@ -73,6 +74,7 @@
 #include "ash/system/locale/locale_notification_controller.h"
 #include "ash/system/network/sms_observer.h"
 #include "ash/system/network/vpn_list.h"
+#include "ash/system/night_light/night_light_controller.h"
 #include "ash/system/power/power_event_observer.h"
 #include "ash/system/power/power_status.h"
 #include "ash/system/power/video_activity_notifier.h"
@@ -84,6 +86,7 @@
 #include "ash/system/tray/system_tray_delegate.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/touch/ash_touch_transform_controller.h"
+#include "ash/tray_action/tray_action.h"
 #include "ash/utility/screenshot_controller.h"
 #include "ash/virtual_keyboard_controller.h"
 #include "ash/wallpaper/wallpaper_controller.h"
@@ -309,6 +312,19 @@ Config Shell::GetAshConfig() {
   return Get()->shell_port_->GetAshConfig();
 }
 
+// static
+bool Shell::ShouldUseIMEService() {
+  return Shell::GetAshConfig() == Config::MASH ||
+         (Shell::GetAshConfig() == Config::MUS &&
+          base::CommandLine::ForCurrentProcess()->HasSwitch(
+              switches::kUseIMEService));
+}
+
+// static
+void Shell::RegisterPrefs(PrefRegistrySimple* registry) {
+  NightLightController::RegisterPrefs(registry);
+}
+
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
     views::Widget* widget) {
   // Use translucent-style window frames for dialogs.
@@ -514,7 +530,7 @@ void Shell::NotifyPinnedStateChanged(WmWindow* pinned_window) {
 }
 
 void Shell::NotifyVirtualKeyboardActivated(bool activated,
-                                           WmWindow* root_window) {
+                                           aura::Window* root_window) {
   for (auto& observer : shell_observers_)
     observer.OnVirtualKeyboardStateChanged(activated, root_window);
 }
@@ -552,11 +568,14 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       media_controller_(base::MakeUnique<MediaController>()),
       new_window_controller_(base::MakeUnique<NewWindowController>()),
       session_controller_(base::MakeUnique<SessionController>()),
+      night_light_controller_(
+          base::MakeUnique<NightLightController>(session_controller_.get())),
       shelf_controller_(base::MakeUnique<ShelfController>()),
       shell_delegate_(std::move(shell_delegate)),
       shutdown_controller_(base::MakeUnique<ShutdownController>()),
       system_tray_controller_(base::MakeUnique<SystemTrayController>()),
       system_tray_notifier_(base::MakeUnique<SystemTrayNotifier>()),
+      tray_action_(base::MakeUnique<TrayAction>()),
       vpn_list_(base::MakeUnique<VpnList>()),
       window_cycle_controller_(base::MakeUnique<WindowCycleController>()),
       window_selector_controller_(base::MakeUnique<WindowSelectorController>()),
@@ -620,10 +639,10 @@ Shell::~Shell() {
   RemovePreTargetHandler(event_transformation_handler_.get());
   RemovePreTargetHandler(toplevel_window_event_handler_.get());
   RemovePostTargetHandler(toplevel_window_event_handler_.get());
-  if (config != Config::MASH)
+  if (config != Config::MASH) {
     RemovePreTargetHandler(system_gesture_filter_.get());
-  if (config == Config::CLASSIC)
     RemovePreTargetHandler(mouse_cursor_filter_.get());
+  }
   RemovePreTargetHandler(modality_filter_.get());
 
   // TooltipController is deleted with the Shell so removing its references.
@@ -935,8 +954,9 @@ void Shell::Init(const ShellInitParams& init_params) {
   accelerator_controller_ = shell_port_->CreateAcceleratorController();
   maximize_mode_controller_ = base::MakeUnique<MaximizeModeController>();
 
-  if (config == Config::CLASSIC || config == Config::MUS) {
-    // Not applicable to mash as events are already routed to InputMethod first.
+  if (!ShouldUseIMEService()) {
+    // Not applicable when using IME service as events are already routed to
+    // InputMethod first.
     AddPreTargetHandler(
         window_tree_host_manager_->input_method_event_handler());
   }
@@ -999,9 +1019,9 @@ void Shell::Init(const ShellInitParams& init_params) {
   // process mouse events prior to screenshot session.
   // See http://crbug.com/459214
   screenshot_controller_.reset(new ScreenshotController());
-  // TODO: evaluate if MouseCursorEventFilter needs to work for mus/mash.
+  // TODO: evaluate if MouseCursorEventFilter needs to work for mash.
   // http://crbug.com/706474.
-  if (config == Config::CLASSIC) {
+  if (config != Config::MASH) {
     mouse_cursor_filter_.reset(new MouseCursorEventFilter());
     PrependPreTargetHandler(mouse_cursor_filter_.get());
   }

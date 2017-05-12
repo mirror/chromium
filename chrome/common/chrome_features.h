@@ -62,6 +62,8 @@ extern const base::Feature kBrowserTouchBar;
 extern const base::Feature kTabStripKeyboardFocus;
 #endif  // defined(OS_MACOSX)
 
+extern const base::Feature kCaptureThumbnailOnLoadFinished;
+
 extern const base::Feature kCheckInstallabilityForBannerOnLoad;
 
 #if defined(OS_WIN)
@@ -102,14 +104,16 @@ extern const base::Feature kLinuxObsoleteSystemIsEndOfTheLine;
 
 extern const base::Feature kLsdPermissionPrompt;
 
+#if defined(OS_MACOSX)
+extern const base::Feature kMacRTL;
+#endif
+
 extern const base::Feature kMaterialDesignBookmarks;
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 extern const base::Feature kMaterialDesignExtensions;
 extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate;
 #endif
-
-extern const base::Feature kMaterialDesignHistory;
 
 extern const base::Feature kMaterialDesignIncognitoNTP;
 
@@ -131,6 +135,10 @@ extern const base::Feature kNativeNotifications;
 #endif
 
 extern const base::Feature kOfflinePageDownloadSuggestionsFeature;
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+extern const base::Feature kOneGoogleBarOnLocalNtp;
+#endif
 
 extern const base::Feature kPermissionsBlacklist;
 
@@ -166,11 +174,15 @@ extern const base::Feature kSafeSearchUrlReporting;
 
 extern const base::Feature kSimplifiedFullscreenUI;
 
+extern const base::Feature kSiteDetails;
+
 #if defined(SYZYASAN)
 extern const base::Feature kSyzyasanDeferredFree;
 #endif
 
 extern const base::Feature kTabsInCbd;
+
+extern const base::Feature kUseGoogleLocalNtp;
 
 extern const base::Feature kUseGroupedPermissionInfobars;
 

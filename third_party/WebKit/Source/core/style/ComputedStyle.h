@@ -37,7 +37,6 @@
 #include "core/style/LineClampValue.h"
 #include "core/style/NinePieceImage.h"
 #include "core/style/SVGComputedStyle.h"
-#include "core/style/StyleBoxData.h"
 #include "core/style/StyleContentAlignmentData.h"
 #include "core/style/StyleDeprecatedFlexibleBoxData.h"
 #include "core/style/StyleDifference.h"
@@ -53,7 +52,6 @@
 #include "core/style/StyleReflection.h"
 #include "core/style/StyleSelfAlignmentData.h"
 #include "core/style/StyleTransformData.h"
-#include "core/style/StyleVisualData.h"
 #include "core/style/StyleWillChangeData.h"
 #include "core/style/TransformOrigin.h"
 #include "platform/Length.h"
@@ -66,6 +64,7 @@
 #include "platform/geometry/FloatRoundedRect.h"
 #include "platform/geometry/LayoutRectOutsets.h"
 #include "platform/graphics/Color.h"
+#include "platform/graphics/TouchAction.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/text/TextDirection.h"
 #include "platform/text/UnicodeBidi.h"
@@ -183,8 +182,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
  protected:
   // non-inherited attributes
-  DataRef<StyleBoxData> box_data_;
-  DataRef<StyleVisualData> visual_data_;
   DataRef<StyleRareNonInheritedData> rare_non_inherited_data_;
 
   // inherited attributes
@@ -262,6 +259,12 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   const PseudoStyleCache* CachedPseudoStyles() const {
     return cached_pseudo_styles_.get();
+  }
+
+  bool BorderWidthEquals(float border_width_first,
+                         float border_width_second) const {
+    return WidthToFixedPoint(border_width_first) ==
+           WidthToFixedPoint(border_width_second);
   }
 
   /**
@@ -470,36 +473,53 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // Border width properties.
   static float InitialBorderWidth() { return 3; }
 
+  // TODO(nainar): Move all fixed point logic to a separate class.
   // border-top-width
   float BorderTopWidth() const {
-    return surround_data_->border_.BorderTopWidth();
+    if (surround_data_->border_.top_.Style() == kBorderStyleNone ||
+        surround_data_->border_.top_.Style() == kBorderStyleHidden)
+      return 0;
+    return static_cast<float>(BorderTopWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderTopWidth(float v) {
-    SET_BORDER_WIDTH(surround_data_, border_.top_, v);
+    surround_data_.Access()->border_top_width_ = WidthToFixedPoint(v);
   }
 
   // border-bottom-width
   float BorderBottomWidth() const {
-    return surround_data_->border_.BorderBottomWidth();
+    if (surround_data_->border_.bottom_.Style() == kBorderStyleNone ||
+        surround_data_->border_.bottom_.Style() == kBorderStyleHidden)
+      return 0;
+    return static_cast<float>(BorderBottomWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderBottomWidth(float v) {
-    SET_BORDER_WIDTH(surround_data_, border_.bottom_, v);
+    surround_data_.Access()->border_bottom_width_ = WidthToFixedPoint(v);
   }
 
   // border-left-width
   float BorderLeftWidth() const {
-    return surround_data_->border_.BorderLeftWidth();
+    if (surround_data_->border_.left_.Style() == kBorderStyleNone ||
+        surround_data_->border_.left_.Style() == kBorderStyleHidden)
+      return 0;
+    return static_cast<float>(BorderLeftWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderLeftWidth(float v) {
-    SET_BORDER_WIDTH(surround_data_, border_.left_, v);
+    surround_data_.Access()->border_left_width_ = WidthToFixedPoint(v);
   }
 
   // border-right-width
   float BorderRightWidth() const {
-    return surround_data_->border_.BorderRightWidth();
+    if (surround_data_->border_.right_.Style() == kBorderStyleNone ||
+        surround_data_->border_.right_.Style() == kBorderStyleHidden)
+      return 0;
+    return static_cast<float>(BorderRightWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderRightWidth(float v) {
-    SET_BORDER_WIDTH(surround_data_, border_.right_, v);
+    surround_data_.Access()->border_right_width_ = WidthToFixedPoint(v);
   }
 
   // Border style properties.
@@ -539,23 +559,35 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // Border color properties.
   // border-left-color
-  void SetBorderLeftColor(const StyleColor& v) {
-    SET_BORDERVALUE_COLOR(surround_data_, border_.left_, v);
+  void SetBorderLeftColor(const StyleColor& color) {
+    if (!compareEqual(BorderLeftColor(), color)) {
+      SetBorderLeftColorInternal(color.Resolve(Color()));
+      SetBorderLeftColorIsCurrentColor(color.IsCurrentColor());
+    }
   }
 
   // border-right-color
-  void SetBorderRightColor(const StyleColor& v) {
-    SET_BORDERVALUE_COLOR(surround_data_, border_.right_, v);
+  void SetBorderRightColor(const StyleColor& color) {
+    if (!compareEqual(BorderRightColor(), color)) {
+      SetBorderRightColorInternal(color.Resolve(Color()));
+      SetBorderRightColorIsCurrentColor(color.IsCurrentColor());
+    }
   }
 
   // border-top-color
-  void SetBorderTopColor(const StyleColor& v) {
-    SET_BORDERVALUE_COLOR(surround_data_, border_.top_, v);
+  void SetBorderTopColor(const StyleColor& color) {
+    if (!compareEqual(BorderTopColor(), color)) {
+      SetBorderTopColorInternal(color.Resolve(Color()));
+      SetBorderTopColorIsCurrentColor(color.IsCurrentColor());
+    }
   }
 
   // border-bottom-color
-  void SetBorderBottomColor(const StyleColor& v) {
-    SET_BORDERVALUE_COLOR(surround_data_, border_.bottom_, v);
+  void SetBorderBottomColor(const StyleColor& color) {
+    if (!compareEqual(BorderBottomColor(), color)) {
+      SetBorderBottomColorInternal(color.Resolve(Color()));
+      SetBorderBottomColorIsCurrentColor(color.IsCurrentColor());
+    }
   }
 
   // box-shadow (aka -webkit-box-shadow)
@@ -576,15 +608,15 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // clip
   static LengthBox InitialClip() { return LengthBox(); }
-  const LengthBox& Clip() const { return visual_data_->clip; }
+  const LengthBox& Clip() const { return visual_data_->clip_; }
   void SetClip(const LengthBox& box) {
-    SET_VAR(visual_data_, has_auto_clip, false);
-    SET_VAR(visual_data_, clip, box);
+    SET_VAR(visual_data_, has_auto_clip_, false);
+    SET_VAR(visual_data_, clip_, box);
   }
-  bool HasAutoClip() const { return visual_data_->has_auto_clip; }
+  bool HasAutoClip() const { return visual_data_->has_auto_clip_; }
   void SetHasAutoClip() {
-    SET_VAR(visual_data_, has_auto_clip, true);
-    SET_VAR(visual_data_, clip, ComputedStyle::InitialClip());
+    SET_VAR(visual_data_, has_auto_clip_, true);
+    SET_VAR(visual_data_, clip_, ComputedStyle::InitialClip());
   }
 
   // Column properties.
@@ -1450,14 +1482,24 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     SET_VAR(rare_non_inherited_data_, page_size_type_, t);
   }
 
+  // sticky subtrees
+  bool SubtreeIsSticky() const {
+    return rare_inherited_data_->subtree_is_sticky_;
+  }
+  void SetSubtreeIsSticky(bool b) {
+    SET_VAR(rare_inherited_data_, subtree_is_sticky_, b);
+  }
+
   // Text decoration properties.
   // text-decoration-line
-  static TextDecoration InitialTextDecoration() { return kTextDecorationNone; }
+  static TextDecoration InitialTextDecoration() {
+    return TextDecoration::kNone;
+  }
   TextDecoration GetTextDecoration() const {
-    return static_cast<TextDecoration>(visual_data_->text_decoration);
+    return static_cast<TextDecoration>(visual_data_->text_decoration_);
   }
   void SetTextDecoration(TextDecoration v) {
-    SET_VAR(visual_data_, text_decoration, v);
+    SET_VAR(visual_data_, text_decoration_, static_cast<unsigned>(v));
   }
 
   // text-decoration-color
@@ -1511,7 +1553,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
 
   // touch-action
-  static TouchAction InitialTouchAction() { return kTouchActionAuto; }
+  static TouchAction InitialTouchAction() {
+    return TouchAction::kTouchActionAuto;
+  }
   TouchAction GetTouchAction() const {
     return static_cast<TouchAction>(rare_non_inherited_data_->touch_action_);
   }
@@ -1660,17 +1704,17 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // hyphens
   static Hyphens InitialHyphens() { return kHyphensManual; }
   Hyphens GetHyphens() const {
-    return static_cast<Hyphens>(rare_inherited_data_->hyphens);
+    return static_cast<Hyphens>(rare_inherited_data_->hyphens_);
   }
-  void SetHyphens(Hyphens h) { SET_VAR(rare_inherited_data_, hyphens, h); }
+  void SetHyphens(Hyphens h) { SET_VAR(rare_inherited_data_, hyphens_, h); }
 
   // -webkit-hyphenate-character
   static const AtomicString& InitialHyphenationString() { return g_null_atom; }
   const AtomicString& HyphenationString() const {
-    return rare_inherited_data_->hyphenation_string;
+    return rare_inherited_data_->hyphenation_string_;
   }
   void SetHyphenationString(const AtomicString& h) {
-    SET_VAR(rare_inherited_data_, hyphenation_string, h);
+    SET_VAR(rare_inherited_data_, hyphenation_string_, h);
   }
 
   // line-height
@@ -1686,26 +1730,26 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // orphans
   static short InitialOrphans() { return 2; }
-  short Orphans() const { return rare_inherited_data_->orphans; }
-  void SetOrphans(short o) { SET_VAR(rare_inherited_data_, orphans, o); }
+  short Orphans() const { return rare_inherited_data_->orphans_; }
+  void SetOrphans(short o) { SET_VAR(rare_inherited_data_, orphans_, o); }
 
   // widows
   static short InitialWidows() { return 2; }
-  short Widows() const { return rare_inherited_data_->widows; }
-  void SetWidows(short w) { SET_VAR(rare_inherited_data_, widows, w); }
+  short Widows() const { return rare_inherited_data_->widows_; }
+  void SetWidows(short w) { SET_VAR(rare_inherited_data_, widows_, w); }
 
   // overflow-wrap (aka word-wrap)
   static EOverflowWrap InitialOverflowWrap() { return kNormalOverflowWrap; }
   EOverflowWrap OverflowWrap() const {
-    return static_cast<EOverflowWrap>(rare_inherited_data_->overflow_wrap);
+    return static_cast<EOverflowWrap>(rare_inherited_data_->overflow_wrap_);
   }
   void SetOverflowWrap(EOverflowWrap b) {
-    SET_VAR(rare_inherited_data_, overflow_wrap, b);
+    SET_VAR(rare_inherited_data_, overflow_wrap_, b);
   }
 
   // quotes
   static QuotesData* InitialQuotes() { return 0; }
-  QuotesData* Quotes() const { return rare_inherited_data_->quotes.Get(); }
+  QuotesData* Quotes() const { return rare_inherited_data_->quotes_.Get(); }
   void SetQuotes(PassRefPtr<QuotesData>);
 
   // line-height-step
@@ -1720,9 +1764,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // speak
   static ESpeak InitialSpeak() { return kSpeakNormal; }
   ESpeak Speak() const {
-    return static_cast<ESpeak>(rare_inherited_data_->speak);
+    return static_cast<ESpeak>(rare_inherited_data_->speak_);
   }
-  void SetSpeak(ESpeak s) { SET_VAR(rare_inherited_data_, speak, s); }
+  void SetSpeak(ESpeak s) { SET_VAR(rare_inherited_data_, speak_, s); }
 
   // tab-size
   static TabSize InitialTabSize() { return TabSize(8); }
@@ -1753,7 +1797,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   static Length InitialTextIndent() { return Length(kFixed); }
   static TextIndentLine InitialTextIndentLine() { return kTextIndentFirstLine; }
   static TextIndentType InitialTextIndentType() { return kTextIndentNormal; }
-  const Length& TextIndent() const { return rare_inherited_data_->indent; }
+  const Length& TextIndent() const { return rare_inherited_data_->indent_; }
   TextIndentLine GetTextIndentLine() const {
     return static_cast<TextIndentLine>(rare_inherited_data_->text_indent_line_);
   }
@@ -1761,7 +1805,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return static_cast<TextIndentType>(rare_inherited_data_->text_indent_type_);
   }
   void SetTextIndent(const Length& v) {
-    SET_VAR(rare_inherited_data_, indent, v);
+    SET_VAR(rare_inherited_data_, indent_, v);
   }
   void SetTextIndentLine(TextIndentLine v) {
     SET_VAR(rare_inherited_data_, text_indent_line_, v);
@@ -1792,7 +1836,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // text-shadow
   static ShadowList* InitialTextShadow() { return 0; }
   ShadowList* TextShadow() const {
-    return rare_inherited_data_->text_shadow.Get();
+    return rare_inherited_data_->text_shadow_.Get();
   }
   void SetTextShadow(PassRefPtr<ShadowList>);
 
@@ -1810,19 +1854,19 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // word-break inherited (aka -epub-word-break)
   static EWordBreak InitialWordBreak() { return kNormalWordBreak; }
   EWordBreak WordBreak() const {
-    return static_cast<EWordBreak>(rare_inherited_data_->word_break);
+    return static_cast<EWordBreak>(rare_inherited_data_->word_break_);
   }
   void SetWordBreak(EWordBreak b) {
-    SET_VAR(rare_inherited_data_, word_break, b);
+    SET_VAR(rare_inherited_data_, word_break_, b);
   }
 
   // -webkit-line-break
   static LineBreak InitialLineBreak() { return kLineBreakAuto; }
   LineBreak GetLineBreak() const {
-    return static_cast<LineBreak>(rare_inherited_data_->line_break);
+    return static_cast<LineBreak>(rare_inherited_data_->line_break_);
   }
   void SetLineBreak(LineBreak b) {
-    SET_VAR(rare_inherited_data_, line_break, b);
+    SET_VAR(rare_inherited_data_, line_break_, b);
   }
 
   // Text emphasis properties.
@@ -1837,27 +1881,28 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
   TextEmphasisFill GetTextEmphasisFill() const {
     return static_cast<TextEmphasisFill>(
-        rare_inherited_data_->text_emphasis_fill);
+        rare_inherited_data_->text_emphasis_fill_);
   }
   TextEmphasisMark GetTextEmphasisMark() const;
   const AtomicString& TextEmphasisCustomMark() const {
-    return rare_inherited_data_->text_emphasis_custom_mark;
+    return rare_inherited_data_->text_emphasis_custom_mark_;
   }
   const AtomicString& TextEmphasisMarkString() const;
   void SetTextEmphasisFill(TextEmphasisFill fill) {
-    SET_VAR(rare_inherited_data_, text_emphasis_fill, fill);
+    SET_VAR(rare_inherited_data_, text_emphasis_fill_, fill);
   }
   void SetTextEmphasisMark(TextEmphasisMark mark) {
-    SET_VAR(rare_inherited_data_, text_emphasis_mark, mark);
+    SET_VAR(rare_inherited_data_, text_emphasis_mark_, mark);
   }
   void SetTextEmphasisCustomMark(const AtomicString& mark) {
-    SET_VAR(rare_inherited_data_, text_emphasis_custom_mark, mark);
+    SET_VAR(rare_inherited_data_, text_emphasis_custom_mark_, mark);
   }
 
   // -webkit-text-emphasis-color (aka -epub-text-emphasis-color)
-  void SetTextEmphasisColor(const StyleColor& c) {
-    SET_VAR_WITH_SETTER(rare_inherited_data_, TextEmphasisColor,
-                        SetTextEmphasisColor, c);
+  void SetTextEmphasisColor(const StyleColor& color) {
+    SET_VAR(rare_inherited_data_, text_emphasis_color_, color.Resolve(Color()));
+    SET_VAR(rare_inherited_data_, text_emphasis_color_is_current_color_,
+            color.IsCurrentColor());
   }
 
   // -webkit-text-emphasis-position
@@ -1866,19 +1911,19 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
   TextEmphasisPosition GetTextEmphasisPosition() const {
     return static_cast<TextEmphasisPosition>(
-        rare_inherited_data_->text_emphasis_position);
+        rare_inherited_data_->text_emphasis_position_);
   }
   void SetTextEmphasisPosition(TextEmphasisPosition position) {
-    SET_VAR(rare_inherited_data_, text_emphasis_position, position);
+    SET_VAR(rare_inherited_data_, text_emphasis_position_, position);
   }
 
   // -webkit-highlight
   static const AtomicString& InitialHighlight() { return g_null_atom; }
   const AtomicString& Highlight() const {
-    return rare_inherited_data_->highlight;
+    return rare_inherited_data_->highlight_;
   }
   void SetHighlight(const AtomicString& h) {
-    SET_VAR(rare_inherited_data_, highlight, h);
+    SET_VAR(rare_inherited_data_, highlight_, h);
   }
 
   // -webkit-line-clamp
@@ -1902,40 +1947,43 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // -webkit-tap-highlight-color
   static Color InitialTapHighlightColor();
   Color TapHighlightColor() const {
-    return rare_inherited_data_->tap_highlight_color;
+    return rare_inherited_data_->tap_highlight_color_;
   }
   void SetTapHighlightColor(const Color& c) {
-    SET_VAR(rare_inherited_data_, tap_highlight_color, c);
+    SET_VAR(rare_inherited_data_, tap_highlight_color_, c);
   }
 
   // -webkit-text-fill-color
-  void SetTextFillColor(const StyleColor& c) {
-    SET_VAR_WITH_SETTER(rare_inherited_data_, TextFillColor, SetTextFillColor,
-                        c);
+  void SetTextFillColor(const StyleColor& color) {
+    SET_VAR(rare_inherited_data_, text_fill_color_, color.Resolve(Color()));
+    SET_VAR(rare_inherited_data_, text_fill_color_is_current_color_,
+            color.IsCurrentColor());
   }
 
   // -webkit-text-security
-  static ETextSecurity InitialTextSecurity() { return TSNONE; }
+  static ETextSecurity InitialTextSecurity() { return ETextSecurity::kNone; }
   ETextSecurity TextSecurity() const {
-    return static_cast<ETextSecurity>(rare_inherited_data_->text_security);
+    return static_cast<ETextSecurity>(rare_inherited_data_->text_security_);
   }
   void SetTextSecurity(ETextSecurity a_text_security) {
-    SET_VAR(rare_inherited_data_, text_security, a_text_security);
+    SET_VAR(rare_inherited_data_, text_security_,
+            static_cast<unsigned>(a_text_security));
   }
 
   // -webkit-text-stroke-color
-  void SetTextStrokeColor(const StyleColor& c) {
-    SET_VAR_WITH_SETTER(rare_inherited_data_, TextStrokeColor,
-                        SetTextStrokeColor, c);
+  void SetTextStrokeColor(const StyleColor& color) {
+    SET_VAR(rare_inherited_data_, text_stroke_color_, color.Resolve(Color()));
+    SET_VAR(rare_inherited_data_, text_stroke_color_is_current_color_,
+            color.IsCurrentColor());
   }
 
   // -webkit-text-stroke-width
   static float InitialTextStrokeWidth() { return 0; }
   float TextStrokeWidth() const {
-    return rare_inherited_data_->text_stroke_width;
+    return rare_inherited_data_->text_stroke_width_;
   }
   void SetTextStrokeWidth(float w) {
-    SET_VAR(rare_inherited_data_, text_stroke_width, w);
+    SET_VAR(rare_inherited_data_, text_stroke_width_, w);
   }
 
   // -webkit-user-drag
@@ -1950,24 +1998,27 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // -webkit-user-modify
   static EUserModify InitialUserModify() { return READ_ONLY; }
   EUserModify UserModify() const {
-    return static_cast<EUserModify>(rare_inherited_data_->user_modify);
+    return static_cast<EUserModify>(rare_inherited_data_->user_modify_);
   }
   void SetUserModify(EUserModify u) {
-    SET_VAR(rare_inherited_data_, user_modify, u);
+    SET_VAR(rare_inherited_data_, user_modify_, u);
   }
 
   // -webkit-user-select
   static EUserSelect InitialUserSelect() { return SELECT_TEXT; }
   EUserSelect UserSelect() const {
-    return static_cast<EUserSelect>(rare_inherited_data_->user_select);
+    return static_cast<EUserSelect>(rare_inherited_data_->user_select_);
   }
   void SetUserSelect(EUserSelect s) {
-    SET_VAR(rare_inherited_data_, user_select, s);
+    SET_VAR(rare_inherited_data_, user_select_, s);
   }
 
   // caret-color
-  void SetCaretColor(const StyleAutoColor& c) {
-    SET_VAR_WITH_SETTER(rare_inherited_data_, CaretColor, SetCaretColor, c);
+  void SetCaretColor(const StyleAutoColor& color) {
+    SET_VAR(rare_inherited_data_, caret_color_, color.Resolve(Color()));
+    SET_VAR(rare_inherited_data_, caret_color_is_current_color_,
+            color.IsCurrentColor());
+    SET_VAR(rare_inherited_data_, caret_color_is_auto_, color.IsAutoColor());
   }
 
   // Font properties.
@@ -1997,6 +2048,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   const AtomicString& Locale() const {
     return LayoutLocale::LocaleString(GetFontDescription().Locale());
   }
+  AtomicString LocaleForLineBreakIterator() const;
 
   // FIXME: Remove letter-spacing/word-spacing and replace them with respective
   // FontBuilder calls.  letter-spacing
@@ -2822,20 +2874,32 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   void SetBorderImageSlicesFill(bool);
   const BorderData& Border() const { return surround_data_->border_; }
-  const BorderValue& BorderLeft() const {
-    return surround_data_->border_.Left();
+  BorderValue BorderLeft() const {
+    return BorderValue(surround_data_->border_.Left(), BorderLeftColor(),
+                       BorderLeftWidth());
   }
-  const BorderValue& BorderRight() const {
-    return surround_data_->border_.Right();
+  BorderValue BorderRight() const {
+    return BorderValue(surround_data_->border_.Right(), BorderRightColor(),
+                       BorderRightWidth());
   }
-  const BorderValue& BorderTop() const { return surround_data_->border_.Top(); }
-  const BorderValue& BorderBottom() const {
-    return surround_data_->border_.Bottom();
+  BorderValue BorderTop() const {
+    return BorderValue(surround_data_->border_.Top(), BorderTopColor(),
+                       BorderTopWidth());
   }
-  const BorderValue& BorderBefore() const;
-  const BorderValue& BorderAfter() const;
-  const BorderValue& BorderStart() const;
-  const BorderValue& BorderEnd() const;
+  BorderValue BorderBottom() const {
+    return BorderValue(surround_data_->border_.Bottom(), BorderBottomColor(),
+                       BorderBottomWidth());
+  }
+  bool BorderSizeEquals(const ComputedStyle& o) const {
+    return BorderWidthEquals(BorderLeftWidth(), o.BorderLeftWidth()) &&
+           BorderWidthEquals(BorderTopWidth(), o.BorderTopWidth()) &&
+           BorderWidthEquals(BorderRightWidth(), o.BorderRightWidth()) &&
+           BorderWidthEquals(BorderBottomWidth(), o.BorderBottomWidth());
+  }
+  BorderValue BorderBefore() const;
+  BorderValue BorderAfter() const;
+  BorderValue BorderStart() const;
+  BorderValue BorderEnd() const;
   float BorderAfterWidth() const;
   float BorderBeforeWidth() const;
   float BorderEndWidth() const;
@@ -2844,7 +2908,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   float BorderUnderWidth() const;
 
   bool HasBorderFill() const { return Border().HasBorderFill(); }
-  bool HasBorder() const { return Border().HasBorder(); }
+  bool HasBorder() const {
+    return Border().HasBorder() || BorderLeftWidth() || BorderRightWidth() ||
+           BorderTopWidth() || BorderBottomWidth();
+  }
   bool HasBorderDecoration() const { return HasBorder() || HasBorderFill(); }
   bool HasBorderRadius() const {
     if (!BorderTopLeftRadius().Width().IsZero())
@@ -2858,7 +2925,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return false;
   }
   bool HasBorderColorReferencingCurrentColor() const {
-    return Border().HasBorderColorReferencingCurrentColor();
+    return (BorderLeft().NonZero() && BorderLeftColor().IsCurrentColor()) ||
+           (BorderRight().NonZero() && BorderRightColor().IsCurrentColor()) ||
+           (BorderTop().NonZero() && BorderTopColor().IsCurrentColor()) ||
+           (BorderBottom().NonZero() && BorderBottomColor().IsCurrentColor());
   }
 
   bool RadiiEqual(const ComputedStyle& o) const {
@@ -2866,6 +2936,43 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
            BorderTopRightRadius() == o.BorderTopRightRadius() &&
            BorderBottomLeftRadius() == o.BorderBottomLeftRadius() &&
            BorderBottomRightRadius() == o.BorderBottomRightRadius();
+  }
+
+  bool BorderColorEquals(const ComputedStyle& o) const {
+    return (BorderLeftColorInternal() == o.BorderLeftColorInternal() &&
+            BorderRightColorInternal() == o.BorderRightColorInternal() &&
+            BorderTopColorInternal() == o.BorderTopColorInternal() &&
+            BorderBottomColorInternal() == o.BorderBottomColorInternal()) &&
+           (BorderLeftColorIsCurrentColor() ==
+                o.BorderLeftColorIsCurrentColor() &&
+            BorderRightColorIsCurrentColor() ==
+                o.BorderRightColorIsCurrentColor() &&
+            BorderTopColorIsCurrentColor() ==
+                o.BorderTopColorIsCurrentColor() &&
+            BorderBottomColorIsCurrentColor() ==
+                o.BorderBottomColorIsCurrentColor());
+  }
+
+  bool BorderColorVisuallyEquals(const ComputedStyle& o) const {
+    if ((BorderLeftStyle() == kBorderStyleNone &&
+         o.BorderLeftStyle() == kBorderStyleNone) &&
+        (BorderRightStyle() == kBorderStyleNone &&
+         o.BorderRightStyle() == kBorderStyleNone) &&
+        (BorderTopStyle() == kBorderStyleNone &&
+         o.BorderTopStyle() == kBorderStyleNone) &&
+        (BorderBottomStyle() == kBorderStyleNone &&
+         o.BorderBottomStyle() == kBorderStyleNone))
+      return true;
+    if ((BorderLeftStyle() == kBorderStyleHidden &&
+         o.BorderLeftStyle() == kBorderStyleHidden) &&
+        (BorderRightStyle() == kBorderStyleHidden &&
+         o.BorderRightStyle() == kBorderStyleHidden) &&
+        (BorderTopStyle() == kBorderStyleHidden &&
+         o.BorderTopStyle() == kBorderStyleHidden) &&
+        (BorderBottomStyle() == kBorderStyleHidden &&
+         o.BorderBottomStyle() == kBorderStyleHidden))
+      return true;
+    return BorderColorEquals(o);
   }
 
   void ResetBorder() {
@@ -2879,17 +2986,30 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     ResetBorderBottomLeftRadius();
     ResetBorderBottomRightRadius();
   }
+
   void ResetBorderTop() {
-    SET_VAR(surround_data_, border_.top_, BorderValue());
+    SET_VAR(surround_data_, border_.top_, BorderStyle());
+    SetBorderTopWidth(3);
+    SetBorderTopColorInternal(0);
+    SetBorderTopColorInternal(true);
   }
   void ResetBorderRight() {
-    SET_VAR(surround_data_, border_.right_, BorderValue());
+    SET_VAR(surround_data_, border_.right_, BorderStyle());
+    SetBorderRightWidth(3);
+    SetBorderRightColorInternal(0);
+    SetBorderRightColorInternal(true);
   }
   void ResetBorderBottom() {
-    SET_VAR(surround_data_, border_.bottom_, BorderValue());
+    SET_VAR(surround_data_, border_.bottom_, BorderStyle());
+    SetBorderBottomWidth(3);
+    SetBorderBottomColorInternal(0);
+    SetBorderBottomColorInternal(true);
   }
   void ResetBorderLeft() {
-    SET_VAR(surround_data_, border_.left_, BorderValue());
+    SET_VAR(surround_data_, border_.left_, BorderStyle());
+    SetBorderLeftWidth(3);
+    SetBorderLeftColorInternal(0);
+    SetBorderLeftColorInternal(true);
   }
   void ResetBorderImage() {
     SET_VAR(surround_data_, border_.image_, NinePieceImage());
@@ -2971,10 +3091,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
 
   // Clip utility functions.
-  const Length& ClipLeft() const { return visual_data_->clip.Left(); }
-  const Length& ClipRight() const { return visual_data_->clip.Right(); }
-  const Length& ClipTop() const { return visual_data_->clip.Top(); }
-  const Length& ClipBottom() const { return visual_data_->clip.Bottom(); }
+  const Length& ClipLeft() const { return visual_data_->clip_.Left(); }
+  const Length& ClipRight() const { return visual_data_->clip_.Right(); }
+  const Length& ClipTop() const { return visual_data_->clip_.Top(); }
+  const Length& ClipBottom() const { return visual_data_->clip_.Bottom(); }
 
   // Offset utility functions.
   // Accessors for positioned object edges that take into account writing mode.
@@ -3055,7 +3175,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // Cursor utility functions.
   CursorList* Cursors() const {
-    return rare_inherited_data_->cursor_data.Get();
+    return rare_inherited_data_->cursor_data_.Get();
   }
   void AddCursor(StyleImage*,
                  bool hot_spot_specified,
@@ -3392,21 +3512,34 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   void SetVisitedLinkTextDecorationColor(const StyleColor& v) {
     SET_VAR(rare_non_inherited_data_, visited_link_text_decoration_color_, v);
   }
-  void SetVisitedLinkTextEmphasisColor(const StyleColor& v) {
-    SET_VAR_WITH_SETTER(rare_inherited_data_, VisitedLinkTextEmphasisColor,
-                        SetVisitedLinkTextEmphasisColor, v);
+  void SetVisitedLinkTextEmphasisColor(const StyleColor& color) {
+    SET_VAR(rare_inherited_data_, visited_link_text_emphasis_color_,
+            color.Resolve(Color()));
+    SET_VAR(rare_inherited_data_,
+            visited_link_text_emphasis_color_is_current_color_,
+            color.IsCurrentColor());
   }
-  void SetVisitedLinkTextFillColor(const StyleColor& v) {
-    SET_VAR_WITH_SETTER(rare_inherited_data_, VisitedLinkTextFillColor,
-                        SetVisitedLinkTextFillColor, v);
+  void SetVisitedLinkTextFillColor(const StyleColor& color) {
+    SET_VAR(rare_inherited_data_, visited_link_text_fill_color_,
+            color.Resolve(Color()));
+    SET_VAR(rare_inherited_data_,
+            visited_link_text_fill_color_is_current_color_,
+            color.IsCurrentColor());
   }
-  void SetVisitedLinkTextStrokeColor(const StyleColor& v) {
-    SET_VAR_WITH_SETTER(rare_inherited_data_, VisitedLinkTextStrokeColor,
-                        SetVisitedLinkTextStrokeColor, v);
+  void SetVisitedLinkTextStrokeColor(const StyleColor& color) {
+    SET_VAR(rare_inherited_data_, visited_link_text_stroke_color_,
+            color.Resolve(Color()));
+    SET_VAR(rare_inherited_data_,
+            visited_link_text_stroke_color_is_current_color_,
+            color.IsCurrentColor());
   }
-  void SetVisitedLinkCaretColor(const StyleAutoColor& v) {
-    SET_VAR_WITH_SETTER(rare_inherited_data_, VisitedLinkCaretColor,
-                        SetVisitedLinkCaretColor, v);
+  void SetVisitedLinkCaretColor(const StyleAutoColor& color) {
+    SET_VAR(rare_inherited_data_, visited_link_caret_color_,
+            color.Resolve(Color()));
+    SET_VAR(rare_inherited_data_, visited_link_caret_color_is_current_color_,
+            color.IsCurrentColor());
+    SET_VAR(rare_inherited_data_, visited_link_caret_color_is_auto_,
+            color.IsAutoColor());
   }
 
   static bool IsDisplayBlockContainer(EDisplay display) {
@@ -3451,22 +3584,35 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // Color accessors are all private to make sure callers use
   // VisitedDependentColor instead to access them.
   StyleColor BorderLeftColor() const {
-    return surround_data_->border_.Left().GetColor();
+    return BorderLeftColorIsCurrentColor()
+               ? StyleColor::CurrentColor()
+               : StyleColor(BorderLeftColorInternal());
   }
   StyleColor BorderRightColor() const {
-    return surround_data_->border_.Right().GetColor();
+    return BorderRightColorIsCurrentColor()
+               ? StyleColor::CurrentColor()
+               : StyleColor(BorderRightColorInternal());
   }
   StyleColor BorderTopColor() const {
-    return surround_data_->border_.Top().GetColor();
+    return BorderTopColorIsCurrentColor()
+               ? StyleColor::CurrentColor()
+               : StyleColor(BorderTopColorInternal());
   }
   StyleColor BorderBottomColor() const {
-    return surround_data_->border_.Bottom().GetColor();
+    return BorderBottomColorIsCurrentColor()
+               ? StyleColor::CurrentColor()
+               : StyleColor(BorderBottomColorInternal());
   }
+
   StyleColor BackgroundColor() const {
     return background_data_->background_color_;
   }
   StyleAutoColor CaretColor() const {
-    return rare_inherited_data_->CaretColor();
+    if (rare_inherited_data_->caret_color_is_current_color_)
+      return StyleAutoColor::CurrentColor();
+    if (rare_inherited_data_->caret_color_is_auto_)
+      return StyleAutoColor::AutoColor();
+    return StyleAutoColor(rare_inherited_data_->caret_color_);
   }
   Color GetColor() const;
   StyleColor ColumnRuleColor() const {
@@ -3476,16 +3622,26 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return rare_non_inherited_data_->outline_.GetColor();
   }
   StyleColor TextEmphasisColor() const {
-    return rare_inherited_data_->TextEmphasisColor();
+    return rare_inherited_data_->text_emphasis_color_is_current_color_
+               ? StyleColor::CurrentColor()
+               : StyleColor(rare_inherited_data_->text_emphasis_color_);
   }
   StyleColor TextFillColor() const {
-    return rare_inherited_data_->TextFillColor();
+    return rare_inherited_data_->text_fill_color_is_current_color_
+               ? StyleColor::CurrentColor()
+               : StyleColor(rare_inherited_data_->text_fill_color_);
   }
   StyleColor TextStrokeColor() const {
-    return rare_inherited_data_->TextStrokeColor();
+    return rare_inherited_data_->text_stroke_color_is_current_color_
+               ? StyleColor::CurrentColor()
+               : StyleColor(rare_inherited_data_->text_stroke_color_);
   }
   StyleAutoColor VisitedLinkCaretColor() const {
-    return rare_inherited_data_->VisitedLinkCaretColor();
+    if (rare_inherited_data_->visited_link_caret_color_is_current_color_)
+      return StyleAutoColor::CurrentColor();
+    if (rare_inherited_data_->visited_link_caret_color_is_auto_)
+      return StyleAutoColor::AutoColor();
+    return StyleAutoColor(rare_inherited_data_->visited_link_caret_color_);
   }
   Color VisitedLinkColor() const;
   StyleColor VisitedLinkBackgroundColor() const {
@@ -3517,13 +3673,24 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return rare_non_inherited_data_->visited_link_text_decoration_color_;
   }
   StyleColor VisitedLinkTextEmphasisColor() const {
-    return rare_inherited_data_->VisitedLinkTextEmphasisColor();
+    return rare_inherited_data_
+                   ->visited_link_text_emphasis_color_is_current_color_
+               ? StyleColor::CurrentColor()
+               : StyleColor(
+                     rare_inherited_data_->visited_link_text_emphasis_color_);
   }
   StyleColor VisitedLinkTextFillColor() const {
-    return rare_inherited_data_->VisitedLinkTextFillColor();
+    return rare_inherited_data_->visited_link_text_fill_color_is_current_color_
+               ? StyleColor::CurrentColor()
+               : StyleColor(
+                     rare_inherited_data_->visited_link_text_fill_color_);
   }
   StyleColor VisitedLinkTextStrokeColor() const {
-    return rare_inherited_data_->VisitedLinkTextStrokeColor();
+    return rare_inherited_data_
+                   ->visited_link_text_stroke_color_is_current_color_
+               ? StyleColor::CurrentColor()
+               : StyleColor(
+                     rare_inherited_data_->visited_link_text_stroke_color_);
   }
 
   StyleColor DecorationColorIncludingFallback(bool visited_link) const;

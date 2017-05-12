@@ -24,15 +24,6 @@ const char kEnableMaterialDesignPolicyPageDescription[] =
     "If enabled, the chrome://md-policy URL loads the Material Design "
     "policy page.";
 
-//  Material Design version of chrome://history
-
-const char kEnableMaterialDesignHistoryName[] =
-    "Enable Material Design history";
-
-const char kEnableMaterialDesignHistoryDescription[] =
-    "If enabled, the chrome://history/ URL loads the Material Design "
-    "history page.";
-
 //  Material Design version of chrome://settings
 
 const char kEnableMaterialDesignSettingsName[] =
@@ -251,6 +242,12 @@ const char kTopChromeMdDescription[] =
 const char kTopChromeMdMaterial[] = "Normal";
 
 const char kTopChromeMdMaterialHybrid[] = "Touch";
+
+const char kSiteDetails[] = "Site Details";
+
+const char kSiteDetailsDescription[] =
+    "Adds UI in MD Settings to view all content settings for a specific "
+    "origin.";
 
 const char kSiteSettings[] = "Site settings with All sites and Site details";
 
@@ -1211,6 +1208,16 @@ const char kEnableDataReductionProxySiteBreakdownName[] =
 const char kEnableDataReductionProxySiteBreakdownDescription[] =
     "Enable the site breakdown on the Data Saver settings page.";
 
+const char kEnableOfflinePreviewsName[] = "Offline Page Previews";
+
+const char kEnableOfflinePreviewsDescription[] =
+    "Enable showing offline page previews on slow networks.";
+
+const char kEnableClientLoFiName[] = "Client-side Lo-Fi previews";
+
+const char kEnableClientLoFiDescription[] =
+    "Enable showing low fidelity images on some pages on slow networks.";
+
 #endif  // defined(OS_ANDROID)
 
 const char kLcdTextName[] = "LCD text antialiasing";
@@ -1733,13 +1740,6 @@ const char kAccountConsistencyName[] =
 const char kAccountConsistencyDescription[] =
     "When enabled, the browser manages signing in and out of Google "
     "accounts.";
-
-const char kEnablePasswordSeparatedSigninFlowName[] =
-    "Enable new gaia password-separated sign in flow";
-
-const char kEnablePasswordSeparatedSigninFlowDescription[] =
-    "When enabled, signing in to the browser will use a new gaia "
-    "password-separated sign in flow.";
 
 const char kGoogleProfileInfoName[] = "Google profile name and icon";
 
@@ -2374,12 +2374,25 @@ const char kEnableContentSuggestionsNewFaviconServerDescription[] =
     "If enabled, the content suggestions (on the NTP) will get favicons from a "
     "new favicon server.";
 
+const char kEnableNtpMostLikelyFaviconsFromServerName[] =
+    "Download favicons for NTP tiles from Google.";
+
+const char kEnableNtpMostLikelyFaviconsFromServerDescription[] =
+    "If enabled, missing favicons for NTP tiles get downloaded from Google. "
+    "This only applies to tiles that originate from synced history.";
+
 const char kEnableContentSuggestionsSettingsName[] =
     "Show content suggestions settings.";
 
 const char kEnableContentSuggestionsSettingsDescription[] =
     "If enabled, the content suggestions settings will be available from the "
     "main settings menu.";
+
+const char kEnableContentSuggestionsShowSummaryName[] =
+    "Show content suggestions summaries.";
+
+const char kEnableContentSuggestionsShowSummaryDescription[] =
+    "If enabled, the content suggestions summaries will be shown.";
 
 const char kEnableNtpRemoteSuggestionsName[] =
     "Show server-side suggestions on the New Tab page";
@@ -2582,6 +2595,11 @@ const char kAndroidPaymentAppsName[] = "Android payment apps";
 const char kAndroidPaymentAppsDescription[] =
     "Enable third party Android apps to integrate as payment apps";
 
+const char kServiceWorkerPaymentAppsName[] = "Service Worker payment apps";
+
+const char kServiceWorkerPaymentAppsDescription[] =
+    "Enable Service Worker applications to integrate as payment apps";
+
 #endif  // defined(OS_ANDROID)
 
 const char kFeaturePolicyName[] = "Feature Policy";
@@ -2646,16 +2664,16 @@ const char kExpensiveBackgroundTimerThrottlingDescription[] =
 
 #if !defined(OS_ANDROID)
 
-const char kEnableDefaultMediaSessionName[] = "Manage audio focus across tabs";
+const char kEnableAudioFocusName[] = "Manage audio focus across tabs";
 
-const char kEnableDefaultMediaSessionDescription[] =
+const char kEnableAudioFocusDescription[] =
     "Manage audio focus across tabs to improve the audio mixing.";
 
-const char kEnableDefaultMediaSessionDisabled[] = "Disabled";
+const char kEnableAudioFocusDisabled[] = "Disabled";
 
-const char kEnableDefaultMediaSessionEnabled[] = "Enabled";
+const char kEnableAudioFocusEnabled[] = "Enabled";
 
-const char kEnableDefaultMediaSessionEnabledDuckFlash[] =
+const char kEnableAudioFocusEnabledDuckFlash[] =
     "Enabled (Flash lowers volume when interrupted by other sound, "
     "experimental)";
 
@@ -2726,17 +2744,6 @@ const char kCrosCompUpdatesName[] = "Chrome OS Flash Component Updates";
 
 const char kCrosCompUpdatesDescription[] =
     "Enable Flash component updates for Chrome OS.";
-
-//  Native Android History chrome://flags strings
-
-#if defined(OS_ANDROID)
-
-const char kNativeAndroidHistoryManager[] = "Native Android History";
-
-const char kNativeAndroidHistoryManagerDescription[] =
-    "Show the native Android UI for browsing history.";
-
-#endif  // defined(OS_ANDROID)
 
 //  Play Services LSD permission prompt chrome://flags strings
 
@@ -3080,7 +3087,7 @@ const char kAutoplayPolicyNoUserGestureRequired[] =
 
 const char kAutoplayPolicyUserGestureRequired[] = "User gesture is required.";
 
-const char kAutoplayPolicyCrossOriginUserGestureRequired[] =
+const char kAutoplayPolicyUserGestureRequiredForCrossOrigin[] =
     "User gesture is required for cross-origin iframes.";
 
 const char kOmniboxDisplayTitleForCurrentUrlName[] =
@@ -3090,6 +3097,11 @@ const char kOmniboxDisplayTitleForCurrentUrlDescription[] =
     "In the event that the omnibox provides suggestions on-focus, the URL of "
     "the current page is provided as the first suggestion without a title. "
     "Enabling this flag causes the title to be displayed.";
+
+const char kOmniboxUIVerticalMarginName[] = "Omnibox UI Vertical Margin";
+
+const char kOmniboxUIVerticalMarginDescription[] =
+    "Changes the vertical margin in the Omnibox UI.";
 
 const char kForceEffectiveConnectionTypeName[] =
     "Override effective connection type";
@@ -3121,5 +3133,49 @@ const char kUseSuggestionsEvenIfFewFeatureName[] =
 const char kUseSuggestionsEvenIfFewFeatureDescription[] =
     "Request server-side suggestions even if there are only very few of them "
     "and use them for tiles on the New Tab Page.";
+
+const char kLocationHardReloadName[] =
+    "Experimental change for Location.reload() to trigger a hard-reload.";
+
+const char kLocationHardReloadDescription[] =
+    "Enable an experimental change for Location.reload() to trigger a "
+    "hard-reload.";
+
+const char kCaptureThumbnailOnLoadFinishedName[] =
+    "Capture page thumbnail on load finished";
+
+const char kCaptureThumbnailOnLoadFinishedDescription[] =
+    "Capture a page thumbnail (for use on the New Tab page) when the page load "
+    "finishes, in addition to other times a thumbnail may be captured.";
+
+#if defined(OS_WIN)
+
+// Name and description of the flag that enables D3D v-sync.
+const char kEnableD3DVsync[] = "D3D v-sync";
+const char kEnableD3DVsyncDescription[] =
+    "Produces v-sync signal by having D3D wait for vertical blanking interval "
+    "to occur.";
+
+#endif  // defined(OS_WIN)
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+
+const char kUseGoogleLocalNtpName[] = "Enable using the Google local NTP";
+const char kUseGoogleLocalNtpDescription[] =
+    "Use the local New Tab page if Google is the default search engine.";
+
+const char kOneGoogleBarOnLocalNtpName[] =
+    "Enable the OneGoogleBar on the local NTP";
+const char kOneGoogleBarOnLocalNtpDescription[] =
+    "Show a OneGoogleBar on the local New Tab page if Google is the default "
+    "search engine.";
+
+#endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
+
+#if defined(OS_MACOSX)
+extern const char kMacRTLName[] = "Enable RTL";
+extern const char kMacRTLDescription[] =
+    "Mirrors the UI for RTL language users";
+#endif
 
 }  // namespace flag_descriptions

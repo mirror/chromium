@@ -75,7 +75,7 @@ void StartNewButtonColumnSet(views::GridLayout* layout,
   const int button_padding =
       provider->GetDistanceMetric(views::DISTANCE_RELATED_BUTTON_HORIZONTAL);
   const int button_size_limit =
-      provider->GetDistanceMetric(DISTANCE_BUTTON_MAX_LINKABLE_WIDTH);
+      provider->GetDistanceMetric(views::DISTANCE_BUTTON_MAX_LINKABLE_WIDTH);
 
   views::ColumnSet* column_set = layout->AddColumnSet(column_layout_id);
   column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::CENTER, 0,
@@ -310,8 +310,10 @@ void CollectedCookiesViews::Init() {
 
   GridLayout* layout = new GridLayout(this);
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  if (provider->UseExtraDialogPadding())
-    layout->SetInsets(gfx::Insets(kTabbedPaneTopPadding, 0, 0, 0));
+  if (provider->UseExtraDialogPadding()) {
+    SetBorder(
+        views::CreateEmptyBorder(gfx::Insets(kTabbedPaneTopPadding, 0, 0, 0)));
+  }
   SetLayoutManager(layout);
 
   const int single_column_layout_id = 0;

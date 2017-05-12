@@ -991,11 +991,11 @@ void Tab::OnGestureEvent(ui::GestureEvent* event) {
 void Tab::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_TAB;
   node_data->SetName(controller_->GetAccessibleTabName(this));
-  node_data->AddStateFlag(ui::AX_STATE_MULTISELECTABLE);
-  node_data->AddStateFlag(ui::AX_STATE_SELECTABLE);
+  node_data->AddState(ui::AX_STATE_MULTISELECTABLE);
+  node_data->AddState(ui::AX_STATE_SELECTABLE);
   controller_->UpdateTabAccessibilityState(this, node_data);
   if (IsSelected())
-    node_data->AddStateFlag(ui::AX_STATE_SELECTED);
+    node_data->AddState(ui::AX_STATE_SELECTED);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1148,11 +1148,11 @@ void Tab::PaintTabBackground(gfx::Canvas* canvas,
                       inactive_color, stroke_color);
   }
 
-  canvas->sk_canvas()->PlaybackPaintRecord(cache.fill_record);
+  canvas->sk_canvas()->drawPicture(cache.fill_record);
   gfx::ScopedCanvas scoped_canvas(clip ? canvas : nullptr);
   if (clip)
     canvas->sk_canvas()->clipPath(*clip, SkClipOp::kDifference, true);
-  canvas->sk_canvas()->PlaybackPaintRecord(cache.stroke_record);
+  canvas->sk_canvas()->drawPicture(cache.stroke_record);
 }
 
 void Tab::PaintTabBackgroundFill(gfx::Canvas* canvas,

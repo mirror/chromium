@@ -95,12 +95,18 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   // false for "https://bobpay.com".
   bool AreRequestedMethodsSupported() const;
 
+  // Returns authenticated user email, or empty string.
+  std::string GetAuthenticatedEmail() const;
+
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
   // Initiates the generation of the PaymentResponse. Callers should check
   // |is_ready_to_pay|, which is inexpensive.
   void GeneratePaymentResponse();
+
+  // Record the use of the data models that were used in the Payment Request.
+  void RecordUseStats();
 
   // Gets the Autofill Profile representing the shipping address or contact
   // information currently selected for this PaymentRequest flow. Can return

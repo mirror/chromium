@@ -228,6 +228,10 @@ void FrameFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
     request.SetHTTPHeaderField("Save-Data", "on");
 }
 
+// TODO(toyoshim, arthursonzogni): PlzNavigate doesn't use this function to set
+// the ResourceRequest's cache policy. The cache policy determination needs to
+// be factored out from FrameFetchContext and moved to the FrameLoader for
+// instance.
 WebCachePolicy FrameFetchContext::ResourceRequestCachePolicy(
     const ResourceRequest& request,
     Resource::Type type,
@@ -693,7 +697,7 @@ MHTMLArchive* FrameFetchContext::Archive() const {
   DCHECK(!IsMainFrame());
   // TODO(nasko): How should this work with OOPIF?
   // The MHTMLArchive is parsed as a whole, but can be constructed from frames
-  // in mutliple processes. In that case, which process should parse it and how
+  // in multiple processes. In that case, which process should parse it and how
   // should the output be spread back across multiple processes?
   if (!GetFrame()->Tree().Parent()->IsLocalFrame())
     return nullptr;

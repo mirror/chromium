@@ -132,6 +132,10 @@ void DialogDelegate::UpdateButton(LabelButton* button, ui::DialogButton type) {
   button->SetIsDefault(is_default);
 }
 
+bool DialogDelegate::ShouldSnapFrameWidth() const {
+  return true;
+}
+
 int DialogDelegate::GetDialogButtons() const {
   return ui::DIALOG_BUTTON_OK | ui::DIALOG_BUTTON_CANCEL;
 }
@@ -239,6 +243,7 @@ ui::AXRole DialogDelegate::GetAccessibleWindowRole() const {
 DialogDelegateView::DialogDelegateView() {
   // A WidgetDelegate should be deleted on DeleteDelegate.
   set_owned_by_client();
+  UMA_HISTOGRAM_BOOLEAN("Dialog.DialogDelegateView.Create", true);
 }
 
 DialogDelegateView::~DialogDelegateView() {}

@@ -165,29 +165,6 @@ void WebStateImpl::SetWebController(CRWWebController* web_controller) {
   web_controller_.reset([web_controller retain]);
 }
 
-void WebStateImpl::OnNavigationCommitted(const GURL& url) {
-  std::unique_ptr<NavigationContext> context =
-      NavigationContextImpl::CreateNavigationContext(this, url,
-                                                     GetHttpResponseHeaders());
-  for (auto& observer : observers_)
-    observer.DidFinishNavigation(context.get());
-}
-
-void WebStateImpl::OnSameDocumentNavigation(const GURL& url) {
-  std::unique_ptr<NavigationContext> context =
-      NavigationContextImpl::CreateSameDocumentNavigationContext(this, url);
-  for (auto& observer : observers_)
-    observer.DidFinishNavigation(context.get());
-}
-
-void WebStateImpl::OnErrorPageNavigation(const GURL& url) {
-  std::unique_ptr<NavigationContext> context =
-      NavigationContextImpl::CreateErrorPageNavigationContext(
-          this, url, GetHttpResponseHeaders());
-  for (auto& observer : observers_)
-    observer.DidFinishNavigation(context.get());
-}
-
 void WebStateImpl::OnTitleChanged() {
   for (auto& observer : observers_)
     observer.TitleWasSet();
@@ -696,6 +673,11 @@ bool WebStateImpl::HasOpener() const {
 void WebStateImpl::OnProvisionalNavigationStarted(const GURL& url) {
   for (auto& observer : observers_)
     observer.ProvisionalNavigationStarted(url);
+}
+
+void WebStateImpl::OnNavigationFinished(web::NavigationContext* context) {
+  for (auto& observer : observers_)
+    observer.DidFinishNavigation(context);
 }
 
 #pragma mark - NavigationManagerDelegate implementation

@@ -14,6 +14,10 @@
 #include "chrome/browser/memory/memory_kills_monitor.h"
 #include "chromeos/system/version_loader.h"
 
+namespace lock_screen_apps {
+class StateController;
+}
+
 namespace session_manager {
 class SessionManager;
 }
@@ -45,6 +49,7 @@ class ExternalLoader;
 
 namespace internal {
 class DBusServices;
+class SystemTokenCertDBInitializer;
 }
 
 class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
@@ -82,6 +87,9 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
 
   std::unique_ptr<internal::DBusServices> dbus_services_;
 
+  std::unique_ptr<internal::SystemTokenCertDBInitializer>
+      system_token_certdb_initializer_;
+
   std::unique_ptr<session_manager::SessionManager> session_manager_;
 
   std::unique_ptr<ShutdownPolicyForwarder> shutdown_policy_forwarder_;
@@ -97,6 +105,9 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
   std::unique_ptr<ArcKioskAppManager> arc_kiosk_app_manager_;
 
   std::unique_ptr<memory::MemoryKillsMonitor::Handle> memory_kills_monitor_;
+
+  std::unique_ptr<lock_screen_apps::StateController>
+      lock_screen_apps_state_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainPartsChromeos);
 };

@@ -107,7 +107,7 @@ void TouchEventManager::Clear() {
   region_for_touch_id_.clear();
   touch_pressed_ = false;
   suppressing_touchmoves_within_slop_ = false;
-  current_touch_action_ = kTouchActionAuto;
+  current_touch_action_ = TouchAction::kTouchActionAuto;
 }
 
 DEFINE_TRACE(TouchEventManager) {
@@ -197,7 +197,7 @@ WebInputEventResult TouchEventManager::DispatchTouchEvents(
 
   if (all_touches_released) {
     touch_sequence_document_.Clear();
-    current_touch_action_ = kTouchActionAuto;
+    current_touch_action_ = TouchAction::kTouchActionAuto;
   }
 
   WebInputEventResult event_result = WebInputEventResult::kNotHandled;
@@ -354,7 +354,7 @@ void TouchEventManager::UpdateTargetAndRegionMapsForTouchStarts(
         // in the active sequence. This must be a single document to
         // ensure we don't leak Nodes between documents.
         touch_sequence_document_ = &(touch_info.touch_node->GetDocument());
-        ASSERT(touch_sequence_document_->GetFrame()->View());
+        DCHECK(touch_sequence_document_->GetFrame()->View());
       }
 
       // Ideally we'd ASSERT(!m_targetForTouchID.contains(point.id())
@@ -369,7 +369,7 @@ void TouchEventManager::UpdateTargetAndRegionMapsForTouchStarts(
 
       TouchAction effective_touch_action =
           TouchActionUtil::ComputeEffectiveTouchAction(*touch_info.touch_node);
-      if (effective_touch_action != kTouchActionAuto) {
+      if (effective_touch_action != TouchAction::kTouchActionAuto) {
         frame_->GetPage()->GetChromeClient().SetTouchAction(
             frame_, effective_touch_action);
 
@@ -431,7 +431,7 @@ void TouchEventManager::SetAllPropertiesOfTouchInfos(
       touch_node = touch_sequence_document_;
       target_frame = touch_sequence_document_->GetFrame();
     }
-    ASSERT(target_frame);
+    DCHECK(target_frame);
 
     // pagePoint should always be in the target element's document coordinates.
     FloatPoint page_point =
@@ -472,7 +472,7 @@ bool TouchEventManager::ReHitTestTouchPointsIfNeeded(
     touch_sequence_document_.Clear();
   }
 
-  ASSERT(frame_->View());
+  DCHECK(frame_->View());
   if (touch_sequence_document_ &&
       (!touch_sequence_document_->GetFrame() ||
        !touch_sequence_document_->GetFrame()->View())) {

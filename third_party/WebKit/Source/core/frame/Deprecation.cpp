@@ -130,7 +130,7 @@ void Deprecation::CountDeprecation(const LocalFrame* frame,
 
   if (!page->GetUseCounter().HasRecordedMeasurement(feature)) {
     page->GetUseCounter().RecordMeasurement(feature);
-    ASSERT(!DeprecationMessage(feature).IsEmpty());
+    DCHECK(!DeprecationMessage(feature).IsEmpty());
     ConsoleMessage* console_message =
         ConsoleMessage::Create(kDeprecationMessageSource, kWarningMessageLevel,
                                DeprecationMessage(feature));
@@ -413,24 +413,6 @@ String Deprecation::DeprecationMessage(UseCounter::Feature feature) {
     case UseCounter::kV8SVGPathElement_GetPathSegAtLength_Method:
       return willBeRemoved("SVGPathElement.getPathSegAtLength", M62,
                            "5638783282184192");
-
-    case UseCounter::kDeprecatedWebKitLinearGradient:
-      return replacedBy("-webkit-linear-gradient", "linear-gradient");
-
-    case UseCounter::kDeprecatedWebKitRepeatingLinearGradient:
-      return replacedBy("-webkit-repeating-linear-gradient",
-                        "repeating-linear-gradient");
-
-    case UseCounter::kDeprecatedWebKitGradient:
-      return replacedBy("-webkit-gradient",
-                        "linear-gradient or radial-gradient");
-
-    case UseCounter::kDeprecatedWebKitRadialGradient:
-      return replacedBy("-webkit-radial-gradient", "radial-gradient");
-
-    case UseCounter::kDeprecatedWebKitRepeatingRadialGradient:
-      return replacedBy("-webkit-repeating-radial-gradient",
-                        "repeating-radial-gradient");
 
     // Features that aren't deprecated don't have a deprecation message.
     default:

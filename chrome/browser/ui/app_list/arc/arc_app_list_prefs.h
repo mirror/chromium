@@ -138,8 +138,12 @@ class ArcAppListPrefs
     // Notifies that package has been modified.
     virtual void OnPackageModified(
         const arc::mojom::ArcPackageInfo& package_info) {}
-    // Notifies that package has been uninstalled.
-    virtual void OnPackageRemoved(const std::string& package_name) {}
+    // Notifies that package has been removed from the system. |uninstalled| is
+    // set to true in case package was uninstalled by user or sync.
+    // OnPackageRemoved is called for each active package with |uninstalled| set
+    // to false in case the user opts out the Play Store.
+    virtual void OnPackageRemoved(const std::string& package_name,
+                                  bool uninstalled) {}
     // Notifies sync date type controller the model is ready to start.
     virtual void OnPackageListInitialRefreshed() {}
 
@@ -306,8 +310,10 @@ class ArcAppListPrefs
   // Returns list of packages from prefs. If |installed| is set to true then
   // returns currently installed packages. If not, returns list of packages that
   // where uninstalled. Note, we store uninstall packages only for packages of
-  // default apps.
-  std::vector<std::string> GetPackagesFromPrefs(bool installed) const;
+  // default apps. If |check_arc_alive| is set to true then package list is
+  // filled only in case ARC is currently active.
+  std::vector<std::string> GetPackagesFromPrefs(bool check_arc_alive,
+                                                bool installed) const;
 
   void AddApp(const arc::mojom::AppInfo& app_info);
   void AddAppAndShortcut(bool app_ready,
@@ -329,7 +335,7 @@ class ArcAppListPrefs
                               const std::string& package_name);
 
   void DisableAllApps();
-  void RemoveAllApps();
+  void RemoveAllAppsAndPackages();
   std::vector<std::string> GetAppIdsNoArcEnabledCheck() const;
   std::unordered_set<std::string> GetAppsAndShortcutsForPackage(
       const std::string& package_name,
@@ -357,10 +363,11 @@ class ArcAppListPrefs
   void RequestIcon(const std::string& app_id, ui::ScaleFactor scale_factor);
 
   // This checks if app is not registered yet and in this case creates
-  // non-launchable app entry.
-  void MaybeAddNonLaunchableApp(const base::Optional<std::string>& name,
-                                const std::string& package_name,
-                                const std::string& activity);
+  // non-launchable app entry. In case app is already registered then updates
+  // last launch time.
+  void HandleTaskCreated(const base::Optional<std::string>& name,
+                         const std::string& package_name,
+                         const std::string& activity);
 
   // Reveals first app from provided package in app launcher if package is newly
   // installed by user. If all apps in package are hidden then app list is not

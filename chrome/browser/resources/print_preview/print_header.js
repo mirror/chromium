@@ -45,7 +45,7 @@ cr.define('print_preview', function() {
      * @private
      */
     this.isPrintButtonEnabled_ = true;
-  };
+  }
 
   /**
    * Event types dispatched by the print header.

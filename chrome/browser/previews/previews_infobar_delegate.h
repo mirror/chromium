@@ -21,10 +21,12 @@ class PreviewsInfoBarDelegate : public ConfirmInfoBarDelegate {
  public:
   // The type of the infobar. It controls the strings and what UMA data is
   // recorded for the infobar.
+  // TODO(ryansturm): Combine PreviewsInfoBarType with previews::PreviewsType.
+  // crbug.com/704335
   enum PreviewsInfoBarType {
-    LOFI,      // Server-side image replacement.
-    LITE_PAGE, // Server-side page rewrite.
-    OFFLINE,   // Offline copy of the page.
+    LOFI,       // Image placeholders (both server and client implementations).
+    LITE_PAGE,  // Server-side page rewrite.
+    OFFLINE,    // Offline copy of the page.
   };
 
   typedef base::Callback<void(bool opt_out)> OnDismissPreviewsInfobarCallback;
@@ -51,6 +53,12 @@ class PreviewsInfoBarDelegate : public ConfirmInfoBarDelegate {
       bool is_data_saver_user,
       const OnDismissPreviewsInfobarCallback& on_dismiss_callback);
 
+  // ConfirmInfoBarDelegate overrides:
+  base::string16 GetMessageText() const override;
+  base::string16 GetLinkText() const override;
+
+  base::string16 GetTimestampText() const;
+
  private:
   PreviewsInfoBarDelegate(
       content::WebContents* web_contents,
@@ -63,9 +71,7 @@ class PreviewsInfoBarDelegate : public ConfirmInfoBarDelegate {
   int GetIconId() const override;
   bool ShouldExpire(const NavigationDetails& details) const override;
   void InfoBarDismissed() override;
-  base::string16 GetMessageText() const override;
   int GetButtons() const override;
-  base::string16 GetLinkText() const override;
   bool LinkClicked(WindowOpenDisposition disposition) override;
 
   PreviewsInfoBarType infobar_type_;

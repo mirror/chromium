@@ -21,19 +21,21 @@ class TaskQueueManagerDelegateForTest : public TaskQueueManagerDelegate {
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       std::unique_ptr<base::TickClock> time_source);
 
-  // NestableSingleThreadTaskRunner implementation
+  // SingleThreadTaskRunner:
   bool PostDelayedTask(const tracked_objects::Location& from_here,
                        base::OnceClosure task,
                        base::TimeDelta delay) override;
   bool PostNonNestableDelayedTask(const tracked_objects::Location& from_here,
                                   base::OnceClosure task,
                                   base::TimeDelta delay) override;
-  bool RunsTasksOnCurrentThread() const override;
+  bool RunsTasksInCurrentSequence() const override;
+
+  // TaskQueueManagerDelegate:
   bool IsNested() const override;
-  void AddNestingObserver(
-      base::MessageLoop::NestingObserver* observer) override;
-  void RemoveNestingObserver(
-      base::MessageLoop::NestingObserver* observer) override;
+  void AddNestingObserver(base::RunLoop::NestingObserver* observer) override;
+  void RemoveNestingObserver(base::RunLoop::NestingObserver* observer) override;
+
+  // TickClock:
   base::TimeTicks NowTicks() override;
 
  protected:

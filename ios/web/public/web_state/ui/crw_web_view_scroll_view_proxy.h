@@ -24,6 +24,7 @@
 @interface CRWWebViewScrollViewProxy : NSObject<UIScrollViewDelegate>
 @property(nonatomic, assign) CGPoint contentOffset;
 @property(nonatomic, assign) UIEdgeInsets contentInset;
+@property(nonatomic, readonly, getter=isDecelerating) BOOL decelerating;
 @property(nonatomic, readonly, getter=isDragging) BOOL dragging;
 @property(nonatomic, readonly) BOOL isZooming;
 @property(nonatomic, readonly) CGFloat zoomScale;
@@ -78,6 +79,12 @@
 - (void)webViewScrollViewDidZoom:
     (CRWWebViewScrollViewProxy*)webViewScrollViewProxy;
 - (void)webViewScrollViewDidResetContentSize:
+    (CRWWebViewScrollViewProxy*)webViewScrollViewProxy;
+
+// The equivalent in UIScrollViewDelegate also takes a parameter (UIView*)view,
+// but CRWWebViewScrollViewObserver doesn't expose it for flexibility of future
+// implementation.
+- (void)webViewScrollViewWillBeginZooming:
     (CRWWebViewScrollViewProxy*)webViewScrollViewProxy;
 @end
 

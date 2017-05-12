@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <utility>
+
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "cc/input/selection.h"
@@ -38,99 +40,90 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
  private:
   // TraitsTestService:
   void EchoBeginFrameArgs(const BeginFrameArgs& b,
-                          const EchoBeginFrameArgsCallback& callback) override {
-    callback.Run(b);
+                          EchoBeginFrameArgsCallback callback) override {
+    std::move(callback).Run(b);
   }
 
   void EchoBeginFrameAck(const BeginFrameAck& b,
-                         const EchoBeginFrameAckCallback& callback) override {
-    callback.Run(b);
+                         EchoBeginFrameAckCallback callback) override {
+    std::move(callback).Run(b);
   }
 
-  void EchoCompositorFrame(
-      CompositorFrame c,
-      const EchoCompositorFrameCallback& callback) override {
-    callback.Run(std::move(c));
+  void EchoCompositorFrame(CompositorFrame c,
+                           EchoCompositorFrameCallback callback) override {
+    std::move(callback).Run(std::move(c));
   }
 
   void EchoCompositorFrameMetadata(
       CompositorFrameMetadata c,
-      const EchoCompositorFrameMetadataCallback& callback) override {
-    callback.Run(std::move(c));
+      EchoCompositorFrameMetadataCallback callback) override {
+    std::move(callback).Run(std::move(c));
   }
 
-  void EchoCopyOutputRequest(
-      std::unique_ptr<CopyOutputRequest> c,
-      const EchoCopyOutputRequestCallback& callback) override {
-    callback.Run(std::move(c));
+  void EchoCopyOutputRequest(std::unique_ptr<CopyOutputRequest> c,
+                             EchoCopyOutputRequestCallback callback) override {
+    std::move(callback).Run(std::move(c));
   }
 
-  void EchoCopyOutputResult(
-      std::unique_ptr<CopyOutputResult> c,
-      const EchoCopyOutputResultCallback& callback) override {
-    callback.Run(std::move(c));
+  void EchoCopyOutputResult(std::unique_ptr<CopyOutputResult> c,
+                            EchoCopyOutputResultCallback callback) override {
+    std::move(callback).Run(std::move(c));
   }
 
-  void EchoFilterOperation(
-      const FilterOperation& f,
-      const EchoFilterOperationCallback& callback) override {
-    callback.Run(f);
+  void EchoFilterOperation(const FilterOperation& f,
+                           EchoFilterOperationCallback callback) override {
+    std::move(callback).Run(f);
   }
 
-  void EchoFilterOperations(
-      const FilterOperations& f,
-      const EchoFilterOperationsCallback& callback) override {
-    callback.Run(f);
+  void EchoFilterOperations(const FilterOperations& f,
+                            EchoFilterOperationsCallback callback) override {
+    std::move(callback).Run(f);
   }
 
   void EchoRenderPass(std::unique_ptr<RenderPass> r,
-                      const EchoRenderPassCallback& callback) override {
-    callback.Run(std::move(r));
+                      EchoRenderPassCallback callback) override {
+    std::move(callback).Run(std::move(r));
   }
 
-  void EchoReturnedResource(
-      const ReturnedResource& r,
-      const EchoReturnedResourceCallback& callback) override {
-    callback.Run(r);
+  void EchoReturnedResource(const ReturnedResource& r,
+                            EchoReturnedResourceCallback callback) override {
+    std::move(callback).Run(r);
   }
 
   void EchoSelection(const Selection<gfx::SelectionBound>& s,
-                     const EchoSelectionCallback& callback) override {
-    callback.Run(s);
+                     EchoSelectionCallback callback) override {
+    std::move(callback).Run(s);
   }
 
-  void EchoSharedQuadState(
-      const SharedQuadState& s,
-      const EchoSharedQuadStateCallback& callback) override {
-    callback.Run(s);
+  void EchoSharedQuadState(const SharedQuadState& s,
+                           EchoSharedQuadStateCallback callback) override {
+    std::move(callback).Run(s);
   }
 
   void EchoSurfaceId(const SurfaceId& s,
-                     const EchoSurfaceIdCallback& callback) override {
-    callback.Run(s);
+                     EchoSurfaceIdCallback callback) override {
+    std::move(callback).Run(s);
   }
 
-  void EchoSurfaceReference(
-      const SurfaceReference& s,
-      const EchoSurfaceReferenceCallback& callback) override {
-    callback.Run(s);
+  void EchoSurfaceReference(const SurfaceReference& s,
+                            EchoSurfaceReferenceCallback callback) override {
+    std::move(callback).Run(s);
   }
 
-  void EchoSurfaceSequence(
-      const SurfaceSequence& s,
-      const EchoSurfaceSequenceCallback& callback) override {
-    callback.Run(s);
+  void EchoSurfaceSequence(const SurfaceSequence& s,
+                           EchoSurfaceSequenceCallback callback) override {
+    std::move(callback).Run(s);
   }
 
   void EchoTextureMailbox(const TextureMailbox& t,
-                          const EchoTextureMailboxCallback& callback) override {
-    callback.Run(t);
+                          EchoTextureMailboxCallback callback) override {
+    std::move(callback).Run(t);
   }
 
   void EchoTransferableResource(
       const TransferableResource& t,
-      const EchoTransferableResourceCallback& callback) override {
-    callback.Run(t);
+      EchoTransferableResourceCallback callback) override {
+    std::move(callback).Run(t);
   }
 
   mojo::BindingSet<TraitsTestService> traits_test_bindings_;
@@ -374,10 +367,10 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   SurfaceId id(FrameSinkId(1234, 4321),
                LocalSurfaceId(5678, base::UnguessableToken::Create()));
   referenced_surfaces.push_back(id);
-  std::vector<SurfaceId> embedded_surfaces;
+  std::vector<SurfaceId> activation_dependencies;
   SurfaceId id2(FrameSinkId(4321, 1234),
                 LocalSurfaceId(8765, base::UnguessableToken::Create()));
-  embedded_surfaces.push_back(id2);
+  activation_dependencies.push_back(id2);
   uint32_t frame_token = 0xdeadbeef;
   uint64_t begin_frame_ack_sequence_number = 0xdeadbeef;
 
@@ -402,7 +395,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   input.selection = selection;
   input.latency_info = latency_infos;
   input.referenced_surfaces = referenced_surfaces;
-  input.embedded_surfaces = embedded_surfaces;
+  input.activation_dependencies = activation_dependencies;
   input.frame_token = frame_token;
   input.begin_frame_ack.sequence_number = begin_frame_ack_sequence_number;
 
@@ -436,9 +429,10 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   EXPECT_EQ(referenced_surfaces.size(), output.referenced_surfaces.size());
   for (uint32_t i = 0; i < referenced_surfaces.size(); ++i)
     EXPECT_EQ(referenced_surfaces[i], output.referenced_surfaces[i]);
-  EXPECT_EQ(embedded_surfaces.size(), output.embedded_surfaces.size());
-  for (uint32_t i = 0; i < embedded_surfaces.size(); ++i)
-    EXPECT_EQ(embedded_surfaces[i], output.embedded_surfaces[i]);
+  EXPECT_EQ(activation_dependencies.size(),
+            output.activation_dependencies.size());
+  for (uint32_t i = 0; i < activation_dependencies.size(); ++i)
+    EXPECT_EQ(activation_dependencies[i], output.activation_dependencies[i]);
   EXPECT_EQ(frame_token, output.frame_token);
   EXPECT_EQ(begin_frame_ack_sequence_number,
             output.begin_frame_ack.sequence_number);
@@ -1108,8 +1102,9 @@ TEST_F(StructTraitsTest, TextureMailbox) {
   const bool is_overlay_candidate = true;
   const bool secure_output_only = true;
   const bool nearest_neighbor = true;
-  const gfx::ColorSpace color_space =
-      gfx::ColorSpace::CreateVideo(4, 5, 9, gfx::ColorSpace::RangeID::LIMITED);
+  const gfx::ColorSpace color_space = gfx::ColorSpace(
+      gfx::ColorSpace::PrimaryID::BT470M, gfx::ColorSpace::TransferID::GAMMA28,
+      gfx::ColorSpace::MatrixID::BT2020_NCL, gfx::ColorSpace::RangeID::LIMITED);
 #if defined(OS_ANDROID)
   const bool is_backed_by_surface_texture = true;
   const bool wants_promotion_hint = true;

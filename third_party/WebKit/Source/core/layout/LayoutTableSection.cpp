@@ -42,11 +42,6 @@ namespace blink {
 
 using namespace HTMLNames;
 
-// This variable is used to balance the memory consumption vs the paint
-// invalidation time on big tables.
-static unsigned g_min_table_size_to_use_fast_paint_path_with_overflowing_cell =
-    75 * 75;
-
 static inline void SetRowLogicalHeightToRowStyleLogicalHeight(
     LayoutTableSection::RowStruct& row) {
   DCHECK(row.row_layout_object);
@@ -85,9 +80,9 @@ static inline void UpdateLogicalHeightForCell(
 
 void CellSpan::EnsureConsistency(const unsigned maximum_span_size) {
   static_assert(std::is_same<decltype(start_), unsigned>::value,
-                "Asserts below assume m_start is unsigned");
+                "Asserts below assume start_ is unsigned");
   static_assert(std::is_same<decltype(end_), unsigned>::value,
-                "Asserts below assume m_end is unsigned");
+                "Asserts below assume end_ is unsigned");
   CHECK_LE(start_, maximum_span_size);
   CHECK_LE(end_, maximum_span_size);
   CHECK_LE(start_, end_);
@@ -106,7 +101,7 @@ LayoutTableSection::LayoutTableSection(Element* element)
       outer_border_before_(0),
       outer_border_after_(0),
       needs_cell_recalc_(false),
-      force_slow_paint_path_with_overflowing_cell_(false),
+      force_full_paint_(false),
       has_multiple_cell_levels_(false),
       has_spanning_cells_(false) {
   // init LayoutObject attributes
@@ -293,7 +288,7 @@ void LayoutTableSection::AddCell(LayoutTableCell* cell, LayoutTableRow* row) {
       DCHECK(cell);
       c.cells.push_back(cell);
       CheckThatVectorIsDOMOrdered(c.cells);
-      // If cells overlap then we take the slow path for painting.
+      // If cells overlap then we take the special paint path for them.
       if (c.cells.size() > 1)
         has_multiple_cell_levels_ = true;
       if (in_col_span)
@@ -828,6 +823,14 @@ void LayoutTableSection::UpdateBaselineForCell(LayoutTableCell* cell,
   }
 }
 
+int LayoutTableSection::VBorderSpacingBeforeFirstRow() const {
+  // We ignore the border-spacing on any non-top section, as it is already
+  // included in the previous section's last row position.
+  if (this != Table()->TopSection())
+    return 0;
+  return Table()->VBorderSpacing();
+}
+
 int LayoutTableSection::CalcRowLogicalHeight() {
 #if DCHECK_IS_ON()
   SetLayoutNeededForbiddenScope layout_forbidden_scope(*this);
@@ -842,13 +845,7 @@ int LayoutTableSection::CalcRowLogicalHeight() {
   LayoutState state(*this);
 
   row_pos_.resize(grid_.size() + 1);
-
-  // We ignore the border-spacing on any non-top section as it is already
-  // included in the previous section's last row position.
-  if (this == Table()->TopSection())
-    row_pos_[0] = Table()->VBorderSpacing();
-  else
-    row_pos_[0] = 0;
+  row_pos_[0] = VBorderSpacingBeforeFirstRow();
 
   SpanningLayoutTableCells row_span_cells;
 
@@ -954,7 +951,7 @@ void LayoutTableSection::UpdateLayout() {
   CHECK(!NeedsCellRecalc());
   DCHECK(!Table()->NeedsSectionRecalc());
 
-  // addChild may over-grow m_grid but we don't want to throw away the memory
+  // addChild may over-grow grid_ but we don't want to throw away the memory
   // too early as addChild can be called in a loop (e.g during parsing). Doing
   // it now ensures we have a stable-enough structure.
   grid_.ShrinkToFit();
@@ -962,7 +959,7 @@ void LayoutTableSection::UpdateLayout() {
   LayoutState state(*this);
 
   const Vector<int>& column_pos = Table()->EffectiveColumnPositions();
-  LayoutUnit row_logical_top;
+  LayoutUnit row_logical_top(VBorderSpacingBeforeFirstRow());
 
   SubtreeLayoutScope layouter(*this);
   for (unsigned r = 0; r < grid_.size(); ++r) {
@@ -1067,7 +1064,7 @@ void LayoutTableSection::DistributeRemainingExtraLogicalHeight(
   if (extra_logical_height <= 0 || !row_pos_[total_rows])
     return;
 
-  // FIXME: m_rowPos[totalRows] - m_rowPos[0] is the total rows' size.
+  // FIXME: row_pos_[total_rows] - row_pos_[0] is the total rows' size.
   int total_row_size = row_pos_[total_rows];
   int total_logical_height_added = 0;
   int previous_row_position = row_pos_[0];
@@ -1236,7 +1233,7 @@ void LayoutTableSection::LayoutRows() {
 
   SetLogicalHeight(LayoutUnit(row_pos_[total_rows]));
 
-  ComputeOverflowFromCells(total_rows, Table()->NumEffectiveColumns());
+  ComputeOverflowFromDescendants();
 }
 
 int LayoutTableSection::PaginationStrutForRow(LayoutTableRow* row,
@@ -1270,51 +1267,65 @@ int LayoutTableSection::PaginationStrutForRow(LayoutTableRow* row,
   return pagination_strut.Ceil();
 }
 
-void LayoutTableSection::ComputeOverflowFromCells() {
-  unsigned total_rows = grid_.size();
-  unsigned n_eff_cols = Table()->NumEffectiveColumns();
-  ComputeOverflowFromCells(total_rows, n_eff_cols);
-}
+void LayoutTableSection::ComputeOverflowFromDescendants() {
+  // These 2 variables are used to balance the memory consumption vs the paint
+  // time on big sections with overflowing cells:
+  // 1. For small sections, don't track overflowing cells because for them the
+  //    full paint path is actually faster than the partial paint path.
+  // 2. For big sections, if overflowing cells are scarce, track overflowing
+  //    cells to enable the partial paint path.
+  // 3. Otherwise don't track overflowing cells to avoid adding a lot of cells
+  //    to the HashSet, and force the full paint path.
+  // See TableSectionPainter::PaintObject() for the full paint path and the
+  // partial paint path.
+  static const unsigned kMinCellCountToUsePartialPaint = 75 * 75;
+  static const float kMaxOverflowingCellRatioForPartialPaint = 0.1f;
 
-void LayoutTableSection::ComputeOverflowFromCells(unsigned total_rows,
-                                                  unsigned n_eff_cols) {
-  unsigned total_cells_count = n_eff_cols * total_rows;
-  unsigned max_allowed_overflowing_cells_count =
-      total_cells_count <
-              g_min_table_size_to_use_fast_paint_path_with_overflowing_cell
+  unsigned total_cell_count = NumRows() * Table()->NumEffectiveColumns();
+  unsigned max_overflowing_cell_count =
+      total_cell_count < kMinCellCountToUsePartialPaint
           ? 0
-          : kGMaxAllowedOverflowingCellRatioForFastPaintPath *
-                total_cells_count;
+          : kMaxOverflowingCellRatioForPartialPaint * total_cell_count;
 
   overflow_.reset();
   overflowing_cells_.clear();
-  force_slow_paint_path_with_overflowing_cell_ = false;
+  force_full_paint_ = false;
 #if DCHECK_IS_ON()
   bool has_overflowing_cell = false;
 #endif
-  // Now that our height has been determined, add in overflow from cells.
-  for (unsigned r = 0; r < total_rows; r++) {
-    unsigned n_cols = NumCols(r);
-    for (unsigned c = 0; c < n_cols; c++) {
-      const auto* cell = OriginatingCellAt(r, c);
-      if (!cell)
-        continue;
-      AddOverflowFromChild(*cell);
-#if DCHECK_IS_ON()
-      has_overflowing_cell |= cell->HasVisualOverflow();
-#endif
-      if (cell->HasVisualOverflow() &&
-          !force_slow_paint_path_with_overflowing_cell_) {
-        overflowing_cells_.insert(cell);
-        if (overflowing_cells_.size() > max_allowed_overflowing_cells_count) {
-          // We need to set m_forcesSlowPaintPath only if there is a least one
-          // overflowing cells as the hit testing code rely on this information.
-          force_slow_paint_path_with_overflowing_cell_ = true;
-          // The slow path does not make any use of the overflowing cells info,
-          // don't hold on to the memory.
-          overflowing_cells_.clear();
-        }
+
+  for (auto* row = FirstRow(); row; row = row->NextRow()) {
+    AddOverflowFromChild(*row);
+
+    for (auto* cell = row->FirstCell(); cell; cell = cell->NextCell()) {
+      // Let the section's self visual overflow cover the cell's whole collapsed
+      // borders. This ensures correct raster invalidation on section border
+      // style change.
+      // TODO(wangxianzhu): When implementing row as DisplayItemClient of
+      // collapsed borders, the following logic should be replaced by
+      // invalidation of rows on section border style change. crbug.com/663208.
+      if (const auto* collapsed_borders = cell->GetCollapsedBorderValues()) {
+        LayoutRect rect = cell->RectForOverflowPropagation(
+            collapsed_borders->LocalVisualRect());
+        rect.MoveBy(cell->Location());
+        AddSelfVisualOverflow(rect);
       }
+
+      if (force_full_paint_ || !cell->HasVisualOverflow())
+        continue;
+
+#if DCHECK_IS_ON()
+      has_overflowing_cell = true;
+#endif
+      if (overflowing_cells_.size() >= max_overflowing_cell_count) {
+        force_full_paint_ = true;
+        // The full paint path does not make any use of the overflowing cells
+        // info, so don't hold on to the memory.
+        overflowing_cells_.clear();
+        continue;
+      }
+
+      overflowing_cells_.insert(cell);
     }
   }
 
@@ -1346,9 +1357,8 @@ bool LayoutTableSection::RecalcChildOverflowAfterStyleChange() {
       row_layouter->ComputeOverflow();
     children_overflow_changed |= row_children_overflow_changed;
   }
-  // TODO(crbug.com/604136): Add visual overflow from rows too.
   if (children_overflow_changed)
-    ComputeOverflowFromCells(total_rows, Table()->NumEffectiveColumns());
+    ComputeOverflowFromDescendants();
   return children_overflow_changed;
 }
 
@@ -1544,7 +1554,7 @@ LayoutRect LayoutTableSection::LogicalRectForWritingModeAndDirection(
 }
 
 CellSpan LayoutTableSection::DirtiedRows(const LayoutRect& damage_rect) const {
-  if (force_slow_paint_path_with_overflowing_cell_)
+  if (force_full_paint_)
     return FullSectionRowSpan();
 
   if (!grid_.size())
@@ -1552,8 +1562,8 @@ CellSpan LayoutTableSection::DirtiedRows(const LayoutRect& damage_rect) const {
 
   CellSpan covered_rows = SpannedRows(damage_rect);
 
-  // To issue paint invalidations for the border we might need to paint
-  // invalidate the first or last row even if they are not spanned themselves.
+  // To paint the border we might need to paint the first or last row even if
+  // they are not spanned themselves.
   CHECK_LT(covered_rows.Start(), row_pos_.size());
   if (covered_rows.Start() == row_pos_.size() - 1 &&
       row_pos_[row_pos_.size() - 1] + Table()->OuterBorderAfter() >=
@@ -1569,7 +1579,7 @@ CellSpan LayoutTableSection::DirtiedRows(const LayoutRect& damage_rect) const {
       covered_rows.Start() >= grid_.size())
     return covered_rows;
 
-  // If there are any cells spanning into the first row, expand coveredRows
+  // If there are any cells spanning into the first row, expand covered_rows
   // to cover the primary cells.
   unsigned n_cols = NumCols(covered_rows.Start());
   unsigned smallest_row = covered_rows.Start();
@@ -1587,16 +1597,15 @@ CellSpan LayoutTableSection::DirtiedRows(const LayoutRect& damage_rect) const {
 
 CellSpan LayoutTableSection::DirtiedEffectiveColumns(
     const LayoutRect& damage_rect) const {
-  if (force_slow_paint_path_with_overflowing_cell_)
+  if (force_full_paint_)
     return FullTableEffectiveColumnSpan();
 
   CHECK(Table()->NumEffectiveColumns());
   CellSpan covered_columns = SpannedEffectiveColumns(damage_rect);
 
   const Vector<int>& column_pos = Table()->EffectiveColumnPositions();
-  // To issue paint invalidations for the border we might need to paint
-  // invalidate the first or last column even if they are not spanned
-  // themselves.
+  // To paint the border we might need to paint the first or last column even if
+  // they are not spanned themselves.
   CHECK_LT(covered_columns.Start(), column_pos.size());
   if (covered_columns.Start() == column_pos.size() - 1 &&
       column_pos[column_pos.size() - 1] + Table()->OuterBorderEnd() >=
@@ -1612,7 +1621,7 @@ CellSpan LayoutTableSection::DirtiedEffectiveColumns(
     return covered_columns;
 
   // If there are any cells spanning into the first column, expand
-  // coveredRows to cover the primary cells.
+  // covered_columns to cover the primary cells.
   unsigned smallest_column = covered_columns.Start();
   CellSpan covered_rows = SpannedRows(damage_rect);
   for (unsigned r = covered_rows.Start(); r < covered_rows.end(); ++r) {
@@ -1755,7 +1764,7 @@ unsigned LayoutTableSection::NumEffectiveColumns() const {
   return result + 1;
 }
 
-const BorderValue& LayoutTableSection::BorderAdjoiningStartCell(
+BorderValue LayoutTableSection::BorderAdjoiningStartCell(
     const LayoutTableCell* cell) const {
 #if DCHECK_IS_ON()
   DCHECK(cell->IsFirstOrLastCellInRow());
@@ -1764,7 +1773,7 @@ const BorderValue& LayoutTableSection::BorderAdjoiningStartCell(
                                   : Style()->BorderEnd();
 }
 
-const BorderValue& LayoutTableSection::BorderAdjoiningEndCell(
+BorderValue LayoutTableSection::BorderAdjoiningEndCell(
     const LayoutTableCell* cell) const {
 #if DCHECK_IS_ON()
   DCHECK(cell->IsFirstOrLastCellInRow());

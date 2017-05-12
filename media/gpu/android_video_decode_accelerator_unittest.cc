@@ -134,8 +134,7 @@ class FakeCodecAllocator : public NiceMock<AVDACodecAllocator> {
 
   void ReleaseMediaCodec(
       std::unique_ptr<MediaCodecBridge> media_codec,
-      TaskType task_type,
-      const scoped_refptr<AVDASurfaceBundle>& surface_bundle) override {
+      scoped_refptr<AVDASurfaceBundle> surface_bundle) override {
     MockReleaseMediaCodec(media_codec.get(), surface_bundle->overlay.get(),
                           surface_bundle->surface_texture.get());
   }
@@ -234,9 +233,9 @@ class FakeCodecAllocator : public NiceMock<AVDACodecAllocator> {
 // Surface chooser that calls mocked functions to allow counting calls, but
 // also records arguments.  Note that gmock can't mock out unique_ptrs
 // anyway, so we can't mock AndroidVideoSurfaceChooser directly.
-class FakeOverlayHelper : public NiceMock<AndroidVideoSurfaceChooser> {
+class FakeOverlayChooser : public NiceMock<AndroidVideoSurfaceChooser> {
  public:
-  FakeOverlayHelper() : weak_factory_(this) {}
+  FakeOverlayChooser() : weak_factory_(this) {}
 
   // These are called by the real functions.  You may set expectations on
   // them if you like.
@@ -245,15 +244,14 @@ class FakeOverlayHelper : public NiceMock<AndroidVideoSurfaceChooser> {
 
   // We guarantee that we'll only clear this during destruction, so that you
   // may treat it as "pointer that lasts as long as |this| does".
-  base::WeakPtr<FakeOverlayHelper> GetWeakPtrForTesting() {
+  base::WeakPtr<FakeOverlayChooser> GetWeakPtrForTesting() {
     return weak_factory_.GetWeakPtr();
   }
 
-  void Initialize(
-      UseOverlayCB use_overlay_cb,
-      UseSurfaceTextureCB use_surface_texture_cb,
-      StopUsingOverlayImmediatelyCB stop_immediately_cb,
-      std::unique_ptr<AndroidOverlayFactory> initial_factory) override {
+  void Initialize(UseOverlayCB use_overlay_cb,
+                  UseSurfaceTextureCB use_surface_texture_cb,
+                  StopUsingOverlayImmediatelyCB stop_immediately_cb,
+                  AndroidOverlayFactoryCB initial_factory) override {
     MockInitialize();
 
     factory_ = std::move(initial_factory);
@@ -262,8 +260,7 @@ class FakeOverlayHelper : public NiceMock<AndroidVideoSurfaceChooser> {
     stop_immediately_cb_ = std::move(stop_immediately_cb);
   }
 
-  void ReplaceOverlayFactory(
-      std::unique_ptr<AndroidOverlayFactory> factory) override {
+  void ReplaceOverlayFactory(AndroidOverlayFactoryCB factory) override {
     MockReplaceOverlayFactory();
     factory_ = std::move(factory);
   }
@@ -288,12 +285,12 @@ class FakeOverlayHelper : public NiceMock<AndroidVideoSurfaceChooser> {
   UseSurfaceTextureCB use_surface_texture_cb_;
   StopUsingOverlayImmediatelyCB stop_immediately_cb_;
 
-  std::unique_ptr<AndroidOverlayFactory> factory_;
+  AndroidOverlayFactoryCB factory_;
 
-  base::WeakPtrFactory<FakeOverlayHelper> weak_factory_;
+  base::WeakPtrFactory<FakeOverlayChooser> weak_factory_;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(FakeOverlayHelper);
+  DISALLOW_COPY_AND_ASSIGN(FakeOverlayChooser);
 };
 
 }  // namespace
@@ -318,7 +315,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
                                          gl::GLContextAttribs());
     context_->MakeCurrent(surface_.get());
 
-    chooser_that_is_usually_null_ = base::MakeUnique<FakeOverlayHelper>();
+    chooser_that_is_usually_null_ = base::MakeUnique<FakeOverlayChooser>();
     chooser_ = chooser_that_is_usually_null_->GetWeakPtrForTesting();
 
     platform_config_.sdk_int = base::android::SDK_VERSION_MARSHMALLOW;
@@ -350,7 +347,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
     config_.surface_id = 123;
     ASSERT_TRUE(InitializeAVDA());
     base::RunLoop().RunUntilIdle();
-    ASSERT_TRUE(chooser_->factory_ != nullptr);
+    ASSERT_TRUE(chooser_->factory_);
 
     // Have the factory provide an overlay, and verify that codec creation is
     // provided with that overlay.
@@ -371,7 +368,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
     ASSERT_TRUE(InitializeAVDA());
     base::RunLoop().RunUntilIdle();
     // We do not expect a factory, since we are using SurfaceTexture.
-    ASSERT_TRUE(chooser_->factory_ == nullptr);
+    ASSERT_FALSE(chooser_->factory_);
 
     // Set the expectations first, since ProvideOverlay might cause callbacks.
     EXPECT_CALL(codec_allocator_,
@@ -413,7 +410,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
   AndroidVideoDecodeAccelerator::PlatformConfig platform_config_;
 
   // We maintain a weak ref to this since AVDA owns it.
-  base::WeakPtr<FakeOverlayHelper> chooser_;
+  base::WeakPtr<FakeOverlayChooser> chooser_;
 
   // This must be a unique pointer to a VDA, not an AVDA, to ensure the
   // the default_delete specialization that calls Destroy() will be used.
@@ -426,7 +423,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
  private:
   // This is the object that |chooser_| points to, or nullptr once we assign
   // ownership to AVDA.
-  std::unique_ptr<FakeOverlayHelper> chooser_that_is_usually_null_;
+  std::unique_ptr<FakeOverlayChooser> chooser_that_is_usually_null_;
 };
 
 TEST_F(AndroidVideoDecodeAcceleratorTest, ConfigureUnsupportedCodec) {

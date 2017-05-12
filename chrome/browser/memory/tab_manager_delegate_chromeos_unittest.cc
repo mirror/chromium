@@ -78,26 +78,57 @@ TEST_F(TabManagerDelegateTest, CandidatesSorted) {
 
   candidates = TabManagerDelegate::GetSortedCandidates(
           tab_list, arc_processes);
-  EXPECT_EQ(9U, candidates.size());
+  ASSERT_EQ(9U, candidates.size());
 
   // focused app.
+  ASSERT_TRUE(candidates[0].app());
   EXPECT_EQ("focused", candidates[0].app()->process_name());
   // visible app 1, last_activity_time larger than visible app 2.
+  ASSERT_TRUE(candidates[1].app());
   EXPECT_EQ("visible1", candidates[1].app()->process_name());
   // visible app 2, last_activity_time less than visible app 1.
+  ASSERT_TRUE(candidates[2].app());
   EXPECT_EQ("visible2", candidates[2].app()->process_name());
   // pinned and media.
+  ASSERT_TRUE(candidates[3].tab());
   EXPECT_EQ(300, candidates[3].tab()->tab_contents_id);
   // media.
+  ASSERT_TRUE(candidates[4].tab());
   EXPECT_EQ(400, candidates[4].tab()->tab_contents_id);
   // pinned.
+  ASSERT_TRUE(candidates[5].tab());
   EXPECT_EQ(100, candidates[5].tab()->tab_contents_id);
   // chrome app.
+  ASSERT_TRUE(candidates[6].tab());
   EXPECT_EQ(500, candidates[6].tab()->tab_contents_id);
   // internal page.
+  ASSERT_TRUE(candidates[7].tab());
   EXPECT_EQ(200, candidates[7].tab()->tab_contents_id);
   // background service.
+  ASSERT_TRUE(candidates[8].app());
   EXPECT_EQ("service", candidates[8].app()->process_name());
+}
+
+// Occasionally, Chrome sees both FOCUSED_TAB and FOCUSED_APP at the same time.
+// Test that Chrome treats the former as a more important process.
+TEST_F(TabManagerDelegateTest, CandidatesSortedWithFocusedAppAndTab) {
+  std::vector<arc::ArcProcess> arc_processes;
+  arc_processes.emplace_back(1, 10, "focused", arc::mojom::ProcessState::TOP,
+                             kIsFocused, 100);
+  TabStats tab1;
+  tab1.tab_contents_id = 100;
+  tab1.is_pinned = true;
+  tab1.is_selected = true;
+  const TabStatsList tab_list = {tab1};
+
+  const std::vector<TabManagerDelegate::Candidate> candidates =
+      TabManagerDelegate::GetSortedCandidates(tab_list, arc_processes);
+  ASSERT_EQ(2U, candidates.size());
+  // FOCUSED_TAB should be the first one.
+  ASSERT_TRUE(candidates[0].tab());
+  EXPECT_EQ(100, candidates[0].tab()->tab_contents_id);
+  ASSERT_TRUE(candidates[1].app());
+  EXPECT_EQ("focused", candidates[1].app()->process_name());
 }
 
 class MockTabManagerDelegate : public TabManagerDelegate {
@@ -202,6 +233,12 @@ TEST_F(TabManagerDelegateTest, SetOomScoreAdj) {
       3, 30, "service", arc::mojom::ProcessState::SERVICE, kNotFocused, 500);
   arc_processes.emplace_back(4, 40, "visible2", arc::mojom::ProcessState::TOP,
                              kNotFocused, 150);
+  arc_processes.emplace_back(5, 50, "persistent",
+                             arc::mojom::ProcessState::PERSISTENT, kNotFocused,
+                             600);
+  arc_processes.emplace_back(6, 60, "persistent_ui",
+                             arc::mojom::ProcessState::PERSISTENT_UI,
+                             kNotFocused, 700);
 
   TabStats tab1, tab2, tab3, tab4, tab5;
   tab1.is_pinned = true;
@@ -221,20 +258,29 @@ TEST_F(TabManagerDelegateTest, SetOomScoreAdj) {
   tab5.renderer_handle = 12;
   TabStatsList tab_list = {tab1, tab2, tab3, tab4, tab5};
 
-  // Sorted order:
-  // app "focused"     pid: 10
-  // app "visible1"    pid: 20
-  // app "visible2"    pid: 40
-  // tab3              pid: 12
-  // tab4              pid: 12
-  // tab1              pid: 11
-  // tab5              pid: 12
-  // tab2              pid: 11
-  // app "service"     pid: 30
+  // Sorted order (by GetSortedCandidates):
+  // app "focused"       pid: 10
+  // app "persistent"    pid: 50
+  // app "persistent_ui" pid: 60
+  // app "visible1"      pid: 20
+  // app "visible2"      pid: 40
+  // tab3                pid: 12
+  // tab4                pid: 12
+  // tab1                pid: 11
+  // tab5                pid: 12
+  // tab2                pid: 11
+  // app "service"       pid: 30
   tab_manager_delegate.AdjustOomPrioritiesImpl(tab_list, arc_processes);
   auto& oom_score_map = tab_manager_delegate.oom_score_map_;
 
-  EXPECT_EQ(6U, oom_score_map.size());
+  // 6 PIDs for apps + 2 PIDs for tabs.
+  EXPECT_EQ(6U + 2U, oom_score_map.size());
+
+  // Non-killable part. AdjustOomPrioritiesImpl() does make a focused app/tab
+  // kernel-killable, but does not do that for PERSISTENT and PERSISTENT_UI
+  // apps.
+  EXPECT_EQ(TabManagerDelegate::kLowestOomScore, oom_score_map[50]);
+  EXPECT_EQ(TabManagerDelegate::kLowestOomScore, oom_score_map[60]);
 
   // Higher priority part.
   EXPECT_EQ(300, oom_score_map[10]);
@@ -337,6 +383,9 @@ TEST_F(TabManagerDelegateTest, KillMultipleProcesses) {
   arc_processes.emplace_back(5, 50, "not-visible",
                              arc::mojom::ProcessState::IMPORTANT_BACKGROUND,
                              kNotFocused, 300);
+  arc_processes.emplace_back(6, 60, "persistent",
+                             arc::mojom::ProcessState::PERSISTENT, kNotFocused,
+                             400);
 
   TabStats tab1, tab2, tab3, tab4, tab5;
   tab1.is_pinned = true;
@@ -361,8 +410,9 @@ TEST_F(TabManagerDelegateTest, KillMultipleProcesses) {
   tab5.tab_contents_id = 5;
   TabStatsList tab_list = {tab1, tab2, tab3, tab4, tab5};
 
-  // Sorted order:
+  // Sorted order (by GetSortedCandidates):
   // app "focused"     pid: 10  nspid 1
+  // app "persistent"  pid: 60  nspid 6
   // app "visible1"    pid: 20  nspid 2
   // app "visible2"    pid: 40  nspid 4
   // tab3              pid: 12  tab_contents_id 3
@@ -379,6 +429,7 @@ TEST_F(TabManagerDelegateTest, KillMultipleProcesses) {
   memory_stat->SetProcessPss(11, 200000);
   memory_stat->SetProcessPss(12, 30000);
   // Should not be used.
+  memory_stat->SetProcessPss(60, 500000);
   memory_stat->SetProcessPss(40, 50000);
   memory_stat->SetProcessPss(20, 30000);
   memory_stat->SetProcessPss(10, 100000);

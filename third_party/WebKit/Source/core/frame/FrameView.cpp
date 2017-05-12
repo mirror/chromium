@@ -232,7 +232,9 @@ FrameView* FrameView::Create(LocalFrame& frame, const IntSize& initial_size) {
 }
 
 FrameView::~FrameView() {
-  ASSERT(has_been_disposed_);
+#if DCHECK_IS_ON()
+  DCHECK(has_been_disposed_);
+#endif
 }
 
 DEFINE_TRACE(FrameView) {
@@ -243,7 +245,6 @@ DEFINE_TRACE(FrameView) {
   visitor->Trace(animating_scrollable_areas_);
   visitor->Trace(auto_size_info_);
   visitor->Trace(children_);
-  visitor->Trace(plugins_);
   visitor->Trace(scrollbars_);
   visitor->Trace(viewport_scrollable_area_);
   visitor->Trace(visibility_observer_);
@@ -251,7 +252,6 @@ DEFINE_TRACE(FrameView) {
   visitor->Trace(anchoring_adjustment_queue_);
   visitor->Trace(scrollbar_manager_);
   visitor->Trace(print_context_);
-  FrameViewBase::Trace(visitor);
   ScrollableArea::Trace(visitor);
 }
 
@@ -380,10 +380,10 @@ void FrameView::Dispose() {
   // FIXME: Do we need to do something here for OOPI?
   HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
   // TODO(dcheng): It seems buggy that we can have an owner element that points
-  // to another FrameViewBase. This can happen when a plugin element loads a
-  // frame (FrameViewBase A of type FrameView) and then loads a plugin
-  // (FrameViewBase B of type WebPluginContainerImpl). In this case, the frame's
-  // view is A and the frame element's owned FrameViewBase is B. See
+  // to another FrameOrPlugin. This can happen when a plugin element loads a
+  // frame (FrameOrPlugin A of type FrameView) and then loads a plugin
+  // (FrameOrPlugin B of type WebPluginContainerImpl). In this case, the frame's
+  // view is A and the frame element's OwnedWidget is B. See
   // https://crbug.com/673170 for an example.
   if (owner_element && owner_element->OwnedWidget() == this)
     owner_element->SetWidget(nullptr);
@@ -504,16 +504,12 @@ void FrameView::InvalidateAllCustomScrollbarsOnActiveChanged() {
   bool uses_window_inactive_selector =
       frame_->GetDocument()->GetStyleEngine().UsesWindowInactiveSelector();
 
-  const ChildrenSet* view_children = Children();
-  for (const Member<FrameViewBase>& child : *view_children) {
-    FrameViewBase* frame_view_base = child.Get();
-    if (frame_view_base->IsFrameView()) {
-      ToFrameView(frame_view_base)
-          ->InvalidateAllCustomScrollbarsOnActiveChanged();
-    }
+  for (const auto& child : children_) {
+    if (child->IsFrameView())
+      ToFrameView(child)->InvalidateAllCustomScrollbarsOnActiveChanged();
   }
 
-  for (const Member<Scrollbar>& scrollbar : *Scrollbars()) {
+  for (const auto& scrollbar : scrollbars_) {
     if (uses_window_inactive_selector && scrollbar->IsCustomScrollbar())
       scrollbar->StyleChanged();
   }
@@ -555,19 +551,6 @@ void FrameView::SetFrameRect(const IntRect& frame_rect) {
   frame_rect_ = frame_rect;
 
   needs_scrollbars_update_ |= width_changed || height_changed;
-
-  // If this is not the main frame, then we got here via
-  // LayoutPart::UpdateGeometryInternal.  In that case, we can't clamp the
-  // scroll offset yet, because we still need to run UpdateLayout(), so our
-  // clamping boundaries may yet change.
-  if (GetFrame().IsMainFrame()) {
-    if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-      if (LayoutView* lv = GetLayoutView())
-        lv->GetScrollableArea()->ClampScrollOffsetAfterOverflowChange();
-    } else {
-      AdjustScrollOffsetFromUpdateScrollbars();
-    }
-  }
 
   FrameRectsChanged();
 
@@ -747,9 +730,8 @@ void FrameView::AdjustViewSize() {
   const IntSize& size = rect.Size();
 
   const IntPoint origin(-rect.X(), -rect.Y());
-  if (ScrollOrigin() != origin) {
+  if (ScrollOrigin() != origin)
     SetScrollOrigin(origin);
-  }
 
   SetContentsSize(size);
 }
@@ -992,7 +974,7 @@ inline void FrameView::ForceLayoutParentViewIfNeeded() {
 
   // Synchronously enter layout, to layout the view containing the host
   // object/embed/iframe.
-  ASSERT(frame_view);
+  DCHECK(frame_view);
   frame_view->UpdateLayout();
 }
 
@@ -1110,7 +1092,7 @@ void FrameView::PerformLayout(bool in_subtree_layout) {
     ScheduleOrthogonalWritingModeRootsForLayout();
   }
 
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPerformLayout);
 
   // performLayout is the actual guts of layout().
@@ -1169,7 +1151,7 @@ void FrameView::ScheduleOrPerformPostLayoutTasks() {
   if (!post_layout_tasks_timer_.IsActive() &&
       (NeedsLayout() || in_synchronous_post_layout_)) {
     // If we need layout or are already in a synchronous call to
-    // postLayoutTasks(), defer FrameViewBase updates and event dispatch until
+    // postLayoutTasks(), defer FrameView updates and event dispatch until
     // after we return.  postLayoutTasks() can make us need to update again, and
     // we can get stuck in a nasty cycle unless we call it through the timer
     // here.
@@ -1181,9 +1163,9 @@ void FrameView::ScheduleOrPerformPostLayoutTasks() {
 
 void FrameView::UpdateLayout() {
   // We should never layout a Document which is not in a LocalFrame.
-  ASSERT(frame_);
-  ASSERT(frame_->View() == this);
-  ASSERT(frame_->GetPage());
+  DCHECK(frame_);
+  DCHECK(frame_->View() == this);
+  DCHECK(frame_->GetPage());
 
   ScriptForbiddenScope forbid_script;
 
@@ -1330,7 +1312,7 @@ void FrameView::UpdateLayout() {
       UpdateLayout();
     }
 
-    ASSERT(layout_subtree_root_list_.IsEmpty());
+    DCHECK(layout_subtree_root_list_.IsEmpty());
   }  // Reset m_layoutSchedulingEnabled to its previous value.
   CheckDoesNotNeedLayout();
 
@@ -1390,7 +1372,7 @@ void FrameView::DeprecatedInvalidateTree(
 
   RELEASE_ASSERT(!GetLayoutViewItem().IsNull());
   LayoutViewItem root_for_paint_invalidation = GetLayoutViewItem();
-  ASSERT(!root_for_paint_invalidation.NeedsLayout());
+  DCHECK(!root_for_paint_invalidation.NeedsLayout());
 
   TRACE_EVENT1("blink", "FrameView::invalidateTree", "root",
                root_for_paint_invalidation.DebugName().Ascii());
@@ -1541,10 +1523,10 @@ void FrameView::UpdateGeometries() {
 }
 
 void FrameView::AddPartToUpdate(LayoutEmbeddedObject& object) {
-  ASSERT(IsInPerformLayout());
-  // Tell the DOM element that it needs a FrameViewBase update.
+  DCHECK(IsInPerformLayout());
+  // Tell the DOM element that it needs a Plugin update.
   Node* node = object.GetNode();
-  ASSERT(node);
+  DCHECK(node);
   if (isHTMLObjectElement(*node) || isHTMLEmbedElement(*node))
     ToHTMLPlugInElement(node)->SetNeedsPluginUpdate(true);
 
@@ -1608,7 +1590,7 @@ bool FrameView::ContentsInCompositedLayer() const {
 }
 
 void FrameView::AddBackgroundAttachmentFixedObject(LayoutObject* object) {
-  ASSERT(!background_attachment_fixed_objects_.Contains(object));
+  DCHECK(!background_attachment_fixed_objects_.Contains(object));
 
   background_attachment_fixed_objects_.insert(object);
   if (ScrollingCoordinator* scrolling_coordinator =
@@ -1625,7 +1607,7 @@ void FrameView::AddBackgroundAttachmentFixedObject(LayoutObject* object) {
 }
 
 void FrameView::RemoveBackgroundAttachmentFixedObject(LayoutObject* object) {
-  ASSERT(background_attachment_fixed_objects_.Contains(object));
+  DCHECK(background_attachment_fixed_objects_.Contains(object));
 
   background_attachment_fixed_objects_.erase(object);
   if (ScrollingCoordinator* scrolling_coordinator =
@@ -1674,14 +1656,26 @@ void FrameView::ViewportSizeChanged(bool width_changed, bool height_changed) {
   bool root_layer_scrolling_enabled =
       RuntimeEnabledFeatures::rootLayerScrollingEnabled();
 
-  if (LayoutViewItem layout_view = this->GetLayoutViewItem()) {
-    if (layout_view.UsesCompositing()) {
+  if (LayoutView* layout_view = this->GetLayoutView()) {
+    // If this is the main frame, we might have got here by hiding/showing the
+    // top controls.  In that case, layout won't be triggered, so we need to
+    // clamp the scroll offset here.
+    if (GetFrame().IsMainFrame()) {
       if (root_layer_scrolling_enabled) {
-        layout_view.Layer()->SetNeedsCompositingInputsUpdate();
+        layout_view->GetScrollableArea()
+            ->ClampScrollOffsetAfterOverflowChange();
+      } else {
+        AdjustScrollOffsetFromUpdateScrollbars();
+      }
+    }
+
+    if (layout_view->UsesCompositing()) {
+      if (root_layer_scrolling_enabled) {
+        layout_view->Layer()->SetNeedsCompositingInputsUpdate();
         if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
           SetNeedsPaintPropertyUpdate();
       } else {
-        layout_view.Compositor()->FrameViewDidChangeSize();
+        layout_view->Compositor()->FrameViewDidChangeSize();
       }
     }
   }
@@ -1788,8 +1782,8 @@ bool FrameView::InvalidateViewportConstrainedObjects() {
        *viewport_constrained_objects_) {
     LayoutObject* layout_object = viewport_constrained_object;
     LayoutItem layout_item = LayoutItem(layout_object);
-    ASSERT(layout_item.Style()->HasViewportConstrainedPosition());
-    ASSERT(layout_item.HasLayer());
+    DCHECK(layout_item.Style()->HasViewportConstrainedPosition());
+    DCHECK(layout_item.HasLayer());
     PaintLayer* layer = LayoutBoxModel(layout_item).Layer();
 
     if (layer->IsPaintInvalidationContainer())
@@ -1842,7 +1836,7 @@ void FrameView::ScrollContentsSlowPath() {
   // all of the objects.
   // FIXME: Find out what are enough to invalidate in slow path scrolling.
   // crbug.com/451090#9.
-  ASSERT(!GetLayoutViewItem().IsNull());
+  DCHECK(!GetLayoutViewItem().IsNull());
   if (ContentsInCompositedLayer())
     GetLayoutViewItem()
         .Layer()
@@ -1854,7 +1848,7 @@ void FrameView::ScrollContentsSlowPath() {
 
   if (ContentsInCompositedLayer()) {
     IntRect update_rect = VisibleContentRect();
-    ASSERT(!GetLayoutViewItem().IsNull());
+    DCHECK(!GetLayoutViewItem().IsNull());
     // FIXME: We should not allow paint invalidation out of paint invalidation
     // state. crbug.com/457415
     DisablePaintInvalidationStateAsserts disabler;
@@ -1906,7 +1900,7 @@ void FrameView::ProcessUrlFragment(const KURL& url,
 
 bool FrameView::ProcessUrlFragmentHelper(const String& name,
                                          UrlFragmentBehavior behavior) {
-  ASSERT(frame_->GetDocument());
+  DCHECK(frame_->GetDocument());
 
   if (behavior == kUrlFragmentScroll &&
       !frame_->GetDocument()->IsRenderingReady()) {
@@ -1959,7 +1953,7 @@ bool FrameView::ProcessUrlFragmentHelper(const String& name,
 }
 
 void FrameView::SetFragmentAnchor(Node* anchor_node) {
-  ASSERT(anchor_node);
+  DCHECK(anchor_node);
   fragment_anchor_ = anchor_node;
 
   // We need to update the layout tree before scrolling.
@@ -2013,7 +2007,7 @@ IntSize FrameView::GetLayoutSize(
 }
 
 void FrameView::SetLayoutSize(const IntSize& size) {
-  ASSERT(!LayoutSizeFixedToFrameSize());
+  DCHECK(!LayoutSizeFixedToFrameSize());
 
   SetLayoutSizeInternal(size);
 }
@@ -2060,7 +2054,7 @@ void FrameView::UpdateLayersAndCompositingAfterScrollIfNeeded() {
   }
 
   // If there fixed position elements, scrolling may cause compositing layers to
-  // change.  Update FrameViewBase and layer positions after scrolling, but only
+  // change.  Update FrameView and layer positions after scrolling, but only
   // if we're not inside of layout.
   if (!nested_layout_count_) {
     UpdateGeometries();
@@ -2115,7 +2109,7 @@ void FrameView::UpdateCompositedSelectionIfNeeded() {
   TRACE_EVENT0("blink", "FrameView::updateCompositedSelectionIfNeeded");
 
   Page* page = GetFrame().GetPage();
-  ASSERT(page);
+  DCHECK(page);
 
   CompositedSelection selection;
   LocalFrame* focused_frame = page->GetFocusController().FocusedFrame();
@@ -2485,8 +2479,8 @@ void FrameView::ScrollToFragmentAnchor() {
 }
 
 bool FrameView::UpdatePlugins() {
-  // This is always called from updatePluginsTimerFired.
-  // m_updatePluginsTimer should only be scheduled if we have FrameViewBases to
+  // This is always called from UpdatePluginsTimerFired.
+  // update_plugins_timer should only be scheduled if we have FrameViews to
   // update. Thus I believe we can stop checking isEmpty here, and just ASSERT
   // isEmpty:
   // FIXME: This assert has been temporarily removed due to
@@ -2525,7 +2519,7 @@ bool FrameView::UpdatePlugins() {
 }
 
 void FrameView::UpdatePluginsTimerFired(TimerBase*) {
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   for (unsigned i = 0; i < kMaxUpdatePluginsIterations; ++i) {
     if (UpdatePlugins())
       return;
@@ -2533,7 +2527,7 @@ void FrameView::UpdatePluginsTimerFired(TimerBase*) {
 }
 
 void FrameView::FlushAnyPendingPostLayoutTasks() {
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   if (post_layout_tasks_timer_.IsActive())
     PerformPostLayoutTasks();
   if (update_plugins_timer_.IsActive()) {
@@ -2543,7 +2537,7 @@ void FrameView::FlushAnyPendingPostLayoutTasks() {
 }
 
 void FrameView::ScheduleUpdatePluginsIfNecessary() {
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   if (update_plugins_timer_.IsActive() || part_update_set_.IsEmpty())
     return;
   update_plugins_timer_.StartOneShot(0, BLINK_FROM_HERE);
@@ -2553,18 +2547,18 @@ void FrameView::PerformPostLayoutTasks() {
   // FIXME: We can reach here, even when the page is not active!
   // http/tests/inspector/elements/html-link-import.html and many other
   // tests hit that case.
-  // We should ASSERT(isActive()); or at least return early if we can!
+  // We should DCHECK(isActive()); or at least return early if we can!
 
   // Always called before or after performLayout(), part of the highest-level
   // layout() call.
-  ASSERT(!IsInPerformLayout());
+  DCHECK(!IsInPerformLayout());
   TRACE_EVENT0("blink,benchmark", "FrameView::performPostLayoutTasks");
 
   post_layout_tasks_timer_.Stop();
 
   frame_->Selection().DidLayout();
 
-  ASSERT(frame_->GetDocument());
+  DCHECK(frame_->GetDocument());
 
   FontFaceSet::DidLayout(*frame_->GetDocument());
   // Cursor update scheduling is done by the local root, which is the main frame
@@ -2590,17 +2584,17 @@ void FrameView::PerformPostLayoutTasks() {
 }
 
 bool FrameView::WasViewportResized() {
-  ASSERT(frame_);
+  DCHECK(frame_);
   LayoutViewItem layout_view_item = this->GetLayoutViewItem();
   if (layout_view_item.IsNull())
     return false;
-  ASSERT(layout_view_item.Style());
+  DCHECK(layout_view_item.Style());
   return (GetLayoutSize(kIncludeScrollbars) != last_viewport_size_ ||
           layout_view_item.Style()->Zoom() != last_zoom_factor_);
 }
 
 void FrameView::SendResizeEventIfNeeded() {
-  ASSERT(frame_);
+  DCHECK(frame_);
 
   LayoutViewItem layout_view_item = this->GetLayoutViewItem();
   if (layout_view_item.IsNull() || layout_view_item.GetDocument().Printing())
@@ -2755,7 +2749,7 @@ void FrameView::UpdateParentScrollableAreaSet() {
     return;
 
   // That ensures that only inner frames are cached.
-  FrameView* parent_frame_view = this->ParentFrameView();
+  FrameView* parent_frame_view = ParentFrameView();
   if (!parent_frame_view)
     return;
 
@@ -2783,7 +2777,7 @@ void FrameView::ScrollbarStyleChanged() {
 
 bool FrameView::ScheduleAnimation() {
   if (PlatformChromeClient* client = GetChromeClient()) {
-    client->ScheduleAnimation(frame_);
+    client->ScheduleAnimation(this);
     return true;
   }
   return false;
@@ -3260,7 +3254,7 @@ void FrameView::PaintTree() {
          (!GetFrame().Tree().Parent()->IsLocalFrame()));
 
   LayoutViewItem view = GetLayoutViewItem();
-  ASSERT(!view.IsNull());
+  DCHECK(!view.IsNull());
   ForAllNonThrottledFrameViews([](FrameView& frame_view) {
     frame_view.Lifecycle().AdvanceTo(DocumentLifecycle::kInPaint);
   });
@@ -3397,8 +3391,9 @@ void FrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
   // TODO(leviw): This currently runs the entire lifecycle on plugin WebViews.
   // We should have a way to only run these other Documents to the same
   // lifecycle stage as this frame.
-  for (const Member<PluginView>& plugin : *Plugins()) {
-    plugin->UpdateAllLifecyclePhases();
+  for (const auto& child : children_) {
+    if (child->IsPluginView())
+      ToPluginView(child)->UpdateAllLifecyclePhases();
   }
   CheckDoesNotNeedLayout();
 
@@ -3652,11 +3647,11 @@ IntPoint FrameView::ConvertToLayoutItem(const LayoutItem& layout_item,
   return RoundedIntPoint(layout_item.AbsoluteToLocal(point, kUseTransforms));
 }
 
-IntPoint FrameView::ConvertSelfToChild(const FrameViewBase* child,
+IntPoint FrameView::ConvertSelfToChild(const FrameOrPlugin& child,
                                        const IntPoint& point) const {
   IntPoint new_point = point;
   new_point = FrameToContents(point);
-  new_point.MoveBy(-child->Location());
+  new_point.MoveBy(child.FrameRect().Location());
   return new_point;
 }
 
@@ -3683,7 +3678,7 @@ IntRect FrameView::ConvertFromContainingFrameViewBase(
   if (parent_) {
     IntRect local_rect = parent_rect;
     local_rect.SetLocation(
-        parent_->ConvertSelfToChild(this, local_rect.Location()));
+        parent_->ConvertSelfToChild(*this, local_rect.Location()));
     return local_rect;
   }
 
@@ -3746,10 +3741,12 @@ void FrameView::SetTracksPaintInvalidations(bool track_paint_invalidations) {
                               ? new Vector<ObjectPaintInvalidation>
                               : nullptr);
       if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+        if (!paint_controller_)
+          paint_controller_ = PaintController::Create();
         paint_controller_->SetTracksRasterInvalidations(
             track_paint_invalidations);
-        paint_artifact_compositor_->SetTracksRasterInvalidations(
-            track_paint_invalidations);
+        if (paint_artifact_compositor_)
+          paint_artifact_compositor_->ResetTrackedRasterInvalidations();
       } else {
         layout_view.Compositor()->SetTracksRasterInvalidations(
             track_paint_invalidations);
@@ -3814,7 +3811,7 @@ void FrameView::RemoveResizerArea(LayoutBox& resizer_box) {
 }
 
 void FrameView::AddScrollableArea(ScrollableArea* scrollable_area) {
-  ASSERT(scrollable_area);
+  DCHECK(scrollable_area);
   if (!scrollable_areas_)
     scrollable_areas_ = new ScrollableAreaSet;
   scrollable_areas_->insert(scrollable_area);
@@ -3835,7 +3832,7 @@ void FrameView::RemoveScrollableArea(ScrollableArea* scrollable_area) {
 }
 
 void FrameView::AddAnimatingScrollableArea(ScrollableArea* scrollable_area) {
-  ASSERT(scrollable_area);
+  DCHECK(scrollable_area);
   if (!animating_scrollable_areas_)
     animating_scrollable_areas_ = new ScrollableAreaSet;
   animating_scrollable_areas_->insert(scrollable_area);
@@ -3847,8 +3844,7 @@ void FrameView::RemoveAnimatingScrollableArea(ScrollableArea* scrollable_area) {
   animating_scrollable_areas_->erase(scrollable_area);
 }
 
-void FrameView::SetParent(FrameViewBase* parent_frame_view_base) {
-  FrameView* parent = ToFrameView(parent_frame_view_base);
+void FrameView::SetParent(FrameView* parent) {
   if (parent == parent_)
     return;
 
@@ -3866,7 +3862,13 @@ void FrameView::SetParent(FrameViewBase* parent_frame_view_base) {
     subtree_throttled_ = ParentFrameView()->CanThrottleRendering();
 }
 
-void FrameView::RemoveChild(FrameViewBase* child) {
+void FrameView::AddChild(FrameOrPlugin* child) {
+  DCHECK(child != this && !child->Parent());
+  child->SetParent(this);
+  children_.insert(child);
+}
+
+void FrameView::RemoveChild(FrameOrPlugin* child) {
   DCHECK(child->Parent() == this);
 
   if (child->IsFrameView() &&
@@ -3875,20 +3877,6 @@ void FrameView::RemoveChild(FrameViewBase* child) {
 
   child->SetParent(nullptr);
   children_.erase(child);
-}
-
-void FrameView::RemovePlugin(PluginView* plugin) {
-  DCHECK(plugin->Parent() == this);
-  DCHECK(plugins_.Contains(plugin));
-  plugin->SetParent(nullptr);
-  plugins_.erase(plugin);
-}
-
-void FrameView::AddPlugin(PluginView* plugin) {
-  DCHECK(!plugin->Parent());
-  DCHECK(!plugins_.Contains(plugin));
-  plugin->SetParent(this);
-  plugins_.insert(plugin);
 }
 
 void FrameView::RemoveScrollbar(Scrollbar* scrollbar) {
@@ -3939,9 +3927,6 @@ void FrameView::FrameRectsChanged() {
 
   for (const auto& child : children_)
     child->FrameRectsChanged();
-
-  for (const auto& plugin : plugins_)
-    plugin->FrameRectsChanged();
 }
 
 void FrameView::SetLayoutSizeInternal(const IntSize& size) {
@@ -3989,12 +3974,6 @@ IntSize FrameView::MaximumScrollOffsetInt() const {
   IntSize maximum_offset =
       ToIntSize(-ScrollOrigin() + (content_bounds - visible_size));
   return maximum_offset.ExpandedTo(MinimumScrollOffsetInt());
-}
-
-void FrameView::AddChild(FrameViewBase* child) {
-  DCHECK(child != this && !child->Parent());
-  child->SetParent(this);
-  children_.insert(child);
 }
 
 void FrameView::SetScrollbarModes(ScrollbarMode horizontal_mode,
@@ -4286,7 +4265,7 @@ void FrameView::UpdateScrollbarGeometry() {
 
 bool FrameView::AdjustScrollbarExistence(
     ComputeScrollbarExistenceOption option) {
-  ASSERT(in_update_scrollbars_);
+  DCHECK(in_update_scrollbars_);
 
   // If we came in here with the view already needing a layout, then go ahead
   // and do that first.  (This will be the common case, e.g., when the page
@@ -4445,7 +4424,7 @@ void FrameView::ScrollContents(const IntSize& scroll_delta) {
     SetNeedsPaintPropertyUpdate();
   }
 
-  // This call will move children with native FrameViewBases (plugins) and
+  // This call will move children with native FrameViews (plugins) and
   // invalidate them as well.
   FrameRectsChanged();
 }
@@ -4792,9 +4771,6 @@ void FrameView::SetParentVisible(bool visible) {
 
   for (const auto& child : children_)
     child->SetParentVisible(visible);
-
-  for (const auto& plugin : plugins_)
-    plugin->SetParentVisible(visible);
 }
 
 void FrameView::Show() {
@@ -4815,9 +4791,6 @@ void FrameView::Show() {
     if (IsParentVisible()) {
       for (const auto& child : children_)
         child->SetParentVisible(true);
-
-      for (const auto& plugin : plugins_)
-        plugin->SetParentVisible(true);
     }
   }
 }
@@ -4827,9 +4800,6 @@ void FrameView::Hide() {
     if (IsParentVisible()) {
       for (const auto& child : children_)
         child->SetParentVisible(false);
-
-      for (const auto& plugin : plugins_)
-        plugin->SetParentVisible(false);
     }
     SetSelfVisible(false);
     if (ScrollingCoordinator* scrolling_coordinator =
@@ -4896,11 +4866,11 @@ void FrameView::CollectAnnotatedRegions(
 
 void FrameView::UpdateViewportIntersectionsForSubtree(
     DocumentLifecycle::LifecycleState target_state) {
-  // TODO(dcheng): Since FrameViewBase tree updates are deferred, FrameViews
-  // might still be in the FrameViewBase hierarchy even though the associated
+  // TODO(dcheng): Since FrameView tree updates are deferred, FrameViews
+  // might still be in the FrameView hierarchy even though the associated
   // Document is already detached. Investigate if this check and a similar check
   // in lifecycle updates are still needed when there are no more deferred
-  // FrameViewBase updates: https://crbug.com/561683
+  // FrameView updates: https://crbug.com/561683
   if (!GetFrame().GetDocument()->IsActive())
     return;
 
@@ -4930,8 +4900,11 @@ void FrameView::UpdateViewportIntersectionsForSubtree(
 
   for (Frame* child = frame_->Tree().FirstChild(); child;
        child = child->Tree().NextSibling()) {
-    if (!child->IsLocalFrame())
+    if (child->IsRemoteFrame()) {
+      if (RemoteFrameView* view = ToRemoteFrame(child)->View())
+        view->UpdateRemoteViewportIntersection();
       continue;
+    }
     if (FrameView* view = ToLocalFrame(child)->View())
       view->UpdateViewportIntersectionsForSubtree(target_state);
   }
@@ -4978,11 +4951,10 @@ void FrameView::UpdateRenderThrottlingStatus(
       (was_throttled != is_throttled ||
        force_throttling_invalidation_behavior ==
            kForceThrottlingInvalidation)) {
-    for (const Member<FrameViewBase>& child : *Children()) {
+    for (const auto& child : children_) {
       if (child->IsFrameView()) {
-        FrameView* child_view = ToFrameView(child);
-        child_view->UpdateRenderThrottlingStatus(
-            child_view->hidden_for_throttling_, is_throttled);
+        ToFrameView(child)->UpdateRenderThrottlingStatus(
+            ToFrameView(child)->hidden_for_throttling_, is_throttled);
       }
     }
   }

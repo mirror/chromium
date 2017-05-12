@@ -304,7 +304,7 @@ class WindowServerTest : public WindowServerTestBase {
 
   std::unique_ptr<ClientAreaChange> WaitForClientAreaToChange() {
     client_area_change_ = base::MakeUnique<ClientAreaChange>();
-    // The nested message loop is quit in OnWmSetClientArea(). Client area
+    // The nested run loop is quit in OnWmSetClientArea(). Client area
     // changes don't route through the window, only the WindowManagerDelegate.
     if (!WindowServerTestBase::DoRunLoopWithTimeout()) {
       client_area_change_.reset();
@@ -361,12 +361,6 @@ class WindowServerTest : public WindowServerTestBase {
     if (embed_details_->waiting &&
         (!result || embed_details_->result->window_tree_client))
       EXPECT_TRUE(WindowServerTestBase::QuitRunLoop());
-  }
-
-  // mojo::test::ServiceTest::
-  std::unique_ptr<base::MessageLoop> CreateMessageLoop() override {
-    // The window server is expected to run with a TYPE_UI message loop.
-    return base::MakeUnique<base::MessageLoop>(base::MessageLoop::TYPE_UI);
   }
 
   std::unique_ptr<EmbedDetails> embed_details_;

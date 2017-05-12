@@ -212,4 +212,20 @@ bool ContentLoFiDecider::ShouldRecordLoFiUMA(
          params::IsIncludedInLoFiControlFieldTrial();
 }
 
+bool ContentLoFiDecider::IsClientLoFiImageRequest(
+    const net::URLRequest& request) const {
+  const content::ResourceRequestInfo* request_info =
+      content::ResourceRequestInfo::ForRequest(&request);
+  return request_info &&
+         request_info->GetResourceType() == content::RESOURCE_TYPE_IMAGE &&
+         (request_info->GetPreviewsState() & content::CLIENT_LOFI_ON);
+}
+
+bool ContentLoFiDecider::IsClientLoFiAutoReloadRequest(
+    const net::URLRequest& request) const {
+  const content::ResourceRequestInfo* request_info =
+      content::ResourceRequestInfo::ForRequest(&request);
+  return request_info &&
+         (request_info->GetPreviewsState() & content::CLIENT_LOFI_AUTO_RELOAD);
+}
 }  // namespace data_reduction_proxy

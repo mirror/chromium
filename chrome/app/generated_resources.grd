@@ -1774,6 +1774,11 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
 
       <!-- Touch Bar-->
       <if expr="is_macosx">
+        <message name="IDS_CUSTOMIZE_TOUCH_BAR"
+                 desc="Menu item text for customizing the Touch Bar.">
+          Customize Touch Bar
+        </message>
+
         <message name="IDS_TOUCH_BAR_GOOGLE_SEARCH"
                    desc="Text for the search button in the touch bar when Google is the default search provider. Pressing the button will bring focus to the omnibox.">
           Search or type URL
@@ -7478,6 +7483,7 @@ I don't think this site should be blocked!
         <message name="IDS_OPTIONS_PASSWORDS_AUTOLOGIN" desc="The label of the 'autologinEnabled' checkbox">
           Offer to sign in to Google sites automatically with this account
         </message>
+        <!-- TODO(718146) Move autofill strings to autofill_strings.grd -->
         <message name="IDS_OPTIONS_AUTOFILL_ENABLE" desc="The label of the 'Ask me to enable Autofill' radio button">
           Enable Autofill to fill out web forms in a single click.
         </message>
@@ -7547,6 +7553,12 @@ I don't think this site should be blocked!
         </message>
         <message name="IDS_AUTOFILL_FIELD_LABEL_EXPIRATION_YEAR" desc="The label of the Expiration date entry.">
           Expiration year
+        </message>
+        <message name="IDS_AUTOFILL_FIELD_LABEL_BILLING_ADDRESS" desc="The label of the Billing Address chooser.">
+          Billing address
+        </message>
+        <message name="IDS_AUTOFILL_BUTTON_LABEL_ADD_BILLING_ADDRESS" desc="The label of the button to add a new billing address.">
+          Add billing address
         </message>
 
         <!-- Extension settings -->
@@ -10768,8 +10780,8 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@gmail.com</ex
             Launch app
           </message>
         </if>
-        <message name="IDS_GO_INCOGNITO_BUTTON" desc="Text shown on Chrome OS sign-in screen button that launches guest session. Should be short.">
-          Browse as Guest
+        <message name="IDS_BROWSE_AS_GUEST_BUTTON" desc="Text shown on Chrome OS sign-in screen button that launches guest session. Should be short.">
+          Browse as guest
         </message>
         <message name="IDS_MORE_OPTIONS_BUTTON" desc="Text read but not shown on the [...] button on login screen">
           More Options
@@ -12093,13 +12105,13 @@ read aloud to screenreader users to announce that a completion is available.">
       Chrome has blocked parts of this site to protect you from potentially deceptive content.
     </message>
 
-    <message name="IDS_SUBRESOURCE_FILTER_HEADER" desc="Header for the subresource filter setting on the Content Settings dialog.">
+    <message name="IDS_SUBRESOURCE_FILTER_HEADER" desc="Header for the subresource filter setting on the Content Settings dialog." translateable="false">
        Subresource Filter
     </message>
-    <message name="IDS_SUBRESOURCE_FILTER_ALLOW_RADIO" desc="A radio button on the Content Settings dialog to allow subresource filter use.">
+    <message name="IDS_SUBRESOURCE_FILTER_ALLOW_RADIO" desc="A radio button on the Content Settings dialog to allow subresource filter use." translateable="false">
       Allow the Subresource Filter to perform filtering
     </message>
-    <message name="IDS_SUBRESOURCE_FILTER_BLOCK_RADIO" desc="A radio button on the Content Settings dialog to block subresource filter use on all sites.">
+    <message name="IDS_SUBRESOURCE_FILTER_BLOCK_RADIO" desc="A radio button on the Content Settings dialog to block subresource filter use on all sites." translateable="false">
       Do not allow Subresource Filter to perform filtering
     </message>
     <if expr="is_win">
@@ -12120,6 +12132,40 @@ read aloud to screenreader users to announce that a completion is available.">
         Sign in
       </message>
       <message name="IDS_WELCOME_DECLINE_BUTTON" desc="A button on the welcome page which declines the offer to sign in to Chrome.">
+        No thanks
+      </message>
+    </if>
+
+    <!-- Windows 10 toast strings -->
+    <if expr="is_win">
+      <message name="IDS_WIN10_TOAST_BROWSE_FAST" desc="Toast message variant: browse fast.">
+        Browse fast with Google Chrome
+      </message>
+      <message name="IDS_WIN10_TOAST_BROWSE_SAFELY" desc="Toast message variant: browse safely.">
+        Browse safely with Google Chrome
+      </message>
+      <message name="IDS_WIN10_TOAST_BROWSE_SMART" desc="Toast message variant: browse smart.">
+        Browse smart with Chrome
+      </message>
+      <message name="IDS_WIN10_TOAST_SWITCH_FAST" desc="Toast message variant: switch to a fast browser.">
+        Switch to a fast browser 
+      </message>
+      <message name="IDS_WIN10_TOAST_SWITCH_SMART" desc="Toast message variant: switch to a smart browser.">
+        Switch to a smart browser
+      </message>
+      <message name="IDS_WIN10_TOAST_SWITCH_SECURE" desc="Toast message variant: switch to a secure browser.">
+        Switch to a secure browser
+      </message>
+      <message name="IDS_WIN10_TOAST_SWITCH_SMART_AND_SECURE" desc="Toast message variant: switch to a smart and secure browser.">
+        Switch to a smart and secure browser
+      </message>
+      <message name="IDS_WIN10_TOAST_RECOMMENDATION" desc="Toast header label noting Google recommends Chrome.">
+        Google recommends Chrome
+      </message>
+      <message name="IDS_WIN10_TOAST_OPEN_CHROME" desc="The label on the button to dismiss the toast and launch Chrome.">
+        Open Chrome
+      </message>
+      <message name="IDS_WIN10_TOAST_NO_THANKS" desc="The label on the button to dismiss the toast without launching Chrome.">
         No thanks
       </message>
     </if>

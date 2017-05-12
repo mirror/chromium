@@ -145,7 +145,7 @@ TEST_F(QueueingTimeEstimatorTest,
   EXPECT_EQ(base::TimeDelta::FromMilliseconds(5500), estimated_queueing_time);
 }
 
-// Tasks containing nested message loops may be extremely long without
+// Tasks containing nested run loops may be extremely long without
 // negatively impacting user experience. Ignore such tasks.
 TEST_F(QueueingTimeEstimatorTest, IgnoresTasksWithNestedMessageLoops) {
   TestQueueingTimeEstimatorClient client;
@@ -160,10 +160,10 @@ TEST_F(QueueingTimeEstimatorTest, IgnoresTasksWithNestedMessageLoops) {
 
   estimator.OnTopLevelTaskStarted(time);
   time += base::TimeDelta::FromMilliseconds(20000);
-  estimator.OnBeginNestedMessageLoop();
+  estimator.OnBeginNestedRunLoop();
   estimator.OnTopLevelTaskCompleted(time);
 
-  // Perform an additional task after the nested message loop. A 1 second task
+  // Perform an additional task after the nested run loop. A 1 second task
   // in a 5 second window results in a 100ms expected queueing time.
   estimator.OnTopLevelTaskStarted(time);
   time += base::TimeDelta::FromMilliseconds(1000);

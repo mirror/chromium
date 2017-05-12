@@ -13,6 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view.h"
+#include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
 #include "chrome/browser/ui/views/payments/validating_combobox.h"
 #include "chrome/browser/ui/views/payments/validating_textfield.h"
 #include "chrome/grit/generated_resources.h"
@@ -68,10 +69,11 @@ ShippingAddressEditorViewController::ShippingAddressEditorViewController(
     PaymentRequestSpec* spec,
     PaymentRequestState* state,
     PaymentRequestDialogView* dialog,
+    BackNavigationType back_navigation_type,
     base::OnceClosure on_edited,
     base::OnceCallback<void(const autofill::AutofillProfile&)> on_added,
     autofill::AutofillProfile* profile)
-    : EditorViewController(spec, state, dialog),
+    : EditorViewController(spec, state, dialog, back_navigation_type),
       on_edited_(std::move(on_edited)),
       on_added_(std::move(on_added)),
       profile_to_edit_(profile),
@@ -82,11 +84,6 @@ ShippingAddressEditorViewController::ShippingAddressEditorViewController(
 
 ShippingAddressEditorViewController::~ShippingAddressEditorViewController() {}
 
-std::unique_ptr<views::View>
-ShippingAddressEditorViewController::CreateHeaderView() {
-  return base::MakeUnique<views::View>();
-}
-
 std::vector<EditorField>
 ShippingAddressEditorViewController::GetFieldDefinitions() {
   return editor_fields_;
@@ -96,10 +93,9 @@ base::string16 ShippingAddressEditorViewController::GetInitialValueForType(
     autofill::ServerFieldType type) {
   // Temporary profile has precedence over profile to edit since its existence
   // is based on having unsaved stated to restore.
-  if (temporary_profile_.get()) {
+  if (temporary_profile_.get())
     return temporary_profile_->GetInfo(autofill::AutofillType(type),
                                        state()->GetApplicationLocale());
-  }
 
   if (!profile_to_edit_)
     return base::string16();
@@ -113,7 +109,6 @@ bool ShippingAddressEditorViewController::ValidateModelAndSave() {
   autofill::AutofillProfile profile;
   if (!SaveFieldsToProfile(&profile, /*ignore_errors=*/false))
     return false;
-
   if (!profile_to_edit_) {
     // Add the profile (will not add a duplicate).
     profile.set_origin(autofill::kSettingsOrigin);
@@ -223,6 +218,14 @@ base::string16 ShippingAddressEditorViewController::GetSheetTitle() {
                           : l10n_util::GetStringUTF16(IDS_PAYMENTS_ADD_ADDRESS);
 }
 
+std::unique_ptr<views::Button>
+ShippingAddressEditorViewController::CreatePrimaryButton() {
+  std::unique_ptr<views::Button> button(
+      EditorViewController::CreatePrimaryButton());
+  button->set_id(static_cast<int>(DialogViewID::SAVE_ADDRESS_BUTTON));
+  return button;
+}
+
 void ShippingAddressEditorViewController::UpdateEditorFields() {
   editor_fields_.clear();
   std::string chosen_country_code;
@@ -264,11 +267,11 @@ void ShippingAddressEditorViewController::UpdateEditorFields() {
         NOTREACHED();
         return;
       }
-      EditorField::LengthHint length_hint = EditorField::LengthHint::HINT_LONG;
-      if (field_length == autofill::kShortField)
-        length_hint = EditorField::LengthHint::HINT_SHORT;
+      EditorField::LengthHint length_hint = EditorField::LengthHint::HINT_SHORT;
+      if (field_length == autofill::kLongField)
+        length_hint = EditorField::LengthHint::HINT_LONG;
       else
-        DCHECK_EQ(autofill::kLongField, field_length);
+        DCHECK_EQ(autofill::kShortField, field_length);
       autofill::ServerFieldType server_field_type =
           GetFieldTypeFromString(field_type);
       EditorField::ControlType control_type =
@@ -288,16 +291,16 @@ void ShippingAddressEditorViewController::UpdateEditorFields() {
             autofill::ADDRESS_HOME_COUNTRY,
             l10n_util::GetStringUTF16(
                 IDS_LIBADDRESSINPUT_COUNTRY_OR_REGION_LABEL),
-            EditorField::LengthHint::HINT_LONG, /*required=*/true,
+            EditorField::LengthHint::HINT_SHORT, /*required=*/true,
             EditorField::ControlType::COMBOBOX);
       }
     }
   }
   // Always add phone number at the end.
   editor_fields_.emplace_back(
-      autofill::PHONE_HOME_NUMBER,
+      autofill::PHONE_HOME_WHOLE_NUMBER,
       l10n_util::GetStringUTF16(IDS_AUTOFILL_FIELD_LABEL_PHONE),
-      EditorField::LengthHint::HINT_LONG, /*required=*/false,
+      EditorField::LengthHint::HINT_SHORT, /*required=*/true,
       EditorField::ControlType::TEXTFIELD);
 }
 
@@ -327,31 +330,37 @@ bool ShippingAddressEditorViewController::SaveFieldsToProfile(
     // ValidatingTextfield* is the key, EditorField is the value.
     if (field.first->invalid()) {
       success = false;
-      if (!ignore_errors)
-        return false;
+    } else {
+      success = profile->SetInfo(autofill::AutofillType(field.second.type),
+                                 field.first->text(), locale);
     }
-    profile->SetInfo(autofill::AutofillType(field.second.type),
-                     field.first->text(), locale);
+    LOG_IF(ERROR, success || ignore_errors)
+        << "Can't setinfo(" << field.second.type << ", " << field.first->text();
+    if (!success && !ignore_errors)
+      return false;
   }
   for (const auto& field : comboboxes()) {
     // ValidatingCombobox* is the key, EditorField is the value.
     ValidatingCombobox* combobox = field.first;
     if (combobox->invalid()) {
       success = false;
-      if (!ignore_errors)
-        return false;
-    }
-
-    if (combobox->id() == autofill::ADDRESS_HOME_COUNTRY) {
-      profile->SetInfo(
-          autofill::AutofillType(field.second.type),
-          base::UTF8ToUTF16(country_codes_[combobox->selected_index()]),
-          locale);
     } else {
-      profile->SetInfo(autofill::AutofillType(field.second.type),
-                       combobox->GetTextForRow(combobox->selected_index()),
-                       locale);
+      if (combobox->id() == autofill::ADDRESS_HOME_COUNTRY) {
+        success = profile->SetInfo(
+            autofill::AutofillType(field.second.type),
+            base::UTF8ToUTF16(country_codes_[combobox->selected_index()]),
+            locale);
+      } else {
+        success = profile->SetInfo(
+            autofill::AutofillType(field.second.type),
+            combobox->GetTextForRow(combobox->selected_index()), locale);
+      }
     }
+    LOG_IF(ERROR, success || ignore_errors)
+        << "Can't setinfo(" << field.second.type << ", "
+        << combobox->GetTextForRow(combobox->selected_index());
+    if (!success && !ignore_errors)
+      return false;
   }
   return success;
 }
@@ -404,7 +413,7 @@ void ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
 bool ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
     ValidateValue(const base::string16& value) {
   if (!value.empty()) {
-    if (field_.type == autofill::PHONE_HOME_NUMBER &&
+    if (field_.type == autofill::PHONE_HOME_WHOLE_NUMBER &&
         !autofill::IsValidPhoneNumber(
             value,
             controller_->country_codes_[controller_->chosen_country_index_])) {
@@ -417,7 +426,6 @@ bool ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
     controller_->DisplayErrorMessageForField(field_, base::ASCIIToUTF16(""));
     return true;
   }
-
   bool is_required_valid = !field_.required;
   const base::string16 displayed_message =
       is_required_valid ? base::ASCIIToUTF16("")

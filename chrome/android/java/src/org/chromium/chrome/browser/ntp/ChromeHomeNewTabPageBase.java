@@ -96,6 +96,8 @@ public abstract class ChromeHomeNewTabPageBase implements NativePage {
                 // If the NTP is loading, the sheet state will be set to SHEET_STATE_HALF.
                 if (TextUtils.equals(tab.getUrl(), getUrl())) return;
 
+                mBottomSheet.getBottomSheetMetrics().setSheetCloseReason(
+                        BottomSheetMetrics.CLOSED_BY_NAVIGATION);
                 mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_PEEK, true);
             }
         };
@@ -107,6 +109,8 @@ public abstract class ChromeHomeNewTabPageBase implements NativePage {
         if (tabAlreadyShowing) onNewTabPageShown();
 
         mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_HALF, true);
+        mBottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
+                BottomSheetMetrics.OPENED_BY_NEW_TAB_CREATION);
 
         // TODO(twellington): disallow moving the NTP to the other window in Android N+
         //                    multi-window mode.
@@ -153,16 +157,6 @@ public abstract class ChromeHomeNewTabPageBase implements NativePage {
         if (mTab.getActivity().getFadingBackgroundView() != null) {
             mTab.getActivity().getFadingBackgroundView().setEnabled(false);
         }
-
-        // This method may be called when an NTP is selected due to the user switching tab models.
-        // In this case, we do not want the bottom sheet to open. Unfortunately, without observing
-        // OverviewModeBehavior, we have no good signal to show the BottomSheet when an NTP is
-        // selected in the tab switcher. Eventually this won't matter because we will not allow
-        // NTPs to remain open after the user leaves them.
-        if (getLayoutManager() != null && getLayoutManager().overviewVisible()) return;
-
-        mBottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
-                BottomSheetMetrics.OPENED_BY_NEW_TAB_CREATION);
     }
 
     private boolean isTabChromeHomeNewTabPage(Tab tab) {
@@ -174,6 +168,8 @@ public abstract class ChromeHomeNewTabPageBase implements NativePage {
         mCloseButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                mBottomSheet.getBottomSheetMetrics().setSheetCloseReason(
+                        BottomSheetMetrics.CLOSED_BY_NTP_CLOSE_BUTTON);
                 mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_PEEK, true);
                 if (mShowOverviewOnClose && getLayoutManager() != null) {
                     getLayoutManager().showOverview(false);

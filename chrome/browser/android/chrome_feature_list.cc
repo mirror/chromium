@@ -39,7 +39,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &autofill::kAutofillScanCardholderName,
     &features::kConsistentOmniboxGeolocation,
     &features::kCopylessPaste,
-    &features::kNativeAndroidHistoryManager,
     &features::kServiceWorkerPaymentApps,
     &features::kSimplifiedFullscreenUI,
     &features::kVrShell,
@@ -54,6 +53,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kChromeHomeFeature,
     &kChromeHomeExpandButton,
     &kContentSuggestionsSettings,
+    &kContentSuggestionsShowSummary,
     &kContextualSearchSingleActions,
     &kContextualSearchUrlActions,
     &kCustomContextMenu,
@@ -81,6 +81,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kWebPaymentsModifiers,
     &kWebPaymentsSingleAppUiSkip,
     &kWebVRCardboardSupport,
+    &kXGEOVisibleNetworks,
     &ntp_snippets::kIncreasedVisibility,
     &ntp_snippets::kForeignSessionsSuggestionsFeature,
     &ntp_snippets::kNotificationsFeature,
@@ -112,7 +113,7 @@ const base::Feature kAndroidPayIntegrationV2{"AndroidPayIntegrationV2",
                                              base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kAndroidPaymentApps{"AndroidPaymentApps",
-                                        base::FEATURE_DISABLED_BY_DEFAULT};
+                                        base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kCCTBackgroundTab{"CCTBackgroundTab",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
@@ -132,11 +133,14 @@ const base::Feature kChromeHomeExpandButton{"ChromeHomeExpandButton",
 const base::Feature kContentSuggestionsSettings{
     "ContentSuggestionsSettings", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kContentSuggestionsShowSummary{
+    "ContentSuggestionsShowSummary", base::FEATURE_ENABLED_BY_DEFAULT};
+
 const base::Feature kContextualSearchSingleActions{
     "ContextualSearchSingleActions", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kContextualSearchUrlActions{
-    "ContextualSearchUrlActions", base::FEATURE_DISABLED_BY_DEFAULT};
+    "ContextualSearchUrlActions", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kCustomContextMenu{"CustomContextMenu",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
@@ -217,6 +221,9 @@ const base::Feature kWebPaymentsSingleAppUiSkip{
 
 const base::Feature kWebVRCardboardSupport{
     "WebVRCardboardSupport", base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kXGEOVisibleNetworks{"XGEOVisibleNetworks",
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 static jboolean IsInitialized(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   return !!base::FeatureList::GetInstance();

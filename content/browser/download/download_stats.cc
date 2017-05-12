@@ -12,6 +12,7 @@
 #include "content/browser/download/download_resource_handler.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "net/http/http_content_disposition.h"
+#include "net/http/http_util.h"
 
 namespace content {
 
@@ -816,21 +817,21 @@ void RecordParallelizableDownloadStats(
   if (!uses_parallel_requests)
     return;
 
+  base::TimeDelta time_saved;
   if (bytes_downloaded_with_parallel_streams > 0) {
     RecordBandwidthMetric(
         "Download.ParallelizableDownloadBandwidth."
         "WithParallelRequestsMultipleStreams",
         CalculateBandwidthBytesPerSecond(bytes_downloaded_with_parallel_streams,
                                          time_with_parallel_streams));
+    if (bandwidth_without_parallel_streams > 0) {
+      time_saved = base::TimeDelta::FromMilliseconds(
+                       1000.0 * bytes_downloaded_with_parallel_streams /
+                       bandwidth_without_parallel_streams) -
+                   time_with_parallel_streams;
+    }
   }
 
-  base::TimeDelta time_saved;
-  if (bandwidth_without_parallel_streams > 0) {
-    time_saved = base::TimeDelta::FromMilliseconds(
-                     1000.0 * bytes_downloaded_with_parallel_streams /
-                     bandwidth_without_parallel_streams) -
-                 time_with_parallel_streams;
-  }
   int kMillisecondsPerHour =
       base::checked_cast<int>(base::Time::kMillisecondsPerSecond * 60 * 60);
   if (time_saved >= base::TimeDelta()) {
@@ -930,6 +931,13 @@ void RecordDownloadSourcePageTransitionType(
       "Download.PageTransition",
       ui::PageTransitionStripQualifier(page_transition.value()),
       ui::PAGE_TRANSITION_LAST_CORE + 1);
+}
+
+void RecordDownloadHttpResponseCode(int response_code) {
+  UMA_HISTOGRAM_CUSTOM_ENUMERATION(
+      "Download.HttpResponseCode",
+      net::HttpUtil::MapStatusCodeForHistogram(response_code),
+      net::HttpUtil::GetStatusCodesForHistogram());
 }
 
 }  // namespace content

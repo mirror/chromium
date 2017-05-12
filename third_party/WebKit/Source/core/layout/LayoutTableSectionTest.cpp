@@ -11,7 +11,27 @@ namespace blink {
 
 namespace {
 
-using LayoutTableSectionTest = RenderingTest;
+class LayoutTableSectionTest : public RenderingTest {
+ protected:
+  LayoutTableSection* GetSectionByElementId(const char* id) {
+    return ToLayoutTableSection(GetLayoutObjectByElementId(id));
+  }
+
+  LayoutTableSection* CreateSection(unsigned rows, unsigned cols) {
+    auto* table = GetDocument().createElement("table");
+    GetDocument().body()->appendChild(table);
+    auto* section = GetDocument().createElement("tbody");
+    table->appendChild(section);
+    for (unsigned i = 0; i < rows; ++i) {
+      auto* row = GetDocument().createElement("tr");
+      section->appendChild(row);
+      for (unsigned i = 0; i < cols; ++i)
+        row->appendChild(GetDocument().createElement("td"));
+    }
+    GetDocument().View()->UpdateAllLifecyclePhases();
+    return ToLayoutTableSection(section->GetLayoutObject());
+  }
+};
 
 TEST_F(LayoutTableSectionTest,
        BackgroundIsKnownToBeOpaqueWithLayerAndCollapsedBorder) {
@@ -23,8 +43,7 @@ TEST_F(LayoutTableSectionTest,
       "  </thead>"
       "</table>");
 
-  LayoutTableSection* section =
-      ToLayoutTableSection(GetLayoutObjectByElementId("section"));
+  auto* section = GetSectionByElementId("section");
   EXPECT_TRUE(section);
   EXPECT_FALSE(
       section->BackgroundIsKnownToBeOpaqueInRect(LayoutRect(0, 0, 1, 1)));
@@ -38,8 +57,7 @@ TEST_F(LayoutTableSectionTest, BackgroundIsKnownToBeOpaqueWithBorderSpacing) {
       "  </thead>"
       "</table>");
 
-  LayoutTableSection* section =
-      ToLayoutTableSection(GetLayoutObjectByElementId("section"));
+  auto* section = GetSectionByElementId("section");
   EXPECT_TRUE(section);
   EXPECT_FALSE(
       section->BackgroundIsKnownToBeOpaqueInRect(LayoutRect(0, 0, 1, 1)));
@@ -54,8 +72,7 @@ TEST_F(LayoutTableSectionTest, BackgroundIsKnownToBeOpaqueWithEmptyCell) {
       "  </thead>"
       "</table>");
 
-  LayoutTableSection* section =
-      ToLayoutTableSection(GetLayoutObjectByElementId("section"));
+  auto* section = GetSectionByElementId("section");
   EXPECT_TRUE(section);
   EXPECT_FALSE(
       section->BackgroundIsKnownToBeOpaqueInRect(LayoutRect(0, 0, 1, 1)));
@@ -67,8 +84,7 @@ TEST_F(LayoutTableSectionTest, EmptySectionDirtiedRows) {
       "  <thead id='section'></thead>"
       "</table>");
 
-  LayoutTableSection* section =
-      ToLayoutTableSection(GetLayoutObjectByElementId("section"));
+  auto* section = GetSectionByElementId("section");
   EXPECT_TRUE(section);
   CellSpan cell_span = section->DirtiedRows(LayoutRect(50, 50, 100, 100));
   EXPECT_EQ(0u, cell_span.Start());
@@ -81,8 +97,7 @@ TEST_F(LayoutTableSectionTest, EmptySectionDirtiedEffectiveColumns) {
       "  <thead id='section'></thead>"
       "</table>");
 
-  LayoutTableSection* section =
-      ToLayoutTableSection(GetLayoutObjectByElementId("section"));
+  auto* section = GetSectionByElementId("section");
   EXPECT_TRUE(section);
   CellSpan cell_span =
       section->DirtiedEffectiveColumns(LayoutRect(50, 50, 100, 100));
@@ -111,7 +126,7 @@ TEST_F(LayoutTableSectionTest, PrimaryCellAtAndOriginatingCellAt) {
   //       0         1
   // 0   0,0(O)    0,1(O)
   // 1   1,0(O)    1,0/0,1(S)
-  auto* section = ToLayoutTableSection(GetLayoutObjectByElementId("section"));
+  auto* section = GetSectionByElementId("section");
   auto* cell00 = GetLayoutObjectByElementId("cell00");
   auto* cell01 = GetLayoutObjectByElementId("cell01");
   auto* cell10 = GetLayoutObjectByElementId("cell10");
@@ -154,7 +169,7 @@ TEST_F(LayoutTableSectionTest, DirtiedRowsAndDirtiedEffectiveColumnsWithSpans) {
   // 0  0,0(O)    0,1(O)      0,2(O)
   // 1  1,0(O)    1,0/0,1(S)  0,2(S)
   // 2  2,0(O)    2,0(S)      2,0(S)
-  auto* section = ToLayoutTableSection(GetLayoutObjectByElementId("section"));
+  auto* section = GetSectionByElementId("section");
 
   // Cell 0,0 only.
   auto span = section->DirtiedRows(LayoutRect(5, 5, 90, 90));
@@ -209,6 +224,111 @@ TEST_F(LayoutTableSectionTest, DirtiedRowsAndDirtiedEffectiveColumnsWithSpans) {
   span = section->DirtiedEffectiveColumns(LayoutRect(205, 105, 90, 190));
   EXPECT_EQ(0u, span.Start());
   EXPECT_EQ(3u, span.end());
+}
+
+TEST_F(LayoutTableSectionTest, VisualOverflowWithCollapsedBorders) {
+  SetBodyInnerHTML(
+      "<style>"
+      "  table { border-collapse: collapse }"
+      "  td { border: 0px solid blue; padding: 0 }"
+      "  div { width: 100px; height: 100px }"
+      "</style>"
+      "<table>"
+      "  <tbody id='section'>"
+      "    <tr>"
+      "      <td style='border-bottom-width: 10px;"
+      "          outline: 3px solid blue'><div></div></td>"
+      "      <td style='border-width: 3px 15px'><div></div></td>"
+      "    </tr>"
+      "    <tr style='outline: 8px solid green'><td><div></div></td></tr>"
+      "  </tbody>"
+      "</table>");
+
+  auto* section = GetSectionByElementId("section");
+
+  // The section's self visual overflow covers the collapsed borders.
+  LayoutRect expected_self_visual_overflow = section->BorderBoxRect();
+  expected_self_visual_overflow.ExpandEdges(LayoutUnit(1), LayoutUnit(8),
+                                            LayoutUnit(0), LayoutUnit(0));
+  EXPECT_EQ(expected_self_visual_overflow, section->SelfVisualOverflowRect());
+
+  // The section's visual overflow covers self visual overflow and visual
+  // overflows rows.
+  LayoutRect expected_visual_overflow = section->BorderBoxRect();
+  expected_visual_overflow.ExpandEdges(LayoutUnit(3), LayoutUnit(8),
+                                       LayoutUnit(8), LayoutUnit(8));
+  EXPECT_EQ(expected_visual_overflow, section->VisualOverflowRect());
+}
+
+static void SetCellsOverflowInRow(LayoutTableRow* row) {
+  for (auto* cell = row->FirstCell(); cell; cell = cell->NextCell())
+    ToElement(cell->GetNode())->setAttribute(HTMLNames::classAttr, "overflow");
+}
+
+TEST_F(LayoutTableSectionTest, OverflowingCells) {
+  SetBodyInnerHTML(
+      "<style>"
+      "  td { width: 10px; height: 10px }"
+      "  td.overflow { outline: 10px solid blue }"
+      "</style>");
+
+  LayoutRect paint_rect(50, 50, 50, 50);
+  auto* small_section = CreateSection(20, 20);
+  EXPECT_FALSE(small_section->HasOverflowingCell());
+  EXPECT_NE(small_section->FullTableEffectiveColumnSpan(),
+            small_section->DirtiedEffectiveColumns(paint_rect));
+  EXPECT_NE(small_section->FullSectionRowSpan(),
+            small_section->DirtiedRows(paint_rect));
+
+  auto* big_section = CreateSection(80, 80);
+  EXPECT_FALSE(big_section->HasOverflowingCell());
+  EXPECT_NE(big_section->FullTableEffectiveColumnSpan(),
+            big_section->DirtiedEffectiveColumns(paint_rect));
+  EXPECT_NE(big_section->FullSectionRowSpan(),
+            big_section->DirtiedRows(paint_rect));
+
+  SetCellsOverflowInRow(small_section->FirstRow());
+  SetCellsOverflowInRow(big_section->FirstRow());
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Small sections with overflowing cells always use the slow path.
+  EXPECT_TRUE(small_section->HasOverflowingCell());
+  EXPECT_EQ(0u, small_section->OverflowingCells().size());
+  EXPECT_EQ(small_section->FullTableEffectiveColumnSpan(),
+            small_section->DirtiedEffectiveColumns(paint_rect));
+  EXPECT_EQ(small_section->FullSectionRowSpan(),
+            small_section->DirtiedRows(paint_rect));
+
+  // Big sections with small number of overflowing cells use the fast path.
+  EXPECT_TRUE(big_section->HasOverflowingCell());
+  EXPECT_EQ(80u, big_section->OverflowingCells().size());
+  EXPECT_NE(big_section->FullTableEffectiveColumnSpan(),
+            big_section->DirtiedEffectiveColumns(paint_rect));
+  EXPECT_NE(big_section->FullSectionRowSpan(),
+            big_section->DirtiedRows(paint_rect));
+
+  for (auto* row = small_section->FirstRow(); row; row = row->NextRow())
+    SetCellsOverflowInRow(row);
+  for (auto* row = big_section->FirstRow(); row; row = row->NextRow())
+    SetCellsOverflowInRow(row);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Small sections with overflowing cells always use the slow path.
+  EXPECT_TRUE(small_section->HasOverflowingCell());
+  EXPECT_EQ(0u, small_section->OverflowingCells().size());
+  EXPECT_EQ(small_section->FullTableEffectiveColumnSpan(),
+            small_section->DirtiedEffectiveColumns(paint_rect));
+  EXPECT_EQ(small_section->FullSectionRowSpan(),
+            small_section->DirtiedRows(paint_rect));
+
+  // Big sections with too many overflowing cells are forced to use the slow
+  // path.
+  EXPECT_TRUE(big_section->HasOverflowingCell());
+  EXPECT_EQ(0u, big_section->OverflowingCells().size());
+  EXPECT_EQ(big_section->FullTableEffectiveColumnSpan(),
+            big_section->DirtiedEffectiveColumns(paint_rect));
+  EXPECT_EQ(big_section->FullSectionRowSpan(),
+            big_section->DirtiedRows(paint_rect));
 }
 
 }  // anonymous namespace

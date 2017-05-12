@@ -51,6 +51,7 @@ WebRemoteFrameImpl::~WebRemoteFrameImpl() {}
 DEFINE_TRACE(WebRemoteFrameImpl) {
   visitor->Trace(frame_client_);
   visitor->Trace(frame_);
+  WebRemoteFrameBase::Trace(visitor);
   WebFrame::TraceFrames(visitor, this);
 }
 
@@ -426,13 +427,8 @@ void WebRemoteFrameImpl::SetReplicatedFeaturePolicyHeader(
           parent_frame->GetSecurityContext()->GetFeaturePolicy();
     }
     WebParsedFeaturePolicy container_policy;
-    if (GetFrame() && GetFrame()->Owner()) {
-      container_policy = GetContainerPolicyFromAllowedFeatures(
-          GetFrame()->Owner()->AllowedFeatures(),
-          GetFrame()->Owner()->AllowFullscreen(),
-          GetFrame()->Owner()->AllowPaymentRequest(),
-          GetFrame()->GetSecurityContext()->GetSecurityOrigin());
-    }
+    if (GetFrame()->Owner())
+      container_policy = GetFrame()->Owner()->ContainerPolicy();
     GetFrame()->GetSecurityContext()->InitializeFeaturePolicy(
         parsed_header, container_policy, parent_feature_policy);
   }
@@ -537,7 +533,7 @@ v8::Local<v8::Object> WebRemoteFrameImpl::GlobalProxy() const {
 
 WebRemoteFrameImpl::WebRemoteFrameImpl(WebTreeScopeType scope,
                                        WebRemoteFrameClient* client)
-    : WebRemoteFrame(scope),
+    : WebRemoteFrameBase(scope),
       frame_client_(RemoteFrameClientImpl::Create(this)),
       client_(client),
       self_keep_alive_(this) {}

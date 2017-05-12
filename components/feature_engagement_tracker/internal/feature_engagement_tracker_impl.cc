@@ -9,14 +9,17 @@
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/feature_engagement_tracker/internal/editable_configuration.h"
-#include "components/feature_engagement_tracker/internal/feature_list.h"
 #include "components/feature_engagement_tracker/internal/in_memory_store.h"
 #include "components/feature_engagement_tracker/internal/model_impl.h"
 #include "components/feature_engagement_tracker/internal/never_condition_validator.h"
 #include "components/feature_engagement_tracker/internal/never_storage_validator.h"
 #include "components/feature_engagement_tracker/internal/once_condition_validator.h"
+#include "components/feature_engagement_tracker/internal/persistent_store.h"
 #include "components/feature_engagement_tracker/internal/single_invalid_configuration.h"
+#include "components/feature_engagement_tracker/internal/system_time_provider.h"
 #include "components/feature_engagement_tracker/public/feature_constants.h"
+#include "components/feature_engagement_tracker/public/feature_list.h"
+#include "components/leveldb_proto/proto_database_impl.h"
 
 namespace feature_engagement_tracker {
 
@@ -40,7 +43,8 @@ CreateDemoModeFeatureEngagementTracker() {
   return base::MakeUnique<FeatureEngagementTrackerImpl>(
       base::MakeUnique<InMemoryStore>(), std::move(configuration),
       base::MakeUnique<OnceConditionValidator>(),
-      base::MakeUnique<NeverStorageValidator>());
+      base::MakeUnique<NeverStorageValidator>(),
+      base::MakeUnique<SystemTimeProvider>());
 }
 
 }  // namespace
@@ -51,29 +55,39 @@ CreateDemoModeFeatureEngagementTracker() {
 // static
 FeatureEngagementTracker* FeatureEngagementTracker::Create(
     const base::FilePath& storage_dir,
-    const scoped_refptr<base::SequencedTaskRunner>& background__task_runner) {
+    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner) {
   if (base::FeatureList::IsEnabled(kIPHDemoMode))
     return CreateDemoModeFeatureEngagementTracker().release();
 
-  std::unique_ptr<Store> store = base::MakeUnique<InMemoryStore>();
+  std::unique_ptr<leveldb_proto::ProtoDatabase<Event>> db =
+      base::MakeUnique<leveldb_proto::ProtoDatabaseImpl<Event>>(
+          background_task_runner);
+
+  std::unique_ptr<Store> store =
+      base::MakeUnique<PersistentStore>(storage_dir, std::move(db));
   std::unique_ptr<Configuration> configuration =
       base::MakeUnique<SingleInvalidConfiguration>();
   std::unique_ptr<ConditionValidator> condition_validator =
       base::MakeUnique<NeverConditionValidator>();
   std::unique_ptr<StorageValidator> storage_validator =
       base::MakeUnique<NeverStorageValidator>();
+  std::unique_ptr<TimeProvider> time_provider =
+      base::MakeUnique<SystemTimeProvider>();
 
   return new FeatureEngagementTrackerImpl(
       std::move(store), std::move(configuration),
-      std::move(condition_validator), std::move(storage_validator));
+      std::move(condition_validator), std::move(storage_validator),
+      std::move(time_provider));
 }
 
 FeatureEngagementTrackerImpl::FeatureEngagementTrackerImpl(
     std::unique_ptr<Store> store,
     std::unique_ptr<Configuration> configuration,
     std::unique_ptr<ConditionValidator> condition_validator,
-    std::unique_ptr<StorageValidator> storage_validator)
+    std::unique_ptr<StorageValidator> storage_validator,
+    std::unique_ptr<TimeProvider> time_provider)
     : condition_validator_(std::move(condition_validator)),
+      time_provider_(std::move(time_provider)),
       initialization_finished_(false),
       weak_ptr_factory_(this) {
   model_ = base::MakeUnique<ModelImpl>(
@@ -86,20 +100,24 @@ FeatureEngagementTrackerImpl::FeatureEngagementTrackerImpl(
 FeatureEngagementTrackerImpl::~FeatureEngagementTrackerImpl() = default;
 
 void FeatureEngagementTrackerImpl::NotifyEvent(const std::string& event) {
-  // TODO(nyquist): Track this event.
+  // TODO(nyquist): Track this event in UMA.
+  // TODO(nyquist): Invoke model_->IncrementEvent(...).
 }
 
 bool FeatureEngagementTrackerImpl::ShouldTriggerHelpUI(
     const base::Feature& feature) {
-  // TODO(nyquist): Track this event.
-  bool result = condition_validator_->MeetsConditions(feature, *model_);
+  // TODO(nyquist): Track this event in UMA.
+  bool result =
+      condition_validator_
+          ->MeetsConditions(feature, *model_, time_provider_->GetCurrentDay())
+          .NoErrors();
   if (result)
     model_->SetIsCurrentlyShowing(true);
   return result;
 }
 
-void FeatureEngagementTrackerImpl::Dismissed() {
-  // TODO(nyquist): Track this event.
+void FeatureEngagementTrackerImpl::Dismissed(const base::Feature& feature) {
+  // TODO(nyquist): Track this event in UMA.
   model_->SetIsCurrentlyShowing(false);
 }
 

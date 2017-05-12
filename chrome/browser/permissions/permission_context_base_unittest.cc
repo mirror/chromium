@@ -27,6 +27,7 @@
 #include "chrome/browser/permissions/permission_request_id.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_util.h"
+#include "chrome/browser/ui/permission_bubble/mock_permission_prompt_factory.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
@@ -247,19 +248,13 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
     PermissionRequestManager* manager =
         PermissionRequestManager::FromWebContents(web_contents());
     manager->TogglePersist(persist);
-    switch (response) {
-      case CONTENT_SETTING_ALLOW:
-        manager->Accept();
-        break;
-      case CONTENT_SETTING_BLOCK:
-        manager->Deny();
-        break;
-      case CONTENT_SETTING_ASK:
-        manager->Closing();
-        break;
-      default:
-        NOTREACHED();
-    }
+    using AutoResponseType = PermissionRequestManager::AutoResponseType;
+    AutoResponseType decision = AutoResponseType::DISMISS;
+    if (response == CONTENT_SETTING_ALLOW)
+      decision = AutoResponseType::ACCEPT_ALL;
+    else if (response == CONTENT_SETTING_BLOCK)
+      decision = AutoResponseType::DENY_ALL;
+    prompt_factory_->set_response_type(decision);
 #endif
   }
 
@@ -268,7 +263,7 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
                                     bool persist) {
     TestPermissionContext permission_context(profile(), content_settings_type);
     GURL url("https://www.google.com");
-    NavigateAndCommit(url);
+    SetUpUrl(url);
     base::HistogramTester histograms;
 
     const PermissionRequestID id(
@@ -420,61 +415,65 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
 
   void TestBlockOnSeveralDismissals_TestContent() {
     GURL url("https://www.google.com");
-    NavigateAndCommit(url);
+    SetUpUrl(url);
     base::HistogramTester histograms;
 
-    // First, ensure that > 3 dismissals behaves correctly.
-    for (uint32_t i = 0; i < 4; ++i) {
-      TestPermissionContext permission_context(
-          profile(), CONTENT_SETTINGS_TYPE_GEOLOCATION);
+    {
+      // Ensure that > 3 dismissals behaves correctly when the
+      // BlockPromptsIfDismissedOften feature is off.
+      base::test::ScopedFeatureList feature_list;
+      feature_list.InitAndDisableFeature(
+          features::kBlockPromptsIfDismissedOften);
 
-      const PermissionRequestID id(
-          web_contents()->GetRenderProcessHost()->GetID(),
-          web_contents()->GetMainFrame()->GetRoutingID(), i);
+      for (uint32_t i = 0; i < 4; ++i) {
+        TestPermissionContext permission_context(
+            profile(), CONTENT_SETTINGS_TYPE_GEOLOCATION);
 
-      permission_context.SetRespondPermissionCallback(
-          base::Bind(&PermissionContextBaseTests::RespondToPermission,
-                     base::Unretained(this), &permission_context, id, url,
-                     false, CONTENT_SETTING_ASK));
-      permission_context.RequestPermission(
-          web_contents(), id, url, true /* user_gesture */,
-          base::Bind(&TestPermissionContext::TrackPermissionDecision,
-                     base::Unretained(&permission_context)));
-      histograms.ExpectTotalCount(
-          "Permissions.Prompt.Dismissed.PriorDismissCount.Geolocation", i + 1);
-      histograms.ExpectBucketCount(
-          "Permissions.Prompt.Dismissed.PriorDismissCount.Geolocation", i, 1);
-      histograms.ExpectUniqueSample(
-          "Permissions.AutoBlocker.EmbargoPromptSuppression",
-          static_cast<int>(PermissionEmbargoStatus::NOT_EMBARGOED), i + 1);
+        const PermissionRequestID id(
+            web_contents()->GetRenderProcessHost()->GetID(),
+            web_contents()->GetMainFrame()->GetRoutingID(), i);
+
+        permission_context.SetRespondPermissionCallback(
+            base::Bind(&PermissionContextBaseTests::RespondToPermission,
+                       base::Unretained(this), &permission_context, id, url,
+                       false, CONTENT_SETTING_ASK));
+        permission_context.RequestPermission(
+            web_contents(), id, url, true /* user_gesture */,
+            base::Bind(&TestPermissionContext::TrackPermissionDecision,
+                       base::Unretained(&permission_context)));
+        histograms.ExpectTotalCount(
+            "Permissions.Prompt.Dismissed.PriorDismissCount.Geolocation",
+            i + 1);
+        histograms.ExpectBucketCount(
+            "Permissions.Prompt.Dismissed.PriorDismissCount.Geolocation", i, 1);
+        histograms.ExpectUniqueSample(
+            "Permissions.AutoBlocker.EmbargoPromptSuppression",
+            static_cast<int>(PermissionEmbargoStatus::NOT_EMBARGOED), i + 1);
 
 // On Android, repeatedly requesting and deciding permissions has the side
-// effect of overcounting any metrics recorded in the PermissionInfoBarDelegate
-// destructor. This is because we directly call
+// effect of overcounting any metrics recorded in the
+// PermissionInfoBarDelegate destructor. This is because we directly call
 // PermissionQueueController::OnPermissionSet without setting the action_taken
 // bit in PermissionInfoBarDelegate. When PermissionQueueController is deleted
 // all OS_ANDROID ifdefs in this test can be removed.
 #if !defined(OS_ANDROID)
-      histograms.ExpectUniqueSample(
-          "Permissions.AutoBlocker.EmbargoStatus",
-          static_cast<int>(PermissionEmbargoStatus::NOT_EMBARGOED), i + 1);
+        histograms.ExpectUniqueSample(
+            "Permissions.AutoBlocker.EmbargoStatus",
+            static_cast<int>(PermissionEmbargoStatus::NOT_EMBARGOED), i + 1);
 #endif
 
-      ASSERT_EQ(1u, permission_context.decisions().size());
-      EXPECT_EQ(CONTENT_SETTING_ASK, permission_context.decisions()[0]);
-      EXPECT_TRUE(permission_context.tab_context_updated());
-      EXPECT_EQ(CONTENT_SETTING_ASK,
-                permission_context.GetContentSettingFromMap(url, url));
+        ASSERT_EQ(1u, permission_context.decisions().size());
+        EXPECT_EQ(CONTENT_SETTING_ASK, permission_context.decisions()[0]);
+        EXPECT_TRUE(permission_context.tab_context_updated());
+        EXPECT_EQ(CONTENT_SETTING_ASK,
+                  permission_context.GetContentSettingFromMap(url, url));
+      }
+
+      // Flush the dismissal counts.
+      auto* map = HostContentSettingsMapFactory::GetForProfile(profile());
+      map->ClearSettingsForOneType(
+          CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA);
     }
-
-    // Flush the dismissal counts. Enable the block on too many dismissals
-    // feature, which is disabled by default.
-    auto* map = HostContentSettingsMapFactory::GetForProfile(profile());
-    map->ClearSettingsForOneType(
-        CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA);
-
-    base::test::ScopedFeatureList feature_list;
-    feature_list.InitAndEnableFeature(features::kBlockPromptsIfDismissedOften);
 
     EXPECT_TRUE(
         base::FeatureList::IsEnabled(features::kBlockPromptsIfDismissedOften));
@@ -488,7 +487,7 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
 
   void TestVariationBlockOnSeveralDismissals_TestContent() {
     GURL url("https://www.google.com");
-    NavigateAndCommit(url);
+    SetUpUrl(url);
     base::HistogramTester histograms;
 
     // Set up the custom parameter and custom value.
@@ -595,7 +594,7 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
     TestPermissionContext permission_context(profile(), content_settings_type);
     GURL url;
     ASSERT_FALSE(url.is_valid());
-    NavigateAndCommit(url);
+    SetUpUrl(url);
 
     const PermissionRequestID id(
         web_contents()->GetRenderProcessHost()->GetID(),
@@ -618,7 +617,7 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
                                       ContentSetting expected_default) {
     TestPermissionContext permission_context(profile(), content_settings_type);
     GURL url("https://www.google.com");
-    NavigateAndCommit(url);
+    SetUpUrl(url);
 
     const PermissionRequestID id(
         web_contents()->GetRenderProcessHost()->GetID(),
@@ -673,7 +672,7 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
     TestPermissionContext permission_context(
         profile(), CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
     GURL url("http://www.google.com");
-    NavigateAndCommit(url);
+    SetUpUrl(url);
 
     const PermissionRequestID id0(
         web_contents()->GetRenderProcessHost()->GetID(),
@@ -718,7 +717,7 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
       int timeout,
       ContentSetting expected_permission_status,
       PermissionEmbargoStatus expected_embargo_reason) {
-    NavigateAndCommit(url);
+    SetUpUrl(url);
     base::HistogramTester histograms;
     base::test::ScopedFeatureList scoped_feature_list;
     scoped_feature_list.InitAndEnableFeature(features::kPermissionsBlacklist);
@@ -761,6 +760,13 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
                                   static_cast<int>(expected_embargo_reason), 1);
   }
 
+  void SetUpUrl(const GURL& url) {
+    NavigateAndCommit(url);
+#if !defined(OS_ANDROID)
+    prompt_factory_->DocumentOnLoadCompletedInMainFrame();
+#endif
+  }
+
  private:
   // ChromeRenderViewHostTestHarness:
   void SetUp() override {
@@ -769,8 +775,19 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
     InfoBarService::CreateForWebContents(web_contents());
 #else
     PermissionRequestManager::CreateForWebContents(web_contents());
+    PermissionRequestManager* manager =
+        PermissionRequestManager::FromWebContents(web_contents());
+    prompt_factory_.reset(new MockPermissionPromptFactory(manager));
+    manager->DisplayPendingRequests();
 #endif
   }
+
+  void TearDown() override {
+    prompt_factory_.reset();
+    ChromeRenderViewHostTestHarness::TearDown();
+  }
+
+  std::unique_ptr<MockPermissionPromptFactory> prompt_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionContextBaseTests);
 };

@@ -69,7 +69,6 @@ class WebRuntimeFeatures {
   BLINK_EXPORT static bool IsOriginTrialsEnabled();
 
   BLINK_EXPORT static void EnableAccelerated2dCanvas(bool);
-  BLINK_EXPORT static void EnableAccessibilityObjectModel(bool);
   BLINK_EXPORT static void EnableAudioOutputDevices(bool);
   BLINK_EXPORT static void EnableCanvas2dImageChromium(bool);
   BLINK_EXPORT static void EnableColorCorrectRendering(bool);
@@ -150,6 +149,7 @@ class WebRuntimeFeatures {
   BLINK_EXPORT static void EnableVideoRotateToFullscreen(bool);
   BLINK_EXPORT static void EnableVideoFullscreenDetection(bool);
   BLINK_EXPORT static void EnableMediaControlsOverlayPlayButton(bool);
+  BLINK_EXPORT static void EnableLocationHardReload(bool);
 
  private:
   WebRuntimeFeatures();

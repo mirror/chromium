@@ -306,6 +306,10 @@ class LayerTreeHostImplTest : public testing::Test,
 
   LayerImpl* CreateScrollAndContentsLayers(LayerTreeImpl* layer_tree_impl,
                                            const gfx::Size& content_size) {
+    // Clear any existing viewport layers that were setup so this function can
+    // be called multiple times.
+    layer_tree_impl->ClearViewportLayers();
+
     // Create both an inner viewport scroll layer and an outer viewport scroll
     // layer. The MaxScrollOffset of the outer viewport scroll layer will be
     // 0x0, so the scrolls will be applied directly to the inner viewport.
@@ -2942,7 +2946,8 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
 
     base::TimeTicks fake_now = base::TimeTicks::Now();
 
-    if (expecting_animations) {
+    // Android Overlay Scrollbar does not have a initial show and fade out.
+    if (animator == LayerTreeSettings::AURA_OVERLAY) {
       // A task will be posted to fade the initial scrollbar.
       EXPECT_FALSE(did_request_next_frame_);
       EXPECT_FALSE(did_request_redraw_);
@@ -3517,7 +3522,7 @@ TEST_F(LayerTreeHostImplTest, MouseMoveAtWithDeviceScaleOf2) {
 }
 
 // This test verifies that only SurfaceLayers in the viewport are included
-// in CompositorFrameMetadata's |embedded_surfaces|.
+// in CompositorFrameMetadata's |activation_dependencies|.
 TEST_F(LayerTreeHostImplTest, EmbeddedSurfacesInMetadata) {
   SetupScrollAndContentsLayers(gfx::Size(100, 100));
   host_impl_->SetViewportSize(gfx::Size(50, 50));
@@ -3546,7 +3551,7 @@ TEST_F(LayerTreeHostImplTest, EmbeddedSurfacesInMetadata) {
           host_impl_->compositor_frame_sink());
   const CompositorFrameMetadata& metadata =
       fake_compositor_frame_sink->last_sent_frame()->metadata;
-  EXPECT_THAT(metadata.embedded_surfaces,
+  EXPECT_THAT(metadata.activation_dependencies,
               testing::UnorderedElementsAre(children[0], children[1]));
   EXPECT_THAT(
       metadata.referenced_surfaces,
@@ -7247,12 +7252,16 @@ class BlendStateCheckLayer : public LayerImpl {
                                     gfx::Size(1, 1), false, false);
     test_blending_draw_quad->visible_rect = quad_visible_rect_;
     EXPECT_EQ(blend_, test_blending_draw_quad->ShouldDrawWithBlending());
-    EXPECT_EQ(has_render_surface_, !!GetRenderSurface(this));
+    EXPECT_EQ(has_render_surface_,
+              GetRenderSurface(this) != GetRenderSurface(comparison_layer_));
   }
 
-  void SetExpectation(bool blend, bool has_render_surface) {
+  void SetExpectation(bool blend,
+                      bool has_render_surface,
+                      LayerImpl* comparison_layer) {
     blend_ = blend;
     has_render_surface_ = has_render_surface;
+    comparison_layer_ = comparison_layer;
     quads_appended_ = false;
   }
 
@@ -7271,6 +7280,7 @@ class BlendStateCheckLayer : public LayerImpl {
       : LayerImpl(tree_impl, id),
         blend_(false),
         has_render_surface_(false),
+        comparison_layer_(nullptr),
         quads_appended_(false),
         quad_rect_(5, 5, 5, 5),
         quad_visible_rect_(5, 5, 5, 5),
@@ -7286,6 +7296,7 @@ class BlendStateCheckLayer : public LayerImpl {
 
   bool blend_;
   bool has_render_surface_;
+  LayerImpl* comparison_layer_;
   bool quads_appended_;
   gfx::Rect quad_rect_;
   gfx::Rect opaque_content_rect_;
@@ -7314,7 +7325,7 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
 
   // Opaque layer, drawn without blending.
   layer1->SetContentsOpaque(true);
-  layer1->SetExpectation(false, false);
+  layer1->SetExpectation(false, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
@@ -7324,7 +7335,7 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
 
   // Layer with translucent content and painting, so drawn with blending.
   layer1->SetContentsOpaque(false);
-  layer1->SetExpectation(true, false);
+  layer1->SetExpectation(true, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   host_impl_->active_tree()->set_needs_update_draw_properties();
@@ -7337,7 +7348,7 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetContentsOpaque(true);
   layer1->test_properties()->opacity = 0.5f;
   layer1->NoteLayerPropertyChanged();
-  layer1->SetExpectation(true, false);
+  layer1->SetExpectation(true, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
@@ -7349,7 +7360,7 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetContentsOpaque(true);
   layer1->test_properties()->opacity = 0.5f;
   layer1->NoteLayerPropertyChanged();
-  layer1->SetExpectation(true, false);
+  layer1->SetExpectation(true, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
@@ -7367,12 +7378,12 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetContentsOpaque(true);
   layer1->test_properties()->opacity = 1.f;
   layer1->NoteLayerPropertyChanged();
-  layer1->SetExpectation(false, false);
+  layer1->SetExpectation(false, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   layer2->SetContentsOpaque(true);
   layer2->test_properties()->opacity = 1.f;
   layer2->NoteLayerPropertyChanged();
-  layer2->SetExpectation(false, false);
+  layer2->SetExpectation(false, false, root);
   layer2->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   host_impl_->active_tree()->set_needs_update_draw_properties();
@@ -7385,9 +7396,9 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   // Parent layer with translucent content, drawn with blending.
   // Child layer with opaque content, drawn without blending.
   layer1->SetContentsOpaque(false);
-  layer1->SetExpectation(true, false);
+  layer1->SetExpectation(true, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
-  layer2->SetExpectation(false, false);
+  layer2->SetExpectation(false, false, root);
   layer2->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   host_impl_->active_tree()->set_needs_update_draw_properties();
@@ -7401,9 +7412,9 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   // blending.
   // Child layer with opaque content, drawn without blending.
   layer1->SetContentsOpaque(true);
-  layer1->SetExpectation(false, false);
+  layer1->SetExpectation(false, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
-  layer2->SetExpectation(false, false);
+  layer2->SetExpectation(false, false, root);
   layer2->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
@@ -7421,9 +7432,9 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->test_properties()->opacity = 0.5f;
   layer1->NoteLayerPropertyChanged();
   layer1->test_properties()->force_render_surface = true;
-  layer1->SetExpectation(false, true);
+  layer1->SetExpectation(false, true, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
-  layer2->SetExpectation(false, false);
+  layer2->SetExpectation(false, false, layer1);
   layer2->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
@@ -7438,12 +7449,12 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetContentsOpaque(true);
   layer1->test_properties()->opacity = 1.f;
   layer1->NoteLayerPropertyChanged();
-  layer1->SetExpectation(false, false);
+  layer1->SetExpectation(false, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   layer2->SetContentsOpaque(true);
   layer2->test_properties()->opacity = 0.5f;
   layer2->NoteLayerPropertyChanged();
-  layer2->SetExpectation(true, false);
+  layer2->SetExpectation(true, false, layer1);
   layer2->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
@@ -7456,12 +7467,12 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetContentsOpaque(true);
   layer1->test_properties()->opacity = 1.f;
   layer1->NoteLayerPropertyChanged();
-  layer1->SetExpectation(false, false);
+  layer1->SetExpectation(false, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   layer2->SetContentsOpaque(false);
   layer2->test_properties()->opacity = 1.f;
   layer2->NoteLayerPropertyChanged();
-  layer2->SetExpectation(true, false);
+  layer2->SetExpectation(true, false, root);
   layer2->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
@@ -7475,12 +7486,12 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetContentsOpaque(true);
   layer1->test_properties()->opacity = 1.f;
   layer1->NoteLayerPropertyChanged();
-  layer1->SetExpectation(false, false);
+  layer1->SetExpectation(false, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   layer2->SetContentsOpaque(true);
   layer2->test_properties()->opacity = 1.f;
   layer2->NoteLayerPropertyChanged();
-  layer2->SetExpectation(false, false);
+  layer2->SetExpectation(false, false, root);
   layer2->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
@@ -7494,7 +7505,7 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetQuadRect(gfx::Rect(5, 5, 5, 5));
   layer1->SetQuadVisibleRect(gfx::Rect(5, 5, 5, 5));
   layer1->SetOpaqueContentRect(gfx::Rect(5, 5, 2, 5));
-  layer1->SetExpectation(true, false);
+  layer1->SetExpectation(true, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   host_impl_->active_tree()->set_needs_update_draw_properties();
@@ -7508,7 +7519,7 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetQuadRect(gfx::Rect(5, 5, 5, 5));
   layer1->SetQuadVisibleRect(gfx::Rect(5, 5, 5, 2));
   layer1->SetOpaqueContentRect(gfx::Rect(5, 5, 2, 5));
-  layer1->SetExpectation(true, false);
+  layer1->SetExpectation(true, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   host_impl_->active_tree()->set_needs_update_draw_properties();
@@ -7522,7 +7533,7 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetQuadRect(gfx::Rect(5, 5, 5, 5));
   layer1->SetQuadVisibleRect(gfx::Rect(7, 5, 3, 5));
   layer1->SetOpaqueContentRect(gfx::Rect(5, 5, 2, 5));
-  layer1->SetExpectation(true, false);
+  layer1->SetExpectation(true, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   host_impl_->active_tree()->set_needs_update_draw_properties();
@@ -7537,7 +7548,7 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   layer1->SetQuadRect(gfx::Rect(5, 5, 5, 5));
   layer1->SetQuadVisibleRect(gfx::Rect(5, 5, 2, 5));
   layer1->SetOpaqueContentRect(gfx::Rect(5, 5, 2, 5));
-  layer1->SetExpectation(false, false);
+  layer1->SetExpectation(false, false, root);
   layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   host_impl_->active_tree()->set_needs_update_draw_properties();
@@ -7627,7 +7638,8 @@ class LayerTreeHostImplViewportCoveredTest : public LayerTreeHostImplTest {
                                                     ->root_layer_for_testing()
                                                     ->test_properties()
                                                     ->children[0]);
-    child_->SetExpectation(false, false);
+    child_->SetExpectation(false, false,
+                           host_impl_->active_tree()->root_layer_for_testing());
     child_->SetContentsOpaque(true);
   }
 
@@ -8321,7 +8333,7 @@ TEST_F(LayerTreeHostImplTestDrawAndTestDamage, FrameIncludesDamageRect) {
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   // Draw a frame. In the first frame, the entire viewport should be damaged.
-  gfx::Rect full_frame_damage(host_impl_->DrawViewportSize());
+  gfx::Rect full_frame_damage(host_impl_->DeviceViewport().size());
   DrawFrameAndTestDamage(full_frame_damage);
 
   // The second frame has damage that doesn't touch the child layer. Its quads
@@ -9123,7 +9135,7 @@ TEST_F(LayerTreeHostImplTest, LatencyInfoPassedToCompositorFrameMetadata) {
       new LatencyInfoSwapPromise(latency_info));
   host_impl_->active_tree()->QueuePinnedSwapPromise(std::move(swap_promise));
 
-  gfx::Rect full_frame_damage(host_impl_->DrawViewportSize());
+  gfx::Rect full_frame_damage(host_impl_->DeviceViewport().size());
   TestFrameData frame;
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
   EXPECT_TRUE(host_impl_->DrawLayers(&frame));
@@ -9167,7 +9179,7 @@ TEST_F(LayerTreeHostImplTest, SelectionBoundsPassedToCompositorFrameMetadata) {
   // Trigger a draw-swap sequence.
   host_impl_->SetNeedsRedraw();
 
-  gfx::Rect full_frame_damage(host_impl_->DrawViewportSize());
+  gfx::Rect full_frame_damage(host_impl_->DeviceViewport().size());
   TestFrameData frame;
   EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
   EXPECT_TRUE(host_impl_->DrawLayers(&frame));

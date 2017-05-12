@@ -21,17 +21,8 @@ RefPtr<WebTaskRunnerImpl> WebTaskRunnerImpl::Create(
   return AdoptRef(new WebTaskRunnerImpl(std::move(task_queue)));
 }
 
-void WebTaskRunnerImpl::PostDelayedTask(const WebTraceLocation& location,
-                                        base::OnceClosure task,
-                                        double delay_ms) {
-  DCHECK_GE(delay_ms, 0.0) << location.function_name() << " "
-                           << location.file_name();
-  task_queue_->PostDelayedTask(location, std::move(task),
-                               base::TimeDelta::FromMillisecondsD(delay_ms));
-}
-
-bool WebTaskRunnerImpl::RunsTasksOnCurrentThread() {
-  return task_queue_->RunsTasksOnCurrentThread();
+bool WebTaskRunnerImpl::RunsTasksInCurrentSequence() {
+  return task_queue_->RunsTasksInCurrentSequence();
 }
 
 double WebTaskRunnerImpl::VirtualTimeSeconds() const {

@@ -22,6 +22,7 @@
 #include "base/task_runner_util.h"
 #include "base/threading/thread_checker.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chromeos/chromeos_switches.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/dbus/dbus_method_call_status.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -32,7 +33,7 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/named_platform_handle.h"
 #include "mojo/edk/embedder/named_platform_handle_utils.h"
-#include "mojo/edk/embedder/pending_process_connection.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/platform_channel_utils_posix.h"
 #include "mojo/edk/embedder/platform_handle_vector.h"
@@ -365,10 +366,15 @@ void ArcSessionImpl::OnSocketCreated(
   bool disable_boot_completed_broadcast =
       !base::FeatureList::IsEnabled(arc::kBootCompletedBroadcastFeature);
 
+  // We only enable /vendor/priv-app when voice interaction is enabled because
+  // voice interaction service apk would be bundled in this location.
+  bool enable_vendor_privileged =
+      chromeos::switches::IsVoiceInteractionEnabled();
+
   chromeos::SessionManagerClient* session_manager_client =
       chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
   session_manager_client->StartArcInstance(
-      cryptohome_id, disable_boot_completed_broadcast,
+      cryptohome_id, disable_boot_completed_broadcast, enable_vendor_privileged,
       base::Bind(&ArcSessionImpl::OnInstanceStarted, weak_factory_.GetWeakPtr(),
                  base::Passed(&socket_fd)));
 }
@@ -441,16 +447,19 @@ mojo::ScopedMessagePipeHandle ArcSessionImpl::ConnectMojo(
   // Hardcode pid 0 since it is unused in mojo.
   const base::ProcessHandle kUnusedChildProcessHandle = 0;
   mojo::edk::PlatformChannelPair channel_pair;
-  mojo::edk::PendingProcessConnection process;
-  process.Connect(kUnusedChildProcessHandle,
-                  mojo::edk::ConnectionParams(channel_pair.PassServerHandle()));
+  mojo::edk::OutgoingBrokerClientInvitation invitation;
+
+  std::string token = mojo::edk::GenerateRandomToken();
+  mojo::ScopedMessagePipeHandle pipe = invitation.AttachMessagePipe(token);
+
+  invitation.Send(
+      kUnusedChildProcessHandle,
+      mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
+                                  channel_pair.PassServerHandle()));
 
   mojo::edk::ScopedPlatformHandleVectorPtr handles(
       new mojo::edk::PlatformHandleVector{
           channel_pair.PassClientHandle().release()});
-
-  std::string token;
-  mojo::ScopedMessagePipeHandle pipe = process.CreateMessagePipe(&token);
 
   // We need to send the length of the message as a single byte, so make sure it
   // fits.

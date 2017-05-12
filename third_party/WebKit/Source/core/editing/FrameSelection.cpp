@@ -250,7 +250,7 @@ void FrameSelection::DidSetSelectionDeprecated(SetSelectionOptions options,
   }
 
   frame_caret_->StopCaretBlinkTimer();
-  UpdateAppearance(LayoutSelection::PaintHint::kPaint);
+  UpdateAppearance();
 
   // Always clear the x position used for vertical arrow navigation.
   // It will be restored by the vertical arrow navigation code if necessary.
@@ -269,7 +269,7 @@ void FrameSelection::DidSetSelectionDeprecated(SetSelectionOptions options,
   }
 
   EUserTriggered user_triggered = SelectionOptionsToUserTriggered(options);
-  NotifyLayoutObjectOfSelectionChange(user_triggered);
+  NotifyTextControlOfSelectionChange(user_triggered);
   if (user_triggered == kUserTriggered) {
     ScrollAlignment alignment;
 
@@ -335,26 +335,7 @@ void FrameSelection::DidChangeFocus() {
   // Hits in
   // virtual/gpu/compositedscrolling/scrollbars/scrollbar-miss-mousemove-disabled.html
   DisableCompositingQueryAsserts disabler;
-
-  // No focused element means document root has focus.
-  const Element* const focus = GetDocument().FocusedElement()
-                                   ? GetDocument().FocusedElement()
-                                   : GetDocument().documentElement();
-
-  // Protection against LayoutTests/editing/selection/selection-crash.html
-  if (!focus) {
-    frame_caret_->ScheduleVisualUpdateForPaintInvalidationIfNeeded();
-    text_control_focused_ = false;
-    return;
-  }
-
-  // Hide the selection when focus goes away from a text-field and into
-  // something that is not a text-field. When focus enters another text-field we
-  // do not need to update appearance; the appearance is updated when the new
-  // selection is set.
-  if (text_control_focused_ && !focus->IsTextControl())
-    UpdateAppearance(LayoutSelection::PaintHint::kHide);
-  text_control_focused_ = focus->IsTextControl();
+  UpdateAppearance();
 }
 
 static DispatchEventResult DispatchSelectStart(
@@ -442,6 +423,61 @@ void FrameSelection::Clear() {
   if (granularity_strategy_)
     granularity_strategy_->Clear();
   SetSelection(SelectionInDOMTree());
+}
+
+bool FrameSelection::SelectionHasFocus() const {
+  // TODO(editing-dev): Hoist UpdateStyleAndLayoutIgnorePendingStylesheets
+  // to caller. See http://crbug.com/590369 for more details.
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  const Node* current =
+      ComputeVisibleSelectionInDOMTree().Start().ComputeContainerNode();
+  if (!current)
+    return false;
+
+  // No focused element means document root has focus.
+  const Element* const focused_element = GetDocument().FocusedElement()
+                                             ? GetDocument().FocusedElement()
+                                             : GetDocument().documentElement();
+  if (!focused_element)
+    return false;
+
+  if (focused_element->IsTextControl())
+    return focused_element->ContainsIncludingHostElements(*current);
+
+  bool has_editable_style = HasEditableStyle(*current);
+  do {
+    // If the selection is within an editable sub tree and that sub tree
+    // doesn't have focus, the selection doesn't have focus either.
+    if (has_editable_style && !HasEditableStyle(*current))
+      return false;
+
+    // Selection has focus if its sub tree has focus.
+    if (current == focused_element)
+      return true;
+    current = current->ParentOrShadowHostNode();
+  } while (current);
+
+  return false;
+}
+
+bool FrameSelection::IsHidden() const {
+  if (SelectionHasFocus())
+    return false;
+
+  const Node* start =
+      ComputeVisibleSelectionInDOMTree().Start().ComputeContainerNode();
+  if (!start)
+    return true;
+
+  // The selection doesn't have focus, so hide everything but range selections.
+  if (!GetSelectionInDOMTree().IsRange())
+    return true;
+
+  // Here we know we have an unfocused range selection. Let's say that
+  // selection resides inside a text control. Since the selection doesn't have
+  // focus neither does the text control. Meaning, if the selection indeed
+  // resides inside a text control, it should be hidden.
+  return EnclosingTextControl(start);
 }
 
 void FrameSelection::DocumentAttached(Document* document) {
@@ -632,17 +668,16 @@ void FrameSelection::SelectAll() {
 
   Node* root = nullptr;
   Node* select_start_target = nullptr;
-  if (ComputeVisibleSelectionInDOMTreeDeprecated().IsContentEditable()) {
-    root = HighestEditableRoot(
-        ComputeVisibleSelectionInDOMTreeDeprecated().Start());
+  if (ComputeVisibleSelectionInDOMTree().IsContentEditable()) {
+    root = HighestEditableRoot(ComputeVisibleSelectionInDOMTree().Start());
     if (Node* shadow_root = NonBoundaryShadowTreeRootNode(
-            ComputeVisibleSelectionInDOMTreeDeprecated().Start()))
+            ComputeVisibleSelectionInDOMTree().Start()))
       select_start_target = shadow_root->OwnerShadowHost();
     else
       select_start_target = root;
   } else {
     root = NonBoundaryShadowTreeRootNode(
-        ComputeVisibleSelectionInDOMTreeDeprecated().Start());
+        ComputeVisibleSelectionInDOMTree().Start());
     if (root) {
       select_start_target = root->OwnerShadowHost();
     } else {
@@ -673,7 +708,7 @@ void FrameSelection::SelectAll() {
                    .SetIsHandleVisible(IsHandleVisible())
                    .Build());
   SelectFrameElementInParentIfFullySelected();
-  NotifyLayoutObjectOfSelectionChange(kUserTriggered);
+  NotifyTextControlOfSelectionChange(kUserTriggered);
 }
 
 bool FrameSelection::SetSelectedRange(const EphemeralRange& range,
@@ -796,18 +831,16 @@ void FrameSelection::CommitAppearanceIfNeeded() {
 }
 
 void FrameSelection::DidLayout() {
-  // Upon relayout, a hidden selection must be kept hidden and a visible
-  // selection must be kept visible.
-  UpdateAppearance(LayoutSelection::PaintHint::kKeep);
+  UpdateAppearance();
 }
 
-void FrameSelection::UpdateAppearance(LayoutSelection::PaintHint hint) {
+void FrameSelection::UpdateAppearance() {
   DCHECK(!frame_->ContentLayoutItem().IsNull());
   frame_caret_->ScheduleVisualUpdateForPaintInvalidationIfNeeded();
-  layout_selection_->SetHasPendingSelection(hint);
+  layout_selection_->SetHasPendingSelection();
 }
 
-void FrameSelection::NotifyLayoutObjectOfSelectionChange(
+void FrameSelection::NotifyTextControlOfSelectionChange(
     EUserTriggered user_triggered) {
   TextControlElement* text_control =
       EnclosingTextControl(GetSelectionInDOMTree().Base());
@@ -984,7 +1017,7 @@ void FrameSelection::RevealSelection(const ScrollAlignment& alignment,
       break;
   }
 
-  Position start = ComputeVisibleSelectionInDOMTreeDeprecated().Start();
+  Position start = ComputeVisibleSelectionInDOMTree().Start();
   DCHECK(start.AnchorNode());
   if (start.AnchorNode() && start.AnchorNode()->GetLayoutObject()) {
     // FIXME: This code only handles scrolling the startContainer's layer, but
@@ -993,7 +1026,7 @@ void FrameSelection::RevealSelection(const ScrollAlignment& alignment,
       document_loader->GetInitialScrollState().was_scrolled_by_user = true;
     if (start.AnchorNode()->GetLayoutObject()->ScrollRectToVisible(
             rect, alignment, alignment))
-      UpdateAppearance(LayoutSelection::PaintHint::kPaint);
+      UpdateAppearance();
   }
 }
 
@@ -1107,7 +1140,7 @@ GranularityStrategy* FrameSelection::GetGranularityStrategy() {
 }
 
 void FrameSelection::MoveRangeSelectionExtent(const IntPoint& contents_point) {
-  if (ComputeVisibleSelectionInDOMTreeDeprecated().IsNone())
+  if (ComputeVisibleSelectionInDOMTree().IsNone())
     return;
 
   const SetSelectionOptions kOptions =

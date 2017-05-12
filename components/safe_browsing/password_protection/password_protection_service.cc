@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -62,6 +63,12 @@ GURL GetHostNameWithHTTPScheme(const GURL& url) {
 }
 
 }  // namespace
+
+const base::Feature kPasswordFieldOnFocusPinging{
+    "PasswordFieldOnFocusPinging", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kProtectedPasswordEntryPinging{
+    "ProtectedPasswordEntryPinging", base::FEATURE_DISABLED_BY_DEFAULT};
 
 PasswordProtectionService::PasswordProtectionService(
     const scoped_refptr<SafeBrowsingDatabaseManager>& database_manager,
@@ -194,6 +201,62 @@ void PasswordProtectionService::CacheVerdict(
       std::string(), std::move(verdict_dictionary));
 }
 
+void PasswordProtectionService::CleanUpExpiredVerdicts() {
+  DCHECK(content_settings_);
+  if (GetStoredVerdictCount() <= 0)
+    return;
+
+  ContentSettingsForOneType password_protection_settings;
+  content_settings_->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION, std::string(),
+      &password_protection_settings);
+
+  for (const ContentSettingPatternSource& source :
+       password_protection_settings) {
+    GURL primary_pattern_url = GURL(source.primary_pattern.ToString());
+    // Find all verdicts associated with this origin.
+    std::unique_ptr<base::DictionaryValue> verdict_dictionary =
+        base::DictionaryValue::From(content_settings_->GetWebsiteSetting(
+            primary_pattern_url, GURL(),
+            CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION, std::string(), nullptr));
+    std::vector<std::string> expired_keys;
+    for (base::DictionaryValue::Iterator it(*verdict_dictionary.get());
+         !it.IsAtEnd(); it.Advance()) {
+      base::DictionaryValue* verdict_entry = nullptr;
+      CHECK(verdict_dictionary->GetDictionaryWithoutPathExpansion(
+          it.key(), &verdict_entry));
+      int verdict_received_time;
+      LoginReputationClientResponse verdict;
+      CHECK(ParseVerdictEntry(verdict_entry, &verdict_received_time, &verdict));
+
+      if (IsCacheExpired(verdict_received_time, verdict.cache_duration_sec())) {
+        // Since DictionaryValue::Iterator cannot be used to modify the
+        // dictionary, we record the keys of expired verdicts in |expired_keys|
+        // and remove them in the next for-loop.
+        expired_keys.push_back(it.key());
+      }
+    }
+
+    for (const std::string& key : expired_keys) {
+      verdict_dictionary->RemoveWithoutPathExpansion(key, nullptr);
+      stored_verdict_count_--;
+    }
+
+    if (verdict_dictionary->size() == 0u) {
+      content_settings_->ClearSettingsForOneTypeWithPredicate(
+          CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION, base::Time(),
+          base::Bind(&OriginMatchPrimaryPattern, primary_pattern_url));
+    } else if (expired_keys.size() > 0u) {
+      // Set the website setting of this origin with the updated
+      // |verdict_diectionary|.
+      content_settings_->SetWebsiteSettingDefaultScope(
+          primary_pattern_url, GURL(),
+          CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION, std::string(),
+          std::move(verdict_dictionary));
+    }
+  }
+}
+
 void PasswordProtectionService::StartRequest(
     const GURL& main_frame_url,
     const GURL& password_form_action,
@@ -214,7 +277,7 @@ void PasswordProtectionService::MaybeStartLowReputationRequest(
     const GURL& password_form_action,
     const GURL& password_form_frame_url) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (!IsPingingEnabled())
+  if (!IsPingingEnabled(kPasswordFieldOnFocusPinging))
     return;
 
   // Skip URLs that we can't get a reliable reputation for.
@@ -298,6 +361,31 @@ int PasswordProtectionService::GetStoredVerdictCount() {
 
 int PasswordProtectionService::GetRequestTimeoutInMS() {
   return kRequestTimeoutMs;
+}
+
+void PasswordProtectionService::FillUserPopulation(
+    const LoginReputationClientRequest::TriggerType& request_type,
+    LoginReputationClientRequest* request_proto) {
+  ChromeUserPopulation* user_population = request_proto->mutable_population();
+  user_population->set_user_population(
+      IsExtendedReporting() ? ChromeUserPopulation::EXTENDED_REPORTING
+                            : ChromeUserPopulation::SAFE_BROWSING);
+  user_population->set_is_history_sync_enabled(IsHistorySyncEnabled());
+
+  base::FieldTrial* low_reputation_field_trial =
+      base::FeatureList::GetFieldTrial(kPasswordFieldOnFocusPinging);
+  if (low_reputation_field_trial) {
+    user_population->add_finch_active_groups(
+        low_reputation_field_trial->trial_name() + "|" +
+        low_reputation_field_trial->group_name());
+  }
+  base::FieldTrial* password_entry_field_trial =
+      base::FeatureList::GetFieldTrial(kProtectedPasswordEntryPinging);
+  if (password_entry_field_trial) {
+    user_population->add_finch_active_groups(
+        low_reputation_field_trial->trial_name() + "|" +
+        low_reputation_field_trial->group_name());
+  }
 }
 
 void PasswordProtectionService::OnMatchCsdWhiteListResult(

@@ -48,6 +48,9 @@ class DesktopViewport {
   // by |scale|.
   void ScaleDesktop(float px, float py, float scale);
 
+  // Moves the viewport center by <x, y> on the desktop's coordinate.
+  void MoveViewport(float dx, float dy);
+
   // Sets the viewport center to (x, y) on the desktop's coordinate.
   void SetViewportCenter(float x, float y);
 
@@ -57,6 +60,9 @@ class DesktopViewport {
   void RegisterOnTransformationChangedCallback(
       const TransformationCallback& callback,
       bool run_immediately);
+
+  // Returns the reference to the desktop-to-surface transformation.
+  const ViewMatrix& GetTransformation() const;
 
  private:
   struct Bounds {
@@ -87,7 +93,7 @@ class DesktopViewport {
 
   // Translates the viewport on the desktop's reference frame by <dx, dy>,
   // without calling UpdateViewport().
-  void MoveViewportCenterWithoutUpdate(float dx, float dy);
+  void MoveViewportWithoutUpdate(float dx, float dy);
 
   // Moves the point inside the bounds with minimum displacement if it is out of
   // the bounds.
@@ -95,11 +101,8 @@ class DesktopViewport {
       const Bounds& bounds,
       const ViewMatrix::Point& point);
 
-  ViewMatrix::Vector2D desktop_size_;
-  ViewMatrix::Vector2D surface_size_;
-
-  bool desktop_size_ready_ = false;
-  bool surface_size_ready_ = false;
+  ViewMatrix::Vector2D desktop_size_{0.f, 0.f};
+  ViewMatrix::Vector2D surface_size_{0.f, 0.f};
 
   ViewMatrix desktop_to_surface_transform_;
 

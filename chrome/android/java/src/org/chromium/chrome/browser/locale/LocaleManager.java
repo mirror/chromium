@@ -14,12 +14,14 @@ import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.SearchEnginePreference;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
+import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrl;
 import org.chromium.chrome.browser.snackbar.Snackbar;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
@@ -27,6 +29,7 @@ import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 /**
  * Manager for some locale specific logics.
@@ -85,6 +88,7 @@ public class LocaleManager {
     /**
      * @return An instance of the {@link LocaleManager}. This should only be called on UI thread.
      */
+    @CalledByNative
     public static LocaleManager getInstance() {
         assert ThreadUtils.runningOnUiThread();
         if (sInstance == null) {
@@ -272,6 +276,14 @@ public class LocaleManager {
     }
 
     /**
+     * @return The referral ID to be passed when searching with Yandex as the DSE.
+     */
+    @CalledByNative
+    protected String getYandexReferralId() {
+        return "";
+    }
+
+    /**
      * To be called after the user has made a selection from a search engine promo dialog.
      * @param type The type of search engine promo dialog that was shown.
      * @param keyword The keyword for the search engine chosen.
@@ -288,6 +300,17 @@ public class LocaleManager {
     private SpecialLocaleHandler getSpecialLocaleHandler() {
         if (mLocaleHandler == null) mLocaleHandler = new SpecialLocaleHandler(getSpecialLocaleId());
         return mLocaleHandler;
+    }
+
+    /**
+     * Get the list of search engines that a user may choose between.
+     * @param promoType Which search engine list to show.
+     * @return List of engines to show.
+     */
+    public List<TemplateUrl> getSearchEnginesForPromoDialog(@SearchEnginePromoType int promoType) {
+        TemplateUrlService instance = TemplateUrlService.getInstance();
+        assert instance.isLoaded();
+        return instance.getSearchEngines();
     }
 
     /** Set a LocaleManager to be used for testing. */

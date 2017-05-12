@@ -86,6 +86,7 @@ MessageView::~MessageView() {
 
 void MessageView::UpdateWithNotification(const Notification& notification) {
   display_source_ = notification.display_source();
+  pinned_ = notification.pinned();
   accessible_name_ = CreateAccessibleName(notification);
   slide_out_controller_.set_enabled(!notification.pinned());
 }
@@ -151,15 +152,18 @@ bool MessageView::OnKeyReleased(const ui::KeyEvent& event) {
 }
 
 void MessageView::OnPaint(gfx::Canvas* canvas) {
+  views::View::OnPaint(canvas);
   views::Painter::PaintFocusPainter(this, canvas, focus_painter_.get());
 }
 
 void MessageView::OnFocus() {
+  views::View::OnFocus();
   // We paint a focus indicator.
   SchedulePaint();
 }
 
 void MessageView::OnBlur() {
+  views::View::OnBlur();
   // We paint a focus indicator.
   SchedulePaint();
 }

@@ -20,7 +20,7 @@
 #include "components/autofill/core/browser/field_types.h"
 #include "components/payments/core/payment_options_provider.h"
 #include "components/payments/core/payments_profile_comparator.h"
-#include "third_party/skia/include/core/SkColor.h"
+#include "ui/base/default_style.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
@@ -153,7 +153,7 @@ std::unique_ptr<views::Label> GetLabelForMissingInformation(
 // dialog at the bottom of the view it borders.
 class PaymentRequestRowBorderPainter : public views::Painter {
  public:
-  PaymentRequestRowBorderPainter() {}
+  explicit PaymentRequestRowBorderPainter(SkColor color) : color_(color) {}
   ~PaymentRequestRowBorderPainter() override {}
 
   // views::Painter:
@@ -167,17 +167,17 @@ class PaymentRequestRowBorderPainter : public views::Painter {
         gfx::PointF(payments::kPaymentRequestRowHorizontalInsets, line_height),
         gfx::PointF(size.width() - payments::kPaymentRequestRowHorizontalInsets,
                     line_height),
-        SK_ColorLTGRAY);
+        color_);
   }
 
  private:
+  SkColor color_;
   DISALLOW_COPY_AND_ASSIGN(PaymentRequestRowBorderPainter);
 };
 
 }  // namespace
 
 int GetActualDialogWidth() {
-  constexpr int kDialogMinWidth = 512;
   static int actual_width =
       views::LayoutProvider::Get()->GetSnappedDialogWidth(kDialogMinWidth);
   return actual_width;
@@ -194,9 +194,9 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
   constexpr int kHeaderTopVerticalInset = 14;
   constexpr int kHeaderBottomVerticalInset = 8;
   constexpr int kHeaderHorizontalInset = 16;
-  // Top, left, bottom, right.
-  layout->SetInsets(kHeaderTopVerticalInset, kHeaderHorizontalInset,
-                    kHeaderBottomVerticalInset, kHeaderHorizontalInset);
+  container->SetBorder(views::CreateEmptyBorder(
+      kHeaderTopVerticalInset, kHeaderHorizontalInset,
+      kHeaderBottomVerticalInset, kHeaderHorizontalInset));
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   // A column for the optional back arrow.
@@ -229,7 +229,8 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
   views::Label* title_label = new views::Label(title);
   title_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   title_label->SetFontList(
-      title_label->GetDefaultFontList().DeriveWithSizeDelta(2));
+      title_label->GetDefaultFontList().DeriveWithSizeDelta(
+          ui::kTitleFontSizeDelta));
   layout->AddView(title_label);
 
   return container;
@@ -303,9 +304,10 @@ std::unique_ptr<views::View> GetShippingAddressLabelWithMissingInfo(
   std::unique_ptr<views::View> base_label =
       GetShippingAddressLabel(type, locale, profile, /*disabled_state=*/false);
 
-  base_label->AddChildView(GetLabelForMissingInformation(
-                               comp.GetStringForMissingShippingFields(profile))
-                               .release());
+  base::string16 missing = comp.GetStringForMissingShippingFields(profile);
+  if (!missing.empty()) {
+    base_label->AddChildView(GetLabelForMissingInformation(missing).release());
+  }
   return base_label;
 }
 
@@ -337,16 +339,18 @@ std::unique_ptr<views::View> GetContactInfoLabel(
   std::unique_ptr<views::View> base_label =
       GetBaseProfileLabel(type, name, phone, email);
 
-  base_label->AddChildView(GetLabelForMissingInformation(
-                               comp.GetStringForMissingContactFields(profile))
-                               .release());
+  base::string16 missing = comp.GetStringForMissingContactFields(profile);
+  if (!missing.empty()) {
+    base_label->AddChildView(GetLabelForMissingInformation(missing).release());
+  }
   return base_label;
 }
 
-std::unique_ptr<views::Border> CreatePaymentRequestRowBorder() {
+std::unique_ptr<views::Border> CreatePaymentRequestRowBorder(
+    SkColor color,
+    const gfx::Insets& insets) {
   return views::CreateBorderPainter(
-      base::MakeUnique<PaymentRequestRowBorderPainter>(),
-      gfx::Insets());
+      base::MakeUnique<PaymentRequestRowBorderPainter>(color), insets);
 }
 
 std::unique_ptr<views::Label> CreateBoldLabel(const base::string16& text) {
@@ -360,7 +364,8 @@ std::unique_ptr<views::Label> CreateBoldLabel(const base::string16& text) {
 
 std::unique_ptr<views::View> CreateShippingOptionLabel(
     payments::mojom::PaymentShippingOption* shipping_option,
-    const base::string16& formatted_amount) {
+    const base::string16& formatted_amount,
+    bool emphasize_label) {
   std::unique_ptr<views::View> container = base::MakeUnique<views::View>();
 
   std::unique_ptr<views::BoxLayout> layout =
@@ -376,6 +381,10 @@ std::unique_ptr<views::View> CreateShippingOptionLabel(
     shipping_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     shipping_label->set_id(
         static_cast<int>(DialogViewID::SHIPPING_OPTION_DESCRIPTION));
+    if (emphasize_label) {
+      shipping_label->SetFontList(shipping_label->font_list().DeriveWithWeight(
+          gfx::Font::Weight::MEDIUM));
+    }
     container->AddChildView(shipping_label.release());
 
     std::unique_ptr<views::Label> amount_label =

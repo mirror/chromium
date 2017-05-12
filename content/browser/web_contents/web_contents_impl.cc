@@ -327,7 +327,7 @@ WebContents* WebContents::FromFrameTreeNodeId(int frame_tree_node_id) {
       FrameTreeNode::GloballyFindByID(frame_tree_node_id);
   if (!frame_tree_node)
     return nullptr;
-  return FromRenderFrameHost(frame_tree_node->current_frame_host());
+  return WebContentsImpl::FromFrameTreeNode(frame_tree_node);
 }
 
 void WebContents::SetScreenOrientationDelegate(
@@ -1130,6 +1130,12 @@ std::vector<WebContentsImpl*> WebContentsImpl::GetWebContentsAndAllInner() {
   return all_contents;
 }
 
+void WebContentsImpl::NotifyManifestUrlChanged(
+    const base::Optional<GURL>& manifest_url) {
+  for (auto& observer : observers_)
+    observer.DidUpdateWebManifestURL(manifest_url);
+}
+
 void WebContentsImpl::UpdateDeviceScaleFactor(double device_scale_factor) {
   SendPageMessage(
       new PageMsg_SetDeviceScaleFactor(MSG_ROUTING_NONE, device_scale_factor));
@@ -1450,12 +1456,10 @@ void WebContentsImpl::WasShown() {
   controller_.SetActive(true);
 
   for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree()) {
-    if (view) {
-      view->Show();
+    view->Show();
 #if defined(OS_MACOSX)
-      view->SetActive(true);
+    view->SetActive(true);
 #endif
-    }
   }
 
   SendPageMessage(new PageMsg_WasShown(MSG_ROUTING_NONE));
@@ -1478,10 +1482,8 @@ void WebContentsImpl::WasHidden() {
     // removes the |GetRenderViewHost()|; then when we actually destroy the
     // window, OnWindowPosChanged() notices and calls WasHidden() (which
     // calls us).
-    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree()) {
-      if (view)
-        view->Hide();
-    }
+    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+      view->Hide();
 
     SendPageMessage(new PageMsg_WasHidden(MSG_ROUTING_NONE));
   }
@@ -1498,17 +1500,13 @@ void WebContentsImpl::WasOccluded() {
   if (capturer_count_ > 0)
     return;
 
-  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree()) {
-    if (view)
-      view->WasOccluded();
-  }
+  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+    view->WasOccluded();
 }
 
 void WebContentsImpl::WasUnOccluded() {
-  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree()) {
-    if (view)
-      view->WasUnOccluded();
-  }
+  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+    view->WasUnOccluded();
 }
 
 bool WebContentsImpl::NeedToFireBeforeUnload() {
@@ -1788,14 +1786,16 @@ std::set<RenderWidgetHostView*>
 WebContentsImpl::GetRenderWidgetHostViewsInTree() {
   std::set<RenderWidgetHostView*> set;
   if (ShowingInterstitialPage()) {
-    set.insert(GetRenderWidgetHostView());
+    if (RenderWidgetHostView* rwhv = GetRenderWidgetHostView())
+      set.insert(rwhv);
   } else {
     for (RenderFrameHost* rfh : GetAllFrames()) {
-      RenderWidgetHostView* rwhv = static_cast<RenderFrameHostImpl*>(rfh)
-                                       ->frame_tree_node()
-                                       ->render_manager()
-                                       ->GetRenderWidgetHostView();
-      set.insert(rwhv);
+      if (RenderWidgetHostView* rwhv = static_cast<RenderFrameHostImpl*>(rfh)
+                                           ->frame_tree_node()
+                                           ->render_manager()
+                                           ->GetRenderWidgetHostView()) {
+        set.insert(rwhv);
+      }
     }
   }
   return set;
@@ -2622,10 +2622,27 @@ WebContentsImpl::GetGeolocationServiceContext() {
   return geolocation_service_context_.get();
 }
 
-device::mojom::WakeLockContext* WebContentsImpl::GetWakeLockServiceContext() {
+device::mojom::WakeLockContext* WebContentsImpl::GetWakeLockContext() {
   if (!wake_lock_context_host_)
     wake_lock_context_host_.reset(new WakeLockContextHost(this));
   return wake_lock_context_host_->GetWakeLockContext();
+}
+
+device::mojom::WakeLockService* WebContentsImpl::GetRendererWakeLock() {
+  // WebContents creates a long-lived connection to one WakeLockServiceImpl.
+  // All the frames' requests will be added into the BindingSet of
+  // WakeLockServiceImpl via this connection.
+  if (!renderer_wake_lock_) {
+    device::mojom::WakeLockContext* wake_lock_context = GetWakeLockContext();
+    if (!wake_lock_context) {
+      return nullptr;
+    }
+    wake_lock_context->GetWakeLock(
+        device::mojom::WakeLockType::PreventDisplaySleep,
+        device::mojom::WakeLockReason::ReasonOther, "Wake Lock API",
+        mojo::MakeRequest(&renderer_wake_lock_));
+  }
+  return renderer_wake_lock_.get();
 }
 
 void WebContentsImpl::OnShowValidationMessage(
@@ -4325,8 +4342,10 @@ void WebContentsImpl::RenderFrameCreated(RenderFrameHost* render_frame_host) {
 }
 
 void WebContentsImpl::RenderFrameDeleted(RenderFrameHost* render_frame_host) {
+  is_notifying_observers_ = true;
   for (auto& observer : observers_)
     observer.RenderFrameDeleted(render_frame_host);
+  is_notifying_observers_ = false;
 #if BUILDFLAG(ENABLE_PLUGINS)
   pepper_playback_observer_->RenderFrameDeleted(render_frame_host);
 #endif

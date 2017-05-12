@@ -7,7 +7,7 @@
 
 #include "base/macros.h"
 #include "components/feature_engagement_tracker/internal/condition_validator.h"
-#include "components/feature_engagement_tracker/internal/feature_list.h"
+#include "components/feature_engagement_tracker/public/feature_list.h"
 
 namespace base {
 struct Feature;
@@ -24,8 +24,9 @@ class NeverConditionValidator : public ConditionValidator {
   ~NeverConditionValidator() override;
 
   // ConditionValidator implementation.
-  bool MeetsConditions(const base::Feature& feature,
-                       const Model& model) override;
+  ConditionValidator::Result MeetsConditions(const base::Feature& feature,
+                                             const Model& model,
+                                             uint32_t current_day) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(NeverConditionValidator);

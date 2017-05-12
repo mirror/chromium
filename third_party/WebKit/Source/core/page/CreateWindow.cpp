@@ -26,6 +26,7 @@
 
 #include "core/page/CreateWindow.h"
 
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
 #include "core/frame/FrameClient.h"
 #include "core/frame/LocalFrame.h"
@@ -82,7 +83,7 @@ static Frame* CreateNewWindow(LocalFrame& opener_frame,
   if (!page)
     return nullptr;
 
-  ASSERT(page->MainFrame());
+  DCHECK(page->MainFrame());
   LocalFrame& frame = *ToLocalFrame(page->MainFrame());
 
   if (!EqualIgnoringASCIICase(request.FrameName(), "_blank"))
@@ -116,7 +117,7 @@ static Frame* CreateNewWindow(LocalFrame& opener_frame,
     frame.Loader().ForceSandboxFlags(
         opener_frame.GetSecurityContext()->GetSandboxFlags());
 
-  // This call may suspend the execution by running nested message loop.
+  // This call may suspend the execution by running nested run loop.
   probe::windowCreated(&opener_frame, &frame);
   created = true;
   return &frame;
@@ -179,19 +180,19 @@ DOMWindow* CreateWindow(const String& url_string,
                         const WindowFeatures& window_features,
                         LocalDOMWindow& calling_window,
                         LocalFrame& first_frame,
-                        LocalFrame& opener_frame) {
+                        LocalFrame& opener_frame,
+                        ExceptionState& exception_state) {
   LocalFrame* active_frame = calling_window.GetFrame();
-  ASSERT(active_frame);
+  DCHECK(active_frame);
 
   KURL completed_url = url_string.IsEmpty()
                            ? KURL(kParsedURLString, g_empty_string)
                            : first_frame.GetDocument()->CompleteURL(url_string);
   if (!completed_url.IsEmpty() && !completed_url.IsValid()) {
     UseCounter::Count(active_frame, UseCounter::kWindowOpenWithInvalidURL);
-    // Don't expose client code to invalid URLs.
-    calling_window.PrintErrorMessage(
-        "Unable to open a window with invalid URL '" +
-        completed_url.GetString() + "'.\n");
+    exception_state.ThrowDOMException(
+        kSyntaxError, "Unable to open a window with invalid URL '" +
+                          completed_url.GetString() + "'.\n");
     return nullptr;
   }
 

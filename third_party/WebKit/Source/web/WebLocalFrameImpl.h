@@ -84,8 +84,7 @@ class WebVector;
 
 // Implementation of WebFrame, note that this is a reference counted object.
 class WEB_EXPORT WebLocalFrameImpl final
-    : public GarbageCollectedFinalized<WebLocalFrameImpl>,
-      NON_EXPORTED_BASE(public WebLocalFrameBase) {
+    : NON_EXPORTED_BASE(public WebLocalFrameBase) {
  public:
   // WebFrame methods:
   // TODO(dcheng): Fix sorting here; a number of method have been moved to
@@ -319,8 +318,10 @@ class WEB_EXPORT WebLocalFrameImpl final
                             WebString& clip_text,
                             WebString& clip_html) override;
 
-  void InitializeCoreFrame(Page&, FrameOwner*, const AtomicString& name);
-  LocalFrame* GetFrame() const { return frame_.Get(); }
+  void InitializeCoreFrame(Page&,
+                           FrameOwner*,
+                           const AtomicString& name) override;
+  LocalFrame* GetFrame() const override { return frame_.Get(); }
 
   void WillBeDetached();
   void WillDetachParent();
@@ -360,9 +361,9 @@ class WEB_EXPORT WebLocalFrameImpl final
   static WebPluginContainerImpl* CurrentPluginContainer(LocalFrame*,
                                                         Node* = nullptr);
 
-  WebViewBase* ViewImpl() const;
+  WebViewBase* ViewImpl() const override;
 
-  FrameView* GetFrameView() const {
+  FrameView* GetFrameView() const override {
     return GetFrame() ? GetFrame()->View() : 0;
   }
 
@@ -391,7 +392,7 @@ class WEB_EXPORT WebLocalFrameImpl final
   // Otherwise, disallow scrolling.
   void SetCanHaveScrollbars(bool) override;
 
-  WebFrameClient* Client() const { return client_; }
+  WebFrameClient* Client() const override { return client_; }
   void SetClient(WebFrameClient* client) { client_ = client; }
 
   ContentSettingsClient& GetContentSettingsClient() {
@@ -407,7 +408,9 @@ class WEB_EXPORT WebLocalFrameImpl final
   static void SelectWordAroundPosition(LocalFrame*, VisiblePosition);
 
   TextCheckerClient& GetTextCheckerClient() const;
-  WebTextCheckClient* TextCheckClient() const { return text_check_client_; }
+  WebTextCheckClient* TextCheckClient() const override {
+    return text_check_client_;
+  }
 
   TextFinder* GetTextFinder() const;
   // Returns the text finder object if it already exists.
@@ -428,10 +431,12 @@ class WEB_EXPORT WebLocalFrameImpl final
   }
 
   WebNode ContextMenuNode() const { return context_menu_node_.Get(); }
-  void SetContextMenuNode(Node* node) { context_menu_node_ = node; }
-  void ClearContextMenuNode() { context_menu_node_.Clear(); }
+  void SetContextMenuNode(Node* node) override { context_menu_node_ = node; }
+  void ClearContextMenuNode() override { context_menu_node_.Clear(); }
 
-  DECLARE_TRACE();
+  std::unique_ptr<WebURLLoader> CreateURLLoader() override;
+
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class LocalFrameClientImpl;

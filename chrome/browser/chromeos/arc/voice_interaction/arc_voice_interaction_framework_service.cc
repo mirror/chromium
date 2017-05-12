@@ -43,12 +43,6 @@ void ScreenshotCallback(
 const char ArcVoiceInteractionFrameworkService::kArcServiceName[] =
     "arc::ArcVoiceInteractionFrameworkService";
 
-// static
-bool ArcVoiceInteractionFrameworkService::IsVoiceInteractionEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      chromeos::switches::kEnableVoiceInteraction);
-}
-
 ArcVoiceInteractionFrameworkService::ArcVoiceInteractionFrameworkService(
     ArcBridgeService* bridge_service)
     : ArcService(bridge_service), binding_(this) {
@@ -85,6 +79,7 @@ void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
   ash::Shell::Get()->accelerator_controller()->UnregisterAll(this);
   if (!metalayer_closed_callback_.is_null())
     base::ResetAndReturn(&metalayer_closed_callback_).Run();
+  metalayer_enabled_ = false;
 }
 
 bool ArcVoiceInteractionFrameworkService::AcceleratorPressed(
@@ -154,13 +149,16 @@ void ArcVoiceInteractionFrameworkService::OnMetalayerClosed() {
     base::ResetAndReturn(&metalayer_closed_callback_).Run();
 }
 
+void ArcVoiceInteractionFrameworkService::SetMetalayerEnabled(bool enabled) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  metalayer_enabled_ = enabled;
+  if (!metalayer_enabled_ && !metalayer_closed_callback_.is_null())
+    base::ResetAndReturn(&metalayer_closed_callback_).Run();
+}
+
 bool ArcVoiceInteractionFrameworkService::IsMetalayerSupported() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  mojom::VoiceInteractionFrameworkInstance* framework_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service()->voice_interaction_framework(),
-          SetMetalayerVisibility);
-  return framework_instance;
+  return metalayer_enabled_;
 }
 
 void ArcVoiceInteractionFrameworkService::ShowMetalayer(

@@ -20,6 +20,7 @@ class ConditionValidator;
 class Model;
 class Store;
 class StorageValidator;
+class TimeProvider;
 
 // The internal implementation of the FeatureEngagementTracker.
 class FeatureEngagementTrackerImpl : public FeatureEngagementTracker,
@@ -29,13 +30,14 @@ class FeatureEngagementTrackerImpl : public FeatureEngagementTracker,
       std::unique_ptr<Store> store,
       std::unique_ptr<Configuration> configuration,
       std::unique_ptr<ConditionValidator> condition_validator,
-      std::unique_ptr<StorageValidator> storage_validator);
+      std::unique_ptr<StorageValidator> storage_validator,
+      std::unique_ptr<TimeProvider> time_provider);
   ~FeatureEngagementTrackerImpl() override;
 
   // FeatureEngagementTracker implementation.
   void NotifyEvent(const std::string& event) override;
   bool ShouldTriggerHelpUI(const base::Feature& feature) override;
-  void Dismissed() override;
+  void Dismissed(const base::Feature& feature) override;
   bool IsInitialized() override;
   void AddOnInitializedCallback(OnInitializedCallback callback) override;
 
@@ -49,6 +51,9 @@ class FeatureEngagementTrackerImpl : public FeatureEngagementTracker,
   // The ConditionValidator provides functionality for knowing when to trigger
   // help UI.
   std::unique_ptr<ConditionValidator> condition_validator_;
+
+  // A utility for retriving time-related information.
+  std::unique_ptr<TimeProvider> time_provider_;
 
   // Whether the initialization of the underlying model has finished.
   bool initialization_finished_;

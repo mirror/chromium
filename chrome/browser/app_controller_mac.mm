@@ -15,9 +15,9 @@
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
+#include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -344,6 +344,18 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
 
   // Initialize the Profile menu.
   [self initProfileMenu];
+
+  // If the OSX version supports this method, the system will automatically
+  // hide the item if there's no touch bar. However, for unsupported versions,
+  // we'll have to manually remove the item from the menu.
+  if (![NSApp
+          respondsToSelector:@selector(toggleTouchBarCustomizationPalette:)]) {
+    NSMenu* mainMenu = [NSApp mainMenu];
+    NSMenu* viewMenu = [[mainMenu itemWithTag:IDC_VIEW_MENU] submenu];
+    NSMenuItem* customizeItem = [viewMenu itemWithTag:IDC_CUSTOMIZE_TOUCH_BAR];
+    if (customizeItem)
+      [viewMenu removeItem:customizeItem];
+  }
 }
 
 - (void)unregisterEventHandlers {
@@ -741,12 +753,6 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
 
   handoff_active_url_observer_bridge_.reset(
       new HandoffActiveURLObserverBridge(self));
-
-  NSApplication* application = [NSApplication sharedApplication];
-  if ([application respondsToSelector:
-      @selector(setAutomaticCustomizeTouchBarMenuItemEnabled:)]) {
-    [application setAutomaticCustomizeTouchBarMenuItemEnabled:YES];
-  }
 }
 
 // Helper function for populating and displaying the in progress downloads at
@@ -944,11 +950,12 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
   }
 
   // Ignore commands during session restore's browser creation.  It uses a
-  // nested message loop and commands dispatched during this operation cause
+  // nested run loop and commands dispatched during this operation cause
   // havoc.
   if (SessionRestore::IsRestoring(lastProfile) &&
-      base::MessageLoop::current()->IsNested())
+      base::RunLoop::IsNestedOnCurrentThread()) {
     return;
+  }
 
   NSInteger tag = [sender tag];
 

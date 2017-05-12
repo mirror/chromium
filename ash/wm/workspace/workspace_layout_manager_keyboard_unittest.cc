@@ -22,7 +22,6 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
-#include "ash/wm/wm_screen_util.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
 #include "ash/wm_window.h"
 #include "base/command_line.h"
@@ -41,8 +40,8 @@
 namespace ash {
 namespace {
 
-WorkspaceLayoutManager* GetWorkspaceLayoutManager(WmWindow* container) {
-  return static_cast<WorkspaceLayoutManager*>(container->GetLayoutManager());
+WorkspaceLayoutManager* GetWorkspaceLayoutManager(aura::Window* container) {
+  return static_cast<WorkspaceLayoutManager*>(container->layout_manager());
 }
 
 }  // namespace
@@ -55,8 +54,8 @@ class WorkspaceLayoutManagerKeyboardTest2 : public test::AshTestBase {
   void SetUp() override {
     test::AshTestBase::SetUp();
     UpdateDisplay("800x600");
-    WmWindow* default_container =
-        ShellPort::Get()->GetPrimaryRootWindowController()->GetWmContainer(
+    aura::Window* default_container =
+        Shell::GetPrimaryRootWindowController()->GetContainer(
             kShellWindowId_DefaultContainer);
     layout_manager_ = GetWorkspaceLayoutManager(default_container);
   }

@@ -1821,7 +1821,7 @@ void WebViewImpl::UpdateICBAndResizeViewport() {
   if (MainFrameImpl()->GetFrameView()) {
     MainFrameImpl()->GetFrameView()->SetInitialViewportSize(icb_size);
     if (!MainFrameImpl()->GetFrameView()->NeedsLayout())
-      ResizeFrameView(MainFrameImpl());
+      resize_viewport_anchor_->ResizeFrameView(MainFrameSize());
   }
 }
 
@@ -2766,7 +2766,7 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoRect(
     // not to zoom in if the user won't be able to zoom out. e.g if the textbox
     // is within a touch-action: none container the user can't zoom back out.
     TouchAction action = TouchActionUtil::ComputeEffectiveTouchAction(*element);
-    if (!(action & kTouchActionPinchZoom))
+    if (!(action & TouchAction::kTouchActionPinchZoom))
       zoom_in_to_legible_scale = false;
   }
 
@@ -3646,11 +3646,6 @@ void WebViewImpl::DidCommitLoad(bool is_new_navigation,
   EndActiveFlingAnimation();
 }
 
-void WebViewImpl::ResizeFrameView(WebLocalFrameImpl* webframe) {
-  if (webframe == MainFrame())
-    resize_viewport_anchor_->ResizeFrameView(MainFrameSize());
-}
-
 void WebViewImpl::ResizeAfterLayout(WebLocalFrameImpl* webframe) {
   LocalFrame* frame = webframe->GetFrame();
   if (!client_ || !client_->CanUpdateLayout() || !frame->IsMainFrame())
@@ -3673,18 +3668,13 @@ void WebViewImpl::ResizeAfterLayout(WebLocalFrameImpl* webframe) {
   if (GetPageScaleConstraintsSet().ConstraintsDirty())
     RefreshPageScaleFactorAfterLayout();
 
-  ResizeFrameView(webframe);
+  resize_viewport_anchor_->ResizeFrameView(MainFrameSize());
 }
 
 void WebViewImpl::LayoutUpdated(WebLocalFrameImpl* webframe) {
   LocalFrame* frame = webframe->GetFrame();
-  if (!client_ || !frame->IsLocalRoot())
+  if (!client_ || !frame->IsMainFrame())
     return;
-  // Relayout immediately to avoid violating the rule that needsLayout()
-  // isn't set at the end of a layout.
-  FrameView* view = frame->View();
-  if (view->NeedsLayout())
-    view->UpdateLayout();
 
   UpdatePageOverlays();
 

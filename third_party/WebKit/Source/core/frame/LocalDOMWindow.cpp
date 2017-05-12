@@ -295,7 +295,7 @@ void LocalDOMWindow::ClearDocument() {
   if (!document_)
     return;
 
-  ASSERT(!document_->IsActive());
+  DCHECK(!document_->IsActive());
 
   // FIXME: This should be part of SuspendableObject shutdown
   ClearEventQueue();
@@ -464,7 +464,7 @@ void LocalDOMWindow::StatePopped(
 
 LocalDOMWindow::~LocalDOMWindow() {
   // Cleared when detaching document.
-  ASSERT(!event_queue_);
+  DCHECK(!event_queue_);
 }
 
 void LocalDOMWindow::Dispose() {
@@ -529,7 +529,7 @@ void LocalDOMWindow::Reset() {
 }
 
 void LocalDOMWindow::SendOrientationChangeEvent() {
-  ASSERT(RuntimeEnabledFeatures::orientationEventEnabled());
+  DCHECK(RuntimeEnabledFeatures::orientationEventEnabled());
   DCHECK(GetFrame()->IsLocalRoot());
 
   // Before dispatching the event, build a list of all frames in the page
@@ -552,7 +552,7 @@ void LocalDOMWindow::SendOrientationChangeEvent() {
 }
 
 int LocalDOMWindow::orientation() const {
-  ASSERT(RuntimeEnabledFeatures::orientationEventEnabled());
+  DCHECK(RuntimeEnabledFeatures::orientationEventEnabled());
 
   if (!GetFrame() || !GetFrame()->GetPage())
     return 0;
@@ -1120,7 +1120,7 @@ void LocalDOMWindow::setName(const AtomicString& name) {
     return;
 
   GetFrame()->Tree().SetName(name);
-  ASSERT(GetFrame()->Loader().Client());
+  DCHECK(GetFrame()->Loader().Client());
   GetFrame()->Loader().Client()->DidChangeName(name);
 }
 
@@ -1167,7 +1167,7 @@ StyleMedia* LocalDOMWindow::styleMedia() const {
 CSSStyleDeclaration* LocalDOMWindow::getComputedStyle(
     Element* elt,
     const String& pseudo_elt) const {
-  ASSERT(elt);
+  DCHECK(elt);
   return CSSComputedStyleDeclaration::Create(elt, false, pseudo_elt);
 }
 
@@ -1610,7 +1610,8 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
                                 const AtomicString& frame_name,
                                 const String& window_features_string,
                                 LocalDOMWindow* calling_window,
-                                LocalDOMWindow* entered_window) {
+                                LocalDOMWindow* entered_window,
+                                ExceptionState& exception_state) {
   if (!IsCurrentlyDisplayedInFrame())
     return nullptr;
   if (!calling_window->GetFrame())
@@ -1668,7 +1669,7 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
   WindowFeatures features(window_features_string);
   DOMWindow* new_window =
       CreateWindow(url_string, frame_name, features, *calling_window,
-                   *first_frame, *GetFrame());
+                   *first_frame, *GetFrame(), exception_state);
   return features.noopener ? nullptr : new_window;
 }
 

@@ -27,7 +27,6 @@
 #include "ash/wm/window_state_aura.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
-#include "ash/wm/wm_screen_util.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
 #include "ash/wm_window.h"
 #include "base/command_line.h"
@@ -731,8 +730,7 @@ TEST_F(WorkspaceLayoutManagerSoloTest, FullscreenSuspendsAlwaysOnTop) {
       always_on_top_window1->GetProperty(aura::client::kAlwaysOnTopKey));
   EXPECT_FALSE(
       always_on_top_window2->GetProperty(aura::client::kAlwaysOnTopKey));
-  EXPECT_NE(nullptr, wm::GetWindowForFullscreenMode(
-                         WmWindow::Get(fullscreen_window.get())));
+  EXPECT_NE(nullptr, wm::GetWindowForFullscreenMode(fullscreen_window.get()));
 
   // Adding a new always-on-top window is not affected by fullscreen.
   std::unique_ptr<aura::Window> always_on_top_window3(
@@ -750,8 +748,7 @@ TEST_F(WorkspaceLayoutManagerSoloTest, FullscreenSuspendsAlwaysOnTop) {
       always_on_top_window2->GetProperty(aura::client::kAlwaysOnTopKey));
   EXPECT_TRUE(
       always_on_top_window3->GetProperty(aura::client::kAlwaysOnTopKey));
-  EXPECT_EQ(nullptr, wm::GetWindowForFullscreenMode(
-                         WmWindow::Get(fullscreen_window.get())));
+  EXPECT_EQ(nullptr, wm::GetWindowForFullscreenMode(fullscreen_window.get()));
 }
 
 // Similary, pinned window causes always_on_top_ windows to stack below.
@@ -934,8 +931,7 @@ TEST_F(WorkspaceLayoutManagerSoloTest, NotResizeWhenScreenIsLocked) {
 namespace {
 
 WorkspaceLayoutManager* GetWorkspaceLayoutManager(aura::Window* container) {
-  return static_cast<WorkspaceLayoutManager*>(
-      WmWindow::Get(container)->GetLayoutManager());
+  return static_cast<WorkspaceLayoutManager*>(container->layout_manager());
 }
 
 class WorkspaceLayoutManagerBackdropTest : public test::AshTestBase {

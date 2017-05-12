@@ -73,6 +73,8 @@ import org.chromium.chrome.browser.tabmodel.TabModelObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserver;
 import org.chromium.chrome.browser.toolbar.ActionModeController.ActionBarDelegate;
+import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarObserver;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
@@ -526,7 +528,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                 if (!tracker.shouldTriggerHelpUI(FeatureConstants.DOWNLOAD_PAGE_FEATURE)) return;
 
                 mTextBubble = new ViewAnchoredTextBubble(mToolbar.getContext(), getMenuAnchor(),
-                        R.string.iph_download_page_for_offline_usage_text);
+                        R.string.iph_download_page_for_offline_usage_text,
+                        R.string.iph_download_page_for_offline_usage_accessibility_text);
                 mTextBubble.setDismissOnTouchInteraction(true);
                 mTextBubble.addOnDismissListener(new OnDismissListener() {
                     @Override
@@ -534,7 +537,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                tracker.dismissed();
+                                tracker.dismissed(FeatureConstants.DOWNLOAD_PAGE_FEATURE);
                                 activity.getAppMenuHandler().setMenuHighlight(null);
                             }
                         });
@@ -543,6 +546,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                 activity.getAppMenuHandler().setMenuHighlight(R.id.offline_page_id);
                 int yInsetPx = activity.getResources().getDimensionPixelOffset(
                         R.dimen.text_bubble_menu_anchor_y_inset);
+                yInsetPx = MathUtils.flipSignIf(yInsetPx, FeatureUtilities.isChromeHomeEnabled());
                 mTextBubble.setInsetPx(0, yInsetPx, 0, 0);
                 mTextBubble.show();
             }

@@ -139,16 +139,24 @@ void LayerTreeImpl::RecreateTileResources() {
 }
 
 bool LayerTreeImpl::IsViewportLayerId(int id) const {
-  if (id == inner_viewport_scroll_layer_id_ ||
-      id == outer_viewport_scroll_layer_id_)
-    return true;
+#if DCHECK_IS_ON()
+  // Ensure the LayerImpl viewport layer types correspond to the LayerTreeImpl's
+  // viewport layers.
+  if (id == inner_viewport_scroll_layer_id_)
+    DCHECK(LayerById(id)->viewport_layer_type() == INNER_VIEWPORT_SCROLL);
+  if (id == outer_viewport_scroll_layer_id_)
+    DCHECK(LayerById(id)->viewport_layer_type() == OUTER_VIEWPORT_SCROLL);
   if (InnerViewportContainerLayer() &&
       id == InnerViewportContainerLayer()->id())
-    return true;
+    DCHECK(InnerViewportContainerLayer()->viewport_layer_type() ==
+           INNER_VIEWPORT_CONTAINER);
   if (OuterViewportContainerLayer() &&
       id == OuterViewportContainerLayer()->id())
-    return true;
-
+    DCHECK(OuterViewportContainerLayer()->viewport_layer_type() ==
+           OUTER_VIEWPORT_CONTAINER);
+#endif
+  if (auto* layer = LayerById(id))
+    return layer->viewport_layer_type() != NOT_VIEWPORT_LAYER;
   return false;
 }
 
@@ -410,6 +418,12 @@ void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
   target_tree->set_bottom_controls_height(bottom_controls_height_);
   target_tree->PushBrowserControls(nullptr);
 
+  // The page scale factor update can affect scrolling which requires that
+  // these ids are set, so this must be before PushPageScaleFactorAndLimits.
+  target_tree->SetViewportLayersFromIds(
+      overscroll_elasticity_layer_id_, page_scale_layer_id_,
+      inner_viewport_scroll_layer_id_, outer_viewport_scroll_layer_id_);
+
   // Active tree already shares the page_scale_factor object with pending
   // tree so only the limits need to be provided.
   target_tree->PushPageScaleFactorAndLimits(nullptr, min_page_scale_factor(),
@@ -425,10 +439,6 @@ void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
 
   target_tree->pending_page_scale_animation_ =
       std::move(pending_page_scale_animation_);
-
-  target_tree->SetViewportLayersFromIds(
-      overscroll_elasticity_layer_id_, page_scale_layer_id_,
-      inner_viewport_scroll_layer_id_, outer_viewport_scroll_layer_id_);
 
   target_tree->RegisterSelection(selection_);
 
@@ -974,13 +984,26 @@ void LayerTreeImpl::SetViewportLayersFromIds(
   page_scale_layer_id_ = page_scale_layer_id;
   inner_viewport_scroll_layer_id_ = inner_viewport_scroll_layer_id;
   outer_viewport_scroll_layer_id_ = outer_viewport_scroll_layer_id;
+
+  UpdateViewportLayerTypes();
 }
 
 void LayerTreeImpl::ClearViewportLayers() {
-  overscroll_elasticity_layer_id_ = Layer::INVALID_ID;
-  page_scale_layer_id_ = Layer::INVALID_ID;
-  inner_viewport_scroll_layer_id_ = Layer::INVALID_ID;
-  outer_viewport_scroll_layer_id_ = Layer::INVALID_ID;
+  SetViewportLayersFromIds(Layer::INVALID_ID, Layer::INVALID_ID,
+                           Layer::INVALID_ID, Layer::INVALID_ID);
+}
+
+void LayerTreeImpl::UpdateViewportLayerTypes() {
+  if (auto* inner_scroll = LayerById(inner_viewport_scroll_layer_id_)) {
+    inner_scroll->SetViewportLayerType(INNER_VIEWPORT_SCROLL);
+    if (auto* inner_container = inner_scroll->scroll_clip_layer())
+      inner_container->SetViewportLayerType(INNER_VIEWPORT_CONTAINER);
+  }
+  if (auto* outer_scroll = LayerById(outer_viewport_scroll_layer_id_)) {
+    outer_scroll->SetViewportLayerType(OUTER_VIEWPORT_SCROLL);
+    if (auto* outer_container = outer_scroll->scroll_clip_layer())
+      outer_container->SetViewportLayerType(OUTER_VIEWPORT_CONTAINER);
+  }
 }
 
 // For unit tests, we use the layer's id as its element id.
@@ -1021,21 +1044,16 @@ bool LayerTreeImpl::UpdateDrawProperties(bool update_lcd_text) {
     TRACE_EVENT2(
         "cc", "LayerTreeImpl::UpdateDrawProperties::CalculateDrawProperties",
         "IsActive", IsActiveTree(), "SourceFrameNumber", source_frame_number_);
-    // TODO(crbug.com/692780): Remove this option entirely once this get to
-    // stable and proves it works.
-    bool can_render_to_separate_surface = true;
-
     // We verify visible rect calculations whenever we verify clip tree
     // calculations except when this function is explicitly passed a flag asking
     // us to skip it.
     LayerTreeHostCommon::CalcDrawPropsImplInputs inputs(
-        layer_list_[0], DrawViewportSize(),
+        layer_list_[0], DeviceViewport().size(),
         layer_tree_host_impl_->DrawTransform(), device_scale_factor(),
         current_page_scale_factor(), PageScaleLayer(),
         InnerViewportScrollLayer(), OuterViewportScrollLayer(),
         elastic_overscroll()->Current(IsActiveTree()),
         OverscrollElasticityLayer(), resource_provider()->max_texture_size(),
-        can_render_to_separate_surface,
         settings().layer_transforms_should_scale_layer_contents,
         &render_surface_list_, &property_trees_);
     LayerTreeHostCommon::CalculateDrawProperties(&inputs);
@@ -1169,8 +1187,8 @@ void LayerTreeImpl::BuildPropertyTreesForTesting() {
       OuterViewportScrollLayer(), OverscrollElasticityLayer(),
       elastic_overscroll()->Current(IsActiveTree()),
       current_page_scale_factor(), device_scale_factor(),
-      gfx::Rect(DrawViewportSize()), layer_tree_host_impl_->DrawTransform(),
-      &property_trees_);
+      gfx::Rect(DeviceViewport().size()),
+      layer_tree_host_impl_->DrawTransform(), &property_trees_);
   property_trees_.transform_tree.set_source_to_parent_updates_allowed(false);
 }
 
@@ -1390,10 +1408,6 @@ base::TimeDelta LayerTreeImpl::CurrentBeginFrameInterval() const {
 
 gfx::Rect LayerTreeImpl::DeviceViewport() const {
   return layer_tree_host_impl_->DeviceViewport();
-}
-
-gfx::Size LayerTreeImpl::DrawViewportSize() const {
-  return layer_tree_host_impl_->DrawViewportSize();
 }
 
 const gfx::Rect LayerTreeImpl::ViewportRectForTilePriority() const {
@@ -1704,7 +1718,8 @@ void LayerTreeImpl::RegisterScrollLayer(LayerImpl* layer) {
 
   DidUpdateScrollState(layer->id());
 
-  layer->set_needs_show_scrollbars(true);
+  if (settings().scrollbar_animator == LayerTreeSettings::AURA_OVERLAY)
+    layer->set_needs_show_scrollbars(true);
 }
 
 void LayerTreeImpl::UnregisterScrollLayer(LayerImpl* layer) {

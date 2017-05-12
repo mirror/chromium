@@ -16,6 +16,7 @@ import org.chromium.chrome.browser.infobar.translate.TranslateMenu;
 import org.chromium.chrome.browser.infobar.translate.TranslateMenuHelper;
 import org.chromium.chrome.browser.infobar.translate.TranslateTabLayout;
 import org.chromium.chrome.browser.snackbar.Snackbar;
+import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.ui.widget.Toast;
 
@@ -39,8 +40,28 @@ class TranslateCompactInfoBar extends InfoBar
     // showing language menu after dismissing overflow menu.
     private TranslateMenuHelper mOverflowMenuHelper;
     private TranslateMenuHelper mLanguageMenuHelper;
-
     private TintedImageButton mMenuButton;
+    private boolean mUserInteracted;
+
+    /** The controller for translate UI snackbars. */
+    class TranslateSnackbarController implements SnackbarController {
+        private final int mMenuItemId;
+
+        public TranslateSnackbarController(int menuItemId) {
+            mMenuItemId = menuItemId;
+        }
+
+        @Override
+        public void onDismissNoAction(Object actionData) {
+            handleTranslateOptionPostSnackbar(mMenuItemId);
+        }
+
+        @Override
+        public void onAction(Object actionData) {
+            // TODO(ramyasharma): Add logging metric to track cancel actions.
+            // Do nothing.
+        }
+    };
 
     @CalledByNative
     private static InfoBar create(int initialStep, String sourceLanguageCode,
@@ -77,6 +98,7 @@ class TranslateCompactInfoBar extends InfoBar
         if (mInitialStep == TRANSLATING_INFOBAR) {
             mTabLayout.getTabAt(TARGET_TAB_INDEX).select();
             mTabLayout.showProgressBarOnTab(TARGET_TAB_INDEX);
+            mUserInteracted = true;
         }
 
         mTabLayout.addOnTabSelectedListener(this);
@@ -113,11 +135,12 @@ class TranslateCompactInfoBar extends InfoBar
         }
     }
 
-    private void startTranslating(int tabPostion) {
-        if (TARGET_TAB_INDEX == tabPostion) {
+    private void startTranslating(int tabPosition) {
+        if (TARGET_TAB_INDEX == tabPosition) {
             // Already on the target tab.
             mTabLayout.showProgressBarOnTab(TARGET_TAB_INDEX);
             onButtonClicked(ActionType.TRANSLATE);
+            mUserInteracted = true;
         } else {
             mTabLayout.getTabAt(TARGET_TAB_INDEX).select();
         }
@@ -144,10 +167,25 @@ class TranslateCompactInfoBar extends InfoBar
         mNativeTranslateInfoBarPtr = nativePtr;
     }
 
+    @CalledByNative
+    private void setAutoAlwaysTranslate() {
+        createAndShowSnackbar(getContext().getString(R.string.translate_snackbar_always_translate,
+                                      mOptions.sourceLanguageName(), mOptions.targetLanguageName()),
+                Snackbar.UMA_TRANSLATE_ALWAYS, TranslateMenu.ID_OVERFLOW_ALWAYS_TRANSLATE);
+    }
+
     @Override
     protected void onNativeDestroyed() {
         mNativeTranslateInfoBarPtr = 0;
         super.onNativeDestroyed();
+    }
+
+    @Override
+    public void onCloseButtonClicked() {
+        if (!mUserInteracted) {
+            onButtonClicked(ActionType.CANCEL);
+        }
+        super.onCloseButtonClicked();
     }
 
     @Override
@@ -172,30 +210,33 @@ class TranslateCompactInfoBar extends InfoBar
 
     @Override
     public void onOverflowMenuItemClicked(int itemId) {
+        mUserInteracted = true;
         switch (itemId) {
             case TranslateMenu.ID_OVERFLOW_MORE_LANGUAGE:
                 initMenuHelper(TranslateMenu.MENU_TARGET_LANGUAGE);
                 mLanguageMenuHelper.show(TranslateMenu.MENU_TARGET_LANGUAGE);
                 return;
             case TranslateMenu.ID_OVERFLOW_ALWAYS_TRANSLATE:
-                mOptions.toggleAlwaysTranslateLanguageState(
-                        !mOptions.alwaysTranslateLanguageState());
-                nativeApplyBoolTranslateOption(mNativeTranslateInfoBarPtr,
-                        TranslateOption.ALWAYS_TRANSLATE, mOptions.alwaysTranslateLanguageState());
                 // Only show snackbar when "Always Translate" is enabled.
-                if (mOptions.alwaysTranslateLanguageState()) {
-                    showSnackbar(TranslateSnackbarType.ALWAYS_TRANSLATE);
+                if (!mOptions.alwaysTranslateLanguageState()) {
+                    createAndShowSnackbar(
+                            getContext().getString(R.string.translate_snackbar_always_translate,
+                                    mOptions.sourceLanguageName(), mOptions.targetLanguageName()),
+                            Snackbar.UMA_TRANSLATE_ALWAYS, itemId);
+                } else {
+                    handleTranslateOptionPostSnackbar(itemId);
                 }
                 return;
             case TranslateMenu.ID_OVERFLOW_NEVER_LANGUAGE:
-                nativeApplyBoolTranslateOption(
-                        mNativeTranslateInfoBarPtr, TranslateOption.NEVER_TRANSLATE, true);
-                showSnackbar(TranslateSnackbarType.NEVER_TRANSLATE);
+                createAndShowSnackbar(
+                        getContext().getString(R.string.translate_snackbar_language_never,
+                                mOptions.sourceLanguageName()),
+                        Snackbar.UMA_TRANSLATE_NEVER, itemId);
                 return;
             case TranslateMenu.ID_OVERFLOW_NEVER_SITE:
-                nativeApplyBoolTranslateOption(
-                        mNativeTranslateInfoBarPtr, TranslateOption.NEVER_TRANSLATE_SITE, true);
-                showSnackbar(TranslateSnackbarType.NEVER_TRANSLATE_SITE);
+                createAndShowSnackbar(
+                        getContext().getString(R.string.translate_snackbar_site_never),
+                        Snackbar.UMA_TRANSLATE_NEVER_SITE, itemId);
                 return;
             case TranslateMenu.ID_OVERFLOW_NOT_THIS_LANGUAGE:
                 initMenuHelper(TranslateMenu.MENU_SOURCE_LANGUAGE);
@@ -230,29 +271,37 @@ class TranslateCompactInfoBar extends InfoBar
         }
     }
 
-    private void showSnackbar(int snackbarType) {
-        if (snackbarType == TranslateSnackbarType.NEVER_TRANSLATE) {
-            createAndShowSnackbar(getContext().getString(R.string.translate_snackbar_language_never,
-                                          mOptions.sourceLanguageName()),
-                    Snackbar.UMA_TRANSLATE_NEVER);
-        } else if (snackbarType == TranslateSnackbarType.ALWAYS_TRANSLATE) {
-            createAndShowSnackbar(
-                    getContext().getString(R.string.translate_snackbar_always_translate,
-                            mOptions.sourceLanguageName(), mOptions.targetLanguageName()),
-                    Snackbar.UMA_TRANSLATE_ALWAYS);
-        } else if (snackbarType == TranslateSnackbarType.NEVER_TRANSLATE_SITE) {
-            createAndShowSnackbar(getContext().getString(R.string.translate_snackbar_site_never),
-                    Snackbar.UMA_TRANSLATE_NEVER_SITE);
-        }
-    }
-
-    private void createAndShowSnackbar(String title, int type) {
+    private void createAndShowSnackbar(String title, int umaType, int itemId) {
         if (getSnackbarManager() == null) {
+            // Directly apply menu option, if snackbar system is not working.
+            handleTranslateOptionPostSnackbar(itemId);
             return;
         }
-        getSnackbarManager().showSnackbar(Snackbar.make(title, new TranslateSnackbarController(),
-                                                          Snackbar.TYPE_NOTIFICATION, type)
-                                                  .setSingleLine(false));
+        getSnackbarManager().showSnackbar(
+                Snackbar.make(title, new TranslateSnackbarController(itemId),
+                                Snackbar.TYPE_NOTIFICATION, umaType)
+                        .setSingleLine(false)
+                        .setAction(
+                                getContext().getString(R.string.translate_snackbar_cancel), null));
+    }
+
+    private void handleTranslateOptionPostSnackbar(int itemId) {
+        switch (itemId) {
+            case TranslateMenu.ID_OVERFLOW_ALWAYS_TRANSLATE:
+                mOptions.toggleAlwaysTranslateLanguageState(
+                        !mOptions.alwaysTranslateLanguageState());
+                nativeApplyBoolTranslateOption(mNativeTranslateInfoBarPtr,
+                        TranslateOption.ALWAYS_TRANSLATE, mOptions.alwaysTranslateLanguageState());
+                return;
+            case TranslateMenu.ID_OVERFLOW_NEVER_LANGUAGE:
+                nativeApplyBoolTranslateOption(
+                        mNativeTranslateInfoBarPtr, TranslateOption.NEVER_TRANSLATE, true);
+                return;
+            case TranslateMenu.ID_OVERFLOW_NEVER_SITE:
+                nativeApplyBoolTranslateOption(
+                        mNativeTranslateInfoBarPtr, TranslateOption.NEVER_TRANSLATE_SITE, true);
+                return;
+        }
     }
 
     private native void nativeApplyStringTranslateOption(

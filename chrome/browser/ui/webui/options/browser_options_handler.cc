@@ -539,6 +539,8 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
      IDS_SETTINGS_PEOPLE_LOCK_SCREEN_EDIT_FINGERPRINTS},
     {"lockScreenEditFingerprintsDescription",
      IDS_SETTINGS_PEOPLE_LOCK_SCREEN_EDIT_FINGERPRINTS_DESCRIPTION},
+    {"lockScreenSetupFingerprintButton",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_FINGERPRINT_SETUP_BUTTON},
     {"lockScreenNumberFingerprints",
      IDS_SETTINGS_PEOPLE_LOCK_SCREEN_NUM_FINGERPRINTS},
     {"lockScreenFingerprintEnable",
@@ -553,6 +555,7 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
     {"lockScreenMediumSecurity",
      IDS_SETTINGS_PEOPLE_LOCK_SCREEN_MEDIUM_SECURITY},
     {"lockScreenNone", IDS_SETTINGS_PEOPLE_LOCK_SCREEN_NONE},
+    {"lockScreenOptions", IDS_SETTINGS_PEOPLE_LOCK_SCREEN_OPTIONS},
     {"lockScreenPasswordOnly", IDS_SETTINGS_PEOPLE_LOCK_SCREEN_PASSWORD_ONLY},
     {"lockScreenPinOrPassword",
      IDS_SETTINGS_PEOPLE_LOCK_SCREEN_PIN_OR_PASSWORD},
@@ -803,7 +806,7 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
                      chromeos::quick_unlock::IsPinEnabled(profile->GetPrefs()));
   values->SetBoolean("fingerprintUnlockEnabled",
                      chromeos::quick_unlock::IsFingerprintEnabled());
-  values->SetBoolean("pinUnlockEnabled",
+  values->SetBoolean("quickUnlockEnabled",
                      chromeos::quick_unlock::IsPinEnabled(profile->GetPrefs()));
   if (chromeos::quick_unlock::IsPinEnabled(profile->GetPrefs())) {
     values->SetString(
@@ -1041,8 +1044,7 @@ void BrowserOptionsHandler::InitializeHandler() {
     signin_observer_.Add(signin_manager);
 
   // Create our favicon data source.
-  content::URLDataSource::Add(
-      profile, new FaviconSource(profile, FaviconSource::FAVICON));
+  content::URLDataSource::Add(profile, new FaviconSource(profile));
 
 #if !defined(OS_CHROMEOS)
   default_browser_policy_.Init(

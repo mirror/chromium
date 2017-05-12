@@ -26,6 +26,7 @@ ASH_EXPORT extern const char kAshDisableSmoothScreenRotation[];
 ASH_EXPORT extern const char kAshDisableTouchExplorationMode[];
 ASH_EXPORT extern const char kAshEnableMagnifierKeyScroller[];
 ASH_EXPORT extern const char kAshEnablePaletteOnAllDisplays[];
+ASH_EXPORT extern const char kAshEnableScaleSettingsTray[];
 ASH_EXPORT extern const char kAshEnableTouchView[];
 ASH_EXPORT extern const char kAshEnableMirroredScreen[];
 ASH_EXPORT extern const char kAshEstimatedPresentationDelay[];
@@ -47,6 +48,7 @@ ASH_EXPORT extern const char kAshShelfColorSchemeDarkMuted[];
 ASH_EXPORT extern const char kAshShelfColorSchemeDarkVibrant[];
 ASH_EXPORT extern const char kAshTouchHud[];
 ASH_EXPORT extern const char kAuraLegacyPowerButton[];
+ASH_EXPORT extern const char kUseIMEService[];
 
 // True if the pointer (cursor) position should be kept inside root windows.
 ASH_EXPORT bool ConstrainPointerToRoot();

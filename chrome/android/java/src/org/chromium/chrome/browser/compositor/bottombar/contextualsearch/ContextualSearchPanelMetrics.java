@@ -6,14 +6,11 @@ package org.chromium.chrome.browser.compositor.bottombar.contextualsearch;
 
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.PanelState;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
-import org.chromium.chrome.browser.contextualsearch.ContextualSearchBlacklist.BlacklistReason;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchHeuristics;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchRankerLogger;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchRankerLoggerImpl;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchUma;
 import org.chromium.chrome.browser.contextualsearch.QuickActionCategory;
-
-import java.util.Locale;
 
 /**
  * This class is responsible for all the logging related to Contextual Search.
@@ -25,7 +22,6 @@ public class ContextualSearchPanelMetrics {
     private final ContextualSearchRankerLogger mTapSuppressionRankerLogger;
 
     // Flags for logging.
-    private BlacklistReason mBlacklistReason;
     private boolean mDidSearchInvolvePromo;
     private boolean mWasSearchContentViewSeen;
     private boolean mIsPromoActive;
@@ -37,14 +33,10 @@ public class ContextualSearchPanelMetrics {
     private boolean mIsSerpNavigation;
     private boolean mWasActivatedByTap;
     private boolean mWasPanelOpenedBeyondPeek;
-    private boolean mWasSelectionPartOfUrl;
     private boolean mWasContextualCardsDataShown;
     private boolean mWasQuickActionShown;
     private int mQuickActionCategory;
     private boolean mWasQuickActionClicked;
-    private boolean mWasSelectionAllCaps;
-    private boolean mDidSelectionStartWithCapital;
-    private char mSelectionFirstChar;
     private int mSelectionLength;
     // Whether any Tap suppression heuristic was satisfied when the panel was shown.
     private boolean mWasAnyHeuristicSatisfiedOnPanelShow;
@@ -121,11 +113,6 @@ public class ContextualSearchPanelMetrics {
                 ContextualSearchUma.logResultsSeen(mWasSearchContentViewSeen, mWasActivatedByTap);
             }
 
-            if (mWasSelectionPartOfUrl) {
-                ContextualSearchUma.logResultsSeenSelectionIsUrl(mWasSearchContentViewSeen,
-                        mWasActivatedByTap);
-            }
-
             if (mWasContextualCardsDataShown) {
                 ContextualSearchUma.logContextualCardsResultsSeen(mWasSearchContentViewSeen);
             }
@@ -139,14 +126,6 @@ public class ContextualSearchPanelMetrics {
                         mWasQuickActionClicked);
             }
 
-            if (mWasSelectionAllCaps && mWasActivatedByTap) {
-                ContextualSearchUma.logAllCapsResultsSeen(mWasSearchContentViewSeen);
-            } else if (mDidSelectionStartWithCapital && mWasActivatedByTap) {
-                ContextualSearchUma.logStartedWithCapitalResultsSeen(mWasSearchContentViewSeen);
-            }
-
-            ContextualSearchUma.logBlacklistSeen(mBlacklistReason, mWasSearchContentViewSeen);
-
             if (mResultsSeenExperiments != null) {
                 mResultsSeenExperiments.logResultsSeen(
                         mWasSearchContentViewSeen, mWasActivatedByTap);
@@ -154,13 +133,11 @@ public class ContextualSearchPanelMetrics {
             }
 
             if (mWasActivatedByTap) {
-                boolean wasAnySuppressionHeuristicSatisfied =
-                        mWasAnyHeuristicSatisfiedOnPanelShow || mWasSelectionPartOfUrl;
+                boolean wasAnySuppressionHeuristicSatisfied = mWasAnyHeuristicSatisfiedOnPanelShow;
                 ContextualSearchUma.logAnyTapSuppressionHeuristicSatisfied(
                         mWasSearchContentViewSeen, wasAnySuppressionHeuristicSatisfied);
                 // Log all the experiments to the Ranker logger.
                 if (mRankerLogExperiments != null) {
-                    writeSelectionFeaturesToRanker();
                     mTapSuppressionRankerLogger.logOutcome(mWasSearchContentViewSeen);
                     mRankerLogExperiments.logRankerTapSuppression(mTapSuppressionRankerLogger);
                     mTapSuppressionRankerLogger.writeLogAndReset();
@@ -184,7 +161,6 @@ public class ContextualSearchPanelMetrics {
         if (isStartingSearch) {
             mFirstPeekTimeNs = System.nanoTime();
             mWasActivatedByTap = reason == StateChangeReason.TEXT_SELECT_TAP;
-            mBlacklistReason = BlacklistReason.NONE;
             if (mWasActivatedByTap && mResultsSeenExperiments != null) {
                 mWasAnyHeuristicSatisfiedOnPanelShow =
                         mResultsSeenExperiments.isAnyConditionSatisfiedForAggregrateLogging();
@@ -242,24 +218,13 @@ public class ContextualSearchPanelMetrics {
             mHasExitedExpanded = false;
             mHasExitedMaximized = false;
             mIsSerpNavigation = false;
-            mWasSelectionPartOfUrl = false;
             mWasContextualCardsDataShown = false;
             mWasQuickActionShown = false;
             mQuickActionCategory = QuickActionCategory.NONE;
             mWasQuickActionClicked = false;
-            mWasSelectionAllCaps = false;
-            mDidSelectionStartWithCapital = false;
             mWasAnyHeuristicSatisfiedOnPanelShow = false;
             mPanelTriggerTimeFromTapNs = 0;
         }
-    }
-
-    /**
-     * Sets the reason why the current selection was blacklisted.
-     * @param reason The given reason.
-     */
-    public void setBlacklistReason(BlacklistReason reason) {
-        mBlacklistReason = reason;
     }
 
     /**
@@ -283,13 +248,6 @@ public class ContextualSearchPanelMetrics {
      */
     public void setIsPromoActive(boolean shown) {
         mIsPromoActive = shown;
-    }
-
-    /**
-     * @param wasPartOfUrl Whether the selected text was part of a URL.
-     */
-    public void setWasSelectionPartOfUrl(boolean wasPartOfUrl) {
-        mWasSelectionPartOfUrl = wasPartOfUrl;
     }
 
     /**
@@ -328,27 +286,6 @@ public class ContextualSearchPanelMetrics {
      */
     public void onSelectionEstablished(String selection) {
         mSelectionLength = selection.length();
-        // In some locales, there is no concept of an upper or lower case letter. Account for this
-        // by checking that the selected text is not equivalent to selection#toLowerCase().
-        mWasSelectionAllCaps = selection.equals(selection.toUpperCase(Locale.getDefault()))
-                && !selection.equals(selection.toLowerCase(Locale.getDefault()));
-        mSelectionFirstChar = selection.charAt(0);
-        String firstChar = String.valueOf(mSelectionFirstChar);
-        mDidSelectionStartWithCapital = firstChar.equals(
-                firstChar.toUpperCase(Locale.getDefault()))
-                && !firstChar.equals(firstChar.toLowerCase(Locale.getDefault()));
-    }
-
-    /**
-     * Writes the set of selection features that we've collected for Ranker to its log.
-     */
-    private void writeSelectionFeaturesToRanker() {
-        mTapSuppressionRankerLogger.log(
-                ContextualSearchRankerLogger.Feature.SELECTION_LENGTH, mSelectionLength);
-        mTapSuppressionRankerLogger.log(
-                ContextualSearchRankerLogger.Feature.SELECTION_FIRST_CHAR, mSelectionFirstChar);
-        mTapSuppressionRankerLogger.log(
-                ContextualSearchRankerLogger.Feature.SELECTION_WAS_ALL_CAPS, mWasSelectionAllCaps);
     }
 
     /**

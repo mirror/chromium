@@ -154,7 +154,6 @@ extern const char kForceEnableMetricsReporting[];
 extern const char kForceFirstRun[];
 extern const char kForceLocalNtp[];
 extern const char kForceVariationIds[];
-extern const char kHistoryEnableGroupByDomain[];
 extern const char kHomePage[];
 extern const char kHostResolverRetryAttempts[];
 extern const char kHostRules[];
@@ -272,8 +271,8 @@ extern const char kWebApkServerUrl[];
 
 #if defined(OS_CHROMEOS)
 extern const char kCroshCommand[];
+extern const char kDisableLoginScreenApps[];
 extern const char kDisableNativeCups[];
-extern const char kEnableLoginScreenApps[];
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(USE_ASH)

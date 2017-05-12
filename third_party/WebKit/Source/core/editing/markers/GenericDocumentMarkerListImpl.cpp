@@ -17,13 +17,13 @@ void GenericDocumentMarkerListImpl::Add(DocumentMarker* marker) {
   switch (marker->GetType()) {
     case DocumentMarker::kSpelling:
     case DocumentMarker::kGrammar:
-      DocumentMarkerListEditor::AddMarkerAndMergeOverlapping(&markers_, marker);
-      return;
+      NOTREACHED();
     case DocumentMarker::kTextMatch:
-    case DocumentMarker::kComposition:
       DocumentMarkerListEditor::AddMarkerWithoutMergingOverlapping(&markers_,
                                                                    marker);
       return;
+    case DocumentMarker::kComposition:
+      NOTREACHED();
   }
 
   NOTREACHED() << "Unhanded marker type: " << marker->GetType();

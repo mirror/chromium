@@ -24,10 +24,10 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
-import org.chromium.chrome.browser.notifications.ChannelDefinitions;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
 import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
+import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationAction;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationOptOut;
 
@@ -226,8 +226,12 @@ public class ContentSuggestionsNotificationHelper {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         for (ActiveNotification activeNotification : getActiveNotifications()) {
             manager.cancel(NOTIFICATION_TAG, activeNotification.mId);
-            recordCachedActionMetric(why);
+            if (removeActiveNotification(
+                        activeNotification.mCategory, activeNotification.mIdWithinCategory)) {
+                recordCachedActionMetric(why);
+            }
         }
+        assert getActiveNotifications().isEmpty();
     }
 
     private static class ActiveNotification {

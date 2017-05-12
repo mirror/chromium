@@ -136,6 +136,8 @@ class PermissionRequestManager
   void WebContentsDestroyed() override;
 
   // PermissionPrompt::Delegate:
+  const std::vector<PermissionRequest*>& Requests() override;
+  const std::vector<bool>& AcceptStates() override;
   void ToggleAccept(int request_index, bool new_value) override;
   void TogglePersist(bool new_value) override;
   void Accept() override;
@@ -145,9 +147,12 @@ class PermissionRequestManager
   // Posts a task which will allow the bubble to become visible if it is needed.
   void ScheduleShowBubble();
 
-  // Shows the bubble if it is not already visible and there are pending
-  // requests.
-  void TriggerShowBubble();
+  // If we aren't already showing a bubble, dequeue and show a pending request.
+  void DequeueRequestsAndShowBubble();
+
+  // Shows the bubble for a request that has just been dequeued, or re-show a
+  // bubble after switching tabs away and back.
+  void ShowBubble();
 
   // Finalize the pending permissions request.
   void FinalizeBubble();

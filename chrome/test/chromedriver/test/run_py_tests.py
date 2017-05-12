@@ -677,6 +677,7 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
   def testAlertHandlingOnPageUnload(self):
     self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
     self._driver.ExecuteScript('window.onbeforeunload=function(){return true}')
+    self._driver.FindElement('tag name', 'body').Click()
     self._driver.GoBack()
     self.assertTrue(self._driver.IsAlertOpen())
     self._driver.HandleAlert(True)

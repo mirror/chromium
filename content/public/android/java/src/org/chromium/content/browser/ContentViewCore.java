@@ -135,8 +135,6 @@ public class ContentViewCore
                 boolean hasCommitted, boolean isSameDocument, boolean isFragmentNavigation,
                 Integer pageTransition, int errorCode, String errorDescription,
                 int httpStatusCode) {
-            determinedProcessVisibility();
-
             if (hasCommitted && isInMainFrame && !isSameDocument) {
                 resetPopupsAndInput();
             }
@@ -156,16 +154,6 @@ public class ContentViewCore
             contentViewCore.mIsMobileOptimizedHint = false;
             contentViewCore.hidePopupsAndClearSelection();
             contentViewCore.resetScrollInProgress();
-        }
-
-        private void determinedProcessVisibility() {
-            ContentViewCore contentViewCore = mWeakContentViewCore.get();
-            if (contentViewCore == null) return;
-            // Signal to the process management logic that we can now rely on the process
-            // visibility signal for binding management. Before the navigation commits, its
-            // renderer is considered background even if the pending navigation happens in the
-            // foreground renderer. See crbug.com/421041 for more details.
-            ChildProcessLauncher.determinedVisibility(contentViewCore.getCurrentRenderProcessId());
         }
     }
 
@@ -239,8 +227,6 @@ public class ContentViewCore
     // Size of the viewport in physical pixels as set from onSizeChanged.
     private int mViewportWidthPix;
     private int mViewportHeightPix;
-    private int mPhysicalBackingWidthPix;
-    private int mPhysicalBackingHeightPix;
     private int mTopControlsHeightPix;
     private int mBottomControlsHeightPix;
     private boolean mTopControlsShrinkBlinkSize;
@@ -725,22 +711,6 @@ public class ContentViewCore
     }
 
     /**
-     * @return Width of underlying physical surface.
-     */
-    @CalledByNative
-    private int getPhysicalBackingWidthPix() {
-        return mPhysicalBackingWidthPix;
-    }
-
-    /**
-     * @return Height of underlying physical surface.
-     */
-    @CalledByNative
-    private int getPhysicalBackingHeightPix() {
-        return mPhysicalBackingHeightPix;
-    }
-
-    /**
      * @return The amount that the viewport size given to Blink is shrunk by the URL-bar..
      */
     @CalledByNative
@@ -824,7 +794,7 @@ public class ContentViewCore
 
     private void setTouchScrollInProgress(boolean inProgress) {
         mTouchScrollInProgress = inProgress;
-        mSelectionPopupController.setScrollInProgress(isScrollInProgress());
+        mSelectionPopupController.setScrollInProgress(inProgress, isScrollInProgress());
     }
 
     @SuppressWarnings("unused")
@@ -1149,21 +1119,6 @@ public class ContentViewCore
         }
 
         updateAfterSizeChanged();
-    }
-
-    /**
-     * Called when the underlying surface the compositor draws to changes size.
-     * This may be larger than the viewport size.
-     */
-    public void onPhysicalBackingSizeChanged(int wPix, int hPix) {
-        if (mPhysicalBackingWidthPix == wPix && mPhysicalBackingHeightPix == hPix) return;
-
-        mPhysicalBackingWidthPix = wPix;
-        mPhysicalBackingHeightPix = hPix;
-
-        if (mNativeContentViewCore != 0) {
-            nativeWasResized(mNativeContentViewCore);
-        }
     }
 
     @CalledByNative

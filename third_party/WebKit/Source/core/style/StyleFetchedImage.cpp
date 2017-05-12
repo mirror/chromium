@@ -78,7 +78,7 @@ bool StyleFetchedImage::ErrorOccurred() const {
 }
 
 LayoutSize StyleFetchedImage::ImageSize(
-    const LayoutObject&,
+    const Document&,
     float multiplier,
     const LayoutSize& default_object_size) const {
   if (image_->GetImage() && image_->GetImage()->IsSVGImage())
@@ -130,9 +130,6 @@ PassRefPtr<Image> StyleFetchedImage::GetImage(
 
 bool StyleFetchedImage::KnownToBeOpaque(
     const LayoutObject& layout_object) const {
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"), "PaintImage",
-               "data",
-               InspectorPaintImageEvent::Data(&layout_object, *image_.Get()));
   return image_->GetImage()->CurrentFrameKnownToBeOpaque(
       Image::kPreCacheMetadata);
 }

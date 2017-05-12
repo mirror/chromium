@@ -22,7 +22,7 @@
 #include "chrome/common/extensions/extension_process_policy.h"
 #include "chrome/test/base/search_test_utils.h"
 #include "chrome/test/base/ui_test_utils.h"
-#include "chromeos/login/login_state.h"
+#include "chromeos/login/scoped_test_public_session_login_state.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
@@ -41,6 +41,10 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/test_data_directory.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+
+#if defined(OS_CHROMEOS)
+#include "chromeos/login/login_state.h"
+#endif  // defined(OS_CHROMEOS)
 
 using content::WebContents;
 
@@ -167,10 +171,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, WebRequestTypes) {
 #if defined(OS_CHROMEOS)
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, WebRequestPublicSession) {
   ASSERT_TRUE(StartEmbeddedTestServer());
-  // Set Public Session state.
-  chromeos::LoginState::Get()->SetLoggedInState(
-      chromeos::LoginState::LOGGED_IN_ACTIVE,
-      chromeos::LoginState::LOGGED_IN_USER_PUBLIC_ACCOUNT);
+  chromeos::ScopedTestPublicSessionLoginState login_state;
   // Disable a CHECK while doing api tests.
   WebRequestPermissions::AllowAllExtensionLocationsInPublicSessionForTesting(
       true);

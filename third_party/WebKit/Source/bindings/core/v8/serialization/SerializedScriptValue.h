@@ -41,6 +41,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/ThreadSafeRefCounted.h"
 #include "platform/wtf/allocator/Partitions.h"
+#include "platform/wtf/text/StringView.h"
 #include "platform/wtf/typed_arrays/ArrayBufferContents.h"
 #include "v8/include/v8.h"
 
@@ -90,14 +91,35 @@ class CORE_EXPORT SerializedScriptValue
   // has been the cause of at least one bug in the past.
   static constexpr uint32_t kWireFormatVersion = 17;
 
+  // This enumeration specifies whether we're serializing a value for storage;
+  // e.g. when writing to IndexedDB. This corresponds to the forStorage flag of
+  // the HTML spec:
+  // https://html.spec.whatwg.org/multipage/infrastructure.html#safe-passing-of-structured-data
+  enum StoragePolicy {
+    // Not persisted; used only during the execution of the browser.
+    kNotForStorage,
+    // May be written to disk and read during a subsequent execution of the
+    // browser.
+    kForStorage,
+  };
+
   struct SerializeOptions {
+    enum WasmSerializationPolicy {
+      kUnspecified,  // Invalid value, used as default initializer.
+      kTransfer,     // In-memory transfer without (necessarily) serializing.
+      kSerialize,    // Serialize to a byte stream.
+      kBlockedInNonSecureContext  // Block transfer or serialization.
+    };
     STACK_ALLOCATED();
+
+    SerializeOptions() {}
+    explicit SerializeOptions(StoragePolicy for_storage)
+        : for_storage(for_storage) {}
+
     Transferables* transferables = nullptr;
     WebBlobInfoArray* blob_info = nullptr;
-    bool write_wasm_to_stream = false;
-    // Set when serializing a value for storage; e.g. when writing to
-    // IndexedDB.
-    bool for_storage = false;
+    WasmSerializationPolicy wasm_policy = kTransfer;
+    StoragePolicy for_storage = kNotForStorage;
   };
   static PassRefPtr<SerializedScriptValue> Serialize(v8::Isolate*,
                                                      v8::Local<v8::Value>,
@@ -118,6 +140,10 @@ class CORE_EXPORT SerializedScriptValue
 
   String ToWireString() const;
   void ToWireBytes(Vector<char>&) const;
+
+  StringView GetWireData() const {
+    return StringView(data_buffer_.get(), data_buffer_size_);
+  }
 
   // Deserializes the value (in the current context). Returns a null value in
   // case of failure.
@@ -143,6 +169,8 @@ class CORE_EXPORT SerializedScriptValue
                                    int,
                                    Transferables&,
                                    ExceptionState&);
+
+  static ArrayBufferArray ExtractNonSharedArrayBuffers(Transferables&);
 
   // Helper function which pulls ArrayBufferContents out of an ArrayBufferArray
   // and neuters the ArrayBufferArray.  Returns nullptr if there is an
@@ -231,10 +259,10 @@ struct NativeValueTraits<SerializedScriptValue>
   CORE_EXPORT static inline PassRefPtr<SerializedScriptValue> NativeValue(
       v8::Isolate* isolate,
       v8::Local<v8::Value> value,
+      const SerializedScriptValue::SerializeOptions& options,
       ExceptionState& exception_state) {
-    return SerializedScriptValue::Serialize(
-        isolate, value, SerializedScriptValue::SerializeOptions(),
-        exception_state);
+    return SerializedScriptValue::Serialize(isolate, value, options,
+                                            exception_state);
   }
 };
 

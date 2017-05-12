@@ -79,7 +79,8 @@ class MockSubresourceFilterClient
   ~MockSubresourceFilterClient() override = default;
 
   MOCK_METHOD1(ToggleNotificationVisibility, void(bool));
-  MOCK_METHOD1(ShouldSuppressActivation, bool(content::NavigationHandle*));
+  MOCK_METHOD2(OnPageActivationComputed,
+               bool(content::NavigationHandle*, bool));
   MOCK_METHOD1(WhitelistByContentSettings, void(const GURL&));
   MOCK_METHOD1(WhitelistInCurrentWebContents, void(const GURL&));
   MOCK_METHOD0(GetRulesetDealer, VerifiedRulesetDealer::Handle*());
@@ -285,7 +286,7 @@ TEST_F(SubresourceFilterSafeBrowsingActivationThrottleTest,
   SimulateStartAndExpectProceed();
   SimulateCommitAndExpectProceed();
   EXPECT_EQ(ContentSubresourceFilterDriverFactory::ActivationDecision::
-                ACTIVATION_LIST_NOT_MATCHED,
+                ACTIVATION_CONDITIONS_NOT_MET,
             factory()->GetActivationDecisionForLastCommittedPageLoad());
   tester().ExpectTotalCount(kMatchesPatternHistogramNameSubresourceFilterSuffix,
                             0);
@@ -319,7 +320,7 @@ TEST_F(SubresourceFilterSafeBrowsingActivationThrottleTest,
   SimulateRedirectAndExpectProceed(GURL(kRedirectURL));
   SimulateCommitAndExpectProceed();
   EXPECT_EQ(ContentSubresourceFilterDriverFactory::ActivationDecision::
-                ACTIVATION_LIST_NOT_MATCHED,
+                ACTIVATION_CONDITIONS_NOT_MET,
             factory()->GetActivationDecisionForLastCommittedPageLoad());
   tester().ExpectTotalCount(kMatchesPatternHistogramNameSubresourceFilterSuffix,
                             0);
@@ -361,7 +362,7 @@ TEST_F(SubresourceFilterSafeBrowsingActivationThrottleTest,
   test_io_task_runner()->FastForwardBy(expected_delay);
   SimulateCommitAndExpectProceed();
   EXPECT_EQ(ContentSubresourceFilterDriverFactory::ActivationDecision::
-                ACTIVATION_LIST_NOT_MATCHED,
+                ACTIVATION_CONDITIONS_NOT_MET,
             factory()->GetActivationDecisionForLastCommittedPageLoad());
   tester().ExpectTotalCount(kMatchesPatternHistogramNameSubresourceFilterSuffix,
                             0);
@@ -438,7 +439,7 @@ TEST_F(SubresourceFilterSafeBrowsingActivationThrottleTest,
 
   SimulateCommitAndExpectProceed();
   EXPECT_EQ(ContentSubresourceFilterDriverFactory::ActivationDecision::
-                ACTIVATION_LIST_NOT_MATCHED,
+                ACTIVATION_CONDITIONS_NOT_MET,
             factory()->GetActivationDecisionForLastCommittedPageLoad());
   tester().ExpectTotalCount(kMatchesPatternHistogramNameSubresourceFilterSuffix,
                             0);

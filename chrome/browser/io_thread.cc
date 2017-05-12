@@ -61,6 +61,7 @@
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/cookie_store_factory.h"
+#include "content/public/browser/network_quality_observer_factory.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/user_agent.h"
@@ -90,7 +91,6 @@
 #include "net/http/http_server_properties_impl.h"
 #include "net/net_features.h"
 #include "net/nqe/external_estimate_provider.h"
-#include "net/nqe/network_quality_estimator.h"
 #include "net/nqe/network_quality_estimator_params.h"
 #include "net/proxy/proxy_config_service.h"
 #include "net/proxy/proxy_script_fetcher_impl.h"
@@ -131,6 +131,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/net/cert_verify_proc_chromeos.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chromeos/network/host_resolver_impl_chromeos.h"
 #endif
 
@@ -387,6 +388,11 @@ IOThread::IOThread(
 #if defined(OS_POSIX) && !defined(OS_ANDROID)
   gssapi_library_name_ = local_state->GetString(prefs::kGSSAPILibraryName);
 #endif
+#if defined(OS_CHROMEOS)
+  policy::BrowserPolicyConnectorChromeOS* connector =
+      g_browser_process->platform_part()->browser_policy_connector_chromeos();
+  allow_gssapi_library_load_ = connector->IsActiveDirectoryManaged();
+#endif
   pref_proxy_config_tracker_.reset(
       ProxyServiceFactory::CreatePrefProxyConfigTrackerOfLocalState(
           local_state));
@@ -583,6 +589,8 @@ void IOThread::Init() {
   globals_->network_quality_estimator.reset(new net::NetworkQualityEstimator(
       std::move(external_estimate_provider), network_quality_estimator_params,
       net_log_));
+  globals_->network_quality_observer = content::CreateNetworkQualityObserver(
+      globals_->network_quality_estimator.get());
 
   UpdateDnsClientEnabled();
 #if defined(OS_CHROMEOS)
@@ -788,6 +796,10 @@ void IOThread::CreateDefaultAuthHandlerFactory() {
 #if defined(OS_POSIX) && !defined(OS_ANDROID)
       ,
       gssapi_library_name_
+#endif
+#if defined(OS_CHROMEOS)
+      ,
+      allow_gssapi_library_load_
 #endif
       ));
   UpdateServerWhitelist();
