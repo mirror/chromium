@@ -1,0 +1,37 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>WebSQL: FTS3 Crash</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+
+async_test(testCase => {
+  const database = openDatabase(
+      'Fts3CrashTest', '1.0', 'Database for FTS3 crash test', 1024 * 1024);
+  assert_not_equals(database, null, 'openDatabase should not fail');
+
+  database.transaction(testCase.step_func(transaction => {
+    transaction.executeSql(
+        "CREATE VIRTUAL TABLE main USING FTS3(foo);", [], () => {},
+        testCase.unreached_func("FTS3 table creation should not fail"));
+    transaction.executeSql(
+        "INSERT INTO main VALUES (x'0000000000000000');", [], () => {},
+        testCase.unreached_func("FTS3 table insertion should not fail"));
+    transaction.executeSql(
+        "SELECT OPTIMIZE(foo) FROM main;", [],
+        (transaction, result) => {
+          console.log(result);
+          testCase.done();
+        },
+        testCase.unreached_func("FTS3 table insertion should not fail"));
+  }));
+
+  database.transaction(testCase.step_func(transaction => {
+    transaction.executeSql("CREATE VIRTUAL TABLE main USING FTS3(foo);");
+    () => {},
+    testCase.unreached_func("Database.transaction should not fail");
+  }));
+
+});
+
+</script>
