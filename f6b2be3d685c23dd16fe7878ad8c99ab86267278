@@ -16,6 +16,24 @@
       "revId": "f6b2be3d685c23dd16fe7878ad8c99ab86267278",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1cd9702_4996352d",
+        "filename": "mojo/public/cpp/bindings/associated_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-12T00:40:50Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "0eb0963c_e48d7e04",
+      "revId": "f6b2be3d685c23dd16fe7878ad8c99ab86267278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
