@@ -92,8 +92,7 @@ class GpuHostTest : public testing::Test {
 };
 
 base::WeakPtr<GpuClient> GpuHostTest::AddGpuClient() {
-  mojom::GpuRequest request;
-  GpuClient* client = gpu_host_->AddInternal(std::move(request));
+  GpuClient* client = gpu_host_->AddInternal(mojom::GpuRequest());
   return client->weak_factory_.GetWeakPtr();
 }
 
