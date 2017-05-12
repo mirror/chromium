@@ -43,6 +43,7 @@
 #include "chrome/browser/ui/page_info/page_info_ui.h"
 #include "chrome/browser/usb/usb_chooser_context.h"
 #include "chrome/browser/usb/usb_chooser_context_factory.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/theme_resources.h"
@@ -399,6 +400,31 @@ void PageInfo::OnRevokeSSLErrorBypassButtonPressed() {
   chrome_ssl_host_state_delegate_->RevokeUserAllowExceptionsHard(
       site_url().host());
   did_revoke_user_ssl_decisions_ = true;
+}
+
+void PageInfo::OpenSiteSettingsView() {
+  // TODO(crbug.com/655876): By default, this opens the general Content Settings
+  // pane. Eventually, this should open a page specific to a given origin that
+  // shows all of the settings for that origin, but currently this only happens
+  // if the |kSiteSettings| and/or |kSiteDetails| flags are enabled.
+  std::string origin = site_url().GetOrigin().spec();
+  std::string link_destination(chrome::kChromeUIContentSettingsURL);
+  if ((base::CommandLine::ForCurrentProcess()->HasSwitch(
+           switches::kEnableSiteSettings) ||
+       base::FeatureList::IsEnabled(features::kSiteDetails)) &&
+      origin.length()) {
+    url::RawCanonOutputT<char> percent_encoded_origin;
+    url::EncodeURIComponent(origin.c_str(), origin.length(),
+                            &percent_encoded_origin);
+    link_destination = chrome::kChromeUISiteDetailsPrefixURL +
+                       std::string(percent_encoded_origin.data(),
+                                   percent_encoded_origin.length());
+  }
+  web_contents()->OpenURL(
+      content::OpenURLParams(GURL(link_destination), content::Referrer(),
+                             WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                             ui::PAGE_TRANSITION_LINK, false));
+  RecordPageInfoAction(PageInfo::PAGE_INFO_SITE_SETTINGS_OPENED);
 }
 
 void PageInfo::Init(const GURL& url,
