@@ -57,6 +57,8 @@ class HistoryCounter : public browsing_data::BrowsingDataCounter,
   void OnWebHistoryTimeout();
   void MergeResults();
 
+  history::WebHistoryService* FetchWebHistoryService();
+
   // SyncServiceObserver implementation.
   void OnStateChanged(syncer::SyncService* sync) override;
 
