@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "451ffb63_aee85333",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_collection_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-05-12T15:15:01Z",
+      "side": 1,
+      "message": "Can you try:\nconst GURL\u0026  realURL\n?",
+      "range": {
+        "startLine": 618,
+        "startChar": 6,
+        "endLine": 618,
+        "endChar": 7
+      },
+      "revId": "8cab63b3ff9daef981b6cd4f302b77ee27e12684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
