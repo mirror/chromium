@@ -47,8 +47,8 @@ bool GestureEventStreamValidator::Validate(const blink::WebGestureEvent& event,
           !event.data.fling_start.velocity_y) {
         error_msg->append("Zero velocity touchscreen fling\n");
       }
-      if (!scrolling_)
-        error_msg->append("Fling start outside of scroll\n");
+      if (!scrolling_ && !event.data.fling_start.target_viewport)
+        error_msg->append("Hit-test-required fling start outside of scroll\n");
       if (pinching_)
         error_msg->append("Flinging while pinching\n");
       scrolling_ = false;

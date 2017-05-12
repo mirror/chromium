@@ -124,7 +124,8 @@ class ContentViewCoreImpl : public ContentViewCore,
                   jfloat y,
                   jfloat vx,
                   jfloat vy,
-                  jboolean target_viewport);
+                  jboolean target_viewport,
+                  jboolean from_gamepad);
   void FlingCancel(JNIEnv* env,
                    const base::android::JavaParamRef<jobject>& obj,
                    jlong time_ms);
