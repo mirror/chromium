@@ -290,7 +290,9 @@ void LinkHighlightImpl::PaintContents(
   web_display_item_list->AppendDrawingItem(
       WebRect(visual_rect.x(), visual_rect.y(), visual_rect.width(),
               visual_rect.height()),
-      recorder.finishRecordingAsPicture());
+      recorder.finishRecordingAsPicture(),
+      WebRect(visual_rect.x(), visual_rect.y(), visual_rect.width(),
+              visual_rect.height()));
 }
 
 void LinkHighlightImpl::StartHighlightAnimationIfNeeded() {
