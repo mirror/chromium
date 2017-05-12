@@ -16,6 +16,24 @@
       "revId": "35b626568dc39b60a795fc365ab6c685990f5753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988d4e8e_9ef1d5cd",
+        "filename": "build/android/pylib/symbols/elf_symbolizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-05-12T22:11:42Z",
+      "side": 1,
+      "message": "explained offline.",
+      "parentUuid": "85abe2a8_e30295af",
+      "revId": "35b626568dc39b60a795fc365ab6c685990f5753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
