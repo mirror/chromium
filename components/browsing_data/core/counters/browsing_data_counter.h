@@ -90,6 +90,10 @@ class BrowsingDataCounter {
             ClearBrowsingDataTab clear_browsing_data_tab,
             const Callback& callback);
 
+  // Can be called instead of |Init()|, to create a counter that doesn't
+  // observe pref changes and always retrieves data for |ALL_TIME|.
+  void InitWithoutPref(const Callback& callback);
+
   // Name of the preference associated with this counter.
   virtual const char* GetPrefName() const = 0;
 
