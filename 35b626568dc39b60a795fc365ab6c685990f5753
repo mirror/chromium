@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85abe2a8_e30295af",
+        "filename": "build/android/pylib/symbols/elf_symbolizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-05-12T21:58:06Z",
+      "side": 1,
+      "message": "going to have to explain this one to me...",
+      "revId": "35b626568dc39b60a795fc365ab6c685990f5753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
