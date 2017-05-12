@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96380e71_b75de306",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-05-12T23:29:43Z",
+      "side": 1,
+      "message": "Style guide recommends the declaration order should match the definition order. Though I see that would require an extra ifdef block... eh.",
+      "range": {
+        "startLine": 162,
+        "startChar": 7,
+        "endLine": 162,
+        "endChar": 31
+      },
+      "revId": "e0e309d6c7e09ae3eb86c9fafd5d616c6320386a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231def86_2e40b637",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-05-12T23:29:43Z",
+      "side": 1,
+      "message": "Looks like this reference will keep the Backend object alive forever.\n\nI think you can used Unretained here since deleting the ApplicationStatusListener will stop listening.\n\n(same in other file)",
+      "range": {
+        "startLine": 212,
+        "startChar": 53,
+        "endLine": 212,
+        "endChar": 57
+      },
+      "revId": "e0e309d6c7e09ae3eb86c9fafd5d616c6320386a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
