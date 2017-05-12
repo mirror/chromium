@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de142e00_76cf0f02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-05-12T18:24:00Z",
+      "side": 1,
+      "message": "I think for the first MakeUnique here you meant WrapUnique",
+      "revId": "8c6ccce47b5df65417db537ea3f0093b196d537c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
