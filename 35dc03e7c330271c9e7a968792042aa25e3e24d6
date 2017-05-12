@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c2d24a_b9e9b2e7",
+        "filename": "tools/chrome_extensions/open_my_editor/ext/gr-content.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-12T19:01:49Z",
+      "side": 1,
+      "message": "nit: the bitwise ~ is a bit opaque if you haven\u0027t seen it before (I\u0027m a javascript noob). But if it\u0027s idiomatic I\u0027m fine with it",
+      "range": {
+        "startLine": 19,
+        "startChar": 39,
+        "endLine": 19,
+        "endChar": 46
+      },
+      "revId": "35dc03e7c330271c9e7a968792042aa25e3e24d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd1371f_74e2f2bb",
+        "filename": "tools/chrome_extensions/open_my_editor/ext/gr-content.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-12T19:01:49Z",
+      "side": 1,
+      "message": "nit: this continue applies also when the path is empty but the comment makes it seem otherwise.",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "35dc03e7c330271c9e7a968792042aa25e3e24d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
