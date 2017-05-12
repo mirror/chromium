@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac4663a5_75873872",
+        "filename": "cc/paint/drawing_display_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-12T16:42:26Z",
+      "side": 1,
+      "message": "I don\u0027t think I realized that there were as many non-origin callers as there were.  (In practice, I think very few things use the rects off the canvas.)\n\nI think the right thing to do is to allow PaintRecorder to take non-origin rects, but to only give Skia sizes (like we do now).  So, maybe this should just get supported forever and these comments and the one on PaintRecorder should get removed.",
+      "revId": "807301699ef01503f538c91a2fec8f3563b7edd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
