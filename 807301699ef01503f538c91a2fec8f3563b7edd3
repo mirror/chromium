@@ -16,6 +16,24 @@
       "revId": "807301699ef01503f538c91a2fec8f3563b7edd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6df387e_21ea2392",
+        "filename": "cc/paint/drawing_display_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-12T19:23:04Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve removed both TODOs that I was adding of this nature.",
+      "parentUuid": "ac4663a5_75873872",
+      "revId": "807301699ef01503f538c91a2fec8f3563b7edd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
