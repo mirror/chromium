@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9e2f211_8dccd254",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/remote/ExpandedControllerActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-05-13T01:50:14Z",
+      "side": 1,
+      "message": "This crashes for me with IllegalArgumentException: tag must not be null or empty.\nReplace \"\" with \"MediaFling\" maybe?",
+      "revId": "29dc2aafa9f79fcd9b220487bd7e24aade8d7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc76ec6c_621f2b76",
+        "filename": "third_party/android_media/java/src/org/chromium/third_party/android/media/MediaController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-05-13T01:50:14Z",
+      "side": 1,
+      "message": "Here and everywhere else getPlaybackState() is used, Chrome crashes because it returns null.\nAs a minimum change, check for null and return early in all updateXX and other methods using getPlaybackState().",
+      "revId": "29dc2aafa9f79fcd9b220487bd7e24aade8d7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
