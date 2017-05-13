@@ -6,7 +6,7 @@ Chrome, then below are the steps to take to simulate kiosk mode.
 ## Steps to Simulate Kiosk Mode
 
 ### Step 1
-
+fjeoijaowiejf!
 Compile the following Java code:
 
 ```java
