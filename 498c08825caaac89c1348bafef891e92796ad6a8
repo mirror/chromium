@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc7ddb0c_e8fef71c",
+        "filename": "device/hid/hid_connection_mac.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-05-13T02:40:19Z",
+      "side": 1,
+      "message": "These two members can be made const.",
+      "range": {
+        "startLine": 67,
+        "startChar": 22,
+        "endLine": 67,
+        "endChar": 41
+      },
+      "revId": "498c08825caaac89c1348bafef891e92796ad6a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accbe78b_9e33d040",
+        "filename": "device/hid/hid_service_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-05-13T02:40:19Z",
+      "side": 1,
+      "message": "Neat.",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 44
+      },
+      "revId": "498c08825caaac89c1348bafef891e92796ad6a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
