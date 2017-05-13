@@ -434,6 +434,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
             Log.d(TAG, "Only localhost, file://, and cryptographic scheme origins allowed");
             // Don't show any UI. Resolve .canMakePayment() with "false". Reject .show() with
             // "NotSupportedError".
+            mMethodData = new HashMap<>();
             onAllPaymentAppsCreated();
             return;
         }
@@ -446,6 +447,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
             Log.d(TAG, "SSL certificate is not valid");
             // Don't show any UI. Resolve .canMakePayment() with "false". Reject .show() with
             // "NotSupportedError".
+            mMethodData = new HashMap<>();
             onAllPaymentAppsCreated();
             return;
         }
