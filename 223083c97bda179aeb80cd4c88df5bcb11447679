@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf8b97b1_36f0f6e7",
+        "filename": "third_party/WebKit/Source/platform/graphics/BoxReflection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-05-13T00:58:53Z",
+      "side": 1,
+      "message": "Or just mask_bounds \u003d FloatRect() and skip the new constructor?",
+      "revId": "223083c97bda179aeb80cd4c88df5bcb11447679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b9f1bc_8b00f32a",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-05-13T00:58:53Z",
+      "side": 1,
+      "message": "It\u0027s not actually the same thing. The visual rect takes into account clips between local and\ndisplay item list space.\n\nAlso, I wouldn\u0027t say they are competing - rather the record_bounds is a technicality for the purpose\nof optimizing skia, and hopefully will go away at some point. The other is necessary for paint\ninvalidation and rtrees.",
+      "revId": "223083c97bda179aeb80cd4c88df5bcb11447679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d1c614_6ac1ab8b",
+        "filename": "third_party/WebKit/Source/web/LinkHighlightImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-05-13T00:58:53Z",
+      "side": 1,
+      "message": "s/visual_rect/record_bounds/",
+      "revId": "223083c97bda179aeb80cd4c88df5bcb11447679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
