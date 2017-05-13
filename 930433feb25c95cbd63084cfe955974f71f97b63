@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f6c66cf_3ebd6e6b",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/canonicalizeFilter/max-length-exceeded-name.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-13T18:09:47Z",
+      "side": 1,
+      "message": "These are renamed files of the previous tests with names too long.\ngerrit doesn\u0027t do similarity yet. ;( https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d4860",
+      "revId": "930433feb25c95cbd63084cfe955974f71f97b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
