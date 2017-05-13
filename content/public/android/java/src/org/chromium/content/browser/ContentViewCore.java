@@ -47,7 +47,6 @@ import org.chromium.content.browser.accessibility.captioning.SystemCaptioningBri
 import org.chromium.content.browser.accessibility.captioning.TextTrackSettings;
 import org.chromium.content.browser.input.ImeAdapter;
 import org.chromium.content.browser.input.InputMethodManagerWrapper;
-import org.chromium.content.browser.input.JoystickScrollProvider;
 import org.chromium.content.browser.input.JoystickZoomProvider;
 import org.chromium.content.browser.input.SelectPopup;
 import org.chromium.content.browser.input.SelectPopupDialog;
@@ -236,9 +235,8 @@ public class ContentViewCore
     // Cached copy of all positions and scales as reported by the renderer.
     private final RenderCoordinates mRenderCoordinates;
 
-    // Provides smooth gamepad joystick-driven scrolling. Created lazily when the first
-    // Joystick event was received.
-    private JoystickScrollProvider mJoystickScrollProvider;
+    // Whether joystick scroll is enabled.  It's disabled when an editable field is focused.
+    private boolean mJoystickScrollEnabled = true;
 
     // Provides smooth gamepad joystick-driven zooming. Created lazily when the first
     // Joystick event was received.
@@ -505,10 +503,6 @@ public class ContentViewCore
 
         addDisplayAndroidObserverIfNeeded();
 
-        if (mJoystickScrollProvider != null) {
-            mJoystickScrollProvider.updateWindowAndroid(windowAndroid);
-        }
-
         for (WindowAndroidChangedObserver observer : mWindowAndroidChangedObservers) {
             observer.onWindowAndroidChanged(windowAndroid);
         }
@@ -575,9 +569,6 @@ public class ContentViewCore
             mContainerView.setClickable(true);
             if (mSelectionPopupController != null) {
                 mSelectionPopupController.setContainerView(containerView);
-            }
-            if (mJoystickScrollProvider != null) {
-                mJoystickScrollProvider.setContainerView(containerView);
             }
             if (mJoystickZoomProvider != null) {
                 mJoystickZoomProvider.setContainerView(containerView);
@@ -909,12 +900,18 @@ public class ContentViewCore
      * @param timeMs the current time.
      * @param velocityX fling speed in x-axis.
      * @param velocityY fling speed in y-axis.
+     * @param fromGamepad fling speed in y-axis.
      */
-    public void flingViewport(long timeMs, int velocityX, int velocityY) {
+    public void flingViewport(long timeMs, float velocityX, float velocityY, boolean fromGamepad) {
         if (mNativeContentViewCore == 0) return;
-        nativeFlingCancel(mNativeContentViewCore, timeMs);
-        nativeScrollBegin(mNativeContentViewCore, timeMs, 0, 0, velocityX, velocityY, true);
-        nativeFlingStart(mNativeContentViewCore, timeMs, 0, 0, velocityX, velocityY, true);
+        if (velocityX == 0 && velocityY == 0) {
+            nativeFlingCancel(mNativeContentViewCore, timeMs);
+            return;
+        }
+        nativeScrollBegin(
+                mNativeContentViewCore, timeMs, 0f, 0f, velocityX, velocityY, true, fromGamepad);
+        nativeFlingStart(
+                mNativeContentViewCore, timeMs, 0, 0, velocityX, velocityY, true, fromGamepad);
     }
 
     /**
@@ -1049,7 +1046,6 @@ public class ContentViewCore
         GamepadList.onAttachedToWindow(mContext);
         mAccessibilityManager.addAccessibilityStateChangeListener(this);
         mSystemCaptioningBridge.addListener(this);
-        if (mJoystickScrollProvider != null) mJoystickScrollProvider.onViewAttachedToWindow();
         mImeAdapter.onViewAttachedToWindow();
     }
 
@@ -1078,7 +1074,6 @@ public class ContentViewCore
     public void onDetachedFromWindow() {
         mAttachedToWindow = false;
         mImeAdapter.onViewDetachedFromWindow();
-        if (mJoystickScrollProvider != null) mJoystickScrollProvider.onViewDetachedFromWindow();
         removeDisplayAndroidObserver();
         GamepadList.onDetachedFromWindow();
         mAccessibilityManager.removeAccessibilityStateChangeListener(this);
@@ -1221,9 +1216,7 @@ public class ContentViewCore
         mHasViewFocus = gainFocus;
         mImeAdapter.onViewFocusChanged(gainFocus, hideKeyboardOnBlur);
 
-        if (mJoystickScrollProvider != null) {
-            mJoystickScrollProvider.setEnabled(gainFocus && !isFocusedNodeEditable());
-        }
+        mJoystickScrollEnabled = gainFocus && !isFocusedNodeEditable();
 
         if (gainFocus) {
             restoreSelectionPopupsIfNecessary();
@@ -1314,6 +1307,16 @@ public class ContentViewCore
     }
 
     /**
+     * Removes noise from joystick motion events.
+     */
+    private static float getFilteredAxisValue(MotionEvent event, int axis) {
+        final float kJoystickScrollDeadzone = 0.2f;
+        float axisValWithNoise = event.getAxisValue(axis);
+        if (Math.abs(axisValWithNoise) > kJoystickScrollDeadzone) return axisValWithNoise;
+        return 0f;
+    }
+
+    /**
      * @see View#onGenericMotionEvent(MotionEvent)
      */
     public boolean onGenericMotionEvent(MotionEvent event) {
@@ -1335,21 +1338,15 @@ public class ContentViewCore
                     }
             }
         } else if ((event.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
-            if (getJoystickScrollProvider().onMotion(event)
-                    || getJoystickZoomProvider().onMotion(event)) {
+            float velocityX = getFilteredAxisValue(event, MotionEvent.AXIS_X);
+            float velocityY = getFilteredAxisValue(event, MotionEvent.AXIS_Y);
+            if (mJoystickScrollEnabled) {
+                flingViewport(event.getEventTime(), -velocityX, -velocityY, true);
                 return true;
             }
+            if (getJoystickZoomProvider().onMotion(event)) return true;
         }
         return mContainerViewInternals.super_onGenericMotionEvent(event);
-    }
-
-    private JoystickScrollProvider getJoystickScrollProvider() {
-        if (mJoystickScrollProvider == null) {
-            mJoystickScrollProvider = new JoystickScrollProvider(
-                    getContainerView(), getWindowAndroid(), getEventForwarder());
-            if (mAttachedToWindow) mJoystickScrollProvider.onViewAttachedToWindow();
-        }
-        return mJoystickScrollProvider;
     }
 
     private JoystickZoomProvider getJoystickZoomProvider() {
@@ -1396,7 +1393,7 @@ public class ContentViewCore
         // such cases ensures a consistent gesture event stream.
         if (mPotentiallyActiveFlingCount > 0) nativeFlingCancel(mNativeContentViewCore, time);
         // x/y represents starting location of scroll.
-        nativeScrollBegin(mNativeContentViewCore, time, 0f, 0f, -dxPix, -dyPix, true);
+        nativeScrollBegin(mNativeContentViewCore, time, 0f, 0f, -dxPix, -dyPix, true, false);
         nativeScrollBy(mNativeContentViewCore, time, 0f, 0f, dxPix, dyPix);
         nativeScrollEnd(mNativeContentViewCore, time);
     }
@@ -1637,7 +1634,7 @@ public class ContentViewCore
 
     @Override
     public void onNodeAttributeUpdated(boolean editable, boolean password) {
-        if (mJoystickScrollProvider != null) mJoystickScrollProvider.setEnabled(!editable);
+        mJoystickScrollEnabled = !editable;
         mSelectionPopupController.updateSelectionState(editable, password);
     }
 
@@ -2393,7 +2390,7 @@ public class ContentViewCore
             long nativeContentViewCoreImpl, int orientation);
 
     private native void nativeScrollBegin(long nativeContentViewCoreImpl, long timeMs, float x,
-            float y, float hintX, float hintY, boolean targetViewport);
+            float y, float hintX, float hintY, boolean targetViewport, boolean fromGamepad);
 
     private native void nativeScrollEnd(long nativeContentViewCoreImpl, long timeMs);
 
@@ -2402,7 +2399,7 @@ public class ContentViewCore
             float deltaX, float deltaY);
 
     private native void nativeFlingStart(long nativeContentViewCoreImpl, long timeMs, float x,
-            float y, float vx, float vy, boolean targetViewport);
+            float y, float vx, float vy, boolean targetViewport, boolean fromGamepad);
 
     private native void nativeFlingCancel(long nativeContentViewCoreImpl, long timeMs);
 
