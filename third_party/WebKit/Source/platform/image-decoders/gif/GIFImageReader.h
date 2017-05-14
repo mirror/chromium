@@ -47,10 +47,7 @@
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
 
-#define MAX_DICTIONARY_ENTRY_BITS 12
-#define MAX_DICTIONARY_ENTRIES 4096  // 2^MAX_DICTIONARY_ENTRY_BITS
-#define MAX_COLORS 256u
-#define BYTES_PER_COLORMAP_ENTRY 3
+namespace blink {
 
 const int cLoopCountNotSeen = -2;
 
@@ -109,6 +106,10 @@ class GIFLZWContext final {
   bool hasRemainingRows() { return rowsRemaining; }
 
  private:
+  static constexpr int MAX_DICTIONARY_ENTRY_BITS = 12;
+  static constexpr int MAX_DICTIONARY_ENTRIES =
+      4096;  // 2^MAX_DICTIONARY_ENTRY_BITS
+
   // LZW decoding states and output states.
   int codesize;
   int codemask;
@@ -361,5 +362,7 @@ class PLATFORM_EXPORT GIFImageReader final {
   RefPtr<blink::SegmentReader> m_data;
   bool m_parseCompleted;
 };
+
+}  // namespace blink
 
 #endif

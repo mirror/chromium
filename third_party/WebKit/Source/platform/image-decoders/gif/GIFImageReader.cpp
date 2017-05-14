@@ -77,7 +77,14 @@ mailing address.
 #include <string.h>
 #include "platform/wtf/PtrUtil.h"
 
-using blink::GIFImageDecoder;
+namespace blink {
+
+namespace {
+
+static constexpr unsigned MAX_COLORS = 256u;
+static constexpr int BYTES_PER_COLORMAP_ENTRY = 3;
+
+}  // namespace
 
 // GETN(n, s) requests at least 'n' bytes available from 'q', at start of state
 // 's'.
@@ -306,7 +313,7 @@ bool GIFLZWContext::doLZW(const unsigned char* block, size_t bytesInBlock) {
   return true;
 }
 
-void GIFColorMap::buildTable(blink::FastSharedBufferReader* reader) {
+void GIFColorMap::buildTable(FastSharedBufferReader* reader) {
   if (!m_isDefined || !m_table.IsEmpty())
     return;
 
@@ -329,8 +336,8 @@ void GIFColorMap::buildTable(blink::FastSharedBufferReader* reader) {
 // decoded. Returns true if decoding progressed further than before without
 // error, or there is insufficient new data to decode further. Otherwise, a
 // decoding error occurred; returns false in this case.
-bool GIFFrameContext::decode(blink::FastSharedBufferReader* reader,
-                             blink::GIFImageDecoder* client,
+bool GIFFrameContext::decode(FastSharedBufferReader* reader,
+                             GIFImageDecoder* client,
                              bool* frameDecoded) {
   m_localColorMap.buildTable(reader);
 
@@ -384,7 +391,7 @@ bool GIFFrameContext::decode(blink::FastSharedBufferReader* reader,
 // Decodes a frame using GIFFrameContext:decode(). Returns true if decoding has
 // progressed, or false if an error has occurred.
 bool GIFImageReader::decode(size_t frameIndex) {
-  blink::FastSharedBufferReader reader(m_data);
+  FastSharedBufferReader reader(m_data);
   m_globalColorMap.buildTable(&reader);
 
   bool frameDecoded = false;
@@ -422,7 +429,7 @@ bool GIFImageReader::parseData(size_t dataPosition,
   if (len < m_bytesToConsume)
     return true;
 
-  blink::FastSharedBufferReader reader(m_data);
+  FastSharedBufferReader reader(m_data);
 
   // A read buffer of 16 bytes is enough to accomodate all possible reads for
   // parsing.
@@ -611,13 +618,13 @@ bool GIFImageReader::parseData(size_t dataPosition,
         int disposalMethod = ((*currentComponent) >> 2) & 0x7;
         if (disposalMethod < 4) {
           currentFrame->setDisposalMethod(
-              static_cast<blink::ImageFrame::DisposalMethod>(disposalMethod));
+              static_cast<ImageFrame::DisposalMethod>(disposalMethod));
         } else if (disposalMethod == 4) {
           // Some specs say that disposal method 3 is "overwrite previous",
           // others that setting the third bit of the field (i.e. method 4) is.
           // We map both to the same value.
           currentFrame->setDisposalMethod(
-              blink::ImageFrame::kDisposeOverwritePrevious);
+              ImageFrame::kDisposeOverwritePrevious);
         }
         currentFrame->setDelayTime(GETINT16(currentComponent + 1) * 10);
         GETN(1, GIFConsumeBlock);
@@ -684,7 +691,7 @@ bool GIFImageReader::parseData(size_t dataPosition,
 
           // Zero loop count is infinite animation loop request.
           if (!m_loopCount)
-            m_loopCount = blink::kCAnimationLoopInfinite;
+            m_loopCount = kCAnimationLoopInfinite;
 
           GETN(1, GIFNetscapeExtensionBlock);
         } else if (netscapeExtension == 2) {
@@ -888,3 +895,5 @@ bool GIFLZWContext::prepareToDecode() {
   }
   return true;
 }
+
+}  // namespace blink
