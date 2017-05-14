@@ -68,6 +68,9 @@ void LayoutPart::WillBeDestroyed() {
   Node* node = GetNode();
   if (node && node->IsFrameOwnerElement())
     ToHTMLFrameOwnerElement(node)->SetWidget(nullptr);
+  // TODO(joelhockey): If HTMLFrameOwnerElement starts overriding
+  // DetachFromLayoutTree, then there should not be a need to call this.
+  // ToHTMLFrameOwnerElement(node)->DetachFromLayout();
 
   LayoutReplaced::WillBeDestroyed();
 }

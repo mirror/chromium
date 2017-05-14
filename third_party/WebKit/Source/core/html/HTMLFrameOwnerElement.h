@@ -61,6 +61,9 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   virtual bool LoadedNonEmptyDocument() const { return false; }
   virtual void DidLoadNonEmptyDocument() {}
 
+  // void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  // void DetachLayoutTree(const AttachContext& = AttachContext()) override;
+
   void SetWidget(FrameOrPlugin*);
   FrameOrPlugin* ReleaseWidget();
   FrameOrPlugin* OwnedWidget() const { return widget_; }

@@ -115,7 +115,11 @@ HTMLFrameOwnerElement::UpdateSuspendScope::~UpdateSuspendScope() {
 
 // Unlike MoveFrameOrPluginToParentSoon, this will not call dispose.
 void TemporarilyRemoveFrameOrPluginFromParentSoon(FrameOrPlugin* child) {
+  child->SetFrameOrPluginState(FrameOrPlugin::kDeferred);
   if (g_update_suspend_count) {
+    VLOG(1) << "Defered temp remove child=" << child;
+    if (VLOG_IS_ON(2))
+      base::debug::StackTrace(10).Print();
     FrameOrPluginsPendingTemporaryRemovalFromParent().insert(child);
   } else {
     if (child->Parent())
@@ -124,6 +128,7 @@ void TemporarilyRemoveFrameOrPluginFromParentSoon(FrameOrPlugin* child) {
 }
 
 void MoveFrameOrPluginToParentSoon(FrameOrPlugin* child, FrameView* parent) {
+  child->SetFrameOrPluginState(FrameOrPlugin::kDeferred);
   if (!g_update_suspend_count) {
     if (parent) {
       parent->AddChild(child);
@@ -133,6 +138,9 @@ void MoveFrameOrPluginToParentSoon(FrameOrPlugin* child, FrameView* parent) {
     }
     return;
   }
+  VLOG(1) << "Deferred New Parent child=" << child << ", parent=" << parent;
+  if (VLOG_IS_ON(2))
+    base::debug::StackTrace(10).Print();
   FrameOrPluginNewParentMap().Set(child, parent);
 }
 
@@ -273,6 +281,8 @@ Document* HTMLFrameOwnerElement::getSVGDocument(
 }
 
 void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
+  VLOG(1) << "SetWidget old=" << widget_ << ", new=" << frame_or_plugin
+          << ", old parent=" << (widget_ && widget_->Parent());
   if (frame_or_plugin == widget_)
     return;
 
@@ -295,14 +305,18 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
 
   LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
   LayoutPartItem layout_part_item = LayoutPartItem(layout_part);
-  if (layout_part_item.IsNull())
+  if (layout_part_item.IsNull()) {
+    VLOG(1) << "SetWidget new=" << frame_or_plugin << ", parent=0";
     return;
+  }
 
   if (widget_) {
     layout_part_item.UpdateOnWidgetChange();
 
     DCHECK_EQ(GetDocument().View(), layout_part_item.GetFrameView());
     DCHECK(layout_part_item.GetFrameView());
+    VLOG(1) << "SetWidget new=" << frame_or_plugin
+            << ",  parent=" << layout_part_item.GetFrameView();
     MoveFrameOrPluginToParentSoon(widget_, layout_part_item.GetFrameView());
   }
 

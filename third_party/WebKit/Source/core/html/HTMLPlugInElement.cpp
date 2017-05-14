@@ -283,6 +283,9 @@ void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
   } else {
     // Clear the plugin; will trigger disposal of it with Oilpan.
     SetWidget(nullptr);
+    // TODO(joelhockey): If HTMLFrameOwnerElement starts overriding
+    // DetachLayoutTree, then no need to call
+    // HTMLFrameOwnerElement::DetachFromLayout. DetachFromLayout();
   }
 
   ResetInstance();

@@ -492,7 +492,11 @@ class CORE_EXPORT FrameView final
   void SetParentVisible(bool) override;
   void SetSelfVisible(bool v) { self_visible_ = v; }
   void SetParent(FrameView*) override;
-  FrameView* Parent() const override { return parent_; }
+  FrameView* Parent() const override;
+  void SetFrameOrPluginState(FrameOrPluginState) override;
+  FrameOrPluginState GetFrameOrPluginState() const override {
+    return frame_view_state_;
+  }
   void RemoveChild(FrameOrPlugin*);
   void AddChild(FrameOrPlugin*);
   using ChildrenSet = HeapHashSet<Member<FrameOrPlugin>>;
@@ -1072,6 +1076,7 @@ class CORE_EXPORT FrameView final
 
   IntRect frame_rect_;
   Member<FrameView> parent_;
+  FrameOrPluginState frame_view_state_;
   bool self_visible_;
   bool parent_visible_;
 

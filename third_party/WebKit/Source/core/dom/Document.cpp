@@ -2556,6 +2556,9 @@ void Document::Shutdown() {
   HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
   if (owner_element)
     owner_element->SetWidget(nullptr);
+  // TODO(joelhockey): Find out what causes widget to still be attached at
+  // this point and try to fix it so that widget is always disposed by now.
+  // DCHECK(!owner_element->OwnedWidget());
 
   markers_->PrepareForDestruction();
 
