@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6522f67d_c3450686",
+        "filename": "components/update_client/updater_state_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-05-15T16:55:32Z",
+      "side": 1,
+      "message": "Note that there could be a memory leak here, if the ObjCCastStrict fails. E.g. if the object is of type NSNumber, but we expect NSString. It is an edge case, but still a leak.",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "4460c000fe063f532937ce150fd6ae229968d9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
