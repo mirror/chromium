@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95818a25_41906765",
+        "filename": "android_webview/webview_apk/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "nit: Add a comment saying why these two are in different targets (because monochrome has a different content provider)",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65a65da_92b7d9a0",
+        "filename": "android_webview/webview_apk/java/src/com/android/webview/chromium/LicenseActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "nit: Make these private.",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c62bc0_843f077b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/MonochromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "nit: revert this file - there\u0027s just whitespace change.",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29cfcb01_924acb2f",
+        "filename": "chrome/android/monochrome/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "nit: use a relative path:\n\"java/src/com/android/webview/chromium/LicenseContentProvider.java\"",
+      "range": {
+        "startLine": 8,
+        "startChar": 20,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbee7f85_edf0705b",
+        "filename": "chrome/android/monochrome/java/src/com/android/webview/chromium/LicenseContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "you should put this output stream within the try () so that it gets closed afterwards.",
+      "range": {
+        "startLine": 66,
+        "startChar": 35,
+        "endLine": 66,
+        "endChar": 51
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a76140e_776bde7d",
+        "filename": "chrome/android/monochrome/java/src/com/android/webview/chromium/LicenseContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need this block anymore.",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce771d0_1a62ab39",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this?",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e78d37a_3464580b",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "nor this?",
+      "range": {
+        "startLine": 76,
+        "startChar": 28,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa3c680_0ab76b1b",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "nit: put parameter name as: GetCredits(false /* include_scripts */)\n\nAlso, you want it as true I think.",
+      "range": {
+        "startLine": 697,
+        "startChar": 38,
+        "endLine": 697,
+        "endChar": 43
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035f4e83_f7c829c4",
+        "filename": "components/about_ui/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need this import, nor any of the above :P",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e12900_bb396991",
+        "filename": "components/about_ui/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "Don\u0027t think you need this.",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bfde29_c7ecfb86",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "This is backwards.",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33223139_e703974c",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "Should be able to avoid this extra copy. Use string::c_str(), and static cast from const char* -\u003e const uint8_t* bytes\n\nYou can then also remove #include \u003cvector\u003e",
+      "range": {
+        "startLine": 57,
+        "startChar": 14,
+        "endLine": 57,
+        "endChar": 21
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b393eb_09e589b6",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "Nit: remove. Never used.",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb808dd5_f3733df7",
+        "filename": "components/about_ui/credit_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "Don\u0027t need this in the header.",
+      "range": {
+        "startLine": 8,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 14
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ff62e6_e26b430a",
+        "filename": "components/about_ui/credit_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-15T20:36:22Z",
+      "side": 1,
+      "message": "Don\u0027t need this in the header.",
+      "range": {
+        "startLine": 11,
+        "startChar": 23,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
