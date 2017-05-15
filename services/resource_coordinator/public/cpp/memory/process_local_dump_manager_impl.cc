@@ -56,14 +56,15 @@ ProcessLocalDumpManagerImpl::~ProcessLocalDumpManagerImpl() {}
 
 void ProcessLocalDumpManagerImpl::RequestProcessMemoryDump(
     const base::trace_event::MemoryDumpRequestArgs& args,
-    const RequestProcessMemoryDumpCallback& callback) {
+    RequestProcessMemoryDumpCallback callback) {
   base::trace_event::MemoryDumpManager::GetInstance()->CreateProcessDump(
-      args, base::Bind(&ProcessLocalDumpManagerImpl::OnProcessMemoryDumpDone,
-                       base::Unretained(this), callback));
+      args,
+      base::BindOnce(&ProcessLocalDumpManagerImpl::OnProcessMemoryDumpDone,
+                     base::Unretained(this), std::move(callback)));
 }
 
 void ProcessLocalDumpManagerImpl::OnProcessMemoryDumpDone(
-    const RequestProcessMemoryDumpCallback& callback,
+    RequestProcessMemoryDumpCallback callback,
     uint64_t dump_guid,
     bool success,
     const base::Optional<base::trace_event::MemoryDumpCallbackResult>& result) {
@@ -81,12 +82,12 @@ void ProcessLocalDumpManagerImpl::OnProcessMemoryDumpDone(
       process_memory_dump->extra_processes_dump[pid] = os_mem_dump;
     }
   }
-  callback.Run(dump_guid, success, std::move(process_memory_dump));
+  std::move(callback).Run(dump_guid, success, std::move(process_memory_dump));
 }
 
 void ProcessLocalDumpManagerImpl::RequestGlobalMemoryDump(
     const base::trace_event::MemoryDumpRequestArgs& args,
-    const base::trace_event::GlobalMemoryDumpCallback& callback) {
+    base::trace_event::GlobalMemoryDumpCallback callback) {
   // Note: This condition is here to match the old behavior. If the delegate is
   // in the browser process, we do not drop parallel requests in the delegate
   // and so they will be queued by the Coordinator service (see
@@ -98,12 +99,12 @@ void ProcessLocalDumpManagerImpl::RequestGlobalMemoryDump(
   // deal with queueing.
   if (task_runner_) {
     auto callback_proxy =
-        base::Bind(&ProcessLocalDumpManagerImpl::MemoryDumpCallbackProxy,
-                   base::Unretained(this), callback);
+        base::BindOnce(&ProcessLocalDumpManagerImpl::MemoryDumpCallbackProxy,
+                       base::Unretained(this), std::move(callback));
     task_runner_->PostTask(
-        FROM_HERE,
-        base::Bind(&mojom::Coordinator::RequestGlobalMemoryDump,
-                   base::Unretained(coordinator_.get()), args, callback_proxy));
+        FROM_HERE, base::BindOnce(&mojom::Coordinator::RequestGlobalMemoryDump,
+                                  base::Unretained(coordinator_.get()), args,
+                                  std::move(callback_proxy)));
     return;
   }
 
@@ -116,18 +117,18 @@ void ProcessLocalDumpManagerImpl::RequestGlobalMemoryDump(
       pending_memory_dump_guid_ = args.dump_guid;
   }
   if (early_out_because_of_another_dump_pending) {
-    callback.Run(args.dump_guid, false);
+    std::move(callback).Run(args.dump_guid, false);
     return;
   }
 
   auto callback_proxy =
-      base::Bind(&ProcessLocalDumpManagerImpl::MemoryDumpCallbackProxy,
-                 base::Unretained(this), callback);
-  coordinator_->RequestGlobalMemoryDump(args, callback_proxy);
+      base::BindOnce(&ProcessLocalDumpManagerImpl::MemoryDumpCallbackProxy,
+                     base::Unretained(this), std::move(callback));
+  coordinator_->RequestGlobalMemoryDump(args, std::move(callback_proxy));
 }
 
 void ProcessLocalDumpManagerImpl::MemoryDumpCallbackProxy(
-    const base::trace_event::GlobalMemoryDumpCallback& callback,
+    base::trace_event::GlobalMemoryDumpCallback callback,
     uint64_t dump_guid,
     bool success,
     mojom::GlobalMemoryDumpPtr) {
@@ -140,7 +141,7 @@ void ProcessLocalDumpManagerImpl::MemoryDumpCallbackProxy(
   // is exposed only through the service and is not passed back to base.
   // TODO(primiano): All these roundtrips are transitional until we move all
   // the clients of memory-infra to use directly the service. crbug.com/720352 .
-  callback.Run(dump_guid, success);
+  std::move(callback).Run(dump_guid, success);
 }
 
 void ProcessLocalDumpManagerImpl::SetAsNonCoordinatorForTesting() {

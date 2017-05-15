@@ -67,8 +67,7 @@ void OnGlobalDumpDone(GlobalMemoryDumpCallback wrapped_callback,
                                   "success", success);
 
   if (!wrapped_callback.is_null()) {
-    wrapped_callback.Run(dump_guid, success);
-    wrapped_callback.Reset();
+    std::move(wrapped_callback).Run(dump_guid, success);
   }
 }
 
@@ -414,13 +413,13 @@ void MemoryDumpManager::UnregisterDumpProviderInternal(
 void MemoryDumpManager::RequestGlobalDump(
     MemoryDumpType dump_type,
     MemoryDumpLevelOfDetail level_of_detail,
-    const GlobalMemoryDumpCallback& callback) {
+    GlobalMemoryDumpCallback callback) {
   // If |request_dump_function_| is null MDM hasn't been initialized yet.
   if (request_dump_function_.is_null()) {
     VLOG(1) << kLogPrefix << " failed because"
             << " memory dump manager is not enabled.";
     if (!callback.is_null())
-      callback.Run(0u /* guid */, false /* success */);
+      std::move(callback).Run(0u /* guid */, false /* success */);
     return;
   }
 
@@ -434,12 +433,13 @@ void MemoryDumpManager::RequestGlobalDump(
       kTraceCategory, "GlobalMemoryDump", TRACE_ID_LOCAL(guid), "dump_type",
       MemoryDumpTypeToString(dump_type), "level_of_detail",
       MemoryDumpLevelOfDetailToString(level_of_detail));
-  GlobalMemoryDumpCallback wrapped_callback = Bind(&OnGlobalDumpDone, callback);
+  GlobalMemoryDumpCallback wrapped_callback =
+      BindOnce(&OnGlobalDumpDone, std::move(callback));
 
   // The embedder will coordinate the IPC broadcast and at some point invoke
   // CreateProcessDump() to get a dump for the current process.
   MemoryDumpRequestArgs args = {guid, dump_type, level_of_detail};
-  request_dump_function_.Run(args, wrapped_callback);
+  request_dump_function_.Run(args, std::move(wrapped_callback));
 }
 
 void MemoryDumpManager::GetDumpProvidersForPolling(
@@ -483,9 +483,8 @@ MemoryDumpManager::GetOrCreateBgTaskRunnerLocked() {
   return dump_thread_->task_runner();
 }
 
-void MemoryDumpManager::CreateProcessDump(
-    const MemoryDumpRequestArgs& args,
-    const ProcessMemoryDumpCallback& callback) {
+void MemoryDumpManager::CreateProcessDump(const MemoryDumpRequestArgs& args,
+                                          ProcessMemoryDumpCallback callback) {
   char guid_str[20];
   sprintf(guid_str, "0x%" PRIx64, args.dump_guid);
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN1(kTraceCategory, "ProcessMemoryDump",
@@ -512,13 +511,14 @@ void MemoryDumpManager::CreateProcessDump(
     // absent we fail the dump immediately.
     if (args.dump_type != MemoryDumpType::SUMMARY_ONLY &&
         heap_profiling_enabled_ && !heap_profiler_serialization_state_) {
-      callback.Run(args.dump_guid, false /* success */, base::nullopt);
+      std::move(callback).Run(args.dump_guid, false /* success */,
+                              base::nullopt);
       return;
     }
 
     pmd_async_state.reset(new ProcessMemoryDumpAsyncState(
-        args, dump_providers_, heap_profiler_serialization_state_, callback,
-        GetOrCreateBgTaskRunnerLocked()));
+        args, dump_providers_, heap_profiler_serialization_state_,
+        std::move(callback), GetOrCreateBgTaskRunnerLocked()));
 
     // If enabled, holds back the peak detector resetting its estimation window.
     MemoryPeakDetector::GetInstance()->Throttle();
@@ -760,8 +760,8 @@ void MemoryDumpManager::FinalizeDumpAndAddToTrace(
   }
 
   if (!pmd_async_state->callback.is_null()) {
-    pmd_async_state->callback.Run(dump_guid, dump_successful, result);
-    pmd_async_state->callback.Reset();
+    std::move(pmd_async_state->callback)
+        .Run(dump_guid, dump_successful, result);
   }
 
   TRACE_EVENT_NESTABLE_ASYNC_END0(kTraceCategory, "ProcessMemoryDump",
@@ -869,7 +869,7 @@ MemoryDumpManager::ProcessMemoryDumpAsyncState::ProcessMemoryDumpAsyncState(
     : req_args(req_args),
       heap_profiler_serialization_state(
           std::move(heap_profiler_serialization_state)),
-      callback(callback),
+      callback(std::move(callback)),
       dump_successful(true),
       callback_task_runner(ThreadTaskRunnerHandle::Get()),
       dump_thread_task_runner(std::move(dump_thread_task_runner)) {
