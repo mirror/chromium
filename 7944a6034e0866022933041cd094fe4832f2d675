@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f28fe405_1f9521db",
+        "filename": "components/browsing_data/core/counters/bookmark_counter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T13:47:47Z",
+      "side": 1,
+      "message": "BookmarkModelHelper owns itself, so it can live arbitrarily long, whereas BookmarkCounter is owned by the UI and can be destroyed at any time. This needs to be a weak pointer.",
+      "revId": "7944a6034e0866022933041cd094fe4832f2d675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c444ab5b_82071995",
+        "filename": "components/browsing_data/core/counters/browsing_data_counter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T13:47:47Z",
+      "side": 1,
+      "message": "Does it make sense to formalize that one or the other must hold? (one for counters tied for prefs, one for counters with fake prefs).\n\nDCHECK((A \u0026\u0026 B) || (!A \u0026\u0026 !B)) \u003c\u003c \"Exactly one of |period_| and |begin_time_| must be specified.\";",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "7944a6034e0866022933041cd094fe4832f2d675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
