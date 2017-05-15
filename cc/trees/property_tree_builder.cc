@@ -904,6 +904,29 @@ bool AddEffectNodeIfNeeded(
         Transform(layer);
     return false;
   }
+  if (is_root) {
+    TRACE_EVENT0("cc", "Root");
+  }
+  if (has_transparency) {
+    if (layer->hide_layer_and_subtree()) {
+      TRACE_EVENT0("cc", "HideSubtree");
+    } else {
+      TRACE_EVENT0("cc", "Opacity");
+    }
+    if (!is_root && Parent(layer)->hide_layer_and_subtree() &&
+        layer->hide_layer_and_subtree()) {
+      TRACE_EVENT0("cc", "NestedHideSubtree");
+    }
+  }
+  if (has_potential_opacity_animation) {
+    TRACE_EVENT0("cc", "PotentialOpacity");
+  }
+  if (has_proxied_opacity) {
+    TRACE_EVENT0("cc", "Proxied");
+  }
+  if (should_create_render_surface) {
+    TRACE_EVENT0("cc", "RS");
+  }
 
   EffectTree& effect_tree = data_for_children->property_trees->effect_tree;
   int node_id = effect_tree.Insert(EffectNode(), parent_id);

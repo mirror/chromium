@@ -381,6 +381,8 @@ class CC_EXPORT LayerImpl {
   virtual bool IsSnapped();
   virtual void PushPropertiesTo(LayerImpl* layer);
 
+  bool hide_layer_and_subtree() { return false; }
+
   virtual void GetAllPrioritizedTilesForTracing(
       std::vector<PrioritizedTile>* prioritized_tiles) const;
   virtual void AsValueInto(base::trace_event::TracedValue* dict) const;
