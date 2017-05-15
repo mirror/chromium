@@ -304,8 +304,8 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     private final boolean mShowDataSource;
 
     private final Dialog mDialog;
-    private final EditorView mEditorView;
-    private final EditorView mCardEditorView;
+    private final EditorDialog mEditorDialog;
+    private final EditorDialog mCardEditorDialog;
     private final ViewGroup mFullContainer;
     private final ViewGroup mRequestView;
     private final PaymentRequestUiErrorView mErrorView;
@@ -434,8 +434,8 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         bottomSheetParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
         mFullContainer.addView(mRequestView, bottomSheetParams);
 
-        mEditorView = new EditorView(activity, sObserverForTest);
-        mCardEditorView = new EditorView(activity, sObserverForTest);
+        mEditorDialog = new EditorDialog(activity, sObserverForTest);
+        mCardEditorDialog = new EditorDialog(activity, sObserverForTest);
 
         // Set up the dialog.
         mDialog = new AlwaysDismissedDialog(activity, R.style.DialogWhenLarge);
@@ -764,14 +764,14 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     }
 
     /** @return The common editor user interface. */
-    public EditorView getEditorView() {
-        return mEditorView;
+    public EditorDialog getEditorDialog() {
+        return mEditorDialog;
     }
 
     /** @return The card editor user interface. Distinct from the common editor user interface,
      * because the credit card editor can launch the address editor. */
-    public EditorView getCardEditorView() {
-        return mCardEditorView;
+    public EditorDialog getCardEditorDialog() {
+        return mCardEditorDialog;
     }
 
     /**
@@ -1117,8 +1117,8 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     @Override
     public void onDismiss(DialogInterface dialog) {
         mIsClosing = true;
-        if (mEditorView.isShowing()) mEditorView.dismiss();
-        if (mCardEditorView.isShowing()) mCardEditorView.dismiss();
+        if (mEditorDialog.isShowing()) mEditorDialog.dismiss();
+        if (mCardEditorDialog.isShowing()) mCardEditorDialog.dismiss();
         if (sObserverForTest != null) sObserverForTest.onPaymentRequestDismiss();
         if (!mIsClientClosing) mClient.onDismiss();
     }
