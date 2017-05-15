@@ -107,12 +107,12 @@ struct BASE_EXPORT MemoryDumpCallbackResult {
 };
 
 using GlobalMemoryDumpCallback =
-    Callback<void(uint64_t dump_guid, bool success)>;
+    OnceCallback<void(uint64_t dump_guid, bool success)>;
 
 using ProcessMemoryDumpCallback =
-    Callback<void(uint64_t dump_guid,
-                  bool success,
-                  const Optional<MemoryDumpCallbackResult>& result)>;
+    OnceCallback<void(uint64_t dump_guid,
+                      bool success,
+                      const Optional<MemoryDumpCallbackResult>& result)>;
 
 BASE_EXPORT const char* MemoryDumpTypeToString(const MemoryDumpType& dump_type);
 

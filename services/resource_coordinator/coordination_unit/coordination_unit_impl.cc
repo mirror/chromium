@@ -126,8 +126,8 @@ void CoordinationUnitImpl::SendEvent(mojom::EventPtr event) {
   RecalcCoordinationPolicy();
 }
 
-void CoordinationUnitImpl::GetID(const GetIDCallback& callback) {
-  callback.Run(id_);
+void CoordinationUnitImpl::GetID(GetIDCallback callback) {
+  std::move(callback).Run(id_);
 }
 
 void CoordinationUnitImpl::Duplicate(mojom::CoordinationUnitRequest request) {

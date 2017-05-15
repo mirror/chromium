@@ -51,7 +51,7 @@ class BASE_EXPORT MemoryDumpManager {
  public:
   using RequestGlobalDumpFunction =
       RepeatingCallback<void(const MemoryDumpRequestArgs& args,
-                             const GlobalMemoryDumpCallback& callback)>;
+                             GlobalMemoryDumpCallback callback)>;
 
   static const char* const kTraceCategory;
   static const char* const kLogPrefix;
@@ -122,7 +122,7 @@ class BASE_EXPORT MemoryDumpManager {
   // successful).
   void RequestGlobalDump(MemoryDumpType dump_type,
                          MemoryDumpLevelOfDetail level_of_detail,
-                         const GlobalMemoryDumpCallback& callback);
+                         GlobalMemoryDumpCallback callback);
 
   // Same as above (still asynchronous), but without callback.
   void RequestGlobalDump(MemoryDumpType dump_type,
@@ -144,7 +144,7 @@ class BASE_EXPORT MemoryDumpManager {
   // CreateProcessDump() was called. This method should only be used by the
   // embedder while creating a global memory dump.
   void CreateProcessDump(const MemoryDumpRequestArgs& args,
-                         const ProcessMemoryDumpCallback& callback);
+                         ProcessMemoryDumpCallback callback);
 
   // Enable heap profiling if kEnableHeapProfiling is specified.
   void EnableHeapProfilingIfNeeded();

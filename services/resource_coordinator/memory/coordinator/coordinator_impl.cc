@@ -86,14 +86,14 @@ void CoordinatorImpl::BindCoordinatorRequest(
 
 CoordinatorImpl::QueuedMemoryDumpRequest::QueuedMemoryDumpRequest(
     const base::trace_event::MemoryDumpRequestArgs args,
-    const RequestGlobalMemoryDumpCallback callback)
-    : args(args), callback(callback) {}
+    RequestGlobalMemoryDumpCallback callback)
+    : args(args), callback(std::move(callback)) {}
 
 CoordinatorImpl::QueuedMemoryDumpRequest::~QueuedMemoryDumpRequest() {}
 
 void CoordinatorImpl::RequestGlobalMemoryDump(
     const base::trace_event::MemoryDumpRequestArgs& args,
-    const RequestGlobalMemoryDumpCallback& callback) {
+    RequestGlobalMemoryDumpCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   bool another_dump_already_in_progress = !queued_memory_dump_requests_.empty();
 
@@ -112,14 +112,14 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
                 << base::trace_event::MemoryDumpLevelOfDetailToString(
                        args.level_of_detail)
                 << ") is already in the queue";
-        callback.Run(args.dump_guid, false /* success */,
-                     nullptr /* global_memory_dump */);
+        std::move(callback).Run(args.dump_guid, false /* success */,
+                                nullptr /* global_memory_dump */);
         return;
       }
     }
   }
 
-  queued_memory_dump_requests_.emplace_back(args, callback);
+  queued_memory_dump_requests_.emplace_back(args, std::move(callback));
 
   // If another dump is already in progress, this dump will automatically be
   // scheduled when the other dump finishes.
@@ -254,10 +254,10 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     global_dump->process_dumps.push_back(std::move(pmd));
   }
 
-  const auto& callback = queued_memory_dump_requests_.front().callback;
+  auto callback = std::move(queued_memory_dump_requests_.front().callback);
   const bool global_success = failed_memory_dump_count_ == 0;
-  callback.Run(queued_memory_dump_requests_.front().args.dump_guid,
-               global_success, std::move(global_dump));
+  std::move(callback).Run(queued_memory_dump_requests_.front().args.dump_guid,
+                          global_success, std::move(global_dump));
   queued_memory_dump_requests_.pop_front();
 
   // Schedule the next queued dump (if applicable).
