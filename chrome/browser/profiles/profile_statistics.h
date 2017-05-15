@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_PROFILES_PROFILE_STATISTICS_H_
 #define CHROME_BROWSER_PROFILES_PROFILE_STATISTICS_H_
 
+#include <memory>
 #include <string>
 
 #include "base/memory/weak_ptr.h"
@@ -56,7 +57,7 @@ class ProfileStatistics : public KeyedService {
   void DeregisterAggregator();
 
   Profile* profile_;
-  scoped_refptr<ProfileStatisticsAggregator> aggregator_;
+  std::unique_ptr<ProfileStatisticsAggregator> aggregator_;
   base::WeakPtrFactory<ProfileStatistics> weak_ptr_factory_;
 };
 

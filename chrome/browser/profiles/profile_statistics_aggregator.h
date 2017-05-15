@@ -5,39 +5,30 @@
 #ifndef CHROME_BROWSER_PROFILES_PROFILE_STATISTICS_AGGREGATOR_H_
 #define CHROME_BROWSER_PROFILES_PROFILE_STATISTICS_AGGREGATOR_H_
 
-#include <stddef.h>
-
 #include <memory>
-#include <set>
 #include <vector>
 
 #include "base/callback_forward.h"
 #include "base/files/file_path.h"
-#include "base/memory/ref_counted.h"
-#include "base/task/cancelable_task_tracker.h"
-#include "base/task_runner.h"
 #include "chrome/browser/profiles/profile_statistics_common.h"
 #include "components/browsing_data/core/counters/browsing_data_counter.h"
 
 class Profile;
 
-class ProfileStatisticsAggregator
-    : public base::RefCountedThreadSafe<ProfileStatisticsAggregator> {
-  // This class is used internally by GetProfileStatistics and
-  // StoreProfileStatisticsToCache.
+class ProfileStatisticsAggregator {
+  // This class is used internally by GetProfileStatistics
   //
   // The class collects statistical information about the profile and returns
   // the information via a callback function. Currently bookmarks, history,
-  // logins and preferences are counted.
-  //
-  // The class is RefCounted because this is needed for CancelableTaskTracker
-  // to function properly.
+  // logins and sites with autofill forms are counted.
 
  public:
   ProfileStatisticsAggregator(
       Profile* profile,
       const profiles::ProfileStatisticsCallback& stats_callback,
       const base::Closure& done_callback);
+
+  ~ProfileStatisticsAggregator();
 
   void AddCallbackAndStartAggregator(
       const profiles::ProfileStatisticsCallback& stats_callback);
@@ -46,14 +37,10 @@ class ProfileStatisticsAggregator
   size_t GetCallbackCount();
 
  private:
-  friend class base::RefCountedThreadSafe<ProfileStatisticsAggregator>;
-
   struct ProfileStatValue {
     int count = 0;
     bool success = false;  // False means the statistics failed to load.
   };
-
-  ~ProfileStatisticsAggregator();
 
   // Start gathering statistics. Also cancels existing statistics tasks.
   void StartAggregator();
@@ -74,9 +61,6 @@ class ProfileStatisticsAggregator
   // Registers, initializes and starts a BrowsingDataCounter.
   void AddCounter(std::unique_ptr<browsing_data::BrowsingDataCounter> counter);
 
-  // Preference counting.
-  ProfileStatValue CountPrefs() const;
-
   Profile* profile_;
   base::FilePath profile_path_;
   profiles::ProfileCategoryStats profile_category_stats_;
@@ -87,8 +71,6 @@ class ProfileStatisticsAggregator
 
   // Callback function to be called when all statistics are calculated.
   base::Closure done_callback_;
-
-  base::CancelableTaskTracker tracker_;
 
   std::vector<std::unique_ptr<browsing_data::BrowsingDataCounter>> counters_;
 

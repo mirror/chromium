@@ -17,29 +17,17 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profile_statistics.h"
 #include "chrome/browser/profiles/profile_statistics_factory.h"
+#include "chrome/browser/web_data_service_factory.h"
+#include "components/browsing_data/core/counters/autofill_counter.h"
 #include "components/browsing_data/core/counters/bookmark_counter.h"
 #include "components/browsing_data/core/counters/history_counter.h"
 #include "components/browsing_data/core/counters/passwords_counter.h"
 #include "components/browsing_data/core/pref_names.h"
-#include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace {
 
 const int kProfileStatCategories = 4;
-
-// Callback for each pref. Every one that should be counted as a changed
-// user pref will cause *count to be incremented.
-void AccumulatePrefStats(const PrefService* pref_service,
-                         int* count,
-                         const std::string& key,
-                         const base::Value& value) {
-  const PrefService::Preference* pref = pref_service->FindPreference(key);
-  // Skip all dictionaries, only want to count values.
-  if (!value.is_dict() && pref && pref->IsUserControlled() &&
-      !pref->IsDefaultValue())
-    ++(*count);
-}
 
 }  // namespace
 
@@ -79,8 +67,7 @@ void ProfileStatisticsAggregator::StartAggregator() {
   DCHECK(g_browser_process->profile_manager()->IsValidProfile(profile_));
   profile_category_stats_.clear();
 
-  // Try to cancel tasks.
-  tracker_.TryCancelAll();
+  // Cancel tasks.
   counters_.clear();
 
   // Initiate bookmark counting.
@@ -117,13 +104,16 @@ void ProfileStatisticsAggregator::StartAggregator() {
     StatisticsCallbackFailure(profiles::kProfileStatisticsPasswords);
   }
 
-  // Initiate preference counting (async).
-  tracker_.PostTaskAndReplyWithResult(
-      content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
-          .get(),
-      FROM_HERE, base::Bind(&ProfileStatisticsAggregator::CountPrefs, this),
-      base::Bind(&ProfileStatisticsAggregator::StatisticsCallback, this,
-                 profiles::kProfileStatisticsSettings));
+  // Initiate autofill counting.
+  scoped_refptr<autofill::AutofillWebDataService> autofill_service =
+      WebDataServiceFactory::GetAutofillWebDataForProfile(
+          profile_, ServiceAccessType::EXPLICIT_ACCESS);
+  if (password_store) {
+    AddCounter(base::MakeUnique<browsing_data::AutofillCounter>(
+        autofill_service, /*sync_service=*/nullptr));
+  } else {
+    StatisticsCallbackFailure(profiles::kProfileStatisticsAutofill);
+  }
 }
 
 void ProfileStatisticsAggregator::CounterCallback(
@@ -141,6 +131,8 @@ void ProfileStatisticsAggregator::CounterCallback(
                               count);
   } else if (pref_name == browsing_data::prefs::kDeletePasswords) {
     StatisticsCallbackSuccess(profiles::kProfileStatisticsPasswords, count);
+  } else if (pref_name == browsing_data::prefs::kDeleteFormData) {
+    StatisticsCallbackSuccess(profiles::kProfileStatisticsAutofill, count);
   } else {
     NOTREACHED();
   }
@@ -154,7 +146,7 @@ void ProfileStatisticsAggregator::StatisticsCallback(
   datum.success = result.success;
   profile_category_stats_.push_back(datum);
   for (const auto& stats_callback : stats_callbacks_) {
-    DCHECK(!stats_callback.is_null());
+    DCHECK(stats_callback);
     stats_callback.Run(profile_category_stats_);
   }
 
@@ -184,15 +176,3 @@ void ProfileStatisticsAggregator::StatisticsCallbackFailure(
   StatisticsCallback(category, result);
 }
 
-ProfileStatisticsAggregator::ProfileStatValue
-    ProfileStatisticsAggregator::CountPrefs() const {
-  const PrefService* pref_service = profile_->GetPrefs();
-
-  ProfileStatValue result;
-  if (pref_service) {
-    pref_service->IteratePreferenceValues(base::BindRepeating(
-        &AccumulatePrefStats, pref_service, base::Unretained(&result.count)));
-    result.success = true;
-  }
-  return result;
-}

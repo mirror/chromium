@@ -9,5 +9,5 @@ namespace profiles {
 const char kProfileStatisticsBrowsingHistory[] = "BrowsingHistory";
 const char kProfileStatisticsPasswords[] = "Passwords";
 const char kProfileStatisticsBookmarks[] = "Bookmarks";
-const char kProfileStatisticsSettings[] = "Settings";
+const char kProfileStatisticsAutofill[] = "Autofill";
 }  // namespace profiles

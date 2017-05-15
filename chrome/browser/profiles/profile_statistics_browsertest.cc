@@ -35,7 +35,7 @@ std::set<std::string> stats_categories() {
   categories.insert(profiles::kProfileStatisticsBrowsingHistory);
   categories.insert(profiles::kProfileStatisticsPasswords);
   categories.insert(profiles::kProfileStatisticsBookmarks);
-  categories.insert(profiles::kProfileStatisticsSettings);
+  categories.insert(profiles::kProfileStatisticsAutofill);
   EXPECT_EQ(4u, categories.size());
   return categories;
 }
@@ -200,7 +200,6 @@ IN_PROC_BROWSER_TEST_F(ProfileStatisticsBrowserTest, GatherStatistics) {
 
   profiles::ProfileCategoryStats stats = state.GetStats();
   for (const auto& stat : stats) {
-    if (stat.category != profiles::kProfileStatisticsSettings)
       EXPECT_EQ(0, stat.count);
   }
 

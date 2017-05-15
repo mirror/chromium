@@ -30,9 +30,7 @@ void ProfileStatistics::GatherStatistics(
   if (HasAggregator()) {
     GetAggregator()->AddCallbackAndStartAggregator(callback);
   } else {
-    // The statistics task may outlive ProfileStatistics in unit tests, so a
-    // weak pointer is used for the callback.
-    aggregator_ = new ProfileStatisticsAggregator(
+    aggregator_ = base::MakeUnique<ProfileStatisticsAggregator>(
         profile_, callback,
         base::Bind(&ProfileStatistics::DeregisterAggregator,
                    weak_ptr_factory_.GetWeakPtr()));
@@ -78,7 +76,7 @@ profiles::ProfileCategoryStats
   stat.count = stat.success ? entry->GetStatsBookmarks() : 0;
   stats.push_back(stat);
 
-  stat.category = profiles::kProfileStatisticsSettings;
+  stat.category = profiles::kProfileStatisticsAutofill;
   stat.success = has_entry ? entry->HasStatsSettings() : false;
   stat.count = stat.success ? entry->GetStatsSettings() : 0;
   stats.push_back(stat);
@@ -110,7 +108,7 @@ void ProfileStatistics::SetProfileStatisticsToAttributesStorage(
     entry->SetStatsPasswords(count);
   } else if (category == profiles::kProfileStatisticsBookmarks) {
     entry->SetStatsBookmarks(count);
-  } else if (category == profiles::kProfileStatisticsSettings) {
+  } else if (category == profiles::kProfileStatisticsAutofill) {
     entry->SetStatsSettings(count);
   } else {
     NOTREACHED();
