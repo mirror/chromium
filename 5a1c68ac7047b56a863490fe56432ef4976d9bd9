@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8db28362_19c3c30d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-15T22:42:13Z",
+      "side": 1,
+      "message": "I wanted to include a full real patch in here to test that it worked on real input, but pylint goes nuts on this file. What do you think is the best way to get around that? Should these two variables be separate files in a resources/ directory?",
+      "revId": "5a1c68ac7047b56a863490fe56432ef4976d9bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
