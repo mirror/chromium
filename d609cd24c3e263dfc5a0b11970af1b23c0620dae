@@ -39,6 +39,29 @@
       "revId": "d609cd24c3e263dfc5a0b11970af1b23c0620dae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828986c9_82aee0d0",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-15T23:28:31Z",
+      "side": 0,
+      "message": "Some of these are no longer relevant after this.",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "d609cd24c3e263dfc5a0b11970af1b23c0620dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
