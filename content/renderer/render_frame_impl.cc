@@ -1102,6 +1102,10 @@ blink::WebURL RenderFrameImpl::OverrideFlashEmbedWithHTML(
   return GetContentClient()->renderer()->OverrideFlashEmbedWithHTML(url);
 }
 
+std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader() {
+  return blink::Platform::Current()->CreateURLLoader();
+}
+
 // RenderFrameImpl ----------------------------------------------------------
 RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
     : frame_(NULL),

@@ -259,6 +259,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // Overwrites the given URL to use an HTML5 embed if possible.
   blink::WebURL OverrideFlashEmbedWithHTML(const blink::WebURL& url) override;
 
+  std::unique_ptr<blink::WebURLLoader> CreateURLLoader() override;
+
   ~RenderFrameImpl() override;
 
   // Called by RenderWidget when meaningful layout has happened.
