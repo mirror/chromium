@@ -74,7 +74,6 @@ class TestExporter(object):
                 _log.info('No in-flight PR found for CL. Creating...')
                 self.create_or_update_pull_request_from_cl(cl)
 
-
     def get_exportable_commits(self, limit):
         return exportable_commits_over_last_n_commits(limit, self.host, self.local_wpt)
 
