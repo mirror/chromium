@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e61710ac_b203691b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-05-15T17:40:37Z",
+      "side": 1,
+      "message": "Looks better, thanks. BTW in case it was not already clear, the reason we pass along the visual rect is for\nperformance. It is indeed the case that it is possible to compute it from the surrounding context of transforms,\nclips etc.",
+      "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
