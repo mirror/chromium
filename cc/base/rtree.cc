@@ -110,6 +110,7 @@ RTree::Branch RTree::BuildRecursive(std::vector<Branch>* branches, int level) {
 }
 
 void RTree::Search(const gfx::Rect& query, std::vector<size_t>* results) const {
+  DCHECK(results->empty());
   if (num_data_elements_ > 0 && query.Intersects(root_.bounds))
     SearchRecursive(root_.subtree, query, results);
 }

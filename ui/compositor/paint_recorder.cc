@@ -21,9 +21,9 @@ PaintRecorder::PaintRecorder(const PaintContext& context,
                              const gfx::Size& recording_size,
                              PaintCache* cache)
     : context_(context),
-      canvas_(context.recorder_->beginRecording(
-                  gfx::RectToSkRect(gfx::Rect(recording_size))),
-              context.device_scale_factor_),
+      record_canvas_(cache->ResetCache(),
+                     gfx::RectToSkRect(gfx::Rect(recording_size))),
+      canvas_(&record_canvas_, context.device_scale_factor_),
       cache_(cache),
       recording_size_(recording_size) {
 #if DCHECK_IS_ON()
@@ -34,20 +34,31 @@ PaintRecorder::PaintRecorder(const PaintContext& context,
 
 PaintRecorder::PaintRecorder(const PaintContext& context,
                              const gfx::Size& recording_size)
-    : PaintRecorder(context, recording_size, nullptr) {
+    : context_(context),
+      record_canvas_(context_.list_->StartPaint(),
+                     gfx::RectToSkRect(gfx::Rect(recording_size))),
+      canvas_(&record_canvas_, context.device_scale_factor_),
+      cache_(nullptr),
+      recording_size_(recording_size) {
+#if DCHECK_IS_ON()
+  DCHECK(!context.inside_paint_recorder_);
+  context.inside_paint_recorder_ = true;
+#endif
 }
 
 PaintRecorder::~PaintRecorder() {
 #if DCHECK_IS_ON()
   context_.inside_paint_recorder_ = false;
 #endif
-  gfx::Rect bounds_in_layer = context_.ToLayerSpaceBounds(recording_size_);
-  const auto& item =
-      context_.list_->CreateAndAppendDrawingItem<cc::DrawingDisplayItem>(
-          bounds_in_layer, context_.recorder_->finishRecordingAsPicture(),
-          gfx::RectToSkRect(gfx::Rect(recording_size_)));
-  if (cache_)
-    cache_->SetCache(item);
+  // If using cache, append what we've saved there to the PaintContext.
+  // Otherwise, the content is already stored in the PaintContext, and we can
+  // just close it.
+  if (cache_) {
+    cache_->UseCache(context_, recording_size_);
+  } else {
+    gfx::Rect bounds_in_layer = context_.ToLayerSpaceBounds(recording_size_);
+    context_.list_->EndPaintOfUnpaired(bounds_in_layer);
+  }
 }
 
 }  // namespace ui

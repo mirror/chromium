@@ -239,10 +239,10 @@ void HostContentSettingsMap::RegisterProvider(
   provider->AddObserver(this);
   content_settings_providers_[type] = std::move(provider);
 
-#ifndef NDEBUG
-  DCHECK_NE(used_from_thread_id_, base::kInvalidThreadId)
-      << "Used from multiple threads before initialization complete.";
-#endif
+  //#ifndef NDEBUG
+  //  DCHECK_NE(used_from_thread_id_, base::kInvalidThreadId)
+  //      << "Used from multiple threads before initialization complete.";
+  //#endif
 
   OnContentSettingChanged(ContentSettingsPattern(),
                           ContentSettingsPattern(),

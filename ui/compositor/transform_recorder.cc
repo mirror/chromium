@@ -5,6 +5,7 @@
 #include "ui/compositor/transform_recorder.h"
 
 #include "cc/paint/display_item_list.h"
+#include "cc/paint/record_paint_canvas.h"
 #include "cc/paint/transform_display_item.h"
 #include "ui/compositor/paint_context.h"
 
@@ -14,14 +15,26 @@ TransformRecorder::TransformRecorder(const PaintContext& context)
     : context_(context), transformed_(false) {}
 
 TransformRecorder::~TransformRecorder() {
-  if (transformed_)
-    context_.list_->CreateAndAppendPairedEndItem<cc::EndTransformDisplayItem>();
+  if (!transformed_)
+    return;
+
+  cc::RecordPaintCanvas record_canvas(context_.list_->StartPaint(),
+                                      SkRect::MakeEmpty());
+  record_canvas.restore();
+  context_.list_->EndPaintOfPairedEnd();
 }
 
 void TransformRecorder::Transform(const gfx::Transform& transform) {
   DCHECK(!transformed_);
-  context_.list_->CreateAndAppendPairedBeginItem<cc::TransformDisplayItem>(
-      transform);
+  if (transform.IsIdentity())
+    return;
+
+  cc::RecordPaintCanvas record_canvas(context_.list_->StartPaint(),
+                                      SkRect::MakeEmpty());
+  record_canvas.save();
+  record_canvas.concat(transform.matrix());
+  context_.list_->EndPaintOfPairedBegin();
+
   transformed_ = true;
 }
 
