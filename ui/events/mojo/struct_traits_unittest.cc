@@ -28,8 +28,8 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
  private:
   // TraitsTestService:
   void EchoEvent(std::unique_ptr<ui::Event> e,
-                 const EchoEventCallback& callback) override {
-    callback.Run(std::move(e));
+                 EchoEventCallback callback) override {
+    std::move(callback).Run(std::move(e));
   }
 
   base::MessageLoop loop_;
