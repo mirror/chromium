@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b93789e_65c38062",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-15T19:28:45Z",
+      "side": 1,
+      "message": "ExpectBodyContains({\"Aborted\"});",
+      "revId": "20f55907a1b22af8b17412fa194ab26f198d3789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
