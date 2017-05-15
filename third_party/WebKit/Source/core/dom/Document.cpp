@@ -412,6 +412,9 @@ static bool IsValidElementNamePerHTMLParser(const String& name) {
 // cases of mismatches.
 static bool IsValidElementName(const LocalDOMWindow* window,
                                const String& name) {
+  // Fast path for names of all ASCII characters.
+  if (LIKELY(name.IsAllASCIIAlpha()))
+    return true;
   bool is_valid_dom_name = Document::IsValidName(name);
   bool is_valid_html_name = IsValidElementNamePerHTMLParser(name);
   if (UNLIKELY(is_valid_html_name != is_valid_dom_name && window)) {
