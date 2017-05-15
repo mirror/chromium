@@ -105,6 +105,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothRemoteGattCharacteristicMac
   bool HasPendingWrite() const {
     return !write_characteristic_value_callbacks_.first.is_null();
   };
+
   // Is true if the characteristic has been discovered with all its descriptors
   // and discovery_pending_count_ is 0.
   bool is_discovery_complete_;
@@ -136,6 +137,8 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothRemoteGattCharacteristicMac
   std::unordered_map<std::string,
                      std::unique_ptr<BluetoothRemoteGattDescriptorMac>>
       gatt_descriptor_macs_;
+
+  base::WeakPtrFactory<BluetoothRemoteGattCharacteristicMac> weak_ptr_factory_;
 };
 
 // Stream operator for logging.
