@@ -315,6 +315,7 @@ class WTF_EXPORT String {
   String RemoveCharacters(CharacterMatchFunctionPtr) const;
   template <bool isSpecialCharacter(UChar)>
   bool IsAllSpecialCharacters() const;
+  bool IsAllASCIIAlpha() const;
 
   // Return the string with case folded for case insensitive comparison.
   String FoldCase() const;
@@ -544,6 +545,16 @@ WTF_EXPORT int CodePointCompareIgnoringASCIICase(const String&, const char*);
 template <bool isSpecialCharacter(UChar)>
 inline bool String::IsAllSpecialCharacters() const {
   return StringView(*this).IsAllSpecialCharacters<isSpecialCharacter>();
+}
+
+inline bool String::IsAllASCIIAlpha() const {
+  if (Is8Bit()) {
+    return ASCIIAlphaDetector<sizeof(MachineWord), LChar>::All(Characters8(),
+                                                               length());
+  } else {
+    return ASCIIAlphaDetector<sizeof(MachineWord), UChar>::All(Characters16(),
+                                                               length());
+  }
 }
 
 template <typename BufferType>

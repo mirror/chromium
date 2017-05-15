@@ -49,7 +49,7 @@ inline T* AlignToMachineWord(T* pointer) {
                               ~kMachineWordAlignmentMask);
 }
 
-template <size_t size, typename CharacterType>
+template <std::size_t size, typename CharacterType>
 struct NonASCIIMask;
 template <>
 struct NonASCIIMask<4, UChar> {
@@ -105,6 +105,225 @@ inline bool CharactersAreAllASCII(const CharacterType* characters,
   MachineWord non_ascii_bit_mask =
       NonASCIIMask<sizeof(MachineWord), CharacterType>::Value();
   return !(all_char_bits & non_ascii_bit_mask);
+}
+
+template <size_t size>
+struct MachineDataWord {};
+
+template <>
+struct MachineDataWord<4> {
+  typedef uint32_t Type;
+};
+
+template <>
+struct MachineDataWord<8> {
+  typedef uint64_t Type;
+};
+
+template <typename CharacterType>
+struct BitsPerChar {};
+
+template <>
+struct BitsPerChar<LChar> {
+  static const size_t kBits = 8;
+};
+
+template <>
+struct BitsPerChar<UChar> {
+  static const size_t kBits = 16;
+};
+
+// Detects whether a string contains all ASCII alpha characters.
+//
+// This is specialized to machine word and character type and performs
+// the comparison of a machine words' worth of characters in parallel.
+template <size_t size, typename CharacterType>
+class ASCIIAlphaDetector {
+ public:
+  using MachineDataWord = typename MachineDataWord<size>::Type;
+
+  // Tests whether every character in `characters` is [A-Za-z].
+  static inline bool All(const CharacterType* characters, size_t length) {
+    const CharacterType* end = characters + length;
+    MachineDataWord test = Flag();
+
+    // Test the unaligned characters at the start of the word.
+    if (!IsAlignedToMachineWord(characters)) {
+      MachineDataWord buffer = Placeholder();
+      while (!IsAlignedToMachineWord(characters) && characters != end) {
+        buffer = buffer << BitsPerChar<CharacterType>::kBits | *characters++;
+      }
+      test = WordIsAllASCIIAlpha(buffer);
+    }
+
+    // Test the middle of the string, one machine word at a time.
+    const CharacterType* word_end = AlignToMachineWord(end);
+    const size_t kLoopIncrement = sizeof(MachineWord) / sizeof(CharacterType);
+    while (characters < word_end) {
+      test &= WordIsAllASCIIAlpha(
+          *(reinterpret_cast_ptr<const MachineDataWord*>(characters)));
+      characters += kLoopIncrement;
+    }
+
+    // Test the unaligned characters at the end of the string.
+    if (characters != end) {
+      MachineDataWord buffer = Placeholder();
+      while (characters != end) {
+        buffer = buffer << BitsPerChar<CharacterType>::kBits | *characters++;
+      }
+      test &= WordIsAllASCIIAlpha(buffer);
+    }
+
+    // Check that all the characters passed the tests.
+    return (test & Flag()) == Flag();
+  }
+
+ private:
+  // Compares characters packed into machine words a and b. The h.o.
+  // bits of each must be clear. For each pair of values v_a and v_b
+  // packed into a and b, if v_a < v_b then the h.o. bit of the result
+  // is set. (Ignore the other bits.)
+  static inline MachineDataWord LessThan(MachineDataWord a, MachineDataWord b) {
+    // This works the following way; assume a and b are unsigned
+    // integers < 2^n. If,
+    //
+    //       a <  b
+    // a + 2^n <  b + 2^n
+    //     2^n <= b + 2^n - a - 1
+    //
+    // Note 2^n - a - 1 is just `a XOR (2^n - 1)` so:
+    //
+    //     2^n <= b + (a XOR (2^n - 1))
+    //
+    // So to test a < b, compute the RHS and test whether it is at
+    // least 2^n by checking the h.o. bit of the result.
+    //
+    // See Lamport, Leslie (1975) Multiple Byte Processing with
+    // Full-Word Instructions. CACM, 18 (8) pp. 471-5.
+    return b + (a ^ ~Flag());
+  }
+
+  static inline MachineDataWord WordIsAllASCIIAlpha(MachineDataWord word) {
+    // The high order bit must be clear for the less-than test to work.
+    MachineDataWord char_high_order_bit_clear = ~(word & Flag());
+    // Assuming characters are alpha, convert them to lowercase.
+    word |= ToLower();
+    // 'a' <= ch
+    MachineDataWord lower_bound = LessThan(Lower(), word);
+    // ch <= 'z'
+    MachineDataWord upper_bound = LessThan(word, Upper());
+    return char_high_order_bit_clear & lower_bound & upper_bound;
+  }
+
+  // A string of 'aaa...' When examining the non-word aligned
+  // characters in a string this placeholder is used to populate
+  // spaces with characters which trivially pass the check.
+  static inline MachineDataWord Placeholder();
+
+  // The exclusive lower bound of the check, '```...'. Note backtick
+  // (0x60) is the character immediately before 'a' (0x61) in ASCII.
+  static inline MachineDataWord Lower();
+
+  // The exclusive upper bound of the check, '{{{...'. Note left curly
+  // brace (0x7b) is the character immediately after 'z' (0x7a) in
+  // ASCII.
+  static inline MachineDataWord Upper();
+
+  // Given a character 'A' <= ch <= 'Z', setting bit 6 (0x20)
+  // transforms it to lowercase.
+  static inline MachineDataWord ToLower();
+
+  // The flag set by logical operations; the high order bit of a
+  // character.
+  static inline MachineDataWord Flag();
+};
+
+// 4-byte word, UTF16
+template <>
+inline uint32_t ASCIIAlphaDetector<4, UChar>::Placeholder() {
+  return 0x00610061U;
+}
+template <>
+inline uint32_t ASCIIAlphaDetector<4, UChar>::Lower() {
+  return 0x00600060U;
+}
+template <>
+inline uint32_t ASCIIAlphaDetector<4, UChar>::Upper() {
+  return 0x007b007bU;
+}
+template <>
+inline uint32_t ASCIIAlphaDetector<4, UChar>::ToLower() {
+  return 0x00200020U;
+}
+template <>
+inline uint32_t ASCIIAlphaDetector<4, UChar>::Flag() {
+  return 0x80008000U;
+}
+
+// 4-byte word, ASCII/UTF8
+template <>
+inline uint32_t ASCIIAlphaDetector<4, LChar>::Placeholder() {
+  return 0x61616161U;
+}
+template <>
+inline uint32_t ASCIIAlphaDetector<4, LChar>::Lower() {
+  return 0x60606060U;
+}
+template <>
+inline uint32_t ASCIIAlphaDetector<4, LChar>::Upper() {
+  return 0x7b7b7b7bU;
+}
+template <>
+inline uint32_t ASCIIAlphaDetector<4, LChar>::ToLower() {
+  return 0x20202020U;
+}
+template <>
+inline uint32_t ASCIIAlphaDetector<4, LChar>::Flag() {
+  return 0x80808080U;
+}
+
+// 8-byte word, UTF16
+template <>
+inline uint64_t ASCIIAlphaDetector<8, UChar>::Placeholder() {
+  return 0x0061006100610061ULL;
+}
+template <>
+inline uint64_t ASCIIAlphaDetector<8, UChar>::Lower() {
+  return 0x0060006000600060ULL;
+}
+template <>
+inline uint64_t ASCIIAlphaDetector<8, UChar>::Upper() {
+  return 0x007b007b007b007bULL;
+}
+template <>
+inline uint64_t ASCIIAlphaDetector<8, UChar>::ToLower() {
+  return 0x0020002000200020ULL;
+}
+template <>
+inline uint64_t ASCIIAlphaDetector<8, UChar>::Flag() {
+  return 0x8000800080008000ULL;
+}
+
+// 8-byte word, ASCII/UTF8
+template <>
+inline uint64_t ASCIIAlphaDetector<8, LChar>::Placeholder() {
+  return 0x6161616161616161ULL;
+}
+template <>
+inline uint64_t ASCIIAlphaDetector<8, LChar>::Lower() {
+  return 0x6060606060606060ULL;
+}
+template <>
+inline uint64_t ASCIIAlphaDetector<8, LChar>::Upper() {
+  return 0x7b7b7b7b7b7b7b7bULL;
+}
+template <>
+inline uint64_t ASCIIAlphaDetector<8, LChar>::ToLower() {
+  return 0x2020202020202020ULL;
+}
+template <>
+inline uint64_t ASCIIAlphaDetector<8, LChar>::Flag() {
+  return 0x8080808080808080ULL;
 }
 
 inline void CopyLCharsFromUCharSource(LChar* destination,
