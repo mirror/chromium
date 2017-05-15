@@ -42,12 +42,12 @@ recognisable effect on `theTrack`, in other words if it's "live" or not. For
 example, changing the zoom level is instantly reflected on the `theTrack`,
 while connecting the Red Eye Reduction, if available, is not.
 
-| Object                   |type                 | retrieved by...                         |
+| Object                   |type                 | Example                                 |
 |:------------------------ |:------------------- | ---------------------------------------:|
 |[`PhotoCapabilities`]     |non-live capabilities|`theImageCapturer.getPhotoCapabilities()`|
 |[`MediaTrackCapabilities`]|live capabilities    |`theTrack.getCapabilities()`             |
 |                          |                     |                                         |
-|[`PhotoSettings`]         |non-live settings    |                                         |
+|[`PhotoSettings`]         |non-live settings    |`theImageCapturer.takePhoto(photoSettings)`|
 |[`MediaTrackSettings`]    |live settings        |`theTrack.getSettings()`                 |
 
 [`PhotoCapabilities`]: https://w3c.github.io/mediacapture-image/##photocapabilities-section
