@@ -695,6 +695,9 @@ bool ChromeContentClient::IsSupplementarySiteIsolationModeEnabled() {
 }
 
 content::OriginTrialPolicy* ChromeContentClient::GetOriginTrialPolicy() {
+  // Prevent initialization race (see crbug.com/721144). There may be a
+  // race when the policy is need for worker startup.
+  base::AutoLock auto_lock(origin_trial_policy_lock_);
   if (!origin_trial_policy_)
     origin_trial_policy_ = base::MakeUnique<ChromeOriginTrialPolicy>();
   return origin_trial_policy_.get();
