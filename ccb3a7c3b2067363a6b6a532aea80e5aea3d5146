@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99687c64_bb7f1b64",
+        "filename": "chrome/browser/browsing_data/bookmark_counter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "nit: This is more like ASSERT_FALSE, since it\u0027s a precondition to the test rather testing the result of this counter\u0027s functionality.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221d5e9c_2d1b6dcb",
+        "filename": "chrome/browser/browsing_data/bookmark_counter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "nit: Probably here as well.",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 13
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c0107c_74ae6e54",
+        "filename": "chrome/browser/profiles/profile_statistics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "Why do we need to hold this as a scoped_refptr? Are there multiple owners?",
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256cb4f9_b58f38d8",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "This looks like something that could be moved inside the counter in long term. Maybe add a TODO?",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 29
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb369eb3_0ab15839",
+        "filename": "components/browsing_data/core/counters/bookmark_counter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "I would just call it kPrefName. The fact that this is not an actual registered preference that we observed is not interesting to the users of this class.",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94aec85_af0c0948",
+        "filename": "components/browsing_data/core/counters/bookmark_counter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "Let\u0027s use the existing namespace \"browser.clear_data.\" and add just add a comment that this is not a registered pref, it\u0027s just here because the counter requires one.\n\nAlso, why \"password\"? :)",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e761ba6_2bfa0031",
+        "filename": "components/browsing_data/core/counters/bookmark_counter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "Long-term, we will want to delete bookmarks from CBD as well, so there will be a preference :)\n\nFor now, we\u0027re using preferences as a key for 1:1:1 mapping UI elements \u003c-\u003e counters \u003c-\u003e results. For that purpose, it\u0027s perfectly valid to add a preference.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49afa97c_c7e6ff29",
+        "filename": "components/browsing_data/core/counters/bookmark_counter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "nit: Should this be const? Or does the counting have any side effects?",
+      "range": {
+        "startLine": 24,
+        "startChar": 27,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36b3121_1f8aa032",
+        "filename": "components/browsing_data/core/counters/bookmark_model_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "Is there a good reason to separate this class out? The code here is very simple and could live inside BookmarkCounter. If it\u0027s a separate class just for lifetime management, you can keep it that way, and define it inside an anonymous namespace in bookmark_counter.cc.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aacef11_14fe338f",
+        "filename": "components/browsing_data/core/counters/browsing_data_counter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "This new use case in profile statistics might require us to rename BASIC/ADVANCED into DEFAULT/BASIC or something such. Can you add a TODO?",
+      "range": {
+        "startLine": 46,
+        "startChar": 51,
+        "endLine": 46,
+        "endChar": 59
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28911c59_a4bc6155",
+        "filename": "components/browsing_data/core/counters/browsing_data_counter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-15T10:50:33Z",
+      "side": 1,
+      "message": "This method is a little too specialized, since not having pref does not necessarily imply advanced tab or all time (in fact, the bookmarks model does have timestamps). But I\u0027m fine with keeping this as is until new usage emerges.",
+      "range": {
+        "startLine": 94,
+        "startChar": 57,
+        "endLine": 94,
+        "endChar": 65
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
