@@ -4,13 +4,18 @@
 
 #include "components/spellcheck/renderer/spellcheck_provider.h"
 
+#include "base/bind.h"
 #include "base/metrics/histogram_macros.h"
+#include "components/spellcheck/common/spellcheck.mojom.h"
 #include "components/spellcheck/common/spellcheck_messages.h"
 #include "components/spellcheck/common/spellcheck_result.h"
 #include "components/spellcheck/renderer/spellcheck.h"
 #include "components/spellcheck/renderer/spellcheck_language.h"
 #include "components/spellcheck/spellcheck_build_features.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_frame.h"
+#include "content/public/renderer/render_thread.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebElement.h"
@@ -47,6 +52,16 @@ SpellCheckProvider::SpellCheckProvider(content::RenderFrame* render_frame,
 SpellCheckProvider::~SpellCheckProvider() {
 }
 
+spellcheck::mojom::SpellCheckHost& SpellCheckProvider::GetSpellCheckHost() {
+  if (spellcheck_host_)
+    return *spellcheck_host_;
+
+  DCHECK(content::RenderThread::Get());
+  content::RenderThread::Get()->GetConnector()->BindInterface(
+      content::mojom::kBrowserServiceName, &spellcheck_host_);
+  return *spellcheck_host_;
+}
+
 void SpellCheckProvider::RequestTextChecking(
     const base::string16& text,
     WebTextCheckingCompletion* completion) {
@@ -64,34 +79,34 @@ void SpellCheckProvider::RequestTextChecking(
   // this text to the Spelling service only if a user enables this feature.
   last_request_.clear();
   last_results_.Assign(blink::WebVector<blink::WebTextCheckingResult>());
+  last_identifier_ = text_check_completions_.Add(completion);
 
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+  // TODO(crbug.com/714480): convert the RequestTextCheck IPC to mojo.
   // Text check (unified request for grammar and spell check) is only
   // available for browser process, so we ask the system spellchecker
-  // over IPC or return an empty result if the checker is not
-  // available.
-  Send(new SpellCheckHostMsg_RequestTextCheck(
-      routing_id(), text_check_completions_.Add(completion), text));
+  // over IPC or return an empty result if the checker is not available.
+  Send(new SpellCheckHostMsg_RequestTextCheck(routing_id(), last_identifier_,
+                                              text));
 #else
-  Send(new SpellCheckHostMsg_CallSpellingService(
-      routing_id(), text_check_completions_.Add(completion),
-      base::string16(text)));
+  GetSpellCheckHost().CallSpellingService(
+      text, base::Bind(&SpellCheckProvider::OnRespondSpellingService,
+                       base::Unretained(this), last_identifier_, text));
 #endif  // !USE_BROWSER_SPELLCHECKER
 }
 
 bool SpellCheckProvider::OnMessageReceived(const IPC::Message& message) {
+#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(SpellCheckProvider, message)
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-    IPC_MESSAGE_HANDLER(SpellCheckMsg_RespondSpellingService,
-                        OnRespondSpellingService)
-#endif
-#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+    // TODO(crbug.com/714480): convert the RequestTextCheck IPC to mojo.
     IPC_MESSAGE_HANDLER(SpellCheckMsg_RespondTextCheck, OnRespondTextCheck)
-#endif
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
+#else
+  return false;
+#endif
 }
 
 void SpellCheckProvider::FocusedNodeChanged(const blink::WebNode& unused) {
@@ -129,7 +144,8 @@ void SpellCheckProvider::CheckSpelling(
     UMA_HISTOGRAM_COUNTS("SpellCheck.api.check", word.size());
     // If optional_suggestions is not requested, the API is called
     // for marking.  So we use this for counting markable words.
-    Send(new SpellCheckHostMsg_NotifyChecked(routing_id(), word, 0 < length));
+    if (content::RenderThread::Get())  // Can be NULL in tests.
+      GetSpellCheckHost().NotifyChecked(word, 0 < length);
   }
 }
 
@@ -151,8 +167,8 @@ void SpellCheckProvider::CancelAllPendingRequests() {
 #if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
 void SpellCheckProvider::OnRespondSpellingService(
     int identifier,
-    bool succeeded,
     const base::string16& line,
+    bool succeeded,
     const std::vector<SpellCheckResult>& results) {
   WebTextCheckingCompletion* completion =
       text_check_completions_.Lookup(identifier);
