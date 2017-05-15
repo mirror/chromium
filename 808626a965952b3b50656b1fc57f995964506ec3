@@ -16,6 +16,24 @@
       "revId": "808626a965952b3b50656b1fc57f995964506ec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccb1de0_1b6931dc",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-15T22:24:44Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "34e1b2e2_2737bc3a",
+      "revId": "808626a965952b3b50656b1fc57f995964506ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "fdf30ec5515bf8bf01d46461532a8db14391d677",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b987106c_c65b0d20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/MonochromeApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-15T22:24:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c75fbd50_5d554a84",
+      "revId": "fdf30ec5515bf8bf01d46461532a8db14391d677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
