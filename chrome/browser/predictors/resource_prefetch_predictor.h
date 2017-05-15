@@ -19,6 +19,7 @@
 #include "base/scoped_observer.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "base/time/time.h"
+#include "chrome/browser/predictors/glowplug_key_value_data.h"
 #include "chrome/browser/predictors/loading_predictor_config.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor_tables.h"
@@ -382,6 +383,13 @@ class ResourcePrefetchPredictor
   bool PopulateFromManifest(const std::string& manifest_host,
                             std::vector<GURL>* urls) const;
 
+  void InitializeOnDBThread(PrefetchDataMap* url_data_map,
+                            PrefetchDataMap* host_data_map,
+                            RedirectDataMap* url_redirect_data_map,
+                            RedirectDataMap* host_redirect_data_map,
+                            ManifestDataMap* manifest_map,
+                            OriginDataMap* origin_data_map);
+
   // Callback for task to read predictor database. Takes ownership of
   // all arguments.
   void CreateCaches(std::unique_ptr<PrefetchDataMap> url_data_map,
@@ -488,6 +496,8 @@ class ResourcePrefetchPredictor
   std::unique_ptr<RedirectDataMap> host_redirect_table_cache_;
   std::unique_ptr<ManifestDataMap> manifest_table_cache_;
   std::unique_ptr<OriginDataMap> origin_table_cache_;
+
+  GlowplugKeyValueData<precache::PrecacheManifest> manifest_data_;
 
   std::map<GURL, base::TimeTicks> inflight_prefetches_;
   NavigationMap inflight_navigations_;

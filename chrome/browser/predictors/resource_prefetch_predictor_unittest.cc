@@ -158,6 +158,8 @@ class MockResourcePrefetchPredictorTables
   MOCK_METHOD1(DeleteManifestData, void(const std::vector<std::string>& hosts));
   MOCK_METHOD0(DeleteAllData, void());
 
+  void ExecuteDBTaskOnDBThread(const DBTask& task) override {}
+
  protected:
   ~MockResourcePrefetchPredictorTables() { }
 };

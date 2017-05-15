@@ -554,6 +554,7 @@ ResourcePrefetchPredictor::ResourcePrefetchPredictor(
       initialization_state_(NOT_INITIALIZED),
       tables_(PredictorDatabaseFactory::GetForProfile(profile)
                   ->resource_prefetch_tables()),
+      manifest_data_(tables_, tables_->manifest_table()),
       history_service_observer_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
@@ -562,6 +563,18 @@ ResourcePrefetchPredictor::ResourcePrefetchPredictor(
 }
 
 ResourcePrefetchPredictor::~ResourcePrefetchPredictor() {}
+
+void ResourcePrefetchPredictor::InitializeOnDBThread(
+    PrefetchDataMap* url_data_map,
+    PrefetchDataMap* host_data_map,
+    RedirectDataMap* url_redirect_data_map,
+    RedirectDataMap* host_redirect_data_map,
+    ManifestDataMap* manifest_map,
+    OriginDataMap* origin_data_map) {
+  tables_->GetAllData(url_data_map, host_data_map, url_redirect_data_map,
+                      host_redirect_data_map, manifest_map, origin_data_map);
+  manifest_data_.InitializeOnDBThread();
+}
 
 void ResourcePrefetchPredictor::StartInitialization() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -590,8 +603,8 @@ void ResourcePrefetchPredictor::StartInitialization() {
 
   BrowserThread::PostTaskAndReply(
       BrowserThread::DB, FROM_HERE,
-      base::BindOnce(&ResourcePrefetchPredictorTables::GetAllData, tables_,
-                     url_data_map_ptr, host_data_map_ptr,
+      base::BindOnce(&ResourcePrefetchPredictor::InitializeOnDBThread,
+                     AsWeakPtr(), url_data_map_ptr, host_data_map_ptr,
                      url_redirect_data_map_ptr, host_redirect_data_map_ptr,
                      manifest_data_map_ptr, origin_data_map_ptr),
       base::BindOnce(&ResourcePrefetchPredictor::CreateCaches, AsWeakPtr(),
