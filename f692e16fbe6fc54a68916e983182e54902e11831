@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27e59347_05370ce8",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "enabling red eye reduction",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b682b52d_bf747aad",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "Type",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e7d4bf_f761db1d",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "49",
+      "range": {
+        "startLine": 4,
+        "startChar": 36,
+        "endLine": 4,
+        "endChar": 39
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0e6fff_f411d367",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "A `MediaRecorder` uses a `MediaStream` as its source of data. The stream may originate from a camera, microphone, `\u003ccanvas\u003e`, `\u003cvideo\u003e` or `\u003caudio\u003e` tag, remote `PeerConnection`, web audio `Node` or content capture (such as the screen, a window or a tab).",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12df6337_50ec0098",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "This method accepts an optional `timeslice` parameter. Chrome will buffer this much of the encoded result (in milliseconds). If unspecified Chrome will buffer as much as possible. A value of 0 will cause as little buffering as possible.",
+      "range": {
+        "startLine": 40,
+        "startChar": 71,
+        "endLine": 44,
+        "endChar": 79
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361d8224_550d712c",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "is unspecified",
+      "range": {
+        "startLine": 47,
+        "startChar": 53,
+        "endLine": 47,
+        "endChar": 79
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e226e56f_e155199f",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "\"The attribute\" or just remove this word.",
+      "range": {
+        "startLine": 48,
+        "startChar": 66,
+        "endLine": 48,
+        "endChar": 69
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4cb886d_ba42f41d",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "or",
+      "range": {
+        "startLine": 48,
+        "startChar": 48,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8447c83e_b2b38e4b",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "`VideoTrackRecorder`/`AudioTrackRecorder`s",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 72
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031ce518_6422ed7d",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "this",
+      "range": {
+        "startLine": 76,
+        "startChar": 73,
+        "endLine": 76,
+        "endChar": 77
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ea5ac6_79a0585e",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "duration or is",
+      "range": {
+        "startLine": 82,
+        "startChar": 40,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a373fe2c_0dd2f022",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "Media recorder",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 7
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6e28b9_3bb237cd",
+        "filename": "third_party/WebKit/Source/modules/mediarecorder/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-15T23:01:17Z",
+      "side": 1,
+      "message": "Remove this part of the URL.",
+      "range": {
+        "startLine": 100,
+        "startChar": 99,
+        "endLine": 100,
+        "endChar": 128
+      },
+      "revId": "f692e16fbe6fc54a68916e983182e54902e11831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
