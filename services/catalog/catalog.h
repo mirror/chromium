@@ -61,6 +61,8 @@ class Catalog {
   // to be relative to the current executable's path.
   static void LoadDefaultCatalogManifest(const base::FilePath& path);
 
+  Instance* GetInstanceForUserId(const std::string& user_id);
+
  private:
   class ServiceImpl;
 
@@ -72,8 +74,6 @@ class Catalog {
 
   void BindDirectoryRequest(const service_manager::BindSourceInfo& source_info,
                             filesystem::mojom::DirectoryRequest request);
-
-  Instance* GetInstanceForUserId(const std::string& user_id);
 
   service_manager::mojom::ServicePtr service_;
   std::unique_ptr<service_manager::ServiceContext> service_context_;

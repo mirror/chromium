@@ -31,6 +31,8 @@ class Instance : public service_manager::mojom::Resolver,
   void BindResolver(service_manager::mojom::ResolverRequest request);
   void BindCatalog(mojom::CatalogRequest request);
 
+  const Entry* Resolve(const std::string& service_name);
+
  private:
   // service_manager::mojom::Resolver:
   void ResolveServiceName(const std::string& service_name,

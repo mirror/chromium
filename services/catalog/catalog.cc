@@ -181,6 +181,17 @@ void Catalog::LoadDefaultCatalogManifest(const base::FilePath& path) {
   catalog::Catalog::SetDefaultCatalogManifest(std::move(manifest_value));
 }
 
+Instance* Catalog::GetInstanceForUserId(const std::string& user_id) {
+  auto it = instances_.find(user_id);
+  if (it != instances_.end())
+    return it->second.get();
+
+  auto result = instances_.insert(std::make_pair(
+      user_id,
+      base::MakeUnique<Instance>(&system_cache_, service_manifest_provider_)));
+  return result.first->second.get();
+}
+
 void Catalog::BindResolverRequest(
     const service_manager::BindSourceInfo& source_info,
     service_manager::mojom::ResolverRequest request) {
@@ -208,17 +219,6 @@ void Catalog::BindDirectoryRequest(
           resources_path, scoped_refptr<filesystem::SharedTempDir>(),
           lock_table_),
       std::move(request));
-}
-
-Instance* Catalog::GetInstanceForUserId(const std::string& user_id) {
-  auto it = instances_.find(user_id);
-  if (it != instances_.end())
-    return it->second.get();
-
-  auto result = instances_.insert(std::make_pair(
-      user_id,
-      base::MakeUnique<Instance>(&system_cache_, service_manifest_provider_)));
-  return result.first->second.get();
 }
 
 }  // namespace catalog

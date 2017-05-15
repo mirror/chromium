@@ -45,35 +45,43 @@ void Instance::BindCatalog(mojom::CatalogRequest request) {
   catalog_bindings_.AddBinding(this, std::move(request));
 }
 
+const Entry* Instance::Resolve(const std::string& service_name) {
+  DCHECK(system_cache_);
+  const Entry* cached_entry = system_cache_->GetEntry(service_name);
+  if (cached_entry)
+    return cached_entry;
+
+  std::unique_ptr<base::Value> new_manifest;
+  if (service_manifest_provider_)
+    new_manifest = service_manifest_provider_->GetManifest(service_name);
+
+  if (!new_manifest) {
+    LOG(ERROR) << "Unable to locate service manifest for " << service_name;
+    return nullptr;
+  }
+
+  auto new_entry = Entry::Deserialize(*new_manifest);
+  if (!new_entry) {
+    LOG(ERROR) << "Malformed manifest for " << service_name;
+    return nullptr;
+  }
+
+  cached_entry = const_cast<const Entry*>(new_entry.get());
+  bool added = system_cache_->AddRootEntry(std::move(new_entry));
+  DCHECK(added);
+  return cached_entry;
+}
+
 void Instance::ResolveServiceName(const std::string& service_name,
                                   const ResolveServiceNameCallback& callback) {
-  DCHECK(system_cache_);
-
   // TODO(beng): per-user catalogs.
-  const Entry* entry = system_cache_->GetEntry(service_name);
+  const Entry* entry = Resolve(service_name);
   if (entry) {
     callback.Run(service_manager::mojom::ResolveResult::From(entry),
                  GetNameFromEntry(entry->parent()));
     return;
-  } else if (service_manifest_provider_) {
-    auto manifest = service_manifest_provider_->GetManifest(service_name);
-    if (manifest) {
-      auto entry = Entry::Deserialize(*manifest);
-      if (entry) {
-        callback.Run(service_manager::mojom::ResolveResult::From(
-                         const_cast<const Entry*>(entry.get())),
-                     GetNameFromEntry(entry->parent()));
-
-        bool added = system_cache_->AddRootEntry(std::move(entry));
-        DCHECK(added);
-        return;
-      } else {
-        LOG(ERROR) << "Received malformed manifest for " << service_name;
-      }
-    }
   }
 
-  LOG(ERROR) << "Unable to locate service manifest for " << service_name;
   callback.Run(nullptr, base::nullopt);
 }
 
