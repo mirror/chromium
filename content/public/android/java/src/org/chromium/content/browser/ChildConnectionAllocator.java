@@ -40,7 +40,8 @@ public class ChildConnectionAllocator {
                 ChildProcessConnection.DeathCallback deathCallback,
                 Bundle childProcessCommonParameters, String serviceClassName) {
             return new ChildProcessConnection(spawnData.getContext(), deathCallback,
-                    serviceClassName, childProcessCommonParameters, spawnData.getCreationParams());
+                    spawnData.isInSandbox(), serviceClassName, childProcessCommonParameters,
+                    spawnData.getCreationParams());
         }
     }
 

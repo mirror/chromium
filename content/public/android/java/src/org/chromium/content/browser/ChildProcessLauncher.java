@@ -131,8 +131,8 @@ public class ChildProcessLauncher {
         final ChildProcessCreationParams creationParams = spawnData.getCreationParams();
         final Context context = spawnData.getContext();
         final boolean inSandbox = spawnData.isInSandbox();
-        String packageName =
-                creationParams != null ? creationParams.getPackageName() : context.getPackageName();
+        String packageName = ChildProcessConnection.getPackageNameFromCreationParams(
+                context, creationParams, inSandbox);
         ChildConnectionAllocator allocator =
                 getConnectionAllocator(context, packageName, inSandbox);
         ChildProcessConnection connection =
@@ -196,8 +196,8 @@ public class ChildProcessLauncher {
             boolean useStrongBinding = !inSandbox;
             connection.start(useStrongBinding, startCallback);
 
-            String packageName = creationParams != null ? creationParams.getPackageName()
-                                                        : context.getPackageName();
+            String packageName = ChildProcessConnection.getPackageNameFromCreationParams(
+                    context, creationParams, inSandbox);
             if (inSandbox
                     && !getConnectionAllocator(context, packageName, true /* sandboxed */)
                                 .isFreeConnectionAvailable()) {
@@ -419,21 +419,6 @@ public class ChildProcessLauncher {
             throw new RuntimeException("CreationParams id " + paramId + " not found");
         }
         if (!ContentSwitches.SWITCH_RENDERER_PROCESS.equals(processType)) {
-            if (params != null && !params.getPackageName().equals(context.getPackageName())) {
-                // WebViews and WebAPKs have renderer processes running in their applications.
-                // When launching these renderer processes, {@link ChildProcessConnection}
-                // requires the package name of the application which holds the renderer process.
-                // Therefore, the package name in ChildProcessCreationParams could be the package
-                // name of WebViews, WebAPKs, or Chrome, depending on the host application.
-                // Except renderer process, all other child processes should use Chrome's package
-                // name. In WebAPK, ChildProcessCreationParams are initialized with WebAPK's
-                // package name. Make a copy of the WebAPK's params, but replace the package with
-                // Chrome's package to use when initializing a non-renderer processes.
-                // TODO(boliu): Should fold into |paramId|. Investigate why this is needed.
-                params = new ChildProcessCreationParams(context.getPackageName(),
-                        params.getIsExternalService(), params.getLibraryProcessType(),
-                        params.getBindToCallerCheck());
-            }
             if (ContentSwitches.SWITCH_GPU_PROCESS.equals(processType)) {
                 childProcessCallback = new GpuProcessCallback();
                 inSandbox = false;
@@ -459,8 +444,8 @@ public class ChildProcessLauncher {
             TraceEvent.begin("ChildProcessLauncher.startInternal");
 
             ChildProcessConnection allocatedConnection = null;
-            String packageName = creationParams != null ? creationParams.getPackageName()
-                    : context.getPackageName();
+            String packageName = ChildProcessConnection.getPackageNameFromCreationParams(
+                    context, creationParams, inSandbox);
             ChildProcessConnection.StartCallback startCallback =
                     new ChildProcessConnection.StartCallback() {
                         @Override

@@ -116,8 +116,8 @@ class ChildProcessLauncherHelper {
     private static int getNumberOfRendererSlots() {
         final ChildProcessCreationParams params = ChildProcessCreationParams.getDefault();
         final Context context = ContextUtils.getApplicationContext();
-        final String packageName =
-                params == null ? context.getPackageName() : params.getPackageName();
+        final String packageName = ChildProcessConnection.getPackageNameFromCreationParams(
+                context, params, true /* inSandbox */);
         try {
             return ChildProcessLauncher.getNumberOfSandboxedServices(context, packageName);
         } catch (RuntimeException e) {

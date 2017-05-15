@@ -46,8 +46,8 @@ public class ChildProcessLauncherIntegrationTest {
                 ChildProcessConnection.DeathCallback deathCallback,
                 Bundle childProcessCommonParameters, String serviceClassName) {
             TestChildProcessConnection connection = new TestChildProcessConnection(
-                    spawnData.getContext(), deathCallback, serviceClassName,
-                    childProcessCommonParameters, spawnData.getCreationParams());
+                    spawnData.getContext(), deathCallback, spawnData.isInSandbox(),
+                    serviceClassName, childProcessCommonParameters, spawnData.getCreationParams());
             mConnections.add(connection);
             return connection;
         }
@@ -61,9 +61,10 @@ public class ChildProcessLauncherIntegrationTest {
         private RuntimeException mRemovedBothInitialAndStrongBinding;
 
         public TestChildProcessConnection(Context context,
-                ChildProcessConnection.DeathCallback deathCallback, String serviceClassName,
-                Bundle childProcessCommonParameters, ChildProcessCreationParams creationParams) {
-            super(context, deathCallback, serviceClassName, childProcessCommonParameters,
+                ChildProcessConnection.DeathCallback deathCallback, boolean inSandbox,
+                String serviceClassName, Bundle childProcessCommonParameters,
+                ChildProcessCreationParams creationParams) {
+            super(context, deathCallback, inSandbox, serviceClassName, childProcessCommonParameters,
                     creationParams);
         }
 
