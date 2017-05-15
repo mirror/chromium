@@ -713,14 +713,19 @@ struct CC_PAINT_EXPORT SaveLayerOp final : PaintOpWithFlags {
 
 struct CC_PAINT_EXPORT SaveLayerAlphaOp final : PaintOp {
   static constexpr PaintOpType kType = PaintOpType::SaveLayerAlpha;
-  SaveLayerAlphaOp(const SkRect* bounds, uint8_t alpha)
-      : bounds(bounds ? *bounds : kUnsetRect), alpha(alpha) {}
+  SaveLayerAlphaOp(const SkRect* bounds,
+                   uint8_t alpha,
+                   bool preserve_lcd_text_requests)
+      : bounds(bounds ? *bounds : kUnsetRect),
+        alpha(alpha),
+        preserve_lcd_text_requests(preserve_lcd_text_requests) {}
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
 
   SkRect bounds;
   uint8_t alpha;
+  bool preserve_lcd_text_requests;
 };
 
 struct CC_PAINT_EXPORT ScaleOp final : PaintOp {
@@ -783,6 +788,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   size_t approximateBytesUsed() const {
     return sizeof(*this) + reserved_ + subrecord_bytes_used_;
   }
+  int size() const { return op_count_; }
   int numSlowPaths() const { return num_slow_paths_; }
   bool HasDiscardableImages() const { return has_discardable_images_; }
 

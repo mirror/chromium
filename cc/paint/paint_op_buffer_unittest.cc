@@ -146,7 +146,7 @@ TEST(PaintOpBufferTest, Peek) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
   PaintFlags draw_flags;
   buffer.push<DrawRectOp>(SkRect::MakeXYWH(1, 2, 3, 4), draw_flags);
   buffer.push<RestoreOp>();
@@ -269,7 +269,7 @@ TEST(PaintOpBufferTest, SaveDrawRestore) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
 
   PaintFlags draw_flags;
   draw_flags.setColor(SK_ColorMAGENTA);
@@ -299,7 +299,7 @@ TEST(PaintOpBufferTest, SaveDrawRestoreFail_BadFlags) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
 
   PaintFlags draw_flags;
   draw_flags.setColor(SK_ColorMAGENTA);
@@ -325,7 +325,7 @@ TEST(PaintOpBufferTest, SaveDrawRestoreFail_TooManyOps) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
 
   PaintFlags draw_flags;
   draw_flags.setColor(SK_ColorMAGENTA);
@@ -352,7 +352,7 @@ TEST(PaintOpBufferTest, SaveDrawRestore_SingleOpNotADrawOp) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
 
   buffer.push<NoopOp>();
   buffer.push<RestoreOp>();
@@ -380,7 +380,7 @@ TEST(PaintOpBufferTest, SaveDrawRestore_SingleOpRecordWithSingleOp) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
   buffer.push<DrawRecordOp>(std::move(record));
   buffer.push<RestoreOp>();
 
@@ -408,7 +408,7 @@ TEST(PaintOpBufferTest, SaveDrawRestore_SingleOpRecordWithSingleNonDrawOp) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
   buffer.push<DrawRecordOp>(std::move(record));
   buffer.push<RestoreOp>();
 
