@@ -75,8 +75,6 @@ LIBOBJ+= vdbe.o parse.o \
 	 vdbetrace.o wal.o walker.o where.o wherecode.o whereexpr.o \
          utf.o vtab.o
 
-LIBOBJ += recover.o recover_varint.o resolve.o
-
 LIBOBJ += sqlite3session.o
 
 # All of the source code files.
@@ -372,8 +370,6 @@ TESTSRC2 = \
   $(TOP)/src/prepare.c \
   $(TOP)/src/printf.c \
   $(TOP)/src/random.c \
-  $(TOP)/src/recover.c \
-  $(TOP)/src/recover_varint.c \
   $(TOP)/src/pcache.c \
   $(TOP)/src/pcache1.c \
   $(TOP)/src/select.c \
@@ -481,10 +477,9 @@ SHELL_OPT += -DSQLITE_ENABLE_EXPLAIN_COMMENTS
 SHELL_OPT += -DSQLITE_ENABLE_UNKNOWN_SQL_FUNCTION
 FUZZERSHELL_OPT = -DSQLITE_ENABLE_JSON1
 FUZZCHECK_OPT = -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_MEMSYS5
+FUZZCHECK_OPT += -DSQLITE_MAX_MEMORY=50000000
 DBFUZZ_OPT =
 KV_OPT = -DSQLITE_THREADSAFE=0 -DSQLITE_DIRECT_OVERFLOW_READ
-DBSELFTEST_OPT = -DSQLITE_THREADSAFE=0 -DSQLITE_OMIT_LOAD_EXTENSION
-DBSELFTEST_OPT += -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_FTS5
 ST_OPT = -DSQLITE_THREADSAFE=0
 
 # This is the default Makefile target.  The objects listed here
@@ -498,7 +493,7 @@ libsqlite3.a:	$(LIBOBJ)
 
 sqlite3$(EXE):	$(TOP)/src/shell.c libsqlite3.a sqlite3.h
 	$(TCCX) $(READLINE_FLAGS) -o sqlite3$(EXE) $(SHELL_OPT) \
-		$(TOP)/src/shell.c $(SHELL_ICU) libsqlite3.a $(LIBREADLINE) $(TLIBS) $(THREADLIB)
+		$(TOP)/src/shell.c libsqlite3.a $(LIBREADLINE) $(TLIBS) $(THREADLIB)
 
 sqldiff$(EXE):	$(TOP)/tool/sqldiff.c sqlite3.c sqlite3.h
 	$(TCCX) -o sqldiff$(EXE) -DSQLITE_THREADSAFE=0 \
@@ -764,7 +759,11 @@ sqlite3_analyzer.c: sqlite3.c $(TOP)/src/tclsqlite.c $(TOP)/tool/spaceanal.tcl
 	echo "; return zMainloop; }" >> $@
 
 sqlite3_analyzer$(EXE): sqlite3_analyzer.c
-	$(TCCX) $(TCL_FLAGS) sqlite3_analyzer.c -o $@ $(LIBTCL) $(TLIBS) $(THREADLIB)
+	$(TCCX) $(TCL_FLAGS) sqlite3_analyzer.c -o $@ $(LIBTCL) $(THREADLIB) 
+
+dbdump$(EXE):	$(TOP)/ext/misc/dbdump.c sqlite3.o
+	$(TCCX) -DDBDUMP_STANDALONE -o dbdump$(EXE) \
+            $(TOP)/ext/misc/dbdump.c sqlite3.o $(THREADLIB)
 
 # Rules to build the 'testfixture' application.
 #
@@ -772,7 +771,6 @@ TESTFIXTURE_FLAGS  = -DSQLITE_TEST=1 -DSQLITE_CRASH_TEST=1
 TESTFIXTURE_FLAGS += -DSQLITE_SERVER=1 -DSQLITE_PRIVATE="" -DSQLITE_CORE
 TESTFIXTURE_FLAGS += -DSQLITE_SERIES_CONSTRAINT_VERIFY=1
 TESTFIXTURE_FLAGS += -DSQLITE_DEFAULT_PAGE_SIZE=1024
-TESTFIXTURE_FLAGS += -DDEFAULT_ENABLE_RECOVER=1
 
 testfixture$(EXE): $(TESTSRC2) libsqlite3.a $(TESTSRC) $(TOP)/src/tclsqlite.c
 	$(TCCX) $(TCL_FLAGS) -DTCLSH=1 $(TESTFIXTURE_FLAGS)                  \
@@ -906,9 +904,6 @@ speedtest1$(EXE):	$(TOP)/test/speedtest1.c sqlite3.c
 
 kvtest$(EXE):	$(TOP)/test/kvtest.c sqlite3.c
 	$(TCCX) -I. $(KV_OPT) -o kvtest$(EXE) $(TOP)/test/kvtest.c sqlite3.c $(THREADLIB) 
-
-dbselftest$(EXE):	$(TOP)/test/dbselftest.c sqlite3.c
-	$(TCCX) -I. $(DBSELFTEST_OPT) -o dbselftest$(EXE) $(TOP)/test/dbselftest.c sqlite3.c $(THREADLIB)
 
 rbu$(EXE): $(TOP)/ext/rbu/rbu.c $(TOP)/ext/rbu/sqlite3rbu.c sqlite3.o 
 	$(TCC) -I. -o rbu$(EXE) $(TOP)/ext/rbu/rbu.c sqlite3.o \
