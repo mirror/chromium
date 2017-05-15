@@ -813,8 +813,9 @@ void UserManagerScreenHandler::GetLocalizedValues(
       l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_PASSWORDS));
   localized_strings->SetString("removeUserWarningTextBookmarks",
       l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_BOOKMARKS));
-  localized_strings->SetString("removeUserWarningTextSettings",
-      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_SETTINGS));
+  localized_strings->SetString(
+      "removeUserWarningTextAutofill",
+      l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_AUTOFILL));
   localized_strings->SetString("removeUserWarningTextCalculating",
       l10n_util::GetStringUTF16(IDS_LOGIN_POD_USER_REMOVE_WARNING_CALCULATING));
   localized_strings->SetString("removeUserWarningTextSyncNoStats",

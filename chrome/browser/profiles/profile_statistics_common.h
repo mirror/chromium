@@ -15,12 +15,12 @@ namespace profiles {
 extern const char kProfileStatisticsBrowsingHistory[];
 extern const char kProfileStatisticsPasswords[];
 extern const char kProfileStatisticsBookmarks[];
-extern const char kProfileStatisticsSettings[];
+extern const char kProfileStatisticsAutofill[];
 
 // Definition of a single return value of |ProfileStatisticsCallback|. If
 // |success| is false, the statistics failed to load and |count| is undefined.
 // The data look like these: {"BrowsingHistory", 912, true},
-// {"Passwords", 71, true}, {"Bookmarks", 120, true}, {"Settings", 200, true}
+// {"Passwords", 71, true}, {"Bookmarks", 120, true}, {"Autofill", 200, true}
 struct ProfileCategoryStat {
   std::string category;
   int count;

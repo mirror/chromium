@@ -118,7 +118,7 @@ TEST_F(ProfileStatisticsTest, ProfileAttributesStorage) {
   categories_to_check.push_back(profiles::kProfileStatisticsBrowsingHistory);
   categories_to_check.push_back(profiles::kProfileStatisticsPasswords);
   categories_to_check.push_back(profiles::kProfileStatisticsBookmarks);
-  categories_to_check.push_back(profiles::kProfileStatisticsSettings);
+  categories_to_check.push_back(profiles::kProfileStatisticsAutofill);
 
   std::vector<std::pair<std::string, int>> insertions;
   int num = 3;
@@ -152,12 +152,11 @@ TEST_F(ProfileStatisticsTest, WaitOrCountBookmarks) {
   BookmarkStatHelper bookmark_stat_helper;
   base::RunLoop run_loop_aggregator_done;
 
-  scoped_refptr<ProfileStatisticsAggregator> aggregator =
-      new ProfileStatisticsAggregator(
-          profile,
-          base::Bind(&BookmarkStatHelper::StatsCallback,
-                     base::Unretained(&bookmark_stat_helper)),
-          run_loop_aggregator_done.QuitClosure());
+  auto aggregator = base::MakeUnique<ProfileStatisticsAggregator>(
+      profile,
+      base::Bind(&BookmarkStatHelper::StatsCallback,
+                 base::Unretained(&bookmark_stat_helper)),
+      run_loop_aggregator_done.QuitClosure());
 
   // Wait until ProfileStatisticsAggregator::WaitOrCountBookmarks is run.
   base::RunLoop run_loop1;
