@@ -55,10 +55,6 @@ struct CC_EXPORT ClipNode {
   // transform node.
   gfx::RectF clip;
 
-  // Each element of this cache stores the accumulated clip from this clip
-  // node to a particular target.
-  mutable std::vector<ClipRectData> cached_clip_rects;
-
   // This rect accumulates all clips from this node to the root in screen space.
   // It is used in the computation of layer's visible rect.
   gfx::RectF cached_accumulated_rect_in_screen_space;
