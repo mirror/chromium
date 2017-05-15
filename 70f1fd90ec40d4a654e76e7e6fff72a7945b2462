@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0cda6fe_0f0d2cfb",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-15T04:28:35Z",
+      "side": 1,
+      "message": "nit: probably this should follow the closing brace and you might have to pull the comment inside the block",
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb21ebb_d160cd31",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-15T04:28:35Z",
+      "side": 1,
+      "message": "nit: \"Eventually\" makes it sound a bit like the code isn\u0027t there yet. I would suggest having:\nBy default, this opens the general Content Settings pane. If the |kSiteSettings| and/or |kSiteDetails| flags are enabled this opens a settings page specific to the current origin of the page.\n\nThe TODO probably isn\u0027t needed. You can link the bug in the definition of the feature flag if you feel like.",
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
