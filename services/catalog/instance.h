@@ -34,7 +34,7 @@ class Instance : public service_manager::mojom::Resolver,
  private:
   // service_manager::mojom::Resolver:
   void ResolveServiceName(const std::string& service_name,
-                          const ResolveServiceNameCallback& callback) override;
+                          ResolveServiceNameCallback callback) override;
 
   // mojom::Catalog:
   void GetEntries(const base::Optional<std::vector<std::string>>& names,

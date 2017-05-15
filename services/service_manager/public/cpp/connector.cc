@@ -32,10 +32,11 @@ std::unique_ptr<Connector> Connector::Create(mojom::ConnectorRequest* request) {
 }
 
 void Connector::StartService(const Identity& identity) {
-  if (BindConnectorIfNecessary())
-    connector_->StartService(identity,
-                             base::Bind(&Connector::RunStartServiceCallback,
-                                        weak_factory_.GetWeakPtr()));
+  if (BindConnectorIfNecessary()) {
+    connector_->StartService(
+        identity, base::Bind(&Connector::RunAndResetStartServiceCallback,
+                             weak_factory_.GetWeakPtr()));
+  }
 }
 
 void Connector::StartService(const std::string& name) {
@@ -52,7 +53,7 @@ void Connector::StartService(const Identity& identity,
   connector_->StartServiceWithProcess(
       identity, service.PassInterface().PassHandle(),
       std::move(pid_receiver_request),
-      base::Bind(&Connector::RunStartServiceCallback,
+      base::Bind(&Connector::RunAndResetStartServiceCallback,
                  weak_factory_.GetWeakPtr()));
 }
 
@@ -71,9 +72,10 @@ void Connector::BindInterface(const Identity& target,
     }
   }
 
-  connector_->BindInterface(target, interface_name, std::move(interface_pipe),
-                            base::Bind(&Connector::RunStartServiceCallback,
-                                       weak_factory_.GetWeakPtr()));
+  connector_->BindInterface(
+      target, interface_name, std::move(interface_pipe),
+      base::Bind(&Connector::RunAndResetStartServiceCallback,
+                 weak_factory_.GetWeakPtr()));
 }
 
 std::unique_ptr<Connector> Connector::Clone() {
@@ -124,8 +126,8 @@ void Connector::ClearBinderOverrides() {
 }
 
 void Connector::SetStartServiceCallback(
-    const Connector::StartServiceCallback& callback) {
-  start_service_callback_ = callback;
+    Connector::StartServiceCallback callback) {
+  start_service_callback_ = std::move(callback);
 }
 
 void Connector::ResetStartServiceCallback() {
@@ -155,10 +157,10 @@ bool Connector::BindConnectorIfNecessary() {
   return true;
 }
 
-void Connector::RunStartServiceCallback(mojom::ConnectResult result,
-                                        const Identity& user_id) {
+void Connector::RunAndResetStartServiceCallback(mojom::ConnectResult result,
+                                                const Identity& user_id) {
   if (!start_service_callback_.is_null())
-    start_service_callback_.Run(result, user_id);
+    std::move(start_service_callback_).Run(result, user_id);
 }
 
 }  // namespace service_manager

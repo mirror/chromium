@@ -108,11 +108,11 @@ class ServiceContext : public mojom::Service {
   friend class service_manager::Service;
 
   // mojom::Service:
-  void OnStart(const Identity& info, const OnStartCallback& callback) override;
+  void OnStart(const Identity& info, OnStartCallback callback) override;
   void OnBindInterface(const BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe,
-                       const OnBindInterfaceCallback& callback) override;
+                       OnBindInterfaceCallback callback) override;
 
   void OnConnectionError();
 

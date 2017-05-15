@@ -68,10 +68,10 @@ void ServiceContext::QuitNow() {
 // ServiceContext, mojom::Service implementation:
 
 void ServiceContext::OnStart(const Identity& identity,
-                             const OnStartCallback& callback) {
+                             OnStartCallback callback) {
   identity_ = identity;
-  callback.Run(std::move(pending_connector_request_),
-               mojo::MakeRequest(&service_control_));
+  std::move(callback).Run(std::move(pending_connector_request_),
+                          mojo::MakeRequest(&service_control_));
   service_->OnStart();
 }
 
@@ -79,9 +79,9 @@ void ServiceContext::OnBindInterface(
     const BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe,
-    const OnBindInterfaceCallback& callback) {
+    OnBindInterfaceCallback callback) {
   // Acknowledge the request regardless of whether it's accepted.
-  callback.Run();
+  std::move(callback).Run();
 
   service_->OnBindInterface(source_info, interface_name,
                             std::move(interface_pipe));
