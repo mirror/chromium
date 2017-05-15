@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11851699_d1b7a8a5",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-15T17:40:19Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be necessary anymore.",
+      "range": {
+        "startLine": 225,
+        "startChar": 1,
+        "endLine": 225,
+        "endChar": 61
+      },
+      "revId": "af152a8582ca1605105ed44f0237159b1afef18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
