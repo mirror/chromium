@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-Found 163 tests; 2 PASS, 161 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 149 tests; 2 PASS, 147 FAIL, 0 TIMEOUT, 0 NOTRUN.
 FAIL Navigator interface: attribute usb assert_true: The prototype object must have a property "usb" expected true got false
 PASS Navigator must be primary interface of navigator 
 PASS Stringification of navigator 
@@ -13,8 +13,6 @@ FAIL USB interface: attribute onconnect assert_own_property: self does not have 
 FAIL USB interface: attribute ondisconnect assert_own_property: self does not have own property "USB" expected property "USB" missing
 FAIL USB interface: operation getDevices() assert_own_property: self does not have own property "USB" expected property "USB" missing
 FAIL USB interface: operation requestDevice(USBDeviceRequestOptions) assert_own_property: self does not have own property "USB" expected property "USB" missing
-FAIL USB must be primary interface of navigator.usb assert_equals: wrong typeof object expected "object" but got "undefined"
-FAIL Stringification of navigator.usb assert_equals: wrong typeof object expected "object" but got "undefined"
 FAIL USB interface: navigator.usb must inherit property "onconnect" with the proper type (0) assert_equals: wrong typeof object expected "object" but got "undefined"
 FAIL USB interface: navigator.usb must inherit property "ondisconnect" with the proper type (1) assert_equals: wrong typeof object expected "object" but got "undefined"
 FAIL USB interface: navigator.usb must inherit property "getDevices" with the proper type (2) assert_equals: wrong typeof object expected "object" but got "undefined"
@@ -69,8 +67,6 @@ FAIL USBInTransferResult interface: existence and properties of interface protot
 FAIL USBInTransferResult interface: existence and properties of interface prototype object's "constructor" property assert_own_property: self does not have own property "USBInTransferResult" expected property "USBInTransferResult" missing
 FAIL USBInTransferResult interface: attribute data assert_own_property: self does not have own property "USBInTransferResult" expected property "USBInTransferResult" missing
 FAIL USBInTransferResult interface: attribute status assert_own_property: self does not have own property "USBInTransferResult" expected property "USBInTransferResult" missing
-FAIL USBInTransferResult must be primary interface of new USBInTransferResult("ok") assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBInTransferResult is not defined"
-FAIL Stringification of new USBInTransferResult("ok") assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBInTransferResult is not defined"
 FAIL USBInTransferResult interface: new USBInTransferResult("ok") must inherit property "data" with the proper type (0) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBInTransferResult is not defined"
 FAIL USBInTransferResult interface: new USBInTransferResult("ok") must inherit property "status" with the proper type (1) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBInTransferResult is not defined"
 FAIL USBOutTransferResult interface: existence and properties of interface object assert_own_property: self does not have own property "USBOutTransferResult" expected property "USBOutTransferResult" missing
@@ -80,8 +76,6 @@ FAIL USBOutTransferResult interface: existence and properties of interface proto
 FAIL USBOutTransferResult interface: existence and properties of interface prototype object's "constructor" property assert_own_property: self does not have own property "USBOutTransferResult" expected property "USBOutTransferResult" missing
 FAIL USBOutTransferResult interface: attribute bytesWritten assert_own_property: self does not have own property "USBOutTransferResult" expected property "USBOutTransferResult" missing
 FAIL USBOutTransferResult interface: attribute status assert_own_property: self does not have own property "USBOutTransferResult" expected property "USBOutTransferResult" missing
-FAIL USBOutTransferResult must be primary interface of new USBOutTransferResult("ok") assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBOutTransferResult is not defined"
-FAIL Stringification of new USBOutTransferResult("ok") assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBOutTransferResult is not defined"
 FAIL USBOutTransferResult interface: new USBOutTransferResult("ok") must inherit property "bytesWritten" with the proper type (0) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBOutTransferResult is not defined"
 FAIL USBOutTransferResult interface: new USBOutTransferResult("ok") must inherit property "status" with the proper type (1) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBOutTransferResult is not defined"
 FAIL USBIsochronousInTransferPacket interface: existence and properties of interface object assert_own_property: self does not have own property "USBIsochronousInTransferPacket" expected property "USBIsochronousInTransferPacket" missing
@@ -91,8 +85,6 @@ FAIL USBIsochronousInTransferPacket interface: existence and properties of inter
 FAIL USBIsochronousInTransferPacket interface: existence and properties of interface prototype object's "constructor" property assert_own_property: self does not have own property "USBIsochronousInTransferPacket" expected property "USBIsochronousInTransferPacket" missing
 FAIL USBIsochronousInTransferPacket interface: attribute data assert_own_property: self does not have own property "USBIsochronousInTransferPacket" expected property "USBIsochronousInTransferPacket" missing
 FAIL USBIsochronousInTransferPacket interface: attribute status assert_own_property: self does not have own property "USBIsochronousInTransferPacket" expected property "USBIsochronousInTransferPacket" missing
-FAIL USBIsochronousInTransferPacket must be primary interface of new USBIsochronousInTransferPacket("ok") assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousInTransferPacket is not defined"
-FAIL Stringification of new USBIsochronousInTransferPacket("ok") assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousInTransferPacket is not defined"
 FAIL USBIsochronousInTransferPacket interface: new USBIsochronousInTransferPacket("ok") must inherit property "data" with the proper type (0) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousInTransferPacket is not defined"
 FAIL USBIsochronousInTransferPacket interface: new USBIsochronousInTransferPacket("ok") must inherit property "status" with the proper type (1) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousInTransferPacket is not defined"
 FAIL USBIsochronousInTransferResult interface: existence and properties of interface object assert_own_property: self does not have own property "USBIsochronousInTransferResult" expected property "USBIsochronousInTransferResult" missing
@@ -102,8 +94,6 @@ FAIL USBIsochronousInTransferResult interface: existence and properties of inter
 FAIL USBIsochronousInTransferResult interface: existence and properties of interface prototype object's "constructor" property assert_own_property: self does not have own property "USBIsochronousInTransferResult" expected property "USBIsochronousInTransferResult" missing
 FAIL USBIsochronousInTransferResult interface: attribute data assert_own_property: self does not have own property "USBIsochronousInTransferResult" expected property "USBIsochronousInTransferResult" missing
 FAIL USBIsochronousInTransferResult interface: attribute packets assert_own_property: self does not have own property "USBIsochronousInTransferResult" expected property "USBIsochronousInTransferResult" missing
-FAIL USBIsochronousInTransferResult must be primary interface of new USBIsochronousInTransferResult([]) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousInTransferResult is not defined"
-FAIL Stringification of new USBIsochronousInTransferResult([]) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousInTransferResult is not defined"
 FAIL USBIsochronousInTransferResult interface: new USBIsochronousInTransferResult([]) must inherit property "data" with the proper type (0) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousInTransferResult is not defined"
 FAIL USBIsochronousInTransferResult interface: new USBIsochronousInTransferResult([]) must inherit property "packets" with the proper type (1) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousInTransferResult is not defined"
 FAIL USBIsochronousOutTransferPacket interface: existence and properties of interface object assert_own_property: self does not have own property "USBIsochronousOutTransferPacket" expected property "USBIsochronousOutTransferPacket" missing
@@ -113,8 +103,6 @@ FAIL USBIsochronousOutTransferPacket interface: existence and properties of inte
 FAIL USBIsochronousOutTransferPacket interface: existence and properties of interface prototype object's "constructor" property assert_own_property: self does not have own property "USBIsochronousOutTransferPacket" expected property "USBIsochronousOutTransferPacket" missing
 FAIL USBIsochronousOutTransferPacket interface: attribute bytesWritten assert_own_property: self does not have own property "USBIsochronousOutTransferPacket" expected property "USBIsochronousOutTransferPacket" missing
 FAIL USBIsochronousOutTransferPacket interface: attribute status assert_own_property: self does not have own property "USBIsochronousOutTransferPacket" expected property "USBIsochronousOutTransferPacket" missing
-FAIL USBIsochronousOutTransferPacket must be primary interface of new USBIsochronousOutTransferPacket("ok") assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousOutTransferPacket is not defined"
-FAIL Stringification of new USBIsochronousOutTransferPacket("ok") assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousOutTransferPacket is not defined"
 FAIL USBIsochronousOutTransferPacket interface: new USBIsochronousOutTransferPacket("ok") must inherit property "bytesWritten" with the proper type (0) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousOutTransferPacket is not defined"
 FAIL USBIsochronousOutTransferPacket interface: new USBIsochronousOutTransferPacket("ok") must inherit property "status" with the proper type (1) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousOutTransferPacket is not defined"
 FAIL USBIsochronousOutTransferResult interface: existence and properties of interface object assert_own_property: self does not have own property "USBIsochronousOutTransferResult" expected property "USBIsochronousOutTransferResult" missing
@@ -123,8 +111,6 @@ FAIL USBIsochronousOutTransferResult interface object name assert_own_property: 
 FAIL USBIsochronousOutTransferResult interface: existence and properties of interface prototype object assert_own_property: self does not have own property "USBIsochronousOutTransferResult" expected property "USBIsochronousOutTransferResult" missing
 FAIL USBIsochronousOutTransferResult interface: existence and properties of interface prototype object's "constructor" property assert_own_property: self does not have own property "USBIsochronousOutTransferResult" expected property "USBIsochronousOutTransferResult" missing
 FAIL USBIsochronousOutTransferResult interface: attribute packets assert_own_property: self does not have own property "USBIsochronousOutTransferResult" expected property "USBIsochronousOutTransferResult" missing
-FAIL USBIsochronousOutTransferResult must be primary interface of new USBIsochronousOutTransferResult([]) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousOutTransferResult is not defined"
-FAIL Stringification of new USBIsochronousOutTransferResult([]) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousOutTransferResult is not defined"
 FAIL USBIsochronousOutTransferResult interface: new USBIsochronousOutTransferResult([]) must inherit property "packets" with the proper type (0) assert_equals: Unexpected exception when evaluating object expected null but got object "ReferenceError: USBIsochronousOutTransferResult is not defined"
 FAIL USBConfiguration interface: existence and properties of interface object assert_own_property: self does not have own property "USBConfiguration" expected property "USBConfiguration" missing
 FAIL USBConfiguration interface object length assert_own_property: self does not have own property "USBConfiguration" expected property "USBConfiguration" missing
