@@ -1709,10 +1709,6 @@ void RenderViewImpl::FocusedNodeChanged(const WebNode& fromNode,
                                         const WebNode& toNode) {
   has_scrolled_focused_editable_node_into_rect_ = false;
 
-  // TODO(estade): remove.
-  for (auto& observer : observers_)
-    observer.FocusedNodeChanged(toNode);
-
   RenderFrameImpl* previous_frame = nullptr;
   if (!fromNode.IsNull())
     previous_frame =
@@ -1732,9 +1728,6 @@ void RenderViewImpl::FocusedNodeChanged(const WebNode& fromNode,
 }
 
 void RenderViewImpl::DidUpdateLayout() {
-  for (auto& observer : observers_)
-    observer.DidUpdateLayout();
-
   // We don't always want to set up a timer, only if we've been put in that
   // mode by getting a |ViewMsg_EnablePreferredSizeChangedMode|
   // message.
@@ -2147,8 +2140,6 @@ void RenderViewImpl::OnPluginActionAt(const gfx::Point& location,
 }
 
 void RenderViewImpl::OnClosePage() {
-  for (auto& observer : observers_)
-    observer.ClosePage();
   // TODO(creis): We'd rather use webview()->Close() here, but that currently
   // sets the WebView's delegate_ to NULL, preventing any JavaScript dialogs
   // in the onunload handler from appearing.  For now, we're bypassing that and

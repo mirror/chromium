@@ -17,7 +17,6 @@ namespace blink {
 class WebFrame;
 class WebGestureEvent;
 class WebLocalFrame;
-class WebNode;
 struct WebURLError;
 }
 
@@ -39,34 +38,21 @@ class CONTENT_EXPORT RenderViewObserver : public IPC::Listener,
   // These match the WebKit API notifications
   virtual void DidStartLoading() {}
   virtual void DidStopLoading() {}
-  virtual void DidFinishDocumentLoad(blink::WebLocalFrame* frame) {}
-  virtual void DidFailLoad(blink::WebLocalFrame* frame,
-                           const blink::WebURLError& error) {}
   virtual void DidFinishLoad(blink::WebLocalFrame* frame) {}
-  virtual void DidStartProvisionalLoad(blink::WebLocalFrame* frame) {}
   virtual void DidFailProvisionalLoad(blink::WebLocalFrame* frame,
                                       const blink::WebURLError& error) {}
   virtual void DidCommitProvisionalLoad(blink::WebLocalFrame* frame,
                                         bool is_new_navigation) {}
-  virtual void DidCreateNewDocument(blink::WebLocalFrame* frame) {}
   virtual void DidClearWindowObject(blink::WebLocalFrame* frame) {}
-  virtual void DidCreateDocumentElement(blink::WebLocalFrame* frame) {}
-  virtual void FrameCreated(blink::WebLocalFrame* parent,
-                            blink::WebFrame* frame) {}
-  virtual void FrameDetached(blink::WebFrame* frame) {}
-  virtual void FocusedNodeChanged(const blink::WebNode& node) {}
   virtual void DraggableRegionsChanged(blink::WebFrame* frame) {}
   virtual void DidCommitCompositorFrame() {}
-  virtual void DidUpdateLayout() {}
 
   // These match the RenderView methods.
   virtual void DidHandleGestureEvent(const blink::WebGestureEvent& event) {}
 
   // These match incoming IPCs.
   virtual void Navigate(const GURL& url) {}
-  virtual void ClosePage() {}
 
-  virtual void OnStop() {}
   virtual void OnZoomLevelChanged() {}
 
   // IPC::Listener implementation.
