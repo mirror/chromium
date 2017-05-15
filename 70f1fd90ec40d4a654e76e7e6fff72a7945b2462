@@ -33,6 +33,23 @@
       "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d79dad_e8468bf2",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-15T04:29:47Z",
+      "side": 1,
+      "message": "nit: !origin.empty()",
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
