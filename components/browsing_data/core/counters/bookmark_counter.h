@@ -15,11 +15,11 @@ class BookmarkModel;
 
 namespace browsing_data {
 
+class BookmarkModelHelper;
+
 class BookmarkCounter : public browsing_data::BrowsingDataCounter {
  public:
-  // This is not a registered preference. It is here because a pref_name
-  // is required for mapping a counter to ui elements.
-  static const char kPrefName[];
+  static const char kFakePrefName[];
 
   explicit BookmarkCounter(bookmarks::BookmarkModel* bookmark_model);
   ~BookmarkCounter() override;
@@ -30,10 +30,10 @@ class BookmarkCounter : public browsing_data::BrowsingDataCounter {
 
  private:
   void Count() override;
-  void CountBookmarks(const bookmarks::BookmarkModel* bookmark_model);
+  void CountBookmarks(bookmarks::BookmarkModel* bookmark_model);
 
   bookmarks::BookmarkModel* bookmark_model_;
-  base::WeakPtrFactory<BookmarkCounter> weak_ptr_factory_;
+  std::unique_ptr<BookmarkModelHelper> bookmark_model_helper_;
 };
 
 }  // namespace browsing_data

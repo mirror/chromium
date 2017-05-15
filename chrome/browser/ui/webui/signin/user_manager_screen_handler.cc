@@ -13,6 +13,7 @@
 #include "base/feature_list.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/single_thread_task_runner.h"
@@ -597,6 +598,7 @@ void UserManagerScreenHandler::HandleRemoveUserWarningLoadStats(
   if (!args->Get(0, &profile_path_value))
     return;
 
+  base::Time start_time = base::Time::Now();
   base::FilePath profile_path;
 
   if (!base::GetValueAsFilePath(*profile_path_value, &profile_path))
@@ -606,44 +608,30 @@ void UserManagerScreenHandler::HandleRemoveUserWarningLoadStats(
   Profile* profile = g_browser_process->profile_manager()->
       GetProfileByPath(profile_path);
 
-  if (!profile)
-    return;
-
-  if (!chrome::FindAnyBrowser(profile, true)) {
-    // If no windows are open for that profile, the statistics in
-    // ProfileAttributesStorage are up to date. The statistics in
-    // ProfileAttributesStorage are returned because the copy in user_pod_row.js
-    // may be outdated. However, if some statistics are missing in
-    // ProfileAttributesStorage (i.e. |item.success| is false), then the actual
-    // statistics are queried instead.
-    base::DictionaryValue return_value;
-    profiles::ProfileCategoryStats stats =
-        ProfileStatistics::GetProfileStatisticsFromAttributesStorage(
-            profile_path);
-    bool stats_success = true;
-    for (const auto& item : stats) {
-      std::unique_ptr<base::DictionaryValue> stat(new base::DictionaryValue);
-      stat->SetIntegerWithoutPathExpansion("count", item.count);
-      stat->SetBooleanWithoutPathExpansion("success", item.success);
-      return_value.SetWithoutPathExpansion(item.category, std::move(stat));
-      stats_success &= item.success;
-    }
-    if (stats_success) {
-      web_ui()->CallJavascriptFunctionUnsafe("updateRemoveWarningDialog",
-                                             base::Value(profile_path.value()),
-                                             return_value);
-      return;
-    }
+  if (profile) {
+    GatherStatistics(profile_path, start_time, profile);
+  } else {
+    g_browser_process->profile_manager()->LoadProfileByPath(
+        profile_path, false,
+        base::Bind(&UserManagerScreenHandler::GatherStatistics,
+                   weak_ptr_factory_.GetWeakPtr(), profile_path, start_time));
   }
+}
 
-  ProfileStatisticsFactory::GetForProfile(profile)->GatherStatistics(
-      base::Bind(
-          &UserManagerScreenHandler::RemoveUserDialogLoadStatsCallback,
-          weak_ptr_factory_.GetWeakPtr(), profile_path));
+void UserManagerScreenHandler::GatherStatistics(
+    const base::FilePath& profile_path,
+    base::Time start_time,
+    Profile* profile) {
+  if (profile) {
+    ProfileStatisticsFactory::GetForProfile(profile)->GatherStatistics(
+        base::Bind(&UserManagerScreenHandler::RemoveUserDialogLoadStatsCallback,
+                   weak_ptr_factory_.GetWeakPtr(), profile_path, start_time));
+  }
 }
 
 void UserManagerScreenHandler::RemoveUserDialogLoadStatsCallback(
     base::FilePath profile_path,
+    base::Time start_time,
     profiles::ProfileCategoryStats result) {
   // Copy result into return_value.
   base::DictionaryValue return_value;
@@ -652,6 +640,11 @@ void UserManagerScreenHandler::RemoveUserDialogLoadStatsCallback(
     stat->SetIntegerWithoutPathExpansion("count", item.count);
     stat->SetBooleanWithoutPathExpansion("success", item.success);
     return_value.SetWithoutPathExpansion(item.category, std::move(stat));
+  }
+  if (result.size() == profiles::kProfileStatisticsCategories) {
+    // All categories are finished.
+    UMA_HISTOGRAM_TIMES("Profile.RemoveUserWarningStatsTime",
+                        base::Time::Now() - start_time);
   }
   web_ui()->CallJavascriptFunctionUnsafe("updateRemoveWarningDialog",
                                          base::Value(profile_path.value()),
@@ -949,19 +942,8 @@ void UserManagerScreenHandler::SendUserList() {
     profile_value->SetBoolean(kKeyIsDesktop, true);
     profile_value->SetString(kKeyAvatarUrl, GetAvatarImage(entry));
 
-    profiles::ProfileCategoryStats stats =
-        ProfileStatistics::GetProfileStatisticsFromAttributesStorage(
-            profile_path);
-    std::unique_ptr<base::DictionaryValue> stats_dict(
-        new base::DictionaryValue);
-    for (const auto& item : stats) {
-      std::unique_ptr<base::DictionaryValue> stat(new base::DictionaryValue);
-      stat->SetIntegerWithoutPathExpansion("count", item.count);
-      stat->SetBooleanWithoutPathExpansion("success", item.success);
-      stats_dict->SetWithoutPathExpansion(item.category, std::move(stat));
-    }
-    profile_value->SetWithoutPathExpansion(kKeyStatistics,
-                                           std::move(stats_dict));
+    profile_value->SetWithoutPathExpansion(
+        kKeyStatistics, base::MakeUnique<base::DictionaryValue>());
 
     // GetProfileByPath returns a pointer if the profile is fully loaded, NULL
     // otherwise.

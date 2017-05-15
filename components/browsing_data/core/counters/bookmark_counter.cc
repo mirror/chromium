@@ -8,66 +8,30 @@
 #include "components/bookmarks/browser/base_bookmark_model_observer.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_node.h"
+#include "components/browsing_data/core/counters/bookmark_model_helper.h"
 
 namespace {
 
-int CountBookmarksFromNode(const bookmarks::BookmarkNode* node,
-                           base::Time period_start) {
+int CountBookmarksFromNode(const bookmarks::BookmarkNode* node) {
   int count = 0;
   if (node->is_url()) {
-    if (node->date_added() >= period_start)
-      ++count;
+    ++count;
   } else {
     for (int i = 0; i < node->child_count(); ++i)
-      count += CountBookmarksFromNode(node->GetChild(i), period_start);
+      count += CountBookmarksFromNode(node->GetChild(i));
   }
   return count;
 }
-
-using BookmarkModelCallback =
-    base::OnceCallback<void(const bookmarks::BookmarkModel*)>;
-
-// This class waits for the |bookmark_model| to load, then executes |callback|
-// and destroys itself afterwards.
-class BookmarkModelHelper : public bookmarks::BaseBookmarkModelObserver {
- public:
-  BookmarkModelHelper(bookmarks::BookmarkModel* bookmark_model,
-                      BookmarkModelCallback callback)
-      : bookmark_model_(bookmark_model), callback_(std::move(callback)) {
-    DCHECK(!bookmark_model_->loaded());
-    bookmark_model_->AddObserver(this);
-  }
-
-  void BookmarkModelLoaded(bookmarks::BookmarkModel* model,
-                           bool ids_reassigned) override {
-    std::move(callback_).Run(model);
-    delete this;
-  };
-
-  void BookmarkModelBeingDeleted(
-      bookmarks::BookmarkModel* bookmark_model) override {
-    // Don't leak this instance if the BookmarkModel never loads.
-    delete this;
-  }
-
-  void BookmarkModelChanged() override {}
-
- private:
-  ~BookmarkModelHelper() override { bookmark_model_->RemoveObserver(this); }
-
-  bookmarks::BookmarkModel* bookmark_model_;
-  BookmarkModelCallback callback_;
-};
 
 }  // namespace
 
 namespace browsing_data {
 
-const char BookmarkCounter::kPrefName[] =
-    "browser.clear_data.fake.pref.bookmarks";
+const char BookmarkCounter::kFakePrefName[] =
+    "browsing.data.fake.pref.name.password";
 
 BookmarkCounter::BookmarkCounter(bookmarks::BookmarkModel* bookmark_model)
-    : bookmark_model_(bookmark_model), weak_ptr_factory_(this) {
+    : bookmark_model_(bookmark_model) {
   DCHECK(bookmark_model);
 }
 
@@ -76,26 +40,25 @@ BookmarkCounter::~BookmarkCounter() {}
 void BookmarkCounter::OnInitialized() {}
 
 const char* BookmarkCounter::GetPrefName() const {
-  return kPrefName;
+  // TODO(dullweber): Is there a better solution for counters without
+  // preferences?
+  return kFakePrefName;
 }
 
 void BookmarkCounter::Count() {
   if (bookmark_model_->loaded()) {
     CountBookmarks(bookmark_model_);
   } else {
-    new BookmarkModelHelper(bookmark_model_,
-                            base::BindOnce(&BookmarkCounter::CountBookmarks,
-                                           weak_ptr_factory_.GetWeakPtr()));
+    bookmark_model_helper_.reset(new BookmarkModelHelper(
+        bookmark_model_, base::BindOnce(&BookmarkCounter::CountBookmarks,
+                                        base::Unretained(this))));
   }
 }
 
-void BookmarkCounter::CountBookmarks(
-    const bookmarks::BookmarkModel* bookmark_model) {
-  base::Time start = GetPeriodStart();
-  int count =
-      CountBookmarksFromNode(bookmark_model->bookmark_bar_node(), start) +
-      CountBookmarksFromNode(bookmark_model->other_node(), start) +
-      CountBookmarksFromNode(bookmark_model->mobile_node(), start);
+void BookmarkCounter::CountBookmarks(bookmarks::BookmarkModel* bookmark_model) {
+  int count = CountBookmarksFromNode(bookmark_model->bookmark_bar_node()) +
+              CountBookmarksFromNode(bookmark_model->other_node()) +
+              CountBookmarksFromNode(bookmark_model->mobile_node());
   ReportResult(count);
 }
 

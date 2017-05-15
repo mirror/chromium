@@ -5,7 +5,6 @@
 #include "components/browsing_data/core/counters/bookmark_counter.h"
 
 #include "base/run_loop.h"
-#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/bookmarks/browser/bookmark_model.h"
@@ -68,10 +67,9 @@ class BookmarkCounterTest : public testing::Test {
 };
 
 TEST_F(BookmarkCounterTest, CountUnloaded) {
-  ASSERT_FALSE(model()->loaded());
+  EXPECT_FALSE(model()->loaded());
   browsing_data::BookmarkCounter counter(model());
   counter.InitWithoutPref(
-      base::Time(),
       base::Bind(&BookmarkCounterTest::Callback, base::Unretained(this)));
   counter.Restart();
   WaitForResult();
@@ -80,11 +78,10 @@ TEST_F(BookmarkCounterTest, CountUnloaded) {
 
 TEST_F(BookmarkCounterTest, Count) {
   bookmarks::test::WaitForBookmarkModelToLoad(model());
-  ASSERT_TRUE(model()->loaded());
+  EXPECT_TRUE(model()->loaded());
   AddNodes("1 2 3 ");
   browsing_data::BookmarkCounter counter(model());
   counter.InitWithoutPref(
-      base::Time(),
       base::Bind(&BookmarkCounterTest::Callback, base::Unretained(this)));
   counter.Restart();
   EXPECT_EQ(3, GetResult());
@@ -93,32 +90,12 @@ TEST_F(BookmarkCounterTest, Count) {
   EXPECT_EQ(5, GetResult());
 }
 
-TEST_F(BookmarkCounterTest, CountWithPeriod) {
-  bookmarks::test::WaitForBookmarkModelToLoad(model());
-  base::Time now = base::Time::Now();
-  AddNodes("1 2 3");
-  const bookmarks::BookmarkNode* node1 = model()->AddURL(
-      model()->bookmark_bar_node(), 0, base::ASCIIToUTF16("4"), GURL());
-  model()->SetDateAdded(node1, now - base::TimeDelta::FromMinutes(30));
-  const bookmarks::BookmarkNode* node2 = model()->AddURL(
-      model()->bookmark_bar_node(), 0, base::ASCIIToUTF16("5"), GURL());
-  model()->SetDateAdded(node2, now - base::TimeDelta::FromMinutes(90));
-
-  browsing_data::BookmarkCounter counter(model());
-  counter.InitWithoutPref(
-      now - base::TimeDelta::FromMinutes(60),
-      base::Bind(&BookmarkCounterTest::Callback, base::Unretained(this)));
-  counter.Restart();
-  // 1,2,3 and 4 should be counted. 5 is too old, so it will be skipped.
-  EXPECT_EQ(4, GetResult());
-}
-
 TEST_F(BookmarkCounterTest, CountWithFolders) {
   bookmarks::test::WaitForBookmarkModelToLoad(model());
+  EXPECT_TRUE(model()->loaded());
   AddNodes("1 2 3 f1:[ 4 5 f2:[ 6 ] ] ");
   browsing_data::BookmarkCounter counter(model());
   counter.InitWithoutPref(
-      base::Time(),
       base::Bind(&BookmarkCounterTest::Callback, base::Unretained(this)));
   counter.Restart();
   EXPECT_EQ(6, GetResult());

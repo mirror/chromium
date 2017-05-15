@@ -25,8 +25,6 @@
 
 namespace {
 
-const int kProfileStatCategories = 4;
-
 // Callback for each pref. Every one that should be counted as a changed
 // user pref will cause *count to be incremented.
 void AccumulatePrefStats(const PrefService* pref_service,
@@ -76,9 +74,8 @@ void ProfileStatisticsAggregator::AddCallbackAndStartAggregator(
 
 void ProfileStatisticsAggregator::AddCounter(
     std::unique_ptr<browsing_data::BrowsingDataCounter> counter) {
-  counter->InitWithoutPref(
-      base::Time(), base::Bind(&ProfileStatisticsAggregator::CounterCallback,
-                               base::Unretained(this)));
+  counter->InitWithoutPref(base::Bind(
+      &ProfileStatisticsAggregator::CounterCallback, base::Unretained(this)));
   counter->Restart();
   counters_.push_back(std::move(counter));
 }
@@ -95,7 +92,7 @@ void ProfileStatisticsAggregator::StartAggregator() {
 
   // Initiate bookmark counting.
   bookmarks::BookmarkModel* bookmark_model =
-      BookmarkModelFactory::GetForBrowserContextIfExists(profile_);
+      BookmarkModelFactory::GetForBrowserContext(profile_);
   if (bookmark_model) {
     AddCounter(
         base::MakeUnique<browsing_data::BookmarkCounter>(bookmark_model));
@@ -105,8 +102,8 @@ void ProfileStatisticsAggregator::StartAggregator() {
 
   // Initiate history counting (async).
   history::HistoryService* history_service =
-      HistoryServiceFactory::GetForProfileWithoutCreating(profile_);
-
+      HistoryServiceFactory::GetForProfile(profile_,
+                                           ServiceAccessType::EXPLICIT_ACCESS);
   if (history_service) {
     history_service->GetHistoryCount(
         base::Time(),
@@ -145,7 +142,7 @@ void ProfileStatisticsAggregator::CounterCallback(
   int count = static_cast<browsing_data::BrowsingDataCounter::FinishedResult*>(
                   result.get())
                   ->Value();
-  if (pref == browsing_data::BookmarkCounter::kPrefName) {
+  if (pref == browsing_data::BookmarkCounter::kFakePrefName) {
     StatisticsCallbackSuccess(profiles::kProfileStatisticsBookmarks, count);
   } else {
     NOTREACHED();
@@ -164,13 +161,10 @@ void ProfileStatisticsAggregator::StatisticsCallback(
     stats_callback.Run(profile_category_stats_);
   }
 
-  if (result.success) {
-    ProfileStatistics::SetProfileStatisticsToAttributesStorage(
-        profile_path_, datum.category, result.count);
-  }
-  if (profile_category_stats_.size() == kProfileStatCategories) {
-    if (!done_callback_.is_null())
-      done_callback_.Run();
+  if (profile_category_stats_.size() ==
+          profiles::kProfileStatisticsCategories &&
+      done_callback_) {
+    done_callback_.Run();
   }
 }
 
