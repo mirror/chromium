@@ -22,6 +22,30 @@
       "revId": "4460c000fe063f532937ce150fd6ae229968d9d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e51415_b737a2b5",
+        "filename": "components/update_client/updater_state_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-05-15T19:50:41Z",
+      "side": 1,
+      "message": "Good catch. I switched from using .release() into the scoped_nsobject to using .get() but then having the scoped_nsobject retain the result.",
+      "parentUuid": "6522f67d_c3450686",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "4460c000fe063f532937ce150fd6ae229968d9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
