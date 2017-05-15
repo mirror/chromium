@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c594d8c_255b17ec",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-15T13:22:25Z",
+      "side": 1,
+      "message": "What if this is a 302?",
+      "range": {
+        "startLine": 252,
+        "startChar": 43,
+        "endLine": 252,
+        "endChar": 55
+      },
+      "revId": "a7ccc89a7a83ebd02c6325584f804911ba664536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bc9ad8_b76abcb2",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-15T13:22:25Z",
+      "side": 1,
+      "message": "Can you use the same name as above?",
+      "range": {
+        "startLine": 84,
+        "startChar": 29,
+        "endLine": 84,
+        "endChar": 39
+      },
+      "revId": "a7ccc89a7a83ebd02c6325584f804911ba664536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
