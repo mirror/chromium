@@ -16,6 +16,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "ipc/ipc_listener.h"
+#include "mojo/edk/embedder/peer_connection.h"
 
 namespace IPC {
 class Channel;
@@ -95,6 +96,7 @@ class FakeSecurityKeyIpcServer : public SecurityKeyIpcServer,
   base::Closure send_response_callback_;
 
   // Used for sending/receiving security key messages between processes.
+  mojo::edk::PeerConnection peer_connection_;
   std::unique_ptr<IPC::Channel> ipc_channel_;
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
