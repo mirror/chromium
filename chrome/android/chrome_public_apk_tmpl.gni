@@ -123,8 +123,10 @@ template("monochrome_public_apk_tmpl") {
     deps += [
       "//android_webview:monochrome_webview_assets",
       "//android_webview/glue",
+      "//android_webview/webview_apk:webview_license_activity_java",
       "//chrome/android:chrome_public_non_pak_assets",
       "//chrome/android:monochrome_pak_assets",
+      "//chrome/android/monochrome:monochrome_license_provider_java",
     ]
 
     if (!is_java_debug) {
