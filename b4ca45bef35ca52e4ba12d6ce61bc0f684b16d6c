@@ -16,6 +16,24 @@
       "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5629e0_7ba7448d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-15T17:43:36Z",
+      "side": 1,
+      "message": "Yep that makes sense, since we\u0027re going to be writing our own transform/clip stack at some point for doing raster, we may be able to leverage that to remove one of the two rects, or we may find other ways to do so that maintain performance. We shall see, thanks for the valuable feedbacks.",
+      "parentUuid": "e61710ac_b203691b",
+      "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
