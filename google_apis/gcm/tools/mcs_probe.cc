@@ -196,7 +196,8 @@ class MCSProbeAuthPreferences : public net::HttpAuthPreferences {
                                 ,
                             std::string()
 #endif
-                                ) {
+                                ,
+                            true) {
   }
   bool IsSupportedScheme(const std::string& scheme) const override {
     return scheme == std::string(net::kBasicAuthScheme);

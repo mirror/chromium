@@ -86,11 +86,11 @@ void WindowPortMus::SetCanAcceptDrops(bool can_accept_drops) {
   window_tree_client_->SetCanAcceptDrops(this, can_accept_drops);
 }
 
-void WindowPortMus::Embed(
-    ui::mojom::WindowTreeClientPtr client,
-    uint32_t flags,
-    const ui::mojom::WindowTree::EmbedCallback& callback) {
-  window_tree_client_->Embed(window_, std::move(client), flags, callback);
+void WindowPortMus::Embed(ui::mojom::WindowTreeClientPtr client,
+                          uint32_t flags,
+                          ui::mojom::WindowTree::EmbedCallback callback) {
+  window_tree_client_->Embed(window_, std::move(client), flags,
+                             std::move(callback));
 }
 
 void WindowPortMus::RequestCompositorFrameSink(

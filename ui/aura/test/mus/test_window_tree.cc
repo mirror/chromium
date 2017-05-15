@@ -225,7 +225,7 @@ void TestWindowTree::ReorderWindow(uint32_t change_id,
 }
 
 void TestWindowTree::GetWindowTree(uint32_t window_id,
-                                   const GetWindowTreeCallback& callback) {}
+                                   GetWindowTreeCallback callback) {}
 
 void TestWindowTree::SetCapture(uint32_t change_id, uint32_t window_id) {
   OnChangeReceived(change_id, WindowTreeChangeType::CAPTURE);
@@ -242,7 +242,7 @@ void TestWindowTree::StopPointerWatcher() {}
 void TestWindowTree::Embed(uint32_t window_id,
                            ui::mojom::WindowTreeClientPtr client,
                            uint32_t flags,
-                           const EmbedCallback& callback) {}
+                           EmbedCallback callback) {}
 
 void TestWindowTree::SetFocus(uint32_t change_id, uint32_t window_id) {
   OnChangeReceived(change_id, WindowTreeChangeType::FOCUS);
@@ -285,8 +285,8 @@ void TestWindowTree::GetWindowManagerClient(
 }
 
 void TestWindowTree::GetCursorLocationMemory(
-    const GetCursorLocationMemoryCallback& callback) {
-  callback.Run(mojo::ScopedSharedBufferHandle());
+    GetCursorLocationMemoryCallback callback) {
+  std::move(callback).Run(mojo::ScopedSharedBufferHandle());
 }
 
 void TestWindowTree::PerformDragDrop(
