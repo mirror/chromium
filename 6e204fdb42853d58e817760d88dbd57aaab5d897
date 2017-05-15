@@ -34,6 +34,24 @@
       "revId": "6e204fdb42853d58e817760d88dbd57aaab5d897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5c7c6fd_9e936c60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/PaymentRequestUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-05-15T16:14:49Z",
+      "side": 1,
+      "message": "Per our offline discussion, EditorView is actually a dialog as well, which threw me off.  So this, seems good to me.",
+      "parentUuid": "3249b381_8ecd5350",
+      "revId": "6e204fdb42853d58e817760d88dbd57aaab5d897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
