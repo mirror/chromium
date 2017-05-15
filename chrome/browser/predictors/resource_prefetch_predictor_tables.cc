@@ -134,7 +134,6 @@ void ResourcePrefetchPredictorTables::SortOrigins(OriginData* data) {
               return ComputeOriginScore(x) > ComputeOriginScore(y);
             });
 }
-
 void ResourcePrefetchPredictorTables::GetAllData(
     PrefetchDataMap* url_data_map,
     PrefetchDataMap* host_data_map,
@@ -160,12 +159,12 @@ void ResourcePrefetchPredictorTables::GetAllData(
   manifest_map->clear();
   origin_data_map->clear();
 
-  url_resource_table_->GetAllData(url_data_map);
-  host_resource_table_->GetAllData(host_data_map);
-  url_redirect_table_->GetAllData(url_redirect_data_map);
-  host_redirect_table_->GetAllData(host_redirect_data_map);
-  manifest_table_->GetAllData(manifest_map);
-  origin_table_->GetAllData(origin_data_map);
+  url_resource_table_->GetAllData(url_data_map, DB());
+  host_resource_table_->GetAllData(host_data_map, DB());
+  url_redirect_table_->GetAllData(url_redirect_data_map, DB());
+  host_redirect_table_->GetAllData(host_redirect_data_map, DB());
+  manifest_table_->GetAllData(manifest_map, DB());
+  origin_table_->GetAllData(origin_data_map, DB());
 }
 
 void ResourcePrefetchPredictorTables::UpdateResourceData(
@@ -177,9 +176,9 @@ void ResourcePrefetchPredictorTables::UpdateResourceData(
     return;
 
   if (key_type == PREFETCH_KEY_TYPE_URL)
-    url_resource_table_->UpdateData(data.primary_key(), data);
+    url_resource_table_->UpdateData(data.primary_key(), data, DB());
   else
-    host_resource_table_->UpdateData(data.primary_key(), data);
+    host_resource_table_->UpdateData(data.primary_key(), data, DB());
 }
 
 void ResourcePrefetchPredictorTables::UpdateRedirectData(
@@ -191,9 +190,9 @@ void ResourcePrefetchPredictorTables::UpdateRedirectData(
     return;
 
   if (key_type == PREFETCH_KEY_TYPE_URL)
-    url_redirect_table_->UpdateData(data.primary_key(), data);
+    url_redirect_table_->UpdateData(data.primary_key(), data, DB());
   else
-    host_redirect_table_->UpdateData(data.primary_key(), data);
+    host_redirect_table_->UpdateData(data.primary_key(), data, DB());
 }
 
 void ResourcePrefetchPredictorTables::UpdateManifestData(
@@ -204,7 +203,7 @@ void ResourcePrefetchPredictorTables::UpdateManifestData(
   if (CantAccessDatabase())
     return;
 
-  manifest_table_->UpdateData(host, manifest_data);
+  manifest_table_->UpdateData(host, manifest_data, DB());
 }
 
 void ResourcePrefetchPredictorTables::UpdateOriginData(
@@ -214,7 +213,7 @@ void ResourcePrefetchPredictorTables::UpdateOriginData(
   if (CantAccessDatabase())
     return;
 
-  origin_table_->UpdateData(origin_data.host(), origin_data);
+  origin_table_->UpdateData(origin_data.host(), origin_data, DB());
 }
 
 void ResourcePrefetchPredictorTables::DeleteResourceData(
@@ -227,9 +226,9 @@ void ResourcePrefetchPredictorTables::DeleteResourceData(
   DCHECK(!urls.empty() || !hosts.empty());
 
   if (!urls.empty())
-    url_resource_table_->DeleteData(urls);
+    url_resource_table_->DeleteData(urls, DB());
   if (!hosts.empty())
-    host_resource_table_->DeleteData(hosts);
+    host_resource_table_->DeleteData(hosts, DB());
 }
 
 void ResourcePrefetchPredictorTables::DeleteSingleResourceDataPoint(
@@ -240,9 +239,9 @@ void ResourcePrefetchPredictorTables::DeleteSingleResourceDataPoint(
     return;
 
   if (key_type == PREFETCH_KEY_TYPE_URL)
-    url_resource_table_->DeleteData({key});
+    url_resource_table_->DeleteData({key}, DB());
   else
-    host_resource_table_->DeleteData({key});
+    host_resource_table_->DeleteData({key}, DB());
 }
 
 void ResourcePrefetchPredictorTables::DeleteRedirectData(
@@ -255,9 +254,9 @@ void ResourcePrefetchPredictorTables::DeleteRedirectData(
   DCHECK(!urls.empty() || !hosts.empty());
 
   if (!urls.empty())
-    url_redirect_table_->DeleteData(urls);
+    url_redirect_table_->DeleteData(urls, DB());
   if (!hosts.empty())
-    host_redirect_table_->DeleteData(hosts);
+    host_redirect_table_->DeleteData(hosts, DB());
 }
 
 void ResourcePrefetchPredictorTables::DeleteSingleRedirectDataPoint(
@@ -268,9 +267,9 @@ void ResourcePrefetchPredictorTables::DeleteSingleRedirectDataPoint(
     return;
 
   if (key_type == PREFETCH_KEY_TYPE_URL)
-    url_redirect_table_->DeleteData({key});
+    url_redirect_table_->DeleteData({key}, DB());
   else
-    host_redirect_table_->DeleteData({key});
+    host_redirect_table_->DeleteData({key}, DB());
 }
 
 void ResourcePrefetchPredictorTables::DeleteManifestData(
@@ -279,7 +278,7 @@ void ResourcePrefetchPredictorTables::DeleteManifestData(
   if (CantAccessDatabase())
     return;
 
-  manifest_table_->DeleteData(hosts);
+  manifest_table_->DeleteData(hosts, DB());
 }
 
 void ResourcePrefetchPredictorTables::DeleteOriginData(
@@ -288,7 +287,7 @@ void ResourcePrefetchPredictorTables::DeleteOriginData(
   if (CantAccessDatabase())
     return;
 
-  origin_table_->DeleteData(hosts);
+  origin_table_->DeleteData(hosts, DB());
 }
 
 void ResourcePrefetchPredictorTables::DeleteAllData() {
@@ -296,15 +295,29 @@ void ResourcePrefetchPredictorTables::DeleteAllData() {
   if (CantAccessDatabase())
     return;
 
-  url_resource_table_->DeleteAllData();
-  url_redirect_table_->DeleteAllData();
-  host_resource_table_->DeleteAllData();
-  host_redirect_table_->DeleteAllData();
-  manifest_table_->DeleteAllData();
-  origin_table_->DeleteAllData();
+  url_resource_table_->DeleteAllData(DB());
+  url_redirect_table_->DeleteAllData(DB());
+  host_resource_table_->DeleteAllData(DB());
+  host_redirect_table_->DeleteAllData(DB());
+  manifest_table_->DeleteAllData(DB());
+  origin_table_->DeleteAllData(DB());
 }
 
-ResourcePrefetchPredictorTables::ResourcePrefetchPredictorTables() = default;
+ResourcePrefetchPredictorTables::ResourcePrefetchPredictorTables() {
+  url_resource_table_ = base::MakeUnique<GlowplugKeyValueTable<PrefetchData>>(
+      kUrlResourceTableName);
+  url_redirect_table_ = base::MakeUnique<GlowplugKeyValueTable<RedirectData>>(
+      kUrlRedirectTableName);
+  host_resource_table_ = base::MakeUnique<GlowplugKeyValueTable<PrefetchData>>(
+      kHostResourceTableName);
+  host_redirect_table_ = base::MakeUnique<GlowplugKeyValueTable<RedirectData>>(
+      kHostRedirectTableName);
+  manifest_table_ =
+      base::MakeUnique<GlowplugKeyValueTable<precache::PrecacheManifest>>(
+          kManifestTableName);
+  origin_table_ =
+      base::MakeUnique<GlowplugKeyValueTable<OriginData>>(kOriginTableName);
+}
 
 ResourcePrefetchPredictorTables::~ResourcePrefetchPredictorTables() = default;
 
@@ -370,6 +383,49 @@ float ResourcePrefetchPredictorTables::ComputeOriginScore(
   score += 1e2 - origin.average_position();
 
   return score;
+}
+
+void ResourcePrefetchPredictorTables::ScheduleDBTask(
+    const tracked_objects::Location& from_here,
+    const DBTask& task) {
+  BrowserThread::PostTask(
+      BrowserThread::DB, from_here,
+      base::BindOnce(&ResourcePrefetchPredictorTables::ExecuteDBTaskOnDBThread,
+                     this, task));
+}
+
+void ResourcePrefetchPredictorTables::ExecuteDBTaskOnDBThread(
+    const DBTask& task) {
+  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  if (CantAccessDatabase())
+    return;
+
+  task.Run(DB());
+}
+
+GlowplugKeyValueTable<PrefetchData>*
+ResourcePrefetchPredictorTables::url_resource_table() {
+  return url_resource_table_.get();
+}
+GlowplugKeyValueTable<RedirectData>*
+ResourcePrefetchPredictorTables::url_redirect_table() {
+  return url_redirect_table_.get();
+}
+GlowplugKeyValueTable<PrefetchData>*
+ResourcePrefetchPredictorTables::host_resource_table() {
+  return host_resource_table_.get();
+}
+GlowplugKeyValueTable<RedirectData>*
+ResourcePrefetchPredictorTables::host_redirect_table() {
+  return host_redirect_table_.get();
+}
+GlowplugKeyValueTable<precache::PrecacheManifest>*
+ResourcePrefetchPredictorTables::manifest_table() {
+  return manifest_table_.get();
+}
+GlowplugKeyValueTable<OriginData>*
+ResourcePrefetchPredictorTables::origin_table() {
+  return origin_table_.get();
 }
 
 // static
@@ -462,24 +518,6 @@ void ResourcePrefetchPredictorTables::CreateTableIfNonExistent() {
 
   if (!success)
     ResetDB();
-
-  if (success) {
-    url_resource_table_ = base::MakeUnique<GlowplugKeyValueTable<PrefetchData>>(
-        kUrlResourceTableName, db);
-    url_redirect_table_ = base::MakeUnique<GlowplugKeyValueTable<RedirectData>>(
-        kUrlRedirectTableName, db);
-    host_resource_table_ =
-        base::MakeUnique<GlowplugKeyValueTable<PrefetchData>>(
-            kHostResourceTableName, db);
-    host_redirect_table_ =
-        base::MakeUnique<GlowplugKeyValueTable<RedirectData>>(
-            kHostRedirectTableName, db);
-    manifest_table_ =
-        base::MakeUnique<GlowplugKeyValueTable<precache::PrecacheManifest>>(
-            kManifestTableName, db);
-    origin_table_ = base::MakeUnique<GlowplugKeyValueTable<OriginData>>(
-        kOriginTableName, db);
-  }
 }
 
 void ResourcePrefetchPredictorTables::LogDatabaseStats() {

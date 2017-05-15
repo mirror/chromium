@@ -19,6 +19,10 @@
 #include "chrome/browser/predictors/resource_prefetch_predictor.pb.h"
 #include "components/precache/core/proto/precache.pb.h"
 
+namespace tracked_objects {
+class Location;
+}
+
 namespace predictors {
 
 // Interface for database tables used by the ResourcePrefetchPredictor.
@@ -39,6 +43,8 @@ class ResourcePrefetchPredictorTables : public PredictorTableBase {
   typedef std::map<std::string, RedirectData> RedirectDataMap;
   typedef std::map<std::string, precache::PrecacheManifest> ManifestDataMap;
   typedef std::map<std::string, OriginData> OriginDataMap;
+  typedef base::Callback<void(sql::Connection*)> DBTask;
+  typedef base::Closure DBTaskCallback;
 
   // Returns data for all Urls and Hosts.
   virtual void GetAllData(PrefetchDataMap* url_data_map,
@@ -92,6 +98,18 @@ class ResourcePrefetchPredictorTables : public PredictorTableBase {
 
   // Deletes all data in all the tables.
   virtual void DeleteAllData();
+
+  void ScheduleDBTask(const tracked_objects::Location& from_here,
+                      const DBTask& task);
+
+  virtual void ExecuteDBTaskOnDBThread(const DBTask& task);
+
+  GlowplugKeyValueTable<PrefetchData>* url_resource_table();
+  GlowplugKeyValueTable<RedirectData>* url_redirect_table();
+  GlowplugKeyValueTable<PrefetchData>* host_resource_table();
+  GlowplugKeyValueTable<RedirectData>* host_redirect_table();
+  GlowplugKeyValueTable<precache::PrecacheManifest>* manifest_table();
+  GlowplugKeyValueTable<OriginData>* origin_table();
 
   // Removes the resources with more than |max_consecutive_misses| consecutive
   // misses from |data|.
