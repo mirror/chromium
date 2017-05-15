@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "37b4eca3_d5909763",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-05-15T22:23:18Z",
+      "side": 1,
+      "message": "nit: maybe this would be clearer?\n\nif (loadTimeData.getBoolean(\u0027enableSiteSettings\u0027))\n  r.SITE_SETTINGS_ALL \u003d r.SITE_SETTINGS.createChild(\u0027all\u0027);\n\nif (loadTimeData.getBoolean(\u0027enableSiteSettings\u0027) ||\n    loadTimeData.getBoolean(\u0027enableSiteDetails\u0027)) {\n  r.SITE_SETTINGS_SITE_DETAILS \u003d\n      r.SITE_SETTINGS.createChild(\u0027/content/siteDetails\u0027);\n}",
+      "range": {
+        "startLine": 170,
+        "startChar": 3,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0cda6fe_0f0d2cfb",
         "filename": "chrome/browser/resources/settings/route.js",
         "patchSetId": 1
