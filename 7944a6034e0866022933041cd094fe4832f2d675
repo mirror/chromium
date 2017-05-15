@@ -39,6 +39,30 @@
       "revId": "7944a6034e0866022933041cd094fe4832f2d675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cba8ae3_9f368a72",
+        "filename": "components/browsing_data/core/counters/browsing_data_counter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T14:35:51Z",
+      "side": 1,
+      "message": "base::Time() is a valid value for begin_time_. To perform this check, I would need another member to track if begin_time_ was initialized?",
+      "parentUuid": "c444ab5b_82071995",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "7944a6034e0866022933041cd094fe4832f2d675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
