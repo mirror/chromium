@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51f5c944_4cb26db0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-15T21:55:17Z",
+      "side": 1,
+      "message": "I\u0027ll rename this to shouldBindAsExternalService in next patch set",
+      "range": {
+        "startLine": 609,
+        "startChar": 22,
+        "endLine": 609,
+        "endChar": 49
+      },
+      "revId": "34296a85527056055dc29f9ffe24ab9c9c38326a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59ec99f_9233d8a4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-15T21:55:17Z",
+      "side": 1,
+      "message": "and in the same vein, this should be \"getIsSandboxedServiceExternal\"",
+      "range": {
+        "startLine": 612,
+        "startChar": 35,
+        "endLine": 612,
+        "endChar": 64
+      },
+      "revId": "34296a85527056055dc29f9ffe24ab9c9c38326a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
