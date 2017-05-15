@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46cfb224_8bce68ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-05-15T16:22:29Z",
+      "side": 1,
+      "message": "Should we just initialize this to an empty map at construction time?  Or even at the top of the init?  There are a few other returns in this function that don\u0027t init it and it is kind of hard to reason about as a reader",
+      "revId": "a92ce856b74b181f6cfb6ca7122c52921b9a39ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
