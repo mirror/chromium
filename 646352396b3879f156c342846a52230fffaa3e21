@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8ba5635_815952a5",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/font-family-case-insensitive.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-15T16:40:16Z",
+      "side": 1,
+      "message": "If you want to, you could add a link to a spec here, e.g.:\n\n\u003clink rel\u003d\"help\" href\u003d\"https://drafts.csswg.org/css-fonts-3/#font-family-casing\"\u003e\n\n(Even though this is not in wpt currently and I don\u0027t think there\u0027s a general convention of linking to specs for most layout tests.)",
+      "revId": "646352396b3879f156c342846a52230fffaa3e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a87caee_847b4d7e",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/font-family-case-insensitive.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-15T16:40:16Z",
+      "side": 1,
+      "message": "Would this make the background of the div below green or red? The text implies it should be green.\n\nYou could add a comment here that we\u0027re expecting there to be a font called \"Ahem\" but not \"ahem\", but \"ahem\" should also work since font family should be case-insensitive.",
+      "revId": "646352396b3879f156c342846a52230fffaa3e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
