@@ -723,6 +723,10 @@ class CC_EXPORT PropertyTrees final {
   DrawTransformData& FetchDrawTransformsDataFromCache(int transform_id,
                                                       int effect_id) const;
 
+ public:
+  base::flat_map<std::pair<int, int>, ClipRectData> cached_clip_map_;
+
+ private:
   PropertyTreesCachedData cached_data_;
 };
 

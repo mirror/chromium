@@ -17,7 +17,6 @@ ClipNode::ClipNode()
       owning_layer_id(Layer::INVALID_ID),
       clip_type(ClipType::APPLIES_LOCAL_CLIP),
       transform_id(TransformTree::kInvalidNodeId) {
-  cached_clip_rects = std::vector<ClipRectData>(defaultCachedClipsSize);
 }
 
 ClipNode::ClipNode(const ClipNode& other)
@@ -31,7 +30,6 @@ ClipNode::ClipNode(const ClipNode& other)
     DCHECK_EQ(clip_type, ClipType::EXPANDS_CLIP);
     clip_expander = base::MakeUnique<ClipExpander>(*other.clip_expander);
   }
-  cached_clip_rects = other.cached_clip_rects;
   cached_accumulated_rect_in_screen_space =
       other.cached_accumulated_rect_in_screen_space;
 }
@@ -50,7 +48,6 @@ ClipNode& ClipNode::operator=(const ClipNode& other) {
   } else {
     clip_expander.reset();
   }
-  cached_clip_rects = other.cached_clip_rects;
   cached_accumulated_rect_in_screen_space =
       other.cached_accumulated_rect_in_screen_space;
   return *this;
