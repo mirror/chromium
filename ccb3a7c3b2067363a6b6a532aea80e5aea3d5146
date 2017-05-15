@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e516163_da352edd",
+        "filename": "chrome/browser/browsing_data/bookmark_counter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99687c64_bb7f1b64",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "221d5e9c_2d1b6dcb",
         "filename": "chrome/browser/browsing_data/bookmark_counter_unittest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "912573e7_327fd9a9",
+        "filename": "chrome/browser/browsing_data/bookmark_counter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "221d5e9c_2d1b6dcb",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 13
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47c0107c_74ae6e54",
         "filename": "chrome/browser/profiles/profile_statistics.h",
         "patchSetId": 5
@@ -62,6 +110,24 @@
       "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109b3049_0552eece",
+        "filename": "chrome/browser/profiles/profile_statistics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "I will remove the scoped_refptr as soon as the old code is removed and replace it with a unique_ptr. Previously each task held a reference to the ProfileStatisticsAggregator, so it will live as long as there are running tasks. The BrowsingDataCounters don\u0027t do this, so I need something external to hold the reference until everything is done. (Or use AddRef/Release internally but I would like to switch to a unique_ptr anyway)",
+      "parentUuid": "47c0107c_74ae6e54",
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "48276a5e_7fabcf15",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "The counters currently expect that the data services are there and don\u0027t handle nullptrs properly. Only sync_service is an optional parameter. I will leave it this way for now.",
+      "parentUuid": "256cb4f9_b58f38d8",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 29
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb369eb3_0ab15839",
         "filename": "components/browsing_data/core/counters/bookmark_counter.cc",
         "patchSetId": 5
@@ -108,6 +198,30 @@
       "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33e4b4f_c1d69293",
+        "filename": "components/browsing_data/core/counters/bookmark_counter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb369eb3_0ab15839",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "dfee120b_667f48e1",
+        "filename": "components/browsing_data/core/counters/bookmark_counter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "Done\n\noops",
+      "parentUuid": "b94aec85_af0c0948",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e761ba6_2bfa0031",
         "filename": "components/browsing_data/core/counters/bookmark_counter.cc",
         "patchSetId": 5
@@ -154,6 +292,30 @@
       "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b17b5bf_29e9aad6",
+        "filename": "components/browsing_data/core/counters/bookmark_counter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "Ok, I removed the comment",
+      "parentUuid": "0e761ba6_2bfa0031",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "2fbfd23c_39150f47",
+        "filename": "components/browsing_data/core/counters/bookmark_counter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "The bookmark_model_helper might need to call AddObserver and RemoveObserver on the model. I changed CountBookmarks to use a const ptr",
+      "parentUuid": "49afa97c_c7e6ff29",
+      "range": {
+        "startLine": 24,
+        "startChar": 27,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e36b3121_1f8aa032",
         "filename": "components/browsing_data/core/counters/bookmark_model_helper.h",
         "patchSetId": 5
@@ -200,6 +386,30 @@
       "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1dba9a0_34adcc7a",
+        "filename": "components/browsing_data/core/counters/bookmark_model_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "Done and I changed the class to delete itself when finished",
+      "parentUuid": "e36b3121_1f8aa032",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "19315781_38cbc97c",
+        "filename": "components/browsing_data/core/counters/browsing_data_counter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aacef11_14fe338f",
+      "range": {
+        "startLine": 46,
+        "startChar": 51,
+        "endLine": 46,
+        "endChar": 59
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28911c59_a4bc6155",
         "filename": "components/browsing_data/core/counters/browsing_data_counter.h",
         "patchSetId": 5
@@ -246,6 +480,30 @@
       "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3b7559_5c4cb782",
+        "filename": "components/browsing_data/core/counters/browsing_data_counter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-15T13:30:27Z",
+      "side": 1,
+      "message": "I just noticed the date_added() method of bookmarks nodes - the BookmarkCounter now supports counting by time period :) \nI also added a begin_time parameter to InitWithoutPref that will be used if period_ is not initialized.",
+      "parentUuid": "28911c59_a4bc6155",
+      "range": {
+        "startLine": 94,
+        "startChar": 57,
+        "endLine": 94,
+        "endChar": 65
+      },
+      "revId": "ccb3a7c3b2067363a6b6a532aea80e5aea3d5146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
