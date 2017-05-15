@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e3b67c7f_0ad9ef36",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/canonicalizeFilter/max-length-exceeded-name-unicode.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-05-15T22:16:13Z",
+      "side": 1,
+      "message": "fwiw: I think it should be lined up with the rest of the strings because it\u0027s an argument of DOMException not of requestDeviceWithKeyDown.",
+      "parentUuid": "2dcb589d_7fb04501",
+      "revId": "930433feb25c95cbd63084cfe955974f71f97b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f6c66cf_3ebd6e6b",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/canonicalizeFilter/max-length-exceeded-name.html",
         "patchSetId": 3
