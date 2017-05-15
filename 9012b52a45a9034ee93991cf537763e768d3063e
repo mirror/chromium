@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4000971_10ab729d",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-15T12:30:28Z",
+      "side": 1,
+      "message": "Remove arc",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 132,
+        "endChar": 20
+      },
+      "revId": "9012b52a45a9034ee93991cf537763e768d3063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e318d4af_2bd7936e",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-15T12:30:28Z",
+      "side": 1,
+      "message": "It\u0027s probably cleaner to remove the call in SetUp() and have each test use its own custom flags.",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 223,
+        "endChar": 6
+      },
+      "revId": "9012b52a45a9034ee93991cf537763e768d3063e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
