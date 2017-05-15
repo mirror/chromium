@@ -8,9 +8,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
-import android.content.pm.ServiceInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -24,8 +21,6 @@ import org.chromium.base.process_launcher.ICallbackInt;
 import org.chromium.base.process_launcher.IChildProcessService;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -152,10 +147,9 @@ public class ChildProcessConnection {
         }
     }
 
-    // TODO(mnaganov): Get rid of it after the release of the next Android SDK.
-    private static final Map<ComponentName, Boolean> sNeedsExtrabindFlagsMap = new HashMap<>();
     private final Context mContext;
     private final ChildProcessConnection.DeathCallback mDeathCallback;
+    private final boolean mIsSandboxed;
     private final ComponentName mServiceName;
 
     // Parameters passed to the child process through the service binding intent.
@@ -232,19 +226,18 @@ public class ChildProcessConnection {
     private boolean mUnbound;
 
     protected ChildProcessConnection(Context context, DeathCallback deathCallback,
-            String serviceClassName, Bundle childProcessCommonParameters,
+            boolean isSandboxed, String serviceClassName, Bundle childProcessCommonParameters,
             ChildProcessCreationParams creationParams) {
         assert LauncherThread.runningOnLauncherThread();
         mContext = context;
         mDeathCallback = deathCallback;
-        String packageName =
-                creationParams != null ? creationParams.getPackageName() : context.getPackageName();
-        mServiceName = new ComponentName(packageName, serviceClassName);
-        mChildProcessCommonParameters = childProcessCommonParameters;
+        mIsSandboxed = isSandboxed;
         mCreationParams = creationParams;
+        mServiceName = new ComponentName(getPackageName(), serviceClassName);
+        mChildProcessCommonParameters = childProcessCommonParameters;
 
         int defaultFlags = Context.BIND_AUTO_CREATE
-                | (shouldBindAsExportedService() ? Context.BIND_EXTERNAL_SERVICE : 0);
+                | (shouldBindAsExternalService() ? Context.BIND_EXTERNAL_SERVICE : 0);
         mInitialBinding = createServiceConnection(defaultFlags);
         mModerateBinding = createServiceConnection(defaultFlags);
         mStrongBinding = createServiceConnection(defaultFlags | Context.BIND_IMPORTANT);
@@ -256,10 +249,15 @@ public class ChildProcessConnection {
         return mContext;
     }
 
+    public static String getPackageNameFromCreationParams(
+            Context context, ChildProcessCreationParams params, boolean sandboxed) {
+        return (sandboxed && params != null) ? params.getPackageNameForSandboxedService()
+                                             : context.getPackageName();
+    }
+
     public final String getPackageName() {
         assert LauncherThread.runningOnLauncherThread();
-        return mCreationParams != null ? mCreationParams.getPackageName()
-                                       : mContext.getPackageName();
+        return getPackageNameFromCreationParams(mContext, mCreationParams, mIsSandboxed);
     }
 
     public final IChildProcessService getService() {
@@ -608,28 +606,10 @@ public class ChildProcessConnection {
         }
     }
 
-    protected boolean shouldBindAsExportedService() {
+    protected boolean shouldBindAsExternalService() {
         assert LauncherThread.runningOnLauncherThread();
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && mCreationParams != null
-                && mCreationParams.getIsExternalService()
-                && isExportedService(getContext(), getServiceName());
-    }
-
-    private static boolean isExportedService(Context context, ComponentName serviceName) {
-        Boolean isExported = sNeedsExtrabindFlagsMap.get(serviceName);
-        if (isExported != null) {
-            return isExported;
-        }
-        boolean result = false;
-        try {
-            PackageManager packageManager = context.getPackageManager();
-            ServiceInfo serviceInfo = packageManager.getServiceInfo(serviceName, 0);
-            result = serviceInfo.exported;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Could not retrieve info about service %s", serviceName, e);
-        }
-        sNeedsExtrabindFlagsMap.put(serviceName, Boolean.valueOf(result));
-        return result;
+        return mIsSandboxed && mCreationParams != null
+                && mCreationParams.getIsSandboxedSerivceExternal();
     }
 
     @VisibleForTesting
