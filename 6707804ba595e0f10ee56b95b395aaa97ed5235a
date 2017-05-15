@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71f49572_8f1c297e",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-05-15T17:02:29Z",
+      "side": 1,
+      "message": "ditto: please obtain a weakref or explain why notification delivery is not racy with destroying the listener.",
+      "range": {
+        "startLine": 644,
+        "startChar": 53,
+        "endLine": 644,
+        "endChar": 75
+      },
+      "revId": "6707804ba595e0f10ee56b95b395aaa97ed5235a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
