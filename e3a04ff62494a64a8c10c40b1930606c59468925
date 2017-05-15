@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fae48dc_7d8e78fb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-15T22:35:48Z",
+      "side": 1,
+      "message": "Possible change:\n\nThis could be extracted to a helper method, something like:\n\ndef check_for_pull_request(self, exportable_commit):\n    \"\"\"Returns a pull request if one already exists, else returns None.\"\"\"\n    # If this CL is already committed, then \n    pull_request \u003d self.wpt_github.pr_with_position(exportable_commit.position)\n    if pull_request:\n        return pull_request\n    # Check if this commit corresponds to an open Gerrit CL PR.\n    change_id \u003d exportable_commit.change_id()\n    if change_id:\n        return self.wpt_github.pr_with_change_id(change_id)\n    return None",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "e3a04ff62494a64a8c10c40b1930606c59468925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
