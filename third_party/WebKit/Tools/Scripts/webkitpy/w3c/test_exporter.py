@@ -41,6 +41,7 @@ class TestExporter(object):
 
         exportable_commits = self.get_exportable_commits(limit=COMMIT_HISTORY_WINDOW)
         for exportable_commit in exportable_commits:
+            # FIXME: also search for pr_with_change_id if exportable commit has a change id
             pull_request = self.wpt_github.pr_with_position(exportable_commit.position)
 
             if pull_request:
