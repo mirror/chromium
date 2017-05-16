@@ -148,14 +148,17 @@ void PaymentRequest::UpdateWith(mojom::PaymentDetailsPtr details) {
 }
 
 void PaymentRequest::Abort() {
-  // The API user has decided to abort. We return a successful abort message to
-  // the renderer, which closes the Mojo message pipe, which triggers
+  // The API user has decided to abort. If a successful abort message is
+  // returned to the renderer, the Mojo message pipe is closed, which triggers
   // PaymentRequest::OnConnectionTerminated, which destroys this object.
-  // TODO(crbug.com/716546): Add a merchant abort metric,
-  journey_logger_.RecordJourneyStatsHistograms(
-      JourneyLogger::COMPLETION_STATUS_OTHER_ABORTED);
+  // Otherwise, the abort promise is rejected and the pipe is not closed.
+  // The abort is only successful if the payment app wasn't yet invoked.
+  // TODO(crbug.com/716546): Add a merchant abort metric
   if (client_.is_bound())
-    client_->OnAbort(true /* aborted_successfully */);
+    client_->OnAbort(!state_->IsPaymentAppInvoked());
+
+  if (observer_for_testing_)
+    observer_for_testing_->OnAbortCalled();
 }
 
 void PaymentRequest::Complete(mojom::PaymentComplete result) {
