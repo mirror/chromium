@@ -16,6 +16,24 @@
       "revId": "f476dcb3c2481d2d2ba4362c49702f6363aea506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971166ea_6f32dc6a",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageReader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-16T16:52:02Z",
+      "side": 1,
+      "message": "In C++11, storage is only required if it\u0027s odr-used, but there\u0027s reasonable concern that there could be UB lurking if someone does odr-use it and it\u0027s not defined. Probably the linker will compile, but I\u0027m not sure if we can actually guarantee that.\n\nFor now, I\u0027ve change this to use the enum trick.",
+      "parentUuid": "d1530742_3df01749",
+      "revId": "f476dcb3c2481d2d2ba4362c49702f6363aea506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
