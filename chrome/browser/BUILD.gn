@@ -1557,6 +1557,7 @@ split_static_library("browser") {
     "//components/renderer_context_menu",
     "//components/resources",
     "//components/safe_browsing_db",
+    "//components/safe_browsing_db:safe_browsing_prefs",
     "//components/safe_json",
     "//components/search",
     "//components/search_engines",
