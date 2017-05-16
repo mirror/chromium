@@ -42,7 +42,7 @@ class MaskContentLayerClient : public ContentLayerClient {
       PaintingControlSetting picture_control) override {
     PaintRecorder recorder;
     PaintCanvas* canvas =
-        recorder.beginRecording(gfx::RectToSkRect(gfx::Rect(bounds_)));
+        recorder.beginRecording(gfx::RectToSkRect(PaintableRegion()));
 
     PaintFlags flags;
     flags.setStyle(PaintFlags::kStroke_Style);
@@ -62,7 +62,8 @@ class MaskContentLayerClient : public ContentLayerClient {
 
     auto display_list = make_scoped_refptr(new DisplayItemList);
     display_list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-        PaintableRegion(), recorder.finishRecordingAsPicture());
+        PaintableRegion(), recorder.finishRecordingAsPicture(),
+        gfx::RectToSkRect(PaintableRegion()));
 
     display_list->Finalize();
     return display_list;
@@ -221,7 +222,7 @@ class CheckerContentLayerClient : public ContentLayerClient {
       PaintingControlSetting picture_control) override {
     PaintRecorder recorder;
     PaintCanvas* canvas =
-        recorder.beginRecording(gfx::RectToSkRect(gfx::Rect(bounds_)));
+        recorder.beginRecording(gfx::RectToSkRect(PaintableRegion()));
 
     PaintFlags flags;
     flags.setStyle(PaintFlags::kStroke_Style);
@@ -240,7 +241,8 @@ class CheckerContentLayerClient : public ContentLayerClient {
 
     auto display_list = make_scoped_refptr(new DisplayItemList);
     display_list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-        PaintableRegion(), recorder.finishRecordingAsPicture());
+        PaintableRegion(), recorder.finishRecordingAsPicture(),
+        gfx::RectToSkRect(PaintableRegion()));
 
     display_list->Finalize();
     return display_list;
@@ -264,7 +266,7 @@ class CircleContentLayerClient : public ContentLayerClient {
       PaintingControlSetting picture_control) override {
     PaintRecorder recorder;
     PaintCanvas* canvas =
-        recorder.beginRecording(gfx::RectToSkRect(gfx::Rect(bounds_)));
+        recorder.beginRecording(gfx::RectToSkRect(PaintableRegion()));
 
     PaintFlags flags;
     flags.setStyle(PaintFlags::kFill_Style);
@@ -275,7 +277,8 @@ class CircleContentLayerClient : public ContentLayerClient {
 
     auto display_list = make_scoped_refptr(new DisplayItemList);
     display_list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-        PaintableRegion(), recorder.finishRecordingAsPicture());
+        PaintableRegion(), recorder.finishRecordingAsPicture(),
+        gfx::RectToSkRect(PaintableRegion()));
 
     display_list->Finalize();
     return display_list;
