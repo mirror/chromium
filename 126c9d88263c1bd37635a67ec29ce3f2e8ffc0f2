@@ -660,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "e1a0e4e2_44f16c50",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-16T20:36:17Z",
+      "side": 1,
+      "message": "Not really at the moment, no. The JNI generator intentionally makes the RegisterNativesImpl a static function so that it will generate this error if you don\u0027t call it, and isn\u0027t aware of the possibility that there are classes which are only used in monochrome/webview and so don\u0027t need registration at all. I\u0027d just leave it, maybe with a comment.",
+      "parentUuid": "294fc0b4_8ffe679e",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb808dd5_f3733df7",
         "filename": "components/about_ui/credit_utils.h",
         "patchSetId": 3
