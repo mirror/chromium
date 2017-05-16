@@ -75,8 +75,10 @@ bool FakeSecurityKeyIpcServer::CreateChannel(
   options.enforce_uniqueness = false;
 #endif
   ipc_channel_ = IPC::Channel::CreateServer(
-      mojo::edk::ConnectToPeerProcess(
-          mojo::edk::CreateServerHandle(channel_handle, options))
+      peer_connection_
+          .Connect(mojo::edk::ConnectionParams(
+              mojo::edk::TransportProtocol::kLegacy,
+              mojo::edk::CreateServerHandle(channel_handle, options)))
           .release(),
       this);
   EXPECT_NE(nullptr, ipc_channel_);

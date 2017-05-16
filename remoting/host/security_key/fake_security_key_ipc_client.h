@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "mojo/edk/embedder/named_platform_handle.h"
+#include "mojo/edk/embedder/peer_connection.h"
 #include "remoting/host/security_key/security_key_ipc_client.h"
 
 namespace IPC {
@@ -101,6 +102,7 @@ class FakeSecurityKeyIpcClient : public SecurityKeyIpcClient {
   base::Closure on_channel_connected_callback_;
 
   // Used for sending/receiving security key messages between processes.
+  mojo::edk::PeerConnection peer_connection_;
   std::unique_ptr<IPC::Channel> client_channel_;
 
   // Provides the contents of the last IPC message received.
