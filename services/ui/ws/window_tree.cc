@@ -1501,12 +1501,10 @@ void WindowTree::ReorderWindow(uint32_t change_id,
   client()->OnChangeCompleted(change_id, success);
 }
 
-void WindowTree::GetWindowTree(
-    Id window_id,
-    const base::Callback<void(std::vector<mojom::WindowDataPtr>)>& callback) {
+void WindowTree::GetWindowTree(Id window_id, GetWindowTreeCallback callback) {
   std::vector<const ServerWindow*> windows(
       GetWindowTree(ClientWindowId(window_id)));
-  callback.Run(WindowsToWindowDatas(windows));
+  std::move(callback).Run(WindowsToWindowDatas(windows));
 }
 
 void WindowTree::SetCapture(uint32_t change_id, Id window_id) {
@@ -1762,8 +1760,8 @@ void WindowTree::SetCanAcceptDrops(Id window_id, bool accepts_drops) {
 void WindowTree::Embed(Id transport_window_id,
                        mojom::WindowTreeClientPtr client,
                        uint32_t flags,
-                       const EmbedCallback& callback) {
-  callback.Run(
+                       EmbedCallback callback) {
+  std::move(callback).Run(
       Embed(ClientWindowId(transport_window_id), std::move(client), flags));
 }
 
@@ -1980,10 +1978,10 @@ void WindowTree::GetWindowManagerClient(
 }
 
 void WindowTree::GetCursorLocationMemory(
-    const GetCursorLocationMemoryCallback& callback) {
-  callback.Run(window_server_->display_manager()
-                   ->GetCursorLocationManager(user_id_)
-                   ->GetCursorLocationMemory());
+    GetCursorLocationMemoryCallback callback) {
+  std::move(callback).Run(window_server_->display_manager()
+                              ->GetCursorLocationManager(user_id_)
+                              ->GetCursorLocationMemory());
 }
 
 void WindowTree::PerformDragDrop(
@@ -2149,7 +2147,7 @@ void WindowTree::CancelWindowMove(Id window_id) {
 
 void WindowTree::AddAccelerators(
     std::vector<mojom::WmAcceleratorPtr> accelerators,
-    const AddAcceleratorsCallback& callback) {
+    AddAcceleratorsCallback callback) {
   DCHECK(window_manager_state_);
 
   bool success = true;
@@ -2158,7 +2156,7 @@ void WindowTree::AddAccelerators(
             iter->get()->id, std::move(iter->get()->event_matcher)))
       success = false;
   }
-  callback.Run(success);
+  std::move(callback).Run(success);
 }
 
 void WindowTree::RemoveAccelerator(uint32_t id) {
@@ -2229,16 +2227,16 @@ void WindowTree::SetDisplayRoot(const display::Display& display,
                                 mojom::WmViewportMetricsPtr viewport_metrics,
                                 bool is_primary_display,
                                 Id window_id,
-                                const SetDisplayRootCallback& callback) {
+                                SetDisplayRootCallback callback) {
   ServerWindow* display_root =
       ProcessSetDisplayRoot(display, *viewport_metrics, is_primary_display,
                             ClientWindowId(window_id));
   if (!display_root) {
-    callback.Run(base::Optional<cc::FrameSinkId>());
+    std::move(callback).Run(base::Optional<cc::FrameSinkId>());
     return;
   }
   display_root->parent()->SetVisible(true);
-  callback.Run(display_root->frame_sink_id());
+  std::move(callback).Run(display_root->frame_sink_id());
 }
 
 void WindowTree::WmResponse(uint32_t change_id, bool response) {

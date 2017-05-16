@@ -34,13 +34,13 @@ class TestWindowManagerClient : public ui::mojom::WindowManagerClient {
   void ActivateNextWindow() override;
   void SetExtendedHitArea(Id window_id, const gfx::Insets& hit_area) override;
   void AddAccelerators(std::vector<ui::mojom::WmAcceleratorPtr> accelerators,
-                       const AddAcceleratorsCallback& callback) override;
+                       AddAcceleratorsCallback callback) override;
   void RemoveAccelerator(uint32_t id) override;
   void SetDisplayRoot(const display::Display& display,
                       ui::mojom::WmViewportMetricsPtr viewport_metrics,
                       bool is_primary_display,
                       Id window_id,
-                      const SetDisplayRootCallback& callback) override;
+                      SetDisplayRootCallback callback) override;
   void WmResponse(uint32_t change_id, bool response) override;
   void WmSetBoundsResponse(uint32_t change_id) override;
   void WmRequestClose(Id transport_window_id) override;

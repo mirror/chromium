@@ -28,14 +28,13 @@ GpuClient::~GpuClient() {
 }
 
 void GpuClient::OnGpuChannelEstablished(
-    const EstablishGpuChannelCallback& callback,
+    EstablishGpuChannelCallback callback,
     mojo::ScopedMessagePipeHandle channel_handle) {
-  callback.Run(client_id_, std::move(channel_handle), *gpu_info_);
+  std::move(callback).Run(client_id_, std::move(channel_handle), *gpu_info_);
 }
 
 // mojom::Gpu overrides:
-void GpuClient::EstablishGpuChannel(
-    const EstablishGpuChannelCallback& callback) {
+void GpuClient::EstablishGpuChannel(EstablishGpuChannelCallback callback) {
   // TODO(sad): crbug.com/617415 figure out how to generate a meaningful
   // tracing id.
   const uint64_t client_tracing_id = 0;
@@ -43,18 +42,17 @@ void GpuClient::EstablishGpuChannel(
   gpu_service_->EstablishGpuChannel(
       client_id_, client_tracing_id, is_gpu_host,
       base::Bind(&GpuClient::OnGpuChannelEstablished,
-                 weak_factory_.GetWeakPtr(), callback));
+                 weak_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
 
-void GpuClient::CreateGpuMemoryBuffer(
-    gfx::GpuMemoryBufferId id,
-    const gfx::Size& size,
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage,
-    const mojom::Gpu::CreateGpuMemoryBufferCallback& callback) {
+void GpuClient::CreateGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
+                                      const gfx::Size& size,
+                                      gfx::BufferFormat format,
+                                      gfx::BufferUsage usage,
+                                      CreateGpuMemoryBufferCallback callback) {
   auto handle = gpu_memory_buffer_manager_->CreateGpuMemoryBufferHandle(
       id, client_id_, size, format, usage, gpu::kNullSurfaceHandle);
-  callback.Run(handle);
+  std::move(callback).Run(handle);
 }
 
 void GpuClient::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,

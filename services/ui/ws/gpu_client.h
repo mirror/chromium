@@ -37,17 +37,15 @@ class GpuClient : public mojom::Gpu {
   friend class test::GpuHostTest;
 
   // EstablishGpuChannelCallback:
-  void OnGpuChannelEstablished(const EstablishGpuChannelCallback& callback,
+  void OnGpuChannelEstablished(EstablishGpuChannelCallback callback,
                                mojo::ScopedMessagePipeHandle channel_handle);
   // mojom::Gpu overrides:
-  void EstablishGpuChannel(
-      const EstablishGpuChannelCallback& callback) override;
-  void CreateGpuMemoryBuffer(
-      gfx::GpuMemoryBufferId id,
-      const gfx::Size& size,
-      gfx::BufferFormat format,
-      gfx::BufferUsage usage,
-      const mojom::Gpu::CreateGpuMemoryBufferCallback& callback) override;
+  void EstablishGpuChannel(EstablishGpuChannelCallback callback) override;
+  void CreateGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
+                             const gfx::Size& size,
+                             gfx::BufferFormat format,
+                             gfx::BufferUsage usage,
+                             CreateGpuMemoryBufferCallback callback) override;
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               const gpu::SyncToken& sync_token) override;
 

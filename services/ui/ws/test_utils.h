@@ -375,7 +375,7 @@ class TestWindowManager : public mojom::WindowManager {
                         const gfx::Vector2d& drag_image_offset,
                         ui::mojom::PointerKind source) override;
   void WmMoveDragImage(const gfx::Point& screen_location,
-                       const WmMoveDragImageCallback& callback) override;
+                       WmMoveDragImageCallback callback) override;
   void WmDestroyDragImage() override;
   void WmPerformMoveLoop(uint32_t change_id,
                          uint32_t window_id,
@@ -499,18 +499,18 @@ class TestWindowTreeClient : public ui::mojom::WindowTreeClient {
                    uint32_t key_state,
                    const gfx::Point& position,
                    uint32_t effect_bitmask,
-                   const OnDragEnterCallback& callback) override;
+                   OnDragEnterCallback callback) override;
   void OnDragOver(uint32_t window,
                   uint32_t key_state,
                   const gfx::Point& position,
                   uint32_t effect_bitmask,
-                  const OnDragOverCallback& callback) override;
+                  OnDragOverCallback callback) override;
   void OnDragLeave(uint32_t window) override;
   void OnCompleteDrop(uint32_t window,
                       uint32_t key_state,
                       const gfx::Point& position,
                       uint32_t effect_bitmask,
-                      const OnCompleteDropCallback& callback) override;
+                      OnCompleteDropCallback callback) override;
   void OnPerformDragDropCompleted(uint32_t window,
                                   bool success,
                                   uint32_t action_taken) override;

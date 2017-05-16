@@ -162,7 +162,7 @@ class TestWindowTree : public ui::mojom::WindowTree {
                      uint32_t relative_window_id,
                      ui::mojom::OrderDirection direction) override;
   void GetWindowTree(uint32_t window_id,
-                     const GetWindowTreeCallback& callback) override;
+                     GetWindowTreeCallback callback) override;
   void SetCapture(uint32_t change_id, uint32_t window_id) override;
   void ReleaseCapture(uint32_t change_id, uint32_t window_id) override;
   void StartPointerWatcher(bool want_moves) override;
@@ -170,7 +170,7 @@ class TestWindowTree : public ui::mojom::WindowTree {
   void Embed(uint32_t window_id,
              ui::mojom::WindowTreeClientPtr client,
              uint32_t flags,
-             const EmbedCallback& callback) override;
+             EmbedCallback callback) override;
   void SetFocus(uint32_t change_id, uint32_t window_id) override;
   void SetCanFocus(uint32_t window_id, bool can_focus) override;
   void SetEventTargetingPolicy(uint32_t window_id,
@@ -193,7 +193,7 @@ class TestWindowTree : public ui::mojom::WindowTree {
       mojo::AssociatedInterfaceRequest<ui::mojom::WindowManagerClient> internal)
       override;
   void GetCursorLocationMemory(
-      const GetCursorLocationMemoryCallback& callback) override;
+      GetCursorLocationMemoryCallback callback) override;
   void PerformDragDrop(
       uint32_t change_id,
       uint32_t source_window_id,

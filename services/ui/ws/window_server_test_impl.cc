@@ -20,27 +20,26 @@ WindowServerTestImpl::WindowServerTestImpl(WindowServer* window_server)
 
 WindowServerTestImpl::~WindowServerTestImpl() {}
 
-void WindowServerTestImpl::OnWindowPaint(
-    const std::string& name,
-    const EnsureClientHasDrawnWindowCallback& cb,
-    ServerWindow* window) {
+void WindowServerTestImpl::OnWindowPaint(const std::string& name,
+                                         EnsureClientHasDrawnWindowCallback cb,
+                                         ServerWindow* window) {
   WindowTree* tree = window_server_->GetTreeWithClientName(name);
   if (!tree)
     return;
   if (tree->HasRoot(window) && window->compositor_frame_sink_manager()) {
-    cb.Run(true);
+    std::move(cb).Run(true);
     window_server_->SetPaintCallback(base::Callback<void(ServerWindow*)>());
   }
 }
 
 void WindowServerTestImpl::EnsureClientHasDrawnWindow(
     const std::string& client_name,
-    const EnsureClientHasDrawnWindowCallback& callback) {
+    EnsureClientHasDrawnWindowCallback callback) {
   WindowTree* tree = window_server_->GetTreeWithClientName(client_name);
   if (tree) {
     for (const ServerWindow* window : tree->roots()) {
       if (window->compositor_frame_sink_manager()) {
-        callback.Run(true);
+        std::move(callback).Run(true);
         return;
       }
     }
@@ -48,30 +47,30 @@ void WindowServerTestImpl::EnsureClientHasDrawnWindow(
 
   window_server_->SetPaintCallback(
       base::Bind(&WindowServerTestImpl::OnWindowPaint, base::Unretained(this),
-                 client_name, std::move(callback)));
+                 client_name, base::Passed(&callback)));
 }
 
 void WindowServerTestImpl::DispatchEvent(int64_t display_id,
                                          std::unique_ptr<ui::Event> event,
-                                         const DispatchEventCallback& cb) {
+                                         DispatchEventCallback cb) {
   DisplayManager* manager = window_server_->display_manager();
   if (!manager) {
     DVLOG(1) << "No display manager in DispatchEvent.";
-    cb.Run(false);
+    std::move(cb).Run(false);
     return;
   }
 
   Display* display = manager->GetDisplayById(display_id);
   if (!display) {
     DVLOG(1) << "Invalid display_id in DispatchEvent.";
-    cb.Run(false);
+    std::move(cb).Run(false);
     return;
   }
 
   ignore_result(static_cast<PlatformDisplayDelegate*>(display)
                     ->GetEventSink()
                     ->OnEventFromSource(event.get()));
-  cb.Run(true);
+  std::move(cb).Run(true);
 }
 
 }  // namespace ws

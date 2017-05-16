@@ -20,7 +20,7 @@ class InputMethodMusTestApi {
   static void CallSendKeyEventToInputMethod(
       InputMethodMus* input_method_mus,
       const ui::KeyEvent& event,
-      std::unique_ptr<InputMethodMus::EventResultCallback> ack_callback) {
+      InputMethodMus::EventResultCallback ack_callback) {
     input_method_mus->SendKeyEventToInputMethod(event, std::move(ack_callback));
   }
 

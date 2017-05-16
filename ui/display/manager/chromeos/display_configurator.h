@@ -46,19 +46,19 @@ class DISPLAY_MANAGER_EXPORT DisplayConfigurator
     INVALID_CLIENT_ID = 0,
   };
 
-  using ConfigurationCallback = base::Callback<void(bool /* success */)>;
+  using ConfigurationCallback = base::OnceCallback<void(bool /* success */)>;
 
-  using SetProtectionCallback = base::Callback<void(bool /* success */)>;
+  using SetProtectionCallback = base::OnceCallback<void(bool /* success */)>;
 
   // link_mask: The type of connected display links, which is a bitmask of
   // DisplayConnectionType values.
   // protection_mask: The desired protection methods, which is a bitmask of the
   // ContentProtectionMethod values.
   using QueryProtectionCallback =
-      base::Callback<void(bool /* success */,
-                          uint32_t /* link_mask */,
-                          uint32_t /* protection_mask */)>;
-  using DisplayControlCallback = base::Callback<void(bool /* success */)>;
+      base::OnceCallback<void(bool /* success */,
+                              uint32_t /* link_mask */,
+                              uint32_t /* protection_mask */)>;
+  using DisplayControlCallback = base::OnceCallback<void(bool /* success */)>;
 
   using DisplayStateList = std::vector<DisplaySnapshot*>;
 
@@ -192,11 +192,11 @@ class DISPLAY_MANAGER_EXPORT DisplayConfigurator
 
   // Called when an external process no longer needs to control the display
   // and Chrome can take control.
-  void TakeControl(const DisplayControlCallback& callback);
+  void TakeControl(DisplayControlCallback callback);
 
   // Called when an external process needs to control the display and thus
   // Chrome should relinquish it.
-  void RelinquishControl(const DisplayControlCallback& callback);
+  void RelinquishControl(DisplayControlCallback callback);
 
   // Replaces |native_display_delegate_| with the delegate passed in and sets
   // |configure_display_| to true. Should be called before Init().
@@ -263,7 +263,7 @@ class DISPLAY_MANAGER_EXPORT DisplayConfigurator
   // to the query.
   void QueryContentProtectionStatus(uint64_t client_id,
                                     int64_t display_id,
-                                    const QueryProtectionCallback& callback);
+                                    QueryProtectionCallback callback);
 
   // Requests the desired protection methods.
   // |protection_mask| is the desired protection methods, which is a bitmask
@@ -272,7 +272,7 @@ class DISPLAY_MANAGER_EXPORT DisplayConfigurator
   void SetContentProtection(uint64_t client_id,
                             int64_t display_id,
                             uint32_t protection_mask,
-                            const SetProtectionCallback& callback);
+                            SetProtectionCallback callback);
 
   // Checks the available color profiles for |display_id| and fills the result
   // into |profiles|.
@@ -362,16 +362,15 @@ class DISPLAY_MANAGER_EXPORT DisplayConfigurator
 
   // Callbacks used to signal when the native platform has released/taken
   // display control.
-  void OnDisplayControlTaken(const DisplayControlCallback& callback,
-                             bool success);
-  void OnDisplayControlRelinquished(const DisplayControlCallback& callback,
+  void OnDisplayControlTaken(DisplayControlCallback callback, bool success);
+  void OnDisplayControlRelinquished(DisplayControlCallback callback,
                                     bool success);
 
   // Helper function that sends the actual command.
   // |callback| is called upon completion of the relinquish command.
   // |success| is the result from calling SetDisplayPowerInternal() in
   // RelinquishDisplay().
-  void SendRelinquishDisplayControl(const DisplayControlCallback& callback,
+  void SendRelinquishDisplayControl(DisplayControlCallback callback,
                                     bool success);
 
   StateController* state_controller_;

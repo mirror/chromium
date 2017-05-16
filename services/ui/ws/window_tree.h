@@ -426,10 +426,7 @@ class WindowTree : public mojom::WindowTree,
                      Id window_id,
                      Id relative_window_id,
                      mojom::OrderDirection direction) override;
-  void GetWindowTree(
-      Id window_id,
-      const base::Callback<void(std::vector<mojom::WindowDataPtr>)>& callback)
-      override;
+  void GetWindowTree(Id window_id, GetWindowTreeCallback callback) override;
   void SetCapture(uint32_t change_id, Id window_id) override;
   void ReleaseCapture(uint32_t change_id, Id window_id) override;
   void StartPointerWatcher(bool want_moves) override;
@@ -457,7 +454,7 @@ class WindowTree : public mojom::WindowTree,
   void Embed(Id transport_window_id,
              mojom::WindowTreeClientPtr client,
              uint32_t flags,
-             const EmbedCallback& callback) override;
+             EmbedCallback callback) override;
   void SetFocus(uint32_t change_id, Id transport_window_id) override;
   void SetCanFocus(Id transport_window_id, bool can_focus) override;
   void SetEventTargetingPolicy(Id transport_window_id,
@@ -485,8 +482,8 @@ class WindowTree : public mojom::WindowTree,
   void GetWindowManagerClient(
       mojo::AssociatedInterfaceRequest<mojom::WindowManagerClient> internal)
       override;
-  void GetCursorLocationMemory(const GetCursorLocationMemoryCallback& callback)
-      override;
+  void GetCursorLocationMemory(
+      GetCursorLocationMemoryCallback callback) override;
   void PerformDragDrop(
       uint32_t change_id,
       Id source_window_id,
@@ -505,7 +502,7 @@ class WindowTree : public mojom::WindowTree,
 
   // mojom::WindowManagerClient:
   void AddAccelerators(std::vector<mojom::WmAcceleratorPtr> accelerators,
-                       const AddAcceleratorsCallback& callback) override;
+                       AddAcceleratorsCallback callback) override;
   void RemoveAccelerator(uint32_t id) override;
   void AddActivationParent(Id transport_window_id) override;
   void RemoveActivationParent(Id transport_window_id) override;
@@ -515,7 +512,7 @@ class WindowTree : public mojom::WindowTree,
                       mojom::WmViewportMetricsPtr viewport_metrics,
                       bool is_primary_display,
                       Id window_id,
-                      const SetDisplayRootCallback& callback) override;
+                      SetDisplayRootCallback callback) override;
   void WmResponse(uint32_t change_id, bool response) override;
   void WmSetBoundsResponse(uint32_t change_id) override;
   void WmRequestClose(Id transport_window_id) override;

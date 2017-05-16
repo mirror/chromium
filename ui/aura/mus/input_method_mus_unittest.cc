@@ -29,9 +29,9 @@ class TestInputMethodDelegate : public ui::internal::InputMethodDelegate {
   DISALLOW_COPY_AND_ASSIGN(TestInputMethodDelegate);
 };
 
-using ProcessKeyEventCallback = base::Callback<void(bool)>;
+using ProcessKeyEventCallback = base::OnceCallback<void(bool)>;
 using ProcessKeyEventCallbacks = std::vector<ProcessKeyEventCallback>;
-using EventResultCallback = base::Callback<void(ui::mojom::EventResult)>;
+using EventResultCallback = base::OnceCallback<void(ui::mojom::EventResult)>;
 
 // InputMethod implementation that queues up the callbacks supplied to
 // ProcessKeyEvent().
@@ -48,8 +48,8 @@ class TestInputMethod : public ui::mojom::InputMethod {
   void OnTextInputTypeChanged(ui::TextInputType text_input_type) override {}
   void OnCaretBoundsChanged(const gfx::Rect& caret_bounds) override {}
   void ProcessKeyEvent(std::unique_ptr<ui::Event> key_event,
-                       const ProcessKeyEventCallback& callback) override {
-    process_key_event_callbacks_.push_back(callback);
+                       ProcessKeyEventCallback callback) override {
+    process_key_event_callbacks_.push_back(std::move(callback));
   }
   void CancelComposition() override {}
 
@@ -83,16 +83,15 @@ TEST_F(InputMethodMusTest, PendingCallbackRunFromDestruction) {
     TestInputMethod test_input_method;
     InputMethodMusTestApi::SetInputMethod(&input_method_mus,
                                           &test_input_method);
-    std::unique_ptr<EventResultCallback> callback =
-        base::MakeUnique<EventResultCallback>(base::Bind(
-            &RunFunctionWithEventResult, &was_event_result_callback_run));
+    EventResultCallback callback = base::BindOnce(
+        &RunFunctionWithEventResult, &was_event_result_callback_run);
     InputMethodMusTestApi::CallSendKeyEventToInputMethod(
         &input_method_mus, ui::KeyEvent(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0),
         std::move(callback));
     // Add a null callback as well, to make sure null is deal with.
     InputMethodMusTestApi::CallSendKeyEventToInputMethod(
         &input_method_mus, ui::KeyEvent(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0),
-        nullptr);
+        EventResultCallback());
     // The event should have been queued.
     EXPECT_EQ(2u, test_input_method.process_key_event_callbacks()->size());
     // Callback should not have been run yet.
@@ -113,9 +112,8 @@ TEST_F(InputMethodMusTest, PendingCallbackRunFromOnDidChangeFocusedClient) {
   InputMethodMus input_method_mus(&input_method_delegate, &window);
   TestInputMethod test_input_method;
   InputMethodMusTestApi::SetInputMethod(&input_method_mus, &test_input_method);
-  std::unique_ptr<EventResultCallback> callback =
-      base::MakeUnique<EventResultCallback>(base::Bind(
-          &RunFunctionWithEventResult, &was_event_result_callback_run));
+  EventResultCallback callback = base::BindOnce(&RunFunctionWithEventResult,
+                                                &was_event_result_callback_run);
   InputMethodMusTestApi::CallSendKeyEventToInputMethod(
       &input_method_mus, ui::KeyEvent(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0),
       std::move(callback));
@@ -176,9 +174,8 @@ TEST_F(InputMethodMusTest, ChangeTextInputTypeWhileProcessingCallback) {
                                                 &test_input_client);
   TestInputMethod test_input_method;
   InputMethodMusTestApi::SetInputMethod(&input_method_mus, &test_input_method);
-  std::unique_ptr<EventResultCallback> callback =
-      base::MakeUnique<EventResultCallback>(base::Bind(
-          &RunFunctionWithEventResult, &was_event_result_callback_run));
+  EventResultCallback callback = base::BindOnce(&RunFunctionWithEventResult,
+                                                &was_event_result_callback_run);
   const ui::KeyEvent key_event(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0);
   InputMethodMusTestApi::CallSendKeyEventToInputMethod(
       &input_method_mus, key_event, std::move(callback));
@@ -186,7 +183,7 @@ TEST_F(InputMethodMusTest, ChangeTextInputTypeWhileProcessingCallback) {
   ASSERT_EQ(1u, test_input_method.process_key_event_callbacks()->size());
   // Callback should not have been run yet.
   EXPECT_FALSE(was_event_result_callback_run);
-  (*test_input_method.process_key_event_callbacks())[0].Run(false);
+  std::move((*test_input_method.process_key_event_callbacks())[0]).Run(false);
 
   // Callback should have been run.
   EXPECT_TRUE(was_event_result_callback_run);

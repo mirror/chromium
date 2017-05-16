@@ -43,9 +43,8 @@ void InputMethodMus::Init(service_manager::Connector* connector) {
     connector->BindInterface(ui::mojom::kServiceName, &ime_server_);
 }
 
-void InputMethodMus::DispatchKeyEvent(
-    ui::KeyEvent* event,
-    std::unique_ptr<EventResultCallback> ack_callback) {
+void InputMethodMus::DispatchKeyEvent(ui::KeyEvent* event,
+                                      EventResultCallback ack_callback) {
   DCHECK(event->type() == ui::ET_KEY_PRESSED ||
          event->type() == ui::ET_KEY_RELEASED);
 
@@ -53,8 +52,9 @@ void InputMethodMus::DispatchKeyEvent(
   if (!GetTextInputClient()) {
     DispatchKeyEventPostIME(event);
     if (ack_callback) {
-      ack_callback->Run(event->handled() ? EventResult::HANDLED
-                                         : EventResult::UNHANDLED);
+      std::move(ack_callback)
+          .Run(event->handled() ? EventResult::HANDLED
+                                : EventResult::UNHANDLED);
     }
     return;
   }
@@ -83,7 +83,7 @@ bool InputMethodMus::OnUntranslatedIMEMessage(const base::NativeEvent& event,
 }
 
 void InputMethodMus::DispatchKeyEvent(ui::KeyEvent* event) {
-  DispatchKeyEvent(event, nullptr);
+  DispatchKeyEvent(event, EventResultCallback());
   // Mark the event as handled so that EventGenerator doesn't attempt to
   // deliver event as well.
   event->SetHandled();
@@ -121,7 +121,7 @@ bool InputMethodMus::IsCandidatePopupOpen() const {
 
 void InputMethodMus::SendKeyEventToInputMethod(
     const ui::KeyEvent& event,
-    std::unique_ptr<EventResultCallback> ack_callback) {
+    EventResultCallback ack_callback) {
   if (!input_method_) {
     // This code path is hit in tests that don't connect to the server.
     DCHECK(!ack_callback);
@@ -185,9 +185,9 @@ void InputMethodMus::UpdateTextInputType() {
 }
 
 void InputMethodMus::AckPendingCallbacksUnhandled() {
-  for (auto& callback_ptr : pending_callbacks_) {
-    if (callback_ptr)
-      callback_ptr->Run(EventResult::UNHANDLED);
+  for (auto& callback : pending_callbacks_) {
+    if (callback)
+      std::move(callback).Run(EventResult::UNHANDLED);
   }
   pending_callbacks_.clear();
 }
@@ -198,8 +198,7 @@ void InputMethodMus::ProcessKeyEventCallback(
   // Remove the callback as DispatchKeyEventPostIME() may lead to calling
   // AckPendingCallbacksUnhandled(), which mutates |pending_callbacks_|.
   DCHECK(!pending_callbacks_.empty());
-  std::unique_ptr<EventResultCallback> ack_callback =
-      std::move(pending_callbacks_.front());
+  EventResultCallback ack_callback = std::move(pending_callbacks_.front());
   pending_callbacks_.pop_front();
   EventResult event_result;
   if (!handled) {
@@ -217,7 +216,7 @@ void InputMethodMus::ProcessKeyEventCallback(
   // called instead of the version which provides a callback. In mus+ash we
   // use the version with callback, but some unittests use the standard form.
   if (ack_callback)
-    ack_callback->Run(event_result);
+    std::move(ack_callback).Run(event_result);
 }
 
 }  // namespace aura

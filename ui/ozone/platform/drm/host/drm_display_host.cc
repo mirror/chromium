@@ -47,13 +47,13 @@ void DrmDisplayHost::UpdateDisplaySnapshot(
 
 void DrmDisplayHost::Configure(const display::DisplayMode* mode,
                                const gfx::Point& origin,
-                               const display::ConfigureCallback& callback) {
+                               display::ConfigureCallback callback) {
   if (is_dummy_) {
-    callback.Run(true);
+    std::move(callback).Run(true);
     return;
   }
 
-  configure_callback_ = callback;
+  configure_callback_ = std::move(callback);
   bool status = false;
   if (mode) {
     status = sender_->GpuConfigureNativeDisplay(
@@ -69,18 +69,15 @@ void DrmDisplayHost::Configure(const display::DisplayMode* mode,
 void DrmDisplayHost::OnDisplayConfigured(bool status) {
   if (!configure_callback_.is_null()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(configure_callback_, status));
+        FROM_HERE, base::BindOnce(std::move(configure_callback_), status));
   } else {
     LOG(ERROR) << "Got unexpected event for display "
                << snapshot_->display_id();
   }
-
-  configure_callback_.Reset();
 }
 
-void DrmDisplayHost::GetHDCPState(
-    const display::GetHDCPStateCallback& callback) {
-  get_hdcp_callback_ = callback;
+void DrmDisplayHost::GetHDCPState(display::GetHDCPStateCallback callback) {
+  get_hdcp_callback_ = std::move(callback);
   if (!sender_->GpuGetHDCPState(snapshot_->display_id()))
     OnHDCPStateReceived(false, display::HDCP_STATE_UNDESIRED);
 }
@@ -89,19 +86,17 @@ void DrmDisplayHost::OnHDCPStateReceived(bool status,
                                          display::HDCPState state) {
   if (!get_hdcp_callback_.is_null()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(get_hdcp_callback_, status, state));
+        FROM_HERE,
+        base::BindOnce(std::move(get_hdcp_callback_), status, state));
   } else {
     LOG(ERROR) << "Got unexpected event for display "
                << snapshot_->display_id();
   }
-
-  get_hdcp_callback_.Reset();
 }
 
-void DrmDisplayHost::SetHDCPState(
-    display::HDCPState state,
-    const display::SetHDCPStateCallback& callback) {
-  set_hdcp_callback_ = callback;
+void DrmDisplayHost::SetHDCPState(display::HDCPState state,
+                                  display::SetHDCPStateCallback callback) {
+  set_hdcp_callback_ = std::move(callback);
   if (!sender_->GpuSetHDCPState(snapshot_->display_id(), state))
     OnHDCPStateUpdated(false);
 }
@@ -109,13 +104,11 @@ void DrmDisplayHost::SetHDCPState(
 void DrmDisplayHost::OnHDCPStateUpdated(bool status) {
   if (!set_hdcp_callback_.is_null()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(set_hdcp_callback_, status));
+        FROM_HERE, base::BindOnce(std::move(set_hdcp_callback_), status));
   } else {
     LOG(ERROR) << "Got unexpected event for display "
                << snapshot_->display_id();
   }
-
-  set_hdcp_callback_.Reset();
 }
 
 void DrmDisplayHost::SetColorCorrection(

@@ -91,7 +91,7 @@ struct WindowPortPropertyDataMus : public ui::PropertyData {
 // message loop starts, or upon destruction.
 class EventAckHandler : public base::RunLoop::NestingObserver {
  public:
-  explicit EventAckHandler(std::unique_ptr<EventResultCallback> ack_callback)
+  explicit EventAckHandler(EventResultCallback ack_callback)
       : ack_callback_(std::move(ack_callback)) {
     DCHECK(ack_callback_);
     base::RunLoop::AddNestingObserverOnCurrentThread(this);
@@ -100,8 +100,9 @@ class EventAckHandler : public base::RunLoop::NestingObserver {
   ~EventAckHandler() override {
     base::RunLoop::RemoveNestingObserverOnCurrentThread(this);
     if (ack_callback_) {
-      ack_callback_->Run(handled_ ? ui::mojom::EventResult::HANDLED
-                                  : ui::mojom::EventResult::UNHANDLED);
+      std::move(ack_callback_)
+          .Run(handled_ ? ui::mojom::EventResult::HANDLED
+                        : ui::mojom::EventResult::UNHANDLED);
     }
   }
 
@@ -112,13 +113,12 @@ class EventAckHandler : public base::RunLoop::NestingObserver {
     // Acknowledge the event immediately if a nested run loop starts.
     // Otherwise we appear unresponsive for the life of the nested run loop.
     if (ack_callback_) {
-      ack_callback_->Run(ui::mojom::EventResult::HANDLED);
-      ack_callback_.reset();
+      std::move(ack_callback_).Run(ui::mojom::EventResult::HANDLED);
     }
   }
 
  private:
-  std::unique_ptr<EventResultCallback> ack_callback_;
+  EventResultCallback ack_callback_;
   bool handled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(EventAckHandler);
@@ -329,11 +329,10 @@ void WindowTreeClient::SetImeVisibility(WindowMus* window,
   tree_->SetImeVisibility(window->server_id(), visible, std::move(state));
 }
 
-void WindowTreeClient::Embed(
-    Window* window,
-    ui::mojom::WindowTreeClientPtr client,
-    uint32_t flags,
-    const ui::mojom::WindowTree::EmbedCallback& callback) {
+void WindowTreeClient::Embed(Window* window,
+                             ui::mojom::WindowTreeClientPtr client,
+                             uint32_t flags,
+                             ui::mojom::WindowTree::EmbedCallback callback) {
   DCHECK(tree_);
   // Window::Init() must be called before Embed() (otherwise the server hasn't
   // been told about the window).
@@ -342,12 +341,12 @@ void WindowTreeClient::Embed(
     // The window server removes all children before embedding. In other words,
     // it's generally an error to Embed() with existing children. So, fail
     // early.
-    callback.Run(false);
+    std::move(callback).Run(false);
     return;
   }
 
   tree_->Embed(WindowMus::Get(window)->server_id(), std::move(client), flags,
-               callback);
+               std::move(callback));
 }
 
 void WindowTreeClient::AttachCompositorFrameSink(
@@ -624,11 +623,10 @@ WindowTreeHostMus* WindowTreeClient::WmNewDisplayAddedImpl(
   return window_tree_host_ptr;
 }
 
-std::unique_ptr<EventResultCallback>
-WindowTreeClient::CreateEventResultCallback(int32_t event_id) {
-  return base::MakeUnique<EventResultCallback>(
-      base::Bind(&ui::mojom::WindowTree::OnWindowInputEventAck,
-                 base::Unretained(tree_), event_id));
+EventResultCallback WindowTreeClient::CreateEventResultCallback(
+    int32_t event_id) {
+  return base::BindOnce(&ui::mojom::WindowTree::OnWindowInputEventAck,
+                        base::Unretained(tree_), event_id);
 }
 
 void WindowTreeClient::OnReceivedCursorLocationMemory(
@@ -1398,8 +1396,8 @@ void WindowTreeClient::OnDragEnter(Id window_id,
                                    uint32_t key_state,
                                    const gfx::Point& position,
                                    uint32_t effect_bitmask,
-                                   const OnDragEnterCallback& callback) {
-  callback.Run(drag_drop_controller_->OnDragEnter(
+                                   OnDragEnterCallback callback) {
+  std::move(callback).Run(drag_drop_controller_->OnDragEnter(
       GetWindowByServerId(window_id), key_state, position, effect_bitmask));
 }
 
@@ -1407,8 +1405,8 @@ void WindowTreeClient::OnDragOver(Id window_id,
                                   uint32_t key_state,
                                   const gfx::Point& position,
                                   uint32_t effect_bitmask,
-                                  const OnDragOverCallback& callback) {
-  callback.Run(drag_drop_controller_->OnDragOver(
+                                  OnDragOverCallback callback) {
+  std::move(callback).Run(drag_drop_controller_->OnDragOver(
       GetWindowByServerId(window_id), key_state, position, effect_bitmask));
 }
 
@@ -1424,8 +1422,8 @@ void WindowTreeClient::OnCompleteDrop(Id window_id,
                                       uint32_t key_state,
                                       const gfx::Point& position,
                                       uint32_t effect_bitmask,
-                                      const OnCompleteDropCallback& callback) {
-  callback.Run(drag_drop_controller_->OnCompleteDrop(
+                                      OnCompleteDropCallback callback) {
+  std::move(callback).Run(drag_drop_controller_->OnCompleteDrop(
       GetWindowByServerId(window_id), key_state, position, effect_bitmask));
 }
 
@@ -1641,16 +1639,15 @@ void WindowTreeClient::WmBuildDragImage(const gfx::Point& screen_location,
                                                drag_image_offset, source);
 }
 
-void WindowTreeClient::WmMoveDragImage(
-    const gfx::Point& screen_location,
-    const WmMoveDragImageCallback& callback) {
+void WindowTreeClient::WmMoveDragImage(const gfx::Point& screen_location,
+                                       WmMoveDragImageCallback callback) {
   if (!window_manager_delegate_) {
-    callback.Run();
+    std::move(callback).Run();
     return;
   }
 
   window_manager_delegate_->OnWmMoveDragImage(screen_location);
-  callback.Run();
+  std::move(callback).Run();
 }
 
 void WindowTreeClient::WmDestroyDragImage() {

@@ -39,27 +39,27 @@ void GpuClient::OnError() {
 }
 
 void GpuClient::OnEstablishGpuChannel(
-    const EstablishGpuChannelCallback& callback,
+    EstablishGpuChannelCallback callback,
     const IPC::ChannelHandle& channel,
     const gpu::GPUInfo& gpu_info,
     GpuProcessHost::EstablishChannelStatus status) {
   mojo::ScopedMessagePipeHandle channel_handle;
   channel_handle.reset(channel.mojo_handle);
-  callback.Run(render_process_id_, std::move(channel_handle), gpu_info);
+  std::move(callback).Run(render_process_id_, std::move(channel_handle),
+                          gpu_info);
 }
 
 void GpuClient::OnCreateGpuMemoryBuffer(
-    const CreateGpuMemoryBufferCallback& callback,
+    CreateGpuMemoryBufferCallback callback,
     const gfx::GpuMemoryBufferHandle& handle) {
-  callback.Run(handle);
+  std::move(callback).Run(handle);
 }
 
-void GpuClient::EstablishGpuChannel(
-    const EstablishGpuChannelCallback& callback) {
+void GpuClient::EstablishGpuChannel(EstablishGpuChannelCallback callback) {
   GpuProcessHost* host = GpuProcessHost::Get();
   if (!host) {
     OnEstablishGpuChannel(
-        callback, IPC::ChannelHandle(), gpu::GPUInfo(),
+        std::move(callback), IPC::ChannelHandle(), gpu::GPUInfo(),
         GpuProcessHost::EstablishChannelStatus::GPU_ACCESS_DENIED);
     return;
   }
@@ -73,21 +73,20 @@ void GpuClient::EstablishGpuChannel(
           render_process_id_),
       preempts, allow_view_command_buffers, allow_real_time_streams,
       base::Bind(&GpuClient::OnEstablishGpuChannel, weak_factory_.GetWeakPtr(),
-                 callback));
+                 base::Passed(&callback)));
 }
 
-void GpuClient::CreateGpuMemoryBuffer(
-    gfx::GpuMemoryBufferId id,
-    const gfx::Size& size,
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage,
-    const ui::mojom::Gpu::CreateGpuMemoryBufferCallback& callback) {
+void GpuClient::CreateGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
+                                      const gfx::Size& size,
+                                      gfx::BufferFormat format,
+                                      gfx::BufferUsage usage,
+                                      CreateGpuMemoryBufferCallback callback) {
   DCHECK(BrowserGpuMemoryBufferManager::current());
 
   base::CheckedNumeric<int> bytes = size.width();
   bytes *= size.height();
   if (!bytes.IsValid()) {
-    OnCreateGpuMemoryBuffer(callback, gfx::GpuMemoryBufferHandle());
+    OnCreateGpuMemoryBuffer(std::move(callback), gfx::GpuMemoryBufferHandle());
     return;
   }
 
@@ -95,7 +94,7 @@ void GpuClient::CreateGpuMemoryBuffer(
       ->AllocateGpuMemoryBufferForChildProcess(
           id, size, format, usage, render_process_id_,
           base::Bind(&GpuClient::OnCreateGpuMemoryBuffer,
-                     weak_factory_.GetWeakPtr(), callback));
+                     weak_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
 
 void GpuClient::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,

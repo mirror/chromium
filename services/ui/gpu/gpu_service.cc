@@ -65,16 +65,16 @@ bool GpuLogMessageHandler(int severity,
 // Returns a callback which does a PostTask to run |callback| on the |runner|
 // task runner.
 template <typename Param>
-const base::Callback<void(const Param&)> WrapCallback(
+base::OnceCallback<void(Param)> WrapCallback(
     scoped_refptr<base::SingleThreadTaskRunner> runner,
-    const base::Callback<void(const Param&)>& callback) {
-  return base::Bind(
+    base::OnceCallback<void(Param)> callback) {
+  return base::BindOnce(
       [](scoped_refptr<base::SingleThreadTaskRunner> runner,
-         const base::Callback<void(const Param&)>& callback,
-         const Param& param) {
-        runner->PostTask(FROM_HERE, base::Bind(callback, param));
+         base::OnceCallback<void(Param)> callback, Param param) {
+        runner->PostTask(FROM_HERE, base::BindOnce(std::move(callback),
+                                                   std::forward<Param>(param)));
       },
-      runner, callback);
+      runner, std::move(callback));
 }
 
 void DestroyBinding(mojo::BindingSet<mojom::GpuService>* binding,
@@ -222,17 +222,16 @@ void GpuService::RecordLogMessage(int severity,
   (*gpu_host_)->RecordLogMessage(severity, header, message);
 }
 
-void GpuService::CreateGpuMemoryBuffer(
-    gfx::GpuMemoryBufferId id,
-    const gfx::Size& size,
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage,
-    int client_id,
-    gpu::SurfaceHandle surface_handle,
-    const CreateGpuMemoryBufferCallback& callback) {
+void GpuService::CreateGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
+                                       const gfx::Size& size,
+                                       gfx::BufferFormat format,
+                                       gfx::BufferUsage usage,
+                                       int client_id,
+                                       gpu::SurfaceHandle surface_handle,
+                                       CreateGpuMemoryBufferCallback callback) {
   DCHECK(io_runner_->BelongsToCurrentThread());
   // This needs to happen in the IO thread.
-  callback.Run(gpu_memory_buffer_factory_->CreateGpuMemoryBuffer(
+  std::move(callback).Run(gpu_memory_buffer_factory_->CreateGpuMemoryBuffer(
       id, size, format, usage, client_id, surface_handle));
 }
 
@@ -249,31 +248,31 @@ void GpuService::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
 }
 
 void GpuService::GetVideoMemoryUsageStats(
-    const GetVideoMemoryUsageStatsCallback& callback) {
+    GetVideoMemoryUsageStatsCallback callback) {
   if (io_runner_->BelongsToCurrentThread()) {
-    auto wrap_callback = WrapCallback(io_runner_, callback);
+    auto wrap_callback = WrapCallback(io_runner_, std::move(callback));
     main_runner_->PostTask(
         FROM_HERE, base::Bind(&GpuService::GetVideoMemoryUsageStats, weak_ptr_,
-                              wrap_callback));
+                              base::Passed(&wrap_callback)));
     return;
   }
   gpu::VideoMemoryUsageStats video_memory_usage_stats;
   gpu_channel_manager_->gpu_memory_manager()->GetVideoMemoryUsageStats(
       &video_memory_usage_stats);
-  callback.Run(video_memory_usage_stats);
+  std::move(callback).Run(video_memory_usage_stats);
 }
 
 void GpuService::RequestCompleteGpuInfo(
-    const RequestCompleteGpuInfoCallback& callback) {
+    RequestCompleteGpuInfoCallback callback) {
   if (io_runner_->BelongsToCurrentThread()) {
-    auto wrap_callback = WrapCallback(io_runner_, callback);
-    main_runner_->PostTask(
-        FROM_HERE, base::Bind(&GpuService::RequestCompleteGpuInfo, weak_ptr_,
-                              wrap_callback));
+    auto wrap_callback = WrapCallback(io_runner_, std::move(callback));
+    main_runner_->PostTask(FROM_HERE,
+                           base::BindOnce(&GpuService::RequestCompleteGpuInfo,
+                                          weak_ptr_, std::move(wrap_callback)));
     return;
   }
   UpdateGpuInfoPlatform();
-  callback.Run(gpu_info_);
+  std::move(callback).Run(gpu_info_);
 #if defined(OS_WIN)
   if (!in_host_process_) {
     // The unsandboxed GPU process fulfilled its duty. Rest in peace.
@@ -373,24 +372,23 @@ void GpuService::SetActiveURL(const GURL& url) {
   base::debug::SetCrashKeyValue(kActiveURL, url.possibly_invalid_spec());
 }
 
-void GpuService::EstablishGpuChannel(
-    int32_t client_id,
-    uint64_t client_tracing_id,
-    bool is_gpu_host,
-    const EstablishGpuChannelCallback& callback) {
+void GpuService::EstablishGpuChannel(int32_t client_id,
+                                     uint64_t client_tracing_id,
+                                     bool is_gpu_host,
+                                     EstablishGpuChannelCallback callback) {
   if (io_runner_->BelongsToCurrentThread()) {
-    EstablishGpuChannelCallback wrap_callback = base::Bind(
+    EstablishGpuChannelCallback wrap_callback = base::BindOnce(
         [](scoped_refptr<base::SingleThreadTaskRunner> runner,
-           const EstablishGpuChannelCallback& cb,
+           EstablishGpuChannelCallback cb,
            mojo::ScopedMessagePipeHandle handle) {
           runner->PostTask(FROM_HERE,
-                           base::Bind(cb, base::Passed(std::move(handle))));
+                           base::BindOnce(std::move(cb), std::move(handle)));
         },
-        io_runner_, callback);
+        io_runner_, std::move(callback));
     main_runner_->PostTask(
-        FROM_HERE,
-        base::Bind(&GpuService::EstablishGpuChannel, weak_ptr_, client_id,
-                   client_tracing_id, is_gpu_host, wrap_callback));
+        FROM_HERE, base::BindOnce(&GpuService::EstablishGpuChannel, weak_ptr_,
+                                  client_id, client_tracing_id, is_gpu_host,
+                                  std::move(wrap_callback)));
     return;
   }
 
@@ -403,7 +401,7 @@ void GpuService::EstablishGpuChannel(
 
   media_gpu_channel_manager_->AddChannel(client_id);
 
-  callback.Run(std::move(pipe.handle1));
+  std::move(callback).Run(std::move(pipe.handle1));
 }
 
 void GpuService::CloseChannel(int32_t client_id) {
@@ -426,18 +424,18 @@ void GpuService::LoadedShader(const std::string& data) {
 
 void GpuService::DestroyingVideoSurface(
     int32_t surface_id,
-    const DestroyingVideoSurfaceCallback& callback) {
+    DestroyingVideoSurfaceCallback callback) {
   DCHECK(io_runner_->BelongsToCurrentThread());
 #if defined(OS_ANDROID)
   main_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(
+      base::BindOnce(
           [](int32_t surface_id) {
             media::ContentVideoViewOverlayAllocator::GetInstance()
                 ->OnSurfaceDestroyed(surface_id);
           },
           surface_id),
-      callback);
+      std::move(callback));
 #else
   NOTREACHED() << "DestroyingVideoSurface() not supported on this platform.";
 #endif
@@ -503,12 +501,12 @@ void GpuService::ThrowJavaException() {
 #endif
 }
 
-void GpuService::Stop(const StopCallback& callback) {
+void GpuService::Stop(StopCallback callback) {
   DCHECK(io_runner_->BelongsToCurrentThread());
-  main_runner_->PostTaskAndReply(FROM_HERE, base::Bind([] {
+  main_runner_->PostTaskAndReply(FROM_HERE, base::BindOnce([] {
                                    base::MessageLoop::current()->QuitWhenIdle();
                                  }),
-                                 callback);
+                                 std::move(callback));
 }
 
 }  // namespace ui
