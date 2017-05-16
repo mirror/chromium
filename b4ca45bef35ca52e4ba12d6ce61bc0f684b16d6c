@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7999648_806a607e",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-16T14:56:24Z",
+      "side": 1,
+      "message": "This is interesting, thanks for bringing it up. Some good news is this code goes away entirely soon.  https://chromium-review.googlesource.com/c/506430/ stops using cc::DisplayItem for the UI. The next step would be to do that for blink also, which would effectively get rid of this line. I will make a patch to try out removing just this line to make us aware of any problems that may be awaiting.",
+      "parentUuid": "033a4520_c1586a5a",
+      "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e61710ac_b203691b",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
         "patchSetId": 17
