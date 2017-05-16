@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81174e9f_311e1235",
+        "filename": "chrome/browser/supervised_user/supervised_user_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-16T14:34:07Z",
+      "side": 1,
+      "message": "Yeah, this is somewhat related to the comment below; the test just verifies that we don\u0027t crash. I\u0027m not sure what a good way is to express that with DoesTheThing/ShouldDoTheThing -- ClosingBlockedTabDoesNotCrash?",
+      "parentUuid": "d0a9f870_44dfdf02",
+      "range": {
+        "startLine": 439,
+        "startChar": 61,
+        "endLine": 439,
+        "endChar": 0
+      },
+      "revId": "68d3574bcee6b08a1d172e01a2480b717c05eaa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea31b548_8481f5a4",
         "filename": "chrome/browser/supervised_user/supervised_user_browsertest.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "68d3574bcee6b08a1d172e01a2480b717c05eaa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b10177f_91404e26",
+        "filename": "chrome/browser/supervised_user/supervised_user_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-16T14:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea31b548_8481f5a4",
+      "revId": "68d3574bcee6b08a1d172e01a2480b717c05eaa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
