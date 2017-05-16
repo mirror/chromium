@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "afa67239_cc3ddfc1",
+        "filename": "android_webview/webview_apk/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-16T22:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b4db965_493259f4",
+      "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aede8a74_2c819fc0",
         "filename": "components/about_ui/BUILD.gn",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0527167f_0455cfde",
+        "filename": "components/about_ui/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-16T22:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aede8a74_2c819fc0",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "80622d9a_9df22816",
+        "filename": "components/about_ui/credit_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-16T22:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cf6c5dc_e67d3cb7",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d72c0d85_bdef98c5",
         "filename": "components/about_ui/resources/about_credits.tmpl",
         "patchSetId": 4
@@ -85,6 +151,30 @@
       "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177c9563_50370942",
+        "filename": "components/about_ui/resources/about_credits.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-16T22:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d72c0d85_bdef98c5",
+      "range": {
+        "startLine": 72,
+        "startChar": 28,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

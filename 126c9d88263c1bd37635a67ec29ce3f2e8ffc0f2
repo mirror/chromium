@@ -684,6 +684,30 @@
     },
     {
       "key": {
+        "uuid": "d77598f8_55fc9acb",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-16T22:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a0e4e2_44f16c50",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "126c9d88263c1bd37635a67ec29ce3f2e8ffc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb808dd5_f3733df7",
         "filename": "components/about_ui/credit_utils.h",
         "patchSetId": 3
