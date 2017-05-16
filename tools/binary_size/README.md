@@ -59,8 +59,9 @@ between milestones.
 
 1. A list of .so section sizes, as reported by `readelf -S`,
 1. Metadata (GN args, filenames, timestamps, git revision, build id),
-1. A list of symbols, including name, address, size, and associated `.o` / `.cc`
-   files.
+1. A list of symbols, including name, address, size,
+  padding (cause by alignment), and associated `.o` / `.cc` files.
+
 
 #### How are Symbols Collected?
 
@@ -73,6 +74,7 @@ between milestones.
      inlined symbols is gathered.
 1. Symbol aliases (when multiple symbols share an address) are collected from
    debug information via `nm elf-file`.
+   * Aliases are created by identical code folding (linker optimization).
    * Aliases have the same address and size, but report their `.pss` as
       `.size / .num_aliases`.
 1. Paths for shared symbols (those found in multiple `.o` files) are collected
@@ -88,13 +90,24 @@ between milestones.
    * Archive names made more pathy: `foo/bar.a(baz.o)` -> `foo/bar.a/baz.o`
 
 1. Name normalization:
-   * `(anonymous::)` is removed from names.
+   * `(anonymous::)` is removed from names (and stored as a symbol flag).
+   * `[clone]` suffix removed (and stored as a symbol flag).
    * `vtable for FOO` -> `Foo [vtable]`
-   * Names split into: `name`, `template_name`, `full_name`
+   * Mangling done by linkers are undone (e.g. prefixing with "unlikely.")
+   * Names are pre-processed as:
+     * `name`: Name without template and argument parameters
+     * `template_name`: Name withough argument parameters.
+     * `full_name`: Name with all parameters.
 
 1. Clustering
-   * Compiler optimizations can cause a symbol to be broken into multiple
-     smaller symbols. Clustering puts them back together.
+   * Compiler & linker optimizations can cause symbols to be broken into
+     multiple parts to become candidates for inlining ("partial inlining").
+   * These symbols are sometimes suffixed with "`[clone]`" (removed by
+     normalization).
+   * Clustering creates groups containing all pieces of a symbol (in the case
+     where multiple pieces remain after inlining).
+   * Clustering is done by default on `SizeInfo.symbols`. To view unclustered
+     symbols, use `SizeInfo.raw_symbols`.
 
 1. Diffing
    * Some heuristics for matching up before/after symbols.
@@ -138,9 +151,18 @@ Example:
     tools/binary_size/supersize html_report chrome.size --report-dir size-report -v
     xdg-open size-report/index.html
 
+### Usage: diff
+
+A convenience command equivalent to: `console before.size after.size --query='Print(Diff(size_info1, size_info2))'`
+
+Example
+
+    tools/binary_size/supersize diff before.size after.size --all
+
 ### Usage: console
 
-Starts a Python interpreter where you can run custom queries.
+Starts a Python interpreter where you can run custom queries, or run pre-made
+queries from canned_queries.py.
 
 Example:
 
@@ -150,13 +172,19 @@ Example:
     # Enters a Python REPL (it will print more guidance).
     tools/binary_size/supersize console chrome.size
 
-### Usage: diff
+Example session:
 
-A convenience command equivalent to: `console before.size after.size --query='Print(Diff(size_info1, size_info2))'`
-
-Example
-
-    tools/binary_size/supersize diff before.size after.size --all
+    >>> ShowExamples()  # Get some inspiration.
+    ...
+    >>> sorted = size_info.symbols.WhereInSection('t').Sorted()
+    >>> Print(sorted)  # Have a look at the largest symbols.
+    ...
+    >>> Print(sorted.WhereNameMatches('TrellisQuantizeBlock'))
+    >>> Disassemble(printed[-1])  # Time to learn assembly.
+    ...
+    >>> help(canned_queries.TemplatesByName)
+    ...
+    >>> Print(canned_queries.TemplatesByName(depth=-1))
 
 ### Roadmap
 
