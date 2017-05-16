@@ -76,11 +76,15 @@ void Frame::Detach(FrameDetachType type) {
   // advanced to the Detaching state.
   DCHECK_EQ(lifecycle_.GetState(), FrameLifecycle::kDetaching);
   client_->SetOpener(0);
-  DisconnectOwnerElement();
   // After this, we must no longer talk to the client since this clears
   // its owning reference back to our owning LocalFrame.
   client_->Detached(type);
   client_ = nullptr;
+  // TODO(dcheng): This currently happens after calling FrameClient::Detached(),
+  // to make it easier for FrameClient::Detached() implementations to detect
+  // provisional frames and avoid detaching them. Once provisional frames have
+  // been removed, remove this code. See https://crbug.com/578349.
+  DisconnectOwnerElement();
   page_ = nullptr;
 }
 

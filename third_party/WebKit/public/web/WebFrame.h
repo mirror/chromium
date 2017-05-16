@@ -199,16 +199,6 @@ class WebFrame {
   // This is executed between layout tests runs
   void ClearOpener() { SetOpener(0); }
 
-  // Inserts the given frame as a child of this frame, so that it is the next
-  // child after |previousSibling|, or first child if |previousSibling| is null.
-  BLINK_EXPORT void InsertAfter(WebFrame* child, WebFrame* previous_sibling);
-
-  // Adds the given frame as a child of this frame.
-  BLINK_EXPORT void AppendChild(WebFrame*);
-
-  // Removes the given child from this frame.
-  BLINK_EXPORT void RemoveChild(WebFrame*);
-
   // Returns the parent frame or 0 if this is a top-most frame.
   BLINK_EXPORT WebFrame* Parent() const;
 
@@ -430,6 +420,9 @@ class WebFrame {
 
   static void InitializeCoreFrame(WebFrame&, Page&);
   static void TraceFrames(Visitor*, WebFrame*);
+
+  // Detaches a frame from its parent frame if it has one.
+  void DetachFromParent();
 #endif
 
  protected:
@@ -442,6 +435,13 @@ class WebFrame {
   // commit-time.
   void SetParent(WebFrame*);
 
+  // Inserts the given frame as a child of this frame, so that it is the next
+  // child after |previousSibling|, or first child if |previousSibling| is null.
+  void InsertAfter(WebFrame* child, WebFrame* previous_sibling);
+
+  // Adds the given frame as a child of this frame.
+  void AppendChild(WebFrame*);
+
  private:
 #if BLINK_IMPLEMENTATION
   friend class OpenedFrameTracker;
@@ -449,6 +449,9 @@ class WebFrame {
 
   static void TraceFrame(Visitor*, WebFrame*);
 #endif
+
+  // Removes the given child from this frame.
+  void RemoveChild(WebFrame*);
 
   const WebTreeScopeType scope_;
 
