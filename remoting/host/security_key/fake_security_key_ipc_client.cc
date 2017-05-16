@@ -71,7 +71,11 @@ bool FakeSecurityKeyIpcClient::ConnectViaIpc(
     return false;
   }
   client_channel_ = IPC::Channel::CreateClient(
-      mojo::edk::ConnectToPeerProcess(std::move(handle)).release(), this);
+      peer_connection_
+          .Connect(mojo::edk::ConnectionParams(
+              mojo::edk::TransportProtocol::kLegacy, std::move(handle)))
+          .release(),
+      this);
   return client_channel_->Connect();
 }
 
