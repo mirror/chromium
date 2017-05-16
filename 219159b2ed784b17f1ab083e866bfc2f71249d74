@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b4db965_493259f4",
+        "filename": "android_webview/webview_apk/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-16T20:46:50Z",
+      "side": 1,
+      "message": "We already have a //android_webview/apk which contains the icons and manifest for the APK; rather than creating a new directory you could put these files in there.",
+      "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aede8a74_2c819fc0",
         "filename": "components/about_ui/BUILD.gn",
         "patchSetId": 4
