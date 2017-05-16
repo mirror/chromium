@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1bc985e_65d6b169",
+        "filename": "chrome/browser/prefs/pref_service_syncable_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-16T06:35:14Z",
+      "side": 1,
+      "message": "This is currently only written in a test (which doesn\u0027t use a constant) so I won\u0027t bother defining a constant. I will instead fix the test in a future CL.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 79
+      },
+      "revId": "ea755c2b3596de9c77b5eff156f133839c28d258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
