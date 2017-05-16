@@ -32,8 +32,7 @@ class OverlayUserPrefStoreTest : public testing::Test {
   OverlayUserPrefStoreTest()
       : underlay_(new TestingPrefStore()),
         overlay_(new OverlayUserPrefStore(underlay_.get())) {
-    overlay_->RegisterOverlayPref(overlay_key);
-    overlay_->RegisterOverlayPref(shared_key);
+    overlay_->RegisterUnderlayPref(regular_key);
   }
 
   ~OverlayUserPrefStoreTest() override {}

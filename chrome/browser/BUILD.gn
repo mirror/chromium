@@ -1562,6 +1562,7 @@ split_static_library("browser") {
     "//components/rappor:rappor_recorder",
     "//components/renderer_context_menu",
     "//components/resources",
+    "//components/safe_browsing/common:safe_browsing_prefs",
     "//components/safe_browsing_db",
     "//components/safe_json",
     "//components/search",
