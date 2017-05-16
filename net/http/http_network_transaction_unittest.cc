@@ -15420,13 +15420,6 @@ class FakeWebSocketStreamCreateHelper :
                                                  using_proxy);
   }
 
-  WebSocketHandshakeStreamBase* CreateSpdyStream(
-      const base::WeakPtr<SpdySession>& session,
-      bool use_relative_url) override {
-    NOTREACHED();
-    return NULL;
-  };
-
   ~FakeWebSocketStreamCreateHelper() override {}
 
   virtual std::unique_ptr<WebSocketStream> Upgrade() {
