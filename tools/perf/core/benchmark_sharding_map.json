@@ -727,14 +727,14 @@
         "v8.runtimestats.browsing_desktop_classic"
       ]
     },
-    "build73-15--device3": {
+    "build73-b1--device3": {
       "benchmarks": [
         "page_cycler_v2.intl_ja_zh",
         "power.typical_10_mobile_reload",
         "v8.runtimestats.browsing_mobile_classic"
       ]
     },
-    "build73-15--device6": {
+    "build73-b1--device6": {
       "benchmarks": [
         "blink_style.polymer",
         "memory.desktop",
