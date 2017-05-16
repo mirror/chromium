@@ -1609,6 +1609,7 @@ PropertyTrees::PropertyTrees()
   effect_tree.SetPropertyTrees(this);
   clip_tree.SetPropertyTrees(this);
   scroll_tree.SetPropertyTrees(this);
+  cached_clip_map_.reserve(100);
 }
 
 PropertyTrees::~PropertyTrees() {}
@@ -2013,13 +2014,16 @@ DrawTransformData& PropertyTrees::FetchDrawTransformsDataFromCache(
 
 ClipRectData* PropertyTrees::FetchClipRectFromCache(int clip_id,
                                                     int target_id) {
-  ClipNode* clip_node = clip_tree.Node(clip_id);
-  for (auto& data : clip_node->cached_clip_rects) {
-    if (data.target_id == target_id || data.target_id == -1)
-      return &data;
+  for (size_t i = 0; i < cached_clip_map_.size(); ++i) {
+    auto& pair = cached_clip_map_[i];
+    if (pair.first != clip_id)
+      continue;
+    if (pair.second.target_id != target_id || target_id == -1)
+      continue;
+    return &pair.second;
   }
-  clip_node->cached_clip_rects.push_back(ClipRectData());
-  return &clip_node->cached_clip_rects.back();
+  cached_clip_map_.emplace_back(clip_id, ClipRectData());
+  return &cached_clip_map_.back().second;
 }
 
 DrawTransforms& PropertyTrees::GetDrawTransforms(int transform_id,
@@ -2079,6 +2083,7 @@ DrawTransforms& PropertyTrees::GetDrawTransforms(int transform_id,
 }
 
 void PropertyTrees::ResetCachedData() {
+  cached_clip_map_.clear();
   cached_data_.transform_tree_update_number = 0;
   cached_data_.animation_scales = std::vector<AnimationScaleData>(
       transform_tree.nodes().size(), AnimationScaleData());

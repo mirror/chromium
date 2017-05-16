@@ -238,11 +238,11 @@ static ConditionalClip ComputeAccumulatedClip(PropertyTrees* property_trees,
   while (target_node->clip_id < clip_node->id) {
     if (parent_chain.size() > 0) {
       // Search the cache.
-      for (auto& data : clip_node->cached_clip_rects) {
-        if (data.target_id == target_id) {
-          cache_hit = true;
-          cached_clip = data.clip;
-        }
+      ClipRectData* cached_data =
+          property_trees->FetchClipRectFromCache(clip_node->id, target_id);
+      if (cached_data->target_id != EffectTree::kInvalidNodeId) {
+        cache_hit = true;
+        cached_clip = cached_data->clip;
       }
     }
     parent_chain.push(clip_node);
@@ -762,14 +762,13 @@ static void ComputeClips(PropertyTrees* property_trees) {
   ClipTree* clip_tree = &property_trees->clip_tree;
   if (!clip_tree->needs_update())
     return;
+  property_trees->cached_clip_map_.clear();
   const int target_effect_id = EffectTree::kContentsRootNodeId;
   const int target_transform_id = TransformTree::kRootNodeId;
   const bool include_expanding_clips = true;
   for (int i = ClipTree::kViewportNodeId;
        i < static_cast<int>(clip_tree->size()); ++i) {
     ClipNode* clip_node = clip_tree->Node(i);
-    // Clear the clip rect cache
-    clip_node->cached_clip_rects = std::vector<ClipRectData>(1);
     if (clip_node->id == ClipTree::kViewportNodeId) {
       clip_node->cached_accumulated_rect_in_screen_space = clip_node->clip;
       continue;
