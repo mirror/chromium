@@ -36,9 +36,14 @@ class IdleRequestCallbackWrapper
       PassRefPtr<IdleRequestCallbackWrapper> callback_wrapper,
       double deadline_seconds) {
     // TODO(rmcilroy): Implement clamping of deadline in some form.
-    if (ScriptedIdleTaskController* controller = callback_wrapper->Controller())
+    ScriptedIdleTaskController* controller = callback_wrapper->Controller();
+    if (controller && !Platform::Current()
+                           ->CurrentThread()
+                           ->Scheduler()
+                           ->ShouldYieldForHighPriorityWork()) {
       controller->CallbackFired(callback_wrapper->Id(), deadline_seconds,
                                 IdleDeadline::CallbackType::kCalledWhenIdle);
+    }
     callback_wrapper->Cancel();
   }
 
