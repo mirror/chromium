@@ -231,6 +231,19 @@ public class ChildProcessConnection {
     // Set to true once unbind() was called.
     private boolean mUnbound;
 
+    @VisibleForTesting
+    private ChildProcessConnection() {
+        mContext = null;
+        mDeathCallback = null;
+        mServiceName = null;
+        mChildProcessCommonParameters = null;
+        mCreationParams = null;
+        mInitialBinding = null;
+        mStrongBinding = null;
+        mModerateBinding = null;
+        mWaivedBinding = null;
+    }
+
     protected ChildProcessConnection(Context context, DeathCallback deathCallback,
             String serviceClassName, Bundle childProcessCommonParameters,
             ChildProcessCreationParams creationParams) {
@@ -641,5 +654,14 @@ public class ChildProcessConnection {
     @VisibleForTesting
     public void crashServiceForTesting() throws RemoteException {
         mService.crashIntentionallyForTesting();
+    }
+
+    /**
+     * Creates an unitialized connection. Used by unit-tests that require a connection but do not
+     * call any method on it.
+     */
+    @VisibleForTesting
+    static ChildProcessConnection createEmptyConnection() {
+        return new ChildProcessConnection();
     }
 }
