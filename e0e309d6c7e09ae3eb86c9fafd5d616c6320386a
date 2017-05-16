@@ -141,6 +141,30 @@
       "revId": "e0e309d6c7e09ae3eb86c9fafd5d616c6320386a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb592a5c_d28e4246",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-05-16T12:54:26Z",
+      "side": 1,
+      "message": "Thanks, good to know. It appears we do this in other places as well, does not explode, pattern accepted.\n\nFeel free to add a comment to ApplicationStatusListener if you want.",
+      "parentUuid": "5e8ba408_b04252b6",
+      "range": {
+        "startLine": 212,
+        "startChar": 53,
+        "endLine": 212,
+        "endChar": 57
+      },
+      "revId": "e0e309d6c7e09ae3eb86c9fafd5d616c6320386a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
