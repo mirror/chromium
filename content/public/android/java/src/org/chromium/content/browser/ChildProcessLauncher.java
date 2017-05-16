@@ -4,7 +4,6 @@
 
 package org.chromium.content.browser;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -54,6 +53,7 @@ public class ChildProcessLauncher {
         void onChildProcessStarted(ChildProcessConnection connection);
     }
 
+    private static final boolean SPARE_CONNECTION_SANDBOXED = true;
     private static final boolean SPARE_CONNECTION_ALWAYS_IN_FOREGROUND = false;
 
     // Map from package name to ChildConnectionAllocator.
@@ -113,8 +113,8 @@ public class ChildProcessLauncher {
     }
 
     @VisibleForTesting
-    static ChildProcessConnection allocateConnection(
-            ChildSpawnData spawnData, Bundle childProcessCommonParams, boolean forWarmUp) {
+    static ChildProcessConnection allocateConnection(ChildSpawnData spawnData,
+            Bundle childProcessCommonParams, boolean queueIfNoneAvailable) {
         assert LauncherThread.runningOnLauncherThread();
         ChildProcessConnection.DeathCallback deathCallback =
                 new ChildProcessConnection.DeathCallback() {
@@ -135,8 +135,8 @@ public class ChildProcessLauncher {
                 creationParams != null ? creationParams.getPackageName() : context.getPackageName();
         ChildConnectionAllocator allocator =
                 getConnectionAllocator(context, packageName, inSandbox);
-        ChildProcessConnection connection =
-                allocator.allocate(spawnData, deathCallback, childProcessCommonParams, !forWarmUp);
+        ChildProcessConnection connection = allocator.allocate(
+                spawnData, deathCallback, childProcessCommonParams, queueIfNoneAvailable);
         sConnectionsToAllocatorMap.put(connection, allocator);
         return connection;
     }
@@ -189,8 +189,9 @@ public class ChildProcessLauncher {
         final boolean inSandbox = spawnData.isInSandbox();
         final ChildProcessCreationParams creationParams = spawnData.getCreationParams();
 
-        ChildProcessConnection connection = allocateConnection(
-                spawnData, createCommonParamsBundle(spawnData.getCreationParams()), forWarmUp);
+        boolean queueIfNoneAvailable = !forWarmUp;
+        ChildProcessConnection connection = allocateConnection(spawnData,
+                createCommonParamsBundle(spawnData.getCreationParams()), queueIfNoneAvailable);
         if (connection != null) {
             // Non sandboxed processes are privileged processes that should be strongly bound.
             boolean useStrongBinding = !inSandbox;
@@ -214,7 +215,8 @@ public class ChildProcessLauncher {
 
     private static void freeConnection(ChildProcessConnection connection) {
         assert LauncherThread.runningOnLauncherThread();
-        if (connection == sSpareSandboxedConnection) clearSpareConnection();
+
+        SpareChildConnectionManager.getInstance().onConnectionFreed(connection);
 
         // Freeing a service should be delayed. This is so that we avoid immediately reusing the
         // freed service (see http://crbug.com/164069): the framework might keep a service process
@@ -247,18 +249,6 @@ public class ChildProcessLauncher {
 
     // Map from pid to ChildService connection.
     private static Map<Integer, ChildProcessConnection> sServiceMap = new ConcurrentHashMap<>();
-
-    // These variables are used for the warm up sandboxed connection.
-    // |sSpareSandboxedConnection| is non-null when there is a pending connection. Note it's cleared
-    // to null again after the connection is used for a real child process.
-    // |sSpareConnectionStarting| is true if ChildProcessConnection.StartCallback has not fired.
-    // This is used for a child process allocation to determine if StartCallback should be chained.
-    // |sSpareConnectionStartCallback| is the chained StartCallback. This is also used to determine
-    // if there is already a child process launch that's used this this connection.
-    @SuppressLint("StaticFieldLeak")
-    private static ChildProcessConnection sSpareSandboxedConnection;
-    private static boolean sSpareConnectionStarting;
-    private static ChildProcessConnection.StartCallback sSpareConnectionStartCallback;
 
     // Manages oom bindings used to bind chind services. Lazily initialized by getBindingManager()
     private static BindingManager sBindingManager;
@@ -350,50 +340,11 @@ public class ChildProcessLauncher {
         LauncherThread.post(new Runnable() {
             @Override
             public void run() {
-                if (sSpareSandboxedConnection != null) return;
-                ChildProcessCreationParams params = ChildProcessCreationParams.getDefault();
-
-                ChildProcessConnection.StartCallback startCallback =
-                        new ChildProcessConnection.StartCallback() {
-                            @Override
-                            public void onChildStarted() {
-                                assert LauncherThread.runningOnLauncherThread();
-                                sSpareConnectionStarting = false;
-                                if (sSpareConnectionStartCallback != null) {
-                                    sSpareConnectionStartCallback.onChildStarted();
-                                    clearSpareConnection();
-                                }
-                                // If there is no chained callback, that means nothing has tried to
-                                // use the spare connection yet. It will be cleared when it is used
-                                // for an actual child process launch.
-                            }
-
-                            @Override
-                            public void onChildStartFailed() {
-                                assert LauncherThread.runningOnLauncherThread();
-                                Log.e(TAG, "Failed to warm up the spare sandbox service");
-                                if (sSpareConnectionStartCallback != null) {
-                                    sSpareConnectionStartCallback.onChildStartFailed();
-                                }
-                                clearSpareConnection();
-                            }
-                        };
-                ChildSpawnData spawnData = new ChildSpawnData(context, null /* commandLine */,
-                        null /* filesToBeMapped */, null /* launchCallback */,
-                        null /* child process callback */, true /* inSandbox */,
-                        SPARE_CONNECTION_ALWAYS_IN_FOREGROUND, params);
-                sSpareSandboxedConnection =
-                        allocateBoundConnection(spawnData, startCallback, true /* forWarmUp */);
-                sSpareConnectionStarting = sSpareSandboxedConnection != null;
+                SpareChildConnectionManager.getInstance().createConnection(context,
+                        SPARE_CONNECTION_SANDBOXED, SPARE_CONNECTION_ALWAYS_IN_FOREGROUND,
+                        ChildProcessCreationParams.getDefault());
             }
         });
-    }
-
-    private static void clearSpareConnection() {
-        assert LauncherThread.runningOnLauncherThread();
-        sSpareSandboxedConnection = null;
-        sSpareConnectionStarting = false;
-        sSpareConnectionStartCallback = null;
     }
 
     /**
@@ -458,9 +409,6 @@ public class ChildProcessLauncher {
         try {
             TraceEvent.begin("ChildProcessLauncher.startInternal");
 
-            ChildProcessConnection allocatedConnection = null;
-            String packageName = creationParams != null ? creationParams.getPackageName()
-                    : context.getPackageName();
             ChildProcessConnection.StartCallback startCallback =
                     new ChildProcessConnection.StartCallback() {
                         @Override
@@ -486,20 +434,9 @@ public class ChildProcessLauncher {
                         }
                     };
 
-            if (inSandbox && sSpareSandboxedConnection != null
-                    && sSpareConnectionStartCallback == null
-                    && SPARE_CONNECTION_ALWAYS_IN_FOREGROUND == alwaysInForeground
-                    && sSpareSandboxedConnection.getPackageName().equals(packageName)
-                    // Object identity check for getDefault should be enough. The default is
-                    // not supposed to change once set.
-                    && creationParams == ChildProcessCreationParams.getDefault()) {
-                allocatedConnection = sSpareSandboxedConnection;
-                if (sSpareConnectionStarting) {
-                    sSpareConnectionStartCallback = startCallback;
-                } else {
-                    clearSpareConnection();
-                }
-            }
+            ChildProcessConnection allocatedConnection =
+                    SpareChildConnectionManager.getInstance().getConnection(
+                            context, inSandbox, alwaysInForeground, creationParams, startCallback);
             if (allocatedConnection == null) {
                 ChildSpawnData spawnData = new ChildSpawnData(context, commandLine, filesToBeMapped,
                         launchCallback, childProcessCallback, inSandbox, alwaysInForeground,
