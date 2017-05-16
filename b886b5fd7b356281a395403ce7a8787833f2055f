@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de31f63d_3fc43657",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-16T15:16:37Z",
+      "side": 1,
+      "message": "fix grammar in comment",
+      "range": {
+        "startLine": 699,
+        "startChar": 29,
+        "endLine": 699,
+        "endChar": 31
+      },
+      "revId": "b886b5fd7b356281a395403ce7a8787833f2055f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ed63dd_19bfb3bb",
+        "filename": "chrome/common/chrome_content_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-16T15:16:37Z",
+      "side": 1,
+      "message": "Should this just be a base::LazyInstance or Singleton global?",
+      "range": {
+        "startLine": 111,
+        "startChar": 50,
+        "endLine": 111,
+        "endChar": 55
+      },
+      "revId": "b886b5fd7b356281a395403ce7a8787833f2055f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
