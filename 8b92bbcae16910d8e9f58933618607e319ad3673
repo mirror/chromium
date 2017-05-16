@@ -16,6 +16,24 @@
       "revId": "8b92bbcae16910d8e9f58933618607e319ad3673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb9de73_edfcab00",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 3371,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-16T07:33:58Z",
+      "side": 0,
+      "message": "Is there any try bot for Windows random order? The issues were only appearing when run on swarming.\nIf we cannot verify that it fails, probably it\u0027s better to avoid flagging it in advance... dunno really.",
+      "parentUuid": "1493ecca_c2319482",
+      "revId": "8b92bbcae16910d8e9f58933618607e319ad3673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
