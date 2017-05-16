@@ -74,7 +74,7 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   // details on arguments.
   void Embed(ui::mojom::WindowTreeClientPtr client,
              uint32_t flags,
-             const ui::mojom::WindowTree::EmbedCallback& callback);
+             ui::mojom::WindowTree::EmbedCallback callback);
 
   using CompositorFrameSinkCallback =
       base::Callback<void(std::unique_ptr<cc::CompositorFrameSink>)>;

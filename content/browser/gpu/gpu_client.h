@@ -22,22 +22,20 @@ class GpuClient : public ui::mojom::Gpu {
 
  private:
   void OnError();
-  void OnEstablishGpuChannel(const EstablishGpuChannelCallback& callback,
+  void OnEstablishGpuChannel(EstablishGpuChannelCallback callback,
                              const IPC::ChannelHandle& channel,
                              const gpu::GPUInfo& gpu_info,
                              GpuProcessHost::EstablishChannelStatus status);
-  void OnCreateGpuMemoryBuffer(const CreateGpuMemoryBufferCallback& callback,
+  void OnCreateGpuMemoryBuffer(CreateGpuMemoryBufferCallback callback,
                                const gfx::GpuMemoryBufferHandle& handle);
 
   // ui::mojom::Gpu overrides:
-  void EstablishGpuChannel(
-      const EstablishGpuChannelCallback& callback) override;
-  void CreateGpuMemoryBuffer(
-      gfx::GpuMemoryBufferId id,
-      const gfx::Size& size,
-      gfx::BufferFormat format,
-      gfx::BufferUsage usage,
-      const ui::mojom::Gpu::CreateGpuMemoryBufferCallback& callback) override;
+  void EstablishGpuChannel(EstablishGpuChannelCallback callback) override;
+  void CreateGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
+                             const gfx::Size& size,
+                             gfx::BufferFormat format,
+                             gfx::BufferUsage usage,
+                             CreateGpuMemoryBufferCallback callback) override;
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               const gpu::SyncToken& sync_token) override;
 
