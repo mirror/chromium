@@ -45,6 +45,30 @@
       "revId": "b886b5fd7b356281a395403ce7a8787833f2055f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9060d930_01d3b477",
+        "filename": "chrome/common/chrome_content_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-05-16T15:49:51Z",
+      "side": 1,
+      "message": "ChromeOriginTrialPolicy doesn\u0027t need to be a singleton/global, as it is just providing lookups to data set at initialization.  The class certainly could be a singleton (or LazyInstance), if that\u0027s the best way to provide thread-safe creation/initialization. It wasn\u0027t clear to me if there\u0027s a common/best practice for such initialization. Is the preferred approach to use LazyInstance?",
+      "parentUuid": "e1ed63dd_19bfb3bb",
+      "range": {
+        "startLine": 111,
+        "startChar": 50,
+        "endLine": 111,
+        "endChar": 55
+      },
+      "revId": "b886b5fd7b356281a395403ce7a8787833f2055f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
