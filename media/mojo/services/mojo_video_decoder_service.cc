@@ -121,7 +121,7 @@ void MojoVideoDecoderService::OnDecoderDecoded(const DecodeCallback& callback,
                                                DecodeStatus status) {
   DVLOG(2) << __func__;
   DCHECK(decoder_);
-  DCHECK(decoder_->CanReadWithoutStalling());
+  // DCHECK(decoder_->CanReadWithoutStalling());
   callback.Run(status);
 }
 

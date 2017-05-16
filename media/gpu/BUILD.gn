@@ -212,8 +212,14 @@ component("gpu") {
 
     if (enable_media_codec_video_decoder) {
       sources += [
+        "android/coalescing_timer.cc",
+        "android/coalescing_timer.h",
         "android/media_codec_video_decoder.cc",
         "android/media_codec_video_decoder.h",
+        "android/media_codec_wrapper.cc",
+        "android/media_codec_wrapper.h",
+        "android/video_frame_factory.cc",
+        "android/video_frame_factory.h",
       ]
     }
 

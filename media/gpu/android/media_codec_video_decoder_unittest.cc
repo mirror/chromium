@@ -21,28 +21,34 @@
 namespace media {
 namespace {
 
-void InitCb(bool* result_out, bool result) {
-  *result_out = result;
-}
+//void InitCb(bool* result_out, bool result) {
+  //*result_out = result;
+//}
 
-void OutputCb(const scoped_refptr<VideoFrame>& frame) {}
+//void OutputCb(const scoped_refptr<VideoFrame>& frame) {}
 
 }  // namespace
 
 class MediaCodecVideoDecoderTest : public testing::Test {
  public:
+  MediaCodecVideoDecoderTest() {} // : mcvd_(new MediaCodecVideoDecoder()) {}
   ~MediaCodecVideoDecoderTest() override {}
 
   bool Initialize(const VideoDecoderConfig& config) {
     bool result = false;
-    mcvd_.Initialize(config, false, nullptr, base::Bind(&InitCb, &result),
-                     base::Bind(&OutputCb));
+    //mcvd_->Initialize(config, false, nullptr, base::Bind(&InitCb, &result),
+     //                 base::Bind(&OutputCb));
     base::RunLoop().RunUntilIdle();
     return result;
   }
 
+  void TearDown() override {
+    // if (mcvd_)
+    // delete mcvd_;
+  }
+
  private:
-  MediaCodecVideoDecoder mcvd_;
+  // MediaCodecVideoDecoder mcvd_;
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
@@ -65,5 +71,7 @@ TEST_F(MediaCodecVideoDecoderTest, SmallVp8IsRejected) {
   SKIP_IF_MEDIA_CODEC_IS_BLACKLISTED();
   ASSERT_TRUE(Initialize(TestVideoConfig::NormalH264()));
 }
+
+TEST_F(MediaCodecVideoDecoderTest, SmallVp8IsRejected2) {}
 
 }  // namespace media

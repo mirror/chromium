@@ -6,14 +6,18 @@
 
 #include <utility>
 
+#include "gpu/ipc/service/gpu_channel.h"
 #include "media/base/audio_decoder.h"
 #include "media/base/cdm_factory.h"
 #include "media/base/video_decoder.h"
+#include "media/gpu/ipc/service/media_gpu_channel_manager.h"
 
 #if defined(OS_ANDROID)
 #include "base/memory/ptr_util.h"
 #include "media/base/android/android_cdm_factory.h"
 #include "media/filters/android/media_codec_audio_decoder.h"
+#include "media/gpu/android/media_codec_video_decoder.h"
+#include "media/gpu/avda_codec_allocator.h"
 #include "media/mojo/interfaces/media_drm_storage.mojom.h"
 #include "media/mojo/interfaces/provision_fetcher.mojom.h"
 #include "media/mojo/services/mojo_media_drm_storage.h"
@@ -45,6 +49,21 @@ std::unique_ptr<MediaDrmStorage> CreateMediaDrmStorage(
   return base::MakeUnique<MojoMediaDrmStorage>(
       std::move(media_drm_storage_ptr));
 }
+
+gpu::GpuCommandBufferStub* GetGpuCommandBufferStub(
+    base::WeakPtr<MediaGpuChannelManager> media_gpu_channel_manager,
+    base::UnguessableToken channel_token,
+    int32_t route_id) {
+  if (!media_gpu_channel_manager)
+    return nullptr;
+
+  gpu::GpuChannel* channel =
+      media_gpu_channel_manager->LookupChannel(channel_token);
+  if (!channel)
+    return nullptr;
+
+  return channel->LookupCommandBuffer(route_id);
+}
 #endif  // defined(OS_ANDROID)
 
 }  // namespace
@@ -69,10 +88,15 @@ std::unique_ptr<AudioDecoder> GpuMojoMediaClient::CreateAudioDecoder(
 std::unique_ptr<VideoDecoder> GpuMojoMediaClient::CreateVideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     mojom::CommandBufferIdPtr command_buffer_id) {
-  static_cast<void>(media_gpu_channel_manager_);
-
-  // TODO(sandersd): Factory for VideoDecoders.
+#if defined(OS_ANDROID)
+  return base::MakeUnique<MediaCodecVideoDecoder>(
+      gpu_task_runner_,
+      base::Bind(&GetGpuCommandBufferStub, media_gpu_channel_manager_,
+                 command_buffer_id->channel_token, command_buffer_id->route_id),
+      AVDACodecAllocator::GetInstance());
+#else
   return nullptr;
+#endif  // defined(OS_ANDROID)
 }
 
 std::unique_ptr<CdmFactory> GpuMojoMediaClient::CreateCdmFactory(

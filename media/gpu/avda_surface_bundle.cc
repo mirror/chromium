@@ -3,12 +3,17 @@
 // found in the LICENSE file.
 
 #include "media/gpu/avda_surface_bundle.h"
+
 #include "media/base/android/android_overlay.h"
 
 namespace media {
 
 AVDASurfaceBundle::AVDASurfaceBundle(std::unique_ptr<AndroidOverlay> overlay)
     : overlay(std::move(overlay)) {}
+
+AVDASurfaceBundle::AVDASurfaceBundle(
+    scoped_refptr<gl::SurfaceTexture> surface_texture)
+    : surface_texture(std::move(surface_texture)) {}
 
 AVDASurfaceBundle::~AVDASurfaceBundle() {
   // Explicitly free the surface first, just to be sure that it's deleted before

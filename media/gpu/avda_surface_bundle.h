@@ -30,6 +30,7 @@ struct MEDIA_GPU_EXPORT AVDASurfaceBundle
  public:
   // |overlay| is the overlay that we'll use, or nullptr for SurfaceTexture.
   explicit AVDASurfaceBundle(std::unique_ptr<AndroidOverlay> overlay);
+  explicit AVDASurfaceBundle(scoped_refptr<gl::SurfaceTexture> surface_texture);
 
   // The surface that MediaCodec is configured to output to.  This can be either
   // a SurfaceTexture or other Surface provider.

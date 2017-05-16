@@ -172,7 +172,7 @@ bool MojoVideoDecoder::NeedsBitstreamConversion() const {
 
 bool MojoVideoDecoder::CanReadWithoutStalling() const {
   DVLOG(3) << __func__;
-  return true;
+  return false;
 }
 
 int MojoVideoDecoder::GetMaxDecodeRequests() const {
