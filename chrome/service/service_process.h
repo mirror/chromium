@@ -14,6 +14,7 @@
 #include "chrome/service/cloud_print/cloud_print_proxy.h"
 #include "chrome/service/service_ipc_server.h"
 #include "mojo/edk/embedder/named_platform_handle.h"
+#include "mojo/edk/embedder/peer_connection.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 
@@ -126,6 +127,7 @@ class ServiceProcess : public ServiceIPCServer::Client,
   std::unique_ptr<ServiceIPCServer> ipc_server_;
   std::unique_ptr<ServiceProcessState> service_process_state_;
   std::unique_ptr<mojo::edk::ScopedIPCSupport> mojo_ipc_support_;
+  mojo::edk::PeerConection peer_connection_;
 
   // An event that will be signalled when we shutdown.
   base::WaitableEvent shutdown_event_;
