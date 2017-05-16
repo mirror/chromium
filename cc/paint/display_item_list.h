@@ -21,6 +21,7 @@
 #include "cc/paint/drawing_display_item.h"
 #include "cc/paint/image_id.h"
 #include "cc/paint/paint_export.h"
+#include "cc/paint/paint_op_buffer.h"
 #include "third_party/skia/include/core/SkPicture.h"
 #include "ui/gfx/color_space.h"
 #include "ui/gfx/geometry/rect.h"
@@ -42,6 +43,9 @@ class CC_PAINT_EXPORT DisplayItemList
  public:
   DisplayItemList();
 
+  enum UsingPaintOps { kUsingPaintOps };
+  explicit DisplayItemList(UsingPaintOps);
+
   // TODO(trchen): Deprecated. Apply clip and scale on the canvas instead.
   void Raster(SkCanvas* canvas,
               SkPicture::AbortCallback* callback,
@@ -59,6 +63,7 @@ class CC_PAINT_EXPORT DisplayItemList
   // content, such as drawing or filter items.
   template <typename DisplayItemType, typename... Args>
   const DisplayItemType& CreateAndAppendPairedBeginItem(Args&&... args) {
+    DCHECK(!using_paint_ops_);
     return CreateAndAppendPairedBeginItemWithVisualRect<DisplayItemType>(
         gfx::Rect(), std::forward<Args>(args)...);
   }
@@ -69,6 +74,7 @@ class CC_PAINT_EXPORT DisplayItemList
   const DisplayItemType& CreateAndAppendPairedBeginItemWithVisualRect(
       const gfx::Rect& visual_rect,
       Args&&... args) {
+    DCHECK(!using_paint_ops_);
     size_t item_index = visual_rects_.size();
     visual_rects_.push_back(visual_rect);
     begin_item_indices_.push_back(item_index);
@@ -78,6 +84,7 @@ class CC_PAINT_EXPORT DisplayItemList
 
   template <typename DisplayItemType, typename... Args>
   const DisplayItemType& CreateAndAppendPairedEndItem(Args&&... args) {
+    DCHECK(!using_paint_ops_);
     DCHECK(!begin_item_indices_.empty());
     size_t last_begin_index = begin_item_indices_.back();
     begin_item_indices_.pop_back();
@@ -117,6 +124,7 @@ class CC_PAINT_EXPORT DisplayItemList
   const DisplayItemType& CreateAndAppendDrawingItem(
       const gfx::Rect& visual_rect,
       Args&&... args) {
+    DCHECK(!using_paint_ops_);
     visual_rects_.push_back(visual_rect);
     GrowCurrentBeginItemVisualRect(visual_rect);
 
@@ -126,8 +134,56 @@ class CC_PAINT_EXPORT DisplayItemList
     return item;
   }
 
-  // Called after all items are appended, to process the items and, if
-  // applicable, create an internally cached SkPicture.
+  PaintOpBuffer* StartPaint() {
+    DCHECK(using_paint_ops_);
+    DCHECK(!current_range_start_);
+    current_range_start_ = paint_op_buffer_.approximateOpCount();
+    return &paint_op_buffer_;
+  }
+
+  void EndPaintOfUnpaired(const gfx::Rect& visual_rect) {
+    DCHECK(using_paint_ops_);
+    if (paint_op_buffer_.approximateOpCount() == current_range_start_)
+      return;
+    visual_rects_.push_back(visual_rect);
+    visual_rects_range_starts_.push_back(current_range_start_);
+    GrowCurrentBeginItemVisualRect(visual_rect);
+
+    current_range_start_ = 0;
+  }
+
+  void EndPaintOfPairedBegin(const gfx::Rect& visual_rect = gfx::Rect()) {
+    DCHECK(using_paint_ops_);
+    DCHECK_NE(current_range_start_, paint_op_buffer_.approximateOpCount());
+    size_t visual_rect_index = visual_rects_.size();
+    visual_rects_.push_back(visual_rect);
+    visual_rects_range_starts_.push_back(current_range_start_);
+    begin_item_indices_.push_back(visual_rect_index);
+
+    current_range_start_ = 0;
+  }
+
+  void EndPaintOfPairedEnd() {
+    DCHECK(using_paint_ops_);
+    DCHECK_NE(current_range_start_, paint_op_buffer_.approximateOpCount());
+
+    // TODO(danakj): Drop the PairedBegin and early out if nothing
+    // was added between then and now.
+
+    // Copy the visual rect of the matching kPairStart.
+    size_t last_begin_index = begin_item_indices_.back();
+    begin_item_indices_.pop_back();
+    visual_rects_.push_back(visual_rects_[last_begin_index]);
+    visual_rects_range_starts_.push_back(current_range_start_);
+
+    // The block that ended needs to be included in the bounds of the enclosing
+    // block.
+    GrowCurrentBeginItemVisualRect(visual_rects_[last_begin_index]);
+
+    current_range_start_ = 0;
+  }
+
+  // Called after all items are appended, to process the items.
   void Finalize();
 
   void SetIsSuitableForGpuRasterization(bool is_suitable) {
@@ -195,6 +251,12 @@ class CC_PAINT_EXPORT DisplayItemList
   RTree rtree_;
   DiscardableImageMap image_map_;
   ContiguousContainer<DisplayItem> items_;
+  PaintOpBuffer paint_op_buffer_;
+  // For each Rect in visual_rects_, this is the start of the range of
+  // PaintOps in the PaintOpBuffer that the Rect describes. The range ends
+  // at the start of the next index in the array.
+  std::vector<int> visual_rects_range_starts_;
+  int current_range_start_ = 0;
 
   // The visual rects associated with each of the display items in the
   // display item list. There is one rect per display item, and the
@@ -210,6 +272,8 @@ class CC_PAINT_EXPORT DisplayItemList
   // Finalize().
   bool retain_visual_rects_ = false;
   bool has_discardable_images_ = false;
+
+  const bool using_paint_ops_ = false;
 
   friend class base::RefCountedThreadSafe<DisplayItemList>;
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, ApproximateMemoryUsage);

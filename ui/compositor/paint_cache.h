@@ -32,9 +32,11 @@ class COMPOSITOR_EXPORT PaintCache {
   // Only PaintRecorder can modify these.
   friend PaintRecorder;
 
-  void SetCache(const cc::DrawingDisplayItem& item);
+  cc::PaintOpBuffer* ResetCache();
 
-  base::Optional<cc::DrawingDisplayItem> display_item_;
+  // Stored in an sk_sp because PaintOpBuffer requires this to append the cached
+  // items into it.
+  sk_sp<cc::PaintOpBuffer> paint_op_buffer_;
 
   DISALLOW_COPY_AND_ASSIGN(PaintCache);
 };
