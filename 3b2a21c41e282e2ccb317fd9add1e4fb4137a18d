@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ce6cec_66e6424c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-16T17:18:41Z",
+      "side": 1,
+      "message": "Nit :The one-liner for this is fine, but could you expand with a paragraph or a sentence for these questions in the main body?\n\n- What are we currently doing?\n- Why is that bad?\n- How does this CL make it better?\n\nI guess this includes mentioning how this changes the interaction for the end user or something along those lines.",
+      "revId": "3b2a21c41e282e2ccb317fd9add1e4fb4137a18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
