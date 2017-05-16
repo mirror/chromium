@@ -372,7 +372,8 @@ mojo::ScopedMessagePipeHandle ServiceProcess::CreateChannelMessagePipe() {
 #endif
   CHECK(channel_handle.is_valid());
 
-  return mojo::edk::ConnectToPeerProcess(std::move(channel_handle));
+  return peer_connection_.Connect(mojo::edk::ConnectionParams(
+      mojo::edk::TransportProtocol::kLegacy, std::move(channel_handle)));
 }
 
 cloud_print::CloudPrintProxy* ServiceProcess::GetCloudPrintProxy() {
