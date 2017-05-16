@@ -128,6 +128,7 @@ test("cast_base_unittests") {
     "bind_to_task_runner_unittest.cc",
     "device_capabilities_impl_unittest.cc",
     "error_codes_unittest.cc",
+    "observer_unittest.cc",
     "path_utils_unittest.cc",
     "process_utils_unittest.cc",
     "serializers_unittest.cc",
