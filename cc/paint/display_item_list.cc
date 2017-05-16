@@ -161,6 +161,9 @@ DisplayItemList::DisplayItemList()
     : items_(LargestDisplayItemSize(),
              LargestDisplayItemSize() * kDefaultNumDisplayItemsToReserve) {}
 
+DisplayItemList::DisplayItemList(UsingPaintOps)
+    : items_(0, 0), using_paint_ops_(true) {}
+
 DisplayItemList::~DisplayItemList() = default;
 
 void DisplayItemList::Raster(SkCanvas* canvas,
@@ -214,6 +217,9 @@ void DisplayItemList::Raster(SkCanvas* canvas,
   if (!GetCanvasClipBounds(canvas, &canvas_playback_rect))
     return;
 
+  PaintOpBuffer::Iterator it(&paint_op_buffer_);
+  SkMatrix original = canvas->getTotalMatrix();
+
   std::vector<size_t> indices;
   rtree_.Search(canvas_playback_rect, &indices);
   for (size_t i = 0; i < indices.size(); ++i) {
@@ -223,26 +229,51 @@ void DisplayItemList::Raster(SkCanvas* canvas,
     if (callback && callback->abort())
       break;
 
-    const DisplayItem& item = items_[indices[i]];
-    // Optimize empty begin/end compositing and merge begin/draw/end compositing
-    // where possible.
-    // TODO(enne): remove empty clips here too?
-    // TODO(enne): does this happen recursively? Or is this good enough?
-    if (i < indices.size() - 2 && item.type == DisplayItem::COMPOSITING) {
-      const DisplayItem& second = items_[indices[i + 1]];
-      const DisplayItem& third = items_[indices[i + 2]];
-      if (second.type == DisplayItem::DRAWING &&
-          third.type == DisplayItem::END_COMPOSITING) {
-        if (MergeAndDrawIfPossible(
-                static_cast<const CompositingDisplayItem&>(item),
-                static_cast<const DrawingDisplayItem&>(second), canvas)) {
-          i += 2;
-          continue;
+    if (using_paint_ops_) {
+      int range_index = indices[i];
+      int last_range_index = visual_rects_range_starts_.size() - 1;
+
+      int start = visual_rects_range_starts_[range_index];
+      int end;
+      if (range_index < last_range_index)
+        end = visual_rects_range_starts_[range_index + 1];
+      else
+        end = paint_op_buffer_.approximateOpCount();
+
+      DCHECK_LT(start, paint_op_buffer_.approximateOpCount());
+      DCHECK_LE(end, paint_op_buffer_.approximateOpCount());
+      DCHECK_LE(start, end);
+
+      while (it.op_idx() < start)
+        ++it;
+      while (it.op_idx() < end) {
+        it->Raster(canvas, original);
+        if (callback && callback->abort())
+          return;
+        ++it;
+      }
+    } else {
+      const DisplayItem& item = items_[indices[i]];
+      // Optimize empty begin/end compositing and merge begin/draw/end
+      // compositing where possible.
+      // TODO(enne): remove empty clips here too?
+      // TODO(enne): does this happen recursively? Or is this good enough?
+      if (i < indices.size() - 2 && item.type == DisplayItem::COMPOSITING) {
+        const DisplayItem& second = items_[indices[i + 1]];
+        const DisplayItem& third = items_[indices[i + 2]];
+        if (second.type == DisplayItem::DRAWING &&
+            third.type == DisplayItem::END_COMPOSITING) {
+          if (MergeAndDrawIfPossible(
+                  static_cast<const CompositingDisplayItem&>(item),
+                  static_cast<const DrawingDisplayItem&>(second), canvas)) {
+            i += 2;
+            continue;
+          }
         }
       }
-    }
 
-    RasterItem(item, canvas, callback);
+      RasterItem(item, canvas, callback);
+    }
   }
 }
 
@@ -254,9 +285,15 @@ void DisplayItemList::GrowCurrentBeginItemVisualRect(
 
 void DisplayItemList::Finalize() {
   TRACE_EVENT0("cc", "DisplayItemList::Finalize");
-  DCHECK(items_.size() == visual_rects_.size())
-      << "items.size() " << items_.size() << " visual_rects.size() "
-      << visual_rects_.size();
+  if (using_paint_ops_) {
+    DCHECK_EQ(visual_rects_range_starts_.size(), visual_rects_.size());
+    // XXX remove the size_t cast.
+    DCHECK_GE((size_t)paint_op_buffer_.approximateOpCount(),
+              visual_rects_.size());
+    paint_op_buffer_.ShrinkToFit();
+  } else {
+    DCHECK_EQ(items_.size(), visual_rects_.size());
+  }
   rtree_.Build(visual_rects_);
 
   if (!retain_visual_rects_)
@@ -538,15 +575,19 @@ void DisplayItemList::GenerateDiscardableImagesMetadata() {
 
 void DisplayItemList::GatherDiscardableImages(
     DiscardableImageStore* image_store) const {
-  // TODO(khushalsagar): Could we avoid this if the data was already stored in
-  // the |image_map_|?
-  SkCanvas* canvas = image_store->GetNoDrawCanvas();
-  for (const auto& item : items_) {
-    if (item.type == DisplayItem::DRAWING) {
-      const auto& drawing_item = static_cast<const DrawingDisplayItem&>(item);
-      image_store->GatherDiscardableImages(drawing_item.picture.get());
-    } else {
-      RasterItem(item, canvas, nullptr);
+  if (using_paint_ops_) {
+    image_store->GatherDiscardableImages(&paint_op_buffer_);
+  } else {
+    // TODO(khushalsagar): Could we avoid this if the data was already stored in
+    // the |image_map_|?
+    SkCanvas* canvas = image_store->GetNoDrawCanvas();
+    for (const auto& item : items_) {
+      if (item.type == DisplayItem::DRAWING) {
+        const auto& drawing_item = static_cast<const DrawingDisplayItem&>(item);
+        image_store->GatherDiscardableImages(drawing_item.picture.get());
+      } else {
+        RasterItem(item, canvas, nullptr);
+      }
     }
   }
 }
