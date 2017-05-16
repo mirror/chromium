@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "f91216ed_b9395783",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-16T15:28:07Z",
+      "side": 1,
+      "message": "If CT results don\u0027t show a regression, then I don\u0027t have concerns here; My optimistic reasoning is that even if there are edge cases that we do worse on, they don\u0027t appear frequently enough in the top 10k for us to worry about them. If we later find that we do something inefficient, we can address those bugs on a case by case basis.",
+      "parentUuid": "08b4bbf6_89b10aab",
+      "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e61710ac_b203691b",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
         "patchSetId": 17
