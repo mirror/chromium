@@ -102,10 +102,13 @@ bug (if it was not linked in the bug, see above).
 
  * Use [//tools/binary_size/diagnose_bloat.py](https://chromium.googlesource.com/chromium/src/+/master/tools/binary_size/README.md)
 to show a diff of ELF symbols.
+   * Googlers should use the speedy `--cloud` option. E.g.:
+   * `tools/binary_size/diagnose_bloat.py 0f30c9488bd2bdc1db2749cd4683994a764a44c9 --cloud`
  * Paste the diff into the bug.
  * If the diff looks reasonable, close as `Won't Fix`.
  * Otherwise, try to refactor a bit (e.g.
  [move code out of templates](https://bugs.chromium.org/p/chromium/issues/detail?id=716393)).
+ * If symbols are larger than expected, use the `Disassemble()` feature of `supersize console` to see what is going on.
 
 ### Growth is from Java code
 
