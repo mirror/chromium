@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "033a4520_c1586a5a",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-16T00:43:21Z",
+      "side": 1,
+      "message": "It\u0027s been a while but at one point I think the idea was that this whole conditional was redundant, because we wouldn\u0027t have even gotten here if we hadn\u0027t matched the item\u0027s rect in the rtree. So we thought we could remove it. But we may have overlooked some issues, or I could have been mistaken, or both.\n\nWhat happens if we remove this line and next, layout-test-wise?",
+      "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e61710ac_b203691b",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
         "patchSetId": 17
