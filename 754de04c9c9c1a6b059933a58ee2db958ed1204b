@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc0c8209_b59b4418",
+        "filename": "third_party/WebKit/Source/web/WebFormElementObserverImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-05-16T11:49:07Z",
+      "side": 1,
+      "message": "Just wondering. Correctly do I understand that this condition is not enough for checking that  |element_| is in DOM, for example if the parent of the element is removed from DOM, the parent might be not null, but |element_| is not in DOM.",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "754de04c9c9c1a6b059933a58ee2db958ed1204b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
