@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/location.h"
+#include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_base.h"
 #include "base/metrics/histogram_delta_serialization.h"
 #include "base/metrics/histogram_macros.h"
@@ -34,28 +35,32 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/named_platform_handle.h"
 #include "mojo/edk/embedder/named_platform_handle_utils.h"
+#include "mojo/edk/embedder/peer_connection.h"
 
 using content::BrowserThread;
 
 namespace {
 
-void ConnectAsync(mojo::ScopedMessagePipeHandle handle,
-                  mojo::edk::NamedPlatformHandle os_pipe) {
+std::unique_ptr<mojo::edk::PeerConnection> ConnectAsync(
+    mojo::ScopedMessagePipeHandle handle,
+    mojo::edk::NamedPlatformHandle os_pipe) {
   mojo::edk::ScopedPlatformHandle os_pipe_handle =
       mojo::edk::CreateClientHandle(os_pipe);
   if (!os_pipe_handle.is_valid())
-    return;
+    return nullptr;
 
+  auto peer_connection = base::MakeUnique<mojo::edk::PeerConnection>();
   mojo::FuseMessagePipes(
-      mojo::edk::ConnectToPeerProcess(std::move(os_pipe_handle)),
+      peer_connection->Connect(mojo::edk::ConnectionParams(
+          mojo::edk::TransportProtocol::kLegacy, std::move(os_pipe_handle))),
       std::move(handle));
+  return peer_connection;
 }
 
 }  // namespace
 
 // ServiceProcessControl implementation.
-ServiceProcessControl::ServiceProcessControl() {
-}
+ServiceProcessControl::ServiceProcessControl() : weak_factory_(this) {}
 
 ServiceProcessControl::~ServiceProcessControl() {
 }
@@ -72,10 +77,12 @@ void ServiceProcessControl::ConnectInternal() {
   DVLOG(1) << "Connecting to Service Process IPC Server";
 
   mojo::MessagePipe pipe;
-  base::PostTaskWithTraits(
+  base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&ConnectAsync, base::Passed(&pipe.handle1),
-                 GetServiceProcessChannel()));
+      base::BindOnce(&ConnectAsync, std::move(pipe.handle1),
+                     GetServiceProcessChannel()),
+      base::BindOnce(&ServiceProcessControl::OnPeerConnectionComplete,
+                     weak_factory_.GetWeakPtr()));
   // TODO(hclam): Handle error connecting to channel.
   auto io_task_runner =
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
@@ -83,6 +90,12 @@ void ServiceProcessControl::ConnectInternal() {
       IPC::ChannelProxy::Create(IPC::ChannelMojo::CreateClientFactory(
                                     std::move(pipe.handle0), io_task_runner),
                                 this, io_task_runner));
+}
+
+void ServiceProcessControl::OnPeerConnectionComplete(
+    std::unique_ptr<mojo::edk::PeerConnection> peer_connection) {
+  // Hold onto the connection object so the connection is kept alive.
+  peer_connection_ = std::move(peer_connection);
 }
 
 void ServiceProcessControl::SetChannel(
