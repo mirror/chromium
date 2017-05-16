@@ -516,10 +516,10 @@ void ContextState::RestoreGlobalState(const ContextState* prev_state) const {
 void ContextState::RestoreState(const ContextState* prev_state) {
   RestoreAllTextureUnitAndSamplerBindings(prev_state);
   RestoreVertexAttribs();
+  RestoreIndexedUniformBufferBindings(prev_state);
   RestoreBufferBindings();
   RestoreRenderbufferBindings();
   RestoreProgramSettings(prev_state, true);
-  RestoreIndexedUniformBufferBindings(prev_state);
   RestoreGlobalState(prev_state);
 
   // FRAMEBUFFER_SRGB will be restored lazily at render time.
