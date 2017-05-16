@@ -12,6 +12,7 @@
 #include "base/feature_list.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/profiler/scoped_tracker.h"
@@ -127,7 +128,7 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobCallback(
     const AlternativeService* alternative_service,
     RequestPriority priority,
     NetLogCaptureMode /* capture_mode */) {
-  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  auto dict = base::MakeUnique<base::DictionaryValue>();
   if (source.IsValid())
     source.AddToEventParameters(dict.get());
   dict->SetString("original_url", original_url->GetOrigin().spec());
@@ -142,7 +143,7 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobCallback(
 std::unique_ptr<base::Value> NetLogHttpStreamProtoCallback(
     NextProto negotiated_protocol,
     NetLogCaptureMode /* capture_mode */) {
-  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  auto dict = base::MakeUnique<base::DictionaryValue>();
 
   dict->SetString("proto", NextProtoToString(negotiated_protocol));
   return std::move(dict);
@@ -440,7 +441,7 @@ void HttpStreamFactoryImpl::Job::OnWebSocketHandshakeStreamReadyCallback() {
   MaybeCopyConnectionAttemptsFromSocketOrHandle();
 
   delegate_->OnWebSocketHandshakeStreamReady(
-      this, server_ssl_config_, proxy_info_, websocket_stream_.release());
+      this, server_ssl_config_, proxy_info_, std::move(websocket_stream_));
   // |this| may be deleted after this call.
 }
 
@@ -1105,8 +1106,8 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
   if (delegate_->for_websockets())
     return ERR_NOT_IMPLEMENTED;
   if (stream_type_ == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
-    bidirectional_stream_impl_.reset(
-        new BidirectionalStreamSpdyImpl(session, net_log_.source()));
+    bidirectional_stream_impl_ = base::MakeUnique<BidirectionalStreamSpdyImpl>(
+        session, net_log_.source());
     return OK;
   }
 
@@ -1116,8 +1117,8 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
 
   bool use_relative_url =
       direct || request_info_.url.SchemeIs(url::kHttpsScheme);
-  stream_.reset(
-      new SpdyHttpStream(session, use_relative_url, net_log_.source()));
+  stream_ = base::MakeUnique<SpdyHttpStream>(session, use_relative_url,
+                                             net_log_.source());
   return OK;
 }
 
@@ -1153,13 +1154,13 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
     if (delegate_->for_websockets()) {
       DCHECK_NE(job_type_, PRECONNECT);
       DCHECK(delegate_->websocket_handshake_stream_create_helper());
-      websocket_stream_.reset(
+      websocket_stream_ =
           delegate_->websocket_handshake_stream_create_helper()
-              ->CreateBasicStream(std::move(connection_), using_proxy));
+              ->CreateBasicStream(std::move(connection_), using_proxy);
     } else {
-      stream_.reset(new HttpBasicStream(
+      stream_ = base::MakeUnique<HttpBasicStream>(
           std::move(connection_), using_proxy,
-          session_->params().http_09_on_non_default_ports_enabled));
+          session_->params().http_09_on_non_default_ports_enabled);
     }
     return OK;
   }
@@ -1448,7 +1449,8 @@ HttpStreamFactoryImpl::JobFactory::JobFactory() {}
 
 HttpStreamFactoryImpl::JobFactory::~JobFactory() {}
 
-HttpStreamFactoryImpl::Job* HttpStreamFactoryImpl::JobFactory::CreateMainJob(
+std::unique_ptr<HttpStreamFactoryImpl::Job>
+HttpStreamFactoryImpl::JobFactory::CreateMainJob(
     HttpStreamFactoryImpl::Job::Delegate* delegate,
     HttpStreamFactoryImpl::JobType job_type,
     HttpNetworkSession* session,
@@ -1461,13 +1463,14 @@ HttpStreamFactoryImpl::Job* HttpStreamFactoryImpl::JobFactory::CreateMainJob(
     GURL origin_url,
     bool enable_ip_based_pooling,
     NetLog* net_log) {
-  return new HttpStreamFactoryImpl::Job(
+  return base::MakeUnique<HttpStreamFactoryImpl::Job>(
       delegate, job_type, session, request_info, priority, proxy_info,
       server_ssl_config, proxy_ssl_config, destination, origin_url,
       enable_ip_based_pooling, net_log);
 }
 
-HttpStreamFactoryImpl::Job* HttpStreamFactoryImpl::JobFactory::CreateAltSvcJob(
+std::unique_ptr<HttpStreamFactoryImpl::Job>
+HttpStreamFactoryImpl::JobFactory::CreateAltSvcJob(
     HttpStreamFactoryImpl::Job::Delegate* delegate,
     HttpStreamFactoryImpl::JobType job_type,
     HttpNetworkSession* session,
@@ -1481,13 +1484,13 @@ HttpStreamFactoryImpl::Job* HttpStreamFactoryImpl::JobFactory::CreateAltSvcJob(
     AlternativeService alternative_service,
     bool enable_ip_based_pooling,
     NetLog* net_log) {
-  return new HttpStreamFactoryImpl::Job(
+  return base::MakeUnique<HttpStreamFactoryImpl::Job>(
       delegate, job_type, session, request_info, priority, proxy_info,
       server_ssl_config, proxy_ssl_config, destination, origin_url,
       alternative_service, ProxyServer(), enable_ip_based_pooling, net_log);
 }
 
-HttpStreamFactoryImpl::Job*
+std::unique_ptr<HttpStreamFactoryImpl::Job>
 HttpStreamFactoryImpl::JobFactory::CreateAltProxyJob(
     HttpStreamFactoryImpl::Job::Delegate* delegate,
     HttpStreamFactoryImpl::JobType job_type,
@@ -1502,7 +1505,7 @@ HttpStreamFactoryImpl::JobFactory::CreateAltProxyJob(
     const ProxyServer& alternative_proxy_server,
     bool enable_ip_based_pooling,
     NetLog* net_log) {
-  return new HttpStreamFactoryImpl::Job(
+  return base::MakeUnique<HttpStreamFactoryImpl::Job>(
       delegate, job_type, session, request_info, priority, proxy_info,
       server_ssl_config, proxy_ssl_config, destination, origin_url,
       AlternativeService(), alternative_proxy_server, enable_ip_based_pooling,

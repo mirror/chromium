@@ -4,10 +4,10 @@
 
 #include "net/websockets/websocket_handshake_stream_create_helper.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/spdy/chromium/spdy_session.h"
@@ -26,7 +26,7 @@ WebSocketHandshakeStreamCreateHelper::WebSocketHandshakeStreamCreateHelper(
 
 WebSocketHandshakeStreamCreateHelper::~WebSocketHandshakeStreamCreateHelper() {}
 
-WebSocketHandshakeStreamBase*
+std::unique_ptr<WebSocketHandshakeStreamBase>
 WebSocketHandshakeStreamCreateHelper::CreateBasicStream(
     std::unique_ptr<ClientSocketHandle> connection,
     bool using_proxy) {
@@ -37,11 +37,11 @@ WebSocketHandshakeStreamCreateHelper::CreateBasicStream(
   // method.
   std::vector<std::string> extensions(
       1, "permessage-deflate; client_max_window_bits");
-  WebSocketBasicHandshakeStream* stream = new WebSocketBasicHandshakeStream(
+  auto stream = base::MakeUnique<WebSocketBasicHandshakeStream>(
       std::move(connection), connect_delegate_, using_proxy,
       requested_subprotocols_, extensions, request_);
-  OnBasicStreamCreated(stream);
-  request_->OnHandshakeStreamCreated(stream);
+  OnBasicStreamCreated(stream.get());
+  request_->OnHandshakeStreamCreated(stream.get());
   return stream;
 }
 

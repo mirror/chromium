@@ -5,6 +5,7 @@
 #include "net/http/http_stream_factory_impl_request.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
@@ -49,10 +50,10 @@ TEST_F(HttpStreamFactoryImplRequestTest, SetPriority) {
       job_controller.get();
   factory->job_controller_set_.insert(std::move(job_controller));
 
-  std::unique_ptr<HttpStreamFactoryImpl::Request> request(
+  std::unique_ptr<HttpStreamFactoryImpl::Request> request =
       job_controller_raw_ptr->Start(
           &request_delegate, nullptr, NetLogWithSource(),
-          HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY));
+          HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
   EXPECT_TRUE(job_controller_raw_ptr->main_job());
   EXPECT_EQ(DEFAULT_PRIORITY, job_controller_raw_ptr->main_job()->priority());
 
