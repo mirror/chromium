@@ -21,8 +21,6 @@ TestDeviceClient::TestDeviceClient(
     : blocking_task_runner_(blocking_task_runner) {}
 
 TestDeviceClient::~TestDeviceClient() {
-  if (hid_service_)
-    hid_service_->Shutdown();
   if (usb_service_)
     usb_service_->Shutdown();
 }
