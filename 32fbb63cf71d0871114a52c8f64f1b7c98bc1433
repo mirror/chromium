@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ce563db_57fa27b5",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-05-16T18:25:24Z",
+      "side": 1,
+      "message": "nit: move this near the other methods that override WebFrameClient (and no blank lines in between) per convention",
+      "range": {
+        "startLine": 262,
+        "startChar": 25,
+        "endLine": 262,
+        "endChar": 37
+      },
+      "revId": "32fbb63cf71d0871114a52c8f64f1b7c98bc1433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
