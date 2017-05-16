@@ -11,12 +11,13 @@
 #include "base/bind.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/system/message_pipe.h"
+#include "services/service_manager/public/cpp/export.h"
 
 namespace service_manager {
 
 struct BindSourceInfo;
 
-class InterfaceBinder {
+class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceBinder {
  public:
   virtual ~InterfaceBinder() {}
 
@@ -29,7 +30,8 @@ class InterfaceBinder {
 };
 
 template <typename Interface>
-class CallbackBinder : public InterfaceBinder {
+class SERVICE_MANAGER_PUBLIC_CPP_EXPORT CallbackBinder
+    : public InterfaceBinder {
  public:
   using BindCallback = base::Callback<void(const BindSourceInfo&,
                                            mojo::InterfaceRequest<Interface>)>;
@@ -65,7 +67,8 @@ class CallbackBinder : public InterfaceBinder {
   DISALLOW_COPY_AND_ASSIGN(CallbackBinder);
 };
 
-class GenericCallbackBinder : public InterfaceBinder {
+class SERVICE_MANAGER_PUBLIC_CPP_EXPORT GenericCallbackBinder
+    : public InterfaceBinder {
  public:
   using BindCallback = base::Callback<void(mojo::ScopedMessagePipeHandle)>;
 
