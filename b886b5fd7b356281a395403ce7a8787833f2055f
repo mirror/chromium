@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a516c396_303bf6c2",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-05-16T21:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de31f63d_3fc43657",
+      "range": {
+        "startLine": 699,
+        "startChar": 29,
+        "endLine": 699,
+        "endChar": 31
+      },
+      "revId": "b886b5fd7b356281a395403ce7a8787833f2055f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1ed63dd_19bfb3bb",
         "filename": "chrome/common/chrome_content_client.h",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "b886b5fd7b356281a395403ce7a8787833f2055f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffc7aa3_cf04c553",
+        "filename": "chrome/common/chrome_content_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-05-16T21:23:34Z",
+      "side": 1,
+      "message": "Thanks for the clarification. This code will get called at worker startup, but only if the worker has origin trial tokens stored from a previous invocation. That should happen extremely rarely, given the infrequent use of origin trials. I\u0027ll stick with using a lock.\n\nI also added a test for this initialization. Although, I was only able to observe a race by injecting a delay into GetOriginTrialPolicy(), without the lock.",
+      "parentUuid": "832eab93_459e9930",
+      "range": {
+        "startLine": 111,
+        "startChar": 50,
+        "endLine": 111,
+        "endChar": 55
+      },
+      "revId": "b886b5fd7b356281a395403ce7a8787833f2055f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
