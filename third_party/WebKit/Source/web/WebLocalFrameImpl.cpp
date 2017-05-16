@@ -1596,6 +1596,17 @@ WebLocalFrameImpl* WebLocalFrameImpl::CreateProvisional(
   return web_frame;
 }
 
+WebLocalFrameImpl* WebLocalFrameImpl::CreateLocalChild(
+    WebTreeScopeType scope,
+    WebFrameClient* client,
+    blink::InterfaceProvider* interface_provider,
+    blink::InterfaceRegistry* interface_registry) {
+  WebLocalFrameImpl* frame = new WebLocalFrameImpl(
+      scope, client, interface_provider, interface_registry);
+  AppendChild(frame);
+  return frame;
+}
+
 WebLocalFrameImpl::WebLocalFrameImpl(
     WebTreeScopeType scope,
     WebFrameClient* client,
