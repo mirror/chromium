@@ -69,6 +69,30 @@
       "revId": "b886b5fd7b356281a395403ce7a8787833f2055f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832eab93_459e9930",
+        "filename": "chrome/common/chrome_content_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-16T15:51:29Z",
+      "side": 1,
+      "message": "It depends; we do both in various places. LazyInstance is a bit more efficient than a full lock if this is in hot code; but not having globals sometimes makes tests easier to write. Either way is fine here if this isn\u0027t perf-critical code.",
+      "parentUuid": "9060d930_01d3b477",
+      "range": {
+        "startLine": 111,
+        "startChar": 50,
+        "endLine": 111,
+        "endChar": 55
+      },
+      "revId": "b886b5fd7b356281a395403ce7a8787833f2055f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
