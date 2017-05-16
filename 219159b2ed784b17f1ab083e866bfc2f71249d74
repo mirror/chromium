@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aede8a74_2c819fc0",
+        "filename": "components/about_ui/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-16T17:17:39Z",
+      "side": 1,
+      "message": "Can you also add an OWNERS file for //components/about_ui. You can put myself and torne in it.",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf6c5dc_e67d3cb7",
+        "filename": "components/about_ui/credit_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-16T17:17:39Z",
+      "side": 1,
+      "message": "nit: remove (c). (here and in .cc)",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72c0d85_bdef98c5",
+        "filename": "components/about_ui/resources/about_credits.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-05-16T17:17:39Z",
+      "side": 1,
+      "message": "Print will not work without javascript. You should hide it and make it visible with javascript so that we don\u0027t show a broken link for webview.",
+      "range": {
+        "startLine": 72,
+        "startChar": 28,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "219159b2ed784b17f1ab083e866bfc2f71249d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
