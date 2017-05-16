@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "088d63ce_9af5ff2c",
+        "filename": "net/http/http_stream_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2531,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-05-16T22:35:50Z",
+      "side": 0,
+      "message": "This test is identical to HttpStreamFactoryTest.RequestWebSocketBasicHandshakeStreamOverSSL above.",
+      "range": {
+        "startLine": 2531,
+        "startChar": 30,
+        "endLine": 2531,
+        "endChar": 74
+      },
+      "revId": "ff7a2feb08b4ef4127d3affabde41f77dbbc636d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
