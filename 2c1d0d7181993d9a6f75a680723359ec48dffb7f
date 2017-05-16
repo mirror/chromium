@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3ddb6c6_aad22331",
+        "filename": "gpu/command_buffer/service/command_buffer_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-05-16T21:10:48Z",
+      "side": 1,
+      "message": "Assume this will never outlive ContextGroup?",
+      "range": {
+        "startLine": 113,
+        "startChar": 25,
+        "endLine": 113,
+        "endChar": 49
+      },
+      "revId": "2c1d0d7181993d9a6f75a680723359ec48dffb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
