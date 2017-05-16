@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "3eaeb420_384a7bfc",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-05-16T16:18:36Z",
+      "side": 1,
+      "message": "This particular check is not necessary for the hijack canvas. Even if the item itself is not rejected here, an op inside the item might be, so we do this check for each image op during playback on that canvas anyway.",
+      "parentUuid": "f91216ed_b9395783",
+      "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e61710ac_b203691b",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
         "patchSetId": 17
