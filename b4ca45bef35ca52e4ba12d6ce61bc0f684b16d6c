@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "08b4bbf6_89b10aab",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-16T15:23:11Z",
+      "side": 1,
+      "message": "I was going to run CT to see what that says also, do you think that\u0027s enough?",
+      "parentUuid": "6ef9bc19_7e65cd81",
+      "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e61710ac_b203691b",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
         "patchSetId": 17
