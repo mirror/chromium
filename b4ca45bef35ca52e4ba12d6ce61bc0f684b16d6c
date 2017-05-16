@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6ef9bc19_7e65cd81",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-16T15:22:25Z",
+      "side": 1,
+      "message": "(to put it differently, I think relying on layout tests as verification that this line is unnecessary is insufficient, since the effect might be a degradation in performance and not a visual artifact)",
+      "parentUuid": "0b362e04_76064193",
+      "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e61710ac_b203691b",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
         "patchSetId": 17
