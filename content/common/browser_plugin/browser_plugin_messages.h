@@ -89,7 +89,8 @@ IPC_MESSAGE_CONTROL5(
 
 // This message is sent from BrowserPlugin to BrowserPluginGuest to notify that
 // inserting the current composition is requested.
-IPC_MESSAGE_CONTROL1(BrowserPluginHostMsg_ImeFinishComposingText,
+IPC_MESSAGE_CONTROL2(BrowserPluginHostMsg_ImeFinishComposingText,
+                     int /* browser_plugin_instance_id */,
                      bool /* keep selection */)
 
 // Deletes the current selection plus the specified number of characters before
