@@ -16,7 +16,7 @@ CanvasPainter::CanvasPainter(SkBitmap* output,
       paint_size_(paint_size),
       raster_scale_(raster_scale),
       clear_color_(clear_color),
-      list_(new cc::DisplayItemList),
+      list_(new cc::DisplayItemList(cc::DisplayItemList::kUsingPaintOps)),
       context_(list_.get(), raster_scale, gfx::Rect(paint_size_)) {}
 
 CanvasPainter::~CanvasPainter() {
