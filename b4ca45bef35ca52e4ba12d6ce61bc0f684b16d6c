@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0b362e04_76064193",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-16T15:18:34Z",
+      "side": 1,
+      "message": "We were looking at this recently with Khushal. There was some awkward interaction with images that had padding. Specifically, we\u0027d hit the image hijack canvas and see an image that was actually outside of the cull rect, which we would process but skia would then ignore. \n\nHowever, I don\u0027t really recall the details or whether we\u0027ve narrowed down our search sufficiently. +khushalsagar, do you remember if this was necessary for our use-case? It seems that both cullRect() and item.bounds would contain the same padding as we would use in the rtree, so maybe this is a red herring.",
+      "parentUuid": "c7999648_806a607e",
+      "revId": "b4ca45bef35ca52e4ba12d6ce61bc0f684b16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e61710ac_b203691b",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DrawingDisplayItem.h",
         "patchSetId": 17
