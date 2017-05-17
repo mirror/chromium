@@ -122,14 +122,16 @@ struct DeviceInfo {
              DeviceType type,
              const base::FilePath& path,
              uint16_t vendor,
-             uint16_t product)
+             uint16_t product,
+             bool enabled)
       : id(device.deviceid),
         name(device.name),
         vendor_id(vendor),
         product_id(product),
         use(device.use),
         type(type),
-        path(path) {
+        path(path),
+        enabled(enabled) {
     for (int i = 0; i < device.num_classes; ++i) {
       switch (device.classes[i]->type) {
         case XIValuatorClass:
@@ -171,6 +173,8 @@ struct DeviceInfo {
   std::vector<ValuatorClassInfo> valuator_class_infos;
 
   TouchClassInfo touch_class_info;
+
+  bool enabled;
 };
 
 // X11 display cache used on worker threads. This is filled on the UI thread and
@@ -265,8 +269,8 @@ void HandleKeyboardDevicesInWorker(
     if (IsKnownInvalidKeyboardDevice(device_info.name))
       continue;  // Skip invalid devices.
     InputDeviceType type = GetInputDeviceTypeFromPath(device_info.path);
-    InputDevice keyboard(device_info.id, type, device_info.name);
-    devices.push_back(keyboard);
+    devices.push_back(InputDevice(device_info.id, type, device_info.name,
+                                  device_info.enabled));
   }
 
   reply_runner->PostTask(FROM_HERE, base::Bind(callback, devices));
@@ -285,7 +289,8 @@ void HandleMouseDevicesInWorker(const std::vector<DeviceInfo>& device_infos,
     }
 
     InputDeviceType type = GetInputDeviceTypeFromPath(device_info.path);
-    devices.push_back(InputDevice(device_info.id, type, device_info.name));
+    devices.push_back(InputDevice(device_info.id, type, device_info.name,
+                                  device_info.enabled));
   }
 
   reply_runner->PostTask(FROM_HERE, base::Bind(callback, devices));
@@ -304,7 +309,8 @@ void HandleTouchpadDevicesInWorker(const std::vector<DeviceInfo>& device_infos,
     }
 
     InputDeviceType type = GetInputDeviceTypeFromPath(device_info.path);
-    devices.push_back(InputDevice(device_info.id, type, device_info.name));
+    devices.push_back(InputDevice(device_info.id, type, device_info.name,
+                                  device_info.enabled));
   }
 
   reply_runner->PostTask(FROM_HERE, base::Bind(callback, devices));
@@ -477,8 +483,9 @@ void X11HotplugEventHandler::OnHotplugEvent() {
       XFree(product_info);
     }
 
-    device_infos.push_back(DeviceInfo(
-        device, device_type, GetDevicePath(display, device), vendor, product));
+    device_infos.push_back(DeviceInfo(device, device_type,
+                                      GetDevicePath(display, device), vendor,
+                                      product, device.enabled));
   }
 
   // X11 is not thread safe, so first get all the required state.

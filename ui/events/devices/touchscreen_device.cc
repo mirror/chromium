@@ -17,11 +17,10 @@ TouchscreenDevice::TouchscreenDevice(int id,
                                      const std::string& name,
                                      const gfx::Size& size,
                                      int touch_points)
-    : InputDevice(id, type, name),
+    : InputDevice(id, type, name, true),
       size(size),
       touch_points(touch_points),
-      is_stylus(false) {
-}
+      is_stylus(false) {}
 
 TouchscreenDevice::TouchscreenDevice(const InputDevice& input_device,
                                      const gfx::Size& size,
