@@ -12,11 +12,14 @@
 #include "base/strings/string_piece.h"
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_frame_proxy.h"
+#include "crypto/secure_hash.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace content {
 
 namespace {
+
+constexpr size_t kSizeLimit = 512;
 
 const std::string& UniqueNameForFrame(blink::WebFrame* frame) {
   return frame->IsWebLocalFrame()
@@ -142,9 +145,9 @@ std::string AppendUniqueSuffix(blink::WebFrame* top,
   return candidate;
 }
 
-std::string CalculateNewName(blink::WebFrame* parent,
-                             blink::WebFrame* child,
-                             const std::string& name) {
+std::string CalculateLegacyName(blink::WebFrame* parent,
+                                blink::WebFrame* child,
+                                const std::string& name) {
   blink::WebFrame* top = parent->Top();
   if (!name.empty() && !UniqueNameExists(top, name) && name != "_blank")
     return name;
@@ -157,31 +160,43 @@ std::string CalculateNewName(blink::WebFrame* parent,
   return AppendUniqueSuffix(top, candidate, likely_unique_suffix);
 }
 
+std::string CalculateHashedName(const std::string& input) {
+  return "";
+}
+
+std::string CalculateNewName(blink::WebFrame* parent,
+                             blink::WebFrame* child,
+                             const std::string& name) {
+  std::string candidate = CalculateLegacyName(parent, child, name);
+  if (candidate.size() < kSizeLimit)
+    return candidate;
+  do {
+    candidate = CalculateHashedName(candidate);
+  } while (UniqueNameExists(parent->Top(), candidate));
+  return candidate;
+}
+
 }  // namespace
 
-UniqueNameHelper::UniqueNameHelper(RenderFrameImpl* render_frame)
-    : render_frame_(render_frame) {}
+UniqueNameHelper::UniqueNameHelper() {}
 
 UniqueNameHelper::~UniqueNameHelper() {}
 
 std::string UniqueNameHelper::GenerateNameForNewChildFrame(
-    blink::WebFrame* parent,
+    blink::WebLocalFrame* parent,
     const std::string& name) {
   return CalculateNewName(parent, nullptr, name);
 }
 
-void UniqueNameHelper::UpdateName(const std::string& name) {
+void UniqueNameHelper::UpdateName(blink::WebLocalFrame* frame,
+                                  const std::string& name) {
   // The unique name of the main frame is always the empty string.
-  if (!GetWebFrame()->Parent())
+  if (!frame->Parent())
     return;
   // It's important to clear this before calculating a new name, as the
   // calculation checks for collisions with existing unique names.
   unique_name_.clear();
-  unique_name_ = CalculateNewName(GetWebFrame()->Parent(), GetWebFrame(), name);
-}
-
-blink::WebLocalFrame* UniqueNameHelper::GetWebFrame() const {
-  return render_frame_->GetWebFrame();
+  unique_name_ = CalculateNewName(frame->Parent(), frame, name);
 }
 
 }  // namespace content
