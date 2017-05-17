@@ -18,7 +18,7 @@ from telemetry.page import legacy_page_test
 
 from page_sets import dummy_story_set
 
-
+# foo
 class _DummyTest(legacy_page_test.LegacyPageTest):
 
   def __init__(self, avg, std):
