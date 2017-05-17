@@ -839,6 +839,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
         final float step =
                 cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP)
                         .floatValue();
+        step = Math.round(step * 100.0) / 100.0;
         builder.setStepExposureCompensation(step);
         final Range<Integer> exposureCompensationRange =
                 cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE);
