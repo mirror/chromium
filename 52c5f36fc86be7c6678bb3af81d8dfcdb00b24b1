@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "925e1d09_0044e191",
+        "filename": "gpu/command_buffer/service/command_executor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-17T18:56:55Z",
+      "side": 1,
+      "message": "This looks like a lot of changes. What happened was that I updated cmd_parser_test to use the CommandExecutor rather than the CommandParser (which goes away), and it turned out that almost all former CommandExecutorTest became essentially duplicates of some the CommandParserTests. So I moved the few left over (last 3 ones), removed the old command_executor_unittests.cc, and moved  cmd_parser_test.cc into command_executor_unittests.cc.",
+      "revId": "52c5f36fc86be7c6678bb3af81d8dfcdb00b24b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
