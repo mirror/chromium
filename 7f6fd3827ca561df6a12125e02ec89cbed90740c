@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0070706_8ab8e39f",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178139
+      },
+      "writtenOn": "2017-05-17T14:05:56Z",
+      "side": 1,
+      "message": "I added a comment to explain the value. I don\u0027t know if there is a good way to determine this at runtime. I thought about using counter_.size() when all statistics are calculated by counters but that doesn\u0027t work if one of the services doesn\u0027t exist and StatisticsCallbackFailure() is called.",
+      "parentUuid": "d233e042_8f77c58b",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e0f0a1_4d6e8efd",
         "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48f8368_9a2f83a6",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1178139
+      },
+      "writtenOn": "2017-05-17T14:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90e0f0a1_4d6e8efd",
+      "range": {
+        "startLine": 140,
+        "startChar": 34,
+        "endLine": 140,
+        "endChar": 49
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "75ad6a6b_00dec56b",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1178139
+      },
+      "writtenOn": "2017-05-17T14:05:56Z",
+      "side": 1,
+      "message": "I extracted a variable but it still needed three lines, so I also added a using declaration for browsing_data::BrowsingDataCounter",
+      "parentUuid": "d809fd6e_12bca3b6",
+      "range": {
+        "startLine": 145,
+        "startChar": 14,
+        "endLine": 145,
+        "endChar": 25
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcdd196e_ba853174",
         "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "57707ebd_e4f16f4b",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1178139
+      },
+      "writtenOn": "2017-05-17T14:05:56Z",
+      "side": 1,
+      "message": "I\u0027m planning to extend this if statement with more cases when I add History and PasswordCounters, so I think it can stay this way. I added a TODO to explain this",
+      "parentUuid": "dcdd196e_ba853174",
+      "range": {
+        "startLine": 148,
+        "startChar": 14,
+        "endLine": 148,
+        "endChar": 27
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bedbe38b_6649f7f1",
         "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c626be_4be6e900",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1178139
+      },
+      "writtenOn": "2017-05-17T14:05:56Z",
+      "side": 1,
+      "message": "StartAggregator() could be called multiple times, so I don\u0027t think I should reset it.",
+      "parentUuid": "bedbe38b_6649f7f1",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
