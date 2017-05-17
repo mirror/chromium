@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d233e042_8f77c58b",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-17T13:24:03Z",
+      "side": 1,
+      "message": "Could you please explain why this has value \"4\"? Can this value be determined at runtime?",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e0f0a1_4d6e8efd",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-17T13:24:03Z",
+      "side": 1,
+      "message": "Maybe rename this to OnCounterResult or HandleCounterResult",
+      "range": {
+        "startLine": 140,
+        "startChar": 34,
+        "endLine": 140,
+        "endChar": 49
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d809fd6e_12bca3b6",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-17T13:24:03Z",
+      "side": 1,
+      "message": "Consider extracting static_cast\u003cbrowsing_data::BrowsingDataCounter::FinishedResult*\u003e(result.get()) to a local variable to make the code more readable",
+      "range": {
+        "startLine": 145,
+        "startChar": 14,
+        "endLine": 145,
+        "endChar": 25
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdd196e_ba853174",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-17T13:24:03Z",
+      "side": 1,
+      "message": "I think this should be a DCHECK and not an if after getting the pref:\nDCHECK_EQ(pref \u003d\u003d browsing_data::BookmarkCounter::kPrefName, pref)",
+      "range": {
+        "startLine": 148,
+        "startChar": 14,
+        "endLine": 148,
+        "endChar": 27
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedbe38b_6649f7f1",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-17T13:24:03Z",
+      "side": 1,
+      "message": "Should done_callback be reset after it is run once?",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
