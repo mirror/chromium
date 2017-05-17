@@ -749,7 +749,7 @@ int Element::clientWidth() {
 
   if (LayoutBox* layout_object = GetLayoutBox())
     return AdjustLayoutUnitForAbsoluteZoom(
-               LayoutUnit(layout_object->PixelSnappedClientWidth()),
+               LayoutUnit(layout_object->PixelSnappedPaddingBoxRect().Width()),
                layout_object->StyleRef())
         .Round();
   return 0;
@@ -785,7 +785,7 @@ int Element::clientHeight() {
 
   if (LayoutBox* layout_object = GetLayoutBox())
     return AdjustLayoutUnitForAbsoluteZoom(
-               LayoutUnit(layout_object->PixelSnappedClientHeight()),
+               LayoutUnit(layout_object->PixelSnappedPaddingBoxRect().Height()),
                layout_object->StyleRef())
         .Round();
   return 0;
