@@ -2318,7 +2318,9 @@ interface HTMLElement : Element
     getter offsetTop
     getter offsetWidth
     getter onabort
+    getter onappinstalled
     getter onauxclick
+    getter onbeforeinstallprompt
     getter onblur
     getter oncancel
     getter oncanplay
@@ -2411,7 +2413,9 @@ interface HTMLElement : Element
     setter inputMode
     setter lang
     setter onabort
+    setter onappinstalled
     setter onauxclick
+    setter onbeforeinstallprompt
     setter onblur
     setter oncancel
     setter oncanplay

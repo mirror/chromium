@@ -3,12 +3,19 @@
     <head>
         <title>appinstalled event test page</title>
         <script>
+            var eventCounter = 0;
+
             function onAppInstalled() {
-                window.document.title = 'Got appinstalled';
+                eventCounter++;
+                window.document.title = 'Got appinstalled ' + eventCounter
+                    + ' times';
             }
 
             window.addEventListener('load', () => {
+                // Test both the addEventListener and onX attribute versions.
+                // When an app is installed, this should fire twice.
                 window.addEventListener('appinstalled', onAppInstalled);
+                window.onappinstalled = onAppInstalled;
             });
         </script>
     </head>
