@@ -9,6 +9,8 @@
 #include <algorithm>
 
 #include "base/logging.h"
+#include "chrome/browser/ui/views/tabs/tab.h"
+#include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace {
@@ -22,7 +24,8 @@ void CalculateNormalTabWidths(const TabSizeInfo& tab_size_info,
                               int num_normal_tabs,
                               int normal_width,
                               int* active_width,
-                              int* inactive_width) {
+                              int* inactive_width,
+                              float* endcap_width) {
   DCHECK_NE(0, num_normal_tabs);
 
   const int min_inactive_width = tab_size_info.min_inactive_width;
@@ -33,9 +36,9 @@ void CalculateNormalTabWidths(const TabSizeInfo& tab_size_info,
   // portions.  Don't let tabs get larger than the "standard width" or smaller
   // than the minimum width for each type, respectively.
   const int total_overlap = tab_size_info.tab_overlap * (num_normal_tabs - 1);
+  const int max_width = tab_size_info.max_size.width();
   const int desired_tab_width =
-      std::min((normal_width + total_overlap) / num_normal_tabs,
-               tab_size_info.max_size.width());
+      std::min((normal_width + total_overlap) / num_normal_tabs, max_width);
   *inactive_width = std::max(desired_tab_width, min_inactive_width);
   *active_width = std::max(desired_tab_width, tab_size_info.min_active_width);
 
@@ -48,6 +51,14 @@ void CalculateNormalTabWidths(const TabSizeInfo& tab_size_info,
         (normal_width + total_overlap - *active_width) / (num_normal_tabs - 1),
         min_inactive_width);
   }
+
+  const float max_endcap_width = TabStrip::GetTabEndcapMaxWidth();
+  const float min_endcap_width = Tab::kMinimumEndcapWidth;
+  const float tab_width_ratio =
+      static_cast<float>(*inactive_width - min_inactive_width) /
+      static_cast<float>(max_width - min_inactive_width);
+  *endcap_width = min_endcap_width +
+                  tab_width_ratio * (max_endcap_width - min_endcap_width);
 }
 
 }  // namespace
@@ -75,12 +86,14 @@ std::vector<gfx::Rect> CalculateBounds(const TabSizeInfo& tab_size_info,
                                        int active_index,
                                        int width,
                                        int* active_width,
-                                       int* inactive_width) {
+                                       int* inactive_width,
+                                       float* endcap_width) {
   DCHECK_NE(0, num_tabs);
 
   std::vector<gfx::Rect> tabs_bounds(num_tabs);
 
   *active_width = *inactive_width = tab_size_info.max_size.width();
+  *endcap_width = TabStrip::GetTabEndcapMaxWidth();
 
   int next_x = 0;
   if (num_pinned_tabs) {
@@ -98,7 +111,7 @@ std::vector<gfx::Rect> CalculateBounds(const TabSizeInfo& tab_size_info,
   const bool is_active_tab_normal = active_index >= num_pinned_tabs;
   const int num_normal_tabs = num_tabs - num_pinned_tabs;
   CalculateNormalTabWidths(tab_size_info, is_active_tab_normal, num_normal_tabs,
-                           width, active_width, inactive_width);
+                           width, active_width, inactive_width, endcap_width);
 
   // As CalculateNormalTabWidths() calculates sizes using ints there may be a
   // bit of extra space (due to the available width not being an integer
