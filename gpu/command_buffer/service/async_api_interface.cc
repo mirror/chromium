@@ -4,72 +4,14 @@
 
 // This file contains the implementation of the command parser.
 
-#include "gpu/command_buffer/service/cmd_parser.h"
+#include "gpu/command_buffer/service/async_api_interface.h"
 
 #include <stddef.h>
 
 #include "base/logging.h"
-#include "base/trace_event/trace_event.h"
+#include "gpu/command_buffer/common/cmd_buffer_common.h"
 
 namespace gpu {
-
-CommandParser::CommandParser(AsyncAPIInterface* handler)
-    : get_(0),
-      put_(0),
-      buffer_(NULL),
-      entry_count_(0),
-      handler_(handler) {
-}
-
-void CommandParser::SetBuffer(
-    void* shm_address,
-    size_t shm_size,
-    ptrdiff_t offset,
-    size_t size) {
-  // check proper alignments.
-  DCHECK_EQ(0, (reinterpret_cast<intptr_t>(shm_address)) % 4);
-  DCHECK_EQ(0, offset % 4);
-  DCHECK_EQ(0u, size % 4);
-  // check that the command buffer fits into the memory buffer.
-  DCHECK_GE(shm_size, offset + size);
-  get_ = 0;
-  put_ = 0;
-  char* buffer_begin = static_cast<char*>(shm_address) + offset;
-  buffer_ = reinterpret_cast<CommandBufferEntry*>(buffer_begin);
-  entry_count_ = size / 4;
-}
-
-// Process one command, reading the header from the command buffer, and
-// forwarding the command index and the arguments to the handler.
-// Note that:
-// - validation needs to happen on a copy of the data (to avoid race
-// conditions). This function only validates the header, leaving the arguments
-// validation to the handler, so it can pass a reference to them.
-// - get_ is modified *after* the command has been executed.
-error::Error CommandParser::ProcessCommands(int num_commands) {
-  int num_entries = put_ < get_ ? entry_count_ - get_ : put_ - get_;
-  int entries_processed = 0;
-
-  error::Error result = handler_->DoCommands(
-      num_commands, buffer_ + get_, num_entries, &entries_processed);
-
-  get_ += entries_processed;
-  if (get_ == entry_count_)
-    get_ = 0;
-
-  return result;
-}
-
-// Processes all the commands, while the buffer is not empty. Stop if an error
-// is encountered.
-error::Error CommandParser::ProcessAllCommands() {
-  while (!IsEmpty()) {
-    error::Error error = ProcessCommands(kParseCommandsSlice);
-    if (error)
-      return error;
-  }
-  return error::kNoError;
-}
 
 // Decode multiple commands, and call the corresponding GL functions.
 // NOTE: buffer is a pointer to the command buffer. As such, it could be
