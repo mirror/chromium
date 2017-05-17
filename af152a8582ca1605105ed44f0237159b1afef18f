@@ -128,6 +128,30 @@
       "revId": "af152a8582ca1605105ed44f0237159b1afef18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec3de5f_cdab344c",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-17T14:01:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5eb4685e_4b67f62d",
+      "range": {
+        "startLine": 225,
+        "startChar": 1,
+        "endLine": 225,
+        "endChar": 61
+      },
+      "revId": "af152a8582ca1605105ed44f0237159b1afef18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
