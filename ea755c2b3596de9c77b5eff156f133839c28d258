@@ -46,6 +46,29 @@
       "revId": "ea755c2b3596de9c77b5eff156f133839c28d258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc0ad8f_61a48c37",
+        "filename": "components/prefs/overlay_user_pref_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-17T00:02:55Z",
+      "side": 1,
+      "message": "Please test with overlayed and non-overlayed keys with a common path prefix.",
+      "range": {
+        "startLine": 25,
+        "startChar": 18,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "ea755c2b3596de9c77b5eff156f133839c28d258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
