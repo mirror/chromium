@@ -10,13 +10,10 @@
 #include "base/macros.h"
 
 namespace blink {
-class WebFrame;
 class WebLocalFrame;
 }  // namespace blink
 
 namespace content {
-
-class RenderFrameImpl;
 
 // Frame helper that manages the details of generating a quasi-stable unique
 // name for the frame. The name is unique within a page, and is used for:
@@ -71,7 +68,7 @@ class RenderFrameImpl;
 // retryNumber ::= smallest non-negative integer resulting in unique name
 class UniqueNameHelper {
  public:
-  explicit UniqueNameHelper(RenderFrameImpl* render_frame);
+  UniqueNameHelper();
   ~UniqueNameHelper();
 
   // Returns the generated unique name.
@@ -90,19 +87,16 @@ class UniqueNameHelper {
   // calculated before the RenderFrameImpl is created. To avoid this chicken and
   // egg problem, this method is static, which means that |parent| needs to be
   // passed as a parameter.
-  static std::string GenerateNameForNewChildFrame(blink::WebFrame* parent,
+  static std::string GenerateNameForNewChildFrame(blink::WebLocalFrame* parent,
                                                   const std::string& name);
 
   // Called after a browsing context name change to generate a new name. Note
   // that this should not be called if the frame is no longer displaying the
   // initial empty document, as unique name changes after that point will break
   // history navigations. See https://crbug.com/607205.
-  void UpdateName(const std::string& name);
+  void UpdateName(blink::WebLocalFrame* frame, const std::string& name);
 
  private:
-  blink::WebLocalFrame* GetWebFrame() const;
-
-  RenderFrameImpl* const render_frame_;
   std::string unique_name_;
 
   DISALLOW_COPY_AND_ASSIGN(UniqueNameHelper);
