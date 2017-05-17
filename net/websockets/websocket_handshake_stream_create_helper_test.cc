@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_request_headers.h"
@@ -47,7 +48,7 @@ class MockClientSocketHandleFactory {
       const std::string& expect_written,
       const std::string& return_to_read) {
     socket_factory_maker_.SetExpectations(expect_written, return_to_read);
-    std::unique_ptr<ClientSocketHandle> socket_handle(new ClientSocketHandle);
+    auto socket_handle = base::MakeUnique<ClientSocketHandle>();
     socket_handle->Init("a", scoped_refptr<MockTransportSocketParams>(), MEDIUM,
                         ClientSocketPool::RespectLimits::ENABLED,
                         CompletionCallback(), &pool_, NetLogWithSource());
@@ -108,8 +109,8 @@ class WebSocketHandshakeStreamCreateHelperTest : public ::testing::Test {
                                      extra_request_headers),
             WebSocketStandardResponse(extra_response_headers));
 
-    std::unique_ptr<WebSocketHandshakeStreamBase> handshake(
-        create_helper.CreateBasicStream(std::move(socket_handle), false));
+    std::unique_ptr<WebSocketHandshakeStreamBase> handshake =
+        create_helper.CreateBasicStream(std::move(socket_handle), false);
 
     // If in future the implementation type returned by CreateBasicStream()
     // changes, this static_cast will be wrong. However, in that case the test

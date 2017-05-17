@@ -26,6 +26,7 @@
 #include "net/base/net_export.h"
 #include "net/base/network_change_notifier.h"
 #include "net/cert/cert_database.h"
+#include "net/http/bidirectional_stream_impl.h"
 #include "net/http/http_server_properties.h"
 #include "net/http/http_stream_factory.h"
 #include "net/log/net_log_with_source.h"
@@ -68,7 +69,6 @@ class QuicServerInfo;
 class QuicStreamFactory;
 class SocketPerformanceWatcherFactory;
 class TransportSecurityState;
-class BidirectionalStreamImpl;
 
 namespace test {
 class QuicStreamFactoryPeer;

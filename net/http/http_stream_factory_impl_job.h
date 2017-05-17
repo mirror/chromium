@@ -64,7 +64,7 @@ class HttpStreamFactoryImpl::Job {
         Job* job,
         const SSLConfig& used_ssl_config,
         const ProxyInfo& used_proxy_info,
-        WebSocketHandshakeStreamBase* stream) = 0;
+        std::unique_ptr<WebSocketHandshakeStreamBase> stream) = 0;
 
     // Invoked when |job| fails to create a stream.
     virtual void OnStreamFailed(Job* job,
@@ -493,7 +493,7 @@ class HttpStreamFactoryImpl::JobFactory {
 
   virtual ~JobFactory();
 
-  virtual HttpStreamFactoryImpl::Job* CreateMainJob(
+  virtual std::unique_ptr<HttpStreamFactoryImpl::Job> CreateMainJob(
       HttpStreamFactoryImpl::Job::Delegate* delegate,
       HttpStreamFactoryImpl::JobType job_type,
       HttpNetworkSession* session,
@@ -507,7 +507,7 @@ class HttpStreamFactoryImpl::JobFactory {
       bool enable_ip_based_pooling,
       NetLog* net_log);
 
-  virtual HttpStreamFactoryImpl::Job* CreateAltSvcJob(
+  virtual std::unique_ptr<HttpStreamFactoryImpl::Job> CreateAltSvcJob(
       HttpStreamFactoryImpl::Job::Delegate* delegate,
       HttpStreamFactoryImpl::JobType job_type,
       HttpNetworkSession* session,
@@ -522,7 +522,7 @@ class HttpStreamFactoryImpl::JobFactory {
       bool enable_ip_based_pooling,
       NetLog* net_log);
 
-  virtual HttpStreamFactoryImpl::Job* CreateAltProxyJob(
+  virtual std::unique_ptr<HttpStreamFactoryImpl::Job> CreateAltProxyJob(
       HttpStreamFactoryImpl::Job::Delegate* delegate,
       HttpStreamFactoryImpl::JobType job_type,
       HttpNetworkSession* session,
