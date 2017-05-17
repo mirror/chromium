@@ -22,6 +22,30 @@
       "revId": "332b3888717dc95f0a2cd27f590826eac8274cb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244ef2af_faa14c9f",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-17T17:33:44Z",
+      "side": 1,
+      "message": "I changed this to \"Users without GAIA or AD accounts are not supported in ARC.\"\nI think kiosks are separate case.",
+      "parentUuid": "39d62b20_993be406",
+      "range": {
+        "startLine": 134,
+        "startChar": 30,
+        "endLine": 134,
+        "endChar": 34
+      },
+      "revId": "332b3888717dc95f0a2cd27f590826eac8274cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
