@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e42637fc_4a5df439",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-17T14:33:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "75ad6a6b_00dec56b",
+      "range": {
+        "startLine": 145,
+        "startChar": 14,
+        "endLine": 145,
+        "endChar": 25
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcdd196e_ba853174",
         "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
         "patchSetId": 9
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "b733da62_e1367f8a",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-17T14:33:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57707ebd_e4f16f4b",
+      "range": {
+        "startLine": 148,
+        "startChar": 14,
+        "endLine": 148,
+        "endChar": 27
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bedbe38b_6649f7f1",
         "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
         "patchSetId": 9
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "StartAggregator() could be called multiple times, so I don\u0027t think I should reset it.",
       "parentUuid": "bedbe38b_6649f7f1",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f55b09a5_4faffb07",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-17T14:33:29Z",
+      "side": 1,
+      "message": "Is this a pattern that is actually supported correctly? Does this class support multiple successive / parallel calls to StartAggregator? For example, what happens if the caller calls StartAggregator a second time, right after the bookmarks values are aggregated?",
+      "parentUuid": "52c626be_4be6e900",
       "range": {
         "startLine": 173,
         "startChar": 6,
