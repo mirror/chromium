@@ -26,13 +26,17 @@ struct EVENTS_DEVICES_EXPORT InputDevice {
   // Creates an invalid input device.
   InputDevice();
 
-  InputDevice(int id, InputDeviceType type, const std::string& name);
+  InputDevice(int id,
+              InputDeviceType type,
+              const std::string& name,
+              bool enabled);
   InputDevice(int id,
               InputDeviceType type,
               const std::string& name,
               const base::FilePath& sys_path,
               uint16_t vendor,
-              uint16_t product);
+              uint16_t product,
+              bool enabled);
   InputDevice(const InputDevice& other);
   virtual ~InputDevice();
 

@@ -17,19 +17,28 @@ InputDevice::InputDevice()
       vendor_id(0),
       product_id(0) {}
 
-InputDevice::InputDevice(int id, InputDeviceType type, const std::string& name)
-    : id(id), type(type), name(name), vendor_id(0), product_id(0) {
-}
+InputDevice::InputDevice(int id,
+                         InputDeviceType type,
+                         const std::string& name,
+                         bool enabled)
+    : id(id),
+      type(type),
+      name(name),
+      enabled(enabled),
+      vendor_id(0),
+      product_id(0) {}
 
 InputDevice::InputDevice(int id,
                          InputDeviceType type,
                          const std::string& name,
                          const base::FilePath& sys_path,
                          uint16_t vendor,
-                         uint16_t product)
+                         uint16_t product,
+                         bool enabled)
     : id(id),
       type(type),
       name(name),
+      enabled(enabled),
       sys_path(sys_path),
       vendor_id(vendor),
       product_id(product) {}
