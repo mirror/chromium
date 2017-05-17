@@ -4,6 +4,7 @@
 
 #include "cc/paint/paint_op_buffer.h"
 
+#include "base/containers/stack_container.h"
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/paint_record.h"
 #include "third_party/skia/include/core/SkAnnotation.h"
@@ -602,7 +603,84 @@ void PaintOpBuffer::Reset() {
   num_slow_paths_ = 0;
 }
 
-void PaintOpBuffer::playback(SkCanvas* canvas) const {
+static const PaintOp* NextOp(const std::vector<size_t>& range_starts,
+                             const std::vector<size_t>& range_indices,
+                             base::StackVector<const PaintOp*, 3>* stack_ptr,
+                             PaintOpBuffer::Iterator* iter,
+                             size_t* range_index) {
+  auto& stack = *stack_ptr;
+  if (stack->size()) {
+    const PaintOp* op = stack->front();
+    // Shift paintops forward
+    stack->erase(stack->begin());
+    return op;
+  }
+  if (!*iter)
+    return nullptr;
+
+  // This grabs the PaintOp from the current iterator position, and advances it
+  // to the next position immediately. We'll see we reached the end of the
+  // buffer on the next call to this method.
+  const PaintOp* op = **iter;
+
+  size_t active_range = range_indices[*range_index];
+  DCHECK_GE(iter->op_idx(), range_starts[active_range]);
+
+  if (active_range + 1 == range_starts.size()) {
+    // In the last possible range, so go right to the end of the buffer.
+    ++*iter;
+  } else {
+    size_t range_end = range_starts[active_range + 1];
+    DCHECK_LE(iter->op_idx(), range_end);
+
+    ++*iter;
+    if (iter->op_idx() == range_end) {
+      if (*range_index + 1 == range_indices.size()) {
+        // Leaving the last range that we want to iterate.
+        *iter = iter->end();
+      } else {
+        // Move to the next range.
+        ++(*range_index);
+        size_t next_range_start = range_starts[range_indices[*range_index]];
+        while (iter->op_idx() < next_range_start)
+          ++(*iter);
+      }
+    }
+  }
+
+  return op;
+}
+
+void PaintOpBuffer::playback(SkCanvas* canvas,
+                             SkPicture::AbortCallback* callback) const {
+  // Treats the entire PaintOpBuffer as a single range.
+  PlaybackRanges({0}, {0}, canvas, callback);
+}
+
+void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
+                                   const std::vector<size_t>& range_indices,
+                                   SkCanvas* canvas,
+                                   SkPicture::AbortCallback* callback) const {
+  if (!op_count_)
+    return;
+  if (callback && callback->abort())
+    return;
+
+#if DCHECK_IS_ON()
+  DCHECK(!range_starts.empty());   // Don't call this then.
+  DCHECK(!range_indices.empty());  // Don't call this then.
+  DCHECK_EQ(0u, range_starts[0]);
+  for (size_t i = 1; i < range_starts.size(); ++i) {
+    DCHECK_GT(range_starts[i], range_starts[i - 1]);
+    DCHECK_LT(range_starts[i], op_count_);
+  }
+  DCHECK_LT(range_indices[0], range_starts.size());
+  for (size_t i = 1; i < range_indices.size(); ++i) {
+    DCHECK_GT(range_indices[i], range_indices[i - 1]);
+    DCHECK_LT(range_indices[i], range_starts.size());
+  }
+#endif
+
   // TODO(enne): a PaintRecord that contains a SetMatrix assumes that the
   // SetMatrix is local to that PaintRecord itself.  Said differently, if you
   // translate(x, y), then draw a paint record with a SetMatrix(identity),
@@ -610,29 +688,44 @@ void PaintOpBuffer::playback(SkCanvas* canvas) const {
   // transform.  This could probably be done more efficiently.
   SkMatrix original = canvas->getTotalMatrix();
 
-  for (Iterator iter(this); iter; ++iter) {
+  // FIFO queue of paint ops that have been peeked at.
+  base::StackVector<const PaintOp*, 3> stack;
+
+  // The current offset into range_indices. range_indices[range_index] is the
+  // current offset into range_starts.
+  size_t range_index = 0;
+
+  Iterator iter(this);
+  while (iter.op_idx() < range_starts[range_indices[range_index]])
+    ++iter;
+  while (const PaintOp* op =
+             NextOp(range_starts, range_indices, &stack, &iter, &range_index)) {
     // Optimize out save/restores or save/draw/restore that can be a single
     // draw.  See also: similar code in SkRecordOpts and cc's DisplayItemList.
     // TODO(enne): consider making this recursive?
-    const PaintOp* op = *iter;
     if (op->GetType() == PaintOpType::SaveLayerAlpha) {
-      const PaintOp* second = iter.peek1();
+      const PaintOp* second =
+          NextOp(range_starts, range_indices, &stack, &iter, &range_index);
+      const PaintOp* third = nullptr;
       if (second) {
         if (second->GetType() == PaintOpType::Restore) {
-          ++iter;
           continue;
         }
         if (second->IsDrawOp()) {
-          const PaintOp* third = iter.peek2();
+          third =
+              NextOp(range_starts, range_indices, &stack, &iter, &range_index);
           if (third && third->GetType() == PaintOpType::Restore) {
             const SaveLayerAlphaOp* save_op =
                 static_cast<const SaveLayerAlphaOp*>(op);
             second->RasterWithAlpha(canvas, save_op->alpha);
-            ++iter;
-            ++iter;
             continue;
           }
         }
+
+        // Store deferred ops for later.
+        stack->push_back(second);
+        if (third)
+          stack->push_back(third);
       }
     }
     // TODO(enne): skip SaveLayer followed by restore with nothing in
@@ -640,25 +733,6 @@ void PaintOpBuffer::playback(SkCanvas* canvas) const {
     // other PaintFlags options) are not a noop.  Figure out what these
     // are so we can skip them correctly.
 
-    op->Raster(canvas, original);
-  }
-}
-
-void PaintOpBuffer::playback(SkCanvas* canvas,
-                             SkPicture::AbortCallback* callback) const {
-  // The abort callback is only used for analysis, in general, so
-  // this playback code can be more straightforward and not do the
-  // optimizations in the other function.
-  if (!callback) {
-    playback(canvas);
-    return;
-  }
-
-  SkMatrix original = canvas->getTotalMatrix();
-
-  // TODO(enne): ideally callers would just iterate themselves and we
-  // can remove the entire notion of an abort callback.
-  for (auto* op : Iterator(this)) {
     op->Raster(canvas, original);
     if (callback && callback->abort())
       return;
