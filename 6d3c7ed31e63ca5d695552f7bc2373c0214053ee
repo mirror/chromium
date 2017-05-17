@@ -22,6 +22,30 @@
       "revId": "6d3c7ed31e63ca5d695552f7bc2373c0214053ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eaaf918_f9af37c2",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-05-17T13:52:08Z",
+      "side": 1,
+      "message": "It\u0027s just a name of the config, which IMO doesn\u0027t contain anything Chromium specific, so I thought if we\u0027re going to reuse the same one for the WebRTC builder, it would make more sense to make the name more generic.",
+      "parentUuid": "d4b0cfc4_0eabe643",
+      "range": {
+        "startLine": 269,
+        "startChar": 30,
+        "endLine": 269,
+        "endChar": 44
+      },
+      "revId": "6d3c7ed31e63ca5d695552f7bc2373c0214053ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
