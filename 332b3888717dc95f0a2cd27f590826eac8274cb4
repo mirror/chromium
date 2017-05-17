@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d62b20_993be406",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-17T17:13:41Z",
+      "side": 1,
+      "message": "should we exhaustively mention \"GAIA, Active Directory, or Kiosk\"? Or something more generic like \"ARC not allowed for profile due to unsupported account\"?",
+      "range": {
+        "startLine": 134,
+        "startChar": 30,
+        "endLine": 134,
+        "endChar": 34
+      },
+      "revId": "332b3888717dc95f0a2cd27f590826eac8274cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
