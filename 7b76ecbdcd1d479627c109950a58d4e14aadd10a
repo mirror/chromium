@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a223ec4f_1e646600",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-17T18:47:23Z",
+      "side": 1,
+      "message": "this is kinda like a layering violation?",
+      "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84f7738_1b06956d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-17T18:47:23Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to be a singleton. You have enough code here so that we could do an unsandboxed spare connection as well. So I think this class should not make such assumptions. Launcher can then make sure only one is ever created?\n\nmaybe just rename this to spareconnection or something?",
+      "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aebe67a_1772b598",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-17T18:47:23Z",
+      "side": 1,
+      "message": "that\u0027s not true.., warm up can be called more than once",
+      "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3601f4e_0274cad4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-17T18:47:23Z",
+      "side": 1,
+      "message": "why post?",
+      "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
