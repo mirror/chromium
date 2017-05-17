@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3c5e9fa_3dc09ffa",
+        "filename": "chrome/common/chrome_content_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-05-17T16:08:26Z",
+      "side": 1,
+      "message": "Thanks for the suggestion! Yes, I was able to trigger the failure under tsan, using yield instead of sleep.  Fixed the test.",
+      "parentUuid": "dca3f552_d1288d49",
+      "range": {
+        "startLine": 202,
+        "startChar": 26,
+        "endLine": 202,
+        "endChar": 31
+      },
+      "revId": "ccdacf9d86a524624ec8762eabb0a29e0ef4d1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53a2b21c_de52d470",
         "filename": "chrome/common/chrome_content_client_unittest.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "ccdacf9d86a524624ec8762eabb0a29e0ef4d1e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af10ae0_ce315914",
+        "filename": "chrome/common/chrome_content_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-05-17T16:08:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53a2b21c_de52d470",
+      "revId": "ccdacf9d86a524624ec8762eabb0a29e0ef4d1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
