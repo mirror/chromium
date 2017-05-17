@@ -118,6 +118,7 @@ source_set("lib") {
   public_deps = [
     "//base",
     "//media",
+    "//media/gpu/ipc/service",
     "//media/mojo/interfaces",
     "//mojo/public/cpp/bindings",
     "//mojo/public/cpp/system",
