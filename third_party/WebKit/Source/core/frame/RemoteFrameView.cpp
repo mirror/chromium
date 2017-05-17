@@ -16,23 +16,59 @@
 namespace blink {
 
 RemoteFrameView::RemoteFrameView(RemoteFrame* remote_frame)
-    : remote_frame_(remote_frame) {
+    : remote_frame_(remote_frame), remote_frame_view_state_(kNotAttached) {
   DCHECK(remote_frame);
 }
 
 RemoteFrameView::~RemoteFrameView() {}
 
-void RemoteFrameView::SetParent(FrameView* parent) {
-  if (parent == parent_)
-    return;
+FrameView* RemoteFrameView::ParentFrameView() const {
+  if (remote_frame_view_state_ != kAttached)
+    return nullptr;
 
-  DCHECK(!parent || !parent_);
-  if (!parent || !parent->IsVisible())
-    SetParentVisible(false);
-  parent_ = parent;
-  if (parent && parent->IsVisible())
-    SetParentVisible(true);
-  FrameRectsChanged();
+  Frame* parent_frame = remote_frame_->Tree().Parent();
+  if (parent_frame && parent_frame->IsLocalFrame())
+    return ToLocalFrame(parent_frame)->View();
+
+  return nullptr;
+}
+
+void RemoteFrameView::SetFrameOrPluginState(FrameOrPluginState state) {
+  VLOG(1) << "SetFrameOrPluginState " << this << " " << remote_frame_view_state_
+          << "->" << state;
+  if (VLOG_IS_ON(2))
+    base::debug::StackTrace(10).Print();
+  switch (state) {
+    case kNotAttached:
+      DCHECK(remote_frame_view_state_ == kAttached ||
+             remote_frame_view_state_ == kDisposed);
+      SetParentVisible(false);
+      break;
+
+    case kAttached:
+      DCHECK(remote_frame_view_state_ == kNotAttached ||
+             remote_frame_view_state_ == kDeferred ||
+             remote_frame_view_state_ == kDisposed);
+      SetParentVisible(true);
+      FrameRectsChanged();
+      break;
+
+    case kDeferred:
+      DCHECK(remote_frame_view_state_ == kNotAttached ||
+             remote_frame_view_state_ == kAttached ||
+             remote_frame_view_state_ == kDeferred ||
+             remote_frame_view_state_ == kDisposed);
+      break;
+    case kDisposed:
+      DCHECK(remote_frame_view_state_ == kAttached ||
+             remote_frame_view_state_ == kNotAttached ||
+             remote_frame_view_state_ == kDeferred ||
+             remote_frame_view_state_ == kDisposed);
+      break;
+    default:
+      NOTREACHED();
+  }
+  remote_frame_view_state_ = state;
 }
 
 RemoteFrameView* RemoteFrameView::Create(RemoteFrame* remote_frame) {
@@ -80,6 +116,8 @@ void RemoteFrameView::UpdateRemoteViewportIntersection() {
 }
 
 void RemoteFrameView::Dispose() {
+  SetFrameOrPluginState(kDisposed);
+
   HTMLFrameOwnerElement* owner_element = remote_frame_->DeprecatedLocalOwner();
   // ownerElement can be null during frame swaps, because the
   // RemoteFrameView is disconnected before detachment.
@@ -111,8 +149,21 @@ void RemoteFrameView::FrameRectsChanged() {
   // containing local frame root. The position of the local root within
   // any remote frames, if any, is accounted for by the embedder.
   IntRect new_rect = frame_rect_;
-  if (parent_)
-    new_rect = parent_->ConvertToRootFrame(parent_->ContentsToFrame(new_rect));
+
+  // TODO(joelhockey): I don't think it makes sense for this to be called
+  // when it is not attached.
+  // This gets called in kNotAttached state from
+  // SetWidget : UpdateOnWidgetChange : UpdateGeometryInternal :
+  // FrameRectsChanged however UpdateOnWidgetChange gets called before the
+  // SetParent which makes this move to kAttached state. This is also called in
+  // kDeferred state for SetParent(nullptr).
+  // kDisposed ?
+  DCHECK(remote_frame_view_state_ == kAttached ||
+         remote_frame_view_state_ == kNotAttached ||
+         remote_frame_view_state_ == kDeferred ||
+         remote_frame_view_state_ == kDisposed);
+  if (FrameView* parent = ParentFrameView())
+    new_rect = parent->ConvertToRootFrame(parent->ContentsToFrame(new_rect));
   remote_frame_->Client()->FrameRectsChanged(new_rect);
 }
 
@@ -139,10 +190,20 @@ void RemoteFrameView::SetParentVisible(bool visible) {
 
 IntRect RemoteFrameView::ConvertFromRootFrame(
     const IntRect& rect_in_root_frame) const {
-  if (parent_) {
-    IntRect parent_rect = parent_->ConvertFromRootFrame(rect_in_root_frame);
+  // TODO(joelhockey): I think this should only be called when in state
+  // kAttached. However, it gets called in state kDisposed from
+  // content_browsertest
+  // --gtest_filter=SitePerProcessBrowserTest.SubframePendingAndBackToSameSiteInstance
+  // Called in state kDeferred from
+  // browser_tests
+  // --gtest_filter=WebViewTests/WebViewTest.Shim_TestDisplayBlock/1
+  DCHECK(remote_frame_view_state_ == kAttached ||
+         remote_frame_view_state_ == kDeferred ||
+         remote_frame_view_state_ == kDisposed);
+  if (FrameView* parent = ParentFrameView()) {
+    IntRect parent_rect = parent->ConvertFromRootFrame(rect_in_root_frame);
     parent_rect.SetLocation(
-        parent_->ConvertSelfToChild(*this, parent_rect.Location()));
+        parent->ConvertSelfToChild(*this, parent_rect.Location()));
     return parent_rect;
   }
   return rect_in_root_frame;
@@ -150,7 +211,6 @@ IntRect RemoteFrameView::ConvertFromRootFrame(
 
 DEFINE_TRACE(RemoteFrameView) {
   visitor->Trace(remote_frame_);
-  visitor->Trace(parent_);
 }
 
 }  // namespace blink
