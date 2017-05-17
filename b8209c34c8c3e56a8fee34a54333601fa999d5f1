@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28f0c5d8_2b0d8e71",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-17T15:58:30Z",
+      "side": 1,
+      "message": "There is a format issue here that is fixed locally. Not uploading again to avoid getting the bots to spin for nothing.",
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
