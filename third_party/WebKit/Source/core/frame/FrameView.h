@@ -91,6 +91,7 @@ class PaintArtifactCompositor;
 class PaintController;
 class PaintInvalidationState;
 class Page;
+class PluginView;
 class PrintContext;
 class ScrollingCoordinator;
 class TracedValue;
@@ -491,12 +492,13 @@ class CORE_EXPORT FrameView final
   }  // Whether or not we are actually visible.
   void SetParentVisible(bool) override;
   void SetSelfVisible(bool v) { self_visible_ = v; }
-  void SetParent(FrameView*) override;
-  FrameView* Parent() const override { return parent_; }
-  void RemoveChild(FrameOrPlugin*);
-  void AddChild(FrameOrPlugin*);
-  using ChildrenSet = HeapHashSet<Member<FrameOrPlugin>>;
-  const ChildrenSet& Children() const { return children_; }
+  void SetFrameOrPluginState(FrameOrPluginState) override;
+  FrameOrPluginState GetFrameOrPluginState() const override {
+    return frame_view_state_;
+  }
+  using PluginSet = HeapHashSet<Member<PluginView>>;
+  const PluginSet& Plugins() const { return plugins_; }
+  void AddPlugin(PluginView*);
   // Custom scrollbars in PaintLayerScrollableArea need to be called with
   // StyleChanged whenever window focus is changed.
   void RemoveScrollbar(Scrollbar*);
@@ -1035,6 +1037,12 @@ class CORE_EXPORT FrameView final
                                Vector<AnnotatedRegionValue>&) const;
 
   template <typename Function>
+  void ForAllChildViewsAndPlugins(const Function&);
+
+  template <typename Function>
+  void ForAllChildFrameViews(const Function&);
+
+  template <typename Function>
   void ForAllNonThrottledFrameViews(const Function&);
 
   void UpdateViewportIntersectionsForSubtree(
@@ -1071,7 +1079,7 @@ class CORE_EXPORT FrameView final
   Member<LocalFrame> frame_;
 
   IntRect frame_rect_;
-  Member<FrameView> parent_;
+  FrameOrPluginState frame_view_state_;
   bool self_visible_;
   bool parent_visible_;
 
@@ -1144,7 +1152,7 @@ class CORE_EXPORT FrameView final
   bool horizontal_scrollbar_lock_;
   bool vertical_scrollbar_lock_;
 
-  ChildrenSet children_;
+  PluginSet plugins_;
   HeapHashSet<Member<Scrollbar>> scrollbars_;
 
   ScrollOffset pending_scroll_delta_;
