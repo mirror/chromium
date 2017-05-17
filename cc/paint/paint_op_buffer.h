@@ -777,8 +777,12 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
 
   void Reset();
 
-  void playback(SkCanvas* canvas) const;
-  void playback(SkCanvas* canvas, SkPicture::AbortCallback* callback) const;
+  void playback(SkCanvas* canvas,
+                SkPicture::AbortCallback* callback = nullptr) const;
+  void PlaybackRanges(const std::vector<size_t>& range_starts,
+                      const std::vector<size_t>& range_indices,
+                      SkCanvas* canvas,
+                      SkPicture::AbortCallback* callback = nullptr) const;
 
   // Returns the size of the paint op buffer. That is, the number of ops
   // contained in it.
@@ -892,7 +896,6 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
       return *this;
     }
     operator bool() const { return op_idx_ < buffer_->size(); }
-
     size_t op_idx() const { return op_idx_; }
 
    private:
