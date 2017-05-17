@@ -1585,6 +1585,7 @@ def _CheckIpcOwners(input_api, output_api):
       '*.typemap',
       # Android native IPC:
       '*.aidl',
+      'AndroidManifest.xml*',
       # Blink uses a different file naming convention:
       '*EnumTraits*.*',
       '*StructTraits*.*',
