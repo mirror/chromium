@@ -741,16 +741,7 @@ void PageInfoBubbleView::HandleLinkClickedAsync(views::Link* source) {
     return;
   switch (source->id()) {
     case LINK_SITE_SETTINGS:
-      // TODO(crbug.com/655876): This opens the general Content Settings pane,
-      // which is OK for now. But on Android, it opens a page specific to a
-      // given origin that shows all of the settings for that origin. If/when
-      // that's available on desktop we should link to that here, too.
-      web_contents()->OpenURL(content::OpenURLParams(
-          GURL(chrome::kChromeUIContentSettingsURL), content::Referrer(),
-          WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_LINK,
-          false));
-      presenter_->RecordPageInfoAction(
-          PageInfo::PAGE_INFO_SITE_SETTINGS_OPENED);
+      presenter_->OpenSiteSettingsView();
       break;
     case LINK_COOKIE_DIALOG:
       // Count how often the Collected Cookies dialog is opened.
