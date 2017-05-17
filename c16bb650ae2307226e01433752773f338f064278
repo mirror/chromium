@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2920834b_be73bb79",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-05-17T06:56:56Z",
+      "side": 1,
+      "message": "whoooa, I had no idea that worked. Neat!",
+      "parentUuid": "76591eb2_c09e4d22",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "c16bb650ae2307226e01433752773f338f064278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeecbf3e_8331a96f",
         "filename": "chrome/browser/resources/pdf/elements/viewer-toolbar-dropdown/viewer-toolbar-dropdown.html",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "c16bb650ae2307226e01433752773f338f064278",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995f3262_cc07d357",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-toolbar-dropdown/viewer-toolbar-dropdown.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-05-17T06:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeecbf3e_8331a96f",
+      "revId": "c16bb650ae2307226e01433752773f338f064278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
