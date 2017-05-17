@@ -112,8 +112,7 @@ void CvcUnmaskViewController::ShowUnmaskPrompt(
 
 void CvcUnmaskViewController::OnUnmaskVerificationResult(
     autofill::AutofillClient::PaymentsRpcResult result) {
-  // TODO(crbug.com/716020): Handle FullCardRequest errors with more
-  // granularity and display an error in the UI.
+  dialog()->HideProcessingSpinner();
 }
 
 base::string16 CvcUnmaskViewController::GetSheetTitle() {
