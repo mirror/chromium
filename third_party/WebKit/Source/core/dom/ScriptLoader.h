@@ -34,6 +34,7 @@
 namespace blink {
 
 class ScriptElementBase;
+class ScriptStreamer;
 class Script;
 
 class ResourceFetcher;
@@ -84,6 +85,7 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   // Returns false if and only if execution was blocked.
   bool ExecuteScript(const Script*);
   virtual void Execute();
+  void ExecuteWithScriptStreamer(ScriptStreamer*);
 
   // XML parser calls these
   void DispatchLoadEvent();

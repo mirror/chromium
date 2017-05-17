@@ -611,8 +611,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
     //  time the prepare a script algorithm started."
     pending_script_ = CreatePendingScript();
     async_exec_type_ = ScriptRunner::kAsync;
-    pending_script_->StartStreamingIfPossible(&element_->GetDocument(),
-                                              ScriptStreamer::kAsync);
+
     // TODO(hiroshige): Here |contextDocument| is used as "node document"
     // while Step 14 uses |elementDocument| as "node document". Fix this.
     context_document->GetScriptRunner()->QueueScriptForExecution(
@@ -894,11 +893,16 @@ bool ScriptLoader::DoExecuteScript(const Script* script) {
 }
 
 void ScriptLoader::Execute() {
+  ExecuteWithScriptStreamer(nullptr);
+}
+
+void ScriptLoader::ExecuteWithScriptStreamer(ScriptStreamer* streamer) {
   DCHECK(!will_be_parser_executed_);
   DCHECK(async_exec_type_ != ScriptRunner::kNone);
   DCHECK(pending_script_->IsExternal());
   bool error_occurred = false;
-  Script* script = pending_script_->GetSource(KURL(), error_occurred);
+  Script* script = pending_script_->GetSource(KURL(), error_occurred, streamer);
+
   const bool wasCanceled = pending_script_->WasCanceled();
   DetachPendingScript();
   if (error_occurred) {

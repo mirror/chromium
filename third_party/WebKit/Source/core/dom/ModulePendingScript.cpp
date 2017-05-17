@@ -68,8 +68,10 @@ void ModulePendingScript::NotifyModuleTreeLoadFinished() {
 }
 
 Script* ModulePendingScript::GetSource(const KURL& document_url,
-                                       bool& error_occurred) const {
+                                       bool& error_occurred,
+                                       ScriptStreamer* script_streamer) const {
   CHECK(IsReady());
+  DCHECK(!script_streamer);  // Not currently suppored for Modules.
   error_occurred = ErrorOccurred();
   return GetModuleScript();
 }
