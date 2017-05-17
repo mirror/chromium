@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6571dc0_2fb7cf2b",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-17T21:40:41Z",
+      "side": 1,
+      "message": "Can you please add comments for the new functions you\u0027re adding?",
+      "revId": "be51c476588743976ce181272a408ab940a1ff4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeecdcdf_47ebbaa2",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-17T21:40:41Z",
+      "side": 1,
+      "message": "Can you add a few unittests for these functions?\nAlso, is a case like\n\n\"begin op1 op2 begin op3 op4 end op5 op6 end\" possible? (begin \u003d StartPaint here)\nIf this results in 2 visual rects (for each of the begins), then what are the starts?\n0 for the first one, 3 for the second one? But then what about op5 and op6 visual rects, are those a part of the first visual rect with start\u003d0? They are not captured in the [0, 3) range\n\nOr is this 4 visual rects with paired begin/ends sharing the same visual rect but different start? The confusion I have is that I only see one current_range_start_ \u003d something_non_zero, which in StartPaint. \n\nI\u0027m not sure if what I\u0027m asking makes sense... so maybe when you add comments and a few tests here, it will be more clear to me.",
+      "revId": "be51c476588743976ce181272a408ab940a1ff4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b79b9a_7ff5a0b8",
+        "filename": "cc/paint/paint_canvas.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-17T21:40:41Z",
+      "side": 1,
+      "message": "I\u0027m a bit unsure how this change relates to the rest (ie to the patch description)",
+      "revId": "be51c476588743976ce181272a408ab940a1ff4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
