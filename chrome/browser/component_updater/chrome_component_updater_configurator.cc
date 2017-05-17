@@ -211,8 +211,8 @@ MakeChromeComponentUpdaterConfigurator(
     const base::CommandLine* cmdline,
     net::URLRequestContextGetter* context_getter,
     PrefService* pref_service) {
-  return base::MakeShared<ChromeConfigurator>(cmdline, context_getter,
-                                              pref_service);
+  return base::MakeRefCounted<ChromeConfigurator>(cmdline, context_getter,
+                                                  pref_service);
 }
 
 }  // namespace component_updater

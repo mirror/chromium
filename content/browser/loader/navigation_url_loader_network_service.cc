@@ -249,7 +249,7 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
   // OnStartLoadingResponseBody().
   if (ssl_info && ssl_info->cert)
     NavigationResourceHandler::GetSSLStatusForRequest(*ssl_info, &ssl_status_);
-  response_ = base::MakeShared<ResourceResponse>();
+  response_ = base::MakeRefCounted<ResourceResponse>();
   response_->head = head;
 }
 
