@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a7a6cf5_93cb8324",
+        "filename": "services/service_manager/public/cpp/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-17T10:38:17Z",
+      "side": 1,
+      "message": "nit: this",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "c3d81b1d8179663c700f9884a87d442276bec3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
