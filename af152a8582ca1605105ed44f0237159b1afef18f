@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f16abf93_bb9e746d",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-17T11:28:01Z",
+      "side": 1,
+      "message": "I think the current one is more readable (at least for me it\u0027s hard to understand the exact condition in your suggestion).",
+      "parentUuid": "1b147120_ce923cbb",
+      "revId": "af152a8582ca1605105ed44f0237159b1afef18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f0177e9_a2c25536",
         "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "92b2f9af_d147137c",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-17T11:28:01Z",
+      "side": 1,
+      "message": "Done, I replaced it everywhere. I also added a new test to test the legacy flag.",
+      "parentUuid": "0f0177e9_a2c25536",
+      "range": {
+        "startLine": 157,
+        "startChar": 61,
+        "endLine": 157,
+        "endChar": 73
+      },
+      "revId": "af152a8582ca1605105ed44f0237159b1afef18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11851699_d1b7a8a5",
         "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-05-15T17:40:19Z",
       "side": 1,
       "message": "Shouldn\u0027t be necessary anymore.",
+      "range": {
+        "startLine": 225,
+        "startChar": 1,
+        "endLine": 225,
+        "endChar": 61
+      },
+      "revId": "af152a8582ca1605105ed44f0237159b1afef18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb4685e_4b67f62d",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-05-17T11:28:01Z",
+      "side": 1,
+      "message": "I\u0027d like to keep it just to be consistent (every test starts now with the list of command line args).",
+      "parentUuid": "11851699_d1b7a8a5",
       "range": {
         "startLine": 225,
         "startChar": 1,
