@@ -25,8 +25,6 @@ const base::Feature kEnableArcFeature{"EnableARC",
 constexpr char kAvailabilityNone[] = "none";
 constexpr char kAvailabilityInstalled[] = "installed";
 constexpr char kAvailabilityOfficiallySupported[] = "officially-supported";
-constexpr char kAvailabilityOfficiallySupportedWithActiveDirectory[] =
-    "officially-supported-with-active-directory";
 
 }  // namespace
 
@@ -36,13 +34,10 @@ bool IsArcAvailable() {
   if (command_line->HasSwitch(chromeos::switches::kArcAvailability)) {
     std::string value = command_line->GetSwitchValueASCII(
         chromeos::switches::kArcAvailability);
-    DCHECK(value == kAvailabilityNone ||
-           value == kAvailabilityInstalled ||
-           value == kAvailabilityOfficiallySupported ||
-           value == kAvailabilityOfficiallySupportedWithActiveDirectory)
+    DCHECK(value == kAvailabilityNone || value == kAvailabilityInstalled ||
+           value == kAvailabilityOfficiallySupported)
         << "Unknown flag value: " << value;
     return value == kAvailabilityOfficiallySupported ||
-           value == kAvailabilityOfficiallySupportedWithActiveDirectory ||
            (value == kAvailabilityInstalled &&
             base::FeatureList::IsEnabled(kEnableArcFeature));
   }
@@ -92,17 +87,6 @@ void SetArcAvailableCommandLineForTesting(base::CommandLine* command_line) {
 bool IsArcKioskMode() {
   return user_manager::UserManager::IsInitialized() &&
          user_manager::UserManager::Get()->IsLoggedInAsArcKioskApp();
-}
-
-bool IsArcAllowedForActiveDirectoryUsers() {
-  const auto* command_line = base::CommandLine::ForCurrentProcess();
-
-  if (!command_line->HasSwitch(chromeos::switches::kArcAvailability))
-    return false;
-
-  return command_line->GetSwitchValueASCII(
-             chromeos::switches::kArcAvailability) ==
-         kAvailabilityOfficiallySupportedWithActiveDirectory;
 }
 
 bool IsArcOptInVerificationDisabled() {
