@@ -26,7 +26,6 @@
 #  git commit -a
 #  git cl upload
 
-
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
   'swiftshader_git': 'https://swiftshader.googlesource.com',
