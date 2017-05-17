@@ -22,6 +22,30 @@
       "revId": "49bd0b0e1fefb31b1771200a540a520a63a24ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aab7b5c_cc9e7d13",
+        "filename": "device/hid/hid_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-17T02:26:52Z",
+      "side": 1,
+      "message": "Done. (Updated usb_service_unittest.cc as well.)",
+      "parentUuid": "e6868195_b57bea82",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 13
+      },
+      "revId": "49bd0b0e1fefb31b1771200a540a520a63a24ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
