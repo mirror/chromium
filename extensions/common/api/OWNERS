@@ -5,4 +5,7 @@ per-file *view*.json=wjmaclean@chromium.org
 per-file *view*.json=lfg@chromium.org
 per-file *view*.json=paulmeyer@chromium.org
 
+per-file *.mojom=set noparent
+per-file *.mojom=file://ipc/SECURITY_OWNERS
+
 # COMPONENT: Platform>Extensions>API
