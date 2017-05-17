@@ -209,8 +209,8 @@ void WebPluginContainerImpl::InvalidateRect(const IntRect& rect) {
   // TODO(joelhockey): Usually parent should only be called when attached,
   // but this is also called in state kDisposed in Dispose.
   // Also called in state kDeferred in plugins/tabindex.html
-  DCHECK(plugin_state_ == kAttached || plugin_state_ == kDeferred ||
-         plugin_state_ == kDisposed);
+  DCHECK(plugin_state_ == kNotAttached || plugin_state_ == kAttached ||
+         plugin_state_ == kDeferred || plugin_state_ == kDisposed);
   FrameView* parent = ParentFrameView();
   if (!parent)
     return;
