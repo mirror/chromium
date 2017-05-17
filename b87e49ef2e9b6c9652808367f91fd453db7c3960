@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb9e979_ca291dac",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-17T09:35:37Z",
+      "side": 1,
+      "message": "Small nit: leave empty lines inside the namespace?",
+      "revId": "b87e49ef2e9b6c9652808367f91fd453db7c3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c151d561_34ab233a",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-17T09:35:37Z",
+      "side": 1,
+      "message": "DCHECK should be fine here.",
+      "revId": "b87e49ef2e9b6c9652808367f91fd453db7c3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
