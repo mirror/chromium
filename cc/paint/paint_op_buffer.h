@@ -777,8 +777,12 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
 
   void Reset();
 
-  void playback(SkCanvas* canvas) const;
-  void playback(SkCanvas* canvas, SkPicture::AbortCallback* callback) const;
+  void playback(SkCanvas* canvas,
+                SkPicture::AbortCallback* callback = nullptr) const;
+  void PlaybackRanges(const std::vector<size_t>& range_starts,
+                      const std::vector<size_t>& range_indices,
+                      SkCanvas* canvas,
+                      SkPicture::AbortCallback* callback = nullptr) const;
 
   // Returns the size of the paint op buffer. That is, the number of ops
   // contained in it.
@@ -882,6 +886,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
       DCHECK_EQ(other.buffer_, buffer_);
       return other.op_idx_ != op_idx_;
     }
+
     Iterator& operator++() {
       if (!op_idx_++)
         return *this;
@@ -891,30 +896,24 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
       ptr_ += op->skip;
       return *this;
     }
+
+    void AdvanceTo(size_t pos) {
+      DCHECK_GE(pos, op_idx_);
+      DCHECK_LE(pos, buffer_->size());
+      // Optimization to avoid incrementing to the end of the PaintOpBuffer, we
+      // can skip directly there.
+      if (pos == buffer_->size()) {
+        *this = end();
+        return;
+      }
+      // Otherwise, we have to increment all the way over.
+      while (op_idx_ < pos)
+        ++(*this);
+    }
+
     operator bool() const { return op_idx_ < buffer_->size(); }
 
     size_t op_idx() const { return op_idx_; }
-
-    // Return the next op without advancing the iterator, or nullptr if none.
-    PaintOp* peek1() const {
-      if (op_idx_ + 1 >= buffer_->size())
-        return nullptr;
-      if (!op_idx_)
-        return reinterpret_cast<PaintOp*>(ptr_);
-      return reinterpret_cast<PaintOp*>(ptr_ + (*this)->skip);
-    }
-
-    // Return the op two ops ahead without advancing the iterator, or nullptr if
-    // none.
-    PaintOp* peek2() const {
-      if (op_idx_ + 2 >= buffer_->size())
-        return nullptr;
-      char* next = ptr_ + reinterpret_cast<PaintOp*>(ptr_)->skip;
-      PaintOp* next_op = reinterpret_cast<PaintOp*>(next);
-      if (!op_idx_)
-        return next_op;
-      return reinterpret_cast<PaintOp*>(next + next_op->skip);
-    }
 
    private:
     Iterator(const PaintOpBuffer* buffer, char* ptr, size_t op_idx)
