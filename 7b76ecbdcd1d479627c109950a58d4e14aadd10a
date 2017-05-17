@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec6c3dd2_791bdd79",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-05-17T20:46:05Z",
+      "side": 1,
+      "message": "Yes... now passing a connection factory. What I\u0027d really like is to be able to pass a ChildConnectionAllocator.\nBut I don\u0027t think we can because of the ChildCreationParams stuff.",
+      "parentUuid": "a223ec4f_1e646600",
+      "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e84f7738_1b06956d",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-17T18:47:23Z",
       "side": 1,
       "message": "I don\u0027t think this needs to be a singleton. You have enough code here so that we could do an unsandboxed spare connection as well. So I think this class should not make such assumptions. Launcher can then make sure only one is ever created?\n\nmaybe just rename this to spareconnection or something?",
+      "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1413f30b_a0887dcf",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-05-17T20:46:05Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "e84f7738_1b06956d",
       "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "157c006d_8de9ac45",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-05-17T20:46:05Z",
+      "side": 1,
+      "message": "Really? I was under the impression that it would be called only once by the embedder on start-up.",
+      "parentUuid": "5aebe67a_1772b598",
+      "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3601f4e_0274cad4",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-05-17T18:47:23Z",
       "side": 1,
       "message": "why post?",
+      "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bce5312_935d8faf",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SpareChildConnectionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-05-17T20:46:05Z",
+      "side": 1,
+      "message": "So the callback is always called after this method returns, whether the connection has been bound yet or not.\nThis is so code like this could work:\nChildProcessConnection mConnection \u003d null;\n...\nStartCallback callback \u003d new StartCallback() {\n public void onChildStarted() {\n   // mConnection is guaranteed to be non null\n   mConnection.doStuff();\n }\n};\nmConnection \u003d spareConnection.getConnection(..., callback, ...)\n\n(even though in this specific case you\u0027d have to null check anyway, it seems clearer to have the callback always called after the method return)",
+      "parentUuid": "a3601f4e_0274cad4",
       "revId": "7b76ecbdcd1d479627c109950a58d4e14aadd10a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
