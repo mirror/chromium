@@ -61,8 +61,6 @@
     "power.gpu_rasterization.top_10": 337.4231767654419,
     "power.gpu_rasterization.top_25": 834.0499158447439,
     "power.steady_state": 596.0703444047408,
-    "power.top_10": 356.0645871018789,
-    "power.top_25": 813.9569391814146,
     "power.trivial_pages": 772.9753481583161,
     "rasterize_and_record_micro.key_mobile_sites": 625.6900956763161,
     "rasterize_and_record_micro.partial_invalidation": 15.75209499442059,
