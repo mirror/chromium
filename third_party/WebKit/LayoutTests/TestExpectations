@@ -117,10 +117,6 @@ crbug.com/709009 virtual/gpu/fast/canvas/getPutImageDataPairTest.html [ Timeout 
 crbug.com/713049 images/color-profile-reflection.html [ Failure Pass ]
 crbug.com/713049 virtual/gpu-rasterization/images/color-profile-reflection.html [ Failure Pass ]
 
-# Fails when run in isolation. Passes when run as part of the directory
-# depending on test order.
-crbug.com/713419 virtual/gpu/fast/canvas/painting-on-bad-canvas.html [ Crash Pass ]
-
 crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Crash ]
 crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-path-context-clip.html [ Crash ]
 crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Timeout ]
@@ -2354,7 +2350,7 @@ crbug.com/626703 external/wpt/domxpath/001.html [ Failure ]
 
 # HTTP tests that started failing after WPT import
 crbug.com/711529 virtual/mojo-loading/http/tests/workers/shared-worker-performance-timeline.html [ Timeout ]
-crbug.com/711529 virtual/mojo-loading/http/tests/origin_trials/sample-api-workers.html [ Timeout ]
+crbug.com/711529 [ Linux Mac10.10 Mac10.11 Mac10.12 Retina Win ] virtual/mojo-loading/http/tests/origin_trials/sample-api-workers.html [ Timeout ]
 crbug.com/711529 virtual/mojo-loading/http/tests/notifications/update-shared-worker.html [ Timeout ]
 crbug.com/711529 virtual/mojo-loading/http/tests/notifications/close-shared-worker.html [ Timeout ]
 crbug.com/711529 virtual/mojo-loading/http/tests/notifications/click-shared-worker.html [ Timeout ]
@@ -3325,6 +3321,22 @@ crbug.com/720511 [ Linux ] virtual/mojo-loading/http/tests/misc/non-utf8-header-
 crbug.com/720511 [ Linux ] virtual/mojo-loading/http/tests/security/contentSecurityPolicy/directive-parsing-03.html [ Failure Pass Timeout ]
 crbug.com/720511 [ Linux ] virtual/mojo-loading/http/tests/security/contentSecurityPolicy/source-list-parsing-04.html [ Failure Pass Timeout ]
 crbug.com/720511 [ Linux ] virtual/mojo-loading/http/tests/security/document-domain-canonicalizes.html [ Failure Pass Timeout ]
+
+# Fails when run in isolation. Passes when run as part of the directory
+# depending on test order.
+crbug.com/713419 virtual/gpu/fast/canvas/painting-on-bad-canvas.html [ Crash Pass ]
+
+# Tests from adding WPT .any.js test support
+crbug.com/709227 external/wpt/background-fetch/interfaces.worker.html [ Failure ]
+crbug.com/709227 external/wpt/user-timing/invoke_with_timing_attributes.worker.html [ Failure ]
+crbug.com/709227 external/wpt/workers/nested_worker.worker.html [ Timeout ]
+crbug.com/709227 external/wpt/html/syntax/parsing/html5lib_menuitem-element.html?run_type=uri [ Failure ]
+crbug.com/709227 external/wpt/html/syntax/parsing/html5lib_menuitem-element.html?run_type=write [ Failure ]
+crbug.com/709227 external/wpt/html/syntax/parsing/html5lib_menuitem-element.html?run_type=write_single [ Failure ]
+crbug.com/709227 external/wpt/html/webappapis/system-state-and-capabilities/the-navigator-object/NavigatorID.worker.html [ Failure ]
+crbug.com/712264 external/wpt/service-workers/service-worker/fetch-event.https.html [ Failure Pass ]
+crbug.com/709227 external/wpt/WebCryptoAPI/derive_bits_keys/hkdf.worker.html [ Timeout ]
+crbug.com/709227 external/wpt/WebCryptoAPI/derive_bits_keys/pbkdf2.worker.html  [ Timeout ]
 
 # Tests to be run only under virtual/experimental-canvas-features/
 crbug.com/682753 fast/canvas-experimental [ Skip ]
