@@ -47,16 +47,33 @@ bool OverlayUserPrefStore::GetValue(const std::string& key,
   return underlay_->GetValue(key, result);
 }
 
+namespace {
+// Similar to base::DictionaryValue::MergeDictionary(), except moves values from
+// |source| to |target| instead of copying them.
+void MergeDictionary(base::DictionaryValue* target,
+                     base::DictionaryValue* source) {
+  CHECK(source->is_dict());
+  for (auto& pair : *source) {
+    std::unique_ptr<base::Value> merge_value = std::move(pair.second);
+    // Check whether we have to merge dictionaries.
+    if (merge_value->IsType(base::Value::Type::DICTIONARY)) {
+      base::DictionaryValue* sub_dict;
+      if (target->GetDictionaryWithoutPathExpansion(pair.first, &sub_dict)) {
+        MergeDictionary(sub_dict,
+                        static_cast<base::DictionaryValue*>(merge_value.get()));
+        continue;
+      }
+    }
+    // All other cases: Move and hook it up.
+    target->SetWithoutPathExpansion(pair.first, std::move(merge_value));
+  }
+}
+}  // namespace
+
 std::unique_ptr<base::DictionaryValue> OverlayUserPrefStore::GetValues() const {
   auto values = underlay_->GetValues();
   auto overlay_values = overlay_.AsDictionaryValue();
-  for (const auto& key : overlay_names_set_) {
-    std::unique_ptr<base::Value> out_value;
-    overlay_values->Remove(key, &out_value);
-    if (out_value) {
-      values->Set(key, std::move(out_value));
-    }
-  }
+  MergeDictionary(values.get(), overlay_values.get());
   return values;
 }
 
@@ -157,11 +174,11 @@ void OverlayUserPrefStore::OnInitializationCompleted(bool succeeded) {
     observer.OnInitializationCompleted(succeeded);
 }
 
-void OverlayUserPrefStore::RegisterOverlayPref(const std::string& key) {
+void OverlayUserPrefStore::RegisterUnderlayPref(const std::string& key) {
   DCHECK(!key.empty()) << "Key is empty";
-  DCHECK(overlay_names_set_.find(key) == overlay_names_set_.end())
+  DCHECK(underlay_names_set_.find(key) == underlay_names_set_.end())
       << "Key already registered";
-  overlay_names_set_.insert(key);
+  underlay_names_set_.insert(key);
 }
 
 void OverlayUserPrefStore::ClearMutableValues() {
@@ -174,5 +191,5 @@ OverlayUserPrefStore::~OverlayUserPrefStore() {
 
 bool OverlayUserPrefStore::ShallBeStoredInOverlay(
     const std::string& key) const {
-  return overlay_names_set_.find(key) != overlay_names_set_.end();
+  return underlay_names_set_.find(key) == underlay_names_set_.end();
 }
