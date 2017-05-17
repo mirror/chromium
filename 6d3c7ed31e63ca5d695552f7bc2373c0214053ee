@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4b0cfc4_0eabe643",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1159394
+      },
+      "writtenOn": "2017-05-17T07:54:14Z",
+      "side": 1,
+      "message": "Why are you renaming the chromium one?",
+      "range": {
+        "startLine": 269,
+        "startChar": 30,
+        "endLine": 269,
+        "endChar": 44
+      },
+      "revId": "6d3c7ed31e63ca5d695552f7bc2373c0214053ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
