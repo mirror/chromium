@@ -48,6 +48,10 @@ bool ComputeLockedPendingUserGesture(const Document& document) {
       return IsDocumentCrossOrigin(document);
     case AutoplayPolicy::Type::kUserGestureRequired:
       return true;
+    // kDocumentUserGestureRequired might be locked pending user gesture but it
+    // will be checked directly on the document instead of computing it.
+    case AutoplayPolicy::Type::kDocumentUserGestureRequired:
+      return false;
   }
 
   NOTREACHED();
@@ -215,6 +219,12 @@ bool AutoplayPolicy::IsAutoplayingMutedInternal(bool muted) const {
 }
 
 bool AutoplayPolicy::IsLockedPendingUserGesture() const {
+  if (GetAutoplayPolicyForDocument(element_->GetDocument()) == AutoplayPolicy::Type::kDocumentUserGestureRequired) {
+    if (!element_->GetDocument().GetFrame())
+      return true;
+    return !element_->GetDocument().GetFrame()->HasReceivedUserGesture();
+  }
+
   return locked_pending_user_gesture_;
 }
 
@@ -231,7 +241,7 @@ void AutoplayPolicy::UnlockUserGesture() {
 }
 
 bool AutoplayPolicy::IsGestureNeededForPlayback() const {
-  if (!locked_pending_user_gesture_)
+  if (!IsLockedPendingUserGesture())
     return false;
 
   return IsGestureNeededForPlaybackIfPendingUserGestureIsLocked();

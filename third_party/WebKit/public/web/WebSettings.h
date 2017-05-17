@@ -119,6 +119,7 @@ class WebSettings {
     kNoUserGestureRequired = 0,
     kUserGestureRequired,
     kUserGestureRequiredForCrossOrigin,
+    kDocumentUserGestureRequired,
   };
 
   // Sets value of a setting by its string identifier from Settings.in and

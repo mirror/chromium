@@ -25,6 +25,7 @@ class AutoplayPolicy final : public GarbageCollected<AutoplayPolicy> {
     kNoUserGestureRequired = 0,
     kUserGestureRequired,
     kUserGestureRequiredForCrossOrigin,
+    kDocumentUserGestureRequired,
   };
 
   CORE_EXPORT static Type GetAutoplayPolicyForDocument(const Document&);

@@ -545,6 +545,8 @@ void InternalSettings::setAutoplayPolicy(const String& policy_str,
     policy = AutoplayPolicy::Type::kUserGestureRequired;
   } else if (policy_str == "user-gesture-required-for-cross-origin") {
     policy = AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin;
+  } else if (policy_str == "document-user-gesture-required") {
+    policy = AutoplayPolicy::Type::kDocumentUserGestureRequired;
   } else {
     exception_state.ThrowDOMException(
         kSyntaxError, "The autoplay policy ('" + policy_str + ")' is invalid.");
