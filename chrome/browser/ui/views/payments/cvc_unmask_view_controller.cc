@@ -15,6 +15,7 @@
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
 #include "chrome/browser/ui/views/payments/payment_request_views_util.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/payments/full_card_request.h"
 #include "components/grit/components_scaled_resources.h"
@@ -112,8 +113,34 @@ void CvcUnmaskViewController::ShowUnmaskPrompt(
 
 void CvcUnmaskViewController::OnUnmaskVerificationResult(
     autofill::AutofillClient::PaymentsRpcResult result) {
-  // TODO(crbug.com/716020): Handle FullCardRequest errors with more
-  // granularity and display an error in the UI.
+  switch (result) {
+    case autofill::AutofillClient::NONE:
+      NOTREACHED();
+    case autofill::AutofillClient::SUCCESS:
+      // In the success case, don't show any error and don't hide the spinner
+      // because the dialog is about to close anyways.
+      return;
+
+    case autofill::AutofillClient::TRY_AGAIN_FAILURE: {
+      DisplayError(l10n_util::GetStringUTF16(
+          IDS_AUTOFILL_CARD_UNMASK_PROMPT_ERROR_TRY_AGAIN_CVC));
+      break;
+    }
+
+    case autofill::AutofillClient::PERMANENT_FAILURE: {
+      DisplayError(l10n_util::GetStringUTF16(
+          IDS_AUTOFILL_CARD_UNMASK_PROMPT_ERROR_PERMANENT));
+      break;
+    }
+
+    case autofill::AutofillClient::NETWORK_ERROR: {
+      DisplayError(l10n_util::GetStringUTF16(
+          IDS_AUTOFILL_CARD_UNMASK_PROMPT_ERROR_NETWORK));
+      break;
+    }
+  }
+
+  dialog()->HideProcessingSpinner();
 }
 
 base::string16 CvcUnmaskViewController::GetSheetTitle() {
@@ -169,6 +196,17 @@ void CvcUnmaskViewController::FillContentView(views::View* content_view) {
   cvc_field_ = cvc_field.get();
   layout->AddView(cvc_field.release());
 
+  layout->AddPaddingRow(0, 22);
+
+  layout->StartRow(0, 1);
+  std::unique_ptr<views::Label> error_label = base::MakeUnique<views::Label>();
+  error_label->set_id(static_cast<int>(DialogViewID::CVC_ERROR_LABEL));
+  error_label->SetEnabledColor(error_label->GetNativeTheme()->GetSystemColor(
+      ui::NativeTheme::kColorId_AlertSeverityHigh));
+  error_label->SetVisible(false);
+
+  layout->AddView(error_label.release());
+
   content_view->SetLayoutManager(layout.release());
 }
 
@@ -205,6 +243,13 @@ void CvcUnmaskViewController::CvcConfirmed() {
   }
 
   dialog()->ShowProcessingSpinner();
+}
+
+void CvcUnmaskViewController::DisplayError(base::string16 error) {
+  views::Label* error_label = static_cast<views::Label*>(
+      dialog()->GetViewByID(static_cast<int>(DialogViewID::CVC_ERROR_LABEL)));
+  error_label->SetText(error);
+  error_label->SetVisible(true);
 }
 
 bool CvcUnmaskViewController::GetSheetId(DialogViewID* sheet_id) {
