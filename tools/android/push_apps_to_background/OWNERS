@@ -1,2 +1,5 @@
 mikecase@chromium.org
 perezju@chromium.org
+
+per-file AndroidManifest.xml*=set noparent
+per-file AndroidManifest.xml*=file://ipc/SECURITY_OWNERS
