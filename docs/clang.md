@@ -71,6 +71,7 @@ how things are currently looking:
 https://build.chromium.org/p/chromium.fyi/console?category=win%20clang
 
 ```shell
+ahem ahem
 python tools\clang\scripts\update.py
 # run `gn args` and add `is_clang = true` to your args.gn, then...
 ninja -C out\gn chrome
