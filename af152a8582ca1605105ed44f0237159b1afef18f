@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b147120_ce923cbb",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-05-17T02:14:04Z",
+      "side": 1,
+      "message": "Optional: Now you can inline the condition?\n\nif ((!user || (!user-\u003eHasGaiaAccount() \u0026\u0026 !user-\u003eIsActiveDirectoryUser()) \u0026\u0026 !IsKioskMode()) {\n  ...\n}",
+      "revId": "af152a8582ca1605105ed44f0237159b1afef18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f0177e9_a2c25536",
         "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
         "patchSetId": 2
