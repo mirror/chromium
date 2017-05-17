@@ -98,9 +98,6 @@ NOINLINE DISABLE_CFI_PERF void RasterItem(const DisplayItem& base_item,
       break;
     case DisplayItem::DRAWING: {
       const auto& item = static_cast<const DrawingDisplayItem&>(base_item);
-      if (canvas->quickReject(item.picture->cullRect()))
-        break;
-
       // TODO(enne): Maybe the PaintRecord itself could know whether this
       // was needed?  It's not clear whether these save/restore semantics
       // that SkPicture handles during playback are things that should be
@@ -427,15 +424,15 @@ DisplayItemList::CreateTracedValue(bool include_items) const {
           state->EndArray();
 
           state->BeginArray("cullRect");
-          state->AppendInteger(item.picture->cullRect().x());
-          state->AppendInteger(item.picture->cullRect().y());
-          state->AppendInteger(item.picture->cullRect().width());
-          state->AppendInteger(item.picture->cullRect().height());
+          state->AppendInteger(item.bounds.x());
+          state->AppendInteger(item.bounds.y());
+          state->AppendInteger(item.bounds.width());
+          state->AppendInteger(item.bounds.height());
           state->EndArray();
 
           std::string b64_picture;
-          PictureDebugUtil::SerializeAsBase64(ToSkPicture(item.picture).get(),
-                                              &b64_picture);
+          PictureDebugUtil::SerializeAsBase64(
+              ToSkPicture(item.picture, item.bounds).get(), &b64_picture);
           state->SetString("skp64", b64_picture);
           state->EndDictionary();
           break;
