@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c34640f_b45a199f",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-17T19:45:28Z",
+      "side": 1,
+      "message": "remove formatter_data\u003d\"android_java\"",
+      "range": {
+        "startLine": 118,
+        "startChar": 262,
+        "endLine": 118,
+        "endChar": 263
+      },
+      "revId": "326c6c1d4d2ee06849cc913908697190027f7c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
