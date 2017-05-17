@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eda624fc_8b83f7e5",
+        "filename": "third_party/WebKit/Source/core/frame/WindowInstallation.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-17T05:38:18Z",
+      "side": 1,
+      "message": "2016 -\u003e 2017.\n\nCan you move this to modules/app_banner/?\n\nSee also: modules/device_orientation/WindowDeviceMotion.idl",
+      "revId": "09848dba3b8e83d127e53ea772f31ddc6bf67c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
