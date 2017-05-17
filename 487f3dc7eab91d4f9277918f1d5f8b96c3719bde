@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d615894e_9bc961ce",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-05-17T01:19:44Z",
+      "side": 1,
+      "message": "nit: I thought we don\u0027t abbreviate names in blink...",
+      "range": {
+        "startLine": 660,
+        "startChar": 8,
+        "endLine": 660,
+        "endChar": 19
+      },
+      "revId": "487f3dc7eab91d4f9277918f1d5f8b96c3719bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
