@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04f404bf_e7d5f7fe",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-password-screen/viewer-password-screen.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-05-17T00:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed494d05_56050ff1",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "85a84a17f7629960c414bf589cb6d83a5df79fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d58cf4bb_ad94f4dd",
         "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "85a84a17f7629960c414bf589cb6d83a5df79fb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da597f6_ba6b932a",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-05-17T00:19:17Z",
+      "side": 1,
+      "message": "The common case here is for the button to be shown, so adding a dom-if here would add a small amount of overhead to the common case in exchange for making the very uncommon case slightly faster.\n\nUltimately, it\u0027s a very small difference so I\u0027m happy to add it if you prefer, but for the moment I think that leaving it off is okay.",
+      "parentUuid": "d58cf4bb_ad94f4dd",
+      "range": {
+        "startLine": 133,
+        "startChar": 46,
+        "endLine": 133,
+        "endChar": 47
+      },
+      "revId": "85a84a17f7629960c414bf589cb6d83a5df79fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
