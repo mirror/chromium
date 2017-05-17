@@ -171,7 +171,7 @@ static bool g_initial_track_all_paint_invalidations = false;
 FrameView::FrameView(LocalFrame& frame, IntRect frame_rect)
     : frame_(frame),
       frame_rect_(frame_rect),
-      parent_(nullptr),
+      frame_view_state_(kNotAttached),
       display_mode_(kWebDisplayModeBrowser),
       can_have_scrollbars_(true),
       has_pending_layout_(false),
@@ -239,12 +239,11 @@ FrameView::~FrameView() {
 
 DEFINE_TRACE(FrameView) {
   visitor->Trace(frame_);
-  visitor->Trace(parent_);
   visitor->Trace(fragment_anchor_);
   visitor->Trace(scrollable_areas_);
   visitor->Trace(animating_scrollable_areas_);
   visitor->Trace(auto_size_info_);
-  visitor->Trace(children_);
+  visitor->Trace(plugins_);
   visitor->Trace(scrollbars_);
   visitor->Trace(viewport_scrollable_area_);
   visitor->Trace(visibility_observer_);
@@ -286,6 +285,37 @@ void FrameView::Reset() {
   viewport_constrained_objects_.reset();
   layout_subtree_root_list_.Clear();
   orthogonal_writing_mode_root_list_.Clear();
+}
+
+template <typename Function>
+void FrameView::ForAllChildViewsAndPlugins(const Function& function) {
+  for (Frame* child = frame_->Tree().FirstChild(); child;
+       child = child->Tree().NextSibling()) {
+    FrameOrPlugin* child_view = nullptr;
+    if (child->IsLocalFrame()) {
+      child_view = ToLocalFrame(child)->View();
+    } else if (child->IsRemoteFrame()) {
+      child_view = ToRemoteFrame(child)->View();
+    }
+
+    if (child_view)
+      function(*child_view);
+  }
+
+  for (const auto& plugin : plugins_) {
+    function(*plugin);
+  }
+}
+
+template <typename Function>
+void FrameView::ForAllChildFrameViews(const Function& function) {
+  for (Frame* child = frame_->Tree().FirstChild(); child;
+       child = child->Tree().NextSibling()) {
+    if (!child->IsLocalFrame())
+      continue;
+    if (FrameView* child_view = ToLocalFrame(child)->View())
+      function(*child_view);
+  }
 }
 
 // Call function for each non-throttled frame view in pre tree order.
@@ -343,6 +373,7 @@ void FrameView::SetupRenderThrottling() {
 }
 
 void FrameView::Dispose() {
+  SetFrameOrPluginState(kDisposed);
   CHECK(!IsInPerformLayout());
 
   if (ScrollAnimatorBase* scroll_animator = ExistingScrollAnimator())
@@ -498,10 +529,9 @@ void FrameView::InvalidateAllCustomScrollbarsOnActiveChanged() {
   bool uses_window_inactive_selector =
       frame_->GetDocument()->GetStyleEngine().UsesWindowInactiveSelector();
 
-  for (const auto& child : children_) {
-    if (child->IsFrameView())
-      ToFrameView(child)->InvalidateAllCustomScrollbarsOnActiveChanged();
-  }
+  ForAllChildFrameViews([](FrameView& frame_view) {
+    frame_view.InvalidateAllCustomScrollbarsOnActiveChanged();
+  });
 
   for (const auto& scrollbar : scrollbars_) {
     if (uses_window_inactive_selector && scrollbar->IsCustomScrollbar())
@@ -2895,17 +2925,6 @@ Color FrameView::DocumentBackgroundColor() const {
   return result;
 }
 
-FrameView* FrameView::ParentFrameView() const {
-  if (!Parent())
-    return nullptr;
-
-  Frame* parent_frame = frame_->Tree().Parent();
-  if (parent_frame && parent_frame->IsLocalFrame())
-    return ToLocalFrame(parent_frame)->View();
-
-  return nullptr;
-}
-
 void FrameView::DidChangeGlobalRootScroller() {
   if (!frame_->GetSettings() || !frame_->GetSettings()->GetViewportEnabled())
     return;
@@ -3389,9 +3408,8 @@ void FrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
   // TODO(leviw): This currently runs the entire lifecycle on plugin WebViews.
   // We should have a way to only run these other Documents to the same
   // lifecycle stage as this frame.
-  for (const auto& child : children_) {
-    if (child->IsPluginView())
-      ToPluginView(child)->UpdateAllLifecyclePhases();
+  for (const auto& plugin : plugins_) {
+    plugin->UpdateAllLifecyclePhases();
   }
   CheckDoesNotNeedLayout();
 
@@ -3656,7 +3674,8 @@ IntPoint FrameView::ConvertSelfToChild(const FrameOrPlugin& child,
 
 IntRect FrameView::ConvertToContainingFrameViewBase(
     const IntRect& local_rect) const {
-  if (parent_) {
+  DCHECK(frame_view_state_ == kAttached);
+  if (FrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
     LayoutPartItem layout_item = frame_->OwnerLayoutItem();
     if (layout_item.IsNull())
@@ -3666,7 +3685,7 @@ IntRect FrameView::ConvertToContainingFrameViewBase(
     // Add borders and padding??
     rect.Move((layout_item.BorderLeft() + layout_item.PaddingLeft()).ToInt(),
               (layout_item.BorderTop() + layout_item.PaddingTop()).ToInt());
-    return parent_->ConvertFromLayoutItem(layout_item, rect);
+    return parent->ConvertFromLayoutItem(layout_item, rect);
   }
 
   return local_rect;
@@ -3674,10 +3693,11 @@ IntRect FrameView::ConvertToContainingFrameViewBase(
 
 IntRect FrameView::ConvertFromContainingFrameViewBase(
     const IntRect& parent_rect) const {
-  if (parent_) {
+  DCHECK(frame_view_state_ == kAttached);
+  if (FrameView* parent = ParentFrameView()) {
     IntRect local_rect = parent_rect;
     local_rect.SetLocation(
-        parent_->ConvertSelfToChild(*this, local_rect.Location()));
+        parent->ConvertSelfToChild(*this, local_rect.Location()));
     return local_rect;
   }
 
@@ -3686,7 +3706,8 @@ IntRect FrameView::ConvertFromContainingFrameViewBase(
 
 IntPoint FrameView::ConvertToContainingFrameViewBase(
     const IntPoint& local_point) const {
-  if (parent_) {
+  DCHECK(frame_->IsLocalRoot() || frame_view_state_ == kAttached);
+  if (FrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
     LayoutPartItem layout_item = frame_->OwnerLayoutItem();
     if (layout_item.IsNull())
@@ -3697,7 +3718,7 @@ IntPoint FrameView::ConvertToContainingFrameViewBase(
     // Add borders and padding
     point.Move((layout_item.BorderLeft() + layout_item.PaddingLeft()).ToInt(),
                (layout_item.BorderTop() + layout_item.PaddingTop()).ToInt());
-    return parent_->ConvertFromLayoutItem(layout_item, point);
+    return parent->ConvertFromLayoutItem(layout_item, point);
   }
 
   return local_point;
@@ -3705,13 +3726,14 @@ IntPoint FrameView::ConvertToContainingFrameViewBase(
 
 IntPoint FrameView::ConvertFromContainingFrameViewBase(
     const IntPoint& parent_point) const {
-  if (parent_) {
+  DCHECK(frame_->IsLocalRoot() || frame_view_state_ == kAttached);
+  if (FrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
     LayoutPartItem layout_item = frame_->OwnerLayoutItem();
     if (layout_item.IsNull())
       return parent_point;
 
-    IntPoint point = parent_->ConvertToLayoutItem(layout_item, parent_point);
+    IntPoint point = parent->ConvertToLayoutItem(layout_item, parent_point);
     // Subtract borders and padding
     point.Move((-layout_item.BorderLeft() - layout_item.PaddingLeft()).ToInt(),
                (-layout_item.BorderTop() - layout_item.PaddingTop()).ToInt());
@@ -3846,39 +3868,60 @@ void FrameView::RemoveAnimatingScrollableArea(ScrollableArea* scrollable_area) {
   animating_scrollable_areas_->erase(scrollable_area);
 }
 
-void FrameView::SetParent(FrameView* parent) {
-  if (parent == parent_)
-    return;
+FrameView* FrameView::ParentFrameView() const {
+  if (frame_view_state_ != kAttached)
+    return nullptr;
 
-  DCHECK(!parent || !parent_);
-  if (!parent || !parent->IsVisible())
-    SetParentVisible(false);
-  parent_ = parent;
-  if (parent && parent->IsVisible())
-    SetParentVisible(true);
+  Frame* parent_frame = frame_->Tree().Parent();
+  if (parent_frame && parent_frame->IsLocalFrame())
+    return ToLocalFrame(parent_frame)->View();
 
-  UpdateParentScrollableAreaSet();
-  SetupRenderThrottling();
-
-  if (ParentFrameView())
-    subtree_throttled_ = ParentFrameView()->CanThrottleRendering();
+  return nullptr;
 }
 
-void FrameView::AddChild(FrameOrPlugin* child) {
-  DCHECK(child != this && !child->Parent());
-  child->SetParent(this);
-  children_.insert(child);
+void FrameView::SetFrameOrPluginState(FrameOrPluginState state) {
+  VLOG(1) << "SetFrameOrPluginState " << this << " " << frame_view_state_
+          << "->" << state;
+  if (VLOG_IS_ON(2))
+    base::debug::StackTrace(10).Print();
+  switch (state) {
+    case kNotAttached:
+      DCHECK(frame_view_state_ == kAttached);
+      if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled())
+        ParentFrameView()->RemoveScrollableArea(this);
+      SetParentVisible(false);
+      break;
+
+    case kAttached:
+      DCHECK(frame_view_state_ == kNotAttached ||
+             frame_view_state_ == kDisposed);
+      SetParentVisible(true);
+      UpdateParentScrollableAreaSet();
+      SetupRenderThrottling();
+      if (FrameView* parent = ParentFrameView())
+        subtree_throttled_ = parent->CanThrottleRendering();
+      break;
+
+    case kDeferred:
+      DCHECK(frame_view_state_ == kNotAttached ||
+             frame_view_state_ == kAttached || frame_view_state_ == kDeferred ||
+             frame_view_state_ == kDisposed);
+      break;
+
+    case kDisposed:
+      DCHECK(frame_view_state_ == kNotAttached ||
+             frame_view_state_ == kAttached || frame_view_state_ == kDeferred ||
+             frame_view_state_ == kDisposed);
+      break;
+    default:
+      NOTREACHED();
+  }
+  frame_view_state_ = state;
 }
 
-void FrameView::RemoveChild(FrameOrPlugin* child) {
-  DCHECK(child->Parent() == this);
-
-  if (child->IsFrameView() &&
-      !RuntimeEnabledFeatures::rootLayerScrollingEnabled())
-    RemoveScrollableArea(ToFrameView(child));
-
-  child->SetParent(nullptr);
-  children_.erase(child);
+void FrameView::AddPlugin(PluginView* plugin) {
+  DCHECK(!plugins_.Contains(plugin));
+  plugins_.insert(plugin);
 }
 
 void FrameView::RemoveScrollbar(Scrollbar* scrollbar) {
@@ -3925,8 +3968,9 @@ void FrameView::FrameRectsChanged() {
   if (LayoutSizeFixedToFrameSize())
     SetLayoutSizeInternal(FrameRect().Size());
 
-  for (const auto& child : children_)
-    child->FrameRectsChanged();
+  ForAllChildViewsAndPlugins([](FrameOrPlugin& frame_or_plugin) {
+    frame_or_plugin.FrameRectsChanged();
+  });
 }
 
 void FrameView::SetLayoutSizeInternal(const IntSize& size) {
@@ -4725,25 +4769,43 @@ bool FrameView::ScrollbarCornerPresent() const {
 }
 
 IntRect FrameView::ConvertToRootFrame(const IntRect& local_rect) const {
-  if (parent_) {
+  // TODO(joelhockey): I expect that this should only be called in state
+  // kAttached However, this is called in state
+  // kNotAttached: browser_tests
+  // --gtest_filter=DevToolsExtensionTest.HttpIframeInDevToolsExtensionDevtools
+  // kDeferred: interactive_ui_tests
+  // --gtest_filter=SitePerProcessInteractiveBrowserTest.FullscreenElementInMultipleSubframes
+  // kDisposed: run-webkit-tests -t Default
+  // third_party/WebKit/LayoutTests/virtual/disable-spinvalidation/compositing/iframes/invisible-nested-iframe-hide.html
+  DCHECK(frame_->IsLocalRoot() || frame_view_state_ == kNotAttached ||
+         frame_view_state_ == kAttached || frame_view_state_ == kDeferred ||
+         frame_view_state_ == kDisposed);
+  if (FrameView* parent = ParentFrameView()) {
     IntRect parent_rect = ConvertToContainingFrameViewBase(local_rect);
-    return parent_->ConvertToRootFrame(parent_rect);
+    return parent->ConvertToRootFrame(parent_rect);
   }
   return local_rect;
 }
 
 IntPoint FrameView::ConvertToRootFrame(const IntPoint& local_point) const {
-  if (parent_) {
+  DCHECK(frame_->IsLocalRoot() || frame_view_state_ == kAttached);
+  if (FrameView* parent = ParentFrameView()) {
     IntPoint parent_point = ConvertToContainingFrameViewBase(local_point);
-    return parent_->ConvertToRootFrame(parent_point);
+    return parent->ConvertToRootFrame(parent_point);
   }
   return local_point;
 }
 
 IntRect FrameView::ConvertFromRootFrame(
     const IntRect& rect_in_root_frame) const {
-  if (parent_) {
-    IntRect parent_rect = parent_->ConvertFromRootFrame(rect_in_root_frame);
+  // TODO(joelhockey): I expect that this should only be called in state
+  // kAttached However, this is called in state kDeferred in
+  // interactive_ui_tests
+  // --gtest_filter=SitePerProcessInteractiveBrowserTest.FullscreenElementInMultipleSubframes
+  DCHECK(frame_->IsLocalRoot() || frame_view_state_ == kAttached ||
+         frame_view_state_ == kDeferred);
+  if (FrameView* parent = ParentFrameView()) {
+    IntRect parent_rect = parent->ConvertFromRootFrame(rect_in_root_frame);
     return ConvertFromContainingFrameViewBase(parent_rect);
   }
   return rect_in_root_frame;
@@ -4751,8 +4813,16 @@ IntRect FrameView::ConvertFromRootFrame(
 
 IntPoint FrameView::ConvertFromRootFrame(
     const IntPoint& point_in_root_frame) const {
-  if (parent_) {
-    IntPoint parent_point = parent_->ConvertFromRootFrame(point_in_root_frame);
+  // TODO(joelhockey): Usually parent should only be called when in state
+  // kAtached, but this is also called in state:
+  // kDisposed: content_shell --run-layout-test
+  // fast/events/frame-detached-in-mousedown.html kDeferred: content_shell
+  // --run-layout-test
+  // external/wpt/fullscreen/api/document-exit-fullscreen-nested-in-iframe-manual.html
+  DCHECK(frame_->IsLocalRoot() || frame_view_state_ == kAttached ||
+         frame_view_state_ == kDeferred || frame_view_state_ == kDisposed);
+  if (FrameView* parent = ParentFrameView()) {
+    IntPoint parent_point = parent->ConvertFromRootFrame(point_in_root_frame);
     return ConvertFromContainingFrameViewBase(parent_point);
   }
   return point_in_root_frame;
@@ -4809,8 +4879,9 @@ void FrameView::SetParentVisible(bool visible) {
   if (!IsSelfVisible())
     return;
 
-  for (const auto& child : children_)
-    child->SetParentVisible(visible);
+  ForAllChildViewsAndPlugins([visible](FrameOrPlugin& frame_or_plugin) {
+    frame_or_plugin.SetParentVisible(visible);
+  });
 }
 
 void FrameView::Show() {
@@ -4829,8 +4900,9 @@ void FrameView::Show() {
       SetNeedsPaintPropertyUpdate();
     }
     if (IsParentVisible()) {
-      for (const auto& child : children_)
-        child->SetParentVisible(true);
+      ForAllChildViewsAndPlugins([](FrameOrPlugin& frame_or_plugin) {
+        frame_or_plugin.SetParentVisible(true);
+      });
     }
   }
 }
@@ -4838,8 +4910,9 @@ void FrameView::Show() {
 void FrameView::Hide() {
   if (IsSelfVisible()) {
     if (IsParentVisible()) {
-      for (const auto& child : children_)
-        child->SetParentVisible(false);
+      ForAllChildViewsAndPlugins([](FrameOrPlugin& frame_or_plugin) {
+        frame_or_plugin.SetParentVisible(false);
+      });
     }
     SetSelfVisible(false);
     if (ScrollingCoordinator* scrolling_coordinator =
@@ -4991,12 +5064,10 @@ void FrameView::UpdateRenderThrottlingStatus(
       (was_throttled != is_throttled ||
        force_throttling_invalidation_behavior ==
            kForceThrottlingInvalidation)) {
-    for (const auto& child : children_) {
-      if (child->IsFrameView()) {
-        ToFrameView(child)->UpdateRenderThrottlingStatus(
-            ToFrameView(child)->hidden_for_throttling_, is_throttled);
-      }
-    }
+    ForAllChildFrameViews([is_throttled](FrameView& frame_view) {
+      frame_view.UpdateRenderThrottlingStatus(frame_view.hidden_for_throttling_,
+                                              is_throttled);
+    });
   }
 
   ScrollingCoordinator* scrolling_coordinator = this->GetScrollingCoordinator();
