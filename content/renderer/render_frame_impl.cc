@@ -1106,7 +1106,6 @@ blink::WebURL RenderFrameImpl::OverrideFlashEmbedWithHTML(
 RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
     : frame_(NULL),
       is_main_frame_(true),
-      unique_name_helper_(this),
       in_browser_initiated_detach_(false),
       in_frame_tree_(false),
       render_view_(params.render_view),
@@ -3290,7 +3289,7 @@ void RenderFrameImpl::DidChangeName(const blink::WebString& name) {
   if (current_history_item_.IsNull()) {
     // Once a navigation has committed, the unique name must no longer change to
     // avoid breaking back/forward navigations: https://crbug.com/607205
-    unique_name_helper_.UpdateName(name.Utf8());
+    unique_name_helper_.UpdateName(frame_, name.Utf8());
   }
   Send(new FrameHostMsg_DidChangeName(routing_id_, name.Utf8(),
                                       unique_name_helper_.value()));
