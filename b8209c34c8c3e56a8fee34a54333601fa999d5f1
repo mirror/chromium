@@ -16,6 +16,52 @@
       "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732fd332_2cfac734",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-05-17T18:28:13Z",
+      "side": 1,
+      "message": "The semantic diff of kDocumentUserGestureRequired vs kUserGestureRequired is not clear to me. Is it or the rest of the enums described somewhere?\n\nOne particular question re the new addition is that it seems to suggest a model a bit more involved than what we target for our \"User Activation\" project.  IIUC, as if we need to differentiate between a user gesture in this document vs its subframe.  Am I missing something around autoplay?",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36362472_d6a1e871",
+        "filename": "third_party/WebKit/public/web/WebSettings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-05-17T18:28:13Z",
+      "side": 1,
+      "message": "Need to update web_preferences.h?",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
