@@ -28,7 +28,7 @@ Run `gn args` and add `is_clang = true` to your args.gn file.
 
 Build: `ninja -C out/gn chrome`
 
-## Reverting to gcc on linux
+## Reverting to gcc on GNU linux
 
 We don't have bots that test this, but building with gcc4.8+ should still work
 on Linux. If your system gcc is new enough, run `gn args` and add `is_clang =
