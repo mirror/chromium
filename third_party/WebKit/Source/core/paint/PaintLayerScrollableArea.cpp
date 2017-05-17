@@ -585,8 +585,7 @@ IntSize PaintLayerScrollableArea::PixelSnappedClientSize() const {
       return ExcludeScrollbars(Box().GetFrameView()->GetLayoutSize());
     }
   }
-  return IntSize(Box().PixelSnappedClientWidth(),
-                 Box().PixelSnappedClientHeight());
+  return Box().PixelSnappedPaddingBoxRect().Size();
 }
 
 IntSize PaintLayerScrollableArea::ContentsSize() const {
@@ -694,8 +693,8 @@ bool PaintLayerScrollableArea::ShouldPlaceVerticalScrollbarOnLeft() const {
 
 int PaintLayerScrollableArea::PageStep(ScrollbarOrientation orientation) const {
   int length = (orientation == kHorizontalScrollbar)
-                   ? Box().PixelSnappedClientWidth()
-                   : Box().PixelSnappedClientHeight();
+                   ? Box().PixelSnappedPaddingBoxRect().Width()
+                   : Box().PixelSnappedPaddingBoxRect().Height();
   int min_page_step = static_cast<float>(length) *
                       ScrollableArea::MinFractionToStepWhenPaging();
   int page_step =
@@ -1263,18 +1262,21 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
   if (Box().HasAutoHorizontalScrollbar()) {
     if (option == kForbidAddingAutoBars)
       needs_horizontal_scrollbar &= HasHorizontalScrollbar();
-    needs_horizontal_scrollbar &=
-        Box().IsRooted() && this->HasHorizontalOverflow() &&
-        Box().PixelSnappedClientHeight() + Box().HorizontalScrollbarHeight() >
-            0;
+    needs_horizontal_scrollbar &= Box().IsRooted() &&
+                                  this->HasHorizontalOverflow() &&
+                                  Box().PixelSnappedPaddingBoxRect().Height() +
+                                          Box().HorizontalScrollbarHeight() >
+                                      0;
   }
 
   if (Box().HasAutoVerticalScrollbar()) {
     if (option == kForbidAddingAutoBars)
       needs_vertical_scrollbar &= HasVerticalScrollbar();
-    needs_vertical_scrollbar &=
-        Box().IsRooted() && this->HasVerticalOverflow() &&
-        Box().PixelSnappedClientWidth() + Box().VerticalScrollbarWidth() > 0;
+    needs_vertical_scrollbar &= Box().IsRooted() &&
+                                this->HasVerticalOverflow() &&
+                                Box().PixelSnappedPaddingBoxRect().Width() +
+                                        Box().VerticalScrollbarWidth() >
+                                    0;
   }
 
   // Look for the scrollbarModes and reset the needs Horizontal & vertical
