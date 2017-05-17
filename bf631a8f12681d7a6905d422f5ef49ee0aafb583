@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9990f77_a41cdd49",
+        "filename": "chrome/browser/browsing_data/history_counter_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-17T11:20:30Z",
+      "side": 1,
+      "message": "style: I think we mostly use\n\nnullptr /* sync_service */\n\nin our codebase.",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 30
+      },
+      "revId": "bf631a8f12681d7a6905d422f5ef49ee0aafb583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

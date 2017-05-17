@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c01ad39_443fcba9",
+        "filename": "components/browsing_data/core/counters/history_counter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-05-17T11:20:30Z",
+      "side": 1,
+      "message": "s/Fetch/Get/\n\nFetch, in my mind, implies a network request. This is just a regular getter.",
+      "range": {
+        "startLine": 54,
+        "startChar": 44,
+        "endLine": 54,
+        "endChar": 66
+      },
+      "revId": "50d520c5acb1ce5376173e9b83ecbac791c78f22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
