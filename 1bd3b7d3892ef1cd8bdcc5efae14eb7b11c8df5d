@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db92a9d0_2e0a2263",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-17T15:28:03Z",
+      "side": 1,
+      "message": "i chuckled a bit :P",
+      "range": {
+        "startLine": 223,
+        "startChar": 64,
+        "endLine": 223,
+        "endChar": 74
+      },
+      "revId": "1bd3b7d3892ef1cd8bdcc5efae14eb7b11c8df5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
