@@ -13,6 +13,7 @@ enum USBTransferStatus {
 // https://wicg.github.io/webusb/#device-usage
 
 [
+    SecureContext,
     OriginTrialEnabled=WebUSB,
 ] interface USBDevice {
     readonly attribute octet usbVersionMajor;

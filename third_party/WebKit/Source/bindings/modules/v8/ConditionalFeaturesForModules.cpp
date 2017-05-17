@@ -71,10 +71,7 @@ void InstallConditionalFeaturesForModules(
   } else if (wrapper_type_info == &V8Window::wrapperTypeInfo) {
     v8::Local<v8::Object> instance_object =
         script_state->GetContext()->Global();
-    // Mimics the [SecureContext] extended attribute. Work-around for
-    // https://crbug.com/695123.
-    if (OriginTrials::webUSBEnabled(execution_context) &&
-        execution_context->IsSecureContext()) {
+    if (OriginTrials::webUSBEnabled(execution_context)) {
       V8WindowPartial::installWebUSB(isolate, world, instance_object,
                                      prototype_object, interface_object);
     }

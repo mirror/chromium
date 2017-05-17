@@ -5,6 +5,7 @@
 // https://wicg.github.io/webusb/#usbintransferresult
 
 [
+    SecureContext,
     OriginTrialEnabled=WebUSB,
     Constructor(USBTransferStatus status, optional DataView? data)
 ] interface USBInTransferResult {

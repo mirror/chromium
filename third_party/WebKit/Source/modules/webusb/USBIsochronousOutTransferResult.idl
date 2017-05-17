@@ -5,6 +5,7 @@
 // https://wicg.github.io/webusb/#usbisochronousouttransferresult
 
 [
+    SecureContext,
     OriginTrialEnabled=WebUSB,
     Constructor(sequence<USBIsochronousOutTransferPacket> packets)
 ] interface USBIsochronousOutTransferResult {

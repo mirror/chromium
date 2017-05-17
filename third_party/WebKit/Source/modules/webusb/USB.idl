@@ -5,6 +5,7 @@
 // https://wicg.github.io/webusb/#usb
 
 [
+    SecureContext,
     OriginTrialEnabled=WebUSB,
 ] interface USB : EventTarget {
     attribute EventHandler onconnect;

@@ -5,6 +5,7 @@
 // https://wicg.github.io/webusb/#usbisochronousintransferpacket
 
 [
+    SecureContext,
     OriginTrialEnabled=WebUSB,
     Constructor(USBTransferStatus status, optional DataView? data)
 ] interface USBIsochronousInTransferPacket {
