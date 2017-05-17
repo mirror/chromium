@@ -49,6 +49,8 @@ const optionsGenerators = [
   capabilities => ({ imageWidth: capabilities.width.max + 1 }),
   capabilities => ({ imageWidth: capabilities.width.min - 1 }),
   capabilities => ({ fillLightMode: "off" }),
+
+  capabilities => ({ nonSenseConstraint: 3.141592 }),
 ];
 
 for (key in optionsGenerators) {
