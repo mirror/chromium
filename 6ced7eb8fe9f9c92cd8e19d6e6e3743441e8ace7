@@ -51,6 +51,24 @@
       "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b785ab6_49680f73",
+        "filename": "tools/perf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-18T00:53:34Z",
+      "side": 1,
+      "message": "I see the if statement in https://cs.chromium.org/chromium/src/android_webview/BUILD.gn?rcl\u003d6a32f0233caef0ad160bb4c3adcc25bb091ab4d0\u0026l\u003d32\n\nDo we still need it again?",
+      "parentUuid": "eabe9ee3_377aaf58",
+      "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
