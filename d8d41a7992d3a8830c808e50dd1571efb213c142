@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58d6c4c9_9fb22852",
+        "filename": "content/public/test/frame_load_waiter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-18T09:32:45Z",
+      "side": 1,
+      "message": "I\u0027m not really sure if we should actually have this in FrameLoadWaiter--the other option is to put it directly in the browser tests that need this. Basically, this is only needed for single-process browser tests. WDYT?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "d8d41a7992d3a8830c808e50dd1571efb213c142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
