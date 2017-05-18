@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a79f62c_cd35d63b",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T14:11:58Z",
+      "side": 1,
+      "message": "anyways -\u003e when the merchant completes the transaction.\n\n(BTW can you check if we should time-out close the dialog after 60s once we\u0027ve returned the payment response, in case the merchant never calls complete. Otherwise there is no way to close this dialog).",
+      "range": {
+        "startLine": 121,
+        "startChar": 46,
+        "endLine": 121,
+        "endChar": 53
+      },
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a9bcd4_0edba0d0",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T14:11:58Z",
+      "side": 1,
+      "message": "don\u0027t think we need the curlies?",
+      "range": {
+        "startLine": 124,
+        "startChar": 55,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ef0854_2ada520b",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T14:11:58Z",
+      "side": 1,
+      "message": "// Space between blah and blah",
+      "range": {
+        "startLine": 199,
+        "startChar": 10,
+        "endLine": 199,
+        "endChar": 23
+      },
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59073bbb_b2db3c8e",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T14:11:58Z",
+      "side": 1,
+      "message": "Consider bringing the code at https://cs.chromium.org/chromium/src/chrome/browser/ui/views/payments/profile_list_view_controller.cc?rcl\u003d062837eda657366995086cc6ad01a32895c88d20\u0026l\u003d174 to payment_request_views_util, which will get you a nice warning icon!",
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660f8136_89f87ea7",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T14:11:58Z",
+      "side": 1,
+      "message": "Shows/hides",
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
