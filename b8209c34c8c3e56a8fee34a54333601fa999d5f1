@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "144a416e_0cace1db",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-18T05:56:10Z",
+      "side": 1,
+      "message": "What\u0027s the \"user activation project\"?",
+      "parentUuid": "732fd332_2cfac734",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36362472_d6a1e871",
         "filename": "third_party/WebKit/public/web/WebSettings.h",
         "patchSetId": 1
