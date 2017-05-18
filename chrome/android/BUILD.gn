@@ -574,6 +574,33 @@ if (enable_vr) {
   }
 }
 
+android_library("chrome_ui_capture_java") {
+  testonly = true
+
+  java_files = [
+    "uicapture/src/org/chromium/chrome/browser/ExampleUiCaptureTest.java",
+    "uicapture/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",
+  ]
+
+  deps = [
+    "//base:base_java",
+    "//base:base_java_test_support",
+    "//chrome/android:app_hooks_java",
+    "//chrome/android:chrome_java",
+    "//chrome/test/android:chrome_java_test_support",
+    "//components/policy/android:policy_java",
+    "//content/public/android:content_java",
+    "//content/public/test/android:content_java_test_support",
+    "//third_party/android_support_test_runner:rules_java",
+    "//third_party/android_support_test_runner:runner_java",
+    "//third_party/android_tools:android_support_annotations_java",
+    "//third_party/android_tools:android_support_v7_appcompat_java",
+    "//third_party/android_tools:android_support_v7_recyclerview_java",
+    "//third_party/junit",
+    "//third_party/ub-uiautomator:ub_uiautomator_java",
+  ]
+}
+
 # Overrides icon / name defined in chrome_java_resources.
 android_resources("chrome_public_apk_resources") {
   resource_dirs = [ "java/res_chromium" ]
@@ -931,6 +958,20 @@ if (enable_vr) {
     ]
     proguard_enabled = !is_java_debug
   }
+}
+
+instrumentation_test_apk("chrome_public_ui_capture_apk") {
+  apk_name = "ChromePublicUiCapture"
+  apk_under_test = ":chrome_public_apk"
+  android_manifest = chrome_public_test_apk_manifest
+  android_manifest_dep = ":chrome_public_test_apk_manifest"
+
+  deps = [
+    ":chrome_ui_capture_java",
+    "//third_party/android_support_test_runner:runner_java",
+  ]
+
+  proguard_enabled = !is_java_debug
 }
 
 android_library("chrome_sync_shell_test_apk_java") {
