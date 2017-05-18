@@ -49,7 +49,7 @@
 // We will always get YUYV from the Mac AVFoundation implementations.
 #define MAYBE_CaptureMjpeg DISABLED_CaptureMjpeg
 #define MAYBE_TakePhoto TakePhoto
-#define MAYBE_GetPhotoCapabilities DISABLED_GetPhotoCapabilities
+#define MAYBE_GetPhotoCapabilities GetPhotoCapabilities
 #elif defined(OS_WIN)
 #define MAYBE_AllocateBadSize AllocateBadSize
 #define MAYBE_CaptureMjpeg CaptureMjpeg
