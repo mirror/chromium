@@ -306,6 +306,30 @@
       "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6d51ebc_260db89d",
+        "filename": "chrome/browser/profiles/profile_statistics_aggregator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-18T08:48:37Z",
+      "side": 1,
+      "message": "Calling StartAggregator multiple times should work. tracker_.TryCancelAll()  and counters_.clear() will cancel tasks that haven\u0027t finished yet. Then the tasks are restarted. There is a test that calls AddCallbackAndStartAggregator twice. In practice it should happen very rarely that the tasks are still running when it is called again. Maybe if you click \"Remove this profile\" and then close the browser. But I will remove the calculation on shutdown anyway.\n\nI noticed that it is weird, that the class starts itself when it is constructed and there is an additional method to start it manually. I removed the call to AddCallbackAndStartAggregator from the constructor.",
+      "parentUuid": "f55b09a5_4faffb07",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "7f6fd3827ca561df6a12125e02ec89cbed90740c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
