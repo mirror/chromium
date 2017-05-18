@@ -4,6 +4,7 @@
 
 #include "platform/graphics/compositing/PaintChunksToCcLayer.h"
 
+#include "cc/base/render_surface_filters.h"
 #include "cc/paint/compositing_display_item.h"
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/drawing_display_item.h"
@@ -21,7 +22,7 @@ namespace blink {
 
 namespace {
 
-enum EndDisplayItemType { kEndTransform, kEndClip, kEndEffect };
+enum EndDisplayItemType { kRestore, kRestore2 };
 
 // Applies the clips between |localState| and |ancestorState| into a single
 // combined cc::FloatClipDisplayItem on |ccList|.
@@ -46,10 +47,16 @@ static void ApplyClipsBetweenStates(
 
   const FloatClipRect& combined_clip =
       GeometryMapper::LocalToAncestorClipRect(local_state, ancestor_state);
+  bool antialias = false;
 
-  cc_list.CreateAndAppendPairedBeginItem<cc::FloatClipDisplayItem>(
-      gfx::RectF(combined_clip.Rect()));
-  end_display_items.push_back(kEndClip);
+  {
+    cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+    buffer->push<cc::SaveOp>();
+    buffer->push<cc::ClipRectOp>(combined_clip.Rect(), SkClipOp::kIntersect,
+                                 antialias);
+    cc_list.EndPaintOfPairedBegin();
+  }
+  end_display_items.push_back(kRestore);
 }
 
 static void RecordPairedBeginDisplayItems(
@@ -77,12 +84,15 @@ static void RecordPairedBeginDisplayItems(
         TransformationMatrix matrix = paired_state->Transform()->Matrix();
         matrix.ApplyTransformOrigin(paired_state->Transform()->Origin());
 
-        gfx::Transform transform(gfx::Transform::kSkipInitialization);
-        transform.matrix() = TransformationMatrix::ToSkMatrix44(matrix);
-
-        cc_list.CreateAndAppendPairedBeginItem<cc::TransformDisplayItem>(
-            transform);
-        end_display_items.push_back(kEndTransform);
+        SkMatrix skmatrix =
+            static_cast<SkMatrix>(TransformationMatrix::ToSkMatrix44(matrix));
+        {
+          cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+          buffer->push<cc::SaveOp>();
+          buffer->push<cc::ConcatOp>(skmatrix);
+          cc_list.EndPaintOfPairedBegin();
+        }
+        end_display_items.push_back(kRestore);
         break;
       }
       case PropertyTreeState::kClip: {
@@ -127,22 +137,47 @@ static void RecordPairedBeginDisplayItems(
           filter_origin = local_to_ancestor_matrix.MapPoint(filter_origin);
         }
 
-        const bool kLcdTextRequiresOpaqueLayer = true;
-        cc_list.CreateAndAppendPairedBeginItem<cc::CompositingDisplayItem>(
-            static_cast<uint8_t>(
-                gfx::ToFlooredInt(255 * paired_state->Effect()->Opacity())),
-            paired_state->Effect()->BlendMode(),
-            // TODO(chrishtr): compute bounds as necessary.
-            nullptr,
-            GraphicsContext::WebCoreColorFilterToSkiaColorFilter(
-                paired_state->Effect()->GetColorFilter()),
-            kLcdTextRequiresOpaqueLayer);
+        {
+          cc::PaintFlags flags;
+          flags.setBlendMode(paired_state->Effect()->BlendMode());
+          // TODO(ajuma): This should really be rounding instead of flooring the
+          // alpha value, but that breaks slimming paint reftests.
+          flags.setAlpha(static_cast<uint8_t>(
+              gfx::ToFlooredInt(255 * paired_state->Effect()->Opacity())));
+          flags.setColorFilter(
+              GraphicsContext::WebCoreColorFilterToSkiaColorFilter(
+                  paired_state->Effect()->GetColorFilter()));
 
-        cc_list.CreateAndAppendPairedBeginItem<cc::FilterDisplayItem>(
-            paired_state->Effect()->Filter().AsCcFilterOperations(), clip_rect,
-            gfx::PointF(filter_origin.X(), filter_origin.Y()));
+          cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+          // TODO(chrishtr): compute bounds as necessary.
+          buffer->push<cc::SaveLayerOp>(nullptr, &flags);
+          cc_list.EndPaintOfPairedBegin();
+        }
+        end_display_items.push_back(kRestore);
 
-        end_display_items.push_back(kEndEffect);
+        {
+          cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+
+          buffer->push<cc::SaveOp>();
+          buffer->push<cc::TranslateOp>(filter_origin.X(), filter_origin.Y());
+
+          cc::PaintFlags flags;
+          flags.setImageFilter(cc::RenderSurfaceFilters::BuildImageFilter(
+              paired_state->Effect()->Filter().AsCcFilterOperations(),
+              gfx::SizeF(clip_rect.Width(), clip_rect.Height())));
+
+          SkRect layer_bounds = clip_rect;
+          layer_bounds.offset(-filter_origin.X(), -filter_origin.Y());
+          buffer->push<cc::SaveLayerOp>(&layer_bounds, &flags);
+          buffer->push<cc::TranslateOp>(-filter_origin.X(), -filter_origin.Y());
+
+          cc_list.EndPaintOfPairedBegin();
+        }
+        // The SaveOp+SaveLayerOp above are grouped such that they share a
+        // visual rect, so group the two restores in the same way so we don't
+        // have a mismatch in the number of EndPaintOfPairedBegin() vs
+        // EndPaintOfPairedEnd().
+        end_display_items.push_back(kRestore2);
         break;
       }
       case PropertyTreeState::kNone:
@@ -158,21 +193,23 @@ static void RecordPairedBeginDisplayItems(
 
 static void RecordPairedEndDisplayItems(
     const Vector<EndDisplayItemType>& end_display_item_types,
-    cc::DisplayItemList* cc_list) {
-  for (Vector<EndDisplayItemType>::const_reverse_iterator end_type =
-           end_display_item_types.rbegin();
+    cc::DisplayItemList& cc_list) {
+  for (auto end_type = end_display_item_types.rbegin();
        end_type != end_display_item_types.rend(); ++end_type) {
     switch (*end_type) {
-      case kEndTransform:
-        cc_list->CreateAndAppendPairedEndItem<cc::EndTransformDisplayItem>();
+      case kRestore: {
+        cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+        buffer->push<cc::RestoreOp>();
+        cc_list.EndPaintOfPairedEnd();
         break;
-      case kEndClip:
-        cc_list->CreateAndAppendPairedEndItem<cc::EndFloatClipDisplayItem>();
+      }
+      case kRestore2: {
+        cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+        buffer->push<cc::RestoreOp>();
+        buffer->push<cc::RestoreOp>();
+        cc_list.EndPaintOfPairedEnd();
         break;
-      case kEndEffect:
-        cc_list->CreateAndAppendPairedEndItem<cc::EndFilterDisplayItem>();
-        cc_list->CreateAndAppendPairedEndItem<cc::EndCompositingDisplayItem>();
-        break;
+      }
     }
   }
 }
@@ -180,7 +217,7 @@ static void RecordPairedEndDisplayItems(
 static gfx::Rect g_large_rect(-200000, -200000, 400000, 400000);
 static void AppendDisplayItemToCcDisplayItemList(
     const DisplayItem& display_item,
-    cc::DisplayItemList* list) {
+    cc::DisplayItemList& cc_list) {
   DCHECK(DisplayItem::IsDrawingType(display_item.GetType()));
   if (DisplayItem::IsDrawingType(display_item.GetType())) {
     const auto& drawing_display_item =
@@ -188,15 +225,17 @@ static void AppendDisplayItemToCcDisplayItemList(
     sk_sp<const PaintRecord> record = drawing_display_item.GetPaintRecord();
     if (!record)
       return;
-    SkRect record_bounds = drawing_display_item.GetPaintRecordBounds();
     // In theory we would pass the bounds of the record, previously done as:
     // gfx::Rect bounds = gfx::SkIRectToRect(record->cullRect().roundOut());
     // or use the visual rect directly. However, clip content layers attempt
     // to raster in a different space than that of the visual rects. We'll be
     // reworking visual rects further for SPv2, so for now we just pass a
     // visual rect large enough to make sure items raster.
-    list->CreateAndAppendDrawingItem<cc::DrawingDisplayItem>(
-        g_large_rect, std::move(record), record_bounds);
+    {
+      cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+      buffer->push<cc::DrawRecordOp>(std::move(record));
+      cc_list.EndPaintOfUnpaired(g_large_rect);
+    }
   }
 }
 
@@ -209,10 +248,12 @@ scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
     const DisplayItemList& display_items) {
   auto cc_list = make_scoped_refptr(new cc::DisplayItemList);
 
-  gfx::Transform counter_offset;
-  counter_offset.Translate(-layer_offset.x(), -layer_offset.y());
-  cc_list->CreateAndAppendPairedBeginItem<cc::TransformDisplayItem>(
-      counter_offset);
+  {
+    cc::PaintOpBuffer* buffer = cc_list->StartPaint();
+    buffer->push<cc::SaveOp>();
+    buffer->push<cc::TranslateOp>(-layer_offset.x(), -layer_offset.y());
+    cc_list->EndPaintOfPairedBegin();
+  }
 
   for (const auto* paint_chunk : paint_chunks) {
     const PropertyTreeState* state =
@@ -229,17 +270,21 @@ scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
     // transforms into single clips in the same way that PaintLayerClipper does.
     Vector<EndDisplayItemType> end_display_items;
 
-    RecordPairedBeginDisplayItems(paired_states, layer_state, *cc_list.get(),
+    RecordPairedBeginDisplayItems(paired_states, layer_state, *cc_list,
                                   end_display_items);
 
     for (const auto& display_item :
          display_items.ItemsInPaintChunk(*paint_chunk))
-      AppendDisplayItemToCcDisplayItemList(display_item, cc_list.get());
+      AppendDisplayItemToCcDisplayItemList(display_item, *cc_list);
 
-    RecordPairedEndDisplayItems(end_display_items, cc_list.get());
+    RecordPairedEndDisplayItems(end_display_items, *cc_list);
   }
 
-  cc_list->CreateAndAppendPairedEndItem<cc::EndTransformDisplayItem>();
+  {
+    cc::PaintOpBuffer* buffer = cc_list->StartPaint();
+    buffer->push<cc::RestoreOp>();
+    cc_list->EndPaintOfPairedEnd();
+  }
 
   cc_list->Finalize();
   return cc_list;
