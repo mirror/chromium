@@ -16,6 +16,24 @@
       "revId": "a7a3a39bc0ae7d4c8b8ea68e1f1fad9a8bf499ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd52f80a_04759f82",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-05-18T14:52:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6416760e_2ed1d034",
+      "revId": "a7a3a39bc0ae7d4c8b8ea68e1f1fad9a8bf499ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
