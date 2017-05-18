@@ -76,18 +76,27 @@ HTMLFrameOwnerElement::UpdateSuspendScope::UpdateSuspendScope() {
 
 void HTMLFrameOwnerElement::UpdateSuspendScope::
     PerformDeferredWidgetTreeOperations() {
+  VLOG(1) << "Performing deferred operations NewParent.size="
+          << FrameOrPluginNewParentMap().size() << ", TempRemoval.size="
+          << FrameOrPluginsPendingTemporaryRemovalFromParent().size()
+          << ", Dispose.size=" << FrameOrPluginsPendingDispose().size();
   FrameOrPluginToParentMap map;
   FrameOrPluginNewParentMap().swap(map);
   for (const auto& entry : map) {
     FrameOrPlugin* child = entry.key;
-    FrameView* current_parent = child->Parent();
-    FrameView* new_parent = entry.value;
-    if (new_parent != current_parent) {
-      if (current_parent)
-        current_parent->RemoveChild(child);
-      if (new_parent)
-        new_parent->AddChild(child);
-      if (current_parent && !new_parent)
+    FrameOrPlugin::FrameOrPluginState current_state =
+        child->GetFrameOrPluginState();
+    FrameOrPlugin::FrameOrPluginState new_state =
+        entry.value ? FrameOrPlugin::kAttached : FrameOrPlugin::kNotAttached;
+    if (new_state != current_state) {
+      if (current_state == FrameOrPlugin::kAttached)
+        child->SetFrameOrPluginState(FrameOrPlugin::kNotAttached);
+
+      if (new_state == FrameOrPlugin::kAttached)
+        child->SetFrameOrPluginState(FrameOrPlugin::kAttached);
+
+      if (current_state == FrameOrPlugin::kAttached &&
+          new_state == FrameOrPlugin::kNotAttached)
         child->Dispose();
     }
   }
@@ -95,8 +104,8 @@ void HTMLFrameOwnerElement::UpdateSuspendScope::
   FrameOrPluginSet remove_set;
   FrameOrPluginsPendingTemporaryRemovalFromParent().swap(remove_set);
   for (const auto& child : remove_set) {
-    if (child->Parent())
-      child->Parent()->RemoveChild(child);
+    if (child->GetFrameOrPluginState() == FrameOrPlugin::kAttached)
+      child->SetFrameOrPluginState(FrameOrPlugin::kNotAttached);
   }
 
   FrameOrPluginSet dispose_set;
@@ -116,23 +125,29 @@ HTMLFrameOwnerElement::UpdateSuspendScope::~UpdateSuspendScope() {
 // Unlike MoveFrameOrPluginToParentSoon, this will not call dispose.
 void TemporarilyRemoveFrameOrPluginFromParentSoon(FrameOrPlugin* child) {
   if (g_update_suspend_count) {
+    VLOG(1) << "Defered temp remove child=" << child;
+    if (VLOG_IS_ON(2))
+      base::debug::StackTrace(10).Print();
     FrameOrPluginsPendingTemporaryRemovalFromParent().insert(child);
   } else {
-    if (child->Parent())
-      child->Parent()->RemoveChild(child);
+    if (child->GetFrameOrPluginState() == FrameOrPlugin::kAttached)
+      child->SetFrameOrPluginState(FrameOrPlugin::kNotAttached);
   }
 }
 
 void MoveFrameOrPluginToParentSoon(FrameOrPlugin* child, FrameView* parent) {
   if (!g_update_suspend_count) {
     if (parent) {
-      parent->AddChild(child);
-    } else if (child->Parent()) {
-      child->Parent()->RemoveChild(child);
+      child->SetFrameOrPluginState(FrameOrPlugin::kAttached);
+    } else if (child->GetFrameOrPluginState() == FrameOrPlugin::kAttached) {
+      child->SetFrameOrPluginState(FrameOrPlugin::kNotAttached);
       child->Dispose();
     }
     return;
   }
+  VLOG(1) << "Deferred New Parent child=" << child << ", parent=" << parent;
+  if (VLOG_IS_ON(2))
+    base::debug::StackTrace(10).Print();
   FrameOrPluginNewParentMap().Set(child, parent);
 }
 
@@ -273,6 +288,10 @@ Document* HTMLFrameOwnerElement::getSVGDocument(
 }
 
 void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
+  VLOG(1) << "SetWidget old=" << widget_ << ", new=" << frame_or_plugin
+          << ", old_state="
+          << (!widget_ ? -1 : widget_->GetFrameOrPluginState())
+          << ", count=" << g_update_suspend_count;
   if (frame_or_plugin == widget_)
     return;
 
@@ -286,7 +305,7 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
   }
 
   if (widget_) {
-    if (widget_->Parent())
+    if (widget_->GetFrameOrPluginState() == FrameOrPlugin::kAttached)
       MoveFrameOrPluginToParentSoon(widget_, nullptr);
   }
 
@@ -295,14 +314,18 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
 
   LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
   LayoutPartItem layout_part_item = LayoutPartItem(layout_part);
-  if (layout_part_item.IsNull())
+  if (layout_part_item.IsNull()) {
+    VLOG(1) << "SetWidget new=" << frame_or_plugin << ", parent=0";
     return;
+  }
 
   if (widget_) {
     layout_part_item.UpdateOnWidgetChange();
 
     DCHECK_EQ(GetDocument().View(), layout_part_item.GetFrameView());
     DCHECK(layout_part_item.GetFrameView());
+    VLOG(1) << "SetWidget new=" << frame_or_plugin
+            << ",  parent=" << layout_part_item.GetFrameView();
     MoveFrameOrPluginToParentSoon(widget_, layout_part_item.GetFrameView());
   }
 
@@ -313,7 +336,7 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
 FrameOrPlugin* HTMLFrameOwnerElement::ReleaseWidget() {
   if (!widget_)
     return nullptr;
-  if (widget_->Parent())
+  if (widget_->GetFrameOrPluginState() == FrameOrPlugin::kAttached)
     TemporarilyRemoveFrameOrPluginFromParentSoon(widget_);
   LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
   if (layout_part) {
