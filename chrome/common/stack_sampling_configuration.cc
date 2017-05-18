@@ -34,7 +34,7 @@ bool IsProfilerSupported() {
   #if defined(GOOGLE_CHROME_BUILD)
   return chrome::GetChannel() == version_info::Channel::CANARY;
   #else
-  return true;
+  return false;
   #endif
 #else
   return false;
