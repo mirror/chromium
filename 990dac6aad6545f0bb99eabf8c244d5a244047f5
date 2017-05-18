@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d03eea69_64ac9aad",
+        "filename": "gpu/command_buffer/service/command_buffer_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-18T18:47:52Z",
+      "side": 1,
+      "message": "They\u0027re both interfaces. Are you saying you want the classes to be named SomethingInterface? This is not required by the chromium style guide (see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md under \"Multiple Inheritance\", where it deviates from the Google one). And is certainly not applied throughout chromium.",
+      "parentUuid": "628ee437_ebd400cd",
+      "range": {
+        "startLine": 57,
+        "startChar": 47,
+        "endLine": 57,
+        "endChar": 71
+      },
+      "revId": "990dac6aad6545f0bb99eabf8c244d5a244047f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d964b20_044bdf63",
         "filename": "gpu/command_buffer/service/common_decoder_unittest.cc",
         "patchSetId": 3
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "Well, looks like some compilers do not allow this",
       "parentUuid": "7d964b20_044bdf63",
+      "range": {
+        "startLine": 78,
+        "startChar": 40,
+        "endLine": 78,
+        "endChar": 41
+      },
+      "revId": "990dac6aad6545f0bb99eabf8c244d5a244047f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d972115_d2da57e0",
+        "filename": "gpu/command_buffer/service/common_decoder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-18T18:47:52Z",
+      "side": 1,
+      "message": "It\u0027s valid C++ but MSVC warns about it. Oh well, fixed.",
+      "parentUuid": "14220164_3ff01364",
       "range": {
         "startLine": 78,
         "startChar": 40,
