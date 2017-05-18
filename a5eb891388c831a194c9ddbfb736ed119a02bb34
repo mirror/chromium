@@ -22,6 +22,30 @@
       "revId": "a5eb891388c831a194c9ddbfb736ed119a02bb34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8563e4db_0133f990",
+        "filename": "tools/roll_angle.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-05-18T18:51:19Z",
+      "side": 1,
+      "message": "Yes, should remove this.",
+      "parentUuid": "162ee7d0_2dad6e85",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "a5eb891388c831a194c9ddbfb736ed119a02bb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
