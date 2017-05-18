@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdbda284_b8e22843",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-18T20:58:25Z",
+      "side": 1,
+      "message": "I was going to suggest that NextOp does this, but I see that it DCHECKs, so that seems good enough.",
+      "revId": "f999ef5a082430f59b5753277dcc8543d7164a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0298577b_b92c689a",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-18T20:58:25Z",
+      "side": 1,
+      "message": "WTB comment about what range_starts and range_indices mean here.",
+      "revId": "f999ef5a082430f59b5753277dcc8543d7164a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
