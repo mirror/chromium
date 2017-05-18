@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7f6c93c_d6241c5e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-18T15:22:07Z",
+      "side": 1,
+      "message": "This will work but it\u0027s usually better to do it the other way around: add a native function to set the native flag, and have the Java setter call the native one when the value changes. This will typically only be set once, so it\u0027s nicer to make just one JNI call to set it on the native side than to make a JNI call every time to get the value.",
+      "revId": "05b2dd86db51c6d60ddb257b396739048ced48da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
