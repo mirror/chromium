@@ -482,6 +482,7 @@ core_dependency_idl_files =
                     "frame/NavigatorOnLine.idl",
                     "frame/WindowBase64.idl",
                     "frame/WindowEventHandlers.idl",
+                    "frame/WindowInstallation.idl",
                     "frame/WindowTimers.idl",
                     "html/HTMLHyperlinkElementUtils.idl",
                     "imagebitmap/ImageBitmapFactories.idl",

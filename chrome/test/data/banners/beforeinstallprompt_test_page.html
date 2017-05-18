@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>beforeinstallprompt event test page</title>
+        <link rel="manifest" href="manifest.json" />
+        <script src="main.js"></script>
+        <script>
+            var eventCounter = 0;
+
+            function onBeforeInstallPrompt(e) {
+                eventCounter++;
+                window.document.title = 'Got beforeinstallprompt '
+                    + eventCounter + ' times';
+            }
+
+            window.addEventListener('load', () => {
+                // Test both the addEventListener and onX attribute versions.
+                // When a prompt is shown, this should fire twice.
+                window.addEventListener('beforeinstallprompt',
+                                        onBeforeInstallPrompt);
+                window.onbeforeinstallprompt = onBeforeInstallPrompt;
+            });
+        </script>
+    </head>
+    <body onload="initialize()"></body>
+</html>
