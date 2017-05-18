@@ -307,7 +307,7 @@ std::unique_ptr<blink::WebURLLoader>
 RendererBlinkPlatformImpl::CreateURLLoader() {
   ChildThreadImpl* child_thread = ChildThreadImpl::current();
 
-  if (!url_loader_factory_ && child_thread) {
+  if (!url_loader_factory_) {
     bool network_service_enabled =
         base::CommandLine::ForCurrentProcess()->HasSwitch(
             switches::kEnableNetworkService);
@@ -322,11 +322,8 @@ RendererBlinkPlatformImpl::CreateURLLoader() {
     }
   }
 
-  // There may be no child thread in RenderViewTests.  These tests can still use
-  // data URLs to bypass the ResourceDispatcher.
-  return base::MakeUnique<WebURLLoaderImpl>(
-      child_thread ? child_thread->resource_dispatcher() : nullptr,
-      url_loader_factory_.get());
+  return base::MakeUnique<WebURLLoaderImpl>(child_thread->resource_dispatcher(),
+                                            url_loader_factory_.get());
 }
 
 blink::WebThread* RendererBlinkPlatformImpl::CurrentThread() {
