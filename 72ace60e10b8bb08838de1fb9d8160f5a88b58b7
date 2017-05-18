@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7de85df2_36ef7462",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T12:52:45Z",
+      "side": 1,
+      "message": "Maybe this should be a bit more verbose: explain which interfaces you are adding? and if you do not create another CL for NullableString16, say that it does change this too?",
+      "revId": "72ace60e10b8bb08838de1fb9d8160f5a88b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c405e93f_8e966c1e",
+        "filename": "base/strings/nullable_string16.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T12:52:45Z",
+      "side": 1,
+      "message": "I would recommend to do this in a different CL. At least, you might want to link to bug 604860",
+      "revId": "72ace60e10b8bb08838de1fb9d8160f5a88b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e31940f_6d55ccda",
+        "filename": "content/browser/manifest/manifest_manager_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T12:52:45Z",
+      "side": 1,
+      "message": "You can do: `callback_.Run(url, manifest.value_or(Manifest());`",
+      "revId": "72ace60e10b8bb08838de1fb9d8160f5a88b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a506ec67_aef67228",
+        "filename": "content/public/common/manifest_struct_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T12:52:45Z",
+      "side": 1,
+      "message": "FWIW, I think it would be more readable as a one statement return because it would avoid the negation.",
+      "revId": "72ace60e10b8bb08838de1fb9d8160f5a88b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4981a2d3_44285f28",
+        "filename": "content/public/common/manifest_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T12:52:45Z",
+      "side": 1,
+      "message": "Did you meant to set `!m_name.is_null()`? Also, you check for `\u003c\u003d kMaxIPCStringLength` but below you use `\u003c`.",
+      "revId": "72ace60e10b8bb08838de1fb9d8160f5a88b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfff395a_ad4b522c",
+        "filename": "content/public/common/manifest_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T12:52:45Z",
+      "side": 1,
+      "message": "Any reason why there is no NOTREACHED() here?",
+      "revId": "72ace60e10b8bb08838de1fb9d8160f5a88b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b26aa3_e4411eae",
+        "filename": "content/renderer/manifest/manifest_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T12:52:45Z",
+      "side": 1,
+      "message": "Why do you need to make a copy of the manifest on the stack?",
+      "revId": "72ace60e10b8bb08838de1fb9d8160f5a88b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfdb71f8_6ffc9410",
+        "filename": "content/renderer/manifest/manifest_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T12:52:45Z",
+      "side": 1,
+      "message": "I understand why you are doing this but the goal was to have logical split between the parser that follows the specification and the IPC security restrictions. The slight overhead required to keep both distinct doesn\u0027t seem a large price to pay, WDYT?",
+      "revId": "72ace60e10b8bb08838de1fb9d8160f5a88b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6dc9405_0ff0c813",
+        "filename": "third_party/WebKit/public/platform/WebDisplayModeStructTraits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T12:52:45Z",
+      "side": 1,
+      "message": "Should this have a NOTREACHED()?",
+      "revId": "72ace60e10b8bb08838de1fb9d8160f5a88b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
