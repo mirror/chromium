@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7607699_53aecdad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-18T19:21:12Z",
+      "side": 1,
+      "message": "nit: s/us/use",
+      "range": {
+        "startLine": 374,
+        "startChar": 62,
+        "endLine": 374,
+        "endChar": 64
+      },
+      "revId": "cb90a1859254d7185887afc64ec71ac71d27f970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
