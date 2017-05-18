@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c0d99b7_1c9accf1",
+        "filename": "media/capture/video/mac/video_capture_device_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-18T21:52:05Z",
+      "side": 1,
+      "message": "As discussed I think we should have more checks here instead of in renderer/blink, long term.",
+      "range": {
+        "startLine": 418,
+        "startChar": 2,
+        "endLine": 418,
+        "endChar": 8
+      },
+      "revId": "e9bdedb97ddb830eec78981a1e47df85948fdad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
