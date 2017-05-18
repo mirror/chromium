@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc1a145_6bce0d82",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-05-18T09:02:24Z",
+      "side": 1,
+      "message": "The clang formatter has ruined the readability completely here.\nHow about:\n\nif (needs_horizontal_scrollbar \u0026\u0026 Box.IsRooted() \u0026\u0026 this-\u003eHasHorizontalOverflow() \u0026\u0026  ...).\n\nI assume that none of the expressions here have any side-effects. With my proposed change, we won\u0027t have to check anything if needs_horizontal_scrollbar is false in the first place.",
+      "revId": "474437bd5dde083354f6d7d76ea5d64e5265b36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10be4d60_25506c19",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-05-18T09:02:24Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "474437bd5dde083354f6d7d76ea5d64e5265b36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
