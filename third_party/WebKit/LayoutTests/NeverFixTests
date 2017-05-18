@@ -338,9 +338,6 @@ crbug.com/672605 external/wpt/encrypted-media [ WontFix ]
 [ Win7 Debug ] virtual/disable-spinvalidation/compositing/perpendicular-layer-sorting.html [ WontFix ]
 
 # Below are manual tests from web-platform-tests without automation.
-external/wpt/battery-status/battery-charging-manual.html [ WontFix ]
-external/wpt/battery-status/battery-plugging-in-manual.html [ WontFix ]
-external/wpt/battery-status/battery-unplugging-manual.html [ WontFix ]
 external/wpt/console/console-count-logging-manual.html [ WontFix ]
 external/wpt/css/css-flexbox-1/interactive/flexbox_interactive_break-after-column-item.html [ WontFix ]
 external/wpt/css/css-flexbox-1/interactive/flexbox_interactive_break-after-column-lastitem.html [ WontFix ]
