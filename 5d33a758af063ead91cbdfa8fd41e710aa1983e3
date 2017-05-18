@@ -68,6 +68,40 @@
       "revId": "5d33a758af063ead91cbdfa8fd41e710aa1983e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4360841a_0ab7cb00",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3896,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-18T07:34:19Z",
+      "side": 1,
+      "message": "In a follow-up CL I might want to factor out RemoveScrollableArea to the caller site and rename RemoveChild to RemovePlugin.",
+      "revId": "5d33a758af063ead91cbdfa8fd41e710aa1983e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ee4af5_cc8a53b4",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-18T07:34:19Z",
+      "side": 1,
+      "message": "ForAllChildFrameViewsAndPlugins ?\n\nBTW I\u0027d prefer creating ForAllChildFrameViews and ForAllChildPluginViews instead of creating ForAllChildFrameViews and ForAllChildFrameViewsAndPlugins. The caller site can call both ForAllChildFrameViews and ForAllChildPluginViews if it wants to iterate both.",
+      "revId": "5d33a758af063ead91cbdfa8fd41e710aa1983e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
