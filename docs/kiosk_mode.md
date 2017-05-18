@@ -1,3 +1,6 @@
+
+tests
+
 # Kiosk Mode
 
 If you have a real world kiosk application that you want to run on Google
