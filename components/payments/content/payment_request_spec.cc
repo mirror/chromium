@@ -69,6 +69,7 @@ void PaymentRequestSpec::UpdateWith(mojom::PaymentDetailsPtr details) {
   // We reparse the |details_| and update the observers.
   UpdateSelectedShippingOption(/*after_update=*/true);
   NotifyOnSpecUpdated();
+  current_update_reason_ = UpdateReason::NONE;
 }
 
 void PaymentRequestSpec::AddObserver(Observer* observer) {
@@ -131,6 +132,7 @@ std::string PaymentRequestSpec::GetFormattedCurrencyCode(
 
 void PaymentRequestSpec::StartWaitingForUpdateWith(
     PaymentRequestSpec::UpdateReason reason) {
+  current_update_reason_ = reason;
   for (auto& observer : observers_) {
     observer.OnStartUpdating(reason);
   }

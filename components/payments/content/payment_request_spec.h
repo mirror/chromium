@@ -112,6 +112,8 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
 
   bool IsMixedCurrency() const;
 
+  UpdateReason current_update_reason() const { return current_update_reason_; }
+
  private:
   friend class PaymentRequestDialogView;
   void add_observer_for_testing(Observer* observer_for_testing) {
@@ -166,6 +168,9 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
   // A mapping of the payment method names to the corresponding JSON-stringified
   // payment method specific data.
   std::map<std::string, std::set<std::string>> stringified_method_data_;
+
+  // The reason why this payment request is waiting for updateWith.
+  UpdateReason current_update_reason_;
 
   // The |observer_for_testing_| will fire after all the |observers_| have been
   // notified.
