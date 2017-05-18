@@ -396,7 +396,9 @@ void IDBRequest::ContextDestroyed(ExecutionContext*) {
     ready_state_ = kEarlyDeath;
     if (transaction_) {
       transaction_->UnregisterRequest(this);
-      transaction_.Clear();
+
+      // NOTE(pwnall): Checking to see if we can get away without this.
+      // transaction_.Clear();
     }
   }
 
