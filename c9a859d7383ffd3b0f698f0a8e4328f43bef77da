@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b05dd9d_e0946261",
+        "filename": "chrome/browser/ui/views/payments/payment_request_sheet_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T13:32:46Z",
+      "side": 1,
+      "message": "this is neat, you should consider bringing this to views/ code",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 24
+      },
+      "revId": "c9a859d7383ffd3b0f698f0a8e4328f43bef77da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79794452_86ff5795",
+        "filename": "chrome/browser/ui/views/payments/payment_request_sheet_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T13:32:46Z",
+      "side": 1,
+      "message": "does this need to be public?",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "c9a859d7383ffd3b0f698f0a8e4328f43bef77da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75513d83_eb848802",
+        "filename": "chrome/browser/ui/views/payments/payment_request_sheet_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T13:32:46Z",
+      "side": 1,
+      "message": "since it\u0027s not a simple getter, I think we should use HasTopBorder",
+      "revId": "c9a859d7383ffd3b0f698f0a8e4328f43bef77da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3755eba2_bc19c041",
+        "filename": "chrome/browser/ui/views/payments/payment_request_sheet_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T13:32:46Z",
+      "side": 1,
+      "message": "// views::Scrollview:",
+      "revId": "c9a859d7383ffd3b0f698f0a8e4328f43bef77da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
