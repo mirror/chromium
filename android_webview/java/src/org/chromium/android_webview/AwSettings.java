@@ -1179,7 +1179,6 @@ public class AwSettings {
         synchronized (mAwSettingsLock) {
             if (mJavaScriptCanOpenWindowsAutomatically != flag) {
                 mJavaScriptCanOpenWindowsAutomatically = flag;
-                mEventHandler.updateWebkitPreferencesLocked();
             }
         }
     }
