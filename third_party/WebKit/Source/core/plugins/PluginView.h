@@ -39,7 +39,6 @@
 namespace blink {
 
 class Event;
-class FrameView;
 class ResourceResponse;
 class WebLayer;
 
@@ -52,8 +51,8 @@ class CORE_EXPORT PluginView : public FrameOrPlugin {
 
   bool IsPluginView() const override { return true; }
 
-  virtual void SetParent(FrameView*) = 0;
-  virtual FrameView* Parent() const = 0;
+  virtual void SetFrameOrPluginState(FrameOrPluginState) = 0;
+  virtual FrameOrPluginState GetFrameOrPluginState() const = 0;
   virtual void SetParentVisible(bool) = 0;
   virtual void SetFocused(bool, WebFocusType) = 0;
   virtual void FrameRectsChanged() = 0;
