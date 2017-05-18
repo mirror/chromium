@@ -16,6 +16,41 @@
       "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fce4a8_6a23f007",
+        "filename": "tools/perf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-05-18T00:50:42Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "dddb2423_980229a8",
+      "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabe9ee3_377aaf58",
+        "filename": "tools/perf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-05-18T00:50:42Z",
+      "side": 1,
+      "message": "so, this will probably break the downstream perf bots because this target is not always defined. Going to have to add..\n\nif (!use_unpublished_apis) {\n  deps +\u003d [\"//android_webview:system_webview_apk\"]\n}",
+      "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
