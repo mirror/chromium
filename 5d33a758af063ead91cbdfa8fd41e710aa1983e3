@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "3171a94c_0b33af13",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3896,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-18T08:09:49Z",
+      "side": 1,
+      "message": "Yes, this will change soon when I remove the parent_ field.  Rather than AddChild / RemoveChild, it will be something like Attach, Detach (along with Dispose).  The code in detach will call RemoveScrollableArea, and other things that happen in SetParent(nullptr).",
+      "parentUuid": "4360841a_0ab7cb00",
+      "revId": "5d33a758af063ead91cbdfa8fd41e710aa1983e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32ee4af5_cc8a53b4",
         "filename": "third_party/WebKit/Source/core/frame/FrameView.h",
         "patchSetId": 4
@@ -171,6 +189,24 @@
       "writtenOn": "2017-05-18T07:34:19Z",
       "side": 1,
       "message": "ForAllChildFrameViewsAndPlugins ?\n\nBTW I\u0027d prefer creating ForAllChildFrameViews and ForAllChildPluginViews instead of creating ForAllChildFrameViews and ForAllChildFrameViewsAndPlugins. The caller site can call both ForAllChildFrameViews and ForAllChildPluginViews if it wants to iterate both.",
+      "revId": "5d33a758af063ead91cbdfa8fd41e710aa1983e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c0b65b_64adb087",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-18T08:09:49Z",
+      "side": 1,
+      "message": "I did think about this.  Plugins are pretty easy to handle since they are a local set, so a regular for-loop works just fine.  It is walking FrameTree that benefits from a template.\n\nI have 2 different use-cases:\n1/ Iterate only (local) FrameView\n2/ Iterate FrameView, RemoteFrameView, PluginView.\n\nI need a dedicated template that walks only FrameView children for 1.  So then I could have either created another dedicated template just for RemoteFrameView, or a template for both FrameView and RemoteFrameView (but not plugin) as you suggest, but I figured I might as well just do the code that overall is simplest which is to all 3 in the single template.\n\nIf you feel strongly, I can change in another CL.",
+      "parentUuid": "32ee4af5_cc8a53b4",
       "revId": "5d33a758af063ead91cbdfa8fd41e710aa1983e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
