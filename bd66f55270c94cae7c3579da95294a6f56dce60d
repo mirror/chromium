@@ -46,6 +46,30 @@
       "revId": "bd66f55270c94cae7c3579da95294a6f56dce60d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0fad6b_7b1a49d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-05-18T20:42:00Z",
+      "side": 1,
+      "message": "not sufficient to figure out why, but i guess you haven\u0027t tried git cl try with Gerrit CL before? if so, then perhaps you aren\u0027t authenticated.",
+      "parentUuid": "8b2ce48f_0e889b1f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "bd66f55270c94cae7c3579da95294a6f56dce60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
