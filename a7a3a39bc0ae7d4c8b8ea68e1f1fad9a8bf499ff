@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6416760e_2ed1d034",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2017-05-18T14:46:28Z",
+      "side": 1,
+      "message": "Nit: Why here and not in `ResetAfterLayoutTest()`? comes out to  the same thing, I suppose, but that seems like a better dumping ground?",
+      "revId": "a7a3a39bc0ae7d4c8b8ea68e1f1fad9a8bf499ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
