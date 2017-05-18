@@ -70,6 +70,30 @@
       "revId": "bd66f55270c94cae7c3579da95294a6f56dce60d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37fd3511_eed73beb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-05-18T20:55:01Z",
+      "side": 1,
+      "message": "OK, that was it, but \"git cl try\" (no args) was working fine. Confirmed:\n\n$ git cl try\nscheduled CQ Dry Run on https://chromium-review.googlesource.com/508928\n$ git cl try -m master.tryserver.chromium.win -b win_clang\nYou are not logged in. Please login first by running:\n  depot-tools-auth login chromium-review.googlesource.com\n$ depot-tools-auth login chromium-review.googlesource.com\n[...]\n$ git cl try -m master.tryserver.chromium.win -b win_clang\nTried jobs on:\nBucket: master.tryserver.chromium.win\n  win_clang: []\nTo see results here, run:        git cl try-results\nTo see results in browser, run:  git cl web\n\nThanks for the info. It\u0027s still OK to remove these invocations; they\u0027re no longer necessary.",
+      "parentUuid": "2d0fad6b_7b1a49d5",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "bd66f55270c94cae7c3579da95294a6f56dce60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
