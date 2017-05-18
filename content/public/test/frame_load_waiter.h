@@ -25,6 +25,7 @@ class FrameLoadWaiter : public RenderFrameObserver {
   void OnDestruct() override;
 
   base::RunLoop run_loop_;
+  bool did_load_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(FrameLoadWaiter);
 };

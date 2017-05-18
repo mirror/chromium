@@ -5,6 +5,7 @@
 #include "content/public/test/frame_load_waiter.h"
 
 #include "base/location.h"
+#include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 
@@ -15,11 +16,17 @@ FrameLoadWaiter::FrameLoadWaiter(RenderFrame* frame)
 }
 
 void FrameLoadWaiter::Wait() {
+  if (did_load_)
+    return;
+
   // Pump messages until Blink's threaded HTML parser finishes.
+  base::MessageLoop::ScopedNestableTaskAllower allow(
+      base::MessageLoop::current());
   run_loop_.Run();
 }
 
 void FrameLoadWaiter::DidFinishLoad() {
+  did_load_ = true;
   // Post a task to quit instead of quitting directly, since the load completion
   // may trigger other IPCs that tests are expecting.
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
