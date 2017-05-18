@@ -141,6 +141,24 @@
       "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53ed6fd_f4e20269",
+        "filename": "tools/perf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-05-18T22:31:36Z",
+      "side": 1,
+      "message": "It seems to work with my android checkout...",
+      "parentUuid": "c4a18d2b_5a8ca247",
+      "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
