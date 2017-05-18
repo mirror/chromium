@@ -45,6 +45,30 @@
       "revId": "990dac6aad6545f0bb99eabf8c244d5a244047f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14220164_3ff01364",
+        "filename": "gpu/command_buffer/service/common_decoder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-05-18T17:22:10Z",
+      "side": 1,
+      "message": "Well, looks like some compilers do not allow this",
+      "parentUuid": "7d964b20_044bdf63",
+      "range": {
+        "startLine": 78,
+        "startChar": 40,
+        "endLine": 78,
+        "endChar": 41
+      },
+      "revId": "990dac6aad6545f0bb99eabf8c244d5a244047f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
