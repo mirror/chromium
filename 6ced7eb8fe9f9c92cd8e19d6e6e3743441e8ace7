@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c44ecd59_2453893c",
+        "filename": "tools/perf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-05-18T21:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69fce4a8_6a23f007",
+      "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eabe9ee3_377aaf58",
         "filename": "tools/perf/BUILD.gn",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Well, the target won\u0027t even be defined if use_unpublished_apis\u003dtrue. So if its a dependent for any target GN is trying to generate ninja files for, its going to complain about unresolved dependencies I htink.\n\nI havent checked, but you can try setting use_unpublished_apis\u003dtrue locally and \"gn gen\"",
       "parentUuid": "2ee59d9c_bb1a0e7e",
+      "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a18d2b_5a8ca247",
+        "filename": "tools/perf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-05-18T21:18:26Z",
+      "side": 1,
+      "message": "I tried setting use_unpublished_apis in gn args, and it gave me an error that it was unused. This was in my public, normal chromium though. \n\nLet me try with my android checkout.",
+      "parentUuid": "276d5e12_75a6144b",
       "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
