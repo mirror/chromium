@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de7cdb04_e7ea2d75",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-18T17:40:33Z",
+      "side": 1,
+      "message": "If there\u0027s no available shipping option but shipping is required, we should probably show something, no? This is fine for now but I\u0027d leave the TODO",
+      "revId": "553d82c3c7c2118a21f402fb54bcbc459f44b943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
