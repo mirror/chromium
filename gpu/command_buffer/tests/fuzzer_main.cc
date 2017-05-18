@@ -234,7 +234,6 @@ class CommandBufferSetup {
  private:
   void PumpCommands() {
     if (!decoder_->MakeCurrent()) {
-      command_buffer_->SetContextLostReason(decoder_->GetContextLostReason());
       command_buffer_->SetParseError(::gpu::error::kLostContext);
       return;
     }
