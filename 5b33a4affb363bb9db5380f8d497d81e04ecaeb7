@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07efba22_bcdf7fec",
+        "filename": "content/renderer/dom_serializer_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-05-18T23:09:03Z",
+      "side": 0,
+      "message": "I think it\u0027s worth keeping the comment, just not the TODO (which looks done).",
+      "revId": "5b33a4affb363bb9db5380f8d497d81e04ecaeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
