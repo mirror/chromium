@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dddb2423_980229a8",
+        "filename": "tools/perf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-18T00:32:18Z",
+      "side": 1,
+      "message": "This seems like the wrong place to put this DEPS in. I think it probably should be around https://cs.chromium.org/chromium/src/tools/perf/chrome_telemetry_build/BUILD.gn?q\u003dtelemetry_chrome_test\u0026l\u003d12",
+      "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
