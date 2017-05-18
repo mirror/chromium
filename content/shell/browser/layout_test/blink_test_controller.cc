@@ -45,6 +45,7 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "content/shell/browser/layout_test/layout_test_bluetooth_chooser_factory.h"
+#include "content/shell/browser/layout_test/layout_test_content_browser_client.h"
 #include "content/shell/browser/layout_test/layout_test_devtools_bindings.h"
 #include "content/shell/browser/layout_test/layout_test_first_device_bluetooth_chooser.h"
 #include "content/shell/browser/shell.h"
@@ -454,6 +455,8 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_AudioDump, OnAudioDump)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_OverridePreferences,
                         OnOverridePreferences)
+    IPC_MESSAGE_HANDLER(ShellViewHostMsg_SetPopupBlockingEnabled,
+                        OnSetPopupBlockingEnabled)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_TestFinished, OnTestFinished)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_ClearDevToolsLocalStorage,
                         OnClearDevToolsLocalStorage)
@@ -821,6 +824,10 @@ void BlinkTestController::OnOverridePreferences(const WebPreferences& prefs) {
   main_render_view_host->OnWebkitPreferencesChanged();
 }
 
+void BlinkTestController::OnSetPopupBlockingEnabled(bool block_popups) {
+  LayoutTestContentBrowserClient::Get()->SetPopupBlockingEnabled(block_popups);
+}
+
 void BlinkTestController::OnClearDevToolsLocalStorage() {
   ShellBrowserContext* browser_context =
       ShellContentBrowserClient::Get()->browser_context();
@@ -923,6 +930,8 @@ void BlinkTestController::OnCloseRemainingWindows() {
 }
 
 void BlinkTestController::OnResetDone() {
+  LayoutTestContentBrowserClient::Get()->SetPopupBlockingEnabled(false);
+
   if (is_leak_detection_enabled_) {
     if (main_window_ && main_window_->web_contents()) {
       RenderViewHost* render_view_host =
