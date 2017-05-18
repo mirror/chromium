@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "712d0d27_7dfb35b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-18T21:01:59Z",
+      "side": 1,
+      "message": "... as a submodule in this change\nhttps://chromium.googlesource.com/chromium/src/+/25a65028b3fd10ffe5850daf25187e4d5d930a66",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "f1b85a3026d49d4506ee80064c54d8a6dd478d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
