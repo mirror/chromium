@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "448f0a5f_4aa1621b",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/ScreenShooter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-18T14:25:38Z",
+      "side": 1,
+      "message": "Javadoc? (Or just leave the comment out completely if the documentation would be trivial.)",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "1090696bf34349481b17f712aa6fe9af1d687887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf42b84_21845e9b",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-18T14:25:38Z",
+      "side": 1,
+      "message": "I still think that in the long term it\u0027ll be easier if we keep this in the standard chrome_test_apk. We could use restrictions to disable these tests unless you pass a special flag to the test runner, or just no-op the screenshot taking unless the flag is set, so we\u0027d still at least cover the code paths.",
+      "revId": "1090696bf34349481b17f712aa6fe9af1d687887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
