@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9507793f_009ae479",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-18T14:48:51Z",
+      "side": 1,
+      "message": "Done.\n\nThe 60s timer is on the Blink side, yay free things!",
+      "parentUuid": "2a79f62c_cd35d63b",
+      "range": {
+        "startLine": 121,
+        "startChar": 46,
+        "endLine": 121,
+        "endChar": 53
+      },
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68a9bcd4_0edba0d0",
         "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f999d1_b8131eb9",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-18T14:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a9bcd4_0edba0d0",
+      "range": {
+        "startLine": 124,
+        "startChar": 55,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7340e50a_b20ea9c3",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-18T14:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ef0854_2ada520b",
+      "range": {
+        "startLine": 199,
+        "startChar": 10,
+        "endLine": 199,
+        "endChar": 23
+      },
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59073bbb_b2db3c8e",
         "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
         "patchSetId": 2
@@ -82,6 +154,24 @@
       "writtenOn": "2017-05-18T14:11:58Z",
       "side": 1,
       "message": "Consider bringing the code at https://cs.chromium.org/chromium/src/chrome/browser/ui/views/payments/profile_list_view_controller.cc?rcl\u003d062837eda657366995086cc6ad01a32895c88d20\u0026l\u003d174 to payment_request_views_util, which will get you a nice warning icon!",
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cbce31_d25b4215",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-18T14:48:51Z",
+      "side": 1,
+      "message": "Let me do that in a follow up.",
+      "parentUuid": "59073bbb_b2db3c8e",
       "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -102,6 +192,24 @@
       "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711f912e_09eb8b95",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-18T14:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "660f8136_89f87ea7",
+      "revId": "e26697b3331f90893fc14217f8e65461a5eafb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
