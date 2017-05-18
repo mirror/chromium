@@ -54,6 +54,9 @@ enum : int {
   kPermissionIconColumnWidth = 16,
 };
 
+// The View ID assigned to the "Site settings" link.
+const int LINK_SITE_SETTINGS = 1341;
+
 // The views implementation of the page info UI.
 class PageInfoBubbleView : public content::WebContentsObserver,
                            public PermissionSelectorRowObserver,

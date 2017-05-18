@@ -106,7 +106,6 @@ const int BUTTON_CLOSE = 1337;
 const int STYLED_LABEL_SECURITY_DETAILS = 1338;
 const int STYLED_LABEL_RESET_CERTIFICATE_DECISIONS = 1339;
 const int LINK_COOKIE_DIALOG = 1340;
-const int LINK_SITE_SETTINGS = 1341;
 const int LINK_CERTIFICATE_VIEWER = 1342;
 
 // The default, ui::kTitleFontSizeDelta, is too large for the page info
@@ -741,16 +740,7 @@ void PageInfoBubbleView::HandleLinkClickedAsync(views::Link* source) {
     return;
   switch (source->id()) {
     case LINK_SITE_SETTINGS:
-      // TODO(crbug.com/655876): This opens the general Content Settings pane,
-      // which is OK for now. But on Android, it opens a page specific to a
-      // given origin that shows all of the settings for that origin. If/when
-      // that's available on desktop we should link to that here, too.
-      web_contents()->OpenURL(content::OpenURLParams(
-          GURL(chrome::kChromeUIContentSettingsURL), content::Referrer(),
-          WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_LINK,
-          false));
-      presenter_->RecordPageInfoAction(
-          PageInfo::PAGE_INFO_SITE_SETTINGS_OPENED);
+      presenter_->OpenSiteSettingsView();
       break;
     case LINK_COOKIE_DIALOG:
       // Count how often the Collected Cookies dialog is opened.
