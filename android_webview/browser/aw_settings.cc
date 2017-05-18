@@ -98,6 +98,15 @@ AwSettings::~AwSettings() {
                                        reinterpret_cast<intptr_t>(this));
 }
 
+bool AwSettings::GetJavaScriptCanOpenWindowsAutomatically() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> scoped_obj = aw_settings_.get(env);
+  if (scoped_obj.is_null())
+    return false;
+  return Java_AwSettings_getJavaScriptCanOpenWindowsAutomatically(env,
+                                                                  scoped_obj);
+}
+
 void AwSettings::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   delete this;
 }
@@ -347,9 +356,6 @@ void AwSettings::PopulateWebPreferencesLocked(JNIEnv* env,
 
   web_prefs->allow_file_access_from_file_urls =
       Java_AwSettings_getAllowFileAccessFromFileURLsLocked(env, obj);
-
-  web_prefs->javascript_can_open_windows_automatically =
-      Java_AwSettings_getJavaScriptCanOpenWindowsAutomaticallyLocked(env, obj);
 
   web_prefs->supports_multiple_windows =
       Java_AwSettings_getSupportMultipleWindowsLocked(env, obj);
