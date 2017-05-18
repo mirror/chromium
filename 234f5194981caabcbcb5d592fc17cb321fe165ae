@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6d697b2_525bb3e8",
+        "filename": "chrome/browser/ui/views/payments/payment_request_row_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T20:14:49Z",
+      "side": 1,
+      "message": "SetIsHighlighted(state() \u003d\u003d views::Button::STATE_HOVERED ||\n      state() \u003d\u003d views::Button::STATE_PRESSED)",
+      "revId": "234f5194981caabcbcb5d592fc17cb321fe165ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0a34bb_72b2f887",
+        "filename": "chrome/browser/ui/views/payments/payment_request_row_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T20:14:49Z",
+      "side": 1,
+      "message": "not always gray :)",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 9
+      },
+      "revId": "234f5194981caabcbcb5d592fc17cb321fe165ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
