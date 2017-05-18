@@ -1,9 +1,9 @@
-# Kiosk Mode
+# Kiosked Mode
 
 If you have a real world kiosk application that you want to run on Google
 Chrome, then below are the steps to take to simulate kiosk mode.
 
-## Steps to Simulate Kiosk Mode
+## Steps to Simulated Kiosk Mode
 
 ### Step 1
 
