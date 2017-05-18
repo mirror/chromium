@@ -33,6 +33,23 @@
       "revId": "f999ef5a082430f59b5753277dcc8543d7164a6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29439fde_364bbeda",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-18T21:46:00Z",
+      "side": 1,
+      "message": "Hmmm I thought I wrote such a comment somewhere else but it seems lost to the sands of time. Wrote a new one.",
+      "revId": "f999ef5a082430f59b5753277dcc8543d7164a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
