@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7f0d9da_0096557d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-18T20:56:47Z",
+      "side": 1,
+      "message": "Point out that before this implementation the scoped callback was returning false via the empty implementation in VideoCaptureDevice::SetPhotoOptions.",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "2367e3b94fc89e79ec6e14f7e571f17dc10bef72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7846a078_fd02c16b",
+        "filename": "media/capture/video/mac/video_capture_device_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-18T20:56:47Z",
+      "side": 1,
+      "message": "Strange that nothing is checked here, and that all options are valid. As you pointed out in person, this should fail if options that won\u0027t work on macOS.are attempted.",
+      "range": {
+        "startLine": 419,
+        "startChar": 2,
+        "endLine": 419,
+        "endChar": 10
+      },
+      "revId": "2367e3b94fc89e79ec6e14f7e571f17dc10bef72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
