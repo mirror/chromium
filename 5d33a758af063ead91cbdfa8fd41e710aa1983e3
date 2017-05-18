@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82922b3c_2f0b9097",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-18T06:32:13Z",
+      "side": 1,
+      "message": "Nit: consider omitting the { }s around one-line blocks for consistency",
+      "range": {
+        "startLine": 296,
+        "startChar": 31,
+        "endLine": 296,
+        "endChar": 32
+      },
+      "revId": "5d33a758af063ead91cbdfa8fd41e710aa1983e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9de470_2e257b49",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-18T06:32:13Z",
+      "side": 1,
+      "message": "Mind adding a TODO(https://crbug.com/719439) so we have a breadcrumb for fixing this later?",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 19
+      },
+      "revId": "5d33a758af063ead91cbdfa8fd41e710aa1983e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c43ab908_f43efdec",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3895,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-18T06:32:13Z",
+      "side": 1,
+      "message": "Nit: maybe move this into a separate if () so line 3898 can use an else if?",
+      "range": {
+        "startLine": 3895,
+        "startChar": 6,
+        "endLine": 3895,
+        "endChar": 58
+      },
+      "revId": "5d33a758af063ead91cbdfa8fd41e710aa1983e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
