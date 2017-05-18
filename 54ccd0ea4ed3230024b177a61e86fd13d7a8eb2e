@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5de1427_0e96e2a8",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-18T14:34:20Z",
+      "side": 1,
+      "message": "Is this default needed? I think those are the only 3 options and we probably want this to not compile if an option is added.",
+      "revId": "54ccd0ea4ed3230024b177a61e86fd13d7a8eb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
