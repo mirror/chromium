@@ -413,6 +413,12 @@ void VideoCaptureDeviceMac::GetPhotoCapabilities(
   callback.Run(std::move(photo_capabilities));
 }
 
+void VideoCaptureDeviceMac::SetPhotoOptions(mojom::PhotoSettingsPtr settings,
+                                            SetPhotoOptionsCallback callback) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  callback.Run(true);
+}
+
 bool VideoCaptureDeviceMac::Init(VideoCaptureApi capture_api_type) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK_EQ(state_, kNotInitialized);
