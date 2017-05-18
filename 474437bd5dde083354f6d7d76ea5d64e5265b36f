@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "958a5615_ef431f99",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-05-18T14:58:35Z",
+      "side": 1,
+      "message": "How about this suggestion --\n\n  LayoutUnit padding_box_plus_scrollbar_height \u003d Box().PixelSnappedPaddingBoxRect().Height() +\n                                          Box().HorizontalScrollbarHeight();\n  needs_horizontal_scrollbar \u0026\u003d (...as before) \u0026\u0026 padding_box_plus_scrollbar_height \u003e 0;",
+      "parentUuid": "edc1a145_6bce0d82",
+      "revId": "474437bd5dde083354f6d7d76ea5d64e5265b36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10be4d60_25506c19",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 2
