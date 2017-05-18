@@ -34,6 +34,24 @@
       "revId": "553d82c3c7c2118a21f402fb54bcbc459f44b943",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22f3e71_9a69bc5b",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-18T18:15:30Z",
+      "side": 1,
+      "message": "Ah yeah that makes sense. SGTM",
+      "parentUuid": "73b2ed14_6bae7352",
+      "revId": "553d82c3c7c2118a21f402fb54bcbc459f44b943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
