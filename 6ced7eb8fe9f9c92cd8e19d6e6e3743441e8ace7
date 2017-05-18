@@ -87,6 +87,24 @@
       "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276d5e12_75a6144b",
+        "filename": "tools/perf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-05-18T00:56:12Z",
+      "side": 1,
+      "message": "Well, the target won\u0027t even be defined if use_unpublished_apis\u003dtrue. So if its a dependent for any target GN is trying to generate ninja files for, its going to complain about unresolved dependencies I htink.\n\nI havent checked, but you can try setting use_unpublished_apis\u003dtrue locally and \"gn gen\"",
+      "parentUuid": "2ee59d9c_bb1a0e7e",
+      "revId": "6ced7eb8fe9f9c92cd8e19d6e6e3743441e8ace7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
