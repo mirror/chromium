@@ -1179,7 +1179,6 @@ public class AwSettings {
         synchronized (mAwSettingsLock) {
             if (mJavaScriptCanOpenWindowsAutomatically != flag) {
                 mJavaScriptCanOpenWindowsAutomatically = flag;
-                mEventHandler.updateWebkitPreferencesLocked();
             }
         }
     }
@@ -1187,6 +1186,7 @@ public class AwSettings {
     /**
      * See {@link android.webkit.WebSettings#getJavaScriptCanOpenWindowsAutomatically}.
      */
+    @CalledByNative
     public boolean getJavaScriptCanOpenWindowsAutomatically() {
         synchronized (mAwSettingsLock) {
             return getJavaScriptCanOpenWindowsAutomaticallyLocked();
