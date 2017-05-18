@@ -16,6 +16,24 @@
       "revId": "553d82c3c7c2118a21f402fb54bcbc459f44b943",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b2ed14_6bae7352",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-18T18:01:02Z",
+      "side": 1,
+      "message": "This is the error state (we can only get here if the user selected an address), and in this case the error is shown as the 4th label of the shipping address section. So I think it\u0027s good?",
+      "parentUuid": "de7cdb04_e7ea2d75",
+      "revId": "553d82c3c7c2118a21f402fb54bcbc459f44b943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
