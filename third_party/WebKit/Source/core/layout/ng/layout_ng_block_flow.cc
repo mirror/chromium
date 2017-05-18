@@ -8,6 +8,7 @@
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_fragment.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_min_max_content_size.h"
 
 namespace blink {
 
@@ -60,6 +61,22 @@ NGInlineNodeData& LayoutNGBlockFlow::GetNGInlineNodeData() const {
 
 void LayoutNGBlockFlow::ResetNGInlineNodeData() {
   ng_inline_node_data_ = WTF::MakeUnique<NGInlineNodeData>();
+}
+
+void LayoutNGBlockFlow::ComputeIntrinsicLogicalWidths(
+    LayoutUnit& min_logical_width,
+    LayoutUnit& max_logical_width) const {
+  // TODO(layout-dev): This should be created in the constructor once instead.
+  // See also the comment in layoutBlock().
+  NGBlockNode* node = new NGBlockNode(const_cast<LayoutNGBlockFlow*>(this));
+  if (!node->CanUseNewLayout()) {
+    LayoutBlockFlow::ComputeIntrinsicLogicalWidths(min_logical_width,
+                                                   max_logical_width);
+    return;
+  }
+  MinMaxContentSize sizes = node->ComputeMinMaxContentSize();
+  min_logical_width = sizes.min_content;
+  max_logical_width = sizes.max_content;
 }
 
 }  // namespace blink
