@@ -276,6 +276,21 @@ bool DownloadRequestCore::OnResponseStarted(
 
   std::unique_ptr<DownloadCreateInfo> create_info =
       CreateDownloadCreateInfo(result);
+
+  // Blink verifies that the requester of this download is allowed to set a
+  // suggested name for the security origin of the download URL. However, this
+  // assumption doesn't hold if there were cross origin redirects. Therefore,
+  // clear the suggested_name for such requests.
+  if (create_info->url_chain.size() > 1) {
+    GURL final_origin = create_info->url_chain.back().GetOrigin();
+    bool cross_origin = false;
+    for (auto& url : create_info->url_chain) {
+      cross_origin |= (url.GetOrigin() != final_origin);
+    }
+    if (cross_origin)
+      create_info->save_info->suggested_name.clear();
+  }
+
   if (result != DOWNLOAD_INTERRUPT_REASON_NONE) {
     delegate_->OnStart(std::move(create_info),
                        std::unique_ptr<ByteStreamReader>(),
@@ -336,15 +351,6 @@ bool DownloadRequestCore::OnResponseStarted(
     create_info->accept_range =
         headers->HasHeaderValue("Accept-Ranges", "bytes");
   }
-
-  // Blink verifies that the requester of this download is allowed to set a
-  // suggested name for the security origin of the download URL. However, this
-  // assumption doesn't hold if there were cross origin redirects. Therefore,
-  // clear the suggested_name for such requests.
-  if (create_info->url_chain.size() > 1 &&
-      create_info->url_chain.front().GetOrigin() !=
-          create_info->url_chain.back().GetOrigin())
-    create_info->save_info->suggested_name.clear();
 
   RecordDownloadContentDisposition(create_info->content_disposition);
   RecordDownloadSourcePageTransitionType(create_info->transition_type);
