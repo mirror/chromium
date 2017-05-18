@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "30bc41c7_e441ac65",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T09:53:58Z",
+      "side": 1,
+      "message": "I see kDocumentUserGestureRequired as the autoplay policy for user activation project. I\u0027m just using what\u0027s currently in the code base at the moment to kick things.\n\nThe difference between kDocumentUserGestureRequired and kUserGestureRequired is that the former would use the sticky bit and the latter the \"real time\" one. The kUserGestureRequired is the default on Android nowadays and is using the current UserGestureIndicator path.\n\n@Mustaq, what do you see as more involved than the User Activation project?\n@Daniel, a started might be https://crbug.com/696617",
+      "parentUuid": "144a416e_0cace1db",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36362472_d6a1e871",
         "filename": "third_party/WebKit/public/web/WebSettings.h",
         "patchSetId": 1
@@ -77,6 +101,30 @@
       "writtenOn": "2017-05-17T18:28:13Z",
       "side": 1,
       "message": "Need to update web_preferences.h?",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6798b79_2d894fd9",
+        "filename": "third_party/WebKit/public/web/WebSettings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-18T09:53:58Z",
+      "side": 1,
+      "message": "I will update it when the implementation is ready to be exposed to chrome://flags",
+      "parentUuid": "36362472_d6a1e871",
       "range": {
         "startLine": 117,
         "startChar": 5,
