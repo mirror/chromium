@@ -12,18 +12,11 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/filter_operation.h"
 #include "cc/base/filter_operations.h"
-#include "cc/paint/clip_display_item.h"
-#include "cc/paint/clip_path_display_item.h"
-#include "cc/paint/compositing_display_item.h"
-#include "cc/paint/drawing_display_item.h"
-#include "cc/paint/filter_display_item.h"
-#include "cc/paint/float_clip_display_item.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_record.h"
 #include "cc/paint/paint_recorder.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "cc/paint/transform_display_item.h"
 #include "cc/test/geometry_test_utils.h"
 #include "cc/test/pixel_test_utils.h"
 #include "cc/test/skia_common.h"
@@ -69,8 +62,7 @@ bool CompareN32Pixels(void* actual_pixels,
   return false;
 }
 
-const gfx::Rect kVisualRect(0, 0, 42, 42);
-
+#if 0
 sk_sp<const PaintRecord> CreateRectPicture(const gfx::Rect& bounds) {
   PaintRecorder recorder;
   PaintCanvas* canvas =
@@ -96,7 +88,7 @@ sk_sp<const PaintRecord> CreateRectPictureWithAlpha(const gfx::Rect& bounds,
 
 void AppendFirstSerializationTestPicture(scoped_refptr<DisplayItemList> list,
                                          const gfx::Size& layer_size) {
-  gfx::PointF offset(2.f, 3.f);
+  gfx::Point offset(2, 3);
   PaintRecorder recorder;
 
   PaintFlags red_paint;
@@ -107,13 +99,15 @@ void AppendFirstSerializationTestPicture(scoped_refptr<DisplayItemList> list,
   PaintCanvas* canvas = recorder.beginRecording(bounds);
   canvas->translate(offset.x(), offset.y());
   canvas->drawRect(SkRect::MakeWH(4, 4), red_paint);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(), bounds);
+  PaintOpBuffer* buffer = list->StartPaint();
+  buffer->push<DrawRecordOp>(recorder.finishRecordingAsPicture());
+  list->EndPaintOfUnpaired(gfx::Rect(offset, layer_size));
 }
+#endif
 
 }  // namespace
 
-TEST(DisplayItemListTest, SingleDrawingItem) {
+TEST(DisplayItemListTest, SingleUnpairedRange) {
   gfx::Rect layer_rect(100, 100);
   PaintRecorder recorder;
   PaintFlags blue_flags;
@@ -123,16 +117,16 @@ TEST(DisplayItemListTest, SingleDrawingItem) {
   unsigned char pixels[4 * 100 * 100] = {0};
   auto list = make_scoped_refptr(new DisplayItemList);
 
-  gfx::PointF offset(8.f, 9.f);
-  gfx::RectF recording_rect(offset, gfx::SizeF(layer_rect.size()));
-  PaintCanvas* canvas =
-      recorder.beginRecording(gfx::RectFToSkRect(recording_rect));
-  canvas->translate(offset.x(), offset.y());
-  canvas->drawRect(SkRect::MakeLTRB(0.f, 0.f, 60.f, 60.f), red_paint);
-  canvas->drawRect(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f), blue_flags);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(),
-      gfx::RectFToSkRect(recording_rect));
+  gfx::Point offset(8, 9);
+
+  PaintOpBuffer* buffer = list->StartPaint();
+  buffer->push<SaveOp>();
+  buffer->push<TranslateOp>(offset.x(), offset.y());
+  buffer->push<DrawRectOp>(SkRect::MakeLTRB(0.f, 0.f, 60.f, 60.f), red_paint);
+  buffer->push<DrawRectOp>(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f),
+                           blue_flags);
+  buffer->push<RestoreOp>();
+  list->EndPaintOfUnpaired(gfx::Rect(offset, layer_rect.size()));
   list->Finalize();
   DrawDisplayList(pixels, layer_rect, list);
 
@@ -155,7 +149,7 @@ TEST(DisplayItemListTest, SingleDrawingItem) {
   EXPECT_TRUE(CompareN32Pixels(pixels, expected_pixels, 100, 100));
 }
 
-TEST(DisplayItemListTest, ClipItem) {
+TEST(DisplayItemListTest, ClipPairedRange) {
   gfx::Rect layer_rect(100, 100);
   PaintRecorder recorder;
   PaintFlags blue_flags;
@@ -165,31 +159,45 @@ TEST(DisplayItemListTest, ClipItem) {
   unsigned char pixels[4 * 100 * 100] = {0};
   auto list = make_scoped_refptr(new DisplayItemList);
 
-  gfx::PointF first_offset(8.f, 9.f);
-  gfx::RectF first_recording_rect(first_offset, gfx::SizeF(layer_rect.size()));
-  PaintCanvas* canvas =
-      recorder.beginRecording(gfx::RectFToSkRect(first_recording_rect));
-  canvas->translate(first_offset.x(), first_offset.y());
-  canvas->drawRect(SkRect::MakeWH(60, 60), red_paint);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(),
-      gfx::RectFToSkRect(first_recording_rect));
+  gfx::Point first_offset(8, 9);
+  gfx::Rect first_recording_rect(first_offset, layer_rect.size());
+
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<TranslateOp>(first_offset.x(), first_offset.y());
+    buffer->push<DrawRectOp>(SkRect::MakeWH(60, 60), red_paint);
+    buffer->push<RestoreOp>();
+    list->EndPaintOfUnpaired(first_recording_rect);
+  }
 
   gfx::Rect clip_rect(60, 60, 10, 10);
-  list->CreateAndAppendPairedBeginItem<ClipDisplayItem>(
-      clip_rect, std::vector<SkRRect>(), true);
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<ClipRectOp>(gfx::RectToSkRect(clip_rect), SkClipOp::kIntersect,
+                             true);
+    list->EndPaintOfPairedBegin();
+  }
 
-  gfx::PointF second_offset(2.f, 3.f);
-  gfx::RectF second_recording_rect(second_offset,
-                                   gfx::SizeF(layer_rect.size()));
-  canvas = recorder.beginRecording(gfx::RectFToSkRect(second_recording_rect));
-  canvas->translate(second_offset.x(), second_offset.y());
-  canvas->drawRect(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f), blue_flags);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(),
-      gfx::RectFToSkRect(second_recording_rect));
+  gfx::Point second_offset(2, 3);
+  gfx::Rect second_recording_rect(second_offset, layer_rect.size());
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<TranslateOp>(second_offset.x(), second_offset.y());
+    buffer->push<DrawRectOp>(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f),
+                             blue_flags);
+    buffer->push<RestoreOp>();
+    list->EndPaintOfUnpaired(second_recording_rect);
+  }
 
-  list->CreateAndAppendPairedEndItem<EndClipDisplayItem>();
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<RestoreOp>();
+    list->EndPaintOfPairedEnd();
+  }
+
   list->Finalize();
 
   DrawDisplayList(pixels, layer_rect, list);
@@ -214,6 +222,7 @@ TEST(DisplayItemListTest, ClipItem) {
   EXPECT_TRUE(CompareN32Pixels(pixels, expected_pixels, 100, 100));
 }
 
+#if 0
 TEST(DisplayItemListTest, TransformItem) {
   gfx::Rect layer_rect(100, 100);
   PaintRecorder recorder;
@@ -848,5 +857,5 @@ TEST(DisplayItemListTest, SaveDrawRestoreFail_TooManyOps) {
   EXPECT_EQ(gfx::RectToSkRect(kVisualRect), canvas.draw_rect_);
   EXPECT_LE(40, canvas.paint_.getAlpha());
 }
-
+#endif
 }  // namespace cc

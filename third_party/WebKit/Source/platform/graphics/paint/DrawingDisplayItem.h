@@ -49,6 +49,7 @@ class PLATFORM_EXPORT DrawingDisplayItem final : public DisplayItem {
   const sk_sp<const PaintRecord>& GetPaintRecord() const { return record_; }
   // This rect is described in the coordinate space relative to the PaintRecord
   // whose bounds it describes.
+  // XXX IS THIS STILL USED?
   FloatRect GetPaintRecordBounds() const { return record_bounds_; }
 
   bool KnownToBeOpaque() const {

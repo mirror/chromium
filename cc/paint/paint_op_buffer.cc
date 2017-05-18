@@ -343,7 +343,11 @@ void DrawRecordOp::Raster(const PaintOp* base_op,
                           const SkMatrix& original_ctm) {
   // Don't use drawPicture here, as it adds an implicit clip.
   auto* op = static_cast<const DrawRecordOp*>(base_op);
+  // Prevent indirected PaintOpBuffers from having side effects back
+  // into the parent PaintOpBuffer.
+  canvas->save();
   op->record->playback(canvas);
+  canvas->restore();
 }
 
 void DrawRectOp::RasterWithFlags(const PaintOpWithFlags* base_op,
@@ -414,7 +418,14 @@ void SaveLayerAlphaOp::Raster(const PaintOp* base_op,
   auto* op = static_cast<const SaveLayerAlphaOp*>(base_op);
   // See PaintOp::kUnsetRect
   bool unset = op->bounds.left() == SK_ScalarInfinity;
-  canvas->saveLayerAlpha(unset ? nullptr : &op->bounds, op->alpha);
+  if (op->preserve_lcd_text_requests) {
+    SkPaint paint;
+    paint.setAlpha(op->alpha);
+    canvas->saveLayerPreserveLCDTextRequests(unset ? nullptr : &op->bounds,
+                                             &paint);
+  } else {
+    canvas->saveLayerAlpha(unset ? nullptr : &op->bounds, op->alpha);
+  }
 }
 
 void ScaleOp::Raster(const PaintOp* base_op,
@@ -509,7 +520,7 @@ size_t DrawDisplayItemListOp::AdditionalBytesUsed() const {
 }
 
 bool DrawDisplayItemListOp::HasDiscardableImages() const {
-  return list->has_discardable_images();
+  return list->HasDiscardableImages();
 }
 
 DrawDisplayItemListOp::DrawDisplayItemListOp(const DrawDisplayItemListOp& op) =
