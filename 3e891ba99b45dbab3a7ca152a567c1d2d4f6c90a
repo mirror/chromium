@@ -22,6 +22,30 @@
       "revId": "3e891ba99b45dbab3a7ca152a567c1d2d4f6c90a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81351de7_662a3d29",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-05-19T20:47:04Z",
+      "side": 1,
+      "message": "wittman@ mentioned in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d531673#c24 that canary doesn\u0027t seem to be seeing nearly the same perf impact.",
+      "parentUuid": "6826b803_fc656663",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "3e891ba99b45dbab3a7ca152a567c1d2d4f6c90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
