@@ -595,13 +595,15 @@ static void Write(TextStream& ts,
       ts << " scrollX " << adjusted_scroll_offset.Width();
     if (adjusted_scroll_offset.Height())
       ts << " scrollY " << adjusted_scroll_offset.Height();
-    if (layer.GetLayoutBox() &&
-        layer.GetLayoutBox()->PixelSnappedClientWidth() !=
-            layer.GetLayoutBox()->PixelSnappedScrollWidth())
+    IntRect padding_box_rect;
+    IntSize scroll_size;
+    if (layer.GetLayoutBox()) {
+      padding_box_rect = layer.GetLayoutBox()->PixelSnappedPaddingBoxRect();
+      scroll_size = layer.GetLayoutBox()->PixelSnappedScrollSize();
+    }
+    if (padding_box_rect.Width() != scroll_size.Width())
       ts << " scrollWidth " << layer.GetLayoutBox()->PixelSnappedScrollWidth();
-    if (layer.GetLayoutBox() &&
-        layer.GetLayoutBox()->PixelSnappedClientHeight() !=
-            layer.GetLayoutBox()->PixelSnappedScrollHeight())
+    if (padding_box_rect.Height() != scroll_size.Height())
       ts << " scrollHeight "
          << layer.GetLayoutBox()->PixelSnappedScrollHeight();
   }
