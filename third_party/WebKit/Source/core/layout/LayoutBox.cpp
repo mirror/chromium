@@ -525,13 +525,12 @@ LayoutUnit LayoutBox::ClientHeight() const {
       .ClampNegativeToZero();
 }
 
-int LayoutBox::PixelSnappedClientWidth() const {
-  return SnapSizeToPixel(ClientWidth(), Location().X() + ClientLeft());
-}
-
 DISABLE_CFI_PERF
-int LayoutBox::PixelSnappedClientHeight() const {
-  return SnapSizeToPixel(ClientHeight(), Location().Y() + ClientTop());
+IntSize LayoutBox::PixelSnappedPaddingBoxSize() const {
+  IntSize snapped_size(
+      SnapSizeToPixel(ClientWidth(), Location().X() + ClientLeft()),
+      SnapSizeToPixel(ClientHeight(), Location().Y() + ClientTop()));
+  return snapped_size;
 }
 
 int LayoutBox::PixelSnappedOffsetWidth(const Element*) const {
@@ -981,8 +980,7 @@ ScrollResult LayoutBox::Scroll(ScrollGranularity granularity,
 
 bool LayoutBox::CanBeScrolledAndHasScrollableArea() const {
   return CanBeProgramaticallyScrolled() &&
-         (PixelSnappedScrollHeight() != PixelSnappedClientHeight() ||
-          PixelSnappedScrollWidth() != PixelSnappedClientWidth());
+         PixelSnappedScrollSize() != PixelSnappedPaddingBoxSize();
 }
 
 bool LayoutBox::CanBeProgramaticallyScrolled() const {
