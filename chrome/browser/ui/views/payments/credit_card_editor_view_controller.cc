@@ -33,6 +33,7 @@
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/payments/content/payment_request_spec.h"
 #include "components/payments/content/payment_request_state.h"
+#include "components/payments/core/strings_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/native_theme/native_theme.h"
@@ -132,7 +133,7 @@ CreditCardEditorViewController::CreateHeaderView() {
 
   // "Cards accepted" label is "disabled" grey.
   std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(
-      l10n_util::GetStringUTF16(IDS_PAYMENTS_ACCEPTED_CARDS_LABEL));
+      GetAcceptedCardTypesText(spec()->supported_card_types_set()));
   label->SetDisabledColor(label->GetNativeTheme()->GetSystemColor(
       ui::NativeTheme::kColorId_LabelDisabledColor));
   label->SetEnabled(false);
