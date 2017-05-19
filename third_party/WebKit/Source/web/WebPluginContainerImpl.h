@@ -76,8 +76,9 @@ class WEB_EXPORT WebPluginContainerImpl final
   ~WebPluginContainerImpl() override;
 
   // PluginView methods
-  void SetParent(FrameView*) override;
-  FrameView* Parent() const override { return parent_; };
+  FrameView* ParentFrameView() const;
+  void SetFrameOrPluginState(FrameOrPluginState) override;
+  FrameOrPluginState GetFrameOrPluginState() const { return plugin_state_; }
   void SetParentVisible(bool) override;
   WebLayer* PlatformLayer() const override;
   v8::Local<v8::Object> ScriptableObject(v8::Isolate*) override;
@@ -216,7 +217,7 @@ class WEB_EXPORT WebPluginContainerImpl final
 
   friend class WebPluginContainerTest;
 
-  Member<FrameView> parent_;
+  FrameOrPluginState plugin_state_;
   Member<HTMLPlugInElement> element_;
   WebPlugin* web_plugin_;
   WebLayer* web_layer_;
