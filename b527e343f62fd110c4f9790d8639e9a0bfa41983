@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5a627799_ed978141",
+        "filename": "tools/perf/benchmarks/speedometer2.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-19T10:15:50Z",
+      "side": 1,
+      "message": "It seems like they just updated Speedometer/ in webkit seems to include both the source code for 1 \u0026 2 (See patch https://github.com/WebKit/webkit/commit/3491ca3de647c150c97fe862f4efcb89548d4074). The file Speedometer/Full.html run 1.0, whereas Speedometer/InteractiveRunner.html\n\nWe should add addyo@ to make sure here.",
+      "parentUuid": "36e91844_66b09ef5",
+      "revId": "b527e343f62fd110c4f9790d8639e9a0bfa41983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "192ede91_bd56ebc8",
         "filename": "tools/perf/benchmarks/speedometer2.py",
         "patchSetId": 3
