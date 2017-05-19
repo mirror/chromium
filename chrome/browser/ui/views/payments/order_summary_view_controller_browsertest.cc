@@ -53,10 +53,11 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestOrderSummaryViewControllerTest,
   ClickOnBackArrow();
   OpenShippingAddressSectionScreen();
   ResetEventObserverForSequence(std::list<DialogEvent>{
-      DialogEvent::BACK_NAVIGATION, DialogEvent::SPEC_DONE_UPDATING});
+      DialogEvent::SPEC_DONE_UPDATING, DialogEvent::BACK_NAVIGATION});
   ClickOnChildInListViewAndWait(
       /* child_index=*/0, /*total_num_children=*/2,
-      DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
+      DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW, false);
+  WaitForAnimation();
 
   // Michigan address is selected and has standard shipping.
   std::vector<base::string16> shipping_address_labels = GetProfileLabelValues(
@@ -89,10 +90,11 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestOrderSummaryViewControllerTest,
   ClickOnBackArrow();
   OpenShippingAddressSectionScreen();
   ResetEventObserverForSequence(std::list<DialogEvent>{
-      DialogEvent::BACK_NAVIGATION, DialogEvent::SPEC_DONE_UPDATING});
+      DialogEvent::SPEC_DONE_UPDATING, DialogEvent::BACK_NAVIGATION});
   ClickOnChildInListViewAndWait(
       /* child_index=*/1, /*total_num_children=*/2,
-      DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
+      DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW, false);
+  WaitForAnimation();
 
   // California address is selected and has free shipping.
   shipping_address_labels = GetProfileLabelValues(
