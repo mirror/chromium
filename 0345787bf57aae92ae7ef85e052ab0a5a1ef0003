@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd69c36d_0b83126b",
+        "filename": "chromecast/tools/build/generate_test_lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-05-19T01:44:38Z",
+      "side": 1,
+      "message": "just copy/pasted to pull these out into functions",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "0345787bf57aae92ae7ef85e052ab0a5a1ef0003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9389fc_2f0e7511",
+        "filename": "chromecast/tools/build/generate_test_lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-05-19T01:44:38Z",
+      "side": 1,
+      "message": "This is the new functionality to skip runtime_deps on files that are not relevant anymore",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 14
+      },
+      "revId": "0345787bf57aae92ae7ef85e052ab0a5a1ef0003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
