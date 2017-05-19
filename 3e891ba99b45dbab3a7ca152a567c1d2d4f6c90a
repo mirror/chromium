@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6826b803_fc656663",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-19T20:45:21Z",
+      "side": 1,
+      "message": "Don\u0027t we want to turn it off here too if it has noticeable perf impact?",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "3e891ba99b45dbab3a7ca152a567c1d2d4f6c90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
