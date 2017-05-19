@@ -176,9 +176,6 @@ void ImportantFileWriter::WriteNow(std::unique_ptr<std::string> data) {
     return;
   }
 
-  if (HasPendingWrite())
-    timer_.Stop();
-
   Closure task = AdaptCallbackForRepeating(
       BindOnce(&WriteScopedStringToFileAtomically, path_, std::move(data),
                std::move(before_next_write_callback_),
@@ -215,6 +212,7 @@ void ImportantFileWriter::DoScheduledWrite() {
     DLOG(WARNING) << "failed to serialize data to be saved in "
                   << path_.value();
   }
+  timer_.Stop();
   serializer_ = nullptr;
 }
 
