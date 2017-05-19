@@ -16,6 +16,24 @@
       "revId": "16c4301e01c3069dea3b34ec7157e995da948448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2ce8c8_517e824f",
+        "filename": "third_party/WebKit/Source/platform/mac/LocalCurrentGraphicsContext.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-19T19:34:23Z",
+      "side": 1,
+      "message": "Oh, I think I see the mistake you\u0027re pointing out here.  I need to clamp width/height and this clamps right/bottom.  A rect at 10001, 10001 50x50 shouldn\u0027t be clamped.",
+      "parentUuid": "7ad7c69e_81d3c82e",
+      "revId": "16c4301e01c3069dea3b34ec7157e995da948448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
