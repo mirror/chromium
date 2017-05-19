@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad7c69e_81d3c82e",
+        "filename": "third_party/WebKit/Source/platform/mac/LocalCurrentGraphicsContext.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-05-19T18:53:07Z",
+      "side": 1,
+      "message": "Would this code be correct if there is a translation component in getTotalMatrix? In other words, why don\u0027t we map the rect and then clamp the device\u0027s width and height?",
+      "revId": "16c4301e01c3069dea3b34ec7157e995da948448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
