@@ -16,6 +16,24 @@
       "revId": "7ebdb138f42c121d85e25821a24f864e8a380d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030464cf_16d32a2e",
+        "filename": "device/usb/usb_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-19T21:44:21Z",
+      "side": 0,
+      "message": "The handles hold open file descriptors which will be closed anyways when the process exits. The UsbDeviceHandle object has no actual dependency on the UsbService object.",
+      "parentUuid": "8171eaf0_555c35e2",
+      "revId": "7ebdb138f42c121d85e25821a24f864e8a380d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
