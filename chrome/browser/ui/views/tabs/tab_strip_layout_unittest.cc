@@ -96,10 +96,11 @@ TEST(TabStripLayoutTest, Tests) {
   for (size_t i = 0; i < arraysize(test_cases); ++i) {
     int active_width;
     int inactive_width;
-    std::vector<gfx::Rect> tabs_bounds =
-        CalculateBounds(tab_size_info, test_cases[i].num_pinned_tabs,
-                        test_cases[i].num_tabs, test_cases[i].active_index,
-                        test_cases[i].width, &active_width, &inactive_width);
+    float endcap_width;
+    std::vector<gfx::Rect> tabs_bounds = CalculateBounds(
+        tab_size_info, test_cases[i].num_pinned_tabs, test_cases[i].num_tabs,
+        test_cases[i].active_index, test_cases[i].width, &active_width,
+        &inactive_width, &endcap_width);
     EXPECT_EQ(test_cases[i].expected_sizes, TabsBoundsToString(tabs_bounds))
         << i;
     EXPECT_EQ(test_cases[i].expected_active_width, active_width) << i;
