@@ -61,7 +61,10 @@ class COMPONENTS_PREFS_EXPORT OverlayUserPrefStore : public PersistentPrefStore,
   void OnPrefValueChanged(const std::string& key) override;
   void OnInitializationCompleted(bool succeeded) override;
 
+  // Register a preference that should be stored in the overlay.
   void RegisterOverlayPref(const std::string& key);
+  // Register a preference that should be stored in the underlay.
+  void RegisterUnderlayPref(const std::string& key);
 
   void ClearMutableValues() override;
 
@@ -74,11 +77,15 @@ class COMPONENTS_PREFS_EXPORT OverlayUserPrefStore : public PersistentPrefStore,
   // Returns true if |key| corresponds to a preference that shall be stored in
   // an in-memory PrefStore that is not persisted to disk.
   bool ShallBeStoredInOverlay(const std::string& key) const;
+  // Returns true if |key| corresponds to a preference that shall be
+  // a persisted to disk.
+  bool ShallBeStoredInUnderlay(const std::string& key) const;
 
   base::ObserverList<PrefStore::Observer, true> observers_;
   PrefValueMap overlay_;
   scoped_refptr<PersistentPrefStore> underlay_;
   NamesSet overlay_names_set_;
+  NamesSet underlay_names_set_;
 
   DISALLOW_COPY_AND_ASSIGN(OverlayUserPrefStore);
 };
