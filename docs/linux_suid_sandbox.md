@@ -17,7 +17,7 @@ specify its path in the `linux_sandbox_path` GYP variable. When spawning the
 will check for the sandbox binary at the location specified by
 `linux_sandbox_path`. For Google Chrome, this is set to
 `/opt/google/chrome/chrome-sandbox`, and early version had this value hard coded
-in `chrome/browser/zygote_host_linux.cc`.
+in `content/browser/zygote_host/zygote_host_impl_linux.cc`.
 
 
 In order for the sandbox to be used, the following conditions must be met:
