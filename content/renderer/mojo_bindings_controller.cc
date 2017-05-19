@@ -10,6 +10,7 @@
 #include "content/public/renderer/render_view.h"
 #include "content/renderer/mojo_context_state.h"
 #include "gin/per_context_data.h"
+#include "third_party/WebKit/public/web/WebContextFeatures.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
@@ -64,6 +65,12 @@ MojoContextState* MojoBindingsController::GetContextState() {
   MojoContextStateData* context_state = static_cast<MojoContextStateData*>(
       context_data->GetUserData(kMojoContextStateKey));
   return context_state ? context_state->state.get() : NULL;
+}
+
+void MojoBindingsController::DidCreateScriptContext(
+    v8::Local<v8::Context> context,
+    int world_id) {
+  blink::WebContextFeatures::EnableMojoJS(context, true);
 }
 
 void MojoBindingsController::WillReleaseScriptContext(

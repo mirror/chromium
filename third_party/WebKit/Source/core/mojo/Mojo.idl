@@ -8,6 +8,7 @@ typedef unsigned long MojoResult;
 
 [
     RuntimeEnabled=MojoJS,
+    ContextEnabled=MojoJS,
 ] interface Mojo {
     const MojoResult RESULT_OK = 0;
     const MojoResult RESULT_CANCELLED = 1;
