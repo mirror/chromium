@@ -379,6 +379,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   IntRect PixelSnappedBorderBoxRect() const {
     return IntRect(IntPoint(), frame_rect_.PixelSnappedSize());
   }
+  IntSize PixelSnappedPaddingBoxSize() const;
   IntRect BorderBoundingBox() const final {
     return PixelSnappedBorderBoxRect();
   }
@@ -562,9 +563,6 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
     return BorderBefore() + ClientLogicalHeight();
   }
 
-  int PixelSnappedClientWidth() const;
-  int PixelSnappedClientHeight() const;
-
   // scrollWidth/scrollHeight will be the same as clientWidth/clientHeight
   // unless the object has overflow:hidden/scroll/auto specified and also has
   // overflow. scrollLeft/Top return the current scroll position. These methods
@@ -576,6 +574,9 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   virtual LayoutUnit ScrollHeight() const;
   int PixelSnappedScrollWidth() const;
   int PixelSnappedScrollHeight() const;
+  IntSize PixelSnappedScrollSize() const {
+    return IntSize(PixelSnappedScrollWidth(), PixelSnappedScrollHeight());
+  }
   virtual void SetScrollLeft(LayoutUnit);
   virtual void SetScrollTop(LayoutUnit);
 
@@ -1041,11 +1042,11 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
 
   bool HasScrollableOverflowX() const {
     return ScrollsOverflowX() &&
-           PixelSnappedScrollWidth() != PixelSnappedClientWidth();
+           PixelSnappedScrollWidth() != PixelSnappedPaddingBoxSize().Width();
   }
   bool HasScrollableOverflowY() const {
     return ScrollsOverflowY() &&
-           PixelSnappedScrollHeight() != PixelSnappedClientHeight();
+           PixelSnappedScrollHeight() != PixelSnappedPaddingBoxSize().Height();
   }
   virtual bool ScrollsOverflowX() const {
     return HasOverflowClip() && (Style()->OverflowX() == EOverflow::kScroll ||
