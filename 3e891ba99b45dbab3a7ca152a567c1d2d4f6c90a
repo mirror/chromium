@@ -46,6 +46,30 @@
       "revId": "3e891ba99b45dbab3a7ca152a567c1d2d4f6c90a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b317e14_08363f60",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-19T20:47:50Z",
+      "side": 1,
+      "message": "Hm, but unless we understand what\u0027s happening it still seems like a safer default action?",
+      "parentUuid": "81351de7_662a3d29",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "3e891ba99b45dbab3a7ca152a567c1d2d4f6c90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
