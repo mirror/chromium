@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a877019_c0ebec3b",
+        "filename": "chrome/browser/ui/views/payments/order_summary_view_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-19T18:05:37Z",
+      "side": 1,
+      "message": "Good point. It\u0027s indeed what we want so I added comments. Let me know if that\u0027s clear!",
+      "parentUuid": "2db13a1d_f887b182",
+      "revId": "986405b294ae589d1d981db0b07a13aae6ea5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e447180a_41a3559c",
         "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-19T17:36:57Z",
       "side": 1,
       "message": "I worry that the delay between OnStartUpdating and OnSpecUpdated is going to be super short sometimes. Have you seen this in tests? Is it a good experience?",
+      "revId": "986405b294ae589d1d981db0b07a13aae6ea5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bd57c7_50e6fe6f",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-19T18:05:37Z",
+      "side": 1,
+      "message": "It\u0027s really not bad. In that case, the spinner shows and goes away really quickly but it\u0027s barely noticeable because the sheet starts animating right away.",
+      "parentUuid": "e447180a_41a3559c",
       "revId": "986405b294ae589d1d981db0b07a13aae6ea5e89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "88858f93_7f23ba5f",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-19T18:05:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9c7431_3765d7e6",
+      "revId": "986405b294ae589d1d981db0b07a13aae6ea5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47e0ee1a_9d09bfcb",
         "filename": "components/payments/content/payment_request_spec.h",
         "patchSetId": 2
@@ -64,6 +118,30 @@
       "writtenOn": "2017-05-19T17:36:57Z",
       "side": 1,
       "message": "Could we have update_reason here?",
+      "range": {
+        "startLine": 48,
+        "startChar": 31,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "986405b294ae589d1d981db0b07a13aae6ea5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe036f71_3b8d31dc",
+        "filename": "components/payments/content/payment_request_spec.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-19T18:05:37Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes that much semantic sense. When we start updating, there\u0027s an explicit reason for it, whereas the website can trigger this by calling updateWith at any time. I think adding it here conveys that the website tells us \"hey, here\u0027s why I\u0027m updating\", which isn\u0027t the case.",
+      "parentUuid": "47e0ee1a_9d09bfcb",
       "range": {
         "startLine": 48,
         "startChar": 31,
