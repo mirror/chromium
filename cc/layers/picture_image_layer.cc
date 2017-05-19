@@ -7,9 +7,7 @@
 #include <stddef.h>
 
 #include "cc/layers/picture_layer_impl.h"
-#include "cc/paint/drawing_display_item.h"
-#include "cc/paint/paint_canvas.h"
-#include "cc/paint/paint_recorder.h"
+#include "cc/paint/paint_op_buffer.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_settings.h"
 
@@ -62,25 +60,22 @@ scoped_refptr<DisplayItemList> PictureImageLayer::PaintContentsToDisplayList(
 
   auto display_list = make_scoped_refptr(new DisplayItemList);
 
-  PaintRecorder recorder;
-  PaintCanvas* canvas =
-      recorder.beginRecording(gfx::RectToSkRect(PaintableRegion()));
+  PaintOpBuffer* buffer = display_list->StartPaint();
+  buffer->push<SaveOp>();
 
   SkScalar content_to_layer_scale_x = SkFloatToScalar(
       static_cast<float>(bounds().width()) / image_.sk_image()->width());
   SkScalar content_to_layer_scale_y = SkFloatToScalar(
       static_cast<float>(bounds().height()) / image_.sk_image()->height());
-  canvas->scale(content_to_layer_scale_x, content_to_layer_scale_y);
+  buffer->push<ScaleOp>(content_to_layer_scale_x, content_to_layer_scale_y);
 
   // Because Android WebView resourceless software draw mode rasters directly
-  // to the root canvas, this draw must use the kSrcOver_Mode so that
+  // to the root canvas, this draw must use the SkBlendMode::kSrcOver so that
   // transparent images blend correctly.
-  canvas->drawImage(image_, 0, 0);
+  buffer->push<DrawImageOp>(image_, 0, 0, nullptr);
 
-  display_list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      PaintableRegion(), recorder.finishRecordingAsPicture(),
-      gfx::RectToSkRect(PaintableRegion()));
-
+  buffer->push<RestoreOp>();
+  display_list->EndPaintOfUnpaired(PaintableRegion());
   display_list->Finalize();
   return display_list;
 }

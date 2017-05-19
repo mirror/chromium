@@ -8,22 +8,18 @@
 
 #include <vector>
 
+#include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "base/values.h"
 #include "cc/base/filter_operation.h"
 #include "cc/base/filter_operations.h"
-#include "cc/paint/clip_display_item.h"
-#include "cc/paint/clip_path_display_item.h"
-#include "cc/paint/compositing_display_item.h"
-#include "cc/paint/drawing_display_item.h"
-#include "cc/paint/filter_display_item.h"
-#include "cc/paint/float_clip_display_item.h"
+#include "cc/base/render_surface_filters.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_record.h"
 #include "cc/paint/paint_recorder.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "cc/paint/transform_display_item.h"
 #include "cc/test/geometry_test_utils.h"
 #include "cc/test/pixel_test_utils.h"
 #include "cc/test/skia_common.h"
@@ -69,8 +65,7 @@ bool CompareN32Pixels(void* actual_pixels,
   return false;
 }
 
-const gfx::Rect kVisualRect(0, 0, 42, 42);
-
+#if 0
 sk_sp<const PaintRecord> CreateRectPicture(const gfx::Rect& bounds) {
   PaintRecorder recorder;
   PaintCanvas* canvas =
@@ -94,26 +89,11 @@ sk_sp<const PaintRecord> CreateRectPictureWithAlpha(const gfx::Rect& bounds,
   return recorder.finishRecordingAsPicture();
 }
 
-void AppendFirstSerializationTestPicture(scoped_refptr<DisplayItemList> list,
-                                         const gfx::Size& layer_size) {
-  gfx::PointF offset(2.f, 3.f);
-  PaintRecorder recorder;
-
-  PaintFlags red_paint;
-  red_paint.setColor(SK_ColorRED);
-
-  SkRect bounds = SkRect::MakeXYWH(offset.x(), offset.y(), layer_size.width(),
-                                   layer_size.height());
-  PaintCanvas* canvas = recorder.beginRecording(bounds);
-  canvas->translate(offset.x(), offset.y());
-  canvas->drawRect(SkRect::MakeWH(4, 4), red_paint);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(), bounds);
-}
+#endif
 
 }  // namespace
 
-TEST(DisplayItemListTest, SingleDrawingItem) {
+TEST(DisplayItemListTest, SingleUnpairedRange) {
   gfx::Rect layer_rect(100, 100);
   PaintRecorder recorder;
   PaintFlags blue_flags;
@@ -123,16 +103,16 @@ TEST(DisplayItemListTest, SingleDrawingItem) {
   unsigned char pixels[4 * 100 * 100] = {0};
   auto list = make_scoped_refptr(new DisplayItemList);
 
-  gfx::PointF offset(8.f, 9.f);
-  gfx::RectF recording_rect(offset, gfx::SizeF(layer_rect.size()));
-  PaintCanvas* canvas =
-      recorder.beginRecording(gfx::RectFToSkRect(recording_rect));
-  canvas->translate(offset.x(), offset.y());
-  canvas->drawRect(SkRect::MakeLTRB(0.f, 0.f, 60.f, 60.f), red_paint);
-  canvas->drawRect(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f), blue_flags);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(),
-      gfx::RectFToSkRect(recording_rect));
+  gfx::Point offset(8, 9);
+
+  PaintOpBuffer* buffer = list->StartPaint();
+  buffer->push<SaveOp>();
+  buffer->push<TranslateOp>(offset.x(), offset.y());
+  buffer->push<DrawRectOp>(SkRect::MakeLTRB(0.f, 0.f, 60.f, 60.f), red_paint);
+  buffer->push<DrawRectOp>(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f),
+                           blue_flags);
+  buffer->push<RestoreOp>();
+  list->EndPaintOfUnpaired(gfx::Rect(offset, layer_rect.size()));
   list->Finalize();
   DrawDisplayList(pixels, layer_rect, list);
 
@@ -155,7 +135,7 @@ TEST(DisplayItemListTest, SingleDrawingItem) {
   EXPECT_TRUE(CompareN32Pixels(pixels, expected_pixels, 100, 100));
 }
 
-TEST(DisplayItemListTest, ClipItem) {
+TEST(DisplayItemListTest, ClipPairedRange) {
   gfx::Rect layer_rect(100, 100);
   PaintRecorder recorder;
   PaintFlags blue_flags;
@@ -165,31 +145,45 @@ TEST(DisplayItemListTest, ClipItem) {
   unsigned char pixels[4 * 100 * 100] = {0};
   auto list = make_scoped_refptr(new DisplayItemList);
 
-  gfx::PointF first_offset(8.f, 9.f);
-  gfx::RectF first_recording_rect(first_offset, gfx::SizeF(layer_rect.size()));
-  PaintCanvas* canvas =
-      recorder.beginRecording(gfx::RectFToSkRect(first_recording_rect));
-  canvas->translate(first_offset.x(), first_offset.y());
-  canvas->drawRect(SkRect::MakeWH(60, 60), red_paint);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(),
-      gfx::RectFToSkRect(first_recording_rect));
+  gfx::Point first_offset(8, 9);
+  gfx::Rect first_recording_rect(first_offset, layer_rect.size());
+
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<TranslateOp>(first_offset.x(), first_offset.y());
+    buffer->push<DrawRectOp>(SkRect::MakeWH(60, 60), red_paint);
+    buffer->push<RestoreOp>();
+    list->EndPaintOfUnpaired(first_recording_rect);
+  }
 
   gfx::Rect clip_rect(60, 60, 10, 10);
-  list->CreateAndAppendPairedBeginItem<ClipDisplayItem>(
-      clip_rect, std::vector<SkRRect>(), true);
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<ClipRectOp>(gfx::RectToSkRect(clip_rect), SkClipOp::kIntersect,
+                             true);
+    list->EndPaintOfPairedBegin();
+  }
 
-  gfx::PointF second_offset(2.f, 3.f);
-  gfx::RectF second_recording_rect(second_offset,
-                                   gfx::SizeF(layer_rect.size()));
-  canvas = recorder.beginRecording(gfx::RectFToSkRect(second_recording_rect));
-  canvas->translate(second_offset.x(), second_offset.y());
-  canvas->drawRect(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f), blue_flags);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(),
-      gfx::RectFToSkRect(second_recording_rect));
+  gfx::Point second_offset(2, 3);
+  gfx::Rect second_recording_rect(second_offset, layer_rect.size());
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<TranslateOp>(second_offset.x(), second_offset.y());
+    buffer->push<DrawRectOp>(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f),
+                             blue_flags);
+    buffer->push<RestoreOp>();
+    list->EndPaintOfUnpaired(second_recording_rect);
+  }
 
-  list->CreateAndAppendPairedEndItem<EndClipDisplayItem>();
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<RestoreOp>();
+    list->EndPaintOfPairedEnd();
+  }
+
   list->Finalize();
 
   DrawDisplayList(pixels, layer_rect, list);
@@ -214,7 +208,7 @@ TEST(DisplayItemListTest, ClipItem) {
   EXPECT_TRUE(CompareN32Pixels(pixels, expected_pixels, 100, 100));
 }
 
-TEST(DisplayItemListTest, TransformItem) {
+TEST(DisplayItemListTest, TransformPairedRange) {
   gfx::Rect layer_rect(100, 100);
   PaintRecorder recorder;
   PaintFlags blue_flags;
@@ -224,31 +218,43 @@ TEST(DisplayItemListTest, TransformItem) {
   unsigned char pixels[4 * 100 * 100] = {0};
   auto list = make_scoped_refptr(new DisplayItemList);
 
-  gfx::PointF first_offset(8.f, 9.f);
-  gfx::RectF first_recording_rect(first_offset, gfx::SizeF(layer_rect.size()));
-  PaintCanvas* canvas =
-      recorder.beginRecording(gfx::RectFToSkRect(first_recording_rect));
-  canvas->translate(first_offset.x(), first_offset.y());
-  canvas->drawRect(SkRect::MakeWH(60, 60), red_paint);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(),
-      gfx::RectFToSkRect(first_recording_rect));
+  gfx::Point first_offset(8, 9);
+  gfx::Rect first_recording_rect(first_offset, layer_rect.size());
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<TranslateOp>(first_offset.x(), first_offset.y());
+    buffer->push<DrawRectOp>(SkRect::MakeWH(60, 60), red_paint);
+    buffer->push<RestoreOp>();
+    list->EndPaintOfUnpaired(first_recording_rect);
+  }
 
   gfx::Transform transform;
   transform.Rotate(45.0);
-  list->CreateAndAppendPairedBeginItem<TransformDisplayItem>(transform);
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<ConcatOp>(static_cast<SkMatrix>(transform.matrix()));
+    list->EndPaintOfPairedBegin();
+  }
 
-  gfx::PointF second_offset(2.f, 3.f);
-  gfx::RectF second_recording_rect(second_offset,
-                                   gfx::SizeF(layer_rect.size()));
-  canvas = recorder.beginRecording(gfx::RectFToSkRect(second_recording_rect));
-  canvas->translate(second_offset.x(), second_offset.y());
-  canvas->drawRect(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f), blue_flags);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, recorder.finishRecordingAsPicture(),
-      gfx::RectFToSkRect(second_recording_rect));
+  gfx::Point second_offset(2, 3);
+  gfx::Rect second_recording_rect(second_offset, layer_rect.size());
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<TranslateOp>(second_offset.x(), second_offset.y());
+    buffer->push<DrawRectOp>(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f),
+                             blue_flags);
+    buffer->push<RestoreOp>();
+    list->EndPaintOfUnpaired(second_recording_rect);
+  }
 
-  list->CreateAndAppendPairedEndItem<EndTransformDisplayItem>();
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<RestoreOp>();
+    list->EndPaintOfPairedEnd();
+  }
   list->Finalize();
 
   DrawDisplayList(pixels, layer_rect, list);
@@ -273,7 +279,7 @@ TEST(DisplayItemListTest, TransformItem) {
   EXPECT_TRUE(CompareN32Pixels(pixels, expected_pixels, 100, 100));
 }
 
-TEST(DisplayItemListTest, FilterItem) {
+TEST(DisplayItemListTest, FilterPairedRange) {
   gfx::Rect layer_rect(100, 100);
   FilterOperations filters;
   unsigned char pixels[4 * 100 * 100] = {0};
@@ -299,29 +305,45 @@ TEST(DisplayItemListTest, FilterItem) {
   filters.Append(FilterOperation::CreateReferenceFilter(image_filter));
   filters.Append(FilterOperation::CreateBrightnessFilter(0.5f));
   gfx::RectF filter_bounds(10.f, 10.f, 50.f, 50.f);
-  list->CreateAndAppendPairedBeginItem<FilterDisplayItem>(
-      filters, filter_bounds, filter_bounds.origin());
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<TranslateOp>(filter_bounds.x(), filter_bounds.y());
+
+    PaintFlags flags;
+    flags.setImageFilter(
+        RenderSurfaceFilters::BuildImageFilter(filters, filter_bounds.size()));
+
+    SkRect layer_bounds = gfx::RectFToSkRect(filter_bounds);
+    layer_bounds.offset(-filter_bounds.x(), -filter_bounds.y());
+    buffer->push<SaveLayerOp>(&layer_bounds, &flags);
+    buffer->push<TranslateOp>(-filter_bounds.x(), -filter_bounds.y());
+
+    list->EndPaintOfPairedBegin();
+  }
 
   // Include a rect drawing so that filter is actually applied to something.
   {
-    PaintRecorder recorder;
+    PaintOpBuffer* buffer = list->StartPaint();
 
-    PaintFlags red_paint;
-    red_paint.setColor(SK_ColorRED);
+    PaintFlags red_flags;
+    red_flags.setColor(SK_ColorRED);
 
-    SkRect bounds =
-        SkRect::MakeXYWH(0, 0, layer_rect.width(), layer_rect.height());
-    PaintCanvas* canvas = recorder.beginRecording(bounds);
-    canvas->drawRect(
+    buffer->push<DrawRectOp>(
         SkRect::MakeLTRB(filter_bounds.x(), filter_bounds.y(),
                          filter_bounds.right(), filter_bounds.bottom()),
-        red_paint);
-    list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-        ToNearestRect(filter_bounds), recorder.finishRecordingAsPicture(),
-        bounds);
+        red_flags);
+
+    list->EndPaintOfUnpaired(ToEnclosingRect(filter_bounds));
   }
 
-  list->CreateAndAppendPairedEndItem<EndFilterDisplayItem>();
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<RestoreOp>();  // For SaveLayerOp.
+    buffer->push<RestoreOp>();  // For SaveOp.
+    list->EndPaintOfPairedEnd();
+  }
+
   list->Finalize();
 
   DrawDisplayList(pixels, layer_rect, list);
@@ -340,72 +362,214 @@ TEST(DisplayItemListTest, FilterItem) {
 }
 
 TEST(DisplayItemListTest, ApproximateMemoryUsage) {
-  const int kNumCommandsInTestSkPicture = 1000;
+  const int kNumPaintOps = 1000;
   size_t memory_usage;
+
+  auto list = make_scoped_refptr(new DisplayItemList);
 
   // Make an PaintRecord whose size is known.
   gfx::Rect layer_rect(100, 100);
   PaintRecorder recorder;
   PaintFlags blue_flags;
   blue_flags.setColor(SK_ColorBLUE);
-  PaintCanvas* canvas = recorder.beginRecording(gfx::RectToSkRect(layer_rect));
-  for (int i = 0; i < kNumCommandsInTestSkPicture; i++)
-    canvas->drawRect(SkRect(), blue_flags);
-  sk_sp<PaintRecord> record = recorder.finishRecordingAsPicture();
-  size_t record_size = record->bytes_used();
-  ASSERT_GE(record_size, kNumCommandsInTestSkPicture * sizeof(SkRect));
 
-  auto list = make_scoped_refptr(new DisplayItemList);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      kVisualRect, record, gfx::RectToSkRect(layer_rect));
-  list->Finalize();
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    for (int i = 0; i < kNumPaintOps; i++)
+      buffer->push<DrawRectOp>(SkRect::MakeWH(1, 1), blue_flags);
+    list->EndPaintOfUnpaired(layer_rect);
+  }
+
   memory_usage = list->ApproximateMemoryUsage();
-  EXPECT_GE(memory_usage, record_size);
-  EXPECT_LE(memory_usage, 2 * record_size);
+  EXPECT_GE(memory_usage, sizeof(DrawRectOp) * kNumPaintOps);
+  EXPECT_LE(memory_usage, 2 * sizeof(DrawRectOp) * kNumPaintOps);
 }
 
-TEST(DisplayItemListTest, AsValueWithNoItems) {
+TEST(DisplayItemListTest, AsValueWithNoOps) {
   auto list = make_scoped_refptr(new DisplayItemList);
   list->SetRetainVisualRectsForTesting(true);
   list->Finalize();
 
+  // Pass |true| to ask for PaintOps even though there are none.
   std::string value = list->CreateTracedValue(true)->ToString();
-  EXPECT_EQ(value.find("\"layer_rect\": [0,0,0,0]"), std::string::npos);
-  EXPECT_NE(value.find("\"items\":[]"), std::string::npos);
-  EXPECT_EQ(value.find("visualRect: [0,0 42x42]"), std::string::npos);
-  EXPECT_NE(value.find("\"skp64\":"), std::string::npos);
 
+  std::unique_ptr<base::Value> root;
+  const base::DictionaryValue* root_dict;
+
+  root = base::JSONReader().Read(value);
+  ASSERT_TRUE(root->GetAsDictionary(&root_dict));
+  // The traced value has a params dictionary as its root.
+  {
+    const base::DictionaryValue* params_dict;
+    ASSERT_TRUE(root_dict->GetDictionary("params", &params_dict));
+
+    // The real contents of the traced value is in here.
+    {
+      const base::ListValue* list;
+      double d;
+
+      // The layer_rect field is present by empty.
+      ASSERT_TRUE(params_dict->GetList("layer_rect", &list));
+      ASSERT_EQ(4u, list->GetSize());
+      EXPECT_TRUE(list->GetDouble(0, &d) && d == 0) << d;
+      EXPECT_TRUE(list->GetDouble(1, &d) && d == 0) << d;
+      EXPECT_TRUE(list->GetDouble(2, &d) && d == 0) << d;
+      EXPECT_TRUE(list->GetDouble(3, &d) && d == 0) << d;
+
+      // The items list is there but empty.
+      ASSERT_TRUE(params_dict->GetList("items", &list));
+      EXPECT_EQ(0u, list->GetSize());
+    }
+  }
+
+  // Pass |false| to not include PaintOps.
   value = list->CreateTracedValue(false)->ToString();
-  EXPECT_EQ(value.find("\"layer_rect\": [0,0,0,0]"), std::string::npos);
-  EXPECT_EQ(value.find("\"items\":"), std::string::npos);
-  EXPECT_EQ(value.find("visualRect: [0,0 42x42]"), std::string::npos);
-  EXPECT_NE(value.find("\"skp64\":"), std::string::npos);
+
+  root = base::JSONReader().Read(value);
+  ASSERT_TRUE(root->GetAsDictionary(&root_dict));
+  // The traced value has a params dictionary as its root.
+  {
+    const base::DictionaryValue* params_dict;
+    ASSERT_TRUE(root_dict->GetDictionary("params", &params_dict));
+
+    // The real contents of the traced value is in here.
+    {
+      const base::ListValue* list;
+      double d;
+
+      // The layer_rect field is present by empty.
+      ASSERT_TRUE(params_dict->GetList("layer_rect", &list));
+      ASSERT_EQ(4u, list->GetSize());
+      EXPECT_TRUE(list->GetDouble(0, &d) && d == 0) << d;
+      EXPECT_TRUE(list->GetDouble(1, &d) && d == 0) << d;
+      EXPECT_TRUE(list->GetDouble(2, &d) && d == 0) << d;
+      EXPECT_TRUE(list->GetDouble(3, &d) && d == 0) << d;
+
+      // The items list is not there since we asked for no ops.
+      ASSERT_FALSE(params_dict->GetList("items", &list));
+    }
+  }
 }
 
-TEST(DisplayItemListTest, AsValueWithItems) {
+TEST(DisplayItemListTest, AsValueWithOps) {
   gfx::Rect layer_rect = gfx::Rect(1, 2, 8, 9);
   auto list = make_scoped_refptr(new DisplayItemList);
   list->SetRetainVisualRectsForTesting(true);
   gfx::Transform transform;
   transform.Translate(6.f, 7.f);
-  list->CreateAndAppendPairedBeginItem<TransformDisplayItem>(transform);
-  AppendFirstSerializationTestPicture(list, layer_rect.size());
-  list->CreateAndAppendPairedEndItem<EndTransformDisplayItem>();
+
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<SaveOp>();
+    buffer->push<ConcatOp>(static_cast<SkMatrix>(transform.matrix()));
+    list->EndPaintOfPairedBegin();
+  }
+
+  gfx::Point offset(2, 3);
+  gfx::Rect bounds(offset, layer_rect.size());
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+
+    PaintFlags red_paint;
+    red_paint.setColor(SK_ColorRED);
+
+    buffer->push<SaveOp>();
+    buffer->push<TranslateOp>(offset.x(), offset.y());
+    buffer->push<DrawRectOp>(SkRect::MakeWH(4, 4), red_paint);
+
+    list->EndPaintOfUnpaired(bounds);
+  }
+
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<RestoreOp>();
+    list->EndPaintOfPairedEnd();
+  }
   list->Finalize();
 
   std::string value = list->CreateTracedValue(true)->ToString();
-  EXPECT_EQ(value.find("\"layer_rect\": [0,0,42,42]"), std::string::npos);
-  EXPECT_NE(value.find("{\"items\":[\"TransformDisplayItem"),
-            std::string::npos);
-  EXPECT_NE(value.find("visualRect: [0,0 42x42]"), std::string::npos);
-  EXPECT_NE(value.find("\"skp64\":"), std::string::npos);
+
+  std::unique_ptr<base::Value> root;
+  const base::DictionaryValue* root_dict;
+
+  root = base::JSONReader().Read(value);
+  ASSERT_TRUE(root->GetAsDictionary(&root_dict));
+  // The traced value has a params dictionary as its root.
+  {
+    const base::DictionaryValue* params_dict;
+    ASSERT_TRUE(root_dict->GetDictionary("params", &params_dict));
+
+    // The real contents of the traced value is in here.
+    {
+      const base::ListValue* list;
+      double d;
+
+      // The layer_rect field is present and has the bounds of the rtree.
+      ASSERT_TRUE(params_dict->GetList("layer_rect", &list));
+      ASSERT_EQ(4u, list->GetSize());
+      EXPECT_TRUE(list->GetDouble(0, &d) && d == 2) << d;
+      EXPECT_TRUE(list->GetDouble(1, &d) && d == 3) << d;
+      EXPECT_TRUE(list->GetDouble(2, &d) && d == 8) << d;
+      EXPECT_TRUE(list->GetDouble(3, &d) && d == 9) << d;
+
+      // The items list has 3 things in it since we built 3 visual rects.
+      ASSERT_TRUE(params_dict->GetList("items", &list));
+      EXPECT_EQ(3u, list->GetSize());
+
+      // This is determined by the number of ops we pushed in each range above.
+      // Ex. we pushed 2 ops in the first range, so the 2nd range starts at 2.
+      size_t range_starts[] = {0, 2, 5};
+
+      for (int i = 0; i < 3; ++i) {
+        const base::DictionaryValue* item_dict;
+        const base::ListValue* visual_rect_list;
+
+        ASSERT_TRUE(list->GetDictionary(i, &item_dict));
+
+        // The first visual rect range starts at the beginning of the buffer.
+        EXPECT_TRUE(item_dict->GetDouble("rangeStart", &d) &&
+                    d == range_starts[i])
+            << d;
+        // The SkPicture for each item exists.
+        EXPECT_TRUE(
+            item_dict->GetString("skp64", static_cast<std::string*>(nullptr)));
+        // The range has a visual rect, it is the same for each item here.
+        EXPECT_TRUE(item_dict->GetList("visualRect", &visual_rect_list));
+        ASSERT_EQ(4u, visual_rect_list->GetSize());
+        EXPECT_TRUE(visual_rect_list->GetDouble(0, &d) && d == 2) << d;
+        EXPECT_TRUE(visual_rect_list->GetDouble(1, &d) && d == 3) << d;
+        EXPECT_TRUE(visual_rect_list->GetDouble(2, &d) && d == 8) << d;
+        EXPECT_TRUE(visual_rect_list->GetDouble(3, &d) && d == 9) << d;
+      }
+    }
+  }
 
   value = list->CreateTracedValue(false)->ToString();
-  EXPECT_EQ(value.find("\"layer_rect\": [0,0,42,42]"), std::string::npos);
-  EXPECT_EQ(value.find("{\"items\":[\"TransformDisplayItem"),
-            std::string::npos);
-  EXPECT_EQ(value.find("visualRect: [0,0 42x42]"), std::string::npos);
-  EXPECT_NE(value.find("\"skp64\":"), std::string::npos);
+
+  root = base::JSONReader().Read(value);
+  ASSERT_TRUE(root->GetAsDictionary(&root_dict));
+  // The traced value has a params dictionary as its root.
+  {
+    const base::DictionaryValue* params_dict;
+    ASSERT_TRUE(root_dict->GetDictionary("params", &params_dict));
+
+    // The real contents of the traced value is in here.
+    {
+      const base::ListValue* list;
+      double d;
+
+      // The layer_rect field is present and has the bounds of the rtree.
+      ASSERT_TRUE(params_dict->GetList("layer_rect", &list));
+      ASSERT_EQ(4u, list->GetSize());
+      EXPECT_TRUE(list->GetDouble(0, &d) && d == 2) << d;
+      EXPECT_TRUE(list->GetDouble(1, &d) && d == 3) << d;
+      EXPECT_TRUE(list->GetDouble(2, &d) && d == 8) << d;
+      EXPECT_TRUE(list->GetDouble(3, &d) && d == 9) << d;
+
+      // The items list is not present since we asked for no ops.
+      ASSERT_FALSE(params_dict->GetList("items", &list));
+    }
+  }
 }
 
 TEST(DisplayItemListTest, SizeEmpty) {
@@ -413,6 +577,7 @@ TEST(DisplayItemListTest, SizeEmpty) {
   EXPECT_EQ(0u, list->size());
 }
 
+#if 0
 TEST(DisplayItemListTest, SizeOne) {
   auto list = make_scoped_refptr(new DisplayItemList);
   gfx::Rect drawing_bounds(5, 6, 1, 1);
@@ -848,5 +1013,5 @@ TEST(DisplayItemListTest, SaveDrawRestoreFail_TooManyOps) {
   EXPECT_EQ(gfx::RectToSkRect(kVisualRect), canvas.draw_rect_);
   EXPECT_LE(40, canvas.paint_.getAlpha());
 }
-
+#endif
 }  // namespace cc

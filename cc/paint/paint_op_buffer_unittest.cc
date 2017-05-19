@@ -241,7 +241,7 @@ TEST(PaintOpBufferTest, SaveDrawRestore) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
 
   PaintFlags draw_flags;
   draw_flags.setColor(SK_ColorMAGENTA);
@@ -271,7 +271,7 @@ TEST(PaintOpBufferTest, SaveDrawRestoreFail_BadFlags) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
 
   PaintFlags draw_flags;
   draw_flags.setColor(SK_ColorMAGENTA);
@@ -297,7 +297,7 @@ TEST(PaintOpBufferTest, SaveDrawRestoreFail_TooManyOps) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
 
   PaintFlags draw_flags;
   draw_flags.setColor(SK_ColorMAGENTA);
@@ -324,7 +324,7 @@ TEST(PaintOpBufferTest, SaveDrawRestore_SingleOpNotADrawOp) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
 
   buffer.push<NoopOp>();
   buffer.push<RestoreOp>();
@@ -352,7 +352,7 @@ TEST(PaintOpBufferTest, SaveDrawRestore_SingleOpRecordWithSingleOp) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
   buffer.push<DrawRecordOp>(std::move(record));
   buffer.push<RestoreOp>();
 
@@ -380,7 +380,7 @@ TEST(PaintOpBufferTest, SaveDrawRestore_SingleOpRecordWithSingleNonDrawOp) {
   PaintOpBuffer buffer;
 
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha);
+  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, false);
   buffer.push<DrawRecordOp>(std::move(record));
   buffer.push<RestoreOp>();
 
@@ -432,8 +432,11 @@ TEST(PaintOpBufferTest, DiscardableImagesTracking_NestedDrawOp) {
   EXPECT_TRUE(buffer.HasDiscardableImages());
 
   scoped_refptr<DisplayItemList> list = new DisplayItemList;
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
-      gfx::Rect(100, 100), record, SkRect::MakeWH(100, 100));
+  {
+    PaintOpBuffer* buffer = list->StartPaint();
+    buffer->push<DrawRecordOp>(record);
+    list->EndPaintOfUnpaired(gfx::Rect(100, 100));
+  }
   list->Finalize();
   PaintOpBuffer new_buffer;
   new_buffer.push<DrawDisplayItemListOp>(list);
@@ -610,7 +613,7 @@ TEST(PaintOpBufferTest, ContiguousRangeWithSaveLayerAlphaRestore) {
 
   buffer.push<DrawColorOp>(0u, SkBlendMode::kClear);
   buffer.push<DrawColorOp>(1u, SkBlendMode::kClear);
-  buffer.push<SaveLayerAlphaOp>(nullptr, 1u);
+  buffer.push<SaveLayerAlphaOp>(nullptr, 1u, true);
   buffer.push<RestoreOp>();
   buffer.push<DrawColorOp>(2u, SkBlendMode::kClear);
   buffer.push<DrawColorOp>(3u, SkBlendMode::kClear);
@@ -682,7 +685,7 @@ TEST(PaintOpBufferTest, NonContiguousRangeWithSaveLayerAlphaRestore) {
 
   buffer.push<DrawColorOp>(0u, SkBlendMode::kClear);
   buffer.push<DrawColorOp>(1u, SkBlendMode::kClear);
-  buffer.push<SaveLayerAlphaOp>(nullptr, 1u);
+  buffer.push<SaveLayerAlphaOp>(nullptr, 1u, true);
   buffer.push<DrawColorOp>(2u, SkBlendMode::kClear);
   buffer.push<DrawColorOp>(3u, SkBlendMode::kClear);
   buffer.push<RestoreOp>();
@@ -762,7 +765,7 @@ TEST(PaintOpBufferTest, ContiguousRangeWithSaveLayerAlphaDrawRestore) {
 
   add_draw_rect(&buffer, 0u);
   add_draw_rect(&buffer, 1u);
-  buffer.push<SaveLayerAlphaOp>(nullptr, 1u);
+  buffer.push<SaveLayerAlphaOp>(nullptr, 1u, true);
   add_draw_rect(&buffer, 2u);
   buffer.push<RestoreOp>();
   add_draw_rect(&buffer, 3u);
@@ -845,7 +848,7 @@ TEST(PaintOpBufferTest, NonContiguousRangeWithSaveLayerAlphaDrawRestore) {
 
   add_draw_rect(&buffer, 0u);
   add_draw_rect(&buffer, 1u);
-  buffer.push<SaveLayerAlphaOp>(nullptr, 1u);
+  buffer.push<SaveLayerAlphaOp>(nullptr, 1u, true);
   add_draw_rect(&buffer, 2u);
   add_draw_rect(&buffer, 3u);
   add_draw_rect(&buffer, 4u);
