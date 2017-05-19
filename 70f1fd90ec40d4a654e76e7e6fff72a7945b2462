@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae2ea98d_d8173296",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-19T03:19:08Z",
+      "side": 1,
+      "message": "Oh - I did it that way to preserve the back-arrow behaviour of \"Site Details\" (i.e. when #enable-site-settings is turned on, it should return to \"All Sites\", regardless of the #enable-site-details setting). I kept this hunk as it is in this patchset, but let me know if I missed something.",
+      "parentUuid": "37b4eca3_d5909763",
+      "range": {
+        "startLine": 170,
+        "startChar": 3,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0cda6fe_0f0d2cfb",
         "filename": "chrome/browser/resources/settings/route.js",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab847cc0_8c9fdb92",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-19T03:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0cda6fe_0f0d2cfb",
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b3ba012c_e818a8f8",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-19T03:19:08Z",
+      "side": 1,
+      "message": "The attached bug isn\u0027t the general \"Site Details\" one (it\u0027s for linking the Page Info bubble to Site Details), so I just moved it to the end of this comment.",
+      "parentUuid": "2eb21ebb_d160cd31",
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44d79dad_e8468bf2",
         "filename": "chrome/browser/ui/page_info/page_info.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfe2f10_0cef7f01",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-19T03:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44d79dad_e8468bf2",
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
