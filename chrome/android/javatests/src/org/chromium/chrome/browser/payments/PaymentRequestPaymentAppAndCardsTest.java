@@ -54,11 +54,11 @@ public class PaymentRequestPaymentAppAndCardsTest implements MainActivityStartCa
         // Mastercard card without a billing address.
         helper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
                 "5454545454545454", "", "12", "2050", "mastercard", R.drawable.pr_mc,
-                "" /* billingAddressId */, "" /* serverId */));
+                CreditCard.CARD_TYPE_UNKNOWN, "" /* billingAddressId */, "" /* serverId */));
         // Visa card with complete set of information.
         helper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
-                "4111111111111111", "", "12", "2050", "visa", R.drawable.pr_visa, billingAddressId,
-                "" /* serverId */));
+                "4111111111111111", "", "12", "2050", "visa", R.drawable.pr_visa,
+                CreditCard.CARD_TYPE_UNKNOWN, billingAddressId, "" /* serverId */));
     }
 
     /**
