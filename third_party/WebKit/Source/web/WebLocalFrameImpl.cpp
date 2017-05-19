@@ -1607,7 +1607,7 @@ WebLocalFrameImpl::WebLocalFrameImpl(
       interface_provider_(interface_provider),
       interface_registry_(interface_registry),
       web_dev_tools_frontend_(0),
-      input_method_controller_(new WebInputMethodControllerImpl(this)),
+      input_method_controller_(*this),
       text_checker_client_(new TextCheckerClientImpl(this)),
       self_keep_alive_(this) {
   DCHECK(client_);
@@ -2573,7 +2573,7 @@ base::SingleThreadTaskRunner* WebLocalFrameImpl::UnthrottledTaskRunner() {
 
 WebInputMethodControllerImpl* WebLocalFrameImpl::GetInputMethodController()
     const {
-  return input_method_controller_.get();
+  return const_cast<WebInputMethodControllerImpl*>(&input_method_controller_);
 }
 
 void WebLocalFrameImpl::ExtractSmartClipData(WebRect rect_in_viewport,

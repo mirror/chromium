@@ -514,7 +514,7 @@ class WEB_EXPORT WebLocalFrameImpl final
 
   Member<Node> context_menu_node_;
 
-  std::unique_ptr<WebInputMethodControllerImpl> input_method_controller_;
+  WebInputMethodControllerImpl input_method_controller_;
 
   // Stores the TextCheckerClient to bridge SpellChecker and WebTextCheckClient.
   Member<TextCheckerClientImpl> text_checker_client_;
