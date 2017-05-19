@@ -57,7 +57,7 @@ IDBRequest* IDBRequest::Create(ScriptState* script_state,
   IDBRequest* request = new IDBRequest(script_state, source, transaction);
   request->SuspendIfNeeded();
   // Requests associated with IDBFactory (open/deleteDatabase/getDatabaseNames)
-  // are not associated with transactions.
+  // do not have an associated transaction.
   if (transaction)
     transaction->RegisterRequest(request);
   return request;
@@ -396,7 +396,9 @@ void IDBRequest::ContextDestroyed(ExecutionContext*) {
     ready_state_ = kEarlyDeath;
     if (transaction_) {
       transaction_->UnregisterRequest(this);
-      transaction_.Clear();
+
+      // NOTE(pwnall): Checking to see if we can get away without this.
+      // transaction_.Clear();
     }
   }
 
