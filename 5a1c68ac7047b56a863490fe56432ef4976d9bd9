@@ -16,6 +16,24 @@
       "revId": "5a1c68ac7047b56a863490fe56432ef4976d9bd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5014124c_61b2ce38",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-19T18:25:24Z",
+      "side": 1,
+      "message": "I don\u0027t see any major downsides to putting them in a separate files that are then read in.\n\nThis also reminds me of https://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/diff_test_data.py.\n\nSo, this would look something like:\n\n    def read_data_file(self, name):\n        path \u003d os.join(os.dirname(__file__), \u0027data\u0027, name)\n        return open(path).read()\n\n    def test_filter_transform_patch(self):\n        sample_patch \u003d self.read_data_file(\u0027sample.patch\u0027)\n        expected \u003d self.read_data_file(\u0027filtered_sample.patch\u0027)\n        self.assertEqual(...)",
+      "parentUuid": "8db28362_19c3c30d",
+      "revId": "5a1c68ac7047b56a863490fe56432ef4976d9bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
