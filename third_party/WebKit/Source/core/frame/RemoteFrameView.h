@@ -25,8 +25,11 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
 
   ~RemoteFrameView() override;
 
-  void SetParent(FrameView*) override;
-  FrameView* Parent() const override { return parent_; }
+  void SetFrameOrPluginState(FrameOrPluginState) override;
+  FrameOrPluginState GetFrameOrPluginState() const {
+    return remote_frame_view_state_;
+  }
+  FrameView* ParentFrameView() const;
 
   RemoteFrame& GetFrame() const {
     DCHECK(remote_frame_);
@@ -58,7 +61,7 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
   // and FrameView. Please see the FrameView::m_frame comment for
   // details.
   Member<RemoteFrame> remote_frame_;
-  Member<FrameView> parent_;
+  FrameOrPluginState remote_frame_view_state_;
   IntRect last_viewport_intersection_;
   IntRect frame_rect_;
   bool self_visible_;
