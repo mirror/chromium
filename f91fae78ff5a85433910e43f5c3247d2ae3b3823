@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99437f6c_bef70a53",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-19T21:22:36Z",
+      "side": 1,
+      "message": "Yep. Will add.",
+      "parentUuid": "48c8e256_1682a538",
+      "revId": "f91fae78ff5a85433910e43f5c3247d2ae3b3823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f4c9e3_6f62fd3e",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit_unittest.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-19T18:25:24Z",
       "side": 1,
       "message": "It may also be worth testing behavior related to deleting, adding and renaming exportable files in external/wpt.\n\nI think that this should work currently though, probably?",
+      "revId": "f91fae78ff5a85433910e43f5c3247d2ae3b3823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b220cae8_496846fa",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-19T21:22:36Z",
+      "side": 1,
+      "message": "I\u0027d imagine it\u0027d work the same way, since it preserves the deletion and renaming lines. I can add a test for that but I\u0027d like to land this sooner rather than later so we start picking up in-flight Gerrit CLs.",
+      "parentUuid": "c3f4c9e3_6f62fd3e",
       "revId": "f91fae78ff5a85433910e43f5c3247d2ae3b3823",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
