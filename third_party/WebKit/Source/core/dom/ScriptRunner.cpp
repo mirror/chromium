@@ -26,9 +26,12 @@
 #include "core/dom/ScriptRunner.h"
 
 #include <algorithm>
+#include "bindings/core/v8/ScriptStreamer.h"
+#include "bindings/core/v8/V8BindingForCore.h"  // for ToScriptStateForMainWorld
 #include "core/dom/Document.h"
 #include "core/dom/ScriptLoader.h"
 #include "core/dom/TaskRunnerHelper.h"
+#include "core/frame/LocalFrame.h"  // for GetFrame()->GetSettings()
 #include "platform/heap/Handle.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "public/platform/Platform.h"
@@ -39,11 +42,12 @@ namespace blink {
 ScriptRunner::ScriptRunner(Document* document)
     : document_(document),
       task_runner_(TaskRunnerHelper::Get(TaskType::kNetworking, document)),
+      currently_streamed_script_was_notify_finished_(false),
       number_of_in_order_scripts_with_pending_notification_(0),
       is_suspended_(false) {
   DCHECK(document);
 #ifndef NDEBUG
-  has_ever_been_suspended_ = false;
+  number_of_extra_tasks_ = 0;
 #endif
 }
 
@@ -54,6 +58,7 @@ void ScriptRunner::QueueScriptForExecution(ScriptLoader* script_loader,
   switch (execution_type) {
     case kAsync:
       pending_async_scripts_.insert(script_loader);
+      TryStream(script_loader, true);
       break;
 
     case kInOrder:
@@ -74,7 +79,11 @@ void ScriptRunner::PostTask(const WebTraceLocation& web_trace_location) {
 
 void ScriptRunner::Suspend() {
 #ifndef NDEBUG
-  has_ever_been_suspended_ = true;
+  // Resume will re-post tasks for all available scripts.
+  number_of_extra_tasks_ += async_scripts_to_execute_soon_.size() +
+                            in_order_scripts_to_execute_soon_.size() +
+                            (currently_streamed_script_ &&
+                             currently_streamed_script_was_notify_finished_);
 #endif
 
   is_suspended_ = true;
@@ -108,6 +117,12 @@ void ScriptRunner::ScheduleReadyInOrderScripts() {
 
 void ScriptRunner::NotifyScriptReady(ScriptLoader* script_loader,
                                      AsyncExecutionType execution_type) {
+  if (script_loader == currently_streamed_script_) {
+    DCHECK(!currently_streamed_script_was_notify_finished_);
+    currently_streamed_script_was_notify_finished_ = true;
+    return;
+  }
+
   SECURITY_CHECK(script_loader);
   switch (execution_type) {
     case kAsync:
@@ -121,7 +136,7 @@ void ScriptRunner::NotifyScriptReady(ScriptLoader* script_loader,
       async_scripts_to_execute_soon_.push_back(script_loader);
 
       PostTask(BLINK_FROM_HERE);
-
+      TryStreamMore();
       break;
 
     case kInOrder:
@@ -150,6 +165,16 @@ bool ScriptRunner::RemovePendingInOrderScript(ScriptLoader* script_loader) {
 
 void ScriptRunner::NotifyScriptLoadError(ScriptLoader* script_loader,
                                          AsyncExecutionType execution_type) {
+  if (script_loader == currently_streamed_script_) {
+    DCHECK_NE(streamers_.find(currently_streamed_script_), streamers_.end());
+    streamers_.find(currently_streamed_script_)->value->Cancel();
+    currently_streamed_script_ = nullptr;
+    currently_streamed_script_was_notify_finished_ = false;
+    document_->DecrementLoadEventDelayCount();
+    TryStreamMore();
+    return;
+  }
+
   switch (execution_type) {
     case kAsync: {
       // See notifyScriptReady() comment.
@@ -168,6 +193,26 @@ void ScriptRunner::NotifyScriptLoadError(ScriptLoader* script_loader,
     }
   }
   document_->DecrementLoadEventDelayCount();
+}
+
+void ScriptRunner::NotifyScriptStreamerFinished() {
+  if (!currently_streamed_script_) {
+    return;
+  }
+
+  DCHECK(currently_streamed_script_);
+  ScriptLoader* script_loader = currently_streamed_script_;
+  currently_streamed_script_ = nullptr;
+
+  if (currently_streamed_script_was_notify_finished_) {
+    async_scripts_to_execute_soon_.push_back(script_loader);
+    if (!is_suspended_)
+      PostTask(BLINK_FROM_HERE);
+  } else {
+    pending_async_scripts_.insert(script_loader);
+  }
+
+  TryStreamMore();
 }
 
 void ScriptRunner::MovePendingScript(Document& old_document,
@@ -218,7 +263,16 @@ bool ScriptRunner::ExecuteTaskFromQueue(
     HeapDeque<Member<ScriptLoader>>* task_queue) {
   if (task_queue->IsEmpty())
     return false;
-  task_queue->TakeFirst()->Execute();
+
+  ScriptLoader* task = task_queue->TakeFirst();
+
+  ScriptStreamer* streamer = nullptr;
+  auto streamer_it = streamers_.find(task);
+  if (streamer_it != streamers_.end()) {
+    streamer = streamer_it->value;
+    streamers_.erase(streamer_it);
+  }
+  task->ExecuteWithScriptStreamer(streamer);
 
   document_->DecrementLoadEventDelayCount();
   return true;
@@ -236,8 +290,78 @@ void ScriptRunner::ExecuteTask() {
 
 #ifndef NDEBUG
   // Extra tasks should be posted only when we resume after suspending.
-  DCHECK(has_ever_been_suspended_);
+  // Or should be accounted for in number_of_extra_tasks_;
+  DCHECK_GT(number_of_extra_tasks_--, 0);
 #endif
+}
+
+void ScriptRunner::TryStreamMore() {
+  if (is_suspended_)
+    return;
+
+  // Look through async_scripts_to_execute_soon_, and stream any one of them.
+  for (auto it = async_scripts_to_execute_soon_.begin();
+       !currently_streamed_script_ &&
+       it != async_scripts_to_execute_soon_.end();
+       ++it) {
+    TryStream(*it, false);
+  }
+}
+
+void ScriptRunner::TryStream(ScriptLoader* script_loader, bool is_pending) {
+  DCHECK(script_loader);
+
+  if (is_suspended_)
+    return;
+
+  // If we're already streaming, we can't stream another one.
+  if (currently_streamed_script_)
+    return;
+
+  // We shouldn't re-parse an already parsed file.
+  // if (script_loader->HasStreamer())
+  //  return;
+  if (streamers_.find(script_loader) != streamers_.end())
+    return;
+
+  // No resource -> can't stream.
+  if (!script_loader->GetResource())
+    return;
+
+  // Try to obtain ScriptState (needed for the streamer);
+  if (!document_->GetFrame())
+    return;
+  ScriptState* script_state = ToScriptStateForMainWorld(document_->GetFrame());
+  if (!script_state)
+    return;
+
+  ScriptStreamer* streamer = ScriptStreamer::StartStreaming(
+      script_loader->GetResource(), ScriptStreamer::kAsync,
+      WTF::Bind(&ScriptRunner::NotifyScriptStreamerFinished,
+                WrapPersistent(this)),
+      document_->GetFrame()->GetSettings(), script_state,
+      TaskRunnerHelper::Get(TaskType::kNetworkingControl, document_));
+
+  if (streamer) {
+    currently_streamed_script_ = script_loader;
+    currently_streamed_script_was_notify_finished_ = !is_pending;
+
+    streamers_.insert(script_loader, streamer);
+
+    if (!is_pending) {
+      auto it = std::find(async_scripts_to_execute_soon_.begin(),
+                          async_scripts_to_execute_soon_.end(), script_loader);
+      DCHECK(it != async_scripts_to_execute_soon_.end());
+      async_scripts_to_execute_soon_.erase(it);
+#ifndef NDEBUG
+      number_of_extra_tasks_++;
+#endif
+    } else {
+      DCHECK_NE(pending_async_scripts_.find(script_loader),
+                pending_async_scripts_.end());
+      pending_async_scripts_.erase(script_loader);
+    }
+  }
 }
 
 DEFINE_TRACE(ScriptRunner) {
@@ -246,6 +370,8 @@ DEFINE_TRACE(ScriptRunner) {
   visitor->Trace(pending_async_scripts_);
   visitor->Trace(async_scripts_to_execute_soon_);
   visitor->Trace(in_order_scripts_to_execute_soon_);
+  visitor->Trace(currently_streamed_script_);
+  visitor->Trace(streamers_);
 }
 
 }  // namespace blink
