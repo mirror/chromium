@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "278378ea_26ec2a30",
+        "filename": "components/about_ui/OWNERS",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-05-19T18:17:01Z",
+      "side": 1,
+      "message": "can you add an OWNERS file in the new android/ directory?  i definitely wont be able to give that an honest review myself ;)",
+      "range": {
+        "startLine": 4,
+        "startChar": 6,
+        "endLine": 4,
+        "endChar": 14
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a8f213_a602cd8c",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-05-19T18:17:01Z",
+      "side": 1,
+      "message": "hmmm, why is this done like this I wonder?\n\none can fairly easily do:\n\n\u003cif expr\u003d\"chromeos\"\u003e\n\u003cscript src\u003d\"chrome://credits/keyboard_utils.js\"\u003e\u003c/script\u003e\n\u003c/if\u003e\n\nin the HTML if it\u0027s grit processed...",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c48954_687fd275",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-05-19T18:17:01Z",
+      "side": 1,
+      "message": "also odd to me that this is hidden then unhidden... rather than just visible to start with",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a69e8ec_6a185026",
+        "filename": "components/about_ui/resources/about_credits.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-05-19T18:17:01Z",
+      "side": 1,
+      "message": "please match the rest of this file and follow the web style guide:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/web/web.md",
+      "range": {
+        "startLine": 67,
+        "startChar": 29,
+        "endLine": 67,
+        "endChar": 36
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca8d1a9_0cab9127",
+        "filename": "components/about_ui/resources/about_credits_entry.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-05-19T18:17:01Z",
+      "side": 1,
+      "message": "please use double-quotes and follow the web styleguide:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/web/web.md",
+      "range": {
+        "startLine": 4,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fa5279_4031ddaf",
+        "filename": "components/about_ui/resources/about_credits_entry.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-05-19T18:17:01Z",
+      "side": 1,
+      "message": "using style\u003d on an element is generally frowned upon.  can you use the hidden attribute instead?",
+      "range": {
+        "startLine": 4,
+        "startChar": 28,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
