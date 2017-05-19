@@ -70,13 +70,13 @@ PrefServiceSyncable::~PrefServiceSyncable() {
 
 PrefServiceSyncable* PrefServiceSyncable::CreateIncognitoPrefService(
     PrefStore* incognito_extension_pref_store,
-    const std::vector<const char*>& overlay_pref_names) {
+    const std::vector<const char*>& underlay_pref_names) {
   pref_service_forked_ = true;
   PrefNotifierImpl* pref_notifier = new PrefNotifierImpl();
   OverlayUserPrefStore* incognito_pref_store =
       new OverlayUserPrefStore(user_pref_store_.get());
-  for (const char* overlay_pref_name : overlay_pref_names)
-    incognito_pref_store->RegisterOverlayPref(overlay_pref_name);
+  for (const char* overlay_pref_name : underlay_pref_names)
+    incognito_pref_store->RegisterUnderlayPref(overlay_pref_name);
 
   scoped_refptr<user_prefs::PrefRegistrySyncable> forked_registry =
       static_cast<user_prefs::PrefRegistrySyncable*>(pref_registry_.get())
