@@ -136,31 +136,3 @@ static_library("minizip") {
   ]
   public_configs = [ ":zlib_config" ]
 }
-
-if (build_with_chromium) {
-  static_library("zip") {
-    sources = [
-      "google/zip.cc",
-      "google/zip.h",
-      "google/zip_internal.cc",
-      "google/zip_internal.h",
-      "google/zip_reader.cc",
-      "google/zip_reader.h",
-    ]
-    deps = [
-      ":minizip",
-      "//base",
-    ]
-  }
-
-  static_library("compression_utils") {
-    sources = [
-      "google/compression_utils.cc",
-      "google/compression_utils.h",
-    ]
-    deps = [
-      ":zlib",
-      "//base",
-    ]
-  }
-}
