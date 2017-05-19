@@ -94,6 +94,30 @@
       "revId": "3e891ba99b45dbab3a7ca152a567c1d2d4f6c90a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fa129d_b565e0ab",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-05-19T20:51:56Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a huge risk since this is only enabled at 10%, but probably reasonable to disable until we know what\u0027s going on.",
+      "parentUuid": "0e2f0ff2_fbcb07a5",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "3e891ba99b45dbab3a7ca152a567c1d2d4f6c90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
