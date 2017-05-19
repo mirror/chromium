@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8171eaf0_555c35e2",
+        "filename": "device/usb/usb_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-05-19T20:48:18Z",
+      "side": 0,
+      "message": "I\u0027m guessing it\u0027s OK to not close this handles before shutdown?",
+      "revId": "7ebdb138f42c121d85e25821a24f864e8a380d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
