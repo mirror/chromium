@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "97e0f165_81ce7351",
+        "filename": "tools/perf/benchmarks/speedometer2.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1132654
+      },
+      "writtenOn": "2017-05-19T09:05:14Z",
+      "side": 1,
+      "message": "I\u0027m confused now, is this speedometer 1 or 2? From the sources it looks like Speedometer 1, while in here the names refer to speedometer 2.",
+      "revId": "b527e343f62fd110c4f9790d8639e9a0bfa41983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "192ede91_bd56ebc8",
         "filename": "tools/perf/benchmarks/speedometer2.py",
         "patchSetId": 3
@@ -13,6 +30,24 @@
       "writtenOn": "2017-05-19T03:22:56Z",
       "side": 1,
       "message": "Are you folks ok with being the owner here?",
+      "revId": "b527e343f62fd110c4f9790d8639e9a0bfa41983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ff5ac3_39b07d2f",
+        "filename": "tools/perf/benchmarks/speedometer2.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1132654
+      },
+      "writtenOn": "2017-05-19T09:05:14Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "192ede91_bd56ebc8",
       "revId": "b527e343f62fd110c4f9790d8639e9a0bfa41983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
