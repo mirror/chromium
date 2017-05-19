@@ -26,6 +26,11 @@ class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
   NGInlineNodeData& GetNGInlineNodeData() const;
   void ResetNGInlineNodeData();
 
+ protected:
+  void ComputeIntrinsicLogicalWidths(
+      LayoutUnit& min_logical_width,
+      LayoutUnit& max_logical_width) const override;
+
  private:
   bool IsOfType(LayoutObjectType) const override;
 
