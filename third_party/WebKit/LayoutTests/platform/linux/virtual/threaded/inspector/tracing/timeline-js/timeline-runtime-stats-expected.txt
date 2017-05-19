@@ -1,0 +1,13 @@
+Check that RuntimeCallStats are present in profile.
+
+Exception while running: () => callback()
+Error: Failure (FunctionCallback frame not found): expected <true> found <false>
+    at Object.InspectorTest.assertEquals (evaluateInWebInspector0.js:638:11)
+    at Object.InspectorTest.assertTrue (evaluateInWebInspector0.js:643:19)
+    at finish (evaluateInWebInspector1.js:71:23)
+    at Timeline.TimelinePanel.InspectorTest.addSniffer (evaluateInWebInspector0.js:1231:75)
+    at Timeline.TimelinePanel.result (evaluateInWebInspector0.js:671:25)
+    at Timeline.TimelinePanel.receiver.(anonymous function) (evaluateInWebInspector0.js:701:22)
+    at Timeline.TimelineController._finalizeTrace (file:///b/c/b/linux_layout/src/out/Release/resources/inspector/timeline/timeline_module.js:128:99)
+    at setTimeout (file:///b/c/b/linux_layout/src/out/Release/resources/inspector/timeline/timeline_module.js:127:76)
+
