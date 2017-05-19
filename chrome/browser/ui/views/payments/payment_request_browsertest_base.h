@@ -158,6 +158,7 @@ class PaymentRequestBrowserTestBase
   // are added close to each other.
   void AddAutofillProfile(const autofill::AutofillProfile& profile);
   void AddCreditCard(const autofill::CreditCard& card);
+  void AddServerCard(const autofill::CreditCard& card);
 
   void CreatePaymentRequestForTest(
       content::WebContents* web_contents,
@@ -179,6 +180,7 @@ class PaymentRequestBrowserTestBase
   // Returns the shipping option labels under |parent_view_id|.
   std::vector<base::string16> GetShippingOptionLabelValues(
       DialogViewID parent_view_id);
+  std::vector<base::string16> GetPaymentMethodLabels();
 
   void OpenCVCPromptWithCVC(const base::string16& cvc);
   void PayWithCreditCardAndWait(const base::string16& cvc);

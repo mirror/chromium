@@ -58,4 +58,55 @@ base::string16 GetShippingOptionSectionString(
   }
 }
 
+base::string16 GetAcceptedCardTypesText(
+    const std::set<autofill::CreditCard::CardType>& types) {
+  int credit =
+      types.find(autofill::CreditCard::CARD_TYPE_CREDIT) != types.end() ? 1 : 0;
+  int debit =
+      types.find(autofill::CreditCard::CARD_TYPE_DEBIT) != types.end() ? 1 : 0;
+  int prepaid =
+      types.find(autofill::CreditCard::CARD_TYPE_PREPAID) != types.end() ? 1
+                                                                         : 0;
+  int string_ids[2][2][2];
+
+  // [credit][debit][prepaid]
+  string_ids[0][0][0] = IDS_PAYMENTS_ACCEPTED_CARDS_LABEL;
+  string_ids[0][0][1] = IDS_PAYMENTS_ACCEPTED_PREPAID_CARDS_LABEL;
+  string_ids[0][1][0] = IDS_PAYMENTS_ACCEPTED_DEBIT_CARDS_LABEL;
+  string_ids[0][1][1] = IDS_PAYMENTS_ACCEPTED_DEBIT_PREPAID_CARDS_LABEL;
+  string_ids[1][0][0] = IDS_PAYMENTS_ACCEPTED_CREDIT_CARDS_LABEL;
+  string_ids[1][0][1] = IDS_PAYMENTS_ACCEPTED_CREDIT_PREPAID_CARDS_LABEL;
+  string_ids[1][1][0] = IDS_PAYMENTS_ACCEPTED_CREDIT_DEBIT_CARDS_LABEL;
+  string_ids[1][1][1] = IDS_PAYMENTS_ACCEPTED_CARDS_LABEL;
+
+  return l10n_util::GetStringUTF16(string_ids[credit][debit][prepaid]);
+}
+
+base::string16 GetCardTypesAreAcceptedText(
+    const std::set<autofill::CreditCard::CardType>& types) {
+  int credit =
+      types.find(autofill::CreditCard::CARD_TYPE_CREDIT) != types.end() ? 1 : 0;
+  int debit =
+      types.find(autofill::CreditCard::CARD_TYPE_DEBIT) != types.end() ? 1 : 0;
+  int prepaid =
+      types.find(autofill::CreditCard::CARD_TYPE_PREPAID) != types.end() ? 1
+                                                                         : 0;
+  int string_ids[2][2][2];
+
+  // [credit][debit][prepaid]
+  string_ids[0][0][0] = -1;
+  string_ids[0][0][1] = IDS_PAYMENTS_PREPAID_CARDS_ARE_ACCEPTED_LABEL;
+  string_ids[0][1][0] = IDS_PAYMENTS_DEBIT_CARDS_ARE_ACCEPTED_LABEL;
+  string_ids[0][1][1] = IDS_PAYMENTS_DEBIT_PREPAID_CARDS_ARE_ACCEPTED_LABEL;
+  string_ids[1][0][0] = IDS_PAYMENTS_CREDIT_CARDS_ARE_ACCEPTED_LABEL;
+  string_ids[1][0][1] = IDS_PAYMENTS_CREDIT_PREPAID_CARDS_ARE_ACCEPTED_LABEL;
+  string_ids[1][1][0] = IDS_PAYMENTS_CREDIT_DEBIT_CARDS_ARE_ACCEPTED_LABEL;
+  string_ids[1][1][1] = -1;
+
+  return (credit == 0 && debit == 0 && prepaid == 0) ||
+                 (credit == 1 && debit == 1 && prepaid == 1)
+             ? base::string16()
+             : l10n_util::GetStringUTF16(string_ids[credit][debit][prepaid]);
+}
+
 }  // namespace payments
