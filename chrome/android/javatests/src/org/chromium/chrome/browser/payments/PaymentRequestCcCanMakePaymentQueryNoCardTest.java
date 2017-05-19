@@ -44,7 +44,8 @@ public class PaymentRequestCcCanMakePaymentQueryNoCardTest implements MainActivi
         // canMakePayment() to return true.
         new AutofillTestHelper().setCreditCard(new CreditCard("", "https://example.com", true, true,
                 "" /* nameOnCard */, "4111111111111111", "1111", "12", "2050", "visa",
-                R.drawable.pr_visa, "" /* billingAddressId */, "" /* serverId */));
+                R.drawable.pr_visa, CreditCard.CARD_TYPE_UNKNOWN, "" /* billingAddressId */,
+                "" /* serverId */));
     }
 
     @Test

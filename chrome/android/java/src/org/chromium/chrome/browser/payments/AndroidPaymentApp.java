@@ -512,4 +512,9 @@ public class AndroidPaymentApp
 
     @Override
     public void dismissInstrument() {}
+
+    @Override
+    public Integer getAdditionalAppTextResourceIdentifier() {
+        return null;
+    }
 }
