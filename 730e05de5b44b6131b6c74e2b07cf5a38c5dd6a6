@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "fc159310_4b33e944",
+        "filename": "chromecast/base/observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-19T04:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b414444_dcb0e13d",
+      "revId": "730e05de5b44b6131b6c74e2b07cf5a38c5dd6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46f95474_53d40f4f",
         "filename": "chromecast/base/observer_unittest.cc",
         "patchSetId": 1
@@ -276,6 +294,30 @@
       "writtenOn": "2017-05-17T00:18:28Z",
       "side": 1,
       "message": "This tests several things: \n\n1) observer that registered before change gets callback after RunUntilIdle()\n2) observer that registered after change doesn\u0027t get callback\n3) observer that registered before two changes gets callbacks for both changes\n4) observer that registered between two changes only gets callback for second change\n\nI think this would be more readable (and debuggable in the case of regression) if each of these can be its own test case",
+      "range": {
+        "startLine": 95,
+        "startChar": 21,
+        "endLine": 95,
+        "endChar": 34
+      },
+      "revId": "730e05de5b44b6131b6c74e2b07cf5a38c5dd6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b331fa6e_ae5cecd1",
+        "filename": "chromecast/base/observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-19T04:47:49Z",
+      "side": 1,
+      "message": "Done. I added tests for 2 and 4; 1 and 3 are already covered by the NoMissingEvents test.",
+      "parentUuid": "46f95474_53d40f4f",
       "range": {
         "startLine": 95,
         "startChar": 21,
