@@ -22,6 +22,30 @@
       "revId": "8cf557d0376ecb7b3395e6328ba7438f5f73b7e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e90a5e_0dfd5aec",
+        "filename": "gpu/command_buffer/service/shader_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-05-19T21:49:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8266244d_84e37208",
+      "range": {
+        "startLine": 138,
+        "startChar": 46,
+        "endLine": 138,
+        "endChar": 52
+      },
+      "revId": "8cf557d0376ecb7b3395e6328ba7438f5f73b7e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
