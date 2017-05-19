@@ -2339,6 +2339,9 @@ crbug.com/723826 virtual/mojo-loading/http/tests/security/w3c/cross-origin-objec
 crbug.com/724251 virtual/threaded/animations/svg-attribute-interpolation/svg-startOffset-interpolation.html [ Failure Pass ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/html/browsers/windows/noreferrer-window-name.html [ Timeout ]
+crbug.com/626703 external/wpt/web-animations/animation-model/animation-types/accumulation-per-property.html [ Timeout ]
+crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-addIceCandidate.html [ Timeout ]
 crbug.com/626703 external/wpt/performance-timeline/po-observe.html [ Timeout ]
 crbug.com/626703 external/wpt/resource-timing/resource-timing.html [ Timeout Failure ]
 crbug.com/626703 external/wpt/screen-orientation/onchange-event.html [ Timeout ]
