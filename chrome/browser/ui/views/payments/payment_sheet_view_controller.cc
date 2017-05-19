@@ -388,7 +388,6 @@ PaymentSheetViewController::PaymentSheetViewController(
     PaymentRequestState* state,
     PaymentRequestDialogView* dialog)
     : PaymentRequestSheetController(spec, state, dialog),
-      pay_button_(nullptr),
       widest_name_column_view_width_(ComputeWidestNameColumnViewWidth()),
       current_update_reason_(PaymentRequestSpec::UpdateReason::NONE) {
   spec->AddObserver(this);
@@ -423,7 +422,6 @@ PaymentSheetViewController::CreatePrimaryButton() {
           this, l10n_util::GetStringUTF16(IDS_PAYMENTS_PAY_BUTTON)));
   button->set_tag(static_cast<int>(PaymentRequestCommonTags::PAY_BUTTON_TAG));
   button->set_id(static_cast<int>(DialogViewID::PAY_BUTTON));
-  pay_button_ = button.get();
   UpdatePayButtonState(state()->is_ready_to_pay());
   return button;
 }
@@ -559,7 +557,7 @@ void PaymentSheetViewController::StyledLabelLinkClicked(
 }
 
 void PaymentSheetViewController::UpdatePayButtonState(bool enabled) {
-  pay_button_->SetEnabled(enabled);
+  primary_button()->SetEnabled(enabled);
 }
 
 // Creates the Order Summary row, which contains an "Order Summary" label,

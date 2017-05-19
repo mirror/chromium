@@ -67,8 +67,6 @@ class PaymentSheetViewController : public PaymentRequestSheetController,
   std::unique_ptr<views::Button> CreateShippingOptionRow();
   std::unique_ptr<views::View> CreateDataSourceRow();
 
-  views::Button* pay_button_;
-
   const int widest_name_column_view_width_;
   PaymentRequestSpec::UpdateReason current_update_reason_;
 
