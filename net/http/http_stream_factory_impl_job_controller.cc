@@ -34,7 +34,7 @@ namespace {
 std::unique_ptr<base::Value> NetLogHttpStreamJobProxyServerResolved(
     const ProxyServer& proxy_server,
     NetLogCaptureMode /* capture_mode */) {
-  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  auto dict = base::MakeUnique<base::DictionaryValue>();
 
   dict->SetString("proxy_server", proxy_server.is_valid()
                                       ? proxy_server.ToPacString()
@@ -119,7 +119,8 @@ bool HttpStreamFactoryImpl::JobController::for_websockets() {
   return factory_->for_websockets_;
 }
 
-HttpStreamFactoryImpl::Request* HttpStreamFactoryImpl::JobController::Start(
+std::unique_ptr<HttpStreamFactoryImpl::Request>
+HttpStreamFactoryImpl::JobController::Start(
     HttpStreamRequest::Delegate* delegate,
     WebSocketHandshakeStreamBase::CreateHelper*
         websocket_handshake_stream_create_helper,
@@ -132,9 +133,12 @@ HttpStreamFactoryImpl::Request* HttpStreamFactoryImpl::JobController::Start(
   stream_type_ = stream_type;
   priority_ = priority;
 
-  request_ = new Request(request_info_.url, this, delegate,
-                         websocket_handshake_stream_create_helper,
-                         source_net_log, stream_type);
+  auto request = base::MakeUnique<Request>(
+      request_info_.url, this, delegate,
+      websocket_handshake_stream_create_helper, source_net_log, stream_type);
+  // Keep a raw pointer but release ownership of Request instance.
+  request_ = request.get();
+
   // Associates |net_log_| with |source_net_log|.
   source_net_log.AddEvent(NetLogEventType::HTTP_STREAM_JOB_CONTROLLER_BOUND,
                           net_log_.source().ToEventParametersCallback());
@@ -142,7 +146,7 @@ HttpStreamFactoryImpl::Request* HttpStreamFactoryImpl::JobController::Start(
                     source_net_log.source().ToEventParametersCallback());
 
   RunLoop(OK);
-  return request_;
+  return request;
 }
 
 void HttpStreamFactoryImpl::JobController::Preconnect(int num_streams) {
@@ -229,7 +233,8 @@ void HttpStreamFactoryImpl::JobController::OnStreamReady(
   DCHECK(!factory_->for_websockets_);
   DCHECK_EQ(HttpStreamRequest::HTTP_STREAM, request_->stream_type());
   OnJobSucceeded(job);
-  request_->OnStreamReady(used_ssl_config, job->proxy_info(), stream.release());
+  request_->OnStreamReady(used_ssl_config, job->proxy_info(),
+                          std::move(stream));
 }
 
 void HttpStreamFactoryImpl::JobController::OnBidirectionalStreamImplReady(
@@ -257,14 +262,14 @@ void HttpStreamFactoryImpl::JobController::OnBidirectionalStreamImplReady(
 
   OnJobSucceeded(job);
   request_->OnBidirectionalStreamImplReady(used_ssl_config, used_proxy_info,
-                                           stream.release());
+                                           std::move(stream));
 }
 
 void HttpStreamFactoryImpl::JobController::OnWebSocketHandshakeStreamReady(
     Job* job,
     const SSLConfig& used_ssl_config,
     const ProxyInfo& used_proxy_info,
-    WebSocketHandshakeStreamBase* stream) {
+    std::unique_ptr<WebSocketHandshakeStreamBase> stream) {
   DCHECK(job);
   MarkRequestComplete(job->was_alpn_negotiated(), job->negotiated_protocol(),
                       job->using_spdy());
@@ -277,7 +282,7 @@ void HttpStreamFactoryImpl::JobController::OnWebSocketHandshakeStreamReady(
 
   OnJobSucceeded(job);
   request_->OnWebSocketHandshakeStreamReady(used_ssl_config, used_proxy_info,
-                                            stream);
+                                            std::move(stream));
 }
 
 void HttpStreamFactoryImpl::JobController::OnStreamFailed(
@@ -456,24 +461,21 @@ void HttpStreamFactoryImpl::JobController::OnNewSpdySessionReady(
 
     MarkRequestComplete(was_alpn_negotiated, negotiated_protocol, using_spdy);
 
-    std::unique_ptr<HttpStream> stream;
-    std::unique_ptr<BidirectionalStreamImpl> bidirectional_stream_impl;
-
     if (for_websockets()) {
       // TODO(ricea): Re-instate this code when WebSockets over SPDY is
       // implemented.
       NOTREACHED();
     } else if (job->stream_type() == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
-      bidirectional_stream_impl = job->ReleaseBidirectionalStream();
+      auto bidirectional_stream_impl = job->ReleaseBidirectionalStream();
       DCHECK(bidirectional_stream_impl);
       delegate_->OnBidirectionalStreamImplReady(
           used_ssl_config, used_proxy_info,
-          bidirectional_stream_impl.release());
+          std::move(bidirectional_stream_impl));
     } else {
-      stream = job->ReleaseStream();
+      std::unique_ptr<HttpStream> stream = job->ReleaseStream();
       DCHECK(stream);
       delegate_->OnStreamReady(used_ssl_config, used_proxy_info,
-                               stream.release());
+                               std::move(stream));
     }
   }
 

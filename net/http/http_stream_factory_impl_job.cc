@@ -128,7 +128,7 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobCallback(
     const AlternativeService* alternative_service,
     RequestPriority priority,
     NetLogCaptureMode /* capture_mode */) {
-  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  auto dict = base::MakeUnique<base::DictionaryValue>();
   if (source.IsValid())
     source.AddToEventParameters(dict.get());
   dict->SetString("original_url", original_url->GetOrigin().spec());
@@ -143,7 +143,7 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobCallback(
 std::unique_ptr<base::Value> NetLogHttpStreamProtoCallback(
     NextProto negotiated_protocol,
     NetLogCaptureMode /* capture_mode */) {
-  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  auto dict = base::MakeUnique<base::DictionaryValue>();
 
   dict->SetString("proto", NextProtoToString(negotiated_protocol));
   return std::move(dict);
@@ -440,7 +440,7 @@ void HttpStreamFactoryImpl::Job::OnWebSocketHandshakeStreamReadyCallback() {
   MaybeCopyConnectionAttemptsFromSocketOrHandle();
 
   delegate_->OnWebSocketHandshakeStreamReady(
-      this, server_ssl_config_, proxy_info_, websocket_stream_.release());
+      this, server_ssl_config_, proxy_info_, std::move(websocket_stream_));
   // |this| may be deleted after this call.
 }
 
@@ -1104,8 +1104,8 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
   if (delegate_->for_websockets())
     return ERR_NOT_IMPLEMENTED;
   if (stream_type_ == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
-    bidirectional_stream_impl_.reset(
-        new BidirectionalStreamSpdyImpl(session, net_log_.source()));
+    bidirectional_stream_impl_ = base::MakeUnique<BidirectionalStreamSpdyImpl>(
+        session, net_log_.source());
     return OK;
   }
 
@@ -1115,8 +1115,8 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
 
   bool use_relative_url =
       direct || request_info_.url.SchemeIs(url::kHttpsScheme);
-  stream_.reset(
-      new SpdyHttpStream(session, use_relative_url, net_log_.source()));
+  stream_ = base::MakeUnique<SpdyHttpStream>(session, use_relative_url,
+                                             net_log_.source());
   return OK;
 }
 
@@ -1152,13 +1152,13 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
     if (delegate_->for_websockets()) {
       DCHECK_NE(job_type_, PRECONNECT);
       DCHECK(delegate_->websocket_handshake_stream_create_helper());
-      websocket_stream_.reset(
+      websocket_stream_ =
           delegate_->websocket_handshake_stream_create_helper()
-              ->CreateBasicStream(std::move(connection_), using_proxy));
+              ->CreateBasicStream(std::move(connection_), using_proxy);
     } else {
-      stream_.reset(new HttpBasicStream(
+      stream_ = base::MakeUnique<HttpBasicStream>(
           std::move(connection_), using_proxy,
-          session_->params().http_09_on_non_default_ports_enabled));
+          session_->params().http_09_on_non_default_ports_enabled);
     }
     return OK;
   }
