@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf2aedba_7d38fd42",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-19T20:47:25Z",
+      "side": 1,
+      "message": "This lets us avoid having #if !defined(ENABLE_MOJO_CDM) in MCVD when it shouldn\u0027t be compiled without it anyway.",
+      "range": {
+        "startLine": 216,
+        "startChar": 58,
+        "endLine": 216,
+        "endChar": 61
+      },
+      "revId": "30bda057d10226ac64b55884f06e54fb82bd643d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abc2ccb_c3887d40",
+        "filename": "media/gpu/avda_surface_bundle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-19T20:47:25Z",
+      "side": 1,
+      "message": "This is the mode AVDA uses. MCVD shouldn\u0027t need an unpopulated bundle.",
+      "range": {
+        "startLine": 27,
+        "startChar": 34,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "30bda057d10226ac64b55884f06e54fb82bd643d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

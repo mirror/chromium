@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd67432c_3c0abb10",
+        "filename": "media/gpu/avda_surface_bundle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-19T20:47:25Z",
+      "side": 0,
+      "message": "I tried to rewrite this to be more concise and more targeted at the level of abstraction we\u0027re dealing with. I think the old version was harder to understand if you didn\u0027t know too much about android graphics. \n\nHappy to change it back, though, if you think I\u0027ve made it worse.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 39
+      },
+      "revId": "ab6a896a5431f19e96cbc15ce7920730ac4ace51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb6f287_ede75c0e",
+        "filename": "media/gpu/avda_surface_bundle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-19T20:47:25Z",
+      "side": 0,
+      "message": "Moved it to the .cc; it\u0027s a bit big to be inlined now I think.",
+      "range": {
+        "startLine": 38,
+        "startChar": 41,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "ab6a896a5431f19e96cbc15ce7920730ac4ace51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
