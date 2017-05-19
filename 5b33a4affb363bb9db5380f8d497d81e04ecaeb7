@@ -16,6 +16,24 @@
       "revId": "5b33a4affb363bb9db5380f8d497d81e04ecaeb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73cbc2cb_55c48d8b",
+        "filename": "content/renderer/dom_serializer_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-19T08:39:43Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "07efba22_bcdf7fec",
+      "revId": "5b33a4affb363bb9db5380f8d497d81e04ecaeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
