@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "485cd768_2bdbdb00",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T06:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e40d8c9_d1d47661",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff3d2f2a_a1f02e6e",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2017-05-19T18:03:56Z",
       "side": 1,
       "message": "DCHECK(observer)",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0d7c918_74818f8d",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T06:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c780103_353cfc6f",
       "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -123,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8e357377_86f1d9b3",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T06:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a224ccd_33d8ffdd",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537dd6db_22541876",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 4
@@ -134,6 +188,24 @@
       "writtenOn": "2017-05-19T18:03:56Z",
       "side": 1,
       "message": "It isn\u0027t readable. Please check emptiness separately.",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3210e216_d0b850c6",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T06:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537dd6db_22541876",
       "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -187,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "7007c9d7_46fc31cb",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T06:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1e098ae_804806b2",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 61
+      },
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67c126c5_d830a36b",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 4
@@ -216,6 +312,24 @@
       "side": 1,
       "message": "It\u0027s not because it can be called by anybody really; even if only one thread can call SetValue(), the same issue occurs as long as the Observer lives on a different thread from the one that calls SetValue(). This is the original issue we had with MediaManager observers.",
       "parentUuid": "67c126c5_d830a36b",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aabdd4b_a4f49f35",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T06:15:45Z",
+      "side": 1,
+      "message": "Removed since I implemented your suggestion to store the value in the sequence-owned info.",
+      "parentUuid": "03f751a2_f9e8d205",
       "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
