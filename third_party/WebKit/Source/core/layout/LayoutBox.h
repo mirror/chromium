@@ -376,6 +376,10 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   LayoutRect PaddingBoxRect() const {
     return LayoutRect(BorderLeft(), BorderTop(), ClientWidth(), ClientHeight());
   }
+
+  // Note this pixel snapping does not take into account the layer's subpixel
+  // accumulation. Use PaintLayer::PixelSnappedBorderBoxRect when possible for
+  // the final pixel snapped size.
   IntRect PixelSnappedBorderBoxRect() const {
     return IntRect(IntPoint(), frame_rect_.PixelSnappedSize());
   }
