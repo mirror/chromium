@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9149218_ae92d866",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-20T01:47:53Z",
+      "side": 1,
+      "message": "maybe comment to help reader see that we\u0027re rejecting\n\n// Reject outstanding requests.",
+      "range": {
+        "startLine": 229,
+        "startChar": 4,
+        "endLine": 229,
+        "endChar": 37
+      },
+      "revId": "251be34dd6086a3332e4f983863e7297fe8a17ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db573606_a5b20fc2",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-20T01:47:53Z",
+      "side": 1,
+      "message": "optionally remove {}s from this and for loop.",
+      "range": {
+        "startLine": 1160,
+        "startChar": 57,
+        "endLine": 1160,
+        "endChar": 0
+      },
+      "revId": "251be34dd6086a3332e4f983863e7297fe8a17ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
