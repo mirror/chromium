@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "14f37793_d851d5bf",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T03:22:26Z",
+      "side": 1,
+      "message": "The lock is necessary to iterate through per_sequence_ anyway. It also allows us to safely grab the current value whenever a new Observer is created.",
+      "parentUuid": "ff3d2f2a_a1f02e6e",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c780103_353cfc6f",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 4
@@ -64,6 +82,24 @@
       "writtenOn": "2017-05-19T18:03:56Z",
       "side": 1,
       "message": "So, there are 2 distinctions to (or better things than) observer_list: 1) sequenced_task specific, not thread specific, 2) initial value guarantees. Is 1) reasonably better to sacrifice performance. ObserverListThreadSafe uses thread-specific-data and not uses locking.",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96b37044_c59906b6",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T03:22:26Z",
+      "side": 1,
+      "message": "ObserverListThreadSafe does use locking. https://cs.chromium.org/chromium/src/base/observer_list_threadsafe.h?q\u003dobserverlistthreadsafe+package:%5Echromium$\u0026l\u003d141",
+      "parentUuid": "e05f7b0a_66edbd89",
       "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -127,6 +163,30 @@
     },
     {
       "key": {
+        "uuid": "c1e098ae_804806b2",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T03:22:26Z",
+      "side": 1,
+      "message": "Do you mean the destructor for PerSequenceInfo? If so, then I agree.",
+      "parentUuid": "f3ddceb5_fcac95b9",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 61
+      },
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67c126c5_d830a36b",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 4
@@ -138,6 +198,24 @@
       "writtenOn": "2017-05-19T18:03:56Z",
       "side": 1,
       "message": "This happens since Observable::SetValue() can be called by anybody. Is it really nice for Observable::SetValue() called by anybody?",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03f751a2_f9e8d205",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-20T03:22:26Z",
+      "side": 1,
+      "message": "It\u0027s not because it can be called by anybody really; even if only one thread can call SetValue(), the same issue occurs as long as the Observer lives on a different thread from the one that calls SetValue(). This is the original issue we had with MediaManager observers.",
+      "parentUuid": "67c126c5_d830a36b",
       "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
