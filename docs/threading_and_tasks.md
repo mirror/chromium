@@ -614,3 +614,11 @@ base::TaskScheduler::GetInstance()->Shutdown();
 // TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN may still be
 // running.
 ```
+## TaskRunner ownership
+
+TaskRunners shouldn't be passed through several components. Instead, the
+components that uses a TaskRunner should be the one that creates it.
+
+See [this example](https://codereview.chromium.org/2885173002/) of a
+refactoring where a TaskRunner was passed through a lot of components that
+didn't needed it to finally be passed to the class that needed it.
