@@ -132,6 +132,12 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
     private final Set<String> mAcceptedBasicCardIssuerNetworks;
 
     /**
+     * The accepted card types: CreditCard.CARD_TYPE_UNKNOWN, CreditCard.CARD_TYPE_CREDIT,
+     * CreditCard.CARD_TYPE_DEBIT, CreditCard.CARD_TYPE_PREPAID.
+     */
+    private final Set<Integer> mAcceptedBasicCardTypes;
+
+    /**
      * The information about the accepted card issuer networks. Used in the editor as a hint to the
      * user about the valid card issuer networks. This is important to keep in a list, because the
      * display order matters.
@@ -229,6 +235,7 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
 
         mAcceptedIssuerNetworks = new HashSet<>();
         mAcceptedBasicCardIssuerNetworks = new HashSet<>();
+        mAcceptedBasicCardTypes = new HashSet<>();
         mAcceptedCardIssuerNetworks = new ArrayList<>();
         mHandler = new Handler();
 
@@ -313,6 +320,8 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
                         addAcceptedNetwork(network);
                     }
                 }
+
+                mAcceptedBasicCardTypes.addAll(AutofillPaymentApp.convertBasicCardToTypes(data));
             }
         }
     }
@@ -356,7 +365,7 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
         // Ensure that |instrument| and |card| are never null.
         final AutofillPaymentInstrument instrument = isNewCard
                 ? new AutofillPaymentInstrument(mWebContents, new CreditCard(),
-                          null /* billingAddress */, null /* methodName */)
+                          null /* billingAddress */, null /* methodName */, false /* matchesType */)
                 : toEdit;
         final CreditCard card = instrument.getCard();
 
@@ -470,8 +479,7 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
                 descriptions.add(mAcceptedCardIssuerNetworks.get(i).description);
             }
             mIconHint = EditorFieldModel.createIconList(
-                    mContext.getString(R.string.payments_accepted_cards_label), icons,
-                    descriptions);
+                    mContext.getString(getAcceptedCardsLabelResourceId()), icons, descriptions);
         }
         editor.addField(mIconHint);
 
@@ -579,6 +587,22 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
             mYearField.setValue(mYearField.getDropdownKeyValues().get(0).getKey());
         }
         editor.addField(mYearField);
+    }
+
+    private int getAcceptedCardsLabelResourceId() {
+        int credit = mAcceptedBasicCardTypes.contains(CreditCard.CARD_TYPE_CREDIT) ? 1 : 0;
+        int debit = mAcceptedBasicCardTypes.contains(CreditCard.CARD_TYPE_DEBIT) ? 1 : 0;
+        int prepaid = mAcceptedBasicCardTypes.contains(CreditCard.CARD_TYPE_PREPAID) ? 1 : 0;
+        int[][][] resourceIds = new int[2][2][2];
+        resourceIds[0][0][0] = R.string.payments_accepted_cards_label;
+        resourceIds[0][0][1] = R.string.payments_accepted_prepaid_cards_label;
+        resourceIds[0][1][0] = R.string.payments_accepted_debit_cards_label;
+        resourceIds[0][1][1] = R.string.payments_accepted_debit_prepaid_cards_label;
+        resourceIds[1][0][0] = R.string.payments_accepted_credit_cards_label;
+        resourceIds[1][0][1] = R.string.payments_accepted_credit_prepaid_cards_label;
+        resourceIds[1][1][0] = R.string.payments_accepted_credit_debit_cards_label;
+        resourceIds[1][1][1] = R.string.payments_accepted_cards_label;
+        return resourceIds[credit][debit][prepaid];
     }
 
     /** Builds the key-value pairs for the month dropdown. */
