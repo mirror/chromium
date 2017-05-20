@@ -430,6 +430,10 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   LayoutRect BoundingBoxForCompositingOverlapTest() const;
   LayoutRect BoundingBoxForCompositing() const;
 
+  // Similar to LayoutBox::PixelSnappedBorderBoxRect but takes into account the
+  // subpixel accumulation getting the final pixel snapped size.
+  IntRect PixelSnappedBorderBoxRect() const;
+
   // If true, this layer's children are included in its bounds for overlap
   // testing.  We can't rely on the children's positions if this layer has a
   // filter that could have moved the children's pixels around.
