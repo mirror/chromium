@@ -53,11 +53,7 @@ bool SetYamaPtracersRestriction(bool enable_restrictions) {
 
 bool CanAccessProcFS() {
   static const char kProcfsKernelSysPath[] = "/proc/sys/kernel/";
-  int ret = access(kProcfsKernelSysPath, F_OK);
-  if (ret) {
-    return false;
-  }
-  return true;
+  return base::PathExists(base::FilePath(kProcfsKernelSysPath));
 }
 
 }  // namespace
