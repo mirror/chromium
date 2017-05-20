@@ -243,7 +243,7 @@ bool IsAsyncWorkerContextEnabled() {
   if (command_line.HasSwitch(switches::kDisableGpuScheduler))
     return false;
 
-  return command_line.HasSwitch(switches::kEnableGpuScheduler);
+  return true;
 }
 
 bool IsForceGpuRasterizationEnabled() {
