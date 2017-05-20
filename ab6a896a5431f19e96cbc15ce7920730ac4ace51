@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94c6a27c_3a03e371",
+        "filename": "media/gpu/avda_surface_bundle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148400
+      },
+      "writtenOn": "2017-05-20T05:36:40Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "fd67432c_3c0abb10",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 39
+      },
+      "revId": "ab6a896a5431f19e96cbc15ce7920730ac4ace51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bb6f287_ede75c0e",
         "filename": "media/gpu/avda_surface_bundle.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ab6a896a5431f19e96cbc15ce7920730ac4ace51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af9390d_904788bc",
+        "filename": "media/gpu/avda_surface_bundle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148400
+      },
+      "writtenOn": "2017-05-20T05:36:40Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "2bb6f287_ede75c0e",
+      "range": {
+        "startLine": 38,
+        "startChar": 41,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "ab6a896a5431f19e96cbc15ce7920730ac4ace51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
