@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42208311_2b27b5c6",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-05-20T06:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9149218_ae92d866",
+      "range": {
+        "startLine": 229,
+        "startChar": 4,
+        "endLine": 229,
+        "endChar": 37
+      },
+      "revId": "251be34dd6086a3332e4f983863e7297fe8a17ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db573606_a5b20fc2",
         "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-20T01:47:53Z",
       "side": 1,
       "message": "optionally remove {}s from this and for loop.",
+      "range": {
+        "startLine": 1160,
+        "startChar": 57,
+        "endLine": 1160,
+        "endChar": 0
+      },
+      "revId": "251be34dd6086a3332e4f983863e7297fe8a17ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543a079c_aac4bb0f",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-05-20T06:14:07Z",
+      "side": 1,
+      "message": "I\u0027ll leave as is for consistency. Most if\u0027s in this file have brackets.",
+      "parentUuid": "db573606_a5b20fc2",
       "range": {
         "startLine": 1160,
         "startChar": 57,
