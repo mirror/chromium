@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b5e6d6e3_53c11d0d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-21T23:56:35Z",
+      "side": 1,
+      "message": "Thanks, this looks better :)",
+      "parentUuid": "084ac4dd_00d4b9e7",
+      "revId": "adcf6069501a045649fad922c689a59c0d4adf05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bae9707_1fed6191",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
         "patchSetId": 3

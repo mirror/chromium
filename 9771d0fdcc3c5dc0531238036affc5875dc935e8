@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f68c9183_9458b130",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-21T23:56:35Z",
+      "side": 1,
+      "message": "Does the serialized origin not include the port :\\ That seems bad?",
+      "revId": "9771d0fdcc3c5dc0531238036affc5875dc935e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a930d03a_9c9d28f5",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-21T23:56:35Z",
+      "side": 1,
+      "message": "nit: make this a private static member of PageInfoBubbleView and that test can be a friend.\n\nedit: Actually I was talking to tapted and he said that view IDs should all be defined in chrome/browser/ui/view_ids.h. It might be easier/less effort just to move these view IDs out now into that header. If not, I\u0027m fine with keeping what you have and fixing it in a followup.",
+      "revId": "9771d0fdcc3c5dc0531238036affc5875dc935e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
