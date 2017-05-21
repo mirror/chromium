@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d96a3a9_e1cd26a7",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-21T23:59:19Z",
+      "side": 1,
+      "message": "Take |source| by value.",
+      "range": {
+        "startLine": 55,
+        "startChar": 21,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "d366e031ade203f4234d676c253a654cabe5bd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d2e3e1_9a4791ad",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-21T23:59:19Z",
+      "side": 1,
+      "message": "Do we want to default to write-through in production for prefs with missing incognito test coverage?",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "d366e031ade203f4234d676c253a654cabe5bd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3909e06_b1ad33d1",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-21T23:59:19Z",
+      "side": 1,
+      "message": "That\u0027s a layering violation.",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 46
+      },
+      "revId": "d366e031ade203f4234d676c253a654cabe5bd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71cf8024_dbb9d1b7",
         "filename": "components/sync_preferences/pref_service_syncable.h",
         "patchSetId": 10
