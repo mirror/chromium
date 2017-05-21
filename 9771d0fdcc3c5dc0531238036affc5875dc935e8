@@ -33,6 +33,24 @@
       "revId": "9771d0fdcc3c5dc0531238036affc5875dc935e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6fc8a0_6a44ba95",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-21T23:57:32Z",
+      "side": 1,
+      "message": "Please double check with tapted@ before doing this in case I\u0027m missing something.",
+      "parentUuid": "a930d03a_9c9d28f5",
+      "revId": "9771d0fdcc3c5dc0531238036affc5875dc935e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
