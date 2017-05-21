@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27824de6_f786bb85",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-21T19:35:57Z",
+      "side": 1,
+      "message": "Don\u0027t think it\u0027s worth it personally. It will need an uglier signature to be shared (bool is_encrypted, VideoCodec codec), doesn\u0027t have an obvious place to go, and the logic has never changed.",
+      "parentUuid": "ff41a5d6_53e5bb4e",
+      "revId": "e9cbc3d9c83ff1baae554070fa312cdc41cae5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8586f9a_a16dd09c",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d4cc87fa_39be1232",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-21T19:35:57Z",
+      "side": 1,
+      "message": "Changed to decoder_config_, if you\u0027re ok with that.",
+      "parentUuid": "d8586f9a_a16dd09c",
+      "revId": "e9cbc3d9c83ff1baae554070fa312cdc41cae5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7546a793_4492ca19",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-05-20T05:36:40Z",
       "side": 1,
       "message": "if kWaitingForCodec and IsSetOutputSurfaceSupported, then it will fall through to TransitionToSurface.  seems like it\u0027ll break when it tries to start another async codec config.",
+      "revId": "e9cbc3d9c83ff1baae554070fa312cdc41cae5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f9d514_01479b78",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-21T19:35:57Z",
+      "side": 1,
+      "message": "Not sure I understand the case where this happens. If state_ is kWaitingForCodec then we\u0027ll go to kSurfaceDestroyed and return regardless of whether setoutputsurface works.",
+      "parentUuid": "7546a793_4492ca19",
       "revId": "e9cbc3d9c83ff1baae554070fa312cdc41cae5a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
