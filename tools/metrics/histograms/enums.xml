@@ -15001,6 +15001,9 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1986" label="CredentialManagerPasswordName"/>
   <int value="1987" label="CredentialManagerAdditionalData"/>
   <int value="1988" label="CredentialManagerCustomFetch"/>
+  <int value="1989" label="ShapeDetection_BarcodeDetectorConstructor"/>
+  <int value="1990" label="ShapeDetection_FaceDetectorConstructor"/>
+  <int value="1991" label="ShapeDetection_TextDetectorConstructor"/>
 </enum>
 
 <enum name="FeedbackSource" type="int">

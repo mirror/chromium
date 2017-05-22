@@ -1600,6 +1600,9 @@ class CORE_EXPORT UseCounter {
     kCredentialManagerPasswordName = 1986,
     kCredentialManagerAdditionalData = 1987,
     kCredentialManagerCustomFetch = 1988,
+    kShapeDetection_BarcodeDetectorConstructor = 1989,
+    kShapeDetection_FaceDetectorConstructor = 1990,
+    kShapeDetection_TextDetectorConstructor = 1991,
 
     // Add new features immediately above this line. Don't change assigned
     // numbers of any item, and don't reuse removed slots.
