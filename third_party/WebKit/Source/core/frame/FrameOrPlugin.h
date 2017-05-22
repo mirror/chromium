@@ -26,6 +26,9 @@ class CORE_EXPORT FrameOrPlugin : public GarbageCollectedMixin {
 
   virtual void SetParent(FrameView*) = 0;
   virtual FrameView* Parent() const = 0;
+  enum FrameOrPluginState { kNotAttached, kAttached, kDeferred, kDisposed };
+  virtual void SetFrameOrPluginState(FrameOrPluginState) = 0;
+  virtual FrameOrPluginState GetFrameOrPluginState() const = 0;
   virtual void SetParentVisible(bool) = 0;
   virtual void SetFrameRect(const IntRect&) = 0;
   virtual void FrameRectsChanged() = 0;
