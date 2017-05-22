@@ -1602,6 +1602,9 @@ class CORE_EXPORT UseCounter {
     kCredentialManagerCustomFetch = 1988,
     kNetInfoRtt = 1989,
     kNetInfoDownlink = 1990,
+    kShapeDetection_BarcodeDetectorConstructor = 1991,
+    kShapeDetection_FaceDetectorConstructor = 1992,
+    kShapeDetection_TextDetectorConstructor = 1993,
 
     // Add new features immediately above this line. Don't change assigned
     // numbers of any item, and don't reuse removed slots.
