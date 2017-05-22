@@ -5,10 +5,8 @@
 #ifndef ScriptStreamer_h
 #define ScriptStreamer_h
 
-#include <memory>
-
 #include "core/CoreExport.h"
-#include "platform/WebTaskRunner.h"
+#include "core/loader/resource/ScriptResource.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/text/WTFString.h"
@@ -16,23 +14,23 @@
 
 namespace blink {
 
-class ClassicPendingScript;
-class Resource;
-class ScriptResource;
 class ScriptState;
 class Settings;
 class SourceStream;
+class WebTaskRunner;
 
 // ScriptStreamer streams incomplete script data to V8 so that it can be parsed
 // while it's loaded. ClassicPendingScript holds a reference to ScriptStreamer.
-// At the moment, ScriptStreamer is only used for parser blocking scripts; this
-// means that the Document stays stable and no other scripts are executing
-// while we're streaming. It is possible, though, that Document and the
-// ClassicPendingScript are destroyed while the streaming is in progress, and
-// ScriptStreamer handles it gracefully.
+//
+// The error conditions are fidgety:
+// - The Document and ClassicPendingScript can be destroyed during streaming.
+// - Streaming might finish before the document has been loaded
+//   (JS parsing will abort when a syntax error is encountered.)
 class CORE_EXPORT ScriptStreamer final
-    : public GarbageCollectedFinalized<ScriptStreamer> {
+    : public GarbageCollectedFinalized<ScriptStreamer>,
+      public ScriptResourceClient {
   WTF_MAKE_NONCOPYABLE(ScriptStreamer);
+  USING_GARBAGE_COLLECTED_MIXIN(ScriptStreamer);
 
  public:
   enum Type { kParsingBlocking, kDeferred, kAsync };
@@ -41,16 +39,13 @@ class CORE_EXPORT ScriptStreamer final
   DECLARE_TRACE();
 
   // Launches a task (on a background thread) which will stream the given
-  // ClassicPendingScript into V8 as it loads.
-  static void StartStreaming(ClassicPendingScript*,
-                             Type,
-                             Settings*,
-                             ScriptState*,
-                             RefPtr<WebTaskRunner>);
-
-  // Returns false if we cannot stream the given encoding.
-  static bool ConvertEncoding(const char* encoding_name,
-                              v8::ScriptCompiler::StreamedSource::Encoding*);
+  // Resource into V8 as it loads.
+  static ScriptStreamer* StartStreaming(ScriptResource*,
+                                        Type,
+                                        std::unique_ptr<WTF::Closure>,
+                                        Settings*,
+                                        ScriptState*,
+                                        RefPtr<WebTaskRunner>);
 
   bool IsFinished() const;
 
@@ -72,12 +67,11 @@ class CORE_EXPORT ScriptStreamer final
   void SuppressStreaming();
   bool StreamingSuppressed() const { return streaming_suppressed_; }
 
-  // Called by ClassicPendingScript when data arrives from the network.
+  // ScriptResourceClient interface.
   void NotifyAppendData(ScriptResource*);
   void NotifyFinished(Resource*);
 
-  // Called by ScriptStreamingTask when it has streamed all data to V8 and V8
-  // has processed it.
+  // Called by ScriptStreamingTask on backgrdoun thread when it has finished.
   void StreamingCompleteOnBackgroundThread();
 
   const String& ScriptURLString() const { return script_url_string_; }
@@ -89,21 +83,15 @@ class CORE_EXPORT ScriptStreamer final
     small_script_threshold_ = threshold;
   }
 
+  // ResourceClient interface:
+  String DebugName() const override { return "ScriptStreamer"; }
+
  private:
   // Scripts whose first data chunk is smaller than this constant won't be
   // streamed. Non-const for testing.
   static size_t small_script_threshold_;
 
-  static ScriptStreamer* Create(
-      ClassicPendingScript* script,
-      Type script_type,
-      ScriptState* script_state,
-      v8::ScriptCompiler::CompileOptions compile_options,
-      RefPtr<WebTaskRunner> loading_task_runner) {
-    return new ScriptStreamer(script, script_type, script_state,
-                              compile_options, std::move(loading_task_runner));
-  }
-  ScriptStreamer(ClassicPendingScript*,
+  ScriptStreamer(ScriptResource*,
                  Type,
                  ScriptState*,
                  v8::ScriptCompiler::CompileOptions,
@@ -112,13 +100,19 @@ class CORE_EXPORT ScriptStreamer final
   void StreamingComplete();
   void NotifyFinishedToClient();
 
-  static bool StartStreamingInternal(ClassicPendingScript*,
-                                     Type,
-                                     Settings*,
-                                     ScriptState*,
-                                     RefPtr<WebTaskRunner>);
+  static ScriptStreamer* StartStreamingInternal(ScriptResource*,
+                                                Type,
+                                                std::unique_ptr<WTF::Closure>,
+                                                Settings*,
+                                                ScriptState*,
+                                                RefPtr<WebTaskRunner>);
 
-  Member<ClassicPendingScript> pending_script_;
+  // Returns false if we cannot stream the given encoding.
+  static bool ConvertEncoding(const char* encoding_name,
+                              v8::ScriptCompiler::StreamedSource::Encoding*);
+
+  // Callback for when the streamer is finished.
+  std::unique_ptr<WTF::Closure> done_;
   // This pointer is weak. If ClassicPendingScript and its Resource are deleted
   // before ScriptStreamer, ClassicPendingScript will notify ScriptStreamer of
   // its deletion by calling cancel().
@@ -150,7 +144,7 @@ class CORE_EXPORT ScriptStreamer final
   // Keep the script URL string for event tracing.
   const String script_url_string_;
 
-  // Keep the script resource dentifier for event tracing.
+  // Keep the script resource identifier for event tracing.
   const unsigned long script_resource_identifier_;
 
   // Encoding of the streamed script. Saved for sanity checking purposes.

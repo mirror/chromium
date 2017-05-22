@@ -54,11 +54,6 @@ WebFrameSchedulerImpl::~WebFrameSchedulerImpl() {
     loading_task_queue_->SetBlameContext(nullptr);
   }
 
-  if (loading_control_task_queue_) {
-    loading_control_task_queue_->UnregisterTaskQueue();
-    loading_task_queue_->SetBlameContext(nullptr);
-  }
-
   if (timer_task_queue_) {
     RemoveTimerQueueFromBackgroundCPUTimeBudgetPool();
     timer_task_queue_->UnregisterTaskQueue();
@@ -252,11 +247,6 @@ void WebFrameSchedulerImpl::AsValueInto(
     state->SetString("loading_task_queue",
                      trace_helper::PointerToString(loading_task_queue_.get()));
   }
-  if (loading_control_task_queue_) {
-    state->SetString(
-        "loading_control_task_queue",
-        trace_helper::PointerToString(loading_control_task_queue_.get()));
-  }
   if (timer_task_queue_)
     state->SetString("timer_task_queue",
                      trace_helper::PointerToString(timer_task_queue_.get()));
@@ -297,8 +287,6 @@ void WebFrameSchedulerImpl::SetSuspended(bool frame_suspended) {
   frame_suspended_ = frame_suspended;
   if (loading_queue_enabled_voter_)
     loading_queue_enabled_voter_->SetQueueEnabled(!frame_suspended);
-  if (loading_control_queue_enabled_voter_)
-    loading_control_queue_enabled_voter_->SetQueueEnabled(!frame_suspended);
   if (timer_queue_enabled_voter_)
     timer_queue_enabled_voter_->SetQueueEnabled(!frame_suspended);
   if (suspendable_queue_enabled_voter_)
