@@ -47,6 +47,10 @@ void InstallConditionalFeaturesCore(const WrapperTypeInfo* wrapper_type_info,
       V8Window::installMojoJS(isolate, world, instance_object, prototype_object,
                               interface_object);
     }
+    if (settings->isServiceManagerEnabled()) {
+      V8Window::installServiceManager(isolate, world, instance_object,
+                                      prototype_object, interface_object);
+    }
   } else if (wrapper_type_info == &V8HTMLLinkElement::wrapperTypeInfo) {
     if (OriginTrials::linkServiceWorkerEnabled(execution_context)) {
       V8HTMLLinkElement::installLinkServiceWorker(

@@ -32,7 +32,8 @@
         "ui": [
           "discardable_memory",
           "gpu_client"
-        ]
+        ],
+        "layout_test_helper": [ "renderer" ]
       }
     },
     "navigation:frame": {

@@ -16,4 +16,12 @@ void WebContextFeatures::EnableMojoJS(v8::Local<v8::Context> context,
       ->enableMojoJS(enable);
 }
 
+// static
+void WebContextFeatures::EnableServiceManager(v8::Local<v8::Context> context,
+                                              bool enable) {
+  ContextFeatureSettings::From(
+      ExecutionContext::From(ScriptState::From(context)))
+      ->enableServiceManager(enable);
+}
+
 }  // namespace blink
