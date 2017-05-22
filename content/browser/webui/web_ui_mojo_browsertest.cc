@@ -268,5 +268,30 @@ IN_PROC_BROWSER_TEST_F(WebUIMojoTest, NativeMojoAvailable) {
   EXPECT_FALSE(is_native_mojo_available);
 }
 
+IN_PROC_BROWSER_TEST_F(WebUIMojoTest, NativeServiceManager) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  const GURL kTestWebUIUrl("chrome://mojo-web-ui/web_ui_mojo_native.html");
+  NavigateToURL(shell(), kTestWebUIUrl);
+
+  bool is_native_service_manager_available = false;
+  const std::string kTestScript("isNativeServiceManagerAvailable()");
+  ASSERT_TRUE(ExecuteScriptAndExtractBool(
+      shell()->web_contents(),
+      "domAutomationController.send(" + kTestScript + ")",
+      &is_native_service_manager_available));
+  EXPECT_TRUE(is_native_service_manager_available);
+
+  // Now navigate again with WebUI disabled and ensure the native bindings are
+  // not available.
+  factory()->set_web_ui_enabled(false);
+  const std::string kTestNonWebUIUrl("/web_ui_mojo_native.html");
+  NavigateToURL(shell(), embedded_test_server()->GetURL(kTestNonWebUIUrl));
+  ASSERT_TRUE(ExecuteScriptAndExtractBool(
+      shell()->web_contents(),
+      "domAutomationController.send(" + kTestScript + ")",
+      &is_native_service_manager_available));
+  EXPECT_FALSE(is_native_service_manager_available);
+}
+
 }  // namespace
 }  // namespace content

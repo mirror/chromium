@@ -875,6 +875,10 @@
       status: "experimental",
     },
     {
+      name: "ServiceManager",
+      status: "test",
+    },
+    {
       name: "ServiceWorkerNavigationPreload",
       status: "stable",
     },
