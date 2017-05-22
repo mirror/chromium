@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "669a0cde_562653c6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/wasm_streaming/wasm_response_apis.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-05-22T17:27:38Z",
+      "side": 1,
+      "message": "Will the test framework reject if you return a promise for false? Or should this instead be assert_true(e instanceof TypeError)?\n\nMaybe it should also do an assert_unreached in the success branch, like the other tests do?\n\nAlso in general testing .constructor is better than testing instanceof so that subclasses don\u0027t pass the test accidentally.",
+      "revId": "5f3565f7d85198cbaa6ba5eda6be564907357fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e53ce29_1b142680",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/wasm_streaming/wasm_response_apis.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-05-22T17:27:38Z",
+      "side": 1,
+      "message": "FYI you can replace the new Promise(...) with Promise.resolve(5)",
+      "revId": "5f3565f7d85198cbaa6ba5eda6be564907357fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47e47ab_b7547cad",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/wasm_streaming/wasm_response_apis.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-05-22T17:27:38Z",
+      "side": 1,
+      "message": "Error!?! Shouldn\u0027t it be something more specific?",
+      "revId": "5f3565f7d85198cbaa6ba5eda6be564907357fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
