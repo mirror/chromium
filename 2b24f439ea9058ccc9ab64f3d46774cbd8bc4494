@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1835e106_7e9db20b",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-22T15:50:34Z",
+      "side": 0,
+      "message": "We\u0027re losing a lot of information here in the traces, but I\u0027m not sure if that\u0027s used anywhere right now.",
+      "revId": "2b24f439ea9058ccc9ab64f3d46774cbd8bc4494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
