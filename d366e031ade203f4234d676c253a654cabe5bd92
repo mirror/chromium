@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d31e210_4d909630",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-22T00:34:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d96a3a9_e1cd26a7",
+      "range": {
+        "startLine": 55,
+        "startChar": 21,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "d366e031ade203f4234d676c253a654cabe5bd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7d2e3e1_9a4791ad",
         "filename": "components/prefs/overlay_user_pref_store.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-21T23:59:19Z",
       "side": 1,
       "message": "Do we want to default to write-through in production for prefs with missing incognito test coverage?",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "d366e031ade203f4234d676c253a654cabe5bd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68613c7_6dc75612",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-22T00:34:06Z",
+      "side": 1,
+      "message": "This is the current behavior so I think it\u0027s an OK intermediate step.",
+      "parentUuid": "d7d2e3e1_9a4791ad",
       "range": {
         "startLine": 84,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9961a2aa_32485fea",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-22T00:34:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3909e06_b1ad33d1",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 46
+      },
+      "revId": "d366e031ade203f4234d676c253a654cabe5bd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71cf8024_dbb9d1b7",
         "filename": "components/sync_preferences/pref_service_syncable.h",
         "patchSetId": 10
@@ -85,6 +157,24 @@
       "revId": "d366e031ade203f4234d676c253a654cabe5bd92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d383c81_b258eba3",
+        "filename": "components/sync_preferences/pref_service_syncable.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-22T00:34:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71cf8024_dbb9d1b7",
+      "revId": "d366e031ade203f4234d676c253a654cabe5bd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
