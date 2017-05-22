@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test same origin: Wrong value of `csp` should not trigger sending Embedding-CSP Header. 
+PASS Test same origin redirect: Wrong value of `csp` should not trigger sending Embedding-CSP Header. 
+PASS Test cross origin redirect: Wrong value of `csp` should not trigger sending Embedding-CSP Header. 
+PASS Test cross origin redirect of cross origin iframe: Wrong value of `csp` should not trigger sending Embedding-CSP Header. 
+FAIL Test Embedding-CSP value on `csp` change: Wrong value of `csp` should not trigger sending Embedding-CSP Header. assert_equals: expected (object) null but got (string) "default-src 'unsafe-inline'"
+Harness: the test ran to completion.
+

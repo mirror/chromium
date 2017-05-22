@@ -1,0 +1,18 @@
+This is a testharness.js-based test.
+PASS Test same origin: Embedding-CSP is not sent if `csp` attribute is not set on <iframe>. 
+PASS Test same origin redirect: Embedding-CSP is not sent if `csp` attribute is not set on <iframe>. 
+PASS Test cross origin redirect: Embedding-CSP is not sent if `csp` attribute is not set on <iframe>. 
+PASS Test cross origin redirect of cross origin iframe: Embedding-CSP is not sent if `csp` attribute is not set on <iframe>. 
+FAIL Test Embedding-CSP value on `csp` change: Embedding-CSP is not sent if `csp` attribute is not set on <iframe>. assert_equals: expected (object) null but got (string) "default-src 'unsafe-inline'"
+FAIL Test same origin: Send Embedding-CSP when `csp` attribute of <iframe> is not empty. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+FAIL Test same origin redirect: Send Embedding-CSP when `csp` attribute of <iframe> is not empty. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+FAIL Test cross origin redirect: Send Embedding-CSP when `csp` attribute of <iframe> is not empty. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+FAIL Test cross origin redirect of cross origin iframe: Send Embedding-CSP when `csp` attribute of <iframe> is not empty. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+FAIL Test Embedding-CSP value on `csp` change: Send Embedding-CSP when `csp` attribute of <iframe> is not empty. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+FAIL Test same origin: Send Embedding-CSP Header on change of `src` attribute on iframe. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+FAIL Test same origin redirect: Send Embedding-CSP Header on change of `src` attribute on iframe. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+FAIL Test cross origin redirect: Send Embedding-CSP Header on change of `src` attribute on iframe. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+FAIL Test cross origin redirect of cross origin iframe: Send Embedding-CSP Header on change of `src` attribute on iframe. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+FAIL Test Embedding-CSP value on `csp` change: Send Embedding-CSP Header on change of `src` attribute on iframe. assert_equals: expected (object) null but got (string) "script-src 'unsafe-inline'"
+Harness: the test ran to completion.
+
