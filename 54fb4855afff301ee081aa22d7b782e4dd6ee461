@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41c1fff1_fdf98d3b",
+        "filename": "third_party/WebKit/LayoutTests/usb/resources/webusb-test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-22T19:58:41Z",
+      "side": 1,
+      "message": "comment along the lines of:\n// Async so tests don\u0027t rely on sync chromium details.",
+      "revId": "54fb4855afff301ee081aa22d7b782e4dd6ee461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
