@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a09ac9d_2d9ed1fa",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-22T14:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f895afb7_3fdbc493",
+      "revId": "fad6d8677a6bbda08e96ffa17b976d81ebbfdd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39e699fd_b5c72827",
         "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-15T12:45:10Z",
       "side": 1,
       "message": "Why swap? Just curious.",
+      "revId": "fad6d8677a6bbda08e96ffa17b976d81ebbfdd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e593588_f0bc1bdb",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-22T14:24:13Z",
+      "side": 1,
+      "message": "To make the initialization \"atomic\" (more or less). All other methods shouldn\u0027t be called before the initialization finishes anyway. I make the check that the cache was initialized based on the value of this unique_ptr.",
+      "parentUuid": "39e699fd_b5c72827",
       "revId": "fad6d8677a6bbda08e96ffa17b976d81ebbfdd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
