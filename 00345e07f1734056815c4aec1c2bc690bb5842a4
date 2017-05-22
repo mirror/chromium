@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3135f460_3e3a3fb7",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-05-22T18:28:28Z",
+      "side": 1,
+      "message": "if you\u0027d like to fix this now, we could probably name this method name to: getLastRouteChangeWasPopState and change the bool to lastRouteChangeWasPopState (and drop the _).",
+      "range": {
+        "startLine": 437,
+        "startChar": 4,
+        "endLine": 437,
+        "endChar": 30
+      },
+      "revId": "00345e07f1734056815c4aec1c2bc690bb5842a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
