@@ -851,7 +851,6 @@ IN_PROC_BROWSER_TEST_F(MediaCanPlayTypeTest, CodecSupportTest_mp4) {
   EXPECT_EQ(kHevcSupported,
             CanPlay("'video/mp4; codecs=\"hvc1.1.6.L93.B0, mp4a.40.5\"'"));
 
-  // switches::kEnableVp9InMp4 is enabled in MediaBrowserTest.
   EXPECT_EQ(kPropProbably, CanPlay("'video/mp4; codecs=\"vp09.00.10.08\"'"));
 
   TestMPEGUnacceptableCombinations("video/mp4");
@@ -1540,13 +1539,9 @@ IN_PROC_BROWSER_TEST_P(MediaCanPlayNewVp9TypeTest,
 }
 
 const CanPlayTypeNewVp9Params kNewVp9ParamVariants[] = {
-    // Expect CanPlay(...) = kNotEmpty when command line flag empty.
-    {"", "video/mp4", kNot, kNot},
+    // Expect CanPlay(...) = kProbably/kMaybe for MP4, but not for WebM.
+    {"", "video/mp4", kPropProbably, kPropMaybe},
     {"", "video/webm", kNot, kNot},
-    // Expect CanPlay(...) = kProbably/kMaybe for MP4, but not for WebM for
-    // these command line flags.
-    {switches::kEnableVp9InMp4, "video/mp4", kPropProbably, kPropMaybe},
-    {switches::kEnableVp9InMp4, "video/webm", kNot, kNot},
     // Expect CanPlay(...) = kProbably/kMaybe for WebM, but not for MP4 for
     // these command line flags.
     {switches::kEnableHDR, "video/mp4", kNot, kNot},
