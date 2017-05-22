@@ -18,6 +18,7 @@ using ::testing::ElementsAre;
 using ::testing::Return;
 using ::testing::WhenSorted;
 using ::testing::ElementsAreArray;
+using ::testing::_;
 
 namespace blink {
 
@@ -26,7 +27,7 @@ class MockScriptLoader final : public ScriptLoader {
   static MockScriptLoader* Create() { return new MockScriptLoader(); }
   ~MockScriptLoader() override {}
 
-  MOCK_METHOD0(Execute, void());
+  MOCK_METHOD1(ExecuteWithScriptStreamer, void(ScriptStreamer*));
   MOCK_CONST_METHOD0(IsReady, bool());
 
  private:
@@ -60,7 +61,7 @@ TEST_F(ScriptRunnerTest, QueueSingleScript_Async) {
   script_runner_->QueueScriptForExecution(script_loader, ScriptRunner::kAsync);
   script_runner_->NotifyScriptReady(script_loader, ScriptRunner::kAsync);
 
-  EXPECT_CALL(*script_loader, Execute());
+  EXPECT_CALL(*script_loader, ExecuteWithScriptStreamer(_));
   platform_->RunUntilIdle();
 }
 
@@ -70,7 +71,7 @@ TEST_F(ScriptRunnerTest, QueueSingleScript_InOrder) {
                                           ScriptRunner::kInOrder);
 
   EXPECT_CALL(*script_loader, IsReady()).WillOnce(Return(true));
-  EXPECT_CALL(*script_loader, Execute());
+  EXPECT_CALL(*script_loader, ExecuteWithScriptStreamer(_));
 
   script_runner_->NotifyScriptReady(script_loader, ScriptRunner::kInOrder);
 
@@ -93,9 +94,9 @@ TEST_F(ScriptRunnerTest, QueueMultipleScripts_InOrder) {
   }
 
   for (size_t i = 0; i < script_loaders.size(); ++i) {
-    EXPECT_CALL(*script_loaders[i], Execute()).WillOnce(Invoke([this, i] {
-      order_.push_back(i + 1);
-    }));
+    EXPECT_CALL(*script_loaders[i], ExecuteWithScriptStreamer(_))
+        .WillOnce(
+            Invoke([this, i](ScriptStreamer*) { order_.push_back(i + 1); }));
   }
 
   // Make the scripts become ready in reverse order.
@@ -147,21 +148,16 @@ TEST_F(ScriptRunnerTest, QueueMixedScripts) {
   script_runner_->NotifyScriptReady(script_loader4, ScriptRunner::kAsync);
   script_runner_->NotifyScriptReady(script_loader5, ScriptRunner::kAsync);
 
-  EXPECT_CALL(*script_loader1, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(1);
-  }));
-  EXPECT_CALL(*script_loader2, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(2);
-  }));
-  EXPECT_CALL(*script_loader3, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(3);
-  }));
-  EXPECT_CALL(*script_loader4, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(4);
-  }));
-  EXPECT_CALL(*script_loader5, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(5);
-  }));
+  EXPECT_CALL(*script_loader1, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(1); }));
+  EXPECT_CALL(*script_loader2, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(2); }));
+  EXPECT_CALL(*script_loader3, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(3); }));
+  EXPECT_CALL(*script_loader4, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(4); }));
+  EXPECT_CALL(*script_loader5, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(5); }));
 
   platform_->RunUntilIdle();
 
@@ -180,22 +176,21 @@ TEST_F(ScriptRunnerTest, QueueReentrantScript_Async) {
   script_runner_->NotifyScriptReady(script_loader1, ScriptRunner::kAsync);
 
   MockScriptLoader* script_loader = script_loader2;
-  EXPECT_CALL(*script_loader1, Execute())
-      .WillOnce(Invoke([script_loader, this] {
+  EXPECT_CALL(*script_loader1, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([script_loader, this](ScriptStreamer*) {
         order_.push_back(1);
         script_runner_->NotifyScriptReady(script_loader, ScriptRunner::kAsync);
       }));
 
   script_loader = script_loader3;
-  EXPECT_CALL(*script_loader2, Execute())
-      .WillOnce(Invoke([script_loader, this] {
+  EXPECT_CALL(*script_loader2, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([script_loader, this](ScriptStreamer*) {
         order_.push_back(2);
         script_runner_->NotifyScriptReady(script_loader, ScriptRunner::kAsync);
       }));
 
-  EXPECT_CALL(*script_loader3, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(3);
-  }));
+  EXPECT_CALL(*script_loader3, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(3); }));
 
   // Make sure that re-entrant calls to notifyScriptReady don't cause
   // ScriptRunner::execute to do more work than expected.
@@ -223,8 +218,8 @@ TEST_F(ScriptRunnerTest, QueueReentrantScript_InOrder) {
   script_runner_->NotifyScriptReady(script_loader1, ScriptRunner::kInOrder);
 
   MockScriptLoader* script_loader = script_loader2;
-  EXPECT_CALL(*script_loader1, Execute())
-      .WillOnce(Invoke([script_loader, &script_loader2, this] {
+  EXPECT_CALL(*script_loader1, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([script_loader, &script_loader2, this](ScriptStreamer*) {
         order_.push_back(1);
         script_runner_->QueueScriptForExecution(script_loader,
                                                 ScriptRunner::kInOrder);
@@ -233,8 +228,8 @@ TEST_F(ScriptRunnerTest, QueueReentrantScript_InOrder) {
       }));
 
   script_loader = script_loader3;
-  EXPECT_CALL(*script_loader2, Execute())
-      .WillOnce(Invoke([script_loader, &script_loader3, this] {
+  EXPECT_CALL(*script_loader2, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([script_loader, &script_loader3, this](ScriptStreamer*) {
         order_.push_back(2);
         script_runner_->QueueScriptForExecution(script_loader,
                                                 ScriptRunner::kInOrder);
@@ -242,9 +237,8 @@ TEST_F(ScriptRunnerTest, QueueReentrantScript_InOrder) {
                                           ScriptRunner::kInOrder);
       }));
 
-  EXPECT_CALL(*script_loader3, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(3);
-  }));
+  EXPECT_CALL(*script_loader3, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(3); }));
 
   // Make sure that re-entrant calls to queueScriptForExecution don't cause
   // ScriptRunner::execute to do more work than expected.
@@ -271,17 +265,17 @@ TEST_F(ScriptRunnerTest, QueueReentrantScript_ManyAsyncScripts) {
                                             ScriptRunner::kAsync);
 
     if (i > 0) {
-      EXPECT_CALL(*script_loaders[i], Execute()).WillOnce(Invoke([this, i] {
-        order_.push_back(i);
-      }));
+      EXPECT_CALL(*script_loaders[i], ExecuteWithScriptStreamer(_))
+          .WillOnce(
+              Invoke([this, i](ScriptStreamer*) { order_.push_back(i); }));
     }
   }
 
   script_runner_->NotifyScriptReady(script_loaders[0], ScriptRunner::kAsync);
   script_runner_->NotifyScriptReady(script_loaders[1], ScriptRunner::kAsync);
 
-  EXPECT_CALL(*script_loaders[0], Execute())
-      .WillOnce(Invoke([&script_loaders, this] {
+  EXPECT_CALL(*script_loaders[0], ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([&script_loaders, this](ScriptStreamer*) {
         for (int i = 2; i < 20; i++)
           script_runner_->NotifyScriptReady(script_loaders[i],
                                             ScriptRunner::kAsync);
@@ -308,15 +302,12 @@ TEST_F(ScriptRunnerTest, ResumeAndSuspend_InOrder) {
   script_runner_->QueueScriptForExecution(script_loader3,
                                           ScriptRunner::kInOrder);
 
-  EXPECT_CALL(*script_loader1, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(1);
-  }));
-  EXPECT_CALL(*script_loader2, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(2);
-  }));
-  EXPECT_CALL(*script_loader3, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(3);
-  }));
+  EXPECT_CALL(*script_loader1, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(1); }));
+  EXPECT_CALL(*script_loader2, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(2); }));
+  EXPECT_CALL(*script_loader3, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(3); }));
 
   EXPECT_CALL(*script_loader2, IsReady()).WillRepeatedly(Return(true));
   EXPECT_CALL(*script_loader3, IsReady()).WillRepeatedly(Return(true));
@@ -354,15 +345,12 @@ TEST_F(ScriptRunnerTest, ResumeAndSuspend_Async) {
   script_runner_->NotifyScriptReady(script_loader2, ScriptRunner::kAsync);
   script_runner_->NotifyScriptReady(script_loader3, ScriptRunner::kAsync);
 
-  EXPECT_CALL(*script_loader1, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(1);
-  }));
-  EXPECT_CALL(*script_loader2, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(2);
-  }));
-  EXPECT_CALL(*script_loader3, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(3);
-  }));
+  EXPECT_CALL(*script_loader1, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(1); }));
+  EXPECT_CALL(*script_loader2, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(2); }));
+  EXPECT_CALL(*script_loader3, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(3); }));
 
   platform_->RunSingleTask();
   script_runner_->Suspend();
@@ -385,12 +373,10 @@ TEST_F(ScriptRunnerTest, LateNotifications) {
   script_runner_->QueueScriptForExecution(script_loader2,
                                           ScriptRunner::kInOrder);
 
-  EXPECT_CALL(*script_loader1, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(1);
-  }));
-  EXPECT_CALL(*script_loader2, Execute()).WillOnce(Invoke([this] {
-    order_.push_back(2);
-  }));
+  EXPECT_CALL(*script_loader1, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(1); }));
+  EXPECT_CALL(*script_loader2, ExecuteWithScriptStreamer(_))
+      .WillOnce(Invoke([this](ScriptStreamer*) { order_.push_back(2); }));
 
   script_runner_->NotifyScriptReady(script_loader1, ScriptRunner::kInOrder);
   platform_->RunUntilIdle();
@@ -422,8 +408,8 @@ TEST_F(ScriptRunnerTest, TasksWithDeadScriptRunner) {
 
   // m_scriptRunner is gone. We need to make sure that ScriptRunner::Task do not
   // access dead object.
-  EXPECT_CALL(*script_loader1, Execute()).Times(0);
-  EXPECT_CALL(*script_loader2, Execute()).Times(0);
+  EXPECT_CALL(*script_loader1, ExecuteWithScriptStreamer(_)).Times(0);
+  EXPECT_CALL(*script_loader2, ExecuteWithScriptStreamer(_)).Times(0);
 
   platform_->RunUntilIdle();
 }

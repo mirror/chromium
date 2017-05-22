@@ -39,6 +39,7 @@ namespace blink {
 
 class Document;
 class PendingScript;
+class ScriptStreamer;
 
 class CORE_EXPORT PendingScriptClient : public GarbageCollectedMixin {
  public:
@@ -82,7 +83,8 @@ class CORE_EXPORT PendingScript
   DECLARE_VIRTUAL_TRACE();
 
   virtual Script* GetSource(const KURL& document_url,
-                            bool& error_occurred) const = 0;
+                            bool& error_occurred,
+                            ScriptStreamer* = nullptr) const = 0;
 
   // https://html.spec.whatwg.org/#the-script-is-ready
   virtual bool IsReady() const = 0;

@@ -37,8 +37,8 @@ class CORE_EXPORT ClassicPendingScript final
 
   ~ClassicPendingScript() override;
 
-  void SetStreamer(ScriptStreamer*);
   void StreamingFinished();
+  void SetStreamer(ScriptStreamer*);
 
   DECLARE_TRACE();
 
@@ -47,7 +47,8 @@ class CORE_EXPORT ClassicPendingScript final
   }
 
   ClassicScript* GetSource(const KURL& document_url,
-                           bool& error_occurred) const override;
+                           bool& error_occurred,
+                           ScriptStreamer* = nullptr) const override;
   bool IsReady() const override;
   bool IsExternal() const override { return GetResource(); }
   bool ErrorOccurred() const override;
@@ -62,6 +63,7 @@ class CORE_EXPORT ClassicPendingScript final
  private:
   enum ReadyState {
     // These states are considered "not ready".
+    kWaitingForResourceAndStreaming,
     kWaitingForResource,
     kWaitingForStreaming,
     // These states are considered "ready".
@@ -79,6 +81,7 @@ class CORE_EXPORT ClassicPendingScript final
   void AdvanceReadyState(ReadyState);
 
   void CheckState() const override;
+  void Finish();
 
   // ScriptResourceClient
   void NotifyFinished(Resource*) override;
