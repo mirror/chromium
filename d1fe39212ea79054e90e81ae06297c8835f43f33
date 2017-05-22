@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bea7c933_4a74af8a",
+        "filename": "base/strings/nullable_string16.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-22T09:25:23Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "d1fe39212ea79054e90e81ae06297c8835f43f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6241dc2_db756dc6",
+        "filename": "base/strings/nullable_string16.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-22T09:25:23Z",
+      "side": 1,
+      "message": "I wonder if people should really be calling this if is_null() is true. It\u0027s legal today, but I think we should have  TODO to DCHECK !is_null() and work on enforcing that.\n\n(It seems like some places already check, though I didn\u0027t do an exhaustive search)",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 47
+      },
+      "revId": "d1fe39212ea79054e90e81ae06297c8835f43f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
