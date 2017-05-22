@@ -90,7 +90,12 @@ void PaintTiming::SetFirstMeaningfulPaintCandidate(double timestamp) {
   if (first_meaningful_paint_candidate_)
     return;
   first_meaningful_paint_candidate_ = timestamp;
-  if (GetFrame() && GetFrame()->View() && !GetFrame()->View()->Parent()) {
+  if (GetFrame() && GetFrame()->View())
+    DCHECK((GetFrame()->View()->Parent() == nullptr) ==
+           (GetFrame()->View()->GetFrameOrPluginState() !=
+            FrameOrPlugin::kAttached));
+  if (GetFrame() && GetFrame()->View() &&
+      GetFrame()->View()->GetFrameOrPluginState() != FrameOrPlugin::kAttached) {
     GetFrame()->FrameScheduler()->OnFirstMeaningfulPaint();
   }
 }
