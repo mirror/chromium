@@ -17,11 +17,11 @@ using ::testing::StrEq;
 namespace base {
 namespace {
 
-const char kBrowserWindowPlacement[] = "browser.window_placement";
+const char kShowAppsShortcutInBookmarkBar[] = "bookmark_bar.show_apps_shortcut";
 const char kShowBookmarkBar[] = "bookmark_bar.show_on_all_tabs";
 const char kSharedKey[] = "sync_promo.show_on_first_run_allowed";
 
-const char* const overlay_key = kBrowserWindowPlacement;
+const char* const overlay_key = kShowAppsShortcutInBookmarkBar;
 const char* const regular_key = kShowBookmarkBar;
 const char* const shared_key = kSharedKey;
 
@@ -32,8 +32,7 @@ class OverlayUserPrefStoreTest : public testing::Test {
   OverlayUserPrefStoreTest()
       : underlay_(new TestingPrefStore()),
         overlay_(new OverlayUserPrefStore(underlay_.get())) {
-    overlay_->RegisterOverlayPref(overlay_key);
-    overlay_->RegisterOverlayPref(shared_key);
+    overlay_->RegisterUnderlayPref(regular_key);
   }
 
   ~OverlayUserPrefStoreTest() override {}
