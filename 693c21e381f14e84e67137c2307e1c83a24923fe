@@ -16,6 +16,24 @@
       "revId": "693c21e381f14e84e67137c2307e1c83a24923fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139dbddd_527762be",
+        "filename": "mojo/public/cpp/bindings/lib/connector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-22T17:01:19Z",
+      "side": 0,
+      "message": "Yikes. Misread it as a test for heap_profiler_tag_. Fixed.",
+      "parentUuid": "50059001_0a5710f6",
+      "revId": "693c21e381f14e84e67137c2307e1c83a24923fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
