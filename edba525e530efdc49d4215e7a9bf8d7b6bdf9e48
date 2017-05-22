@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d311c7f2_308acb62",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-22T21:16:25Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we need to have both guards for this.",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
