@@ -22,6 +22,30 @@
       "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d70457f_9e3deae0",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-22T21:25:05Z",
+      "side": 1,
+      "message": "We certainly don\u0027t *need* to. If we removed the RuntimeEnabled flag, we\u0027d instead want to:\n\n- Add a feature flag to content which enabled the MojoJS context-enabled feature for all contexts\n- Make sure content always turns on the context-enabled feature in layout tests, except when kStableReleaseMode is set\n\nIf you would prefer this approach, I\u0027m happy to remove the RuntimeEnabled attributes from these interfaces.",
+      "parentUuid": "d311c7f2_308acb62",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
