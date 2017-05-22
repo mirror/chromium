@@ -4,10 +4,10 @@
 
 #include "net/websockets/websocket_handshake_stream_create_helper.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/websockets/websocket_basic_handshake_stream.h"

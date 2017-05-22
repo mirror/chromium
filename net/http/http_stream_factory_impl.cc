@@ -187,13 +187,15 @@ void HttpStreamFactoryImpl::OnNewSpdySessionReady(
                HttpStreamRequest::BIDIRECTIONAL_STREAM) {
       request->OnBidirectionalStreamImplReady(
           used_ssl_config, used_proxy_info,
-          new BidirectionalStreamSpdyImpl(spdy_session, source_dependency));
+          base::MakeUnique<BidirectionalStreamSpdyImpl>(spdy_session,
+                                                        source_dependency));
     } else {
       bool use_relative_url =
           direct || request->url().SchemeIs(url::kHttpsScheme);
-      request->OnStreamReady(used_ssl_config, used_proxy_info,
-                             new SpdyHttpStream(spdy_session, use_relative_url,
-                                                source_dependency));
+      request->OnStreamReady(
+          used_ssl_config, used_proxy_info,
+          base::MakeUnique<SpdyHttpStream>(spdy_session, use_relative_url,
+                                           source_dependency));
     }
   }
   // TODO(mbelshe): Alert other valid requests.
