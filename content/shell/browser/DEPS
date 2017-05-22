@@ -10,4 +10,7 @@ specific_include_rules = {
   "shell\.cc": [
     "+content/shell/browser/layout_test",
   ],
+  "shell_content_browser_client.cc": [
+    "+content/shell/browser/layout_test",
+  ],
 }

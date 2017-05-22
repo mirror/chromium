@@ -7,3 +7,7 @@ window.isNativeMojoAvailable = () => {
   return typeof(Mojo) !== 'undefined' && typeof(MojoHandle) !== 'undefined' &&
       typeof(MojoWatcher) !== 'undefined';
 };
+
+window.isNativeServiceManagerAvailable = () => {
+  return typeof(ServiceManager) != 'undefined';
+};

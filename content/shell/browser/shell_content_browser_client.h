@@ -40,6 +40,7 @@ class ShellContentBrowserClient : public ContentBrowserClient {
   void RegisterOutOfProcessServices(OutOfProcessServiceMap* services) override;
   std::unique_ptr<base::Value> GetServiceManifestOverlay(
       base::StringPiece name) override;
+  std::vector<ServiceManifestInfo> GetExtraServiceManifests() override;
   void AppendExtraCommandLineSwitches(base::CommandLine* command_line,
                                       int child_process_id) override;
   void ResourceDispatcherHostCreated() override;
