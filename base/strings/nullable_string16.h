@@ -30,6 +30,7 @@ class BASE_EXPORT NullableString16 {
   NullableString16& operator=(NullableString16&& other);
 
   const string16& string() const {
+    DCHECK(string_);
     return string_ ? *string_ : EmptyString16();
   }
   bool is_null() const { return !string_; }
