@@ -24,6 +24,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/sys_info.h"
 #include "base/trace_event/trace_event.h"
 #include "base/win/iat_patch_function.h"
 #include "base/win/scoped_handle.h"
@@ -593,8 +594,17 @@ sandbox::ResultCode SetJobLevel(const base::CommandLine& cmd_line,
     return policy->SetJobLevel(sandbox::JOB_NONE, 0);
 
 #ifdef _WIN64
-  sandbox::ResultCode ret =
-      policy->SetJobMemoryLimit(4ULL * 1024 * 1024 * 1024);
+  // Allow the sandbox to access more physical memory if it's
+  // available on the system.
+  int64_t physical_memory = base::SysInfo::AmountOfPhysicalMemory();
+  int64_t GB = 1024 * 1024 * 1024;
+  size_t memory_limit = 4 * GB;
+  if (physical_memory > 16 * GB) {
+    memory_limit = 16 * GB;
+  } else if (physical_memory > 8 * GB) {
+    memory_limit = 8 * GB;
+  }
+  sandbox::ResultCode ret = policy->SetJobMemoryLimit(memory_limit);
   if (ret != sandbox::SBOX_ALL_OK)
     return ret;
 #endif
