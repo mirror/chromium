@@ -505,8 +505,13 @@ class USBTest {
     if (!g_deviceManager || !g_chooserService)
       throw new Error('Call initialize() before reset().');
 
-    g_deviceManager.removeAllDevices();
-    g_chooserService.setChosenDevice(null);
+    return new Promise(resolve => {
+      setTimeout(() => {
+        g_deviceManager.removeAllDevices();
+        g_chooserService.setChosenDevice(null);
+        resolve();
+      }, 0);
+    });
   }
 }
 
