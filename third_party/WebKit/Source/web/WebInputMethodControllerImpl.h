@@ -22,7 +22,7 @@ class WebInputMethodControllerImpl : public WebInputMethodController {
   WTF_MAKE_NONCOPYABLE(WebInputMethodControllerImpl);
 
  public:
-  explicit WebInputMethodControllerImpl(WebLocalFrameImpl* owner_frame);
+  explicit WebInputMethodControllerImpl(WebLocalFrameImpl& web_frame);
   ~WebInputMethodControllerImpl() override;
 
   static WebInputMethodControllerImpl* FromFrame(LocalFrame*);
@@ -49,7 +49,7 @@ class WebInputMethodControllerImpl : public WebInputMethodController {
   InputMethodController& GetInputMethodController() const;
   WebPlugin* FocusedPluginIfInputMethodSupported() const;
 
-  WeakMember<WebLocalFrameImpl> web_local_frame_;
+  const WeakMember<WebLocalFrameImpl> web_frame_;
 };
 }  // namespace blink
 
