@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "676ce48d_fdd4a45c",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-22T18:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27824de6_f786bb85",
+      "revId": "e9cbc3d9c83ff1baae554070fa312cdc41cae5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8586f9a_a16dd09c",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "daa0cadf_81f010d7",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-22T18:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4cc87fa_39be1232",
+      "revId": "e9cbc3d9c83ff1baae554070fa312cdc41cae5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7546a793_4492ca19",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Not sure I understand the case where this happens. If state_ is kWaitingForCodec then we\u0027ll go to kSurfaceDestroyed and return regardless of whether setoutputsurface works.",
       "parentUuid": "7546a793_4492ca19",
+      "revId": "e9cbc3d9c83ff1baae554070fa312cdc41cae5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f0f8b8_88f4213e",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-22T18:48:49Z",
+      "side": 1,
+      "message": "misread || as \u0026\u0026, several times.",
+      "parentUuid": "d0f9d514_01479b78",
       "revId": "e9cbc3d9c83ff1baae554070fa312cdc41cae5a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
