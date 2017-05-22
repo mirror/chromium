@@ -6,6 +6,7 @@
 #include "base/android/jni_android.h"
 #include "base/bind.h"
 #include "base/run_loop.h"
+#include "base/test/mock_callback.h"
 #include "base/test/scoped_task_environment.h"
 #include "media/base/android/media_codec_util.h"
 #include "media/base/android/media_jni_registrar.h"
@@ -126,6 +127,15 @@ TEST_F(MediaCodecVideoDecoderTest, DecodeTriggersLazyInit) {
   EXPECT_CALL(*codec_allocator_, MockCreateMediaCodecAsync(_, _));
   mcvd_->Decode(nullptr, base::Bind(&DecodeCb));
   base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(MediaCodecVideoDecoderTest, DecodeCbsAreRunOnError) {
+  Initialize(TestVideoConfig::NormalH264());
+  base::MockCallback<VideoDecoder::DecodeCB> decode_cb;
+  EXPECT_CALL(decode_cb, Run(DecodeStatus::DECODE_ERROR));
+  mcvd_->Decode(nullptr, decode_cb.Get());
+  base::RunLoop().RunUntilIdle();
+  codec_allocator_->ProvideNullCodecAsync();
 }
 
 }  // namespace media
