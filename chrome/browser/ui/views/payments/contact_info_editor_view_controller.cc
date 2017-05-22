@@ -16,6 +16,7 @@
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/payments/content/payment_request_spec.h"
 #include "components/payments/content/payment_request_state.h"
+#include "components/payments/core/payment_request_data_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_combobox_model.h"
@@ -151,6 +152,19 @@ ContactInfoEditorViewController::ContactInfoValidationDelegate::
 
 ContactInfoEditorViewController::ContactInfoValidationDelegate::
     ~ContactInfoValidationDelegate() {}
+
+bool ContactInfoEditorViewController::ContactInfoValidationDelegate::
+    ShouldFormat() {
+  return field_.type == autofill::PHONE_HOME_WHOLE_NUMBER;
+}
+
+base::string16
+ContactInfoEditorViewController::ContactInfoValidationDelegate::Format(
+    const base::string16& text) {
+  return base::UTF8ToUTF16(data_util::FormatPhoneForDisplay(
+      base::UTF16ToUTF8(text),
+      autofill::AutofillCountry::CountryCodeForLocale(locale_)));
+}
 
 bool ContactInfoEditorViewController::ContactInfoValidationDelegate::
     IsValidTextfield(views::Textfield* textfield) {
