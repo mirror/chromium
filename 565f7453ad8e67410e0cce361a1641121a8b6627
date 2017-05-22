@@ -2,6 +2,132 @@
   "comments": [
     {
       "key": {
+        "uuid": "b7493d1b_371f75c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentApp.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment for the reader here.",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 23
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64e3cd7_f3f30649",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentApp.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "We should eventually (post branch) use a common implementation for this. Do you know if Mojo objects can cross the JNI boundary?",
+      "range": {
+        "startLine": 123,
+        "startChar": 18,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7f7bd1_f8f700f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/CardEditor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "this argument name is not obvious to me",
+      "range": {
+        "startLine": 368,
+        "startChar": 76,
+        "endLine": 368,
+        "endChar": 81
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e646a6_8b21493a",
+        "filename": "chrome/browser/ui/views/payments/payment_method_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "Since this is now non-trivial layout, I would encourage ASCII art",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a77741_674fbe20",
+        "filename": "chrome/browser/ui/views/payments/payment_method_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "I would encourage you to put this in a private function, CreateHeaderView(). The end result is more readable, see:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/views/payments/profile_list_view_controller.cc?rcl\u003d102feab6fd73e6b0510c572165d10e2b3831790c\u0026l\u003d375",
+      "range": {
+        "startLine": 196,
+        "startChar": 18,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dd10f0_5bdbe1d5",
+        "filename": "chrome/browser/ui/views/payments/payment_method_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "Do you need this? There is only one thing in your layout so you need not define the spacing between multiple items in it.",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bc6343b_967222d4",
         "filename": "chrome/browser/ui/views/payments/payment_method_view_controller.cc",
         "patchSetId": 7
@@ -19,6 +145,58 @@
     },
     {
       "key": {
+        "uuid": "7597d73e_88341b57",
+        "filename": "chrome/browser/ui/views/payments/payment_method_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "It\u0027s interesting that you can redefine |layout| here?",
+      "parentUuid": "2bc6343b_967222d4",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b422b7c9_84afd697",
+        "filename": "chrome/browser/ui/views/payments/payment_request_debit_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "nit: GetOrCreateBillingAddressId?",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d27ee08_812a77e2",
+        "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "warning icon (if present)",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7297c9b2_2aeb0e79",
         "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
         "patchSetId": 7
@@ -30,6 +208,131 @@
       "writtenOn": "2017-05-22T13:51:59Z",
       "side": 1,
       "message": "This and the following statement can be moved to line 184, merging the 2 if blocks.",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52820d8c_72dd3b33",
+        "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "Should probably change this ID to SHIPPING_ADDRESS_SECTION_HEADER_LABEL",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4bcd6d_572173f6",
+        "filename": "chrome/browser/ui/views/payments/shipping_option_view_controller_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "add an expectation that it\u0027s the text that you want.",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69197713_ca77c913",
+        "filename": "components/autofill/core/browser/credit_card.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "WDYT of\n// Local cards may be UNKNOWN, while server cards may have a more specific type.",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b65b3e8_674cdc0f",
+        "filename": "components/autofill/core/browser/credit_card.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "Mention unknown",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88abae94_6b9981f2",
+        "filename": "components/autofill/core/browser/credit_card.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "whoa",
+      "range": {
+        "startLine": 294,
+        "startChar": 6,
+        "endLine": 294,
+        "endChar": 15
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44122ff0_dee07f71",
+        "filename": "components/payments/content/payment_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "what should unknown do?",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4073b7_11aed88a",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-22T15:01:36Z",
+      "side": 1,
+      "message": "reading this (in c++ now) is still not obvious to me. Should add a comment",
       "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
