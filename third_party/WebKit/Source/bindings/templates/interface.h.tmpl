@@ -258,6 +258,11 @@ class {{v8_class}} {
       v8::Local<v8::Object> prototype,
       v8::Local<v8::Function> interface);
 
+  {% for feature in context_enabled_features %}
+  static void install{{feature.name}}(ScriptState*, v8::Local<v8::Object> instance);
+  static void install{{feature.name}}(v8::Isolate*, const DOMWrapperWorld&, v8::Local<v8::Object> instance, v8::Local<v8::Object> prototype, v8::Local<v8::Function> interface);
+  {% endfor %}
+
   {% if has_partial_interface %}
   static InstallRuntimeEnabledFunction install{{v8_class}}RuntimeEnabledFunction;
   {% endif %}
