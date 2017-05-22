@@ -22,6 +22,7 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/page_info/page_info.h"
+#include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
@@ -100,14 +101,6 @@ const int kPermissionsVerticalSpacing = 12;
 
 // Spacing between the label and the menu.
 const int kPermissionMenuSpacing = 16;
-
-// Button/styled label/link IDs ------------------------------------------------
-const int BUTTON_CLOSE = 1337;
-const int STYLED_LABEL_SECURITY_DETAILS = 1338;
-const int STYLED_LABEL_RESET_CERTIFICATE_DECISIONS = 1339;
-const int LINK_COOKIE_DIALOG = 1340;
-const int LINK_SITE_SETTINGS = 1341;
-const int LINK_CERTIFICATE_VIEWER = 1342;
 
 // The default, ui::kTitleFontSizeDelta, is too large for the page info
 // bubble (e.g. +3). Use +1 to obtain a smaller font.
@@ -249,7 +242,7 @@ BubbleHeaderView::BubbleHeaderView(
   layout->StartRow(0, label_column_status);
   details_label_ =
       new views::StyledLabel(base::string16(), styled_label_listener);
-  details_label_->set_id(STYLED_LABEL_SECURITY_DETAILS);
+  details_label_->set_id(VIEW_ID_PAGE_INFO_LABEL_SECURITY_DETAILS);
   layout->AddView(details_label_, 1, 1, views::GridLayout::FILL,
                   views::GridLayout::LEADING);
 
@@ -298,7 +291,8 @@ void BubbleHeaderView::AddResetDecisionsLabel() {
   base::string16 text = base::ReplaceStringPlaceholders(
       base::ASCIIToUTF16("$1 $2"), subst, &offsets);
   reset_decisions_label_ = new views::StyledLabel(text, styled_label_listener_);
-  reset_decisions_label_->set_id(STYLED_LABEL_RESET_CERTIFICATE_DECISIONS);
+  reset_decisions_label_->set_id(
+      VIEW_ID_PAGE_INFO_LABEL_RESET_CERTIFICATE_DECISIONS);
   gfx::Range link_range(offsets[1], text.length());
 
   views::StyledLabel::RangeStyleInfo link_style =
@@ -538,7 +532,7 @@ const gfx::FontList& PageInfoBubbleView::GetTitleFontList() const {
 
 void PageInfoBubbleView::ButtonPressed(views::Button* button,
                                        const ui::Event& event) {
-  DCHECK_EQ(BUTTON_CLOSE, button->id());
+  DCHECK_EQ(VIEW_ID_PAGE_INFO_BUTTON_CLOSE, button->id());
   GetWidget()->Close();
 }
 
@@ -648,7 +642,7 @@ void PageInfoBubbleView::SetPermissionInfo(
   // Add site settings link.
   views::Link* site_settings_link = new views::Link(
       l10n_util::GetStringUTF16(IDS_PAGE_INFO_SITE_SETTINGS_LINK));
-  site_settings_link->set_id(LINK_SITE_SETTINGS);
+  site_settings_link->set_id(VIEW_ID_PAGE_INFO_LINK_SITE_SETTINGS);
   site_settings_link->set_listener(this);
   views::View* link_section = new views::View();
   const int kLinkMarginTop = 4;
@@ -684,7 +678,7 @@ void PageInfoBubbleView::SetIdentityInfo(const IdentityInfo& identity_info) {
 
       // Create the link to add to the Certificate Section.
       views::Link* inspect_link = new views::Link(link_title);
-      inspect_link->set_id(LINK_CERTIFICATE_VIEWER);
+      inspect_link->set_id(VIEW_ID_PAGE_INFO_LINK_CERTIFICATE_VIEWER);
       inspect_link->set_listener(this);
       if (valid_identity) {
         inspect_link->SetTooltipText(l10n_util::GetStringFUTF16(
@@ -717,7 +711,7 @@ views::View* PageInfoBubbleView::CreateSiteSettingsView(int side_margin) {
   // Create the link and icon for the Certificate section.
   cookie_dialog_link_ = new views::Link(
       l10n_util::GetPluralStringFUTF16(IDS_PAGE_INFO_NUM_COOKIES, 0));
-  cookie_dialog_link_->set_id(LINK_COOKIE_DIALOG);
+  cookie_dialog_link_->set_id(VIEW_ID_PAGE_INFO_LINK_COOKIE_DIALOG);
   cookie_dialog_link_->set_listener(this);
 
   PageInfoUI::PermissionInfo info;
@@ -740,25 +734,16 @@ void PageInfoBubbleView::HandleLinkClickedAsync(views::Link* source) {
   if (web_contents() == nullptr || web_contents()->IsBeingDestroyed())
     return;
   switch (source->id()) {
-    case LINK_SITE_SETTINGS:
-      // TODO(crbug.com/655876): This opens the general Content Settings pane,
-      // which is OK for now. But on Android, it opens a page specific to a
-      // given origin that shows all of the settings for that origin. If/when
-      // that's available on desktop we should link to that here, too.
-      web_contents()->OpenURL(content::OpenURLParams(
-          GURL(chrome::kChromeUIContentSettingsURL), content::Referrer(),
-          WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_LINK,
-          false));
-      presenter_->RecordPageInfoAction(
-          PageInfo::PAGE_INFO_SITE_SETTINGS_OPENED);
+    case VIEW_ID_PAGE_INFO_LINK_SITE_SETTINGS:
+      presenter_->OpenSiteSettingsView();
       break;
-    case LINK_COOKIE_DIALOG:
+    case VIEW_ID_PAGE_INFO_LINK_COOKIE_DIALOG:
       // Count how often the Collected Cookies dialog is opened.
       presenter_->RecordPageInfoAction(
           PageInfo::PAGE_INFO_COOKIES_DIALOG_OPENED);
       new CollectedCookiesViews(web_contents());
       break;
-    case LINK_CERTIFICATE_VIEWER: {
+    case VIEW_ID_PAGE_INFO_LINK_CERTIFICATE_VIEWER: {
       gfx::NativeWindow top_window = web_contents()->GetTopLevelNativeWindow();
       if (certificate_ && top_window) {
         presenter_->RecordPageInfoAction(
@@ -776,7 +761,7 @@ void PageInfoBubbleView::StyledLabelLinkClicked(views::StyledLabel* label,
                                                 const gfx::Range& range,
                                                 int event_flags) {
   switch (label->id()) {
-    case STYLED_LABEL_SECURITY_DETAILS:
+    case VIEW_ID_PAGE_INFO_LABEL_SECURITY_DETAILS:
       web_contents()->OpenURL(content::OpenURLParams(
           GURL(chrome::kPageInfoHelpCenterURL), content::Referrer(),
           WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_LINK,
@@ -784,7 +769,7 @@ void PageInfoBubbleView::StyledLabelLinkClicked(views::StyledLabel* label,
       presenter_->RecordPageInfoAction(
           PageInfo::PAGE_INFO_CONNECTION_HELP_OPENED);
       break;
-    case STYLED_LABEL_RESET_CERTIFICATE_DECISIONS:
+    case VIEW_ID_PAGE_INFO_LABEL_RESET_CERTIFICATE_DECISIONS:
       presenter_->OnRevokeSSLErrorBypassButtonPressed();
       GetWidget()->Close();
       break;
