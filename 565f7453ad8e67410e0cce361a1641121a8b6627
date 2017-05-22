@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bc6343b_967222d4",
+        "filename": "chrome/browser/ui/views/payments/payment_method_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-22T13:51:59Z",
+      "side": 1,
+      "message": "MakeUnique and release()",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7297c9b2_2aeb0e79",
+        "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-22T13:51:59Z",
+      "side": 1,
+      "message": "This and the following statement can be moved to line 184, merging the 2 if blocks.",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d3fbd0_59253a63",
+        "filename": "components/payments/core/strings_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-22T13:51:59Z",
+      "side": 1,
+      "message": "I think this (and the function below) can be made clearer to the reader with some named bitfields and a map. Something like\n\nconstexpr int kCredit \u003d   1 \u003c\u003c 0;\nconstexpr int kDebit \u003d     1 \u003c\u003c 1;\nconstexpr int kPrepaid \u003d 1 \u003c\u003c 2;\n\n// This being a local static, it\u0027s only initialized once\nstatic std::map\u003cint, int\u003e id_map {\n  { kCredit,          IDS_PAYMENTS_ACCEPTED_CREDIT_CARDS_LABEL },\n  { kCredit | kDebit, IDS_PAYMENTS_ACCEPTED_CREDIT_DEBIT_CARDS_LABEL },\n  // etc...\n};\n\nint accepted \u003d 0;\nif (types.find(autofill::CreditCard::CARD_TYPE_CREDIT) !\u003d types.end())\n  accepted |\u003d kCredit;\nif (types.find(autofill::CreditCard::CARD_TYPE_DEBIT) !\u003d types.end())\n  accepted |\u003d kDebit;\nif (types.find(autofill::CreditCard::CARD_TYPE_PREPAID) !\u003d types.end())\n  accepted |\u003d kPrepaid;\n\nreturn id_map[accepted];\n\nIt\u0027s also harder to introduce bugs because it\u0027s not possible to mix up indices this way. WDYT?",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
