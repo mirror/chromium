@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25f50b46_3dc72c95",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-22T07:37:04Z",
+      "side": 1,
+      "message": "Whoops, it actually does - I think it doesn\u0027t include it for origins which are using the default port for their scheme, so I added a test with a non-default port to verify this behaves properly. I think I\u0027m going to get rid of this though - seems better to use url::Origin::Serialize() as the source of truth about the origin string is and change the WebUI to match that instead of the other way around. So going to \"Site Details\" via Page Info will be broken until that\u0027s fixed.",
+      "parentUuid": "f68c9183_9458b130",
+      "revId": "9771d0fdcc3c5dc0531238036affc5875dc935e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a930d03a_9c9d28f5",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
         "patchSetId": 5
@@ -51,6 +69,24 @@
       "revId": "9771d0fdcc3c5dc0531238036affc5875dc935e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e047331_4006ff3a",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-22T07:37:04Z",
+      "side": 1,
+      "message": "tapted said this was the way to do it, so I went ahead and did that in the next patchset - thanks, I didn\u0027t know about c/b/u/view_ids.h either :O",
+      "parentUuid": "1f6fc8a0_6a44ba95",
+      "revId": "9771d0fdcc3c5dc0531238036affc5875dc935e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
