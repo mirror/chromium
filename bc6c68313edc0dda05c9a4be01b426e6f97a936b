@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c3191fe_a9465f04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-05-22T00:39:26Z",
+      "side": 1,
+      "message": "Is it generated on Linux? I thought it was on Windows.",
+      "revId": "bc6c68313edc0dda05c9a4be01b426e6f97a936b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
