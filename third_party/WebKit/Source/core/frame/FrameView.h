@@ -489,9 +489,11 @@ class CORE_EXPORT FrameView final
   }  // Whether or not we are actually visible.
   void SetParentVisible(bool) override;
   void SetSelfVisible(bool v) { self_visible_ = v; }
-  void SetParent(FrameView*) override;
-  FrameView* Parent() const override { return parent_; }
-  void RemoveChild(FrameOrPlugin*);
+  FrameView* Parent() const override;
+  void SetFrameOrPluginState(FrameOrPluginState) override;
+  FrameOrPluginState GetFrameOrPluginState() const override {
+    return frame_view_state_;
+  }
   using PluginSet = HeapHashSet<Member<PluginView>>;
   const PluginSet& Plugins() const { return plugins_; }
   void AddPlugin(PluginView*);
@@ -1074,6 +1076,7 @@ class CORE_EXPORT FrameView final
 
   IntRect frame_rect_;
   Member<FrameView> parent_;
+  FrameOrPluginState frame_view_state_;
   bool self_visible_;
   bool parent_visible_;
 
