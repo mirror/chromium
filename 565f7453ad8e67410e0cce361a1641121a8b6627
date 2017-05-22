@@ -305,6 +305,29 @@
     },
     {
       "key": {
+        "uuid": "bdf14c20_4e5767a6",
+        "filename": "components/autofill/core/browser/webdata/autofill_wallet_syncable_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-22T16:58:02Z",
+      "side": 1,
+      "message": "This NOTREACHED seems a little suspicious to me -- are we guaranteed the server could never add another type and the network data couldn\u0027t get corrupted?  It seems like otherwise this could conceivably be reached, so I\u0027d likely remove this.",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44122ff0_dee07f71",
         "filename": "components/payments/content/payment_request.cc",
         "patchSetId": 7
@@ -350,6 +373,29 @@
       "writtenOn": "2017-05-22T13:51:59Z",
       "side": 1,
       "message": "I think this (and the function below) can be made clearer to the reader with some named bitfields and a map. Something like\n\nconstexpr int kCredit \u003d   1 \u003c\u003c 0;\nconstexpr int kDebit \u003d     1 \u003c\u003c 1;\nconstexpr int kPrepaid \u003d 1 \u003c\u003c 2;\n\n// This being a local static, it\u0027s only initialized once\nstatic std::map\u003cint, int\u003e id_map {\n  { kCredit,          IDS_PAYMENTS_ACCEPTED_CREDIT_CARDS_LABEL },\n  { kCredit | kDebit, IDS_PAYMENTS_ACCEPTED_CREDIT_DEBIT_CARDS_LABEL },\n  // etc...\n};\n\nint accepted \u003d 0;\nif (types.find(autofill::CreditCard::CARD_TYPE_CREDIT) !\u003d types.end())\n  accepted |\u003d kCredit;\nif (types.find(autofill::CreditCard::CARD_TYPE_DEBIT) !\u003d types.end())\n  accepted |\u003d kDebit;\nif (types.find(autofill::CreditCard::CARD_TYPE_PREPAID) !\u003d types.end())\n  accepted |\u003d kPrepaid;\n\nreturn id_map[accepted];\n\nIt\u0027s also harder to introduce bugs because it\u0027s not possible to mix up indices this way. WDYT?",
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c23f45_6efbcbc2",
+        "filename": "components/webdata/common/web_database.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-22T16:58:02Z",
+      "side": 1,
+      "message": "This should stay as 72, in keeping with how you\u0027re (correctly, IMO) not updating the compatible version number on database upgrade.\n\nOtherwise, an upgraded database would be marked as 72-compatible, but a newly-created one would be marked as 73-compatible.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 40
+      },
       "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
