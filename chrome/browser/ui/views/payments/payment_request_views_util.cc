@@ -20,6 +20,7 @@
 #include "components/autofill/core/browser/field_types.h"
 #include "components/payments/core/payment_options_provider.h"
 #include "components/payments/core/payments_profile_comparator.h"
+#include "components/payments/core/strings_util.h"
 #include "ui/base/default_style.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -47,23 +48,6 @@
 namespace payments {
 
 namespace {
-
-// TODO(tmartino): Consider combining this with the Android equivalent in
-// PersonalDataManager.java
-base::string16 GetAddressFromProfile(const autofill::AutofillProfile& profile,
-                                     const std::string& locale) {
-  std::vector<autofill::ServerFieldType> fields;
-  fields.push_back(autofill::COMPANY_NAME);
-  fields.push_back(autofill::ADDRESS_HOME_LINE1);
-  fields.push_back(autofill::ADDRESS_HOME_LINE2);
-  fields.push_back(autofill::ADDRESS_HOME_DEPENDENT_LOCALITY);
-  fields.push_back(autofill::ADDRESS_HOME_CITY);
-  fields.push_back(autofill::ADDRESS_HOME_STATE);
-  fields.push_back(autofill::ADDRESS_HOME_ZIP);
-  fields.push_back(autofill::ADDRESS_HOME_SORTING_CODE);
-
-  return profile.ConstructInferredLabel(fields, fields.size(), locale);
-}
 
 // |s1|, |s2|, and |s3| are lines identifying the profile. |s1| is the
 // "headline" which may be emphasized depending on |type|. If |disabled_state|
@@ -129,7 +113,8 @@ std::unique_ptr<views::View> GetShippingAddressLabel(
   base::string16 name =
       profile.GetInfo(autofill::AutofillType(autofill::NAME_FULL), locale);
 
-  base::string16 address = GetAddressFromProfile(profile, locale);
+  base::string16 address =
+      GetShippingAddressLabelFormAutofillProfile(profile, locale);
 
   base::string16 phone = profile.GetInfo(
       autofill::AutofillType(autofill::PHONE_HOME_WHOLE_NUMBER), locale);
@@ -200,16 +185,16 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   // A column for the optional back arrow.
-  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
-                     0, views::GridLayout::USE_PREF, 0, 0);
+  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER, 0,
+                     views::GridLayout::USE_PREF, 0, 0);
 
   constexpr int kPaddingBetweenArrowAndTitle = 16;
   if (show_back_arrow)
     columns->AddPaddingColumn(0, kPaddingBetweenArrowAndTitle);
 
   // A column for the title.
-  columns->AddColumn(views::GridLayout::FILL, views::GridLayout::CENTER,
-                     1, views::GridLayout::USE_PREF, 0, 0);
+  columns->AddColumn(views::GridLayout::FILL, views::GridLayout::CENTER, 1,
+                     views::GridLayout::USE_PREF, 0, 0);
 
   layout->StartRow(0, 0);
   if (!show_back_arrow) {
@@ -220,8 +205,8 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
     constexpr int kBackArrowSize = 16;
     back_arrow->SetSize(gfx::Size(kBackArrowSize, kBackArrowSize));
     back_arrow->SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
-    back_arrow->set_tag(static_cast<int>(
-        PaymentRequestCommonTags::BACK_BUTTON_TAG));
+    back_arrow->set_tag(
+        static_cast<int>(PaymentRequestCommonTags::BACK_BUTTON_TAG));
     back_arrow->set_id(static_cast<int>(DialogViewID::BACK_BUTTON));
     layout->AddView(back_arrow);
   }
