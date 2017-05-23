@@ -224,7 +224,7 @@ gfx::Size AvatarButton::GetMinimumSize() const {
   return LabelButton::GetMinimumSize();
 }
 
-gfx::Size AvatarButton::GetPreferredSize() const {
+gfx::Size AvatarButton::CalculatePreferredSize() const {
   // TODO(estade): Calculate the height instead of hardcoding to 20 for the
   // not-condensible case.
   gfx::Size size(LabelButton::GetPreferredSize().width(), 20);

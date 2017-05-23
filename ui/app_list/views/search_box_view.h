@@ -79,7 +79,7 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   void SetBackButtonLabel(bool folder);
 
   // Overridden from views::View:
-  gfx::Size GetPreferredSize() const override;
+  gfx::Size CalculatePreferredSize() const override;
   bool OnMouseWheel(const ui::MouseWheelEvent& event) override;
   void OnEnabledChanged() override;
   const char* GetClassName() const override;

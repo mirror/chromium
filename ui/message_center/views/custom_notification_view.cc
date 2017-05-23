@@ -89,7 +89,7 @@ void CustomNotificationView::OnSlideChanged() {
     contents_view_delegate_->OnSlideChanged();
 }
 
-gfx::Size CustomNotificationView::GetPreferredSize() const {
+gfx::Size CustomNotificationView::CalculatePreferredSize() const {
   const gfx::Insets insets = GetInsets();
   const int contents_width = kNotificationWidth - insets.width();
   const int contents_height = contents_view_->GetHeightForWidth(contents_width);

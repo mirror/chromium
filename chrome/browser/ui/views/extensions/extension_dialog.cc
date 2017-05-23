@@ -78,7 +78,7 @@ ExtensionDialog* ExtensionDialog::Show(
   // Preferred size must be set before views::Widget::CreateWindowWithParent
   // is called because CreateWindowWithParent refers the result of CanResize().
   ExtensionViewViews* view = GetExtensionView(host);
-  view->SetPreferredSize(gfx::Size(width, height));
+  view->set_preferred_size(gfx::Size(width, height));
   view->set_minimum_size(gfx::Size(min_width, min_height));
   host->SetAssociatedWebContents(web_contents);
 
@@ -158,7 +158,7 @@ bool ExtensionDialog::CanResize() const {
 }
 
 void ExtensionDialog::SetMinimumContentsSize(int width, int height) {
-  GetExtensionView(host_.get())->SetPreferredSize(gfx::Size(width, height));
+  GetExtensionView(host_.get())->set_preferred_size(gfx::Size(width, height));
 }
 
 ui::ModalType ExtensionDialog::GetModalType() const {

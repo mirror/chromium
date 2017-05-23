@@ -27,7 +27,7 @@ class TestView : public views::View {
   explicit TestView(ViewEventTestBase* harness) : harness_(harness) {}
 
   gfx::Size GetPreferredSize() const override {
-    return harness_->GetPreferredSize();
+    return harness_->GetPreferredSizeForContents();
   }
 
   void Layout() override {
@@ -105,7 +105,7 @@ void ViewEventTestBase::TearDown() {
   ui::ShutdownInputMethodForTesting();
 }
 
-gfx::Size ViewEventTestBase::GetPreferredSize() const {
+gfx::Size ViewEventTestBase::GetPreferredSizeForContents() const {
   return gfx::Size();
 }
 
