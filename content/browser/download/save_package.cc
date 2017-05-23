@@ -1481,7 +1481,12 @@ void SavePackage::RemoveObservers() {
 }
 
 void SavePackage::OnDownloadDestroyed(DownloadItem* download) {
-  RemoveObservers();
+  if (!canceled()) {
+    Cancel(false);
+    // Cancel() also calls RemoveObservers().
+  } else {
+    RemoveObservers();
+  }
 }
 
 void SavePackage::FinalizeDownloadEntry() {
