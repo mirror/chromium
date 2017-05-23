@@ -1,5 +1,7 @@
 This component provides a database that can be used to store Protocol Buffers.
 
+Nice!
+
 It is based on LevelDB[1]. In this implementation, keys are strings chosen by
 the developer, and values are serialized Protocol Buffers.
 
