@@ -273,6 +273,7 @@ class WebServiceWorkerContextClient {
   // WebServiceWorkerClientInfo and WebServiceWorkerError ownerships are
   // passed to the WebServiceWorkerClientsCallbacks implementation.
   virtual void OpenWindow(const WebURL&,
+                          const WebURL&,
                           std::unique_ptr<WebServiceWorkerClientCallbacks>) = 0;
 
   // A suggestion to cache this metadata in association with this URL.

@@ -6,8 +6,10 @@ package org.chromium.chrome.browser;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
@@ -21,6 +23,7 @@ import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.Referrer;
 import org.chromium.content_public.common.ResourceRequestBody;
 import org.chromium.ui.base.PageTransition;
+import org.chromium.ui.mojom.WindowOpenDisposition;
 import org.chromium.webapk.lib.client.WebApkNavigationClient;
 import org.chromium.webapk.lib.client.WebApkValidator;
 
@@ -49,10 +52,23 @@ public class ServiceTabLauncher {
      * @param postData Post-data to include in the tab URL's request body.
      */
     @CalledByNative
-    public static void launchTab(final int requestId, final boolean incognito, final String url,
-            final int disposition, final String referrerUrl, final int referrerPolicy,
-            final String extraHeaders, final ResourceRequestBody postData) {
+    public static void launchTab(final int requestId, final boolean incognito,
+            final String redirectUrl, final String url, final int disposition,
+            final String referrerUrl, final int referrerPolicy, final String extraHeaders,
+            final ResourceRequestBody postData) {
         final TabDelegate tabDelegate = new TabDelegate(incognito);
+
+        if (disposition == WindowOpenDisposition.NEW_POPUP && !TextUtils.isEmpty(redirectUrl)) {
+            if (!tabDelegate.createCustomTabOverWindow(redirectUrl, url)) {
+                ThreadUtils.postOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onWebContentsForRequestAvailable(requestId, null);
+                    }
+                });
+            }
+            return;
+        }
 
         // 1. Launch WebAPK if one matches the target URL.
         if (ChromeWebApkHost.isEnabled()) {

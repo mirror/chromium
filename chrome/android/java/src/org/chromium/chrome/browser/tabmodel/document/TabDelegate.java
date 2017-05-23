@@ -10,9 +10,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Browser;
+import android.support.customtabs.CustomTabsIntent;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
+import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.ServiceTabLauncher;
 import org.chromium.chrome.browser.TabState;
@@ -92,6 +96,30 @@ public class TabDelegate extends TabCreator {
         IntentHandler.addTrustedIntentExtras(intent);
         MultiWindowUtils.onMultiInstanceModeStarted();
         activity.startActivity(intent);
+    }
+
+    public boolean createCustomTabOverWindow(String redirectUrl, String url) {
+        Activity lastTrackedActivity = ApplicationStatus.getLastTrackedFocusedActivity();
+        if (!(lastTrackedActivity instanceof ChromeActivity)) return false;
+        WebContents webcontents =
+                ((ChromeActivity) lastTrackedActivity).getActivityTab().getWebContents();
+        if (webcontents == null) return false;
+        if (!redirectUrl.equalsIgnoreCase(webcontents.getLastCommittedUrl())) return false;
+
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.setShowTitle(true);
+        builder.setStartAnimations(lastTrackedActivity, R.anim.slide_in_up, 0);
+        builder.setExitAnimations(lastTrackedActivity, 0, R.anim.slide_out_down);
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.intent.setData(Uri.parse(url));
+        customTabsIntent.intent.setPackage(ContextUtils.getApplicationContext().getPackageName());
+
+        IntentHandler.addTrustedIntentExtras(customTabsIntent.intent);
+
+        lastTrackedActivity.startActivity(
+                customTabsIntent.intent, customTabsIntent.startAnimationBundle);
+
+        return true;
     }
 
     @Override

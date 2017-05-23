@@ -60,9 +60,10 @@ void ServiceWorkerGlobalScopeClientImpl::GetClients(
 }
 
 void ServiceWorkerGlobalScopeClientImpl::OpenWindow(
+    const WebURL& origin_url,
     const WebURL& url,
     std::unique_ptr<WebServiceWorkerClientCallbacks> callbacks) {
-  client_.OpenWindow(url, std::move(callbacks));
+  client_.OpenWindow(origin_url, url, std::move(callbacks));
 }
 
 void ServiceWorkerGlobalScopeClientImpl::SetCachedMetadata(const WebURL& url,

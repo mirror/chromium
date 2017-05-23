@@ -1044,7 +1044,9 @@ void ServiceWorkerVersion::CountFeature(uint32_t feature) {
     provider_host_by_uuid.second->CountFeature(feature);
 }
 
-void ServiceWorkerVersion::OnOpenWindow(int request_id, GURL url) {
+void ServiceWorkerVersion::OnOpenWindow(int request_id,
+                                        GURL origin_url,
+                                        GURL url) {
   // Just abort if we are shutting down.
   if (!context_)
     return;
@@ -1075,7 +1077,7 @@ void ServiceWorkerVersion::OnOpenWindow(int request_id, GURL url) {
   }
 
   service_worker_client_utils::OpenWindow(
-      url, script_url_, embedded_worker_->process_id(), context_,
+      origin_url, url, script_url_, embedded_worker_->process_id(), context_,
       base::Bind(&ServiceWorkerVersion::OnOpenWindowFinished,
                  weak_factory_.GetWeakPtr(), request_id));
 }

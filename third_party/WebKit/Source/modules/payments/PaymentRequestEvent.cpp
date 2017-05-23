@@ -4,7 +4,14 @@
 
 #include "modules/payments/PaymentRequestEvent.h"
 
+#include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "core/dom/DOMException.h"
+#include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerLocation.h"
 #include "modules/serviceworkers/RespondWithObserver.h"
+#include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
+#include "modules/serviceworkers/ServiceWorkerWindowClientCallback.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
@@ -51,6 +58,39 @@ const HeapVector<PaymentDetailsModifier>& PaymentRequestEvent::modifiers()
 
 const String& PaymentRequestEvent::instrumentKey() const {
   return instrument_key_;
+}
+
+ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
+                                              const String& url) {
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  ExecutionContext* context = ExecutionContext::From(script_state);
+
+  KURL parsed_url = KURL(ToWorkerGlobalScope(context)->location()->Url(), url);
+  if (!parsed_url.IsValid()) {
+    resolver->Reject(V8ThrowException::CreateTypeError(
+        script_state->GetIsolate(), "'" + url + "' is not a valid URL."));
+    return promise;
+  }
+
+  if (!context->GetSecurityOrigin()->CanDisplay(parsed_url)) {
+    resolver->Reject(V8ThrowException::CreateTypeError(
+        script_state->GetIsolate(),
+        "'" + parsed_url.ElidedString() + "' cannot be opened."));
+    return promise;
+  }
+
+  if (!context->IsWindowInteractionAllowed()) {
+    resolver->Reject(DOMException::Create(kInvalidAccessError,
+                                          "Not allowed to open a window."));
+    return promise;
+  }
+  context->ConsumeWindowInteraction();
+
+  ServiceWorkerGlobalScopeClient::From(context)->OpenWindow(
+      KURL(kParsedURLString, top_level_origin_), parsed_url,
+      WTF::MakeUnique<NavigateClientCallback>(resolver));
+  return promise;
 }
 
 void PaymentRequestEvent::respondWith(ScriptState* script_state,

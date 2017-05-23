@@ -630,12 +630,13 @@ void ServiceWorkerContextClient::GetClients(
 }
 
 void ServiceWorkerContextClient::OpenWindow(
+    const blink::WebURL& origin_url,
     const blink::WebURL& url,
     std::unique_ptr<blink::WebServiceWorkerClientCallbacks> callbacks) {
   DCHECK(callbacks);
   int request_id = context_->client_callbacks.Add(std::move(callbacks));
-  Send(new ServiceWorkerHostMsg_OpenWindow(
-      GetRoutingID(), request_id, url));
+  Send(new ServiceWorkerHostMsg_OpenWindow(GetRoutingID(), request_id,
+                                           origin_url, url));
 }
 
 void ServiceWorkerContextClient::SetCachedMetadata(const blink::WebURL& url,

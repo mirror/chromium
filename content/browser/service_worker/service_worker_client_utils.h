@@ -39,7 +39,8 @@ void FocusWindowClient(ServiceWorkerProviderHost* provider_host,
 
 // Opens a new window and navigates it to |url|. |callback| is called with the
 // window's client information on completion.
-void OpenWindow(const GURL& url,
+void OpenWindow(const GURL& origin_url,
+                const GURL& url,
                 const GURL& script_url,
                 int worker_process_id,
                 const base::WeakPtr<ServiceWorkerContextCore>& context,

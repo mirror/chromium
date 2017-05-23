@@ -272,8 +272,9 @@ IPC_MESSAGE_ROUTED2(ServiceWorkerHostMsg_SetCachedMetadata,
 IPC_MESSAGE_ROUTED1(ServiceWorkerHostMsg_ClearCachedMetadata, GURL /* url */)
 
 // Ask the browser to open a tab/window (renderer->browser).
-IPC_MESSAGE_ROUTED2(ServiceWorkerHostMsg_OpenWindow,
+IPC_MESSAGE_ROUTED3(ServiceWorkerHostMsg_OpenWindow,
                     int /* request_id */,
+                    GURL /* origin_url */,
                     GURL /* url */)
 
 // Ask the browser to focus a client (renderer->browser).

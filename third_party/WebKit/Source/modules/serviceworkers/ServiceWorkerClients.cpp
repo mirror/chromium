@@ -186,7 +186,7 @@ ScriptPromise ServiceWorkerClients::openWindow(ScriptState* script_state,
   context->ConsumeWindowInteraction();
 
   ServiceWorkerGlobalScopeClient::From(context)->OpenWindow(
-      parsed_url, WTF::MakeUnique<NavigateClientCallback>(resolver));
+      KURL(), parsed_url, WTF::MakeUnique<NavigateClientCallback>(resolver));
   return promise;
 }
 

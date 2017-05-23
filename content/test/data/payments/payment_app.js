@@ -44,7 +44,7 @@ self.addEventListener('paymentrequest', e => {
     });
 
     // Open a window
-    clients.openWindow('payment_app_window.html')
+    e.openWindow('payment_app_window.html')
       .then(window_client => {
         payment_app_window = window_client;
         maybeSendPaymentRequest();

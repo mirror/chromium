@@ -176,6 +176,7 @@ void DidOpenURLOnUI(const OpenURLCallback& callback,
 }
 
 void OpenWindowOnUI(
+    const GURL& origin_url,
     const GURL& url,
     const GURL& script_url,
     int worker_process_id,
@@ -205,8 +206,13 @@ void OpenWindowOnUI(
       url,
       Referrer::SanitizeForRequest(
           url, Referrer(script_url, blink::kWebReferrerPolicyDefault)),
-      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      origin_url.is_valid() ? WindowOpenDisposition::NEW_POPUP
+                            : WindowOpenDisposition::NEW_FOREGROUND_TAB,
       ui::PAGE_TRANSITION_AUTO_TOPLEVEL, true /* is_renderer_initiated */);
+
+  if (origin_url.is_valid()) {
+    params.redirect_chain.emplace_back(origin_url);
+  }
 
   GetContentClient()->browser()->OpenURL(browser_context, params,
                                          base::Bind(&DidOpenURLOnUI, callback));
@@ -434,7 +440,8 @@ void FocusWindowClient(ServiceWorkerProviderHost* provider_host,
       callback);
 }
 
-void OpenWindow(const GURL& url,
+void OpenWindow(const GURL& origin_url,
+                const GURL& url,
                 const GURL& script_url,
                 int worker_process_id,
                 const base::WeakPtr<ServiceWorkerContextCore>& context,
@@ -443,7 +450,7 @@ void OpenWindow(const GURL& url,
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::Bind(
-          &OpenWindowOnUI, url, script_url, worker_process_id,
+          &OpenWindowOnUI, origin_url, url, script_url, worker_process_id,
           make_scoped_refptr(context->wrapper()),
           base::Bind(&DidNavigate, context, script_url.GetOrigin(), callback)));
 }

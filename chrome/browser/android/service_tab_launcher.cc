@@ -65,10 +65,16 @@ void ServiceTabLauncher::LaunchTab(content::BrowserContext* browser_context,
       base::MakeUnique<TabLaunchedCallback>(callback));
   DCHECK_GE(request_id, 1);
 
-  Java_ServiceTabLauncher_launchTab(env, request_id,
-                                    browser_context->IsOffTheRecord(), url,
-                                    static_cast<int>(disposition), referrer_url,
-                                    params.referrer.policy, headers, post_data);
+  ScopedJavaLocalRef<jstring> redirect_url = ConvertUTF8ToJavaString(env, "");
+  if (!params.redirect_chain.empty()) {
+    redirect_url =
+        ConvertUTF8ToJavaString(env, params.redirect_chain.back().spec());
+  }
+
+  Java_ServiceTabLauncher_launchTab(
+      env, request_id, browser_context->IsOffTheRecord(), redirect_url, url,
+      static_cast<int>(disposition), referrer_url, params.referrer.policy,
+      headers, post_data);
 }
 
 void ServiceTabLauncher::OnTabLaunched(int request_id,
