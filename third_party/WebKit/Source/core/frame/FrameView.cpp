@@ -388,6 +388,14 @@ void FrameView::SetupRenderThrottling() {
 void FrameView::Dispose() {
   CHECK(!IsInPerformLayout());
 
+  // Remove ScrollableArea if still attached.
+  // Dispose can be called from Document::Shutdown without calling Detach.
+  if (is_attached_) {
+    if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled())
+      ParentFrameView()->RemoveScrollableArea(this);
+    is_attached_ = false;
+  }
+
   if (ScrollAnimatorBase* scroll_animator = ExistingScrollAnimator())
     scroll_animator->CancelAnimation();
   CancelProgrammaticScrollAnimation();
