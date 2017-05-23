@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e9f0602_974cf799",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-23T16:03:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ad1f85a_9c9d4f1b",
+      "revId": "231123417972da9454ac33d3a3eb459fc4e0a905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51cc00ac_18053b16",
         "filename": "components/payments/core/strings_util.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b0ced6c2_acc322e4",
+        "filename": "components/payments/core/strings_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-23T16:03:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51cc00ac_18053b16",
+      "revId": "231123417972da9454ac33d3a3eb459fc4e0a905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be8db3e6_ae660b2c",
         "filename": "components/payments/core/strings_util.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "231123417972da9454ac33d3a3eb459fc4e0a905",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f1b7f6_eb392729",
+        "filename": "components/payments/core/strings_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-23T16:03:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be8db3e6_ae660b2c",
+      "revId": "231123417972da9454ac33d3a3eb459fc4e0a905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
