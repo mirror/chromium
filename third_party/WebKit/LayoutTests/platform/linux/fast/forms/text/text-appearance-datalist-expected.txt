@@ -34,8 +34,8 @@ layer at (10,33) size 132x16
   LayoutBlockFlow {DIV} at (0,0) size 132.14x16
 layer at (168,33) size 132x16
   LayoutBlockFlow {DIV} at (0,0) size 132.14x16
-hidden layer at (142,34) size 18x14 transparent
+hidden layer at (142,34) size 18x13 transparent
   LayoutDetailsMarker {DIV} at (132.14,1.33) size 17.86x13.33: down
-hidden layer at (300,34) size 18x14 transparent
+hidden layer at (300,34) size 18x13 transparent
   LayoutDetailsMarker {DIV} at (132.14,1.33) size 17.86x13.33: down
 caret: position 0 of child 0 {DIV} of child 0 {DIV} of child 0 {DIV} of {#document-fragment} of child 3 {INPUT} of body

@@ -2638,6 +2638,11 @@ LayoutRect PaintLayer::BoundingBoxForCompositingInternal(
   return result;
 }
 
+IntRect PaintLayer::PixelSnappedBorderBoxRect() const {
+  return PixelSnappedIntRect(ToLayoutPoint(SubpixelAccumulation()),
+                             GetLayoutBox()->Size());
+}
+
 CompositingState PaintLayer::GetCompositingState() const {
   DCHECK(IsAllowedToQueryCompositingState());
 
