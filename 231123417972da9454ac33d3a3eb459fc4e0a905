@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad1f85a_9c9d4f1b",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-23T15:46:04Z",
+      "side": 1,
+      "message": "Might want to remove those logs.",
+      "revId": "231123417972da9454ac33d3a3eb459fc4e0a905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cc00ac_18053b16",
+        "filename": "components/payments/core/strings_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-23T15:46:04Z",
+      "side": 1,
+      "message": "nit: declare this as a local static and use an initializer list so the vector is only created once.",
+      "revId": "231123417972da9454ac33d3a3eb459fc4e0a905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8db3e6_ae660b2c",
+        "filename": "components/payments/core/strings_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-23T15:46:04Z",
+      "side": 1,
+      "message": "nit: same as above.",
+      "revId": "231123417972da9454ac33d3a3eb459fc4e0a905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
