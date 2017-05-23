@@ -153,7 +153,7 @@ public class NFCTest {
         try {
             doNothing().when(mNfcTagHandler).connect();
             doNothing().when(mNfcTagHandler).write(any(NdefMessage.class));
-            doReturn(createUrlWebNFCNdefMessage()).when(mNfcTagHandler).read();
+            doReturn(createUrlWebNFCNdefMessage(TEST_URL)).when(mNfcTagHandler).read();
             doNothing().when(mNfcTagHandler).close();
         } catch (IOException | FormatException e) {
         }
@@ -278,7 +278,7 @@ public class NFCTest {
     @Feature({"NFCTest"})
     public void testMojoToNdefConversion() throws InvalidNfcMessageException {
         // Test URL record conversion.
-        NdefMessage urlNdefMessage = createUrlWebNFCNdefMessage();
+        NdefMessage urlNdefMessage = createUrlWebNFCNdefMessage(TEST_URL);
         assertEquals(2, urlNdefMessage.getRecords().length);
         assertEquals(NdefRecord.TNF_WELL_KNOWN, urlNdefMessage.getRecords()[0].getTnf());
         assertEquals(TEST_URL, urlNdefMessage.getRecords()[0].toUri().toString());
@@ -452,12 +452,12 @@ public class NFCTest {
      */
     @Test
     @Feature({"NFCTest"})
-    public void testlWatchMatching() {
+    public void testWatchMatching() {
         TestNfcImpl nfc = new TestNfcImpl(mContext, mDelegate);
         mDelegate.invokeCallback();
         nfc.setClient(mNfcClient);
 
-        // Should match by WebNFC Id.
+        // Should match by WebNFC Id (exact match).
         NfcWatchOptions options1 = createNfcWatchOptions();
         options1.mode = NfcWatchMode.WEBNFC_ONLY;
         options1.url = TEST_URL;
@@ -875,6 +875,91 @@ public class NFCTest {
     }
 
     /**
+     * Test that Nfc.watch() WebNFC Id pattern matching works correctly.
+     */
+    @Test
+    @Feature({"NFCTest"})
+    public void testWatchPatternMatching() throws IOException, FormatException {
+        TestNfcImpl nfc = new TestNfcImpl(mContext, mDelegate);
+        mDelegate.invokeCallback();
+        nfc.setClient(mNfcClient);
+
+        // Should match.
+        {
+            NfcWatchOptions options = createNfcWatchOptions();
+            options.mode = NfcWatchMode.WEBNFC_ONLY;
+            options.url = "*://*.test.com/*";
+            WatchResponse mockWatchCallback = mock(WatchResponse.class);
+            nfc.watch(options, mockWatchCallback);
+            verify(mockWatchCallback).call(mWatchCaptor.capture(), mErrorCaptor.capture());
+            assertNull(mErrorCaptor.getValue());
+        }
+        int watchId1 = mWatchCaptor.getValue().intValue();
+
+        // Should not match.
+        {
+            NfcWatchOptions options = createNfcWatchOptions();
+            options.mode = NfcWatchMode.WEBNFC_ONLY;
+            options.url = "*://www.test.com/*";
+            WatchResponse mockWatchCallback = mock(WatchResponse.class);
+            nfc.watch(options, mockWatchCallback);
+            verify(mockWatchCallback).call(mWatchCaptor.capture(), mErrorCaptor.capture());
+            assertNull(mErrorCaptor.getValue());
+        }
+        int watchId2 = mWatchCaptor.getValue().intValue();
+
+        // Should match.
+        {
+            NfcWatchOptions options = createNfcWatchOptions();
+            options.mode = NfcWatchMode.WEBNFC_ONLY;
+            options.url = "https://*.test.com/contact/42";
+            WatchResponse mockWatchCallback = mock(WatchResponse.class);
+            nfc.watch(options, mockWatchCallback);
+            verify(mockWatchCallback).call(mWatchCaptor.capture(), mErrorCaptor.capture());
+            assertNull(mErrorCaptor.getValue());
+        }
+        int watchId3 = mWatchCaptor.getValue().intValue();
+
+        // Should match.
+        {
+            NfcWatchOptions options = createNfcWatchOptions();
+            options.mode = NfcWatchMode.WEBNFC_ONLY;
+            options.url = "https://subdomain.test.com/*";
+            WatchResponse mockWatchCallback = mock(WatchResponse.class);
+            nfc.watch(options, mockWatchCallback);
+            verify(mockWatchCallback).call(mWatchCaptor.capture(), mErrorCaptor.capture());
+            assertNull(mErrorCaptor.getValue());
+        }
+        int watchId4 = mWatchCaptor.getValue().intValue();
+
+        // Should match.
+        {
+            NfcWatchOptions options = createNfcWatchOptions();
+            options.mode = NfcWatchMode.WEBNFC_ONLY;
+            options.url = "*://*/contact/42";
+            WatchResponse mockWatchCallback = mock(WatchResponse.class);
+            nfc.watch(options, mockWatchCallback);
+            verify(mockWatchCallback).call(mWatchCaptor.capture(), mErrorCaptor.capture());
+            assertNull(mErrorCaptor.getValue());
+        }
+        int watchId5 = mWatchCaptor.getValue().intValue();
+
+        doReturn(createUrlWebNFCNdefMessage("https://subdomain.test.com/contact/42"))
+                .when(mNfcTagHandler)
+                .read();
+        nfc.processPendingOperationsForTesting(mNfcTagHandler);
+
+        // Check that client was notified and watch with correct id was triggered.
+        verify(mNfcClient, times(1))
+                .onWatch(mOnWatchCallbackCaptor.capture(), any(NfcMessage.class));
+        assertEquals(4, mOnWatchCallbackCaptor.getValue().length);
+        assertEquals(watchId1, mOnWatchCallbackCaptor.getValue()[0]);
+        assertEquals(watchId3, mOnWatchCallbackCaptor.getValue()[1]);
+        assertEquals(watchId4, mOnWatchCallbackCaptor.getValue()[2]);
+        assertEquals(watchId5, mOnWatchCallbackCaptor.getValue()[3]);
+    }
+
+    /**
      * Creates NfcPushOptions with default values.
      */
     private NfcPushOptions createNfcPushOptions() {
@@ -926,12 +1011,12 @@ public class NFCTest {
         return message;
     }
 
-    private NdefMessage createUrlWebNFCNdefMessage() {
+    private NdefMessage createUrlWebNFCNdefMessage(String webNfcId) {
         NfcRecord urlNfcRecord = new NfcRecord();
         urlNfcRecord.recordType = NfcRecordType.URL;
         urlNfcRecord.mediaType = TEXT_MIME;
         urlNfcRecord.data = TEST_URL.getBytes();
-        NfcMessage urlNfcMessage = createNfcMessage(TEST_URL, urlNfcRecord);
+        NfcMessage urlNfcMessage = createNfcMessage(webNfcId, urlNfcRecord);
         try {
             return NfcTypeConverter.toNdefMessage(urlNfcMessage);
         } catch (InvalidNfcMessageException e) {

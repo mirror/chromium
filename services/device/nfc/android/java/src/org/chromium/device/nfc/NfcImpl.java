@@ -39,11 +39,21 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /** Android implementation of the NFC mojo service defined in device/nfc/nfc.mojom.
  */
 public class NfcImpl implements Nfc {
     private static final String TAG = "NfcImpl";
+
+    /**
+     * Regular expression pattern created from ABNF notation in
+     * https://w3c.github.io/web-nfc/#url-patterns
+     */
+    private final String mWatchRegEx =
+            "^(\\*|https):\\/\\/((\\*\\.)?([[\\p{Alnum}].-]+)|\\*)(\\/\\*|.*)?";
 
     private final int mHostId;
 
@@ -116,6 +126,11 @@ public class NfcImpl implements Nfc {
      * Runnable responsible for cancelling push operation after specified timeout.
      */
     private Runnable mPushTimeoutRunnable;
+
+    /**
+     * Compiled regular expression pattern that is used for watch url validation.
+     */
+    private Pattern mWatchPatternValidator;
 
     public NfcImpl(Context context, int hostId, NfcDelegate delegate) {
         mHostId = hostId;
@@ -578,10 +593,8 @@ public class NfcImpl implements Nfc {
             return false;
         }
 
-        // Filter by NfcMessage.url
-        if (options.url != null && !options.url.isEmpty() && !options.url.equals(message.url)) {
-            return false;
-        }
+        // Filter by WebNfc watch Id.
+        if (!matchesWebNfcId(options.url, message.url)) return false;
 
         // Matches any record / media type.
         if ((options.mediaType == null || options.mediaType.isEmpty())
@@ -612,6 +625,46 @@ public class NfcImpl implements Nfc {
         }
 
         return false;
+    }
+
+    /**
+     * WebNfc Id match algorithm.
+     */
+    private boolean matchesWebNfcId(String id, String url) {
+        boolean url_matched = true;
+        if (id != null && !id.isEmpty() && url != null) {
+            // If needed, compile regexp pattern that is used to validate specified ABNF.
+            if (mWatchPatternValidator == null) {
+                try {
+                    mWatchPatternValidator = Pattern.compile(mWatchRegEx, Pattern.CASE_INSENSITIVE);
+                } catch (PatternSyntaxException e) {
+                    Log.w(TAG, "Cannot compile watch URL regular expression.");
+                }
+            }
+
+            // check if valid ABNF notation
+            if (mWatchPatternValidator != null && mWatchPatternValidator.matcher(id).matches()) {
+                // Quote invalid regexp characters
+                String urlPattern = Matcher.quoteReplacement(id);
+
+                // Convert WebNFC ABNF wildcard notation to regexp.
+                urlPattern = urlPattern.replace(".", "\\.").replace("*", ".*");
+
+                // Try regexp match.
+                try {
+                    url_matched = Pattern.compile(urlPattern, Pattern.CASE_INSENSITIVE)
+                                          .matcher(url)
+                                          .matches();
+                } catch (PatternSyntaxException e) {
+                    url_matched = false;
+                }
+            } else {
+                // Try exact match.
+                url_matched = id.equals(url);
+            }
+        }
+
+        return url_matched;
     }
 
     /**
