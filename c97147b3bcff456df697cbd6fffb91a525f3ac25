@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7862d3b9_2ccbaf74",
+        "filename": "cc/blink/web_display_item_list_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "In the future it will be blink::DisplayItems with the logic (instead of cc::DisplayItems before) if that makes sense. This is right now the implementation of blink::DisplayItems because of web APIs. Does that help justify this?",
+      "parentUuid": "16ccdfc7_cd9317df",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c05293bb_b3d69e65",
         "filename": "cc/blink/web_display_item_list_impl.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-22T15:50:34Z",
       "side": 1,
       "message": "Make StartPaint/End RAII in these functions, please",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05018777_cc1682d1",
+        "filename": "cc/blink/web_display_item_list_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Will work on this",
+      "parentUuid": "c05293bb_b3d69e65",
       "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7ef333d9_149292c0",
+        "filename": "cc/blink/web_display_item_list_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "I suspect it might fail, and seems like most voted to make this patch riskier, so would prefer to not right now.",
+      "parentUuid": "517d1bd0_8f0414af",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4230e21_839f7726",
         "filename": "cc/blink/web_display_item_list_impl.cc",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-05-22T15:50:34Z",
       "side": 1,
       "message": "WDYT about making this and similar functions do something like a private AppendRestoreItem() instead?",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bd0d90_63834965",
+        "filename": "cc/blink/web_display_item_list_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "I like that. My one thought is that this is going to move up to blink::DisplayItems like https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/graphics/paint/Transform3DDisplayItem.cpp?rcl\u003d2945762ef57ed4d63f04c0744ff5eff70115e7af\u0026l\u003d61 and I\u0027m not sure where I would share that method there. I spose I could do it for now though, done.",
+      "parentUuid": "e4230e21_839f7726",
       "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,23 @@
     },
     {
       "key": {
+        "uuid": "e6372687_fb37854f",
+        "filename": "cc/blink/web_display_item_list_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Ya sure, that\u0027ll be easier once this is on the blink display item, since it can keep state more clearly.",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d0f415c_0084a8cb",
         "filename": "cc/layers/picture_image_layer.cc",
         "patchSetId": 9
@@ -98,6 +187,23 @@
       "writtenOn": "2017-05-22T15:50:34Z",
       "side": 1,
       "message": "Similar comment here. I think most of the time (all of the time?) this scale is 1.f, 1.f, so we might save on a save/restore if we check, but I\u0027m not sure about the relative performance of doing it always vs checking for identity scale.",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05cf1b9_ed1db3a2",
+        "filename": "cc/layers/picture_image_layer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "I don\u0027t think this method is hot enough that a branch would hurt compared to doing extra memory operations. So done.",
       "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +244,24 @@
     },
     {
       "key": {
+        "uuid": "f87cf8e8_a9d6112b",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71fd5693_43798aa1",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "912bf7e2_2612f230",
         "filename": "cc/paint/display_item_list.cc",
         "patchSetId": 9
@@ -149,6 +273,24 @@
       "writtenOn": "2017-05-22T15:50:34Z",
       "side": 1,
       "message": "In a MUS world if we restrict paint op buffer from being rasterized on the compositor (due to various caching like skshader and things like that), then this would be a pain point to change... But maybe this is just me being too paranoid.",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e18c40c_31ebc3a8",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Yeah we\u0027d have to figure out how to get visuals for traces if we did that, but I don\u0027t think we will cuz there\u0027s lots of inprocess raster. For example for the drag and drop icon. The difference could be that we have a RasterSource for the compositor, but this is much lower level than that so seems like we won\u0027t need to worry about this (or conversely that we need to worry and support this for other use cases too).",
+      "parentUuid": "912bf7e2_2612f230",
       "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +314,24 @@
     },
     {
       "key": {
+        "uuid": "0ae6d97a_b31691b9",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Yeah I think RAII will solve this.",
+      "parentUuid": "91f07e93_88373e75",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e98a791_60f50610",
         "filename": "cc/paint/display_item_list.h",
         "patchSetId": 9
@@ -183,6 +343,23 @@
       "writtenOn": "2017-05-22T15:50:34Z",
       "side": 1,
       "message": "s/XXX/TODO(danakj):/?",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6010a84c_df79a285",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "These markers are for things that I want to do before this patch is done, which is why they aren\u0027t TODO, but something else that gets highlighted and is visible :) I\u0027ve resolved these both now.",
       "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +400,24 @@
     },
     {
       "key": {
+        "uuid": "0405a103_ebd40e1b",
+        "filename": "cc/paint/display_item_list_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Yep this was WIP, it\u0027s gone now as I didn\u0027t need it.",
+      "parentUuid": "d34abc3a_4c0bdd36",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d4de3f5_53511938",
         "filename": "cc/paint/display_item_list_unittest.cc",
         "patchSetId": 9
@@ -234,6 +429,24 @@
       "writtenOn": "2017-05-22T15:50:34Z",
       "side": 1,
       "message": "You can keep this as traced value, and call ToBaseValue()-\u003eGetAsDictionary(\u0026root_dict); instead of putting it to string and then parsing that.",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffccd4b_8ffba92f",
+        "filename": "cc/paint/display_item_list_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "9d4de3f5_53511938",
       "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +470,23 @@
     },
     {
       "key": {
+        "uuid": "b8a7382a_9d6f4edc",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "I think that is not desired, because records could come from various places including from canvas which is js-generated. I liked the idea to do this in Playback tho so we get it for the root PaintOpBuffer too. I also used SkAutoCanvasRestore there, which ensures if we early out it works but also does restoreTo() so js-generated stuff can\u0027t leave us in a weird state! win-win.",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f56b9a8_cf9c3e3b",
         "filename": "cc/test/fake_content_layer_client.cc",
         "patchSetId": 9
@@ -268,6 +498,23 @@
       "writtenOn": "2017-05-22T15:50:34Z",
       "side": 1,
       "message": "Is this supposed to be EndPaintOfPairedEnd?",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f8049e_8b04e04c",
+        "filename": "cc/test/fake_content_layer_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Yep.. I wanted to say RAII objects will fix that but I\u0027m not sure. Maybe I should add a check to DisplayItemList that we don\u0027t have an unclosed visual rect range... done and it fires without this fixed. Happily, all other unit tests pass too.",
       "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +538,24 @@
     },
     {
       "key": {
+        "uuid": "b81af897_fd5ac4cb",
+        "filename": "cc/test/solid_color_content_layer_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "150ac5d8_2e8a66ba",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42e036d2_39ebb17b",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
         "patchSetId": 9
@@ -302,6 +567,24 @@
       "writtenOn": "2017-05-22T15:50:34Z",
       "side": 1,
       "message": "Maybe just store the number of restores in the vector? Like .push_back(1); or .push_back(2); and then instead of a switch, iterate the value and append that many restores",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e5d22b_97db4d00",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Ye, good plan.",
+      "parentUuid": "42e036d2_39ebb17b",
       "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -322,6 +605,24 @@
       "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d88a6a_dd797103",
+        "filename": "ui/compositor/paint_cache.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 1,
+      "message": "Done (It\u0027s Reset not Restore)",
+      "parentUuid": "f885542f_f71a1549",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

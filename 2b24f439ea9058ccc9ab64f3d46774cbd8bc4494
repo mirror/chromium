@@ -16,6 +16,24 @@
       "revId": "2b24f439ea9058ccc9ab64f3d46774cbd8bc4494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77ee42f_de2d97b5",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:27:00Z",
+      "side": 0,
+      "message": "The visualRects are all there, but some other things aren\u0027t yeah, such as length. We could trace each PaintOp instead, but I\u0027m not sure that\u0027s better than the SkPicture for anything. I also don\u0027t think these are used in the trace viewer.",
+      "parentUuid": "1835e106_7e9db20b",
+      "revId": "2b24f439ea9058ccc9ab64f3d46774cbd8bc4494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
