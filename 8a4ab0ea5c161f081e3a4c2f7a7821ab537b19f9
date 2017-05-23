@@ -19,6 +19,167 @@
     },
     {
       "key": {
+        "uuid": "80173a67_6f072543",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "I think the forward declaration in the header is sufficient since you aren\u0027t using this.",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55325b15_235affc1",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "DCHECKing the validity of data provided by an untrusted process seems bad.",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 24
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d1302e_f1f8f50d",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "Either this should be named SpellcheckHostImpl or the file should be named spell_check_host_impl.h.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c8bdd6_9fd7f5a4",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "How about CustomDictionaryResults?",
+      "range": {
+        "startLine": 51,
+        "startChar": 46,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6359ca_160a943f",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "SpellcheckHostImplTest",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65513756_7c0a1bde",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "ASSERT",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 8
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f919851b_48363d9e",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "ASSERT",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 8
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af4f6ff5_38fad28a",
         "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
         "patchSetId": 7
@@ -52,6 +213,98 @@
         "startChar": 4,
         "endLine": 235,
         "endChar": 8
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6499e77_34e2d636",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "Why is this call to GetSpellCheckHost() not gated by content::RenderThread::Get()?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0cecb1_a956345a",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": ":/",
+      "range": {
+        "startLine": 117,
+        "startChar": 6,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9c37ec_22f30ccc",
+        "filename": "components/spellcheck/renderer/spellcheck_provider_hunspell_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure I believe this. Maybe add a TODO to figure out what this is trying to test.",
+      "range": {
+        "startLine": 22,
+        "startChar": 31,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db276137_ac15e7cb",
+        "filename": "components/spellcheck/renderer/spellcheck_provider_test.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-23T05:54:22Z",
+      "side": 1,
+      "message": "The test fixture should be responsible for ensuring a MessageLoop exists.",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 35
       },
       "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
