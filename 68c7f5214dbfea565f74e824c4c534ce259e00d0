@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67a8b21e_6471e0fa",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "Refactored this a bit",
+      "parentUuid": "04e5643b_6e44e9e2",
+      "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b4193dd_59afd82f",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-23T06:13:43Z",
       "side": 1,
       "message": "DCHECK(kBeforeSurfaceInit)?  i think that\u0027s true.",
+      "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0a26f0_2b5b5edc",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "Refactored this a bit",
+      "parentUuid": "6b4193dd_59afd82f",
       "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "e2290478_295802fa",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "I almost did that refactor, but AVDA does it this way for a good reason: if state is kSurfaceDestroyed we don\u0027t want to transition to the error state.",
+      "parentUuid": "45858490_2b2fc611",
+      "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc5848e8_ab6804a0",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "15d1f3d0_c86abadb",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc5848e8_ab6804a0",
+      "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2da008f5_7f5f2b17",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -98,6 +170,24 @@
       "writtenOn": "2017-05-23T06:13:43Z",
       "side": 1,
       "message": "waiting for key?  QueueInput checks for it.",
+      "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed8ae31_8db058f2",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "Was going to leave out encrypted for now. I think it will be easier to handle once we use MediaCodec through a wrapper class that will know about waiting for key.",
+      "parentUuid": "2da008f5_7f5f2b17",
       "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +217,53 @@
     },
     {
       "key": {
+        "uuid": "ee26093f_86ea3f54",
+        "filename": "media/gpu/android/media_codec_video_decoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "No problem. I\u0027ll take care of merging changes from AVDA into MCVD. Shouldn\u0027t be much work at all since I\u0027m intentionally keeping the structure very similar for now",
+      "parentUuid": "000260b2_331f4f19",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 39
+      },
+      "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6b5438_3ba852c5",
+        "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "oops",
+      "range": {
+        "startLine": 114,
+        "startChar": 42,
+        "endLine": 114,
+        "endChar": 52
+      },
+      "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a9037c7_1005deb9",
         "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
         "patchSetId": 2
@@ -138,6 +275,47 @@
       "writtenOn": "2017-05-23T06:13:43Z",
       "side": 1,
       "message": "even though you\u0027re doing the AVDA -\u003e MCVD -\u003e flows transitions separately, i\u0027d still suggest more unit testing of MCVD early.",
+      "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f517be1d_9df7b0c5",
+        "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "Yeah, you\u0027re right. Will do. I can\u0027t really do all the overlay testing that AVDATest has yet. But I will make sure MCVD tests are a superset of AVDAs test cases as soon as I can",
+      "parentUuid": "0a9037c7_1005deb9",
+      "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be7f797_2b06bc68",
+        "filename": "media/gpu/android_video_decode_accelerator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "This leaves GL initialized after it finishes running which can break future tests that init gl.",
+      "range": {
+        "startLine": 150,
+        "startChar": 14,
+        "endLine": 150,
+        "endChar": 24
+      },
       "revId": "68c7f5214dbfea565f74e824c4c534ce259e00d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

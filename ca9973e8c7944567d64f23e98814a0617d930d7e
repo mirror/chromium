@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3adb5c_41578fe1",
+        "filename": "media/gpu/android/fake_codec_allocator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "By default this is a noisy mock: unexpected calls are not errors but they\u0027re logged as warnings.",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3024e3d_a00a5b76",
+        "filename": "media/gpu/android_video_decode_accelerator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T19:49:19Z",
+      "side": 1,
+      "message": "This is now a pointer so we can control the destruction sequence",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 20
+      },
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
