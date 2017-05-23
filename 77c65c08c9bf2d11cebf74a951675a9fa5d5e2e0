@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ecdc32a_c3b79a0a",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-23T16:25:42Z",
+      "side": 1,
+      "message": "I agree, and that\u0027s something I overlooked, just FYI, I had a separate CL to add the UI, and this CL simply removes the macro, so even reverting this CL, those macros will still be there.",
+      "parentUuid": "0a0aa597_4025e2bf",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "77c65c08c9bf2d11cebf74a951675a9fa5d5e2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de7aa7ed_66c444bf",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-23T15:32:44Z",
       "side": 1,
       "message": "Is it true that Desktop Site menu item should always be enabled?  I don\u0027t think that\u0027s the case now.",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 17
+      },
+      "revId": "77c65c08c9bf2d11cebf74a951675a9fa5d5e2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9472c91d_f50ad1e9",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-23T16:25:42Z",
+      "side": 1,
+      "message": "Here the code decides if the cell should be visible (displayed), not the state of enabled, if we want to hide mobile site cell, then we would always want to make desktop site visible and mobile site invisible.\n\nFYI, during OH, we\u0027ve decided to go with reverting the whole CL.",
+      "parentUuid": "de7aa7ed_66c444bf",
       "range": {
         "startLine": 112,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2d528269_d0c4488a",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-23T16:25:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c85d691a_09bcc207",
+      "range": {
+        "startLine": 41,
+        "startChar": 72,
+        "endLine": 41,
+        "endChar": 79
+      },
+      "revId": "77c65c08c9bf2d11cebf74a951675a9fa5d5e2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e00fc453_748a5856",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "18b25d6f_27bc0c51",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-23T16:25:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e00fc453_748a5856",
+      "range": {
+        "startLine": 275,
+        "startChar": 54,
+        "endLine": 275,
+        "endChar": 0
+      },
+      "revId": "77c65c08c9bf2d11cebf74a951675a9fa5d5e2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f663d4d9_2137f875",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-05-23T08:12:26Z",
       "side": 1,
       "message": "The Macro is called HIDE_REQUEST_MOBILE_SITE_CELL but the IDC_REQUEST_DESKTOP_SITE is hidden. Is the macro set around the wrong entry?",
+      "range": {
+        "startLine": 285,
+        "startChar": 7,
+        "endLine": 285,
+        "endChar": 36
+      },
+      "revId": "77c65c08c9bf2d11cebf74a951675a9fa5d5e2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b5ae14_8ef519e5",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-23T16:25:42Z",
+      "side": 1,
+      "message": "Sorry, the logic in tools menu is quite confusing. Each cell has two states: visibility and state of enabled, visibility decided whether user can see this cell or not, while state of enabled decided if it\u0027s clickable by users. So here, we only make it not clickable, and we\u0027re not hiding the cell.",
+      "parentUuid": "f663d4d9_2137f875",
       "range": {
         "startLine": 285,
         "startChar": 7,
