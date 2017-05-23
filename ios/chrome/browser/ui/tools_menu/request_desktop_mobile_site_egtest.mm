@@ -162,9 +162,12 @@ class UserAgentResponseProvider : public web::DataResponseProvider {
       assertWithMatcher:grey_notNil()];
 }
 
+// TODO(crbug.com/725316): Test is disabled on M-59 release branch because
+// Request Mobile Site feature is reverted. Re-enable this test once it's
+// cherry-picked to M-59 release branch.
 // Tests that requesting mobile site of a page works and the user agent
 // propagates to the next navigations in the same tab.
-- (void)testRequestMobileSitePropagatesToNextNavigations {
+- (void)DISABLED_testRequestMobileSitePropagatesToNextNavigations {
   std::unique_ptr<web::DataResponseProvider> provider(
       new UserAgentResponseProvider());
   web::test::SetUpHttpServer(std::move(provider));
@@ -194,9 +197,12 @@ class UserAgentResponseProvider : public web::DataResponseProvider {
       assertWithMatcher:grey_notNil()];
 }
 
+// TODO(crbug.com/725316): Test is disabled on M-59 release branch because
+// Request Mobile Site feature is reverted. Re-enable this test once it's
+// cherry-picked to M-59 release branch.
 // Tests that requesting mobile site of a page works and going back re-opens
 // desktop version of the page.
-- (void)testRequestMobileSiteGoBackToDesktop {
+- (void)DISABLED_testRequestMobileSiteGoBackToDesktop {
   std::unique_ptr<web::DataResponseProvider> provider(
       new UserAgentResponseProvider());
   web::test::SetUpHttpServer(std::move(provider));
@@ -266,9 +272,12 @@ class UserAgentResponseProvider : public web::DataResponseProvider {
       assertWithMatcher:grey_notNil()];
 }
 
+// TODO(crbug.com/725316): Test is disabled on M-59 release branch because
+// Request Mobile Site feature is reverted. Re-enable this test once it's
+// cherry-picked to M-59 release branch.
 // Tests that navigator.appVersion JavaScript API returns correct string for
 // mobile User Agent.
-- (void)testAppVersionJSAPIWithMobileUserAgent {
+- (void)DISABLED_testAppVersionJSAPIWithMobileUserAgent {
   web::test::SetUpFileBasedHttpServer();
   [ChromeEarlGrey loadURL:web::test::HttpServer::MakeUrl(kUserAgentTestURL)];
   // Verify initial reception of the mobile site.

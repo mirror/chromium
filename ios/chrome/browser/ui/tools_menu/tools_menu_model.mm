@@ -15,6 +15,11 @@
 #import "ios/public/provider/chrome/browser/user_feedback/user_feedback_provider.h"
 #include "ios/web/public/user_agent.h"
 
+// TODO(crbug.com/725316): Hide Request Mobile Site UI for M-59 release becuase
+// it is not well tested. Remove this switch once it's cherry-picked to M-59
+// release branch.
+#define HIDE_REQUEST_MOBILE_SITE_CELL
+
 // Menu items can be marked as visible or not when Incognito is enabled.
 // The following bits are used for |visibility| field in |MenuItemInfo|.
 const NSInteger kVisibleIncognitoOnly = 1 << 0;
@@ -103,9 +108,17 @@ bool ToolsMenuItemShouldBeVisible(const MenuItemInfo& item,
     // flag should stick when going backward and which cell should be visible
     // when navigating to native pages).
     case IDS_IOS_TOOLS_MENU_REQUEST_DESKTOP_SITE:
+#ifdef HIDE_REQUEST_MOBILE_SITE_CELL
+      return true;
+#else
       return (configuration.userAgentType != web::UserAgentType::DESKTOP);
+#endif
     case IDS_IOS_TOOLS_MENU_REQUEST_MOBILE_SITE:
+#ifdef HIDE_REQUEST_MOBILE_SITE_CELL
+      return false;
+#else
       return (configuration.userAgentType == web::UserAgentType::DESKTOP);
+#endif
     default:
       return true;
   }

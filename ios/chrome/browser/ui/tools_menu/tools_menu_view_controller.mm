@@ -37,6 +37,12 @@
 #include "ios/web/public/user_agent.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
+
+// TODO(crbug.com/725316): Hide Request Mobile Site UI for M-59 release becuase
+// it is not well tested. Remove this switch once it's cherry-picked to M-59
+// release branch.
+#define HIDE_REQUEST_MOBILE_SITE_CELL
+
 using ios::material::TimingFunction;
 
 namespace {
@@ -276,6 +282,9 @@ NS_INLINE void AnimateInViews(NSArray* views,
       break;
     case web::UserAgentType::DESKTOP:
       [self setItemEnabled:YES withTag:IDC_REQUEST_MOBILE_SITE];
+#ifdef HIDE_REQUEST_MOBILE_SITE_CELL
+      [self setItemEnabled:NO withTag:IDC_REQUEST_DESKTOP_SITE];
+#endif
       break;
   }
 
