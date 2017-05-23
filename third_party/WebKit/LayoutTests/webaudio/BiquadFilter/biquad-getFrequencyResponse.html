@@ -265,6 +265,32 @@ audit.define({
     task.done();
 });
 
+      audit.define({label: 'getFrequencyResponse',
+        description: 'Test out-of-bounds frequency values'}, (task, should) => {
+          let context = new OfflineAudioContext(1, 1, sampleRate); let filter =
+          new BiquadFilterNode(context);
+
+          let freq = new Float32Array(2); freq[0] = -1; freq[1] =
+          context.sampleRate / 2 + 1;
+      
+          let mag = new Float32Array(2); let phase = new Float32Array(2);
+
+          filter.getFrequencyResponse(freq, mag, phase);
+
+          for (let k = 0; k < mag.length; ++k) {
+            should(isNaN(mag[k]), 'Magnitude response at frequency ' + freq[k] +
+            ' = NaN')
+              .beTrue();
+          }
+
+          for (let k = 0; k < phase.length; ++k) {
+            should(isNaN(phase[k]), 'Phase response at frequency ' + freq[k] + ' = NaN')
+              .beTrue();
+          }
+
+          task.done();
+      });
+
 audit.run();
 </script>
 
