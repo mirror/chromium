@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b32d152_88ee9900",
+        "filename": "components/about_ui/OWNERS",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-23T19:15:48Z",
+      "side": 1,
+      "message": "Do you mean moving these two owners to components/about_ui/android/OWNERS?",
+      "parentUuid": "278378ea_26ec2a30",
+      "range": {
+        "startLine": 4,
+        "startChar": 6,
+        "endLine": 4,
+        "endChar": 14
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10a8f213_a602cd8c",
         "filename": "components/about_ui/resources/about_credits.js",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-19T18:17:01Z",
       "side": 1,
       "message": "hmmm, why is this done like this I wonder?\n\none can fairly easily do:\n\n\u003cif expr\u003d\"chromeos\"\u003e\n\u003cscript src\u003d\"chrome://credits/keyboard_utils.js\"\u003e\u003c/script\u003e\n\u003c/if\u003e\n\nin the HTML if it\u0027s grit processed...",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42336fa_7ae4ec47",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-23T19:15:48Z",
+      "side": 1,
+      "message": "I don\u0027t know the history of this part. If necessary, I can change it in a separate CL :)",
+      "parentUuid": "10a8f213_a602cd8c",
       "range": {
         "startLine": 11,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "67ef5656_b286a984",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-23T19:15:48Z",
+      "side": 1,
+      "message": "The print link is set hidden by default for Webview since it doesn\u0027t take JS and cannot really print. We disable the hidden here for Chrome since Chrome can use JS to print the license.",
+      "parentUuid": "f8c48954_687fd275",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a69e8ec_6a185026",
         "filename": "components/about_ui/resources/about_credits.tmpl",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb92a92c_6cfce518",
+        "filename": "components/about_ui/resources/about_credits.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-23T19:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a69e8ec_6a185026",
+      "range": {
+        "startLine": 67,
+        "startChar": 29,
+        "endLine": 67,
+        "endChar": 36
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +233,54 @@
       "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ee117c_6ebee927",
+        "filename": "components/about_ui/resources/about_credits_entry.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-23T19:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84fa5279_4031ddaf",
+      "range": {
+        "startLine": 4,
+        "startChar": 28,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2852a0bf_2dae14c8",
+        "filename": "components/about_ui/resources/about_credits_entry.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-23T19:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca8d1a9_0cab9127",
+      "range": {
+        "startLine": 4,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
