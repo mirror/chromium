@@ -591,6 +591,22 @@ void BluetoothAdapterMac::LowEnergyDeviceUpdated(
 void BluetoothAdapterMac::LowEnergyCentralManagerUpdatedState() {
   VLOG(1) << "Central manager state updated: "
           << [low_energy_central_manager_ state];
+  // A state with a value lower than CBCentralManagerStatePoweredOn implies that
+  // scanning has stopped and that any connected peripherals have been
+  // disconnected.
+  // See
+  // https://developer.apple.com/reference/corebluetooth/cbcentralmanagerdelegate/1518888-centralmanagerdidupdatestate?language=objc
+  if ([low_energy_central_manager_ state] < CBCentralManagerStatePoweredOn) {
+    VLOG(1)
+        << "Central no longer powered on. Notifying of device disconnection.";
+    for (auto& pair : devices_) {
+      BluetoothLowEnergyDeviceMac* device =
+          static_cast<BluetoothLowEnergyDeviceMac*>(pair.second.get());
+      if (device->IsGattConnected()) {
+        device->DidDisconnectPeripheral(nullptr);
+      }
+    }
+  }
 }
 
 void BluetoothAdapterMac::AddPairedDevices() {
