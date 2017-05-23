@@ -7,6 +7,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
+namespace i18n {
 namespace {
 
 TEST(TimezoneTest, CountryCodeForCurrentTimezone) {
@@ -18,4 +19,5 @@ TEST(TimezoneTest, CountryCodeForCurrentTimezone) {
 }
 
 }  // namespace
+}  // namespace i18n
 }  // namespace base
