@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb1bbb86_e29cedda",
+        "filename": "chrome/browser/spellchecker/spell_check_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-23T17:38:57Z",
+      "side": 1,
+      "message": "Is it possible to crank up --similarity parameter for \"git cl upload\" to detect that this is a copy of the message_filtter file?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "3d8947a01680e53902f9c991d96f8f31021bf5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343f4e7c_9844aaf4",
+        "filename": "chrome/browser/spellchecker/spell_check_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-23T17:38:57Z",
+      "side": 1,
+      "message": "From what I\u0027ve seen in other C++ mojo service implementations, the implementation should have the same name as the interface. They can be differentiated by namespace, if necessary.  Better yet, if you put this \"SpellcheckHost\" class into \"spellcheck\" namespace, then you can write:\n\nnamespace spellcheck {\nclass SpellCheckHost : public mojom::SpellCheckHost {\n...\n\nThe namespace decision is up to you, but I encourage you to rename SpellCheckHostImpl into SpellCheckHost.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "3d8947a01680e53902f9c991d96f8f31021bf5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152de598_d323552e",
+        "filename": "chrome/browser/spellchecker/spell_check_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-23T17:38:57Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 5
+      },
+      "revId": "3d8947a01680e53902f9c991d96f8f31021bf5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da339853_cb0a3a74",
+        "filename": "chrome/browser/spellchecker/spell_check_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-23T17:38:57Z",
+      "side": 1,
+      "message": "You instantiate this in the constructor and never delete it. It seems that \"SpellingServiceClient client_;\" would be cleaner for that use pattern.",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "3d8947a01680e53902f9c991d96f8f31021bf5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
