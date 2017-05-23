@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "02833a87_1eae128e",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "Yes, worked.",
+      "parentUuid": "80173a67_6f072543",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55325b15_235affc1",
         "filename": "chrome/browser/spellchecker/spellcheck_host_impl.cc",
         "patchSetId": 7
@@ -83,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "97efc39e_ab08ee3d",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "\u003e DCHECKing the validity of data provided by an untrusted process seems bad.\n\nI wonder if spell checking data from an untrusted process would seem bad too?\n\nMartin might have some thoughts here.",
+      "parentUuid": "55325b15_235affc1",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 24
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8d1302e_f1f8f50d",
         "filename": "chrome/browser/spellchecker/spellcheck_host_impl.h",
         "patchSetId": 7
@@ -94,6 +142,30 @@
       "writtenOn": "2017-05-23T05:54:22Z",
       "side": 1,
       "message": "Either this should be named SpellcheckHostImpl or the file should be named spell_check_host_impl.h.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc0a5fe_1f09560b",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "Used spell_check_host_impl.h",
+      "parentUuid": "c8d1302e_f1f8f50d",
       "range": {
         "startLine": 29,
         "startChar": 6,
@@ -152,6 +224,54 @@
     },
     {
       "key": {
+        "uuid": "96557378_0338e4fd",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b6359ca_160a943f",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3a4415d_56786040",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "Ack \u0026 Done.",
+      "parentUuid": "a6c8bdd6_9fd7f5a4",
+      "range": {
+        "startLine": 51,
+        "startChar": 46,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65513756_7c0a1bde",
         "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
         "patchSetId": 7
@@ -175,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "86395240_5682aaac",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65513756_7c0a1bde",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 8
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f919851b_48363d9e",
         "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
         "patchSetId": 7
@@ -195,6 +339,30 @@
       "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8979b3c_7a6055f2",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f919851b_48363d9e",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 8
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "1efa94d1_a90311cc",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "\u003e Why is this call to GetSpellCheckHost() not gated by content::RenderThread::Get()?\n\nThat would break the spellcheck_provider_hunspell_unittest.cc, which provides the SpellCheckHost, but content::RenderThread::Get() is NULL in that test.\n\nPerhaps we could handle that with:\n\nif (spell_check_host_ || content::RenderThread::Get())\n  GetSpellCheckHost().CallSpellingService(...)\n\nat the cost of breaking the encapsulation of GetSpellCheckHost() a little?",
+      "parentUuid": "b6499e77_34e2d636",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad0cecb1_a956345a",
         "filename": "components/spellcheck/renderer/spellcheck_provider.h",
         "patchSetId": 7
@@ -323,6 +515,30 @@
       "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afeff40d_7ee69187",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad0cecb1_a956345a",
+      "range": {
+        "startLine": 117,
+        "startChar": 6,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "0ca9eb6b_a9d59aa9",
+        "filename": "components/spellcheck/renderer/spellcheck_provider_hunspell_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "Yeah.  Seems that most test fixtures herein call RequestTextChecking, which maybe means that Hunspell is used, not sure.\n\nAdded the TODO.",
+      "parentUuid": "df9c37ec_22f30ccc",
+      "range": {
+        "startLine": 22,
+        "startChar": 31,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db276137_ac15e7cb",
         "filename": "components/spellcheck/renderer/spellcheck_provider_test.h",
         "patchSetId": 7
@@ -360,6 +600,30 @@
       "writtenOn": "2017-05-23T05:54:22Z",
       "side": 1,
       "message": "The test fixture should be responsible for ensuring a MessageLoop exists.",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 35
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2ce303_973f10a0",
+        "filename": "components/spellcheck/renderer/spellcheck_provider_test.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-23T16:52:38Z",
+      "side": 1,
+      "message": "\u003e The test fixture should be responsible for ensuring a MessageLoop exists.\n\nNot quite following here, sorry - perhaps we should chat off-line to clarify.",
+      "parentUuid": "db276137_ac15e7cb",
       "range": {
         "startLine": 76,
         "startChar": 24,
