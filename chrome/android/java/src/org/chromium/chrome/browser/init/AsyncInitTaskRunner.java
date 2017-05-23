@@ -111,9 +111,6 @@ public abstract class AsyncInitTaskRunner {
             });
         }
 
-        if (allocateChildConnection) {
-            ChildProcessLauncher.warmUp(ContextUtils.getApplicationContext());
-        }
         mLoadTask = new LoadTask();
         mLoadTask.executeOnExecutor(getExecutor());
     }

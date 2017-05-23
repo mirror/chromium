@@ -33,7 +33,7 @@ public class WebApkActivity extends WebappActivity {
     private WebApkUpdateManager mUpdateManager;
 
     /** Indicates whether launching renderer in WebAPK process is enabled. */
-    private boolean mCanLaunchRendererInWebApkProcess;
+    private boolean mCanLaunchRendererInWebApkProcess = true;
 
     private final ChildProcessCreationParams mDefaultParams =
             ChildProcessCreationParams.getDefault();
@@ -91,7 +91,13 @@ public class WebApkActivity extends WebappActivity {
     public void finishNativeInitialization() {
         super.finishNativeInitialization();
         if (!isInitialized()) return;
-        mCanLaunchRendererInWebApkProcess = ChromeWebApkHost.canLaunchRendererInWebApkProcess();
+        initializeChildProcessCreationParams(mCanLaunchRendererInWebApkProcess);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initializeChildProcessCreationParams(mCanLaunchRendererInWebApkProcess);
     }
 
     @Override
@@ -191,6 +197,7 @@ public class WebApkActivity extends WebappActivity {
      *                     WebAPK renderer process.
      */
     private void initializeChildProcessCreationParams(boolean isForWebApk) {
+android.util.Log.w("boliu", "initializeChildProcessCreationParams for webapk: " + isForWebApk);
         // TODO(hanxi): crbug.com/664530. WebAPKs shouldn't use a global ChildProcessCreationParams.
         ChildProcessCreationParams params = mDefaultParams;
         if (isForWebApk) {

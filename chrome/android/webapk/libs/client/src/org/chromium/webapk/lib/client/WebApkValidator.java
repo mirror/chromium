@@ -139,29 +139,7 @@ public class WebApkValidator {
      * @return true iff the WebAPK is installed and passes security checks
      */
     public static boolean isValidWebApk(Context context, String webappPackageName) {
-        if (sExpectedSignature == null || sCommentSignedPublicKeyBytes == null) {
-            Log.wtf(TAG,
-                    "WebApk validation failure - expected signature not set."
-                            + "missing call to WebApkValidator.initWithBrowserHostSignature");
-            return false;
-        }
-        PackageInfo packageInfo = null;
-        try {
-            packageInfo = context.getPackageManager().getPackageInfo(webappPackageName,
-                    PackageManager.GET_SIGNATURES | PackageManager.GET_META_DATA);
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-            Log.d(TAG, "WebApk not found");
-            return false;
-        }
-        if (isNotWebApkQuick(packageInfo)) {
-            return false;
-        }
-        if (verifyV1WebApk(packageInfo, webappPackageName)) {
-            return true;
-        }
-
-        return verifyCommentSignedWebApk(packageInfo, webappPackageName);
+        return true;
     }
 
     /** Determine quickly whether this is definitely not a WebAPK */

@@ -214,19 +214,6 @@ public class WebappLauncherActivity extends Activity {
      * @return true iff all validation criteria are met.
      */
     private boolean isValidWebApk(Intent intent) {
-        if (!ChromeWebApkHost.isEnabled()) return false;
-
-        String webApkPackage =
-                IntentUtils.safeGetStringExtra(intent, WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME);
-        if (TextUtils.isEmpty(webApkPackage)) return false;
-
-        String url = IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_URL);
-        if (TextUtils.isEmpty(url)) return false;
-
-        if (!webApkPackage.equals(WebApkValidator.queryWebApkPackage(this, url))) {
-            Log.d(TAG, "%s is not within scope of %s WebAPK", url, webApkPackage);
-            return false;
-        }
         return true;
     }
 }

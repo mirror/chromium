@@ -1,0 +1,28 @@
+# Build arguments go here. Examples:
+#   is_component_build = true
+#   is_debug = false
+# See "gn args <out_dir> --list" for available build arguments.
+target_os = "android"
+target_cpu = "arm64"
+dcheck_always_on = false
+is_debug = false
+is_java_debug = false  # turn off proguard
+is_component_build = true
+is_clang = false
+symbol_level = 1
+strip_absolute_paths_from_debug_symbols = true
+system_webview_package_name = "com.google.android.webview"
+
+run_findbugs = false
+
+use_goma = false
+
+# use_unpublished_apis = true
+# use_webview_internal_framework = true
+
+webapk_name = "plus.google.com"
+webapk_short_name = "plus.google.com"
+webapk_scope_url_host = "plus.google.com"
+webapk_scope_url_path = "/"
+webapk_start_url = "https://plus.google.com"
+webapk_scope_url = "https://plus.google.com"

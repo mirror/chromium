@@ -229,7 +229,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
      */
     @Override
     @SuppressLint("MissingSuperCall")  // Called in onCreateInternal.
-    protected final void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         TraceEvent.begin("AsyncInitializationActivity.onCreate()");
         onCreateInternal(savedInstanceState);
         TraceEvent.end("AsyncInitializationActivity.onCreate()");
