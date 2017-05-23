@@ -8,6 +8,7 @@
 #include <iosfwd>
 
 #include "base/base_export.h"
+#include "base/logging.h"
 #include "base/optional.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
@@ -30,6 +31,7 @@ class BASE_EXPORT NullableString16 {
   NullableString16& operator=(NullableString16&& other);
 
   const string16& string() const {
+    DCHECK(string_);
     return string_ ? *string_ : EmptyString16();
   }
   bool is_null() const { return !string_; }

@@ -133,7 +133,7 @@ void PromiseWriterHelper(const DropData& drop_data,
   // HTML.
   if ([type isEqualToString:NSHTMLPboardType] ||
       [type isEqualToString:ui::kChromeDragImageHTMLPboardType]) {
-    DCHECK(!dropData_->html.string().empty());
+    DCHECK(!dropData_->html.is_null() && !dropData_->html.string().empty());
     // See comment on |kHtmlHeader| above.
     [pboard setString:SysUTF16ToNSString(kHtmlHeader + dropData_->html.string())
               forType:type];
@@ -169,7 +169,7 @@ void PromiseWriterHelper(const DropData& drop_data,
 
   // Plain text.
   } else if ([type isEqualToString:NSStringPboardType]) {
-    DCHECK(!dropData_->text.string().empty());
+    DCHECK(!dropData_->text.is_null() && !dropData_->text.string().empty());
     [pboard setString:SysUTF16ToNSString(dropData_->text.string())
               forType:NSStringPboardType];
 
@@ -423,7 +423,8 @@ void PromiseWriterHelper(const DropData& drop_data,
   }
 
   // HTML.
-  bool hasHTMLData = !dropData_->html.string().empty();
+  bool hasHTMLData =
+      !dropData_->html.is_null() && !dropData_->html.string().empty();
   // Mail.app and TextEdit accept drags that have both HTML and image flavors on
   // them, but don't process them correctly <http://crbug.com/55879>. Therefore,
   // if there is an image flavor, don't put the HTML data on as HTML, but rather
@@ -444,7 +445,7 @@ void PromiseWriterHelper(const DropData& drop_data,
   }
 
   // Plain text.
-  if (!dropData_->text.string().empty()) {
+  if (!dropData_->text.is_null() && !dropData_->text.string().empty()) {
     [pasteboard_ addTypes:@[ NSStringPboardType ]
                     owner:contentsView_];
   }
