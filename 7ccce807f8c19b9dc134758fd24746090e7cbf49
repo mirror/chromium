@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a284b49_0b487107",
+        "filename": "base/win/scoped_comptr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-05-23T23:30:58Z",
+      "side": 1,
+      "message": "Maybe I\u0027m mistaken, but in the case of std::unique_ptr, I feel we tend to prefer .reset() instead of assigning null. I guess you can\u0027t remove that from ComPtr, but maybe it\u0027d be better to change the callers to Reset() anyway?",
+      "revId": "7ccce807f8c19b9dc134758fd24746090e7cbf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
