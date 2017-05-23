@@ -158,8 +158,14 @@ static Frame* CreateWindowHelper(LocalFrame& opener_frame,
     }
 
     if (opener_frame.GetSettings() &&
-        !opener_frame.GetSettings()->GetSupportsMultipleWindows())
+        !opener_frame.GetSettings()->GetSupportsMultipleWindows()) {
+      // Take the user gesture status into account to simulate the behavior of
+      // Android WebView's popup blocker if the embedder doesn't support
+      // multiple windows.
+      if (!UserGestureIndicator::ProcessingUserGesture())
+        return nullptr;
       window = &opener_frame.Tree().Top();
+    }
   }
 
   if (window) {
@@ -269,9 +275,6 @@ void CreateWindowForRequest(const FrameLoadRequest& request,
 
   if (opener_frame.GetDocument() &&
       opener_frame.GetDocument()->IsSandboxed(kSandboxPopups))
-    return;
-
-  if (!LocalDOMWindow::AllowPopUp(opener_frame))
     return;
 
   if (policy == kNavigationPolicyCurrentTab)
