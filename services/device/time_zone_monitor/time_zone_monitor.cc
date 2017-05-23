@@ -4,7 +4,11 @@
 
 #include "services/device/time_zone_monitor/time_zone_monitor.h"
 
+#ifdef OS_ANDROID
+#include "base/android/timezone_utils.h"
+#endif
 #include "base/logging.h"
+#include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "third_party/icu/source/common/unicode/unistr.h"
 #include "third_party/icu/source/i18n/unicode/timezone.h"
@@ -29,6 +33,10 @@ void TimeZoneMonitor::NotifyClients() {
   // On CrOS, ICU's default tz is already set to a new zone. No
   // need to redetect it with detectHostTimeZone().
   std::unique_ptr<icu::TimeZone> new_zone(icu::TimeZone::createDefault());
+#elif defined(OS_ANDROID)
+  base::string16 tzid = base::GetDefaultTimeZoneId();
+  icu::TimeZone* new_zone = icu::TimeZone::createTimeZone(
+      icu::UnicodeString(FALSE, tzid.data(), tzid.length()));
 #else
   icu::TimeZone* new_zone = icu::TimeZone::detectHostTimeZone();
 #if defined(OS_LINUX)
