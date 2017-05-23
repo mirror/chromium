@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0360bf2_256082d2",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 3833,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-23T15:01:10Z",
+      "side": 1,
+      "message": "Calling SetParentVisible(false) looks good but would you help me understand why the old code was not calling it?",
+      "revId": "52653b3753ce19ff5b3fcb5c40e9bc8a16010170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

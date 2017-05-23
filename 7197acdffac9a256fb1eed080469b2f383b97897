@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95d450f7_e97cab5c",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 3826,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-23T15:01:10Z",
+      "side": 0,
+      "message": "Why can we remove SetParentVisible(false)?",
+      "revId": "7197acdffac9a256fb1eed080469b2f383b97897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
