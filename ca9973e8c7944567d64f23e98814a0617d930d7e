@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "685559ef_cd407f12",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T21:57:08Z",
+      "side": 1,
+      "message": "Ah ok.\n\nYeah your suggestion sounds pretty good and similar to what I\u0027d imagined.",
+      "parentUuid": "97b76323_7c6a1afa",
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b3a3624_494cc4c5",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 3
@@ -160,6 +178,24 @@
       "side": 1,
       "message": "mostly, i don\u0027t like ignoring the return value in one of the two places that it\u0027s called.  seems like something\u0027s not right about the way Transition... is defined if we\u0027re ignoring it half the time.\n\nmaybe it shouldn\u0027t return anything, then, and DecodeOutput could return true immediately, unconditionally, after calling it, regardless of the outcome.  or, it could check |state_ \u003d\u003d kOk| or something and return otherwise.",
       "parentUuid": "74bf7516_9c22f190",
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d23be27_5448068c",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T21:57:08Z",
+      "side": 1,
+      "message": "Sounds good",
+      "parentUuid": "9a490cc4_a0e93bfb",
       "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
