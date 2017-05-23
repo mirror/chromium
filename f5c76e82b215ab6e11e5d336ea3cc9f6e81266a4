@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf0c59f4_d6c11889",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-05-23T19:50:54Z",
+      "side": 1,
+      "message": "I\u0027d prefer to rename this variable to something like layer_rect.",
+      "range": {
+        "startLine": 1352,
+        "startChar": 16,
+        "endLine": 1352,
+        "endChar": 26
+      },
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282ea780_eaa8937c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2643,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-05-23T19:50:54Z",
+      "side": 1,
+      "message": "This should be implemented in terms of Layer::Size().\n\nThat wouldn\u0027t have worked previously, because Layer didn\u0027t get its final size until a post-layout pass over the layer tree.  That\u0027s no longer true; Layer now gets its size during LayoutBox::UpdateAfterLayout.",
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b77c18f_7394e36e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-05-23T19:50:54Z",
+      "side": 1,
+      "message": "I\u0027d prefer something like PixelSnappedLayerRect or PixelSnappedLayerBounds.",
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae8aa6c7_659964ee",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
@@ -13,6 +70,24 @@
       "writtenOn": "2017-05-23T19:30:58Z",
       "side": 1,
       "message": "This looks like another place that sub pixel accumulation will have to be handled.",
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "119826f9_ac376838",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-05-23T19:50:54Z",
+      "side": 1,
+      "message": "There are a whole bunch of places in this file where Box() geometry calls should be replaced by Layer::Size() calls.  I\u0027m working on it.",
+      "parentUuid": "ae8aa6c7_659964ee",
       "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
