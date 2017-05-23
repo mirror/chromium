@@ -318,16 +318,22 @@ class HomePrefNotificationBridge {
         browser_->tab_strip_model()->GetActiveWebContents();
     GURL originUrl = contents->GetLastCommittedURL();
 
-    base::string16 displayText = base::ASCIIToUTF16(originUrl.GetContent());
-    size_t hostLength = originUrl.host().length();
+    base::string16 displayText = base::ASCIIToUTF16(originUrl.spec());
     base::scoped_nsobject<NSMutableAttributedString> attributedString(
         [[NSMutableAttributedString alloc]
             initWithString:base::SysUTF16ToNSString(displayText)]);
-    [attributedString
-        addAttribute:NSForegroundColorAttributeName
-               value:OmniboxViewMac::BaseTextColor(true)
-               range:NSMakeRange(hostLength,
-                                 [attributedString length] - hostLength)];
+
+    if (originUrl.has_path()) {
+      // Decrement to remove the slash.
+      size_t pathLength = originUrl.path().length() - 1;
+
+      [attributedString
+          addAttribute:NSForegroundColorAttributeName
+                 value:OmniboxViewMac::BaseTextColor(true)
+                 range:NSMakeRange([attributedString length] - pathLength,
+                                   pathLength)];
+    }
+
     [touchBarItem
         setView:[NSTextField labelWithAttributedString:attributedString.get()]];
   } else if ([identifier hasSuffix:kExitFullscreenTouchId]) {
