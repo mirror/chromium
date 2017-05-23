@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac10be0_1acd1543",
+        "filename": "third_party/WebKit/public/web/WebContextFeatures.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-23T21:46:49Z",
+      "side": 1,
+      "message": "nit: file comment explaining when/how these should be used, since doing so out of the blue looks like it won\u0027t work. e.g. that it should be called in WebFrameClient::DidCreateScriptContext, that it should only be given main world contexts, that it will expose said feature in the JavaScript context, etc. Maybe a nod to the explanation in IDLExtendedAttributes.md.",
+      "revId": "3bd6e4b0ff7cd4814576e98575589fafdf15002e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

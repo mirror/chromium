@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "8f1950ac_5644ee7f",
+        "filename": "third_party/WebKit/Source/core/context_features/ContextFeatureSettings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-23T21:46:49Z",
+      "side": 1,
+      "message": "Sure, e.g. we could key it off the v8::Context and store the data in V8PerContextData. I\u0027m not sure if any other conditional features stuff (e.g. origin trials) has given a lot of thought to isolated worlds/extensions.",
+      "parentUuid": "1491e5e3_abdeb8ab",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d311c7f2_308acb62",
         "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.idl",
         "patchSetId": 3
