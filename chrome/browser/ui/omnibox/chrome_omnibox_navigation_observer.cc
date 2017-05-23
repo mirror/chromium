@@ -284,7 +284,7 @@ void ChromeOmniboxNavigationObserver::CreateFetcher(
         })");
   fetcher_ = net::URLFetcher::Create(destination_url, net::URLFetcher::HEAD,
                                      this, traffic_annotation);
-  fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES);
+  fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES| net::LOAD_DO_NOT_SEND_AUTH_STUFF);
   // We stop-on-redirect for a couple of reasons:
   // * Sites with lots of redirects, especially through slow machines, take time
   //   to follow the redirects.  This delays the appearance of the infobar,
