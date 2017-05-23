@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8861a37_5d114a0b",
+        "filename": "content/common/sandbox_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-05-23T01:21:06Z",
+      "side": 1,
+      "message": "does this have to be exported from the class? if it\u0027s only called from SetJobLevel then it could be anonymous namespace. if it\u0027s intended to be called from outside this code, then it should be called alongside SetJobLevel?",
+      "range": {
+        "startLine": 603,
+        "startChar": 20,
+        "endLine": 603,
+        "endChar": 37
+      },
+      "revId": "b753b5c9e0db9b2fc8ff47d5bcad5453c9bd9d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
