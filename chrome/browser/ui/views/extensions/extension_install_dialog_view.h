@@ -65,7 +65,6 @@ class ExtensionInstallDialogView : public views::DialogDelegateView,
   bool Accept() override;
   ui::ModalType GetModalType() const override;
   void Layout() override;
-  gfx::Size GetPreferredSize() const override;
   views::View* CreateExtraView() override;
   bool IsDialogButtonEnabled(ui::DialogButton button) const override;
 
@@ -108,9 +107,6 @@ class ExtensionInstallDialogView : public views::DialogDelegateView,
   // The scroll view containing all the details for the dialog (including all
   // collapsible/expandable sections).
   views::ScrollView* scroll_view_;
-
-  // The preferred size of the dialog.
-  gfx::Size dialog_size_;
 
   // ExperienceSampling: Track this UI event.
   std::unique_ptr<extensions::ExperienceSamplingEvent> sampling_event_;
@@ -169,7 +165,7 @@ class ExpandableContainerView : public views::View,
     ~DetailsView() override {}
 
     // views::View:
-    gfx::Size GetPreferredSize() const override;
+    gfx::Size CalculatePreferredSize() const override;
 
     void AddDetail(const base::string16& detail);
 

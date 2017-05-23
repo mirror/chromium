@@ -97,7 +97,7 @@ class ToolbarActionsBar : public ToolbarActionsModel::Observer,
 
   // Returns the preferred size for the toolbar; this does *not* reflect any
   // animations that may be running.
-  gfx::Size GetPreferredSize() const;
+  gfx::Size GetFullSize() const;
 
   // Returns the [minimum|maximum] possible width for the toolbar.
   int GetMinimumWidth() const;

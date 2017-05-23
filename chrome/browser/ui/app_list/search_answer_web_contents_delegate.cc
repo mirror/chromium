@@ -169,7 +169,7 @@ void SearchAnswerWebContentsDelegate::UpdatePreferredSize(
   model_->SetSearchAnswerAvailable(is_card_size_ok_ && received_answer_ &&
                                    !web_contents_->IsLoading());
   if (!features::IsAnswerCardDarkRunEnabled())
-    web_view_->SetPreferredSize(pref_size);
+    web_view_->set_preferred_size(pref_size);
   if (!answer_loaded_time_.is_null()) {
     UMA_HISTOGRAM_TIMES("SearchAnswer.ResizeAfterLoadTime",
                         base::TimeTicks::Now() - answer_loaded_time_);

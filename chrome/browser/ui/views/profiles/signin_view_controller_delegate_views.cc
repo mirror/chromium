@@ -100,7 +100,7 @@ void SigninViewControllerDelegateViews::ResizeNativeView(int height) {
       ->window()
       ->GetWebContentsModalDialogHost()
       ->GetMaximumDialogSize().height();
-  content_view_->SetPreferredSize(
+  content_view_->set_preferred_size(
       gfx::Size(kModalDialogWidth, std::min(height, max_height)));
   content_view_->Layout();
 
@@ -164,7 +164,7 @@ SigninViewControllerDelegateViews::CreateGaiaWebView(
   if (delegate)
     web_view->GetWebContents()->SetDelegate(delegate);
 
-  web_view->SetPreferredSize(pref_size);
+  web_view->set_preferred_size(pref_size);
   content::RenderWidgetHostView* rwhv =
       web_view->GetWebContents()->GetRenderWidgetHostView();
   if (rwhv)
@@ -203,7 +203,7 @@ SigninViewControllerDelegateViews::CreateDialogWebView(Browser* browser,
                        ->GetWebContentsModalDialogHost()
                        ->GetMaximumDialogSize()
                        .height();
-  web_view->SetPreferredSize(
+  web_view->set_preferred_size(
       gfx::Size(kModalDialogWidth, std::min(dialog_height, max_height)));
 
   return std::unique_ptr<views::WebView>(web_view);
