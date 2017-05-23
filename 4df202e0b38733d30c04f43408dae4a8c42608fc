@@ -22,6 +22,30 @@
       "revId": "4df202e0b38733d30c04f43408dae4a8c42608fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27f77fc_1468b303",
+        "filename": "base/i18n/timezone.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-05-23T23:14:43Z",
+      "side": 0,
+      "message": "I don\u0027t remember why I needed to put this here and I can\u0027t find clues in the history either. It seems that a couple other things (ARC and video capture) now rely on this function, I\u0027m not sure if we\u0027ll be breaking them by removing this.",
+      "parentUuid": "5f5e8e4c_00095951",
+      "range": {
+        "startLine": 462,
+        "startChar": 8,
+        "endLine": 465,
+        "endChar": 28
+      },
+      "revId": "4df202e0b38733d30c04f43408dae4a8c42608fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
