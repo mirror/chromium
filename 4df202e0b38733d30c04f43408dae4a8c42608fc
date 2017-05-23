@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5e8e4c_00095951",
+        "filename": "base/i18n/timezone.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-05-23T22:32:01Z",
+      "side": 0,
+      "message": "Evan, do you need to preserve this behavior?  As you know well, UTC and GMT are different from Europe/London.  ICU returns \u0027001\u0027 (world) for them. \n\nStill some people in GB may have misconfigured their timezone because British time in winter has the same offset (zero) as UTC.",
+      "range": {
+        "startLine": 462,
+        "startChar": 8,
+        "endLine": 465,
+        "endChar": 28
+      },
+      "revId": "4df202e0b38733d30c04f43408dae4a8c42608fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
