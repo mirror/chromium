@@ -113,8 +113,11 @@ size_t DOMStorageMap::CountBytes(const DOMStorageValuesMap& values) {
     return 0;
 
   size_t count = 0;
-  for (const auto& pair : values)
-    count += size_of_item(pair.first, pair.second.string());
+  for (const auto& pair : values) {
+    count += size_of_item(
+        pair.first,
+        pair.second.as_optional_string16().value_or(base::string16()));
+  }
   return count;
 }
 
