@@ -30,6 +30,9 @@ sandbox::ResultCode SetJobLevel(const base::CommandLine& cmd_line,
                                 uint32_t ui_exceptions,
                                 sandbox::TargetPolicy* policy);
 
+sandbox::ResultCode SetJobMemoryLimit(const base::CommandLine& cmd_line,
+                                      sandbox::TargetPolicy* policy);
+
 // Closes handles that are opened at process creation and initialization.
 sandbox::ResultCode AddBaseHandleClosePolicy(sandbox::TargetPolicy* policy);
 
