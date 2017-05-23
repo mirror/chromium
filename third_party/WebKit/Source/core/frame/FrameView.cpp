@@ -1069,6 +1069,8 @@ void FrameView::PerformLayout(bool in_subtree_layout) {
   // doing.
 
   ForceLayoutParentViewIfNeeded();
+  // TODO(szager): Remove this after checking crash reports.
+  DCHECK(IsInPerformLayout());
 
   if (in_subtree_layout) {
     if (analyzer_)
