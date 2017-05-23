@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a49f2b2e_d360bf79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-23T12:50:55Z",
+      "side": 1,
+      "message": "I think I would keep the old pattern: in recordCachedActionMetric(), check whether startup has completed, and either directly call flushCachedMetric() or add an observer, and in flushCachedMetric() assert that startup has completed. If this is called from the native side, asserting that is valid as well.",
+      "revId": "27deddf7f2bb211c5c74695c0088d346cb129372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
