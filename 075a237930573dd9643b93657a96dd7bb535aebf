@@ -22,6 +22,30 @@
       "revId": "075a237930573dd9643b93657a96dd7bb535aebf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccc0c3f_7536fd2e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-23T18:45:31Z",
+      "side": 0,
+      "message": "Because it\u0027s doesn\u0027t need to be protected.\n\nprotected implies package protected, but also allows access sublcasses from a different package. And the only subclass is in the tests in the same package. So package protected is fine.",
+      "parentUuid": "9c9d5154_22250716",
+      "range": {
+        "startLine": 229,
+        "startChar": 4,
+        "endLine": 229,
+        "endChar": 13
+      },
+      "revId": "075a237930573dd9643b93657a96dd7bb535aebf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
