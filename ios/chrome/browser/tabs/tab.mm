@@ -197,15 +197,6 @@ bool IsApplicationStateNotActive(UIApplicationState state) {
           state == UIApplicationStateInactive);
 }
 
-// Returns true if |item| is the result of a HTTP redirect.
-// Returns false if |item| is nullptr;
-bool IsItemRedirectItem(web::NavigationItem* item) {
-  if (!item)
-    return false;
-
-  return (ui::PageTransition::PAGE_TRANSITION_IS_REDIRECT_MASK &
-          item->GetTransitionType()) == 0;
-}
 }  // namespace
 
 @interface Tab ()<CRWWebStateObserver,
@@ -1366,7 +1357,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
          visibleItem->GetUserAgentType() == web::UserAgentType::DESKTOP;
 }
 
-- (void)reloadWithUserAgentType:(web::UserAgentType)userAgentType {
+- (void)reloadForDesktopUserAgent {
   // This removes the web view, which will be recreated at the end of this.
   [self.webController requirePageReconstruction];
 
@@ -1375,41 +1366,25 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // navigation from new navigations.
   web::NavigationManager* navigationManager = [self navigationManager];
   DCHECK(navigationManager);
-
-  web::NavigationItem* lastNonRedirectItem =
-      navigationManager->GetTransientItem();
-  if (!lastNonRedirectItem || IsItemRedirectItem(lastNonRedirectItem))
-    lastNonRedirectItem = navigationManager->GetVisibleItem();
-  if (!lastNonRedirectItem || IsItemRedirectItem(lastNonRedirectItem))
-    lastNonRedirectItem = GetLastCommittedNonRedirectedItem(navigationManager);
-
-  if (!lastNonRedirectItem)
+  web::NavigationItem* lastNonRedirectedItem =
+      GetLastCommittedNonRedirectedItem(navigationManager);
+  if (!lastNonRedirectedItem)
     return;
 
   // |reloadURL| will be empty if a page was open by DOM.
-  GURL reloadURL(lastNonRedirectItem->GetOriginalRequestURL());
+  GURL reloadURL(lastNonRedirectedItem->GetOriginalRequestURL());
   if (reloadURL.is_empty()) {
     DCHECK(self.webState && self.webState->HasOpener());
-    reloadURL = lastNonRedirectItem->GetVirtualURL();
+    reloadURL = lastNonRedirectedItem->GetVirtualURL();
   }
 
   web::NavigationManager::WebLoadParams params(reloadURL);
-  params.referrer = lastNonRedirectItem->GetReferrer();
-  params.transition_type = ui::PAGE_TRANSITION_RELOAD;
-
-  switch (userAgentType) {
-    case web::UserAgentType::DESKTOP:
-      params.user_agent_override_option =
-          web::NavigationManager::UserAgentOverrideOption::DESKTOP;
-      break;
-    case web::UserAgentType::MOBILE:
-      params.user_agent_override_option =
-          web::NavigationManager::UserAgentOverrideOption::MOBILE;
-      break;
-    case web::UserAgentType::NONE:
-      NOTREACHED();
-  }
-
+  params.referrer = lastNonRedirectedItem->GetReferrer();
+  // A new navigation is needed here for reloading with desktop User-Agent.
+  params.user_agent_override_option =
+      web::NavigationManager::UserAgentOverrideOption::DESKTOP;
+  params.transition_type =
+      ui::PageTransitionFromInt(ui::PAGE_TRANSITION_FORM_SUBMIT);
   navigationManager->LoadURLWithParams(params);
 }
 

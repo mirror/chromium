@@ -25,7 +25,6 @@ source_set("tabs") {
     "//ios/chrome/browser/web:sad_tab_tab_helper_delegate",
     "//ios/net",
     "//ios/web",
-    "//ios/web:user_agent",
     "//ui/base",
   ]
   libs = [ "UIKit.framework" ]
@@ -108,7 +107,6 @@ source_set("tabs_internal") {
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/native_app_launcher",
     "//ios/web",
-    "//ios/web:user_agent",
     "//net",
     "//ui/base",
     "//url",
