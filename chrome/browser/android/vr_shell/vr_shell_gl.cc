@@ -35,6 +35,7 @@
 #include "ui/gl/android/surface_texture.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
+#include "ui/gl/gl_fence_egl.h"
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
@@ -388,13 +389,6 @@ void VrShellGl::SubmitWebVRFrame(int16_t frame_index,
     // OnWebVRFrameAvailable where we'd normally report that.
     submit_client_->OnSubmitFrameRendered();
   }
-
-  TRACE_EVENT0("gpu", "VrShellGl::glFinish");
-  // This is a load-bearing glFinish, please don't remove it without
-  // before/after timing comparisons. Goal is to clear the GPU queue
-  // of the native GL context to avoid stalls later in GVR frame
-  // acquire/submit.
-  glFinish();
 }
 
 void VrShellGl::SetSubmitClient(
@@ -1058,12 +1052,46 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
     frame.Unbind();
   }
 
-  {
-    TRACE_EVENT0("gpu", "VrShellGl::Submit");
-    gvr::Mat4f mat;
-    MatfToGvrMat(head_pose, &mat);
-    frame.Submit(*buffer_viewport_list_, mat);
+  base::TimeDelta initial_delay;
+  if (ShouldDrawWebVr() && surfaceless_rendering_) {
+    vrshell_submit_fence_ = base::MakeUnique<gl::GLFenceEGL>();
+    initial_delay = base::TimeDelta::FromMilliseconds(1);
+  } else {
+    vrshell_submit_fence_ = nullptr;
+    initial_delay = base::TimeDelta::FromMilliseconds(0);
   }
+
+  vrshell_submit_fence_ = base::MakeUnique<gl::GLFenceEGL>();
+  task_runner_->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&VrShellGl::DrawFrameSubmitWhenReady,
+                 weak_ptr_factory_.GetWeakPtr(), frame_index, frame.release(),
+                 head_pose),
+      initial_delay);
+}
+
+void VrShellGl::DrawFrameSubmitWhenReady(int16_t frame_index,
+                                         gvr_frame* frame_ptr,
+                                         const vr::Mat4f& head_pose) {
+  if (vrshell_submit_fence_ && !vrshell_submit_fence_->HasCompleted()) {
+    task_runner_->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&VrShellGl::DrawFrameSubmitWhenReady,
+                   weak_ptr_factory_.GetWeakPtr(), frame_index, frame_ptr,
+                   head_pose),
+        base::TimeDelta::FromMilliseconds(1));
+    return;
+  }
+  vrshell_submit_fence_ = nullptr;
+  base::TimeTicks current_time = base::TimeTicks::Now();
+
+  TRACE_EVENT1("gpu", "VrShellGl::DrawFrameSubmitWhenReady", "frame",
+               frame_index);
+
+  gvr::Frame frame(frame_ptr);
+  gvr::Mat4f mat;
+  MatfToGvrMat(head_pose, &mat);
+  frame.Submit(*buffer_viewport_list_, mat);
 
   // No need to swap buffers for surfaceless rendering.
   if (!surfaceless_rendering_) {

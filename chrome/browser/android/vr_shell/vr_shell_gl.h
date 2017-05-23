@@ -30,6 +30,7 @@ class WebInputEvent;
 
 namespace gl {
 class GLContext;
+class GLFence;
 class GLSurface;
 class ScopedJavaSurface;
 class SurfaceTexture;
@@ -113,6 +114,9 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
   void DrawFrame(int16_t frame_index);
+  void DrawFrameSubmitWhenReady(int16_t frame_index,
+                                gvr_frame* frame_ptr,
+                                const vr::Mat4f& head_pose);
   void DrawWorldElements(const vr::Mat4f& head_pose);
   void DrawOverlayElements(const vr::Mat4f& head_pose);
   void DrawHeadLockedElements();
@@ -252,6 +256,7 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   base::CancelableClosure vsync_task_;
   base::TimeTicks vsync_timebase_;
   base::TimeDelta vsync_interval_;
+  std::unique_ptr<gl::GLFence> vrshell_submit_fence_;
 
   base::TimeDelta pending_time_;
   bool pending_vsync_ = false;
