@@ -409,6 +409,35 @@ class SystemTokenCertDBInitializer {
 
   // Entry point, called on UI thread.
   void Initialize() {
+    // Only start loading the system token if cryptohome is available and TPM is
+    // owned.
+    DBusThreadManager::Get()
+        ->GetCryptohomeClient()
+        ->WaitForServiceToBeAvailable(
+            base::Bind(&SystemTokenCertDBInitializer::OnCryptohomeAvailable,
+                       weak_ptr_factory_.GetWeakPtr()));
+  }
+
+ private:
+  void OnCryptohomeAvailable(bool available) {
+    if (!available) {
+      LOG(ERROR) << "Failed to wait for cryptohome to become available";
+      return;
+    }
+
+    VLOG(1) << "Cryptohome available.";
+    DBusThreadManager::Get()->GetCryptohomeClient()->TpmIsReady(
+        base::Bind(&SystemTokenCertDBInitializer::OnTpmIsReady,
+                   weak_ptr_factory_.GetWeakPtr()));
+  }
+
+  void OnTpmIsReady(DBusMethodCallStatus call_status, bool tpm_is_ready) {
+    if (!tpm_is_ready) {
+      VLOG(1) << "TPM is not ready - not loading system token.";
+      return;
+    }
+    VLOG(1) << "TPM is ready, loading system token.";
+    TPMTokenLoader::Get()->EnsureStarted();
     base::Callback<void(crypto::ScopedPK11Slot)> callback =
         base::BindRepeating(&SystemTokenCertDBInitializer::InitializeDatabase,
                             weak_ptr_factory_.GetWeakPtr());
@@ -417,7 +446,6 @@ class SystemTokenCertDBInitializer {
         base::BindOnce(&GetSystemSlotOnIOThread, callback));
   }
 
- private:
   // Initializes the global system token NSSCertDatabase with |system_slot|.
   // Also starts CertLoader with the system token database.
   void InitializeDatabase(crypto::ScopedPK11Slot system_slot) {
@@ -434,6 +462,7 @@ class SystemTokenCertDBInitializer {
     database->SetSystemSlot(std::move(system_slot_copy));
     system_token_cert_database_ = std::move(database);
 
+    VLOG(1) << "System token database initialized, starting CertLoader.";
     CertLoader::Get()->SetSystemNSSDB(system_token_cert_database_.get());
   }
 
@@ -541,7 +570,6 @@ void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
           content::BrowserThread::IO));
 
   // Initialize NSS database for system token.
-  TPMTokenLoader::Get()->EnsureStarted();
   system_token_certdb_initializer_ =
       base::MakeUnique<internal::SystemTokenCertDBInitializer>();
   system_token_certdb_initializer_->Initialize();
