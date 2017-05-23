@@ -16,6 +16,24 @@
       "revId": "27deddf7f2bb211c5c74695c0088d346cb129372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7757ed_4b7b4ce2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-05-23T13:27:12Z",
+      "side": 1,
+      "message": "\u003e I think I would keep the old pattern: in recordCachedActionMetric(), check whether startup has completed, and either directly call flushCachedMetric() or add an observer, and in flushCachedMetric() assert that startup has completed. If this is called from the native side, asserting that is valid as well.\n\nRight now, native calls flushCachedMetrics() before startup has finished—it calls it during startup of the notification service, which is late enough (everything the notification service needs exists) but would fail the check here.\n\nSome ideas:\n* Have native defer the flush until browser startup has completed. I would need to make sure native\u0027s notion of \"started up\" matches Java\u0027s. Do you know the right method for that? BrowserStartupController doesn\u0027t seem to have a native entry point for it.\n* Add our own boolean flag for \"our native code is ready\".\n* Add our own hook for \"flushAfterStartup()\" separate from flushCachedMetrics() (recordCachedActionMetric() doesn\u0027t actually need the deferral behavior)\n\nI guess I would probably go with #3. What do you think?",
+      "parentUuid": "a49f2b2e_d360bf79",
+      "revId": "27deddf7f2bb211c5c74695c0088d346cb129372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
