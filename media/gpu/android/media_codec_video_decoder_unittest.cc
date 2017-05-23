@@ -6,6 +6,7 @@
 #include "base/android/jni_android.h"
 #include "base/bind.h"
 #include "base/run_loop.h"
+#include "base/test/mock_callback.h"
 #include "base/test/scoped_task_environment.h"
 #include "media/base/android/media_codec_util.h"
 #include "media/base/android/media_jni_registrar.h"
@@ -18,7 +19,8 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
-using ::testing::_;
+using testing::_;
+using testing::InvokeWithoutArgs;
 
 namespace media {
 namespace {
@@ -110,7 +112,7 @@ TEST_F(MediaCodecVideoDecoderTest, H264IsSupported) {
 
 TEST_F(MediaCodecVideoDecoderTest, SmallVp8IsRejected) {
   SKIP_IF_MEDIA_CODEC_IS_BLACKLISTED();
-  ASSERT_TRUE(Initialize(TestVideoConfig::NormalH264()));
+  ASSERT_FALSE(Initialize(TestVideoConfig::Normal()));
 }
 
 TEST_F(MediaCodecVideoDecoderTest, InitializeDoesNotCreateACodec) {
@@ -123,9 +125,41 @@ TEST_F(MediaCodecVideoDecoderTest, InitializeDoesNotCreateACodec) {
 TEST_F(MediaCodecVideoDecoderTest, DecodeTriggersLazyInit) {
   SKIP_IF_MEDIA_CODEC_IS_BLACKLISTED();
   Initialize(TestVideoConfig::NormalH264());
+  // Creating a codec is the last step of lazy init.
   EXPECT_CALL(*codec_allocator_, MockCreateMediaCodecAsync(_, _));
   mcvd_->Decode(nullptr, base::Bind(&DecodeCb));
   base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(MediaCodecVideoDecoderTest, DecodeCbsAreRunOnError) {
+  SKIP_IF_MEDIA_CODEC_IS_BLACKLISTED();
+  Initialize(TestVideoConfig::NormalH264());
+  base::MockCallback<VideoDecoder::DecodeCB> decode_cb;
+  EXPECT_CALL(decode_cb, Run(DecodeStatus::DECODE_ERROR)).Times(2);
+  mcvd_->Decode(nullptr, decode_cb.Get());
+  mcvd_->Decode(nullptr, decode_cb.Get());
+  base::RunLoop().RunUntilIdle();
+  // Failing to create a codec should put MCVD into an error state.
+  codec_allocator_->ProvideNullCodecAsync();
+}
+
+TEST_F(MediaCodecVideoDecoderTest, AfterLazyInitTheCodecIsPolled) {
+  SKIP_IF_MEDIA_CODEC_IS_BLACKLISTED();
+  Initialize(TestVideoConfig::NormalH264());
+  mcvd_->Decode(nullptr, base::Bind(&DecodeCb));
+  base::RunLoop().RunUntilIdle();
+
+  // Run a RunLoop until the first time the codec is polled for an available
+  // input buffer.
+  codec_allocator_->ProvideMockCodecAsync();
+  auto* codec = codec_allocator_->most_recent_codec();
+  base::RunLoop loop;
+  EXPECT_CALL(*codec, DequeueInputBuffer(_, _))
+      .WillOnce(InvokeWithoutArgs([&loop]() {
+        loop.Quit();
+        return MEDIA_CODEC_TRY_AGAIN_LATER;
+      }));
+  loop.Run();
 }
 
 }  // namespace media

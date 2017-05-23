@@ -75,10 +75,9 @@ void FakeCodecAllocator::ProvideMockCodecAsync() {
     return;
 
   std::unique_ptr<MockMediaCodecBridge> codec =
-      base::MakeUnique<MockMediaCodecBridge>();
+      base::MakeUnique<NiceMock<MockMediaCodecBridge>>();
   most_recent_codec_ = codec.get();
   most_recent_codec_destruction_observer_ = codec->CreateDestructionObserver();
-  most_recent_codec_destruction_observer_->DoNotAllowDestruction();
   client_->OnCodecConfigured(std::move(codec));
 }
 
