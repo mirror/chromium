@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c149dd1_cf2f755d",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-05-23T14:02:34Z",
+      "side": 1,
+      "message": "nit: I guess this version would be slightly more correct: \"once cryptohome is available and only if TPM is owned\".",
+      "range": {
+        "startLine": 412,
+        "startChar": 43,
+        "endLine": 413,
+        "endChar": 12
+      },
+      "revId": "7b49bfdfc66dac0829ff4db3a4f92474e8d1184c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48852ac4_f99bbb38",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-05-23T14:02:34Z",
+      "side": 1,
+      "message": "nit: #include \"chromeos/dbus/cryptohome_client.h\"",
+      "range": {
+        "startLine": 416,
+        "startChar": 10,
+        "endLine": 416,
+        "endChar": 37
+      },
+      "revId": "df67fcdf4dbb5256c36943c0fc549e0a4f5d00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4285954a_04971904",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-05-23T14:02:34Z",
+      "side": 1,
+      "message": "nit: Maybe modify this and other log messages so that they all refer to loading system token explicitly? It\u0027ll be unclear otherwise what this cryptohome error in chrome_browser_main_chromeos.cc actually means.",
+      "range": {
+        "startLine": 424,
+        "startChar": 21,
+        "endLine": 424,
+        "endChar": 70
+      },
+      "revId": "df67fcdf4dbb5256c36943c0fc549e0a4f5d00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02b8915_b0260357",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-05-23T14:02:34Z",
+      "side": 1,
+      "message": "nit: #include \"base/logging.h\"",
+      "range": {
+        "startLine": 424,
+        "startChar": 6,
+        "endLine": 424,
+        "endChar": 16
+      },
+      "revId": "df67fcdf4dbb5256c36943c0fc549e0a4f5d00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ec9607_e8163b86",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-05-23T14:02:34Z",
+      "side": 1,
+      "message": "nit: The word \"starting\" doesn\u0027t seem to be perfectly correct here. CertLoader can also use the user slot, and that can even (in theory) happen earlier than when this code gets triggered.\n(BTW, if you fix this, then ideally we\u0027d also update comments for CertLoader::SetSystemNSSDB, CertLoader::SetUserNSSDB, OnGetNSSCertDatabaseForUser in src/chrome/browser/chromeos/login/session/user_session_manager.cc. But this can be done in a separate CL.)",
+      "range": {
+        "startLine": 465,
+        "startChar": 51,
+        "endLine": 465,
+        "endChar": 70
+      },
+      "revId": "df67fcdf4dbb5256c36943c0fc549e0a4f5d00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
