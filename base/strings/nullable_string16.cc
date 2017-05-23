@@ -5,7 +5,6 @@
 #include "base/strings/nullable_string16.h"
 
 #include <ostream>
-#include <utility>
 
 namespace base {
 NullableString16::NullableString16() = default;
