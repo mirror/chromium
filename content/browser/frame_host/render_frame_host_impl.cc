@@ -2727,7 +2727,7 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
 #if defined(OS_ANDROID)
   if (base::FeatureList::IsEnabled(features::kWebNfc)) {
-    GetInterfaceRegistry()->AddInterface<device::nfc::mojom::NFC>(base::Bind(
+    GetInterfaceRegistry()->AddInterface<device::mojom::NFC>(base::Bind(
         &RenderFrameHostImpl::BindNFCRequest, base::Unretained(this)));
   }
 #endif
@@ -3801,7 +3801,7 @@ void RenderFrameHostImpl::BindWakeLockServiceRequest(
 #if defined(OS_ANDROID)
 void RenderFrameHostImpl::BindNFCRequest(
     const service_manager::BindSourceInfo& source_info,
-    device::nfc::mojom::NFCRequest request) {
+    device::mojom::NFCRequest request) {
   if (delegate_)
     delegate_->GetNFC(std::move(request));
 }
