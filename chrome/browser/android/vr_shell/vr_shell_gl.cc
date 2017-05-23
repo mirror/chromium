@@ -1475,9 +1475,6 @@ void VrShellGl::OnVSync() {
   base::TimeDelta time = intervals * vsync_interval_;
   if (!callback_.is_null()) {
     SendVSync(time, base::ResetAndReturn(&callback_));
-  } else {
-    pending_vsync_ = true;
-    pending_time_ = time;
   }
   if (!ShouldDrawWebVr()) {
     DrawFrame(-1);
@@ -1490,18 +1487,13 @@ void VrShellGl::OnRequest(device::mojom::VRVSyncProviderRequest request) {
 }
 
 void VrShellGl::GetVSync(const GetVSyncCallback& callback) {
-  if (!pending_vsync_) {
-    if (!callback_.is_null()) {
-      mojo::ReportBadMessage(
-          "Requested VSync before waiting for response to previous request.");
-      binding_.Close();
-      return;
-    }
-    callback_ = callback;
+  if (!callback_.is_null()) {
+    mojo::ReportBadMessage(
+        "Requested VSync before waiting for response to previous request.");
+    binding_.Close();
     return;
   }
-  pending_vsync_ = false;
-  SendVSync(pending_time_, callback);
+  callback_ = callback;
 }
 
 void VrShellGl::UpdateVSyncInterval(int64_t timebase_nanos,
