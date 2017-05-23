@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a0171b2_14827907",
+        "filename": "content/test/data/web_ui_mojo_native.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-23T20:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e30d417_abb9693b",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea7b053a_64a17d95",
         "filename": "third_party/WebKit/Source/bindings/IDLExtendedAttributes.txt",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b2f3a1_d96842bc",
+        "filename": "third_party/WebKit/Source/bindings/IDLExtendedAttributes.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-23T20:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea7b053a_64a17d95",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2d1071e2_b258aeb4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-23T20:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac35a18a_c5ee4fc8",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a66e9c5_0240c775",
         "filename": "third_party/WebKit/Source/bindings/templates/interface.h.tmpl",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66726bc_f2b2e3fa",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-23T20:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a66e9c5_0240c775",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "800874ae_86eabb79",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-23T20:22:34Z",
+      "side": 1,
+      "message": "Actually, I was afraid of that, but it turns out to be pretty trivial. I\u0027ve merged them into a shared optional_features collection for the template.",
+      "parentUuid": "690281b2_6d0d1abc",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbf28a90_8b52e34a",
         "filename": "third_party/WebKit/Source/core/context_features/ContextFeatureSettings.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1491e5e3_abdeb8ab",
+        "filename": "third_party/WebKit/Source/core/context_features/ContextFeatureSettings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-23T20:22:34Z",
+      "side": 1,
+      "message": "DCHECK added, and content changed to ensure that we never call this for an isolated world. That seems OK for now, but I wonder, is there a reasonable approach to doing this per-V8-Context in the future? Something tells me we\u0027ll find good use for Mojo in isolated worlds someday sooner rather than later.",
+      "parentUuid": "cbf28a90_8b52e34a",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +280,30 @@
       "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02545a8_a71685a0",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-23T20:22:34Z",
+      "side": 1,
+      "message": "Done (re: documentation)",
+      "parentUuid": "09312e3e_12557b55",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
