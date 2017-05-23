@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a8e8dd0_9ae209c1",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-23T18:21:44Z",
+      "side": 1,
+      "message": "return Pattern.compile(urlPattern, Pattern.CASE_INSENSITIVE)\n                                          .matcher(url)\n                                          .matches();",
+      "range": {
+        "startLine": 655,
+        "startChar": 0,
+        "endLine": 655,
+        "endChar": 87
+      },
+      "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b92522_093f8799",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-23T18:21:44Z",
+      "side": 1,
+      "message": "return false;",
+      "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b1c68b_11f6b9b6",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-23T18:21:44Z",
+      "side": 1,
+      "message": "return id.equals(url);",
+      "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca7daf2_e43da91e",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-23T18:21:44Z",
+      "side": 1,
+      "message": "return true;",
+      "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
