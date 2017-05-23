@@ -86,8 +86,7 @@ ChromeOmniboxNavigationObserver::ChromeOmniboxNavigationObserver(
             destination: WEBSITE
           }
           policy {
-            cookies_allowed: true
-            cookies_store: "user"
+            cookies_allowed: false
             setting: "This feature cannot be disabled in settings."
             policy_exception_justification:
               "By disabling DefaultSearchProviderEnabled, one can disable "
@@ -98,7 +97,9 @@ ChromeOmniboxNavigationObserver::ChromeOmniboxNavigationObserver(
     fetcher_ = net::URLFetcher::Create(alternate_nav_match_.destination_url,
                                        net::URLFetcher::HEAD, this,
                                        traffic_annotation);
-    fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES);
+    fetcher_->SetLoadFlags(
+        net::LOAD_DO_NOT_SAVE_COOKIES | net::LOAD_DO_NOT_SEND_COOKIES |
+        net::LOAD_DISABLE_CACHE | net::LOAD_DO_NOT_SEND_AUTH_DATA);
     fetcher_->SetStopOnRedirect(true);
   }
   // We need to start by listening to AllSources, since we don't know which tab
