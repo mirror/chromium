@@ -487,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "6a090009_6bb4af1c",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-23T23:31:35Z",
+      "side": 1,
+      "message": "I added a test for this too, will work on RAII stuff next tomorrow.",
+      "parentUuid": "b8a7382a_9d6f4edc",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f56b9a8_cf9c3e3b",
         "filename": "cc/test/fake_content_layer_client.cc",
         "patchSetId": 9
