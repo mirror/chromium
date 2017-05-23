@@ -22,6 +22,74 @@
       "revId": "00345e07f1734056815c4aec1c2bc690bb5842a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e824f5a_f4098c85",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-23T00:29:44Z",
+      "side": 1,
+      "message": "nit: is this needed now?",
+      "revId": "00345e07f1734056815c4aec1c2bc690bb5842a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd0f512_2fc5a7c3",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-23T00:29:44Z",
+      "side": 1,
+      "message": "nit: is this needed?",
+      "revId": "00345e07f1734056815c4aec1c2bc690bb5842a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101938a9_629287b3",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-23T00:29:44Z",
+      "side": 1,
+      "message": "nit: we try to be consistent with single-line if\u0027s (at least within the same file). The if on line 62 doesn\u0027t have {} so don\u0027t use them here (or change line 62).",
+      "revId": "00345e07f1734056815c4aec1c2bc690bb5842a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365c3a97_f89739ea",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-05-23T00:29:44Z",
+      "side": 1,
+      "message": "nit: you should be able to access browser() from inside TestOpeningSiteDetails()\n\nnit2 (optional): Sometimes it\u0027s more readable to EXPECT from here rather than inside the test function. So you might have:\n\nEXPECT_EQ(GURL(chrome::kChromeUIContentSettingsURL), OpenSiteSettingsForUrl(url));",
+      "revId": "00345e07f1734056815c4aec1c2bc690bb5842a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
