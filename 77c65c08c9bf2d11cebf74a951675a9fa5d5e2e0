@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a0aa597_4025e2bf",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-05-23T08:12:26Z",
+      "side": 1,
+      "message": "I\u0027d be more comfortable if this definition was set in one place only, and not in separate places.",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "77c65c08c9bf2d11cebf74a951675a9fa5d5e2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85d691a_09bcc207",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-05-23T08:12:26Z",
+      "side": 1,
+      "message": "because",
+      "range": {
+        "startLine": 41,
+        "startChar": 72,
+        "endLine": 41,
+        "endChar": 79
+      },
+      "revId": "77c65c08c9bf2d11cebf74a951675a9fa5d5e2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00fc453_748a5856",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-05-23T08:12:26Z",
+      "side": 1,
+      "message": "The logic below is hard to follow.\n\nIt seems that a transition from Desktop to back to Mobile would leave request desktop site enabled. Why are not all the conditions changing both states? Or from desktop back to a chrome url, leaving Mobile enabled.\n\nThis is outside the scope of this CL that is just there to disable the feature.",
+      "range": {
+        "startLine": 275,
+        "startChar": 54,
+        "endLine": 275,
+        "endChar": 0
+      },
+      "revId": "77c65c08c9bf2d11cebf74a951675a9fa5d5e2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f663d4d9_2137f875",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-05-23T08:12:26Z",
+      "side": 1,
+      "message": "The Macro is called HIDE_REQUEST_MOBILE_SITE_CELL but the IDC_REQUEST_DESKTOP_SITE is hidden. Is the macro set around the wrong entry?",
+      "range": {
+        "startLine": 285,
+        "startChar": 7,
+        "endLine": 285,
+        "endChar": 36
+      },
+      "revId": "77c65c08c9bf2d11cebf74a951675a9fa5d5e2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
