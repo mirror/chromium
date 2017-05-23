@@ -478,7 +478,7 @@ bool ArcSupportHost::Initialize() {
   loadtime_data->SetBoolean("isOwnerProfile",
                             chromeos::ProfileHelper::IsOwnerProfile(profile_));
 
-  const std::string& country_code = base::CountryCodeForCurrentTimezone();
+  const std::string& country_code = base::i18n::CountryCodeForCurrentTimezone();
   loadtime_data->SetString("countryCode", country_code);
 
   const std::string& app_locale = g_browser_process->GetApplicationLocale();
