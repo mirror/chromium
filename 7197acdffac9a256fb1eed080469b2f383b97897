@@ -16,6 +16,24 @@
       "revId": "7197acdffac9a256fb1eed080469b2f383b97897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc64f109_d2a7f782",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 3826,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-23T23:51:24Z",
+      "side": 0,
+      "message": "We haven\u0027t removed it.  It is done in Detach.\n\nNew Attach method is equivalent to calling old SetParent with valid ptr.\n\nNew Detach method is equivalent to calling old RemoveChild, which then goes on to call SetParent(nullptr).",
+      "parentUuid": "95d450f7_e97cab5c",
+      "revId": "7197acdffac9a256fb1eed080469b2f383b97897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
