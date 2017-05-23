@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "228b9f6d_04ee517c",
+        "filename": "ash/test/shelf_view_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-23T23:43:17Z",
+      "side": 1,
+      "message": "This entire api is for the shelf view, so explicitly adding \u0027ShelfView\u0027 seems overly verbose. For example, shelf_view_tooltip_manager() would be overkill too.",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b9407d_84a5774e",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-23T23:43:17Z",
+      "side": 1,
+      "message": "Update description?",
+      "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103b5b04_b899eab9",
+        "filename": "chrome/browser/ui/views/constrained_web_dialog_delegate_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-23T23:43:17Z",
+      "side": 1,
+      "message": "Why do you need this override?",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 28
+      },
+      "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a638f3b7_ee1d449a",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-23T23:43:17Z",
+      "side": 1,
+      "message": "How come you don\u0027t use the entire preferred size like the old code did?",
+      "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

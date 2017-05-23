@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0379b37e_d2882fa7",
+        "filename": "ui/views/controls/scroll_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-23T23:43:17Z",
+      "side": 0,
+      "message": "I\u0027m surprised you don\u0027t need to call PreferredSizeChanged() from these tests.",
+      "revId": "ef4b834e59e5d1bcf0e945445ada37f2e5e90b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0920a518_b4488060",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-23T23:43:17Z",
+      "side": 0,
+      "message": "Same comment here about the this code being slightly different from View::set_preferred_size().",
+      "revId": "ef4b834e59e5d1bcf0e945445ada37f2e5e90b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc12546_4fe5368a",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-23T23:43:17Z",
+      "side": 0,
+      "message": "This is slightly different from View::GetPreferredSize(). Is any of the code using SetView::SetPreferredSize() setting it to empty?",
+      "revId": "ef4b834e59e5d1bcf0e945445ada37f2e5e90b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
