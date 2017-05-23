@@ -25,6 +25,57 @@
     },
     {
       "key": {
+        "uuid": "00f8e979_147cedf7",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-23T20:13:38Z",
+      "side": 1,
+      "message": "you might want to split these up for clarity, since one has lots of caveats / needs to be fixed, while the other one is WAI.  in the WaitingForCodec case, we need to clear the bundle pointer and transition to the kSurfaceDestroyed state (along with most of the comment above about failed playback, since this is the \u0027lots of caveats\u0027 case).",
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08332c05_3cc70b36",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-23T20:13:38Z",
+      "side": 1,
+      "message": "can this create multiple surface bundles for the same SurfaceTexture?  at least, i don\u0027t see where |surface_texture_| is ever replaced after init.\n\nit might be okay if we can guarantee that the previous surface bundle has already been destroyed.  however, if we ever post that surface bundle with codec release, and get a new codec, then i think that it\u0027s impossible to guarantee that.  it might be sitting on a codec allocator thread.",
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3a3624_494cc4c5",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-23T20:13:38Z",
+      "side": 1,
+      "message": "maybe if(!TransitionTo...) DCHECK(!media_codec_), to be sure that we released it.  or maybe the surface bundle, not sure which.",
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3024e3d_a00a5b76",
         "filename": "media/gpu/android_video_decode_accelerator_unittest.cc",
         "patchSetId": 3
