@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "3e30d417_abb9693b",
+        "filename": "content/test/data/web_ui_mojo_native.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-23T18:35:38Z",
+      "side": 1,
+      "message": "super-nit: |\u0027Mojo\u0027 in self| (etc) would ensure that the property is absent (not just returning the value undefined)",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7b053a_64a17d95",
+        "filename": "third_party/WebKit/Source/bindings/IDLExtendedAttributes.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-23T18:35:38Z",
+      "side": 1,
+      "message": "Needs corresponding IDLExtendedAttributes.md change",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac35a18a_c5ee4fc8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-23T18:35:38Z",
+      "side": 1,
+      "message": "Might be premature optimization, but we don\u0027t really need to allocate the supplement if it doesn\u0027t exist, given in practice it will not be populated 99% of the time (all non-Mojo-enabled contexts).",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a66e9c5_0240c775",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-23T18:35:38Z",
+      "side": 1,
+      "message": "nit: this seems most similar to the origin trials code above; if the code can\u0027t be shared, could it at least be closer together?",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690281b2_6d0d1abc",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-23T18:35:38Z",
+      "side": 1,
+      "message": "I gather it was non-trivial to reuse the similar code for origin trials, etc.? Seems a shame to have to keep these all in sync.",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf28a90_8b52e34a",
+        "filename": "third_party/WebKit/Source/core/context_features/ContextFeatureSettings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-23T18:35:38Z",
+      "side": 1,
+      "message": "The callback to content is per-V8-context, but this is per-ExecutionContext. The same ExecutionContexts are shared between worlds, so this seems like it would make it easy for confusion to occur, with content trying to turn on an API only for an isolated world, and instead exposing it to the main world. (AFAIK origin trials simply never exposes to isolated worlds at present.)\n\nIf you keep this per-ExecutionContext (and applying to the main world), WebContextFeatures should be modified to DCHECK if a context for any other world is provided.",
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d311c7f2_308acb62",
         "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.idl",
         "patchSetId": 3
@@ -37,6 +139,30 @@
       "side": 1,
       "message": "We certainly don\u0027t *need* to. If we removed the RuntimeEnabled flag, we\u0027d instead want to:\n\n- Add a feature flag to content which enabled the MojoJS context-enabled feature for all contexts\n- Make sure content always turns on the context-enabled feature in layout tests, except when kStableReleaseMode is set\n\nIf you would prefer this approach, I\u0027m happy to remove the RuntimeEnabled attributes from these interfaces.",
       "parentUuid": "d311c7f2_308acb62",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "edba525e530efdc49d4215e7a9bf8d7b6bdf9e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09312e3e_12557b55",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-23T18:35:38Z",
+      "side": 1,
+      "message": "I\u0027d like it spelled out how this interacts with RuntimeEnabled in the .md file, at least.",
+      "parentUuid": "3d70457f_9e3deae0",
       "range": {
         "startLine": 9,
         "startChar": 4,
