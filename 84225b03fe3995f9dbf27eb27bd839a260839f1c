@@ -52,6 +52,24 @@
       "revId": "84225b03fe3995f9dbf27eb27bd839a260839f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70101df2_fe8b768b",
+        "filename": "chrome/browser/ui/views/payments/validating_textfield.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-23T16:10:51Z",
+      "side": 1,
+      "message": "I\u0027m fine landing as-is.",
+      "parentUuid": "bcc506ce_860c4d0c",
+      "revId": "84225b03fe3995f9dbf27eb27bd839a260839f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
