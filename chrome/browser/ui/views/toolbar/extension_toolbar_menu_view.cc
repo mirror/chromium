@@ -56,7 +56,7 @@ ExtensionToolbarMenuView::ExtensionToolbarMenuView(
 ExtensionToolbarMenuView::~ExtensionToolbarMenuView() {
 }
 
-gfx::Size ExtensionToolbarMenuView::GetPreferredSize() const {
+gfx::Size ExtensionToolbarMenuView::CalculatePreferredSize() const {
   gfx::Size s = views::ScrollView::GetPreferredSize();
   // views::ScrollView::GetPreferredSize() includes the contents' size, but
   // not the scrollbar width. Add it in if necessary.

@@ -384,8 +384,8 @@ void ExtensionInstallDialogView::InitView() {
       0,
       std::min(kScrollViewMaxHeight, scrollable->GetPreferredSize().height()));
 
-  dialog_size_ = gfx::Size(content_width + 2 * button_margin,
-                           container_->GetPreferredSize().height());
+  set_preferred_size(gfx::Size(content_width + 2 * button_margin,
+                               container_->GetPreferredSize().height()));
 
   std::string event_name = ExperienceSamplingEvent::kExtensionInstallDialog;
   event_name.append(
@@ -587,10 +587,6 @@ void ExtensionInstallDialogView::Layout() {
   DialogDelegateView::Layout();
 }
 
-gfx::Size ExtensionInstallDialogView::GetPreferredSize() const {
-  return dialog_size_;
-}
-
 views::View* ExtensionInstallDialogView::CreateExtraView() {
   if (!prompt_->has_webstore_data())
     return nullptr;
@@ -663,7 +659,7 @@ void ExpandableContainerView::DetailsView::AddDetail(
   layout_->AddView(detail_label);
 }
 
-gfx::Size ExpandableContainerView::DetailsView::GetPreferredSize() const {
+gfx::Size ExpandableContainerView::DetailsView::CalculatePreferredSize() const {
   gfx::Size size = views::View::GetPreferredSize();
   return gfx::Size(size.width(), size.height() * state_);
 }

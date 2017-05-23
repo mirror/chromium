@@ -80,14 +80,7 @@ class CustomView : public View {
  public:
   CustomView() {}
 
-  void SetPreferredSize(const gfx::Size& size) {
-    preferred_size_ = size;
-    PreferredSizeChanged();
-  }
-
   const gfx::Point last_location() const { return last_location_; }
-
-  gfx::Size GetPreferredSize() const override { return preferred_size_; }
 
   void Layout() override {
     gfx::Size pref = GetPreferredSize();
@@ -106,7 +99,6 @@ class CustomView : public View {
   }
 
  private:
-  gfx::Size preferred_size_;
   gfx::Point last_location_;
 
   DISALLOW_COPY_AND_ASSIGN(CustomView);
@@ -440,7 +432,7 @@ TEST_F(ScrollViewTest, Header) {
   EXPECT_EQ("0,0 0x0", contents->bounds().ToString());
 
   // Get the header a height of 20.
-  header->SetPreferredSize(gfx::Size(10, 20));
+  header->set_preferred_size(gfx::Size(10, 20));
   EXPECT_EQ("0,0 100x20", header->parent()->bounds().ToString());
   EXPECT_EQ("0,20 100x80", contents->parent()->bounds().ToString());
   if (contents->layer()) {
@@ -463,7 +455,7 @@ TEST_F(ScrollViewTest, ScrollBarsWithHeader) {
   scroll_view_.SetHeader(header);
   View* contents = InstallContents();
 
-  header->SetPreferredSize(gfx::Size(10, 20));
+  header->set_preferred_size(gfx::Size(10, 20));
 
   // Size the contents such that vertical scrollbar is needed.
   contents->SetBounds(0, 0, 50, 400);
@@ -533,11 +525,11 @@ TEST_F(ScrollViewTest, HeaderScrollsWithContent) {
   ScrollViewTestApi test_api(&scroll_view_);
   CustomView* contents = new CustomView;
   scroll_view_.SetContents(contents);
-  contents->SetPreferredSize(gfx::Size(500, 500));
+  contents->set_preferred_size(gfx::Size(500, 500));
 
   CustomView* header = new CustomView;
   scroll_view_.SetHeader(header);
-  header->SetPreferredSize(gfx::Size(500, 20));
+  header->set_preferred_size(gfx::Size(500, 20));
 
   scroll_view_.SetBoundsRect(gfx::Rect(0, 0, 100, 100));
   EXPECT_EQ("0,0", test_api.IntegralViewOffset().ToString());
@@ -561,7 +553,7 @@ TEST_F(ScrollViewTest, ScrollRectToVisible) {
   ScrollViewTestApi test_api(&scroll_view_);
   CustomView* contents = new CustomView;
   scroll_view_.SetContents(contents);
-  contents->SetPreferredSize(gfx::Size(500, 1000));
+  contents->set_preferred_size(gfx::Size(500, 1000));
 
   scroll_view_.SetBoundsRect(gfx::Rect(0, 0, 100, 100));
   scroll_view_.Layout();
@@ -886,7 +878,7 @@ TEST_F(ScrollViewTest, ContentScrollNotResetOnLayout) {
   ScrollViewTestApi test_api(&scroll_view_);
 
   CustomView* contents = new CustomView;
-  contents->SetPreferredSize(gfx::Size(300, 300));
+  contents->set_preferred_size(gfx::Size(300, 300));
   scroll_view_.SetContents(contents);
   scroll_view_.ClipHeightTo(0, 150);
   scroll_view_.SizeToPreferredSize();
@@ -902,14 +894,14 @@ TEST_F(ScrollViewTest, ContentScrollNotResetOnLayout) {
   EXPECT_EQ(25, test_api.CurrentOffset().y());
   // Change contents of |contents|, call Layout; still no change to scroll
   // position.
-  contents->SetPreferredSize(gfx::Size(300, 500));
+  contents->set_preferred_size(gfx::Size(300, 500));
   contents->InvalidateLayout();
   scroll_view_.Layout();
   EXPECT_EQ(25, test_api.CurrentOffset().y());
 
   // Change |contents| to be shorter than the ScrollView's clipped height.
   // This /will/ change the scroll location due to ConstrainScrollToBounds.
-  contents->SetPreferredSize(gfx::Size(300, 50));
+  contents->set_preferred_size(gfx::Size(300, 50));
   scroll_view_.Layout();
   EXPECT_EQ(0, test_api.CurrentOffset().y());
 }
@@ -951,7 +943,8 @@ TEST_F(WidgetScrollViewTest, ScrollTrackScrolling) {
 TEST_F(WidgetScrollViewTest, EventLocation) {
   // Set up with both scrollers.
   CustomView* contents = new CustomView;
-  contents->SetPreferredSize(gfx::Size(kDefaultHeight * 5, kDefaultHeight * 5));
+  contents->set_preferred_size(
+      gfx::Size(kDefaultHeight * 5, kDefaultHeight * 5));
   AddScrollViewWithContents(contents);
 
   const gfx::Point location_in_widget(10, 10);

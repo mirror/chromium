@@ -93,7 +93,7 @@ class ShelfViewTestAPI {
   OverflowButton* overflow_button() const;
 
   // Returns the preferred size of |shelf_view_|.
-  gfx::Size GetPreferredSize();
+  gfx::Size GetShelfViewPreferredSize();
 
   // Returns minimum distance before drag starts.
   int GetMinimumDragDistance() const;

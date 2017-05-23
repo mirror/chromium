@@ -69,7 +69,7 @@ class MatchCountLabel : public views::Label {
   // views::Label overrides:
   bool CanProcessEventsWithinSubtree() const override { return true; }
 
-  gfx::Size GetPreferredSize() const override {
+  gfx::Size CalculatePreferredSize() const override {
     // We need to return at least 1dip so that box layout adds padding on either
     // side (otherwise there will be a jump when our size changes between empty
     // and non-empty).
@@ -256,7 +256,7 @@ void FindBarView::Layout() {
       find_previous_button_->height());
 }
 
-gfx::Size FindBarView::GetPreferredSize() const {
+gfx::Size FindBarView::CalculatePreferredSize() const {
   gfx::Size size = views::View::GetPreferredSize();
   // Ignore the preferred size for the match count label, and just let it take
   // up part of the space for the input textfield. This prevents the overall

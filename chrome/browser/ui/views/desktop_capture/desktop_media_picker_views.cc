@@ -277,7 +277,7 @@ void DesktopMediaPickerDialogView::DetachParent() {
   parent_ = nullptr;
 }
 
-gfx::Size DesktopMediaPickerDialogView::GetPreferredSize() const {
+gfx::Size DesktopMediaPickerDialogView::CalculatePreferredSize() const {
   static const size_t kDialogViewWidth = 600;
   return gfx::Size(kDialogViewWidth, GetHeightForWidth(kDialogViewWidth));
 }

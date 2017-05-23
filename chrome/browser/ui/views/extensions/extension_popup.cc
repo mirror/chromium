@@ -144,7 +144,7 @@ void ExtensionPopup::OnExtensionSizeChanged(ExtensionViewViews* view) {
   SizeToContents();
 }
 
-gfx::Size ExtensionPopup::GetPreferredSize() const {
+gfx::Size ExtensionPopup::CalculatePreferredSize() const {
   // Constrain the size to popup min/max.
   gfx::Size sz = views::View::GetPreferredSize();
   sz.set_width(std::max(kMinWidth, std::min(kMaxWidth, sz.width())));

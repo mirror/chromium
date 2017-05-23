@@ -40,7 +40,7 @@ class PreferredSizeLabel : public Label {
   ~PreferredSizeLabel() override {}
 
   // Label:
-  gfx::Size GetPreferredSize() const override {
+  gfx::Size CalculatePreferredSize() const override {
     return gfx::Size(50, Label::GetPreferredSize().height());
   }
 
