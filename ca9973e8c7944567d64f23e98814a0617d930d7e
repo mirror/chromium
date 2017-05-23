@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "0fe30bb6_586f0c18",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T20:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00f8e979_147cedf7",
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08332c05_3cc70b36",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 3
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "31f3b344_b96ccf4f",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T20:45:15Z",
+      "side": 1,
+      "message": "Yes, MCVD will need a permanent surface_texture so it can always fall back from overlays synchronously.  (ST creation is necessarily async in MCVD).\n\n\nI feel like we already have this same reusing ST problem in AVDA right? But yes, I\u0027d like to fix it at some point. It\u0027s not really possible right now.",
+      "parentUuid": "08332c05_3cc70b36",
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b3a3624_494cc4c5",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 3
@@ -70,6 +106,24 @@
       "writtenOn": "2017-05-23T20:13:38Z",
       "side": 1,
       "message": "maybe if(!TransitionTo...) DCHECK(!media_codec_), to be sure that we released it.  or maybe the surface bundle, not sure which.",
+      "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bf7516_9c22f190",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-23T20:45:15Z",
+      "side": 1,
+      "message": "DCHECKing the result of calling one of our member functions is weird to me. Feels like code duplication/documentation duplication.",
+      "parentUuid": "0b3a3624_494cc4c5",
       "revId": "ca9973e8c7944567d64f23e98814a0617d930d7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
