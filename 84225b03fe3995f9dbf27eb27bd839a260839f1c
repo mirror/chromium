@@ -16,6 +16,24 @@
       "revId": "84225b03fe3995f9dbf27eb27bd839a260839f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47882a89_0fd36faa",
+        "filename": "chrome/browser/ui/views/payments/validating_textfield.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-23T15:46:30Z",
+      "side": 1,
+      "message": "I have not been able to find auto-formatting elsewhere in desktop Chrome. Android has built-in auto-formatting API, so I did not have to do it manually in there.\n\nHow can I test accessibility?",
+      "parentUuid": "4f88db6a_f78e7cbd",
+      "revId": "84225b03fe3995f9dbf27eb27bd839a260839f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
