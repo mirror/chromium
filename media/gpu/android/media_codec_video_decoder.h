@@ -5,8 +5,10 @@
 #ifndef MEDIA_GPU_ANDROID_MEDIA_CODEC_VIDEO_DECODER_H_
 #define MEDIA_GPU_ANDROID_MEDIA_CODEC_VIDEO_DECODER_H_
 
+#include "base/optional.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_checker.h"
+#include "base/timer/elapsed_timer.h"
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
 #include "media/base/android_overlay_mojo_factory.h"
 #include "media/base/video_decoder.h"
@@ -15,6 +17,19 @@
 #include "media/gpu/media_gpu_export.h"
 
 namespace media {
+
+struct PendingDecode {
+  PendingDecode(scoped_refptr<DecoderBuffer> buffer,
+                VideoDecoder::DecodeCB decode_cb);
+  PendingDecode(PendingDecode&& other);
+  ~PendingDecode();
+
+  scoped_refptr<DecoderBuffer> buffer;
+  VideoDecoder::DecodeCB decode_cb;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PendingDecode);
+};
 
 // TODO(watk): Simplify the interface to AVDACodecAllocator.
 struct CodecAllocatorAdapter
@@ -84,8 +99,17 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   void InitializeSurfaceChooser();
   void OnSurfaceChosen(std::unique_ptr<AndroidOverlay> overlay);
   void OnSurfaceDestroyed(AndroidOverlay* overlay);
-  void TransitionToSurface(scoped_refptr<AVDASurfaceBundle> surface_bundle);
+
+  // Sets |codecs_|'s output surface to |incoming_surface_|. Releases the codec
+  // and both the current and incoming bundles on failure.
+  void TransitionToIncomingSurface();
   void StartCodecCreation();
+  void OnCodecCreated(std::unique_ptr<MediaCodecBridge> media_codec);
+
+  void PumpCodec(bool force_start_timer);
+  bool QueueInput();
+  bool DequeueOutput();
+  void ManageTimer(bool start_timer);
 
   // Sets |state_| and runs pending callbacks.
   void HandleError();
@@ -98,14 +122,23 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
 
   State state_;
   bool lazy_init_pending_;
+  std::deque<PendingDecode> pending_decodes_;
+
+  // The ongoing drain operation, if any.
+  base::Optional<DrainType> drain_type_;
   VideoDecoderConfig decoder_config_;
+
+  // The routing token for a mojo AndroidOverlay.
+  base::Optional<base::UnguessableToken> overlay_routing_token_;
+
+  // The surface bundle that we're transitioning to, if any.
+  base::Optional<scoped_refptr<AVDASurfaceBundle>> incoming_surface_;
 
   // |codec_config_| must not be modified while |state_| is kWaitingForCodec.
   scoped_refptr<CodecConfig> codec_config_;
-  std::unique_ptr<MediaCodecBridge> media_codec_;
-
-  // The ongoing drain operation, if any.
-  base::Optional<DrainType> drain_kind_;
+  std::unique_ptr<MediaCodecBridge> codec_;
+  base::Optional<base::ElapsedTimer> idle_timer_;
+  base::RepeatingTimer repeating_timer_;
 
   scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner_;
   base::Callback<gpu::GpuCommandBufferStub*()> get_command_buffer_stub_cb_;
@@ -117,14 +150,8 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   scoped_refptr<SurfaceTextureGLOwner> surface_texture_;
   std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser_;
 
-  // The surface bundle that we're transitioning to, if any.
-  base::Optional<scoped_refptr<AVDASurfaceBundle>> incoming_surface_;
-
   // An optional factory callback for creating mojo AndroidOverlays.
   AndroidOverlayMojoFactoryCB overlay_factory_cb_;
-
-  // The routing token for a mojo AndroidOverlay.
-  base::Optional<base::UnguessableToken> overlay_routing_token_;
 
   base::WeakPtrFactory<MediaCodecVideoDecoder> weak_factory_;
 
