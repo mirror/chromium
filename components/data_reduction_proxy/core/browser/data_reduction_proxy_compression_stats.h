@@ -34,7 +34,6 @@ class Value;
 namespace data_reduction_proxy {
 class DataReductionProxyService;
 class DataUsageBucket;
-class DataUseGroup;
 class PerSiteDataUsage;
 
 // Data reduction proxy delayed pref service reduces the number calls to pref
@@ -61,18 +60,14 @@ class DataReductionProxyCompressionStats {
                                      const base::TimeDelta& delay);
   ~DataReductionProxyCompressionStats();
 
-  // Records detailed data usage broken down by connection type and domain. Also
-  // records daily data savings statistics to prefs and reports data savings
-  // UMA. |compressed_size| and |original_size| are measured in bytes.
-  // TODO(rajendrant): This can be changed to RecordRequestMimeType and
-  // |data_use_group| param removed. It records daily data savings statistics to
-  // prefs and reports data savings UMA.
-  void UpdateContentLengths(int64_t compressed_size,
-                            int64_t original_size,
-                            bool data_reduction_proxy_enabled,
-                            DataReductionProxyRequestType request_type,
-                            const scoped_refptr<DataUseGroup>& data_use_group,
-                            const std::string& mime_type);
+  // Records detailed data usage broken down by connection type. Also records
+  // daily data savings statistics to prefs and reports data savings UMA.
+  // |compressed_size| and |original_size| are measured in bytes.
+  void RecordRequestMimeType(int64_t compressed_size,
+                             int64_t original_size,
+                             bool data_reduction_proxy_enabled,
+                             DataReductionProxyRequestType request_type,
+                             const std::string& mime_type);
 
   // Record data usage and original size of request broken down by host.
   // |original_request_size| and |data_used| are in bytes. |time| is the time at
@@ -240,14 +235,13 @@ class DataReductionProxyCompressionStats {
   // Example: "http://www.finance.google.com" -> "www.finance.google.com"
   static std::string NormalizeHostname(const std::string& host);
 
-  // Records detailed data usage broken down by |host|. Also records daily data
-  // savings statistics to prefs and reports data savings UMA. |data_used| and
-  // |original_size| are measured in bytes.
+  // Records detailed data usage broken down by |mime_type|. Also records daily
+  // data savings statistics to prefs and reports data savings UMA. |data_used|
+  // and |original_size| are measured in bytes.
   void RecordData(int64_t data_used,
                   int64_t original_size,
                   bool data_saver_enabled,
                   DataReductionProxyRequestType request_type,
-                  const std::string& data_use_host,
                   const std::string& mime_type);
 
   DataReductionProxyService* service_;
