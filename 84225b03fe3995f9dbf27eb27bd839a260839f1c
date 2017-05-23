@@ -34,6 +34,24 @@
       "revId": "84225b03fe3995f9dbf27eb27bd839a260839f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc506ce_860c4d0c",
+        "filename": "chrome/browser/ui/views/payments/validating_textfield.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-23T15:52:43Z",
+      "side": 1,
+      "message": "There\u0027s a few solutions on Windows, Voice Over on Mac, and ChromeVox on ChromeOS. I\u0027m due for a pass today, I\u0027ll patch in your change and try it out.\n\nI think the ideal solution would be to override the text field\u0027s painting and do the formatting there (this way it\u0027s only a display thing) but again, not sure what the canonical way is.\n\nDo you want to land this as-is and we figure out a11y later? I\u0027d be fine with that since most of the logic would probably be reused anyways.",
+      "parentUuid": "47882a89_0fd36faa",
+      "revId": "84225b03fe3995f9dbf27eb27bd839a260839f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
