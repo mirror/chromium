@@ -1602,6 +1602,9 @@ class CORE_EXPORT UseCounter {
     kShapeDetection_BarcodeDetectorConstructor = 1991,
     kShapeDetection_FaceDetectorConstructor = 1992,
     kShapeDetection_TextDetectorConstructor = 1993,
+    kRequestFullscreenForDialogElement = 1994,
+    kRequestFullscreenForDialogElementInTopLayer = 1995,
+    kShowModalForElementInFullscreenStack = 1996,
 
     // Add new features immediately above this line. Don't change assigned
     // numbers of any item, and don't reuse removed slots.

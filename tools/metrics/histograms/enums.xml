@@ -15008,6 +15008,9 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1991" label="ShapeDetection_BarcodeDetectorConstructor"/>
   <int value="1992" label="ShapeDetection_FaceDetectorConstructor"/>
   <int value="1993" label="ShapeDetection_TextDetectorConstructor"/>
+  <int value="1994" label="RequestFullscreenForDialogElement"/>
+  <int value="1995" label="RequestFullscreenForDialogElementInTopLayer"/>
+  <int value="1996" label="ShowModalForElementInFullscreenStack"/>
 </enum>
 
 <enum name="FeedbackSource" type="int">
