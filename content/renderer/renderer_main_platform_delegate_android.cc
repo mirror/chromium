@@ -7,11 +7,15 @@
 #include <signal.h>
 
 #include "base/android/build_info.h"
+#include "base/android/timezone_utils.h"
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/string16.h"
 #include "sandbox/sandbox_features.h"
+#include "third_party/icu/source/common/unicode/unistr.h"
+#include "third_party/icu/source/i18n/unicode/timezone.h"
 
 #if BUILDFLAG(USE_SECCOMP_BPF)
 #include "content/common/sandbox_linux/android/sandbox_bpf_base_policy_android.h"
@@ -82,6 +86,7 @@ RendererMainPlatformDelegate::~RendererMainPlatformDelegate() {
 }
 
 void RendererMainPlatformDelegate::PlatformInitialize() {
+  icu::TimeZone::adoptDefault(base::DetectHostTimeZone());
 }
 
 void RendererMainPlatformDelegate::PlatformUninitialize() {

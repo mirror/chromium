@@ -9,10 +9,16 @@
 
 #include <map>
 
+#ifdef OS_ANDROID
+#include "base/android/timezone_utils.h"
+#endif
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#ifdef OS_ANDROID
+#include "third_party/icu/source/common/unicode/unistr.h"
+#endif
 #include "third_party/icu/source/i18n/unicode/timezone.h"
 
 namespace base {
@@ -614,5 +620,13 @@ std::string CountryCodeForCurrentTimezone() {
   return TimezoneMap::GetInstance()->CountryCodeForTimezone(
       id.toUTF8String(olson_code));
 }
+
+#ifdef OS_ANDROID
+icu::TimeZone* DetectHostTimeZone() {
+  base::string16 timezone_id = base::android::GetDefaultTimeZoneId();
+  return icu::TimeZone::createTimeZone(
+      icu::UnicodeString(FALSE, timezone_id.data(), timezone_id.length()));
+}
+#endif
 
 }  // namespace base

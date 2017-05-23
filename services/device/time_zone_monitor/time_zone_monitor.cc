@@ -4,6 +4,9 @@
 
 #include "services/device/time_zone_monitor/time_zone_monitor.h"
 
+#ifdef OS_ANDROID
+#include "base/android/timezone_utils.h"
+#endif
 #include "base/logging.h"
 #include "build/build_config.h"
 #include "third_party/icu/source/common/unicode/unistr.h"
@@ -30,7 +33,11 @@ void TimeZoneMonitor::NotifyClients() {
   // need to redetect it with detectHostTimeZone().
   std::unique_ptr<icu::TimeZone> new_zone(icu::TimeZone::createDefault());
 #else
+#if defined(OS_ANDROID)
+  icu::TimeZone* new_zone = base::DetectHostTimeZone();
+#else
   icu::TimeZone* new_zone = icu::TimeZone::detectHostTimeZone();
+#endif
 #if defined(OS_LINUX)
   // We get here multiple times on Linux per a single tz change, but
   // want to update the ICU default zone and notify renderer only once.
