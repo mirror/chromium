@@ -16,6 +16,24 @@
       "revId": "490eee4b140f19216ec28138c7fe89e50aa8bd3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c756be9_26bc8bf3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/idlharness.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-05-24T20:49:29Z",
+      "side": 1,
+      "message": "There\u0027s also an -expected.txt to indicate that there should be failures because [SecureContext] prevents the exposure. That\u0027s assuming I can sort out the preceding CL to get [SecureContext] working for interfaces.",
+      "parentUuid": "9ea92a74_8651d09e",
+      "revId": "490eee4b140f19216ec28138c7fe89e50aa8bd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
