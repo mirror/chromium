@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b7801c67_bf245114",
+        "filename": "third_party/WebKit/Source/core/frame/ResizeViewportAnchor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-24T22:37:17Z",
+      "side": 1,
+      "message": "Actually, based on the replies, I\u0027m led to believe this should always be true right? Should we be DCHECKing this instead?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "8983db0d988a24492556da5d00b82ab37d27dbee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d766758_a9aa6ef0",
         "filename": "third_party/WebKit/Source/web/WebAXObject.cpp",
         "patchSetId": 1
