@@ -461,7 +461,7 @@ views::View* AppListViewDelegate::CreateStartPageWebView(
   DCHECK_EQ(profile_, web_contents->GetBrowserContext());
   views::WebView* web_view = new views::WebView(
       web_contents->GetBrowserContext());
-  web_view->SetPreferredSize(size);
+  web_view->set_preferred_size(size);
   web_view->SetResizeBackgroundColor(SK_ColorTRANSPARENT);
   web_view->SetWebContents(web_contents);
   return web_view;
@@ -486,7 +486,7 @@ std::vector<views::View*> AppListViewDelegate::CreateCustomPageWebViews(
 
     views::WebView* web_view =
         new views::WebView(web_contents->GetBrowserContext());
-    web_view->SetPreferredSize(size);
+    web_view->set_preferred_size(size);
     web_view->SetResizeBackgroundColor(SK_ColorTRANSPARENT);
     web_view->SetWebContents(web_contents);
     web_views.push_back(web_view);

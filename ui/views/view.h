@@ -284,6 +284,11 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // approach is controlling the parent's layout via a LayoutManager.
   void set_preferred_size(const gfx::Size& size) { preferred_size_ = size; }
 
+  // Updates the preferred size and also informs the parent that a new layout
+  // may be needed. This can trigger more layouts than otherwise needed, so
+  // it's generally best to stick to using |set_preferred_size()|.
+  void UpdatePreferredSize(const gfx::Size& size);
+
   // Convenience method that sizes this view to its preferred size.
   void SizeToPreferredSize();
 

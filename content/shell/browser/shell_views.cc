@@ -79,7 +79,7 @@ class ShellWindowDelegateView : public views::WidgetDelegateView,
     contents_view_->SetLayoutManager(new views::FillLayout());
     web_view_ = new views::WebView(web_contents->GetBrowserContext());
     web_view_->SetWebContents(web_contents);
-    web_view_->SetPreferredSize(size);
+    web_view_->set_preferred_size(size);
     web_contents->Focus();
     contents_view_->AddChildView(web_view_);
     Layout();
