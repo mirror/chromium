@@ -48,6 +48,7 @@ public class ChildConnectionAllocator {
     // Connections to services. Indices of the array correspond to the service numbers.
     private final ChildProcessConnection[] mChildProcessConnections;
 
+    private final String mPackageName;
     private final String mServiceClassName;
 
     // The list of free (not bound) service indices.
@@ -128,6 +129,7 @@ public class ChildConnectionAllocator {
 
     private ChildConnectionAllocator(
             String packageName, String serviceClassName, int numChildServices) {
+        mPackageName = packageName;
         mServiceClassName = serviceClassName;
         mChildProcessConnections = new ChildProcessConnection[numChildServices];
         mFreeConnectionIndices = new ArrayList<Integer>(numChildServices);
@@ -141,6 +143,7 @@ public class ChildConnectionAllocator {
             boolean bindAsExternalService, ChildProcessConnection.DeathCallback deathCallback,
             boolean queueIfNoSlotAvailable) {
         assert LauncherThread.runningOnLauncherThread();
+        assert mPackageName.equals(packageName);
         if (mFreeConnectionIndices.isEmpty()) {
             Log.d(TAG, "Ran out of services to allocate.");
             if (queueIfNoSlotAvailable) {
@@ -152,7 +155,7 @@ public class ChildConnectionAllocator {
         assert mChildProcessConnections[slot] == null;
         String serviceClassName = mServiceClassName + slot;
         mChildProcessConnections[slot] = mConnectionFactory.createConnection(
-                spawnData, packageName, bindAsExternalService, deathCallback, serviceClassName);
+                spawnData, mPackageName, bindAsExternalService, deathCallback, serviceClassName);
         Log.d(TAG, "Allocator allocated a connection, name: %s, slot: %d", mServiceClassName, slot);
         return mChildProcessConnections[slot];
     }
@@ -173,6 +176,14 @@ public class ChildConnectionAllocator {
             Log.d(TAG, "Allocator freed a connection, name: %s, slot: %d", mServiceClassName, slot);
         }
         return mPendingSpawnQueue.poll();
+    }
+
+    public String getPackageName() {
+        return mPackageName;
+    }
+
+    public boolean anyConnectionAllocated() {
+        return mFreeConnectionIndices.size() < mChildProcessConnections.length;
     }
 
     public boolean isFreeConnectionAvailable() {
