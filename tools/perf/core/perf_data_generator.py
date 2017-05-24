@@ -711,8 +711,6 @@ def generate_telemetry_tests(name, tester_config, benchmarks,
   else:
     browser_name ='release'
 
-  num_shards = len(tester_config['swarming_dimensions'][0]['device_ids'])
-  current_shard = 0
   for benchmark in benchmarks:
     if not ShouldBenchmarkBeScheduled(benchmark, tester_config['platform']):
       continue
@@ -731,10 +729,14 @@ def generate_telemetry_tests(name, tester_config, benchmarks,
                          ' component and cc martiniss@ and nednguyen@ to'
                          ' execute the benchmark on the waterfall.' % (
                              benchmark.Name()))
+      if device in BLACKLISTED_DEVICES:
+        continue
 
       swarming_dimensions.append(get_swarming_dimension(
           dimension, device))
 
+    if not swarming_dimensions:
+      continue
     test = generate_telemetry_test(
       swarming_dimensions, benchmark.Name(), browser_name)
     isolated_scripts.append(test)
@@ -744,10 +746,6 @@ def generate_telemetry_tests(name, tester_config, benchmarks,
       reference_test = generate_telemetry_test(
         swarming_dimensions, benchmark.Name(),'reference')
       isolated_scripts.append(reference_test)
-      if current_shard == (num_shards - 1):
-        current_shard = 0
-      else:
-        current_shard += 1
 
   return isolated_scripts
 
@@ -757,6 +755,13 @@ BENCHMARK_SWARMING_TIMEOUTS = {
     'loading.mobile': 16200, # 4.5 hours
     'system_health.memory_mobile': 10800, # 4 hours
 }
+
+
+# Devices which are broken right now. Tests will not be scheduled on them.
+# Please add a comment with a bug for replacing the device.
+BLACKLISTED_DEVICES = [
+    ['build8-b1'], # https://crbug.com/724998
+]
 
 
 # List of benchmarks that are to never be run with reference builds.
