@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a3180_f5a78c16",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-05-24T15:21:43Z",
+      "side": 0,
+      "message": "Can you explain why this logic was changed as part of the original CL?  What was wrong with simply calling GetLastCommittedNonRedirectedItem() like the original code did?\n\nThese are the changes that worry me and make me want to unrevert tab.mm.",
+      "revId": "91754cf24203d703142138a81431cc178150014c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
