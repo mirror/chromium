@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "012cc9ad_ba0bef2a",
+        "filename": "ash/test/shelf_view_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-05-24T18:42:49Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "17264ff9_b5d9085f",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6b9407d_84a5774e",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar.h",
         "patchSetId": 4
