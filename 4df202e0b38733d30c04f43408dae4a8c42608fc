@@ -46,6 +46,30 @@
       "revId": "4df202e0b38733d30c04f43408dae4a8c42608fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7626a6c7_1de67fce",
+        "filename": "base/i18n/timezone.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-05-24T00:10:30Z",
+      "side": 0,
+      "message": "Ok. I just updated the CL to special-case Etc/GMT only. That\u0027s the one Britons are most likely to mistake for British Time.",
+      "parentUuid": "a27f77fc_1468b303",
+      "range": {
+        "startLine": 462,
+        "startChar": 8,
+        "endLine": 465,
+        "endChar": 28
+      },
+      "revId": "4df202e0b38733d30c04f43408dae4a8c42608fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
