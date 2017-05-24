@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b78b5b1e_a1083af8",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-05-24T20:39:35Z",
+      "side": 1,
+      "message": "I\u0027m probably misreading this, but it seems like this fence should be created up in SubmitWebVRFrame where the finish once was? That more tightly bounds the work that we\u0027re waiting on and gives it a bit of time to complete first, which may also enable you to do the direct call without waiting on the first pass that Bill suggested?",
+      "revId": "74c509c3879ec85dfd2b65413a7498fbdfb953e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
