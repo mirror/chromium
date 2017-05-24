@@ -24,6 +24,7 @@
 #include "net/log/net_log_with_source.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 namespace net {
 class HttpResponseHeaders;
@@ -135,6 +136,9 @@ struct CONTENT_EXPORT DownloadCreateInfo {
 
   // The HTTP connection type.
   net::HttpResponseInfo::ConnectionInfo connection_info;
+
+  // The initiating origin of the download.
+  base::Optional<url::Origin> initiator;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DownloadCreateInfo);
