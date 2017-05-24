@@ -185,7 +185,8 @@ WmWindow* GetReferenceWindow(const WmWindow* root_window,
     WmWindow* window = windows[i % windows.size()];
     while (window->GetTransientParent())
       window = window->GetTransientParent();
-    if (window != exclude && window->GetType() == ui::wm::WINDOW_TYPE_NORMAL &&
+    if (window != exclude &&
+        window->GetType() == aura::client::WINDOW_TYPE_NORMAL &&
         window->GetRootWindow() == root_window &&
         window->GetTargetVisibility() &&
         window->GetWindowState()->window_position_managed()) {

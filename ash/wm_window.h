@@ -13,12 +13,12 @@
 #include "base/observer_list.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
+#include "ui/aura/client/window_types.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/compositor/layer_animation_element.h"
 #include "ui/wm/core/transient_window_observer.h"
 #include "ui/wm/core/window_animations.h"
-#include "ui/wm/public/window_types.h"
 
 namespace display {
 class Display;
@@ -106,7 +106,7 @@ class ASH_EXPORT WmWindow : public aura::WindowObserver,
   // See shell_window_ids.h for list of known ids.
   WmWindow* GetChildByShellWindowId(int id);
 
-  ui::wm::WindowType GetType() const;
+  aura::client::WindowType GetType() const;
   int GetAppType() const;
   void SetAppType(int app_type) const;
 

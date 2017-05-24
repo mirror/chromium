@@ -342,7 +342,7 @@ void PanelLayoutManager::OnWindowResized() {
 }
 
 void PanelLayoutManager::OnWindowAddedToLayout(Window* child) {
-  if (child->type() == ui::wm::WINDOW_TYPE_POPUP)
+  if (child->type() == aura::client::WINDOW_TYPE_POPUP)
     return;
   if (in_add_window_)
     return;
@@ -374,7 +374,7 @@ void PanelLayoutManager::OnWindowAddedToLayout(Window* child) {
 void PanelLayoutManager::OnWillRemoveWindowFromLayout(Window* child) {}
 
 void PanelLayoutManager::OnWindowRemovedFromLayout(Window* child) {
-  if (child->type() == ui::wm::WINDOW_TYPE_POPUP)
+  if (child->type() == aura::client::WINDOW_TYPE_POPUP)
     return;
 
   PanelList::iterator found = std::find(
@@ -512,7 +512,7 @@ void PanelLayoutManager::OnWindowActivated(ActivationReason reason,
   WmWindow* wm_gained_active = WmWindow::Get(gained_active);
   // Ignore if the panel that is not managed by this was activated.
   if (wm_gained_active &&
-      wm_gained_active->GetType() == ui::wm::WINDOW_TYPE_PANEL &&
+      wm_gained_active->GetType() == aura::client::WINDOW_TYPE_PANEL &&
       wm_gained_active->GetParent() == panel_container_) {
     UpdateStacking(wm_gained_active);
     UpdateCallouts();

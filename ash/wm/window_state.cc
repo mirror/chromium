@@ -121,8 +121,8 @@ bool WindowState::IsActive() const {
 }
 
 bool WindowState::IsUserPositionable() const {
-  return (window_->GetType() == ui::wm::WINDOW_TYPE_NORMAL ||
-          window_->GetType() == ui::wm::WINDOW_TYPE_PANEL);
+  return (window_->GetType() == aura::client::WINDOW_TYPE_NORMAL ||
+          window_->GetType() == aura::client::WINDOW_TYPE_PANEL);
 }
 
 bool WindowState::CanMaximize() const {
@@ -150,7 +150,7 @@ bool WindowState::CanActivate() const {
 }
 
 bool WindowState::CanSnap() const {
-  if (!CanResize() || window_->GetType() == ui::wm::WINDOW_TYPE_PANEL ||
+  if (!CanResize() || window_->GetType() == aura::client::WINDOW_TYPE_PANEL ||
       window_->GetTransientParent()) {
     return false;
   }
