@@ -36,7 +36,7 @@ class TestCustomView : public views::View {
   TestCustomView() {
     SetFocusBehavior(FocusBehavior::ALWAYS);
     set_background(views::Background::CreateSolidBackground(kBackgroundColor));
-    set_preferred_size(gfx::Size(100, 100));
+    SetPreferredSize(gfx::Size(100, 100));
   }
   ~TestCustomView() override {}
 
@@ -414,13 +414,13 @@ TEST_F(CustomNotificationViewTest, ChangeContentHeight) {
   EXPECT_EQ("360x100", size.ToString());
 
   // Allow small notifications.
-  custom_view()->set_preferred_size(gfx::Size(10, 10));
+  custom_view()->SetPreferredSize(gfx::Size(10, 10));
   size = notification_view()->GetPreferredSize();
   size.Enlarge(0, -notification_view()->GetInsets().height());
   EXPECT_EQ("360x10", size.ToString());
 
   // The long notification.
-  custom_view()->set_preferred_size(gfx::Size(1000, 1000));
+  custom_view()->SetPreferredSize(gfx::Size(1000, 1000));
   size = notification_view()->GetPreferredSize();
   size.Enlarge(0, -notification_view()->GetInsets().height());
   EXPECT_EQ("360x1000", size.ToString());
