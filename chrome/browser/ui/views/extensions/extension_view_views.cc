@@ -76,7 +76,7 @@ void ExtensionViewViews::ResizeDueToAutoResize(
   }
 
   if (new_size != GetPreferredSize())
-    SetPreferredSize(new_size);
+    set_preferred_size(new_size);
 }
 
 void ExtensionViewViews::RenderViewCreated(

@@ -79,7 +79,7 @@ class WebDialogWebContentsDelegateViews
       return;
 
     // Sets WebView's preferred size based on auto-resized contents.
-    web_view_->SetPreferredSize(preferred_size);
+    web_view_->set_preferred_size(preferred_size);
 
     content::WebContents* top_level_web_contents =
         constrained_window::GetTopLevelWebContents(
@@ -189,6 +189,9 @@ class ConstrainedWebDialogDelegateViewViews
   content::WebContents* GetWebContents() override {
     return impl_->GetWebContents();
   }
+  gfx::Size GetPreferredSize() const override {
+    return CalculatePreferredSize();
+  }
 
   // views::WidgetDelegate:
   views::View* GetInitiallyFocusedView() override { return this; }
@@ -220,16 +223,15 @@ class ConstrainedWebDialogDelegateViewViews
     GetWidget()->Close();
     return true;
   }
-  gfx::Size GetPreferredSize() const override {
+  gfx::Size CalculatePreferredSize() const override {
+    // If auto-resizing is enabled and the dialog has been auto-resized,
+    // GetPreferredSize won't have called |CalculatePreferredSize| but will use
+    // the |preferred_size_| instead.
+    if (impl_->closed_via_webui())
+      return gfx::Size();
+
     gfx::Size size;
-    if (!impl_->closed_via_webui()) {
-      // If auto-resizing is enabled and the dialog has been auto-resized,
-      // GetPreferredSize() will return the appropriate current size.  In this
-      // case, GetDialogSize() should leave its argument untouched.  In all
-      // other cases, GetDialogSize() will overwrite the passed-in size.
-      size = WebView::GetPreferredSize();
-      GetWebDialogDelegate()->GetDialogSize(&size);
-    }
+    GetWebDialogDelegate()->GetDialogSize(&size);
     return size;
   }
   gfx::Size GetMinimumSize() const override {
