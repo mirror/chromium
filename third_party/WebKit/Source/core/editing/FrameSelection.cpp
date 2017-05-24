@@ -428,6 +428,11 @@ bool FrameSelection::SelectionHasFocus() const {
   // TODO(editing-dev): Hoist UpdateStyleAndLayoutIgnorePendingStylesheets
   // to caller. See http://crbug.com/590369 for more details.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  if (ComputeVisibleSelectionInDOMTree().IsNone() ||
+      ComputeVisibleSelectionInFlatTree().IsNone())
+    return false;
+
   const Node* current =
       ComputeVisibleSelectionInDOMTree().Start().ComputeContainerNode();
   if (!current)
