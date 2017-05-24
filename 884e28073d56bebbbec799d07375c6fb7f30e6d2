@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1c3dd7d_512a7563",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-24T09:45:26Z",
+      "side": 1,
+      "message": "Good catch! Done",
+      "parentUuid": "6540ea15_74e5b809",
+      "revId": "884e28073d56bebbbec799d07375c6fb7f30e6d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f53a7fd_4e1d1e95",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a08fd8ad_f97638ea",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-24T09:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f53a7fd_4e1d1e95",
+      "revId": "884e28073d56bebbbec799d07375c6fb7f30e6d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2314fcec_1772b954",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-05-24T08:54:52Z",
       "side": 1,
       "message": "is pos_ \u003c value_.length() implied by !IsTokenChar(c) ?",
+      "revId": "884e28073d56bebbbec799d07375c6fb7f30e6d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81352eb_85332fd4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-24T09:45:26Z",
+      "side": 1,
+      "message": "Without the first condition, UChar gets clamped and e.g. U+141 becomes U+41 which is \u0027A\u0027, one of the token characters.\n\nAdded a test to clarify the reason.",
+      "parentUuid": "2314fcec_1772b954",
       "revId": "884e28073d56bebbbec799d07375c6fb7f30e6d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
