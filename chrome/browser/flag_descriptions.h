@@ -317,6 +317,9 @@ extern const char kFastUnloadDescription[];
 extern const char kFeaturePolicyName[];
 extern const char kFeaturePolicyDescription[];
 
+extern const char kFetchKeepaliveName[];
+extern const char kFetchKeepaliveDescription[];
+
 extern const char kFontCacheScalingName[];
 extern const char kFontCacheScalingDescription[];
 

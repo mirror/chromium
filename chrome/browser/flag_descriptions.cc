@@ -400,6 +400,11 @@ const char kFastUnloadDescription[] =
     "Enables fast tab/window closing - runs a tab's onunload js handler "
     "independently of the GUI.";
 
+const char kFetchKeepaliveName[] = "Fetch API keepalive";
+const char kFetchKeepaliveDescription[] =
+    "Enables Fetch API keepalive option. This is also used for setting a "
+    "timeout value for SendBeacon.";
+
 const char kUserConsentForExtensionScriptsName[] =
     "User consent for extension scripts";
 
