@@ -15,8 +15,13 @@
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/common/profile_management_switches.h"
+#include "content/public/common/service_manager_connection.h"
 #include "extensions/common/extension_l10n_util.h"
 #include "google_apis/gaia/gaia_urls.h"
+// TODO(blundell): Add target as dep in GN.
+#include "services/identity/public/cpp/scope_set.h"
+#include "services/identity/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/app_mode/app_mode_utils.h"
@@ -483,6 +488,18 @@ void IdentityGetAuthTokenFunction::OnGaiaFlowCompleted(
   CompleteFunctionWithResult(access_token);
 }
 
+void IdentityGetAuthTokenFunction::OnGetAccessTokenComplete(
+    const base::Optional<std::string>& access_token,
+    base::Time expiration_time,
+    const GoogleServiceAuthError& error) {
+  if (access_token) {
+    // NOTE: Can't pass nullptr here, it's used in OnGetTokenSuccess().
+    OnGetTokenSuccess(nullptr, access_token.value(), expiration_time);
+  } else {
+    OnGetTokenFailure(nullptr, error);
+  }
+}
+
 void IdentityGetAuthTokenFunction::OnGetTokenSuccess(
     const OAuth2TokenService::Request* request,
     const std::string& access_token,
@@ -514,6 +531,7 @@ void IdentityGetAuthTokenFunction::Shutdown() {
   gaia_web_auth_flow_.reset();
   signin_flow_.reset();
   login_token_request_.reset();
+  identity_manager_.reset();
   extensions::IdentityAPI::GetFactoryInstance()
       ->Get(GetProfile())
       ->mint_queue()
@@ -550,9 +568,9 @@ bool IdentityGetAuthTokenFunction::IsOriginWhitelistedInPublicSession() {
 #endif
 
 void IdentityGetAuthTokenFunction::StartLoginAccessTokenRequest() {
+#if defined(OS_CHROMEOS)
   ProfileOAuth2TokenService* service =
       ProfileOAuth2TokenServiceFactory::GetForProfile(GetProfile());
-#if defined(OS_CHROMEOS)
   if (chrome::IsRunningInForcedAppMode()) {
     std::string app_client_id;
     std::string app_client_secret;
@@ -569,8 +587,23 @@ void IdentityGetAuthTokenFunction::StartLoginAccessTokenRequest() {
     }
   }
 #endif
+
+#if 1
+  // TODO(blundell): Where should this code go?
+  content::BrowserContext::GetConnectorFor(GetProfile())
+      ->BindInterface(::identity::mojom::kServiceName,
+                      mojo::MakeRequest(&identity_manager_));
+
+  identity_manager_->GetAccessToken(
+      token_key_->account_id, ::identity::ScopeSet(),
+      base::Bind(&IdentityGetAuthTokenFunction::OnGetAccessTokenComplete,
+                 base::Unretained(this)));
+#else
+  ProfileOAuth2TokenService* service =
+      ProfileOAuth2TokenServiceFactory::GetForProfile(GetProfile());
   login_token_request_ = service->StartRequest(
       token_key_->account_id, OAuth2TokenService::ScopeSet(), this);
+#endif
 }
 
 void IdentityGetAuthTokenFunction::StartGaiaRequest(
