@@ -499,6 +499,7 @@ def get_waterfall_config():
        'device_ids': [
            'build4-b1', 'build5-b1', 'build6-b1', 'build7-b1', 'build8-b1'
           ],
+       'blacklisted_devices': ['build8-b1'], # https://crbug.com/724998
        'perf_tests': [
          ('performance_browser_tests', 'build8-b1')
        ]
@@ -731,10 +732,14 @@ def generate_telemetry_tests(name, tester_config, benchmarks,
                          ' component and cc martiniss@ and nednguyen@ to'
                          ' execute the benchmark on the waterfall.' % (
                              benchmark.Name()))
+      if device in dimension.get('blacklisted_devices', []):
+        continue
 
       swarming_dimensions.append(get_swarming_dimension(
           dimension, device))
 
+    if not swarming_dimensions:
+      continue
     test = generate_telemetry_test(
       swarming_dimensions, benchmark.Name(), browser_name)
     isolated_scripts.append(test)
