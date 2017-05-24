@@ -230,8 +230,8 @@ gfx::Rect ScopedTransformOverviewWindow::GetTargetBoundsInScreen() const {
     // Ignore other window types when computing bounding box of window
     // selector target item.
     if (window != overview_window &&
-        window->type() != ui::wm::WINDOW_TYPE_NORMAL &&
-        window->type() != ui::wm::WINDOW_TYPE_PANEL) {
+        window->type() != aura::client::WINDOW_TYPE_NORMAL &&
+        window->type() != aura::client::WINDOW_TYPE_PANEL) {
       continue;
     }
     gfx::Rect target_bounds = window->GetTargetBounds();
@@ -249,8 +249,8 @@ gfx::Rect ScopedTransformOverviewWindow::GetTransformedBounds() const {
     // Ignore other window types when computing bounding box of window
     // selector target item.
     if (window != overview_window &&
-        (window->type() != ui::wm::WINDOW_TYPE_NORMAL &&
-         window->type() != ui::wm::WINDOW_TYPE_PANEL)) {
+        (window->type() != aura::client::WINDOW_TYPE_NORMAL &&
+         window->type() != aura::client::WINDOW_TYPE_PANEL)) {
       continue;
     }
     gfx::RectF window_bounds(window->GetTargetBounds());
@@ -279,8 +279,9 @@ SkColor ScopedTransformOverviewWindow::GetTopColor() const {
   for (auto* window : GetTransientTreeIterator(window_)) {
     // If there are regular windows in the transient ancestor tree, all those
     // windows are shown in the same overview item and the header is not masked.
-    if (window != window_ && (window->type() == ui::wm::WINDOW_TYPE_NORMAL ||
-                              window->type() == ui::wm::WINDOW_TYPE_PANEL)) {
+    if (window != window_ &&
+        (window->type() == aura::client::WINDOW_TYPE_NORMAL ||
+         window->type() == aura::client::WINDOW_TYPE_PANEL)) {
       return SK_ColorTRANSPARENT;
     }
   }
@@ -294,8 +295,9 @@ int ScopedTransformOverviewWindow::GetTopInset() const {
   for (auto* window : GetTransientTreeIterator(window_)) {
     // If there are regular windows in the transient ancestor tree, all those
     // windows are shown in the same overview item and the header is not masked.
-    if (window != window_ && (window->type() == ui::wm::WINDOW_TYPE_NORMAL ||
-                              window->type() == ui::wm::WINDOW_TYPE_PANEL)) {
+    if (window != window_ &&
+        (window->type() == aura::client::WINDOW_TYPE_NORMAL ||
+         window->type() == aura::client::WINDOW_TYPE_PANEL)) {
       return 0;
     }
   }
