@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c00cb8fc_3bb8ea57",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-24T00:16:27Z",
+      "side": 1,
+      "message": "I\u0027d like to add a comment here, and/or where we act on this when true in LayerTreeHostImpl, but I\u0027m actually not sure why we need to call set_needs_update_draw_properties on the LayerTreeImpl for transform animations, but not for opacity/filter animations, and also only on the impl thread.\n\nI\u0027ve preserved logic, but if thoughts to better explain let me know.",
+      "range": {
+        "startLine": 1747,
+        "startChar": 12,
+        "endLine": 1747,
+        "endChar": 29
+      },
+      "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
