@@ -612,6 +612,11 @@ def _DownloadBuildArtifacts(archive, build, supersize_path, depot_tools_path):
 
 
 def _DownloadAndArchive(gsutil_path, archive, dl_dir, build, supersize_path):
+  retcode = subprocess.call(
+      [gsutil_path, 'version'], stdout=sys.stdout, stderr=subprocess.STDOUT)
+  if retcode:
+    _Die('gsutil error. Please file a bug in Tools>BinarySize.')
+
   dl_dst = os.path.join(dl_dir, archive.rev)
   logging.info('Downloading build artifacts for %s', archive.rev)
   # gsutil writes stdout and stderr to stderr, so pipe stdout and stderr to
