@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25577e58_07c5bfb9",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/ScreenShooter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-05-24T14:01:45Z",
+      "side": 1,
+      "message": "Need to handle this return value somehow.",
+      "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50e9c34_ba9e92c9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-05-24T14:01:45Z",
+      "side": 1,
+      "message": "Both of these appear to be failing consistently on the N5+K trybot?",
+      "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
