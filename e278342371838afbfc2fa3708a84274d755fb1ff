@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17264ff9_b5d9085f",
+        "filename": "ash/test/shelf_view_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-05-24T00:15:46Z",
+      "side": 1,
+      "message": "would you prefer GetViewPreferredSize or something else?",
+      "parentUuid": "228b9f6d_04ee517c",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6b9407d_84a5774e",
         "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar.h",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8db6e3_5d4013d3",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_bar.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-05-24T00:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6b9407d_84a5774e",
+      "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2ef858fd_c9b8fec6",
+        "filename": "chrome/browser/ui/views/constrained_web_dialog_delegate_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-05-24T00:15:46Z",
+      "side": 1,
+      "message": "it\u0027s pretty dumb, but ConstrainedWebDialogDelegateBase also defines a virtual GetPreferredSize (I am surprised C++ even lets you inherit from two classes that have a shared virtual symbol like this). I would fix ConstrainedWebDialogDelegateBase but that turned out to be pretty byzantine.",
+      "parentUuid": "103b5b04_b899eab9",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 28
+      },
+      "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a638f3b7_ee1d449a",
         "filename": "ui/app_list/views/start_page_view.cc",
         "patchSetId": 4
@@ -76,6 +142,24 @@
       "writtenOn": "2017-05-23T23:43:17Z",
       "side": 1,
       "message": "How come you don\u0027t use the entire preferred size like the old code did?",
+      "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49df214b_1947edc9",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-05-24T00:15:46Z",
+      "side": 1,
+      "message": "did it? I think this is the same behavior as before: see the old SearchBoxSpacerView ctor.",
+      "parentUuid": "a638f3b7_ee1d449a",
       "revId": "e278342371838afbfc2fa3708a84274d755fb1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
