@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ab6654_bd3f8350",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4251,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-05-24T17:48:13Z",
+      "side": 1,
+      "message": "Would it be useful to distinguish between criteria that create a block formatting context per CSS specs and those that create a de facto formatting context for other reasons? Is ruby text one of the latter maybe? Inline tables? Flow threads?\n\nThere is certainly a class of items here that create a formatting context and others that do so less directly - the distinction might help guide future changes here.",
+      "revId": "ed5f7f211ff6554f6797e3518cd7ce3b29bddd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
