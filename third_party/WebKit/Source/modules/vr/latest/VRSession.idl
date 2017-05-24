@@ -1,0 +1,26 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// https://w3c.github.io/webvr/spec/latest/#vrsession-interface
+[
+    OriginTrialEnabled=WebVR
+] interface VRSession : EventTarget {
+  readonly attribute VRDevice device;
+  readonly attribute VRSessionCreateParameters createParameters;
+
+  attribute double depthNear;
+  attribute double depthFar;
+
+  attribute VRLayer baseLayer;
+
+  attribute EventHandler onblur;
+  attribute EventHandler onfocus;
+  attribute EventHandler onresetpose;
+
+  [CallWith=ScriptState] Promise createFrameOfReference(VRFrameOfReferenceType type);
+
+  [CallWith=ScriptState] Promise requestVRPresentationFrame();
+
+  [CallWith=ScriptState] Promise endSession();
+};

@@ -19,6 +19,7 @@
 #include "modules/vr/VRDisplay.h"
 #include "modules/vr/VRGetDevicesCallback.h"
 #include "modules/vr/VRPose.h"
+#include "modules/vr/latest/VR.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 
@@ -50,6 +51,20 @@ NavigatorVR& NavigatorVR::From(Navigator& navigator) {
     ProvideTo(navigator, SupplementName(), supplement);
   }
   return *supplement;
+}
+
+VR* NavigatorVR::vr(Navigator& navigator) {
+  return NavigatorVR::From(navigator).vr();
+}
+
+VR* NavigatorVR::vr() {
+  if (!vr_) {
+    Document* document = GetDocument();
+    if (!document || !document->GetFrame())
+      return nullptr;
+    vr_ = VR::Create(*document->GetFrame());
+  }
+  return vr_;
 }
 
 ScriptPromise NavigatorVR::getVRDisplays(ScriptState* script_state,
@@ -107,6 +122,7 @@ Document* NavigatorVR::GetDocument() {
 }
 
 DEFINE_TRACE(NavigatorVR) {
+  visitor->Trace(vr_);
   visitor->Trace(controller_);
   Supplement<Navigator>::Trace(visitor);
 }

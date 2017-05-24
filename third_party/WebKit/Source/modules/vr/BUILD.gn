@@ -32,4 +32,35 @@ blink_modules_sources("vr") {
   deps = [
     "//device/vr:mojo_bindings_blink",
   ]
+
+  # WebVR "2.0" implementation
+  sources += [
+    "latest/VR.cpp",
+    "latest/VR.h",
+    "latest/VRCoordinateSystem.cpp",
+    "latest/VRCoordinateSystem.h",
+    "latest/VRDevice.cpp",
+    "latest/VRDevice.h",
+    "latest/VRDeviceEvent.cpp",
+    "latest/VRDeviceEvent.h",
+    "latest/VRDevicePose.cpp",
+    "latest/VRDevicePose.h",
+    "latest/VRFrameOfReference.cpp",
+    "latest/VRFrameOfReference.h",
+    "latest/VRLayer.cpp",
+    "latest/VRLayer.h",
+    "latest/VRPresentationFrame.cpp",
+    "latest/VRPresentationFrame.h",
+    "latest/VRSession.cpp",
+    "latest/VRSession.h",
+    "latest/VRSessionCreateParameters.h",
+    "latest/VRSessionEvent.cpp",
+    "latest/VRSessionEvent.h",
+    "latest/VRStageBounds.h",
+    "latest/VRView.cpp",
+    "latest/VRView.h",
+    "latest/VRViewport.h",
+    "latest/VRWebGLLayer.cpp",
+    "latest/VRWebGLLayer.h",
+  ]
 }
