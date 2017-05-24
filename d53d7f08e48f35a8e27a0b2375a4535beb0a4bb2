@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d587925_5ff81852",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-05-24T17:43:06Z",
+      "side": 1,
+      "message": "In this case, should we just call DrawFrameSubmitWhenReady directly?",
+      "range": {
+        "startLine": 1061,
+        "startChar": 37,
+        "endLine": 1061,
+        "endChar": 53
+      },
+      "revId": "d53d7f08e48f35a8e27a0b2375a4535beb0a4bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d7dcc2_b7b99f5f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-05-24T17:43:06Z",
+      "side": 1,
+      "message": "Consider moving up to the top as a constant, same for initial_delay.",
+      "range": {
+        "startLine": 1082,
+        "startChar": 42,
+        "endLine": 1082,
+        "endChar": 43
+      },
+      "revId": "d53d7f08e48f35a8e27a0b2375a4535beb0a4bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
