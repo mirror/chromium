@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41371b98_5739992c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-05-24T10:27:15Z",
+      "side": 1,
+      "message": "perhaps,\nWhen enabled, the Site Details page is found... If enabled, allow the user..",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 28
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28f143e_724e6790",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-05-24T10:27:15Z",
+      "side": 1,
+      "message": "does it close the bubble?",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ff096d_a7f0cd7b",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-05-24T10:27:15Z",
+      "side": 1,
+      "message": "I don\u0027t think this works on Windows 10. The trick is that Win7 trybots use a virtual framebuffer, which disables the compositing window manager. But Win10 always has a compositing window manager, so \"toplevel\" widgets are created, which don\u0027t own bubbles the same way.\n\nI fired off a win10 job, but it looks like there are win_chromium_rel_ng failures as well.\n\nAnyway, TestBrowserDialog::RunDialog() has a working implementation of this [1] https://cs.chromium.org/chromium/src/chrome/browser/ui/test/test_browser_dialog.cc?q\u003dTestBrowserDialog::RunDialog+package:%5Echromium$\u0026l\u003d97\n\nBut it has a very general task.\n\nIs it possible just to get the page info bubble directly? Perhaps via a test api and a new global. Most other bubbles just have a global - PageInfo already has a global (just not for the View*), so it\u0027s already opting in to global badness (e.g., impossible to have bubbles on 2 different browser windows).\n\nIf this technique is really needed, we should move the stuff in TestBrowserDialog to a shared file",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eceaf8a5_c798b660",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-05-24T10:27:15Z",
+      "side": 1,
+      "message": "you could do..\n\n  auto added \u003d base::STLSetDifference\u003cstd::vector\u003cviews::Widget*\u003e\u003e(\n      child_widgets_after, child_widgets_before);\n  EXPECT_EQ(1u, added.size());\n  page_info_bubble \u003d added.front();",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e9c6b5_94899455",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-05-24T10:27:15Z",
+      "side": 1,
+      "message": "Perhaps add an else? (e.g. what happens to the test when the feature is enabled by default? -- you can pass --enabled-features\u003d.. on the command line to test)",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 16
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6aa1a50_a7432b1c",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-05-24T10:27:15Z",
+      "side": 1,
+      "message": "It\u0027s usually good to have a comment for each test describing why it exists",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
