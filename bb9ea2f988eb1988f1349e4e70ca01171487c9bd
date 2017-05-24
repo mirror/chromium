@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a365774f_16743b8f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResourceTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-05-24T16:09:07Z",
+      "side": 0,
+      "message": "Could you migrate these tests to e.g. MockResource instead of deleting them?\nI think (most of?) these tests are testing revalidations in general and just happen to use RawResource.",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 48
+      },
+      "revId": "bb9ea2f988eb1988f1349e4e70ca01171487c9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c92178d_89b68725",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-05-24T16:09:07Z",
+      "side": 0,
+      "message": "Probably keeping a comment that mentions main resources is helpful, because \"do not add kMainResource to MemoryCache\" is an assumption that has been true for longer period and has more specific reasons (e.g. enabling saving non-HTML responses via browser process) than \"do not add RawResource\" in general.",
+      "range": {
+        "startLine": 800,
+        "startChar": 7,
+        "endLine": 800,
+        "endChar": 57
+      },
+      "revId": "bb9ea2f988eb1988f1349e4e70ca01171487c9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

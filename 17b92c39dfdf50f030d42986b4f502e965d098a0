@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc31a1e6_94a3d6e0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-05-24T16:09:07Z",
+      "side": 1,
+      "message": "Add CHECK(!IsCacheValidator()) here, because the assumption failure might cause security bugs.",
+      "range": {
+        "startLine": 185,
+        "startChar": 1,
+        "endLine": 185,
+        "endChar": 2
+      },
+      "revId": "17b92c39dfdf50f030d42986b4f502e965d098a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea676c8_87b7b3f8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResourceTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-05-24T16:09:07Z",
+      "side": 1,
+      "message": "And also following two tests are about revalidation, so should we migrate them to MockResource?\n(A part of (or the whole) tests might be not needed if they are testing corner cases that is only related to RawResource \u0026 revalidation, but I\u0027ll need more time to check that)",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 71
+      },
+      "revId": "17b92c39dfdf50f030d42986b4f502e965d098a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cedf180_ede18e4c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-05-24T16:09:07Z",
+      "side": 1,
+      "message": "I feel this is doing a kind of duplication of DetermineRevalidationPolicy(), and am wondering if IsShareable() would be becoming more complex and we would have to be careful to keep IsShareable() and DetermineRevalidationPolicy() consistent.",
+      "range": {
+        "startLine": 313,
+        "startChar": 29,
+        "endLine": 313,
+        "endChar": 79
+      },
+      "revId": "17b92c39dfdf50f030d42986b4f502e965d098a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
