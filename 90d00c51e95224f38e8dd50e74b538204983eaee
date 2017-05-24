@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "36d618e9_eccc36ee",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-24T22:20:41Z",
+      "side": 1,
+      "message": "Thanks for the insight. I\u0027d like to better understand our design philosophy w.r.t. property trees and keeping them up to date. Are we ok with (1) as was done here to date, intentionally not marking effect tree in need of update if we know we don\u0027t care about recomputing other fields that may depend on node fields we\u0027ve just mutated?\n\nOr, do we prefer (2) any time we mutate a field on a node, we should also mark the involved tree as in need of update, and its LayerTreeImpl as needing UDP. Even though we may know it\u0027s unnecessary, there is a desire to have a consistent property tree state. This would ensure that dependent node fields are always kept up to date, and prevent fragile logic bugs/dependencies down the line. Though there may be no field dependency today, one could be added later.\n\nI\u0027d infer (2) from discussion, but then if that\u0027s the case, don\u0027t we actually need to mark effect tree and LayerTreeImpl for update for FILTER case as well on principle?\n\nAnd, if (2), exploring safer ways to enforce like setter methods on the nodes/trees, or helper methods, could be warranted since it\u0027s easy to overlook.\n\nFILTER specifically has a comment about knowing we don\u0027t need the subtree to be rebuilt. It seems like rebuilding could be expensive in some cases. So I want to understand the above better to carry into both this and future work thinking.",
+      "parentUuid": "11c072bd_9feac129",
+      "range": {
+        "startLine": 1747,
+        "startChar": 12,
+        "endLine": 1747,
+        "endChar": 29
+      },
+      "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e7edbbe_f961c694",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 2
@@ -102,6 +126,24 @@
       "side": 1,
       "message": "I have vague memory of trying this for impl but don\u0027t remember why, possibly unittests?",
       "parentUuid": "5e7edbbe_f961c694",
+      "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db1fa3f_6d155fae",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-24T22:20:41Z",
+      "side": 1,
+      "message": "I did see some test failures when I did this all the time. I\u0027ll look into and follow up.",
+      "parentUuid": "2a3a2d64_e9a70fa7",
       "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
