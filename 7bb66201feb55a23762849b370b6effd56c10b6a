@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d056bb0_3f3d736e",
+        "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-24T00:14:37Z",
+      "side": 1,
+      "message": "Can you document when this would be out of sync with is_attached_?",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 56
+      },
+      "revId": "7bb66201feb55a23762849b370b6effd56c10b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78dcf26_62c0de8c",
+        "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-24T00:14:37Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean the plugin container is not attached? Why would it be getting events in this case? Similar question for other uses of ParentFrameView() in this file.",
+      "range": {
+        "startLine": 792,
+        "startChar": 6,
+        "endLine": 792,
+        "endChar": 43
+      },
+      "revId": "7bb66201feb55a23762849b370b6effd56c10b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2b723d_076cddf8",
+        "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-24T00:14:37Z",
+      "side": 1,
+      "message": "This looks a bit interesting: if there\u0027s no page, the frame isn\u0027t attached. In that case, I\u0027m not sure we should be calling SetFocusedElement() at all (it\u0027s a no-op anyway)\n\nRemoving it might be out of scope of this CL, but can we add a TODO to remove in a followup?",
+      "range": {
+        "startLine": 951,
+        "startChar": 6,
+        "endLine": 951,
+        "endChar": 48
+      },
+      "revId": "7bb66201feb55a23762849b370b6effd56c10b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
