@@ -34,6 +34,24 @@
       "revId": "490eee4b140f19216ec28138c7fe89e50aa8bd3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a0cf56_9e080ec7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/idlharness.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-24T21:00:41Z",
+      "side": 1,
+      "message": "Can we land a hand-written test for [SecureContext] instead of having a -expected.txt like I do for feature policy? In general I think we should we want to avoid having -expected.txt files for testharness.js-based tests since failing test cases should be exceptional.",
+      "parentUuid": "9c756be9_26bc8bf3",
+      "revId": "490eee4b140f19216ec28138c7fe89e50aa8bd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
