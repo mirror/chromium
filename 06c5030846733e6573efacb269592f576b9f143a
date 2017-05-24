@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abd4ae14_c4cd7528",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-24T21:32:28Z",
+      "side": 1,
+      "message": "nit: It seems especially important here that we say \"Story Expectation\" as opposed to just expectation because the user won\u0027t be in the code at this point, and \"Expectation\" is all that they\u0027ll see",
+      "revId": "06c5030846733e6573efacb269592f576b9f143a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
