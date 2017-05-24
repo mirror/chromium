@@ -57,6 +57,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
+#include "net/http/http_content_disposition.h"
 #include "net/http/http_response_headers.h"
 #include "net/log/net_log.h"
 #include "net/log/net_log_event_type.h"
@@ -1399,6 +1400,22 @@ void DownloadItemImpl::OnDownloadTargetDetermined(
     TransitionTo(INTERRUPTED_TARGET_PENDING_INTERNAL);
     OnTargetResolved();
     return;
+  }
+
+  // Even if the delegate didn't flag the download as dangerous, we might have
+  // to mark it as dangerous if it's cross origin but doesn't have a content
+  // disposition header.
+  if (danger_type == DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS) {
+    if (!url_chain_.back().SchemeIsBlob() &&
+        site_url_.GetOrigin() != url_chain_.back().GetOrigin() &&
+        (content_disposition_.empty() ||
+         !net::HttpContentDisposition(content_disposition_, std::string())
+              .is_attachment())) {
+      danger_type = DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE;
+      RecordDownloadCount(CROSS_ORIGIN_DOWNLOAD_WITHOUT_CONTENT_DISPOSITION);
+      DVLOG(20) << __func__ << "() updating danger level to " << danger_type
+                << " for cross origin download";
+    }
   }
 
   target_path_ = target_path;
