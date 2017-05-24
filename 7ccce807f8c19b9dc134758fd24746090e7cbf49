@@ -16,6 +16,24 @@
       "revId": "7ccce807f8c19b9dc134758fd24746090e7cbf49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01797612_9fce7096",
+        "filename": "base/win/scoped_comptr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-24T00:26:16Z",
+      "side": 1,
+      "message": "We don\u0027t have any explicit guidance here:\nhttps://www.chromium.org/developers/smart-pointer-guidelines\n\nWhat\u0027s the benefit of calling .reset() over assigning null?",
+      "parentUuid": "6a284b49_0b487107",
+      "revId": "7ccce807f8c19b9dc134758fd24746090e7cbf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
