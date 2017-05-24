@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4ea8a5_5386a7df",
+        "filename": "content/renderer/media/media_permission_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-05-24T23:51:04Z",
+      "side": 1,
+      "message": "Does it make sense to change this call to:\nPermissionServicePtr MediaPermissionDispatcher::GetPermissionService()\nso that you don\u0027t need to explicitly call ConnectToservice() whenever you need to use the service?",
+      "range": {
+        "startLine": 130,
+        "startChar": 32,
+        "endLine": 130,
+        "endChar": 48
+      },
+      "revId": "0e3b57e5ecafac7210a318c361cc6f3b3f14b07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
