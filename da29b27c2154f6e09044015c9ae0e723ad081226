@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49fd649b_65e38c53",
+        "filename": "cc/blink/web_display_item_list_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-24T22:52:07Z",
+      "side": 1,
+      "message": "This optimization is lost if this doesn\u0027t use RecordPaintCanvas, and we don\u0027t handle SaveLayerOp during playback, which I think is why the layout tests are slightly different.\n\nhttps://cs.chromium.org/chromium/src/cc/paint/record_paint_canvas.cc?rcl\u003d017234bc0a7505f2a773352e1d38090847aee163\u0026l\u003d48",
+      "range": {
+        "startLine": 125,
+        "startChar": 18,
+        "endLine": 125,
+        "endChar": 19
+      },
+      "revId": "da29b27c2154f6e09044015c9ae0e723ad081226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
