@@ -34,6 +34,24 @@
       "revId": "27deddf7f2bb211c5c74695c0088d346cb129372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cee52b0_a8340460",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-24T10:40:25Z",
+      "side": 1,
+      "message": "Oh, hm. Given that, I think I\u0027d probably be okay with the current delay even if it\u0027s not strictly necessary, as long as we add a comment about it.",
+      "parentUuid": "3a7757ed_4b7b4ce2",
+      "revId": "27deddf7f2bb211c5c74695c0088d346cb129372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
