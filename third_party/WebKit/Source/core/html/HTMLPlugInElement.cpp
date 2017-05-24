@@ -77,8 +77,9 @@ HTMLPlugInElement::HTMLPlugInElement(
     PreferPlugInsForImagesOption prefer_plug_ins_for_images_option)
     : HTMLFrameOwnerElement(tag_name, doc),
       is_delaying_load_event_(false),
-      // m_needsPluginUpdate(!createdByParser) allows HTMLObjectElement to delay
-      // FrameViewBase updates until after all children are parsed. For
+      plugin_wrapper_map_(V8PerIsolateData::MainThreadIsolate()),
+      // needs_plugin_update_(!created_by_parser) allows HTMLObjectElement to
+      // delay FrameViewBase updates until after all children are parsed. For
       // HTMLEmbedElement this delay is unnecessary, but it is simpler to make
       // both classes share the same codepath in this class.
       needs_plugin_update_(!created_by_parser),
@@ -86,7 +87,6 @@ HTMLPlugInElement::HTMLPlugInElement(
                                          kShouldPreferPlugInsForImages) {}
 
 HTMLPlugInElement::~HTMLPlugInElement() {
-  DCHECK(plugin_wrapper_.IsEmpty());  // cleared in detachLayoutTree()
   DCHECK(!is_delaying_load_event_);
 }
 
@@ -319,7 +319,7 @@ void HTMLPlugInElement::FinishParsingChildren() {
 }
 
 void HTMLPlugInElement::ResetInstance() {
-  plugin_wrapper_.Reset();
+  plugin_wrapper_.Clear();
 }
 
 v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
@@ -331,7 +331,8 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // return the cached allocated Bindings::Instance. Not supporting this
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
-  if (plugin_wrapper_.IsEmpty()) {
+  int world_id = ScriptState::Current()->World().GetWorldId();
+  if (!plugin_wrapper_map_.ContainsKey(&world_id)) {
     PluginView* plugin;
 
     if (persisted_plugin_)

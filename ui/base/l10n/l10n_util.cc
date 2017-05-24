@@ -687,6 +687,19 @@ std::string GetStringUTF8(int message_id) {
 base::string16 GetStringUTF16(int message_id) {
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   base::string16 str = rb.GetLocalizedString(message_id);
+
+#ifndef NDEBUG
+  // Make sure every there are no placeholders, as no replacements are passed
+  // in.
+  // $9 is the highest allowed placeholder.
+  for (size_t i = 0; i < 9; ++i) {
+    base::string16 placeholder = base::ASCIIToUTF16("$");
+    placeholder += (L'1' + i);
+    size_t pos = str.find(placeholder);
+    DCHECK_EQ(std::string::npos, pos)
+        << " Unexpectedly found a " << placeholder << " placeholder in " << str;
+  }
+#endif
   AdjustParagraphDirectionality(&str);
 
   return str;

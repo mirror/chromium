@@ -26,7 +26,7 @@
 
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "platform/bindings/SharedPersistent.h"
+#include "platform/bindings/DOMWrapperMap.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -173,7 +173,7 @@ class CORE_EXPORT HTMLPlugInElement : public HTMLFrameOwnerElement {
                              const Vector<String>& param_names,
                              const Vector<String>& param_values);
 
-  v8::Global<v8::Object> plugin_wrapper_;
+  DOMWrapperMap<int> plugin_wrapper_map_;
   bool needs_plugin_update_;
   bool should_prefer_plug_ins_for_images_;
   // Represents |layoutObject() && layoutObject()->isEmbeddedObject() &&
