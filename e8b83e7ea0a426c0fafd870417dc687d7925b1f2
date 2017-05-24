@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "0673058b_18889fc3",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1191210
+      },
+      "writtenOn": "2017-05-24T21:45:04Z",
+      "side": 1,
+      "message": "Oh, now it changed to support sequenced task runner since https://codereview.chromium.org/2805933002/.\n\nWonder if it addressed our issue as well.",
+      "parentUuid": "96b37044_c59906b6",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a224ccd_33d8ffdd",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 4
