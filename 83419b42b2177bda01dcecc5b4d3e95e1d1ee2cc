@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ec1994c_ddffeea6",
+        "filename": "extensions/browser/extension_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-24T10:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ef7e52a_6653badd",
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b99a0e0b_e76624c1",
         "filename": "extensions/browser/extension_prefs.h",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f1c4cc_06a2c5a6",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-24T10:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b99a0e0b_e76624c1",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 14
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "47daee7e_ceb05743",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-24T10:59:58Z",
+      "side": 1,
+      "message": "Yes. Those options are simpler and all of these mutations options use ScopedExtensionPrefUpdate.",
+      "parentUuid": "5ee4c373_9954f755",
+      "range": {
+        "startLine": 101,
+        "startChar": 45,
+        "endLine": 101,
+        "endChar": 52
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf46b9c_a4f0371e",
         "filename": "extensions/browser/extension_prefs.h",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b8a863_2ce660b5",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-24T10:59:58Z",
+      "side": 1,
+      "message": "It means these comments are out of date. Updated them.",
+      "parentUuid": "edf46b9c_a4f0371e",
+      "range": {
+        "startLine": 110,
+        "startChar": 22,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "57dde1a4_499ddab0",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-24T10:59:58Z",
+      "side": 1,
+      "message": "Seemingly not. Done.",
+      "parentUuid": "b8f7e481_31894cda",
+      "range": {
+        "startLine": 111,
+        "startChar": 17,
+        "endLine": 111,
+        "endChar": 27
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e88c2ff_24724742",
         "filename": "extensions/browser/extension_prefs.h",
         "patchSetId": 5
@@ -131,6 +245,30 @@
       "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17bfa55_c21c135c",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-24T10:59:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e88c2ff_24724742",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 24
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
