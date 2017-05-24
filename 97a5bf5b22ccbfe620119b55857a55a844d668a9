@@ -51,6 +51,24 @@
       "revId": "97a5bf5b22ccbfe620119b55857a55a844d668a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f994e18_d92ddf45",
+        "filename": "media/gpu/surface_texture_gl_owner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-24T21:03:43Z",
+      "side": 1,
+      "message": "Actually, I\u0027m glad you asked about it because I noticed this is a bug. surface_texture() may be null.",
+      "parentUuid": "822342da_fff828fe",
+      "revId": "97a5bf5b22ccbfe620119b55857a55a844d668a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
