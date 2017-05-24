@@ -34,6 +34,24 @@
       "revId": "7ccce807f8c19b9dc134758fd24746090e7cbf49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ebe8d4_e774551b",
+        "filename": "base/win/scoped_comptr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-05-24T00:32:38Z",
+      "side": 1,
+      "message": "OK, /shrug, fine as is then. I just felt like it was more common usage. (Maybe predating nullptr?)",
+      "parentUuid": "01797612_9fce7096",
+      "revId": "7ccce807f8c19b9dc134758fd24746090e7cbf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
