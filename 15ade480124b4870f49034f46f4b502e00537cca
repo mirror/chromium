@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e2c22f2_17bc1ea0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-24T11:28:17Z",
+      "side": 1,
+      "message": "Fixed! Forgot to update after changing the return type back to void.",
+      "parentUuid": "6ac6558f_06a10306",
+      "range": {
+        "startLine": 403,
+        "startChar": 36,
+        "endLine": 403,
+        "endChar": 43
+      },
+      "revId": "15ade480124b4870f49034f46f4b502e00537cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14edaeb6_6600734e",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-24T11:09:16Z",
       "side": 1,
       "message": "I\u0027m not comfortable with the inconsistency between this and the absence of the check in the below function.",
+      "range": {
+        "startLine": 442,
+        "startChar": 14,
+        "endLine": 442,
+        "endChar": 15
+      },
+      "revId": "15ade480124b4870f49034f46f4b502e00537cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079cc4ab_eefcdcde",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-24T11:28:17Z",
+      "side": 1,
+      "message": "Oh, I just forgot to add it to ConsumeTokenChars(). I see, WTFString return 0 for out-of-range access, ... I\u0027ve never thought about that...",
+      "parentUuid": "14edaeb6_6600734e",
       "range": {
         "startLine": 442,
         "startChar": 14,
