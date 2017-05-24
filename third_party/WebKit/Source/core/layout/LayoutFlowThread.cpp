@@ -168,6 +168,7 @@ bool LayoutFlowThread::NodeAtPoint(HitTestResult& result,
 }
 
 LayoutUnit LayoutFlowThread::PageLogicalHeightForOffset(LayoutUnit offset) {
+  DCHECK(IsPageLogicalHeightKnown());
   LayoutMultiColumnSet* column_set =
       ColumnSetAtBlockOffset(offset, kAssociateWithLatterPage);
   if (!column_set)
