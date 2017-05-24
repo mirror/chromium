@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "651e0eb4_922ca9ce",
+        "filename": "cc/blink/web_display_item_list_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-24T20:56:22Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m making a doc with some options in it for where to go next.",
+      "parentUuid": "f709c38f_e75a8127",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48e39790_05d26aaf",
         "filename": "cc/layers/picture_image_layer.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69573d89_9b6f1c2b",
+        "filename": "cc/layers/picture_image_layer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-24T20:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48e39790_05d26aaf",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6ba0c80b_8974a54a",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-24T20:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4097b60_26369252",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28d9111_e03a4101",
         "filename": "cc/paint/display_item_list.h",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "dd8dcff4_f6812433",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-24T20:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28d9111_e03a4101",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d574a58f_71c089ea",
         "filename": "cc/paint/paint_canvas.h",
         "patchSetId": 14
@@ -81,6 +153,24 @@
       "writtenOn": "2017-05-24T20:36:44Z",
       "side": 1,
       "message": "default value on a virtual \u003c_\u003c",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6615318_9ca0b547",
+        "filename": "cc/paint/paint_canvas.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-24T20:56:22Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "d574a58f_71c089ea",
       "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
