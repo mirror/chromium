@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f744174_5cae7ee9",
+        "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-24T01:30:03Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure that they are always in sync.  My previous incarnation of this code had a few different states such as Attached, Deferred, Disposed and I think at one point it was possible for frame to be null when still attached.\n\nhttps://chromium-review.googlesource.com/c/513702/",
+      "parentUuid": "6d056bb0_3f3d736e",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 56
+      },
+      "revId": "7bb66201feb55a23762849b370b6effd56c10b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b78dcf26_62c0de8c",
         "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "87551dfa_bf71c4fd",
+        "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-24T01:30:03Z",
+      "side": 1,
+      "message": "I have just copied the previous code logic in this case that was guarding against parent_ being null.  I agree that many methods should only be called when the plugin is attached. so these checks are silly.  I have modified to add DCHECK(is_attached \u0026\u0026 ParentFrameView()) in most places, and specifically document other cases.\n\nSee https://chromium-review.googlesource.com/c/513702/",
+      "parentUuid": "b78dcf26_62c0de8c",
+      "range": {
+        "startLine": 792,
+        "startChar": 6,
+        "endLine": 792,
+        "endChar": 43
+      },
+      "revId": "7bb66201feb55a23762849b370b6effd56c10b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb2b723d_076cddf8",
         "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
         "patchSetId": 18
@@ -59,6 +107,30 @@
       "writtenOn": "2017-05-24T00:14:37Z",
       "side": 1,
       "message": "This looks a bit interesting: if there\u0027s no page, the frame isn\u0027t attached. In that case, I\u0027m not sure we should be calling SetFocusedElement() at all (it\u0027s a no-op anyway)\n\nRemoving it might be out of scope of this CL, but can we add a TODO to remove in a followup?",
+      "range": {
+        "startLine": 951,
+        "startChar": 6,
+        "endLine": 951,
+        "endChar": 48
+      },
+      "revId": "7bb66201feb55a23762849b370b6effd56c10b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2faa3c80_d1a16903",
+        "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-24T01:30:03Z",
+      "side": 1,
+      "message": "It looks to me that this is only called when attached.",
+      "parentUuid": "cb2b723d_076cddf8",
       "range": {
         "startLine": 951,
         "startChar": 6,
