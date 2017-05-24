@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c09ce49_28039572",
+        "filename": "cc/base/list_container_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-24T15:50:56Z",
+      "side": 1,
+      "message": "You\u0027re right that non-first elements are not being explicitly aligned, but I think this DCHECK implies that they are aligned right now, and we could pad if this failed. I should add a comment to this effect.",
+      "revId": "c8c51371fa7128a1486eb8386ec9f8eb935021d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
