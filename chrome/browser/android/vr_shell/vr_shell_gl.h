@@ -253,8 +253,6 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   base::TimeTicks vsync_timebase_;
   base::TimeDelta vsync_interval_;
 
-  base::TimeDelta pending_time_;
-  bool pending_vsync_ = false;
   GetVSyncCallback callback_;
   bool received_frame_ = false;
   mojo::Binding<device::mojom::VRVSyncProvider> binding_;
