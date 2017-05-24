@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ef7e52a_6653badd",
+        "filename": "extensions/browser/extension_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-05-24T03:54:01Z",
+      "side": 1,
+      "message": "Why is this one empty and the other default?",
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99a0e0b_e76624c1",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-05-24T03:54:01Z",
+      "side": 1,
+      "message": "Nit: \"Wrappers around...\" and maybe change ScopedUserPrefUpdate to ... ScopedDictionaryPrefUpdate ... or something?",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 14
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee4c373_9954f755",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-05-24T03:54:01Z",
+      "side": 1,
+      "message": "Is this comment still correct? Are there other reasons to prefer these classes now?",
+      "range": {
+        "startLine": 101,
+        "startChar": 45,
+        "endLine": 101,
+        "endChar": 52
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf46b9c_a4f0371e",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-05-24T03:54:01Z",
+      "side": 1,
+      "message": "It\u0027s a bit weird to return a unique_ptr and say that ownership remains with the prefs. What does that mean?",
+      "range": {
+        "startLine": 110,
+        "startChar": 22,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f7e481_31894cda",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-05-24T03:54:01Z",
+      "side": 1,
+      "message": "Do these (and others) need to be virtual?",
+      "range": {
+        "startLine": 111,
+        "startChar": 17,
+        "endLine": 111,
+        "endChar": 27
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e88c2ff_24724742",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-05-24T03:54:01Z",
+      "side": 1,
+      "message": "Nit: blank line above",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 24
+      },
+      "revId": "83419b42b2177bda01dcecc5b4d3e95e1d1ee2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
