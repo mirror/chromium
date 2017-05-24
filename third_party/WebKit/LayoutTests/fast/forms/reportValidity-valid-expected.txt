@@ -5,7 +5,7 @@ On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE
 
  lorem ipsum    
 
-Elements valid from the begining
+Elements valid from the beginning
 PASS document.getElementsByTagName("fieldset")[0].reportValidity() is true
 PASS document.getElementsByTagName("input")[0].reportValidity() is true
 PASS document.getElementsByTagName("button")[0].reportValidity() is true
