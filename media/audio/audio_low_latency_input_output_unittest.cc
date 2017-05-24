@@ -150,6 +150,8 @@ class FullDuplexAudioSinkSource
     base::CloseFile(text_file);
   }
 
+  void OnError(AudioInputStream* stream) override {}
+
   // AudioInputStream::AudioInputCallback.
   void OnData(AudioInputStream* stream,
               const AudioBus* src,
@@ -181,8 +183,6 @@ class FullDuplexAudioSinkSource
     //   buffer_->Clear();
     // }
   }
-
-  void OnError(AudioInputStream* stream) override {}
 
   // AudioOutputStream::AudioSourceCallback.
   int OnMoreData(base::TimeDelta delay,
@@ -216,7 +216,7 @@ class FullDuplexAudioSinkSource
     return 0;
   }
 
-  void OnError(AudioOutputStream* stream) override {}
+  void OnError() override {}
 
  protected:
   // Converts from bytes to milliseconds taking the sample rate and size
