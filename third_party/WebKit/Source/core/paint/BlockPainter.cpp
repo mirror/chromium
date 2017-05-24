@@ -213,8 +213,9 @@ void BlockPainter::PaintObject(const PaintInfo& paint_info,
             paint_info.context.GetPaintController(), layout_block_,
             DisplayItem::PaintPhaseToDrawingType(paint_phase), properties);
         scrolled_paint_info.emplace(paint_info);
-        scrolled_paint_info->UpdateCullRect(
-            scroll_translation->Matrix().ToAffineTransform());
+        scrolled_paint_info->UpdateCullRectForScrollingContents(
+            scroll_translation->Matrix().ToAffineTransform(),
+            EnclosingIntRect(layout_block_.OverflowClipRect(paint_offset)));
       }
     } else if (layout_block_.HasOverflowClip()) {
       IntSize scroll_offset = layout_block_.ScrolledContentOffset();

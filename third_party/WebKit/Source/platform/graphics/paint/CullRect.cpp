@@ -40,10 +40,20 @@ bool CullRect::IntersectsVerticalRange(LayoutUnit lo, LayoutUnit hi) const {
   return !(lo >= rect_.MaxY() || hi <= rect_.Y());
 }
 
-void CullRect::UpdateCullRect(
-    const AffineTransform& local_to_parent_transform) {
+void CullRect::Update(const AffineTransform& local_to_parent_transform) {
   if (rect_ != LayoutRect::InfiniteIntRect())
     rect_ = local_to_parent_transform.Inverse().MapRect(rect_);
+}
+
+void CullRect::UpdateForScrollingContents(
+    const AffineTransform& local_to_parent_transform,
+    const IntRect& overflow_clip_rect) {
+  // The distance to expand the cull rect for scrolling contents.
+  static const int kPixelDistanceToExpand = 4000;
+
+  rect_.Intersect(overflow_clip_rect);
+  Update(local_to_parent_transform);
+  rect_.Inflate(kPixelDistanceToExpand);
 }
 
 }  // namespace blink

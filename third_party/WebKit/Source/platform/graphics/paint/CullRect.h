@@ -31,11 +31,17 @@ class PLATFORM_EXPORT CullRect {
 
   bool IntersectsCullRect(const AffineTransform&,
                           const FloatRect& bounding_box) const;
-  void UpdateCullRect(const AffineTransform& local_to_parent_transform);
   bool IntersectsCullRect(const IntRect&) const;
   bool IntersectsCullRect(const LayoutRect&) const;
   bool IntersectsHorizontalRange(LayoutUnit lo, LayoutUnit hi) const;
   bool IntersectsVerticalRange(LayoutUnit lo, LayoutUnit hi) const;
+
+  void Update(const AffineTransform& local_to_parent_transform);
+
+  // |overflow_clip_rect| should be in the same coordinate space as |rect_|.
+  void UpdateForScrollingContents(
+      const AffineTransform& local_to_parent_transform,
+      const IntRect& overflow_clip_rect);
 
   String ToString() const { return rect_.ToString(); }
 
