@@ -34,6 +34,24 @@
       "revId": "c8c51371fa7128a1486eb8386ec9f8eb935021d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2a4e9b_c646dbb0",
+        "filename": "cc/base/list_container_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-05-24T17:09:34Z",
+      "side": 1,
+      "message": "This does look stricter. Either is fine.",
+      "parentUuid": "368f1a58_c0df0fa5",
+      "revId": "c8c51371fa7128a1486eb8386ec9f8eb935021d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
