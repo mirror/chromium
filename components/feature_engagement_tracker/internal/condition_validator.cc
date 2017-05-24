@@ -16,7 +16,7 @@ ConditionValidator::Result::Result(bool initial_values)
       preconditions_ok(initial_values),
       session_rate_ok(initial_values) {}
 
-bool ConditionValidator::Result::NoErrors() {
+bool ConditionValidator::Result::NoErrors() const {
   return model_ready_ok && currently_showing_ok && feature_enabled_ok &&
          config_ok && used_ok && trigger_ok && preconditions_ok &&
          session_rate_ok;
