@@ -219,7 +219,6 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
 
   friend class WebPluginContainerTest;
 
-  bool is_attached_;
   Member<HTMLPlugInElement> element_;
   WebPlugin* web_plugin_;
   WebLayer* web_layer_;
@@ -229,7 +228,7 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
   bool wants_wheel_events_;
   bool self_visible_;
   bool parent_visible_;
-  bool is_disposed_;
+  bool is_attached_;
 };
 
 DEFINE_TYPE_CASTS(WebPluginContainerImpl,
