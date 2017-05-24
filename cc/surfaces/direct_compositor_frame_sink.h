@@ -33,6 +33,7 @@ class CC_SURFACES_EXPORT DirectCompositorFrameSink
   DirectCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
       SurfaceManager* surface_manager,
+      BeginFrameSource* display_begin_frame_source,
       Display* display,
       scoped_refptr<ContextProvider> context_provider,
       scoped_refptr<ContextProvider> worker_context_provider,
@@ -41,6 +42,7 @@ class CC_SURFACES_EXPORT DirectCompositorFrameSink
   DirectCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
       SurfaceManager* surface_manager,
+      BeginFrameSource* display_begin_frame_source,
       Display* display,
       scoped_refptr<VulkanContextProvider> vulkan_context_provider);
   ~DirectCompositorFrameSink() override;
@@ -79,6 +81,7 @@ class CC_SURFACES_EXPORT DirectCompositorFrameSink
   LocalSurfaceId local_surface_id_;
   SurfaceManager* surface_manager_;
   LocalSurfaceIdAllocator local_surface_id_allocator_;
+  BeginFrameSource* display_begin_frame_source_;
   Display* display_;
   gfx::Size last_swap_frame_size_;
   float device_scale_factor_ = 1.f;
