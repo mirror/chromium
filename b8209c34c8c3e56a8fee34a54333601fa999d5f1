@@ -90,6 +90,30 @@
     },
     {
       "key": {
+        "uuid": "bc0cca26_60549fe3",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-05-24T16:03:24Z",
+      "side": 1,
+      "message": "Thanks for explaining the diffs here and in our 1:1. I am taking back my comment about things possibly getting involved.\n\nThe main source of my confusion was our existing user gesture code: we have some historical crafts (like DocumentUserGestureToken class which adds nothing to the base class) that I am currently cleaning up.  From that perspective, I wrongly assumed that your new enum here implies a document-vs-non-document distinction!\n\nTo avoid future confusions, can we please clarify the enum and associated policy string here?  E.g. something like\ns/kDocumentUserGestureRequired/kStickyUserActivationRequired/ ?\n\nAny chance we can align the previous enums/strings too with our new plan? I am not sure how much of those are exposed, so can\u0027t judge the compat risk at all.  Correct me if this is impossible.",
+      "parentUuid": "30bc41c7_e441ac65",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36362472_d6a1e871",
         "filename": "third_party/WebKit/public/web/WebSettings.h",
         "patchSetId": 1
