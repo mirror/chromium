@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8500fe84_7743b500",
+        "filename": "tools/perf/core/perf_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-24T19:58:20Z",
+      "side": 1,
+      "message": "My preference is to be more explicit and name this story_expectation_validator\n\n(I don\u0027t think \"perf\" is necessary in the name, as we\u0027re already in tools/perf, so it\u0027s implied)",
+      "revId": "c7fec0afd1eea9ca60d44d1848b3e343befb1524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc329930_1a80feaa",
+        "filename": "tools/perf/core/perf_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-24T19:58:20Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "c7fec0afd1eea9ca60d44d1848b3e343befb1524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181c29c5_e7ac4ee7",
+        "filename": "tools/perf/core/perf_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-24T19:58:20Z",
+      "side": 1,
+      "message": "Maybe get_benchmark_classes or something like that? Otherwise, I might expect this to return actual instances of the benchmarks rather than just the classes that can be instantiated",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "c7fec0afd1eea9ca60d44d1848b3e343befb1524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ddcf9f_42164d85",
+        "filename": "tools/perf/core/perf_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-24T19:58:20Z",
+      "side": 1,
+      "message": "should this be validate_story_names (plural) instead, given that it operates on multiple benchmarks?",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "c7fec0afd1eea9ca60d44d1848b3e343befb1524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b217430_5d879bcf",
+        "filename": "tools/perf/core/perf_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-24T19:58:20Z",
+      "side": 1,
+      "message": "Should this be ValidateStoryExpectations? Are there any other types of expectations?",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "c7fec0afd1eea9ca60d44d1848b3e343befb1524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409d4352_fbee4a2d",
+        "filename": "tools/perf/core/perf_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-24T19:58:20Z",
+      "side": 1,
+      "message": "supernit that I remember being weird: across most of catapult, we put two spaces before end-of-line comments\n\nhttps://cs.corp.google.com/search/?q\u003dp:github+f:%5Ecatapult-project/catapult/+%5CS%5C+%5C+%23+f:.py$\u0026m\u003d100\u0026det\u003dmatsel\u0026type\u003dcs",
+      "revId": "c7fec0afd1eea9ca60d44d1848b3e343befb1524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
