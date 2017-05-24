@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11014b83_368239d3",
+        "filename": "ios/chrome/app/spotlight/actions_spotlight_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-05-24T15:05:14Z",
+      "side": 1,
+      "message": "Should we omit the changes to ActionsSpotlightManager, if all they do is call super?  The method is already exposed publicly on the base class.",
+      "revId": "34f3d33515a1cd6be6bcb4e9ef9b44f2a6843bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
