@@ -9,8 +9,8 @@
 namespace prefs {
 namespace {
 
-// One for the persistent pref store.
-constexpr size_t kLocalPrefStores = 1;
+// One for the persistent pref store. One for the remote default store.
+constexpr size_t kLocalPrefStores = 2;
 
 }  // namespace
 
@@ -57,6 +57,13 @@ void PendingPrefConnection::ProvidePersistentPrefStore(
   PrefStoreConnectionReady();
 }
 
+void PendingPrefConnection::ProvideDefaults(
+    std::unique_ptr<base::DictionaryValue> defaults) {
+  DCHECK(!defaults_);
+  defaults_ = std::move(defaults);
+  PrefStoreConnectionReady();
+}
+
 PendingPrefConnection::~PendingPrefConnection() {
   DCHECK_EQ(0U, remaining_connections_);
 }
@@ -73,7 +80,7 @@ void PendingPrefConnection::PrefStoreConnectionReady() {
   DCHECK_GT(remaining_connections_, 0U);
   if (--remaining_connections_ == 0) {
     std::move(callback_).Run(std::move(persistent_pref_store_connection_),
-                             std::move(connections_));
+                             std::move(defaults_), std::move(connections_));
   }
 }
 

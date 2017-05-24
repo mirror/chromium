@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <set>
 
 #include "base/containers/hash_tables.h"
 #include "base/macros.h"
@@ -47,6 +48,8 @@ class COMPONENTS_PREFS_EXPORT PrefRegistry
     // This marks the pref as "lossy". There is no strict time guarantee on when
     // a lossy pref will be persisted to permanent storage when it is modified.
     LOSSY_PREF = 1 << 8,
+
+    PUBLIC = 1 << 9,
   };
 
   typedef PrefValueMap::const_iterator const_iterator;
@@ -70,6 +73,13 @@ class COMPONENTS_PREFS_EXPORT PrefRegistry
   // |pref_name| must be a previously registered preference.
   void SetDefaultPrefValue(const std::string& pref_name, base::Value* value);
 
+  void RegisterUnownedPref(const std::string path);
+  void SetRemoteDefaultPrefValues(base::DictionaryValue defaults);
+
+  const std::set<std::string>& unowned_pref_keys() const {
+    return unowned_pref_keys_;
+  }
+
  protected:
   friend class base::RefCounted<PrefRegistry>;
   virtual ~PrefRegistry();
@@ -84,6 +94,8 @@ class COMPONENTS_PREFS_EXPORT PrefRegistry
 
   // A map of pref name to a bitmask of PrefRegistrationFlags.
   PrefRegistrationFlagsMap registration_flags_;
+
+  std::set<std::string> unowned_pref_keys_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PrefRegistry);

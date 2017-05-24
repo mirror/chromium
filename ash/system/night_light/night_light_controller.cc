@@ -63,6 +63,12 @@ void NightLightController::RegisterPrefs(PrefRegistrySimple* registry) {
                                kDefaultColorTemperature);
 }
 
+// static
+void NightLightController::RegisterUnownedPrefs(PrefRegistrySimple* registry) {
+  registry->RegisterUnownedPref(prefs::kNightLightEnabled);
+  registry->RegisterUnownedPref(prefs::kNightLightTemperature);
+}
+
 void NightLightController::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);
 }

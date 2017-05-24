@@ -4,6 +4,7 @@
 
 #include "services/preferences/public/cpp/pref_service_factory.h"
 
+#include "base/barrier_closure.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -119,18 +120,53 @@ class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
 
   // Create a fully initialized PrefService synchronously.
   std::unique_ptr<PrefService> Create() {
+    return CreateImpl({}, CreateDefaultPrefRegistry());
+  }
+
+  std::unique_ptr<PrefService> CreateNonOwning() {
+    return CreateImpl({}, CreateDefaultNonOwningPrefRegistry());
+  }
+
+  std::unique_ptr<PrefService> CreateWithLocalLayeredPrefStores() {
+    return CreateImpl(
+        {{
+             {PrefValueStore::COMMAND_LINE_STORE, above_user_prefs_pref_store_},
+             {PrefValueStore::RECOMMENDED_STORE, below_user_prefs_pref_store_},
+         },
+         base::KEEP_LAST_OF_DUPES},
+        CreateDefaultPrefRegistry());
+  }
+
+  std::unique_ptr<PrefService> CreateImpl(
+      base::flat_map<PrefValueStore::PrefStoreType, scoped_refptr<PrefStore>>
+          local_pref_stores,
+      scoped_refptr<PrefRegistry> pref_registry) {
     std::unique_ptr<PrefService> pref_service;
     base::RunLoop run_loop;
-    auto pref_registry = make_scoped_refptr(new PrefRegistrySimple());
-    pref_registry->RegisterIntegerPref(kKey, kInitialValue);
-    pref_registry->RegisterIntegerPref(kOtherKey, kInitialValue);
-    pref_registry->RegisterDictionaryPref(kDictionaryKey);
-    ConnectToPrefService(connector(), pref_registry,
-                         std::vector<PrefValueStore::PrefStoreType>(),
+    ConnectToPrefService(connector(), std::move(pref_registry),
+                         std::move(local_pref_stores),
                          base::Bind(&PrefServiceFactoryTest::OnCreate,
                                     run_loop.QuitClosure(), &pref_service));
     run_loop.Run();
     return pref_service;
+  }
+
+  scoped_refptr<PrefRegistrySimple> CreateDefaultPrefRegistry() {
+    auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+    pref_registry->RegisterIntegerPref(kKey, kInitialValue,
+                                       PrefRegistry::PUBLIC);
+    pref_registry->RegisterIntegerPref(kOtherKey, kInitialValue,
+                                       PrefRegistry::PUBLIC);
+    pref_registry->RegisterDictionaryPref(kDictionaryKey, PrefRegistry::PUBLIC);
+    return pref_registry;
+  }
+
+  scoped_refptr<PrefRegistrySimple> CreateDefaultNonOwningPrefRegistry() {
+    auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+    pref_registry->RegisterUnownedPref(kKey);
+    pref_registry->RegisterUnownedPref(kOtherKey);
+    pref_registry->RegisterUnownedPref(kDictionaryKey);
+    return pref_registry;
   }
 
   // Wait until first update of the pref |key| in |pref_service| synchronously.
@@ -203,13 +239,46 @@ TEST_F(PrefServiceFactoryTest, Basic) {
 // Check that updates in one client eventually propagates to the other.
 TEST_F(PrefServiceFactoryTest, MultipleClients) {
   auto pref_service = Create();
-  auto pref_service2 = Create();
+  auto pref_service2 = CreateNonOwning();
 
   EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
   EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kKey));
   pref_service->SetInteger(kKey, kUpdatedValue);
   WaitForPrefChange(pref_service2.get(), kKey);
   EXPECT_EQ(kUpdatedValue, pref_service2->GetInteger(kKey));
+}
+
+// Check that defaults set by one client are correctly shared to the other
+// client.
+TEST_F(PrefServiceFactoryTest, MultipleClients_Defaults) {
+  std::unique_ptr<PrefService> pref_service, pref_service2;
+  {
+    base::RunLoop run_loop;
+    auto done_closure = base::BarrierClosure(2, run_loop.QuitClosure());
+
+    auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+    pref_registry->RegisterIntegerPref(kKey, kInitialValue,
+                                       PrefRegistry::PUBLIC);
+    pref_registry->RegisterUnownedPref(kOtherKey);
+    auto pref_registry2 = base::MakeRefCounted<PrefRegistrySimple>();
+    pref_registry2->RegisterUnownedPref(kKey);
+    pref_registry2->RegisterIntegerPref(kOtherKey, kInitialValue,
+                                        PrefRegistry::PUBLIC);
+    ConnectToPrefService(connector(), std::move(pref_registry),
+                         base::flat_map<PrefValueStore::PrefStoreType,
+                                        scoped_refptr<PrefStore>>(),
+                         base::Bind(&OnCreate, done_closure, &pref_service));
+    ConnectToPrefService(connector(), std::move(pref_registry2),
+                         base::flat_map<PrefValueStore::PrefStoreType,
+                                        scoped_refptr<PrefStore>>(),
+                         base::Bind(&OnCreate, done_closure, &pref_service2));
+    run_loop.Run();
+  }
+
+  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
+  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kKey));
+  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kOtherKey));
+  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kOtherKey));
 }
 
 // Check that read-only pref store changes are observed.
@@ -227,6 +296,22 @@ TEST_F(PrefServiceFactoryTest, ReadOnlyPrefStore) {
   above_user_prefs_pref_store()->SetValue(kKey,
                                           base::MakeUnique<base::Value>(4), 0);
   WaitForPrefChange(pref_service.get(), kKey);
+  EXPECT_EQ(4, pref_service->GetInteger(kKey));
+}
+
+// Check that read-only pref store changes are observed.
+TEST_F(PrefServiceFactoryTest, ReadOnlyPrefStore_Local) {
+  auto pref_service = CreateWithLocalLayeredPrefStores();
+
+  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
+
+  below_user_prefs_pref_store()->SetValue(
+      kKey, base::MakeUnique<base::Value>(kUpdatedValue), 0);
+  EXPECT_EQ(kUpdatedValue, pref_service->GetInteger(kKey));
+  pref_service->SetInteger(kKey, 3);
+  EXPECT_EQ(3, pref_service->GetInteger(kKey));
+  above_user_prefs_pref_store()->SetValue(kKey,
+                                          base::MakeUnique<base::Value>(4), 0);
   EXPECT_EQ(4, pref_service->GetInteger(kKey));
 }
 
@@ -270,7 +355,7 @@ void Fail(PrefService* pref_service) {
 
 TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
   auto pref_service = Create();
-  auto pref_service2 = Create();
+  auto pref_service2 = CreateNonOwning();
 
   void (*updates[])(ScopedDictionaryPrefUpdate*) = {
       [](ScopedDictionaryPrefUpdate* update) {
@@ -428,7 +513,7 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
 
 TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Erase) {
   auto pref_service = Create();
-  auto pref_service2 = Create();
+  auto pref_service2 = CreateNonOwning();
   {
     ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
     update->SetInteger("path.to.integer", 1);
@@ -446,7 +531,7 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Erase) {
 
 TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_ClearDictionary) {
   auto pref_service = Create();
-  auto pref_service2 = Create();
+  auto pref_service2 = CreateNonOwning();
 
   {
     ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
@@ -466,7 +551,7 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_ClearDictionary) {
 TEST_F(PrefServiceFactoryTest,
        MultipleClients_SubPrefUpdates_ClearEmptyDictionary) {
   auto pref_service = Create();
-  auto pref_service2 = Create();
+  auto pref_service2 = CreateNonOwning();
 
   {
     ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
@@ -532,11 +617,14 @@ TEST_F(PrefServiceFactoryManualPrefStoreRegistrationTest,
                                   std::move(below_ptr));
 
   std::unique_ptr<PrefService> pref_service;
+
   base::RunLoop run_loop;
-  ConnectToPrefService(connector(), base::MakeRefCounted<PrefRegistrySimple>(),
-                       std::vector<PrefValueStore::PrefStoreType>(),
-                       base::Bind(&PrefServiceFactoryTest::OnCreate,
-                                  run_loop.QuitClosure(), &pref_service));
+  auto done_closure = base::BarrierClosure(2, run_loop.QuitClosure());
+  ConnectToPrefService(
+      connector(), base::MakeRefCounted<PrefRegistrySimple>(),
+      base::flat_map<PrefValueStore::PrefStoreType, scoped_refptr<PrefStore>>(),
+      base::Bind(&PrefServiceFactoryTest::OnCreate, done_closure,
+                 &pref_service));
 
   add_observer_run_loop.Run();
   ASSERT_TRUE(below_user_prefs.observer_added());
@@ -544,7 +632,7 @@ TEST_F(PrefServiceFactoryManualPrefStoreRegistrationTest,
   EXPECT_FALSE(pref_service);
 
   mojom::PrefStorePtr above_ptr;
-  PrefStoreImpl above_user_prefs({}, mojo::MakeRequest(&above_ptr));
+  PrefStoreImpl above_user_prefs(done_closure, mojo::MakeRequest(&above_ptr));
   pref_store_registry()->Register(PrefValueStore::COMMAND_LINE_STORE,
                                   std::move(above_ptr));
 
