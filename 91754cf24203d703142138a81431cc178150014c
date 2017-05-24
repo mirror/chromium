@@ -16,6 +16,24 @@
       "revId": "91754cf24203d703142138a81431cc178150014c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94d6960_3b72914f",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-24T15:52:53Z",
+      "side": 0,
+      "message": "This piece of code deals with an edge case when user requests desktop site while there is a non-redirect visible pending item. The original code (directly call GetLastCommittedNonRedirectedItem) simply discards the pending items and reloads the last committed non-redirect item, however, the new code would reload the visible pending item.",
+      "parentUuid": "9a6a3180_f5a78c16",
+      "revId": "91754cf24203d703142138a81431cc178150014c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
