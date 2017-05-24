@@ -127,6 +127,10 @@ BOOL SetStartupParametersForSpotlightAction(
       });
 }
 
+- (void)shutdown {
+  [super shutdown];
+}
+
 #pragma mark private methods
 
 - (void)clearAndAddSpotlightActions {
