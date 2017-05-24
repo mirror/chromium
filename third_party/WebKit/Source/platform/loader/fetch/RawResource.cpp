@@ -28,7 +28,6 @@
 #include <memory>
 #include "platform/HTTPNames.h"
 #include "platform/loader/fetch/FetchParameters.h"
-#include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoader.h"
@@ -183,16 +182,6 @@ void RawResource::WillNotFollowRedirect() {
 void RawResource::ResponseReceived(
     const ResourceResponse& response,
     std::unique_ptr<WebDataConsumerHandle> handle) {
-  if (response.WasFallbackRequiredByServiceWorker()) {
-    // The ServiceWorker asked us to re-fetch the request. This resource must
-    // not be reused.
-    // Note: This logic is needed here because DocumentThreadableLoader handles
-    // CORS independently from ResourceLoader. Fix it.
-    GetMemoryCache()->Remove(this);
-  }
-
-  bool is_successful_revalidation =
-      IsCacheValidator() && response.HttpStatusCode() == 304;
   Resource::ResponseReceived(response, nullptr);
 
   ResourceClientWalker<RawResourceClient> w(Clients());
@@ -201,15 +190,6 @@ void RawResource::ResponseReceived(
     // |handle| is cleared when passed, but it's not a problem because |handle|
     // is null when there are two or more clients, as asserted.
     c->ResponseReceived(this, this->GetResponse(), std::move(handle));
-  }
-
-  // If we successfully revalidated, we won't get appendData() calls. Forward
-  // the data to clients now instead. Note: |m_data| can be null when no data is
-  // appended to the original resource.
-  if (is_successful_revalidation && Data()) {
-    ResourceClientWalker<RawResourceClient> w(Clients());
-    while (RawResourceClient* c = w.Next())
-      c->DataReceived(this, Data()->Data(), Data()->size());
   }
 }
 

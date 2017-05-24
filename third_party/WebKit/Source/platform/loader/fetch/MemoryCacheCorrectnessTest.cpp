@@ -32,7 +32,6 @@
 
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/FetchParameters.h"
-#include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceRequest.h"
@@ -78,14 +77,6 @@ class MemoryCacheCorrectnessTest : public ::testing::Test {
     GetMemoryCache()->Add(resource);
 
     return resource;
-  }
-  // TODO(toyoshim): Consider to use MockResource for all tests instead of
-  // RawResource.
-  RawResource* FetchRawResource() {
-    ResourceRequest resource_request(KURL(kParsedURLString, kResourceURL));
-    resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
-    FetchParameters fetch_params(resource_request, FetchInitiatorInfo());
-    return RawResource::Fetch(fetch_params, Fetcher());
   }
   MockResource* FetchMockResource() {
     FetchParameters fetch_params(
@@ -425,30 +416,13 @@ TEST_F(MemoryCacheCorrectnessTest, FreshWithStaleRedirect) {
   EXPECT_NE(first_resource, fetched);
 }
 
-TEST_F(MemoryCacheCorrectnessTest, PostToSameURLTwice) {
-  ResourceRequest request1(KURL(kParsedURLString, kResourceURL));
-  request1.SetHTTPMethod(HTTPNames::POST);
-  RawResource* resource1 =
-      RawResource::Create(ResourceRequest(request1.Url()), Resource::kRaw);
-  resource1->SetStatus(ResourceStatus::kPending);
-  GetMemoryCache()->Add(resource1);
-
-  ResourceRequest request2(KURL(kParsedURLString, kResourceURL));
-  request2.SetHTTPMethod(HTTPNames::POST);
-  FetchParameters fetch2(request2, FetchInitiatorInfo());
-  RawResource* resource2 = RawResource::FetchSynchronously(fetch2, Fetcher());
-
-  EXPECT_EQ(resource2, GetMemoryCache()->ResourceForURL(request2.Url()));
-  EXPECT_NE(resource1, resource2);
-}
-
 TEST_F(MemoryCacheCorrectnessTest, 302RedirectNotImplicitlyFresh) {
   KURL redirect_url(kParsedURLString, kResourceURL);
   const char kRedirectTargetUrlString[] = "http://redirect-target.com";
   KURL redirect_target_url(kParsedURLString, kRedirectTargetUrlString);
 
-  RawResource* first_resource =
-      RawResource::Create(ResourceRequest(redirect_url), Resource::kRaw);
+  MockResource* first_resource =
+      MockResource::Create(ResourceRequest(redirect_url));
 
   ResourceResponse fresh302_response;
   fresh302_response.SetURL(redirect_url);
@@ -479,7 +453,7 @@ TEST_F(MemoryCacheCorrectnessTest, 302RedirectNotImplicitlyFresh) {
 
   AdvanceClock(500.);
 
-  RawResource* fetched = FetchRawResource();
+  MockResource* fetched = FetchMockResource();
   EXPECT_NE(first_resource, fetched);
 }
 

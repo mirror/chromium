@@ -30,8 +30,8 @@
 
 #include "platform/loader/fetch/MemoryCache.h"
 
-#include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/loader/testing/MockResource.h"
 #include "platform/loader/testing/MockResourceClient.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -159,7 +159,7 @@ static void TestResourcePruningAtEndOfTask(Resource* resource1,
 
   // Enforce pruning by adding |dummyResource| and then call prune().
   Resource* dummy_resource =
-      RawResource::Create(ResourceRequest("http://dummy"), Resource::kRaw);
+      MockResource::Create(ResourceRequest("http://dummy"));
   GetMemoryCache()->Add(dummy_resource);
   EXPECT_GT(GetMemoryCache()->size(), 1u);
   const unsigned kTotalCapacity = 1;

@@ -442,7 +442,7 @@ Resource* ResourceFetcher::ResourceForStaticData(
   resource->SetCacheIdentifier(cache_identifier);
   resource->Finish();
 
-  if (!substitute_data.IsValid())
+  if (!substitute_data.IsValid() && resource->IsShareable())
     GetMemoryCache()->Add(resource);
 
   return resource;
@@ -797,12 +797,8 @@ Resource* ResourceFetcher::CreateResourceForLoading(
   }
   resource->SetCacheIdentifier(cache_identifier);
 
-  // - Don't add main resource to cache to prevent reuse.
-  // - Don't add the resource if its body will not be stored.
-  if (IsMainThread() && factory.GetType() != Resource::kMainResource &&
-      params.Options().data_buffering_policy != kDoNotBufferData) {
+  if (resource->IsShareable())
     GetMemoryCache()->Add(resource);
-  }
   return resource;
 }
 

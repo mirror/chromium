@@ -148,8 +148,7 @@ TEST_F(ResourceFetcherTest, UseExistingResource) {
 
 TEST_F(ResourceFetcherTest, Vary) {
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
-  Resource* resource =
-      RawResource::Create(ResourceRequest(url), Resource::kRaw);
+  Resource* resource = MockResource::Create(ResourceRequest(url));
   GetMemoryCache()->Add(resource);
   ResourceResponse response;
   response.SetURL(url);
@@ -167,7 +166,7 @@ TEST_F(ResourceFetcherTest, Vary) {
       FetchParameters(resource_request, FetchInitiatorInfo());
   Platform::Current()->GetURLLoaderMockFactory()->RegisterURL(
       url, WebURLResponse(), "");
-  Resource* new_resource = RawResource::Fetch(fetch_params, fetcher);
+  Resource* new_resource = MockResource::Fetch(fetch_params, fetcher);
   EXPECT_NE(resource, new_resource);
   new_resource->Loader()->Cancel();
 }
@@ -215,8 +214,7 @@ TEST_F(ResourceFetcherTest, VaryOnBack) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
-  Resource* resource =
-      RawResource::Create(ResourceRequest(url), Resource::kRaw);
+  Resource* resource = MockResource::Create(ResourceRequest(url));
   GetMemoryCache()->Add(resource);
   ResourceResponse response;
   response.SetURL(url);
@@ -232,7 +230,7 @@ TEST_F(ResourceFetcherTest, VaryOnBack) {
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params =
       FetchParameters(resource_request, FetchInitiatorInfo());
-  Resource* new_resource = RawResource::Fetch(fetch_params, fetcher);
+  Resource* new_resource = MockResource::Fetch(fetch_params, fetcher);
   EXPECT_EQ(resource, new_resource);
 }
 
@@ -700,9 +698,7 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
 
 TEST_F(ResourceFetcherTest, Revalidate304) {
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
-  Resource* resource =
-      RawResource::Create(ResourceRequest(url), Resource::kRaw);
-  GetMemoryCache()->Add(resource);
+  Resource* resource = MockResource::Create(ResourceRequest(url));
   ResourceResponse response;
   response.SetURL(url);
   response.SetHTTPStatusCode(304);
@@ -717,7 +713,7 @@ TEST_F(ResourceFetcherTest, Revalidate304) {
       FetchParameters(resource_request, FetchInitiatorInfo());
   Platform::Current()->GetURLLoaderMockFactory()->RegisterURL(
       url, WebURLResponse(), "");
-  Resource* new_resource = RawResource::Fetch(fetch_params, fetcher);
+  Resource* new_resource = MockResource::Fetch(fetch_params, fetcher);
   fetcher->StopFetching();
 
   EXPECT_NE(resource, new_resource);

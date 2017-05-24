@@ -93,6 +93,7 @@ class PLATFORM_EXPORT RawResource final : public Resource {
   void DidSendData(unsigned long long bytes_sent,
                    unsigned long long total_bytes_to_be_sent) override;
   void DidDownloadData(int) override;
+  bool IsShareable() const override { return false; }
   void ReportResourceTimingToClients(const ResourceTimingInfo&) override;
 };
 
