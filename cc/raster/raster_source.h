@@ -27,6 +27,7 @@ namespace cc {
 class DisplayItemList;
 class DrawImage;
 class ImageDecodeCache;
+class PaintCanvas;
 
 class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
  public:
@@ -141,6 +142,16 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
     image_decode_cache_ = image_decode_cache;
   }
 
+  // Sets up a non-shared canvas for playing back, but doesn't play the
+  // raster source back.
+  void SetupCanvasForPlayback(
+      PaintCanvas* canvas,
+      const gfx::Rect& canvas_bitmap_rect,
+      const gfx::Rect& canvas_playback_rect,
+      const gfx::AxisTransform2d& raster_transform) const;
+
+  const DisplayItemList* display_list() const { return display_list_.get(); }
+
  protected:
   friend class base::RefCountedThreadSafe<RasterSource>;
 
@@ -170,7 +181,8 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
   void RasterCommon(SkCanvas* canvas,
                     SkPicture::AbortCallback* callback = nullptr) const;
 
-  void PrepareForPlaybackToCanvas(SkCanvas* canvas) const;
+  template <typename Canvas>
+  void PrepareForPlaybackToCanvas(Canvas* canvas) const;
 
   DISALLOW_COPY_AND_ASSIGN(RasterSource);
 };

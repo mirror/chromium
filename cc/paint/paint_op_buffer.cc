@@ -139,6 +139,13 @@ static constexpr size_t kNumOpTypes =
 static_assert(kNumOpTypes == TYPES(M), "Missing op in list");
 #undef M
 
+using SerializeFunction = size_t (*)(const PaintOp* op,
+                                  void* memory,
+                                  size_t size);
+#define M(T) &T::Serialize,
+static const SerializeFunction g_serialize_functions[kNumOpTypes] = {TYPES(M)};
+#undef M
+
 using RasterFunction = void (*)(const PaintOp* op,
                                 SkCanvas* canvas,
                                 const SkMatrix& original_ctm);
@@ -189,6 +196,136 @@ TYPES(M);
 #undef TYPES
 
 SkRect PaintOp::kUnsetRect = {SK_ScalarInfinity, 0, 0, 0};
+
+size_t AnnotateOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t ClipPathOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t ClipRectOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t ClipRRectOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t ConcatOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawArcOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawCircleOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawColorOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawDisplayItemListOp::Serialize(const PaintOp* op,
+                                        void* memory,
+                                        size_t size) {
+  return 0;
+}
+
+size_t DrawDRRectOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawImageOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawImageRectOp::Serialize(const PaintOp* op,
+                                  void* memory,
+                                  size_t size) {
+  return 0;
+}
+
+size_t DrawIRectOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawLineOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawOvalOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawPathOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawPosTextOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawRecordOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawRectOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawRRectOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawTextOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t DrawTextBlobOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t NoopOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t RestoreOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t RotateOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t SaveOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t SaveLayerOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t SaveLayerAlphaOp::Serialize(const PaintOp* op,
+                                   void* memory,
+                                   size_t size) {
+  return 0;
+}
+
+size_t ScaleOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t SetMatrixOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
+
+size_t TranslateOp::Serialize(const PaintOp* op, void* memory, size_t size) {
+  return 0;
+}
 
 void AnnotateOp::Raster(const PaintOp* base_op,
                         SkCanvas* canvas,
@@ -448,6 +585,10 @@ void PaintOp::Raster(SkCanvas* canvas, const SkMatrix& original_ctm) const {
 
 void PaintOp::RasterWithAlpha(SkCanvas* canvas, uint8_t alpha) const {
   g_raster_alpha_functions[type](this, canvas, alpha);
+}
+
+size_t PaintOp::Serialize(void* memory, size_t size) const {
+  return g_serialize_functions[type](this, memory, size);
 }
 
 int ClipPathOp::CountSlowPaths() const {

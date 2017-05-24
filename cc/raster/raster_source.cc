@@ -21,6 +21,34 @@
 #include "ui/gfx/geometry/axis_transform2d.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 
+namespace {
+
+bool CanvasIsUnclipped(const SkCanvas* canvas) {
+  if (!canvas->isClipRect())
+    return false;
+
+  SkIRect bounds;
+  if (!canvas->getDeviceClipBounds(&bounds))
+    return false;
+
+  SkISize size = canvas->getBaseLayerSize();
+  return bounds.contains(0, 0, size.width(), size.height());
+}
+
+// Used for both SkCanvas and PaintCanvas
+template <typename Canvas>
+void SetupScaleAndClip(Canvas* canvas,
+                       const gfx::Rect& canvas_bitmap_rect,
+                       const gfx::Rect& canvas_playback_rect,
+                       const gfx::AxisTransform2d& raster_transform) {
+  canvas->translate(-canvas_bitmap_rect.x(), -canvas_bitmap_rect.y());
+  canvas->clipRect(gfx::RectToSkRect(canvas_bitmap_rect));
+  canvas->translate(raster_transform.translation().x(),
+                    raster_transform.translation().y());
+  canvas->scale(raster_transform.scale(), raster_transform.scale());
+}
+}
+
 namespace cc {
 
 scoped_refptr<RasterSource> RasterSource::CreateFromRecordingSource(
@@ -68,19 +96,17 @@ void RasterSource::PlaybackToCanvas(
     const gfx::Rect& canvas_playback_rect,
     const gfx::AxisTransform2d& raster_transform,
     const PlaybackSettings& settings) const {
-  SkIRect raster_bounds = gfx::RectToSkIRect(canvas_bitmap_rect);
   if (!canvas_playback_rect.IsEmpty() &&
-      !raster_bounds.intersect(gfx::RectToSkIRect(canvas_playback_rect)))
+      !canvas_bitmap_rect.Intersects(canvas_playback_rect)) {
     return;
+  }
+
   // Treat all subnormal values as zero for performance.
   ScopedSubnormalFloatDisabler disabler;
 
   raster_canvas->save();
-  raster_canvas->translate(-canvas_bitmap_rect.x(), -canvas_bitmap_rect.y());
-  raster_canvas->clipRect(SkRect::MakeFromIRect(raster_bounds));
-  raster_canvas->translate(raster_transform.translation().x(),
-                           raster_transform.translation().y());
-  raster_canvas->scale(raster_transform.scale(), raster_transform.scale());
+  SetupScaleAndClip(raster_canvas, canvas_bitmap_rect, canvas_playback_rect,
+                    raster_transform);
   PlaybackToCanvas(raster_canvas, target_color_space, settings);
   raster_canvas->restore();
 }
@@ -96,8 +122,13 @@ void RasterSource::PlaybackToCanvas(SkCanvas* input_canvas,
     raster_canvas = color_transform_canvas.get();
   }
 
-  if (!settings.playback_to_shared_canvas)
+  if (!settings.playback_to_shared_canvas) {
+    // TODO(enne): replicate this discard in gles2_cmd_decoder
+    if (CanvasIsUnclipped(raster_canvas))
+      raster_canvas->discard();
+
     PrepareForPlaybackToCanvas(raster_canvas);
+  }
 
   if (settings.skip_images) {
     SkipImageCanvas canvas(raster_canvas);
@@ -121,28 +152,18 @@ void RasterSource::PlaybackToCanvas(SkCanvas* input_canvas,
   }
 }
 
-namespace {
-
-bool CanvasIsUnclipped(const SkCanvas* canvas) {
-  if (!canvas->isClipRect())
-    return false;
-
-  SkIRect bounds;
-  if (!canvas->getDeviceClipBounds(&bounds))
-    return false;
-
-  SkISize size = canvas->getBaseLayerSize();
-  return bounds.contains(0, 0, size.width(), size.height());
+void RasterSource::SetupCanvasForPlayback(
+    PaintCanvas* canvas,
+    const gfx::Rect& canvas_bitmap_rect,
+    const gfx::Rect& canvas_playback_rect,
+    const gfx::AxisTransform2d& raster_transform) const {
+  SetupScaleAndClip(canvas, canvas_bitmap_rect, canvas_playback_rect,
+                    raster_transform);
+  PrepareForPlaybackToCanvas(canvas);
 }
 
-}  // namespace
-
-void RasterSource::PrepareForPlaybackToCanvas(SkCanvas* canvas) const {
-  // TODO(hendrikw): See if we can split this up into separate functions.
-
-  if (CanvasIsUnclipped(canvas))
-    canvas->discard();
-
+template <typename Canvas>
+void RasterSource::PrepareForPlaybackToCanvas(Canvas* canvas) const {
   // If this raster source has opaque contents, it is guaranteeing that it will
   // draw an opaque rect the size of the layer.  If it is not, then we must
   // clear this canvas ourselves.
@@ -184,6 +205,9 @@ void RasterSource::PrepareForPlaybackToCanvas(SkCanvas* canvas) const {
   content_device_rect.roundOut(&interest_rect);
   interest_rect.outset(1, 1);
 
+// TODO(enne): need to support clipRegion if we want to handle this
+// Or some sort of variant on clip region.
+#if 0
   if (clear_canvas_with_debug_color_) {
     // Any non-painted areas outside of the content bounds are left in
     // this color.  If this is seen then it means that cc neglected to
@@ -208,6 +232,9 @@ void RasterSource::PrepareForPlaybackToCanvas(SkCanvas* canvas) const {
   canvas->clipRegion(interest_region);
   canvas->clear(background_color_);
   canvas->restore();
+#else
+  canvas->clear(background_color_);
+#endif
 }
 
 void RasterSource::RasterCommon(SkCanvas* raster_canvas,
