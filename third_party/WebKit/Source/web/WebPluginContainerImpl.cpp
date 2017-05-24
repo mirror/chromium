@@ -111,17 +111,6 @@ namespace blink {
 
 // Public methods --------------------------------------------------------------
 
-FrameView* WebPluginContainerImpl::ParentFrameView() const {
-  if (!is_attached_)
-    return nullptr;
-
-  LocalFrame* frame = element_->GetDocument().GetFrame();
-  if (!frame)
-    return nullptr;
-
-  return frame->View();
-}
-
 void WebPluginContainerImpl::Attach() {
   DCHECK(!is_attached_);
   is_attached_ = true;
@@ -143,9 +132,7 @@ void WebPluginContainerImpl::UpdateAllLifecyclePhases() {
 
 void WebPluginContainerImpl::Paint(GraphicsContext& context,
                                    const CullRect& cull_rect) const {
-  FrameView* parent = ParentFrameView();
-  if (!parent)
-    return;
+  DCHECK(is_attached_ && ParentFrameView());
 
   // Don't paint anything if the plugin doesn't intersect.
   if (!cull_rect.IntersectsCullRect(frame_rect_))
@@ -171,21 +158,22 @@ void WebPluginContainerImpl::Paint(GraphicsContext& context,
 
   // The plugin is positioned in the root frame's coordinates, so it needs to
   // be painted in them too.
-  IntPoint origin = parent->ContentsToRootFrame(IntPoint(0, 0));
+  IntPoint origin = ParentFrameView()->ContentsToRootFrame(IntPoint(0, 0));
   context.Translate(static_cast<float>(-origin.X()),
                     static_cast<float>(-origin.Y()));
 
   WebCanvas* canvas = context.Canvas();
 
-  IntRect window_rect = parent->ContentsToRootFrame(cull_rect.rect_);
+  IntRect window_rect = ParentFrameView()->ContentsToRootFrame(cull_rect.rect_);
   web_plugin_->Paint(canvas, window_rect);
 
   context.Restore();
 }
 
 void WebPluginContainerImpl::InvalidateRect(const IntRect& rect) {
-  FrameView* parent = ParentFrameView();
-  if (!parent)
+  // InvalidateRect can be called from Dispose when this plugin is no longer
+  // attached.  In this case, we return immediately.
+  if (!is_attached_)
     return;
 
   LayoutBox* layout_object = ToLayoutBox(element_->GetLayoutObject());
@@ -285,7 +273,6 @@ void WebPluginContainerImpl::SetPlugin(WebPlugin* plugin) {
 
   element_->ResetInstance();
   web_plugin_ = plugin;
-  is_disposed_ = false;
 }
 
 float WebPluginContainerImpl::DeviceScaleFactor() {
@@ -447,9 +434,8 @@ void WebPluginContainerImpl::ScheduleAnimation() {
 }
 
 void WebPluginContainerImpl::ReportGeometry() {
-  FrameView* parent = ParentFrameView();
-  // We cannot compute geometry without a parent or layoutObject.
-  if (!parent || !element_ || !element_->GetLayoutObject() || !web_plugin_)
+  // We cannot compute geometry without a layoutObject.
+  if (!element_ || !element_->GetLayoutObject() || !web_plugin_)
     return;
 
   IntRect window_rect, clip_rect, unobscured_rect;
@@ -524,12 +510,12 @@ void WebPluginContainerImpl::LoadFrameRequest(const WebURLRequest& request,
 }
 
 bool WebPluginContainerImpl::IsRectTopmost(const WebRect& rect) {
-  // Disallow access to the frame during dispose(), because it is not guaranteed
+  // Disallow access to the frame during Dispose(), because it is not guaranteed
   // to be valid memory once this object has started disposal. In particular,
   // we might be being disposed because the frame has already be deleted and
   // then something else dropped the
   // last reference to the this object.
-  if (is_disposed_ || !element_)
+  if (!is_attached_ || !element_)
     return false;
 
   LocalFrame* frame = element_->GetDocument().GetFrame();
@@ -592,8 +578,9 @@ void WebPluginContainerImpl::SetWantsWheelEvents(bool wants_wheel_events) {
   if (Page* page = element_->GetDocument().GetPage()) {
     if (ScrollingCoordinator* scrolling_coordinator =
             page->GetScrollingCoordinator()) {
-      FrameView* parent = ParentFrameView();
-      if (parent)
+      // Only call scrolling_coordinator if attached.  SetWantsWheelEvents can
+      // be called from Plugin Initialization when it is not yet attached.
+      if (is_attached_)
         scrolling_coordinator->NotifyGeometryChanged();
     }
   }
@@ -601,23 +588,20 @@ void WebPluginContainerImpl::SetWantsWheelEvents(bool wants_wheel_events) {
 
 WebPoint WebPluginContainerImpl::RootFrameToLocalPoint(
     const WebPoint& point_in_root_frame) {
-  FrameView* parent = ParentFrameView();
-  if (!parent)
-    return point_in_root_frame;
-  WebPoint point_in_content = parent->RootFrameToContents(point_in_root_frame);
+  DCHECK(is_attached_ && ParentFrameView());
+  WebPoint point_in_content =
+      ParentFrameView()->RootFrameToContents(point_in_root_frame);
   return RoundedIntPoint(element_->GetLayoutObject()->AbsoluteToLocal(
       FloatPoint(point_in_content), kUseTransforms));
 }
 
 WebPoint WebPluginContainerImpl::LocalToRootFramePoint(
     const WebPoint& point_in_local) {
-  FrameView* parent = ParentFrameView();
-  if (!parent)
-    return point_in_local;
+  DCHECK(is_attached_ && ParentFrameView());
   IntPoint absolute_point =
       RoundedIntPoint(element_->GetLayoutObject()->LocalToAbsolute(
           FloatPoint(point_in_local), kUseTransforms));
-  return parent->ContentsToRootFrame(absolute_point);
+  return ParentFrameView()->ContentsToRootFrame(absolute_point);
 }
 
 void WebPluginContainerImpl::DidReceiveResponse(
@@ -686,7 +670,6 @@ bool WebPluginContainerImpl::WantsWheelEvents() {
 WebPluginContainerImpl::WebPluginContainerImpl(HTMLPlugInElement* element,
                                                WebPlugin* web_plugin)
     : WebPluginContainerBase(element->GetDocument().GetFrame()),
-      is_attached_(false),
       element_(element),
       web_plugin_(web_plugin),
       web_layer_(nullptr),
@@ -694,15 +677,19 @@ WebPluginContainerImpl::WebPluginContainerImpl(HTMLPlugInElement* element,
       wants_wheel_events_(false),
       self_visible_(false),
       parent_visible_(false),
-      is_disposed_(false) {}
+      is_attached_(false) {}
 
 WebPluginContainerImpl::~WebPluginContainerImpl() {
   // The plugin container must have been disposed of by now.
   DCHECK(!web_plugin_);
 }
 
+FrameView* WebPluginContainerImpl::ParentFrameView() const {
+  return element_->GetDocument().GetFrame()->View();
+}
+
 void WebPluginContainerImpl::Dispose() {
-  is_disposed_ = true;
+  is_attached_ = false;
 
   RequestTouchEventType(kTouchEventRequestTypeNone);
   SetWantsWheelEvents(false);
@@ -728,6 +715,7 @@ void WebPluginContainerImpl::HandleMouseEvent(MouseEvent* event) {
   // We cache the parent FrameView here as the plugin widget could be deleted
   // in the call to HandleEvent. See http://b/issue?id=1362948
   FrameView* parent = ParentFrameView();
+  DCHECK(is_attached_ && parent);
 
   // TODO(dtapuska): Move WebMouseEventBuilder into the anonymous namespace
   // in this class.
@@ -789,8 +777,8 @@ void WebPluginContainerImpl::HandleWheelEvent(WheelEvent* event) {
   WebFloatPoint absolute_location = event->NativeEvent().PositionInRootFrame();
 
   // Translate the root frame position to content coordinates.
-  if (FrameView* parent = ParentFrameView())
-    absolute_location = parent->RootFrameToContents(absolute_location);
+  DCHECK(is_attached_ && ParentFrameView());
+  absolute_location = ParentFrameView()->RootFrameToContents(absolute_location);
 
   IntPoint local_point =
       RoundedIntPoint(element_->GetLayoutObject()->AbsoluteToLocal(
@@ -849,12 +837,13 @@ WebTouchEvent WebPluginContainerImpl::TransformTouchEvent(
   const WebTouchEvent* touch_event = static_cast<const WebTouchEvent*>(&event);
   WebTouchEvent transformed_event = touch_event->FlattenTransform();
 
+  DCHECK(is_attached_ && ParentFrameView());
+  FrameView* parent = ParentFrameView();
   for (unsigned i = 0; i < transformed_event.touches_length; ++i) {
     WebFloatPoint absolute_location = transformed_event.touches[i].position;
 
     // Translate the root frame position to content coordinates.
-    if (FrameView* parent = ParentFrameView())
-      absolute_location = parent->RootFrameToContents(absolute_location);
+    absolute_location = parent->RootFrameToContents(absolute_location);
 
     IntPoint local_point =
         RoundedIntPoint(element_->GetLayoutObject()->AbsoluteToLocal(
@@ -934,9 +923,9 @@ void WebPluginContainerImpl::HandleGestureEvent(GestureEvent* event) {
 }
 
 void WebPluginContainerImpl::SynthesizeMouseEventIfPossible(TouchEvent* event) {
-  FrameView* parent = ParentFrameView();
+  DCHECK(is_attached_ && ParentFrameView());
   WebMouseEventBuilder web_event(
-      parent, LayoutItem(element_->GetLayoutObject()), *event);
+      ParentFrameView(), LayoutItem(element_->GetLayoutObject()), *event);
   if (web_event.GetType() == WebInputEvent::kUndefined)
     return;
 
