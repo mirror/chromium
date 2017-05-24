@@ -25,6 +25,8 @@ source_set("preferences") {
     "//services/service_manager/public/cpp",
   ]
   sources = [
+    "pending_pref_connection.cc",
+    "pending_pref_connection.h",
     "persistent_pref_store_factory.cc",
     "persistent_pref_store_factory.h",
     "persistent_pref_store_impl.cc",
