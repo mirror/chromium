@@ -673,8 +673,11 @@ public class ChildProcessLauncherTest {
                 String packageName = creationParams != null
                         ? creationParams.getPackageNameForSandboxedService()
                         : context.getPackageName();
+                boolean bindAsExternalService = inSandbox && creationParams != null
+                        ? creationParams.getIsSandboxedServiceExternal()
+                        : false;
                 ChildConnectionAllocator allocator = ChildProcessLauncher.getConnectionAllocator(
-                        context, packageName, inSandbox);
+                        context, packageName, inSandbox, bindAsExternalService);
 
                 allocator.enqueuePendingQueueForTesting(new ChildSpawnData(context,
                         null /* serviceBundle */, null /* connectionBundle */,
@@ -691,7 +694,8 @@ public class ChildProcessLauncherTest {
                     @Override
                     public Integer call() {
                         return ChildProcessLauncher
-                                .getConnectionAllocator(context, packageName, true /*isSandboxed */)
+                                .getConnectionAllocator(context, packageName, true /*isSandboxed */,
+                                        false /* bindToCallerCheck */)
                                 .allocatedConnectionsCountForTesting();
                     }
                 });
@@ -704,7 +708,8 @@ public class ChildProcessLauncherTest {
                     @Override
                     public ChildProcessConnection[] call() {
                         return ChildProcessLauncher
-                                .getConnectionAllocator(context, packageName, true /*isSandboxed */)
+                                .getConnectionAllocator(context, packageName, true /*isSandboxed */,
+                                        false /* bindToCallerCheck */)
                                 .connectionArrayForTesting();
                     }
                 });
@@ -717,7 +722,8 @@ public class ChildProcessLauncherTest {
                     @Override
                     public Integer call() {
                         return ChildProcessLauncher
-                                .getConnectionAllocator(context, packageName, inSandbox)
+                                .getConnectionAllocator(context, packageName, inSandbox,
+                                        false /* bindToCallerCheck */)
                                 .pendingSpawnsCountForTesting();
                     }
                 });
