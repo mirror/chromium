@@ -85,6 +85,12 @@ std::string EncodeImage(const gfx::Image& image,
   return base_64_data;
 }
 
+std::string EncodeSkBitmap(const gfx::SkBitmap& image,
+                           const std::string& format,
+                           int quality) {
+  return EncodeImage(gfx::Image::CreateFrom1xBitmap(bitmap), format, quality);
+}
+
 }  // namespace
 
 PageHandler::PageHandler()
@@ -593,8 +599,7 @@ void PageHandler::ScreencastFrameCaptured(cc::CompositorFrameMetadata metadata,
   }
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::Bind(&EncodeImage, gfx::Image::CreateFrom1xBitmap(bitmap),
-                 screencast_format_, screencast_quality_),
+      base::Bind(&EncodeImage, bitmap, screencast_format_, screencast_quality_),
       base::Bind(&PageHandler::ScreencastFrameEncoded,
                  weak_factory_.GetWeakPtr(), base::Passed(&metadata),
                  base::Time::Now()));
