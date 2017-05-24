@@ -37,6 +37,11 @@
 #include "ios/web/public/user_agent.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
+
+// TODO(crbug.com/678047) Remove this switch when request mobile site
+// functionality is implemented.
+#define HIDE_REQUEST_MOBILE_SITE_CELL
+
 using ios::material::TimingFunction;
 
 namespace {
@@ -276,6 +281,12 @@ NS_INLINE void AnimateInViews(NSArray* views,
       break;
     case web::UserAgentType::DESKTOP:
       [self setItemEnabled:YES withTag:IDC_REQUEST_MOBILE_SITE];
+
+// TODO(crbug.com/678047) Remove this switch when request mobile site
+// functionality is implemented.
+#ifdef HIDE_REQUEST_MOBILE_SITE_CELL
+      [self setItemEnabled:NO withTag:IDC_REQUEST_DESKTOP_SITE];
+#endif
       break;
   }
 
