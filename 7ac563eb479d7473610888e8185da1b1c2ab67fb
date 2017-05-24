@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8feffbd_96e9b818",
+        "filename": "net/dns/dns_config_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-05-24T18:28:32Z",
+      "side": 1,
+      "message": "I don\u0027t think that detaching in the destructor is the right pattern to be using, so I would like to hear more about what your intent is.\n\nI think to convert from NonThreadSafe to ThreadChecker, we want to instead add to destructors:\n\n   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);\n\nMy understanding is that today, NonThreadSafe asserts the thread in its destructor so this is the default behavior we are getting. Whereas ThreadChecker doesn\u0027t appear to do that, so we will need to call explicitly in the destructor.",
+      "revId": "7ac563eb479d7473610888e8185da1b1c2ab67fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
