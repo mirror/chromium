@@ -16,6 +16,24 @@
       "revId": "b6168b1d24855e3ae95a61fbd1bc83f29211e7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c32084b_7c298ccd",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobDataTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-24T23:15:31Z",
+      "side": 1,
+      "message": "Okay, figured out what the problem was (some bug in BindingSet::FlushForTesting), so no longer using RunUntilIdle for these tests.",
+      "parentUuid": "f4440429_f3e192ab",
+      "revId": "b6168b1d24855e3ae95a61fbd1bc83f29211e7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
