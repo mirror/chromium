@@ -600,7 +600,7 @@ TEST_F(OfflinePageModelImplTest, SavePageOfflineArchiverTwoPages) {
   archiver_ptr->set_delayed(true);
   SavePageWithArchiverAsync(
       kTestUrl, kTestClientId1, GURL(), std::move(archiver));
-  EXPECT_TRUE(archiver_ptr->create_archive_called());
+  EXPECT_FALSE(archiver_ptr->create_archive_called());
   // |remove_popup_overlay| should not be turned on on foreground mode.
   EXPECT_FALSE(archiver_ptr->create_archive_params().remove_popup_overlay);
 
@@ -672,11 +672,13 @@ TEST_F(OfflinePageModelImplTest, SavePageOnBackground) {
   save_page_params.is_background = true;
   save_page_params.use_page_problem_detectors = false;
   SavePageWithParamsAsync(save_page_params, std::move(archiver));
+  EXPECT_FALSE(archiver_ptr->create_archive_called());
+  EXPECT_FALSE(archiver_ptr->create_archive_params().remove_popup_overlay);
+
+  PumpLoop();
   EXPECT_TRUE(archiver_ptr->create_archive_called());
   // |remove_popup_overlay| should be turned on on background mode.
   EXPECT_TRUE(archiver_ptr->create_archive_params().remove_popup_overlay);
-
-  PumpLoop();
 }
 
 TEST_F(OfflinePageModelImplTest, MarkPageAccessed) {
