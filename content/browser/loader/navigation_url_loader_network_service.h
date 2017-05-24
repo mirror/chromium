@@ -64,7 +64,7 @@ class NavigationURLLoaderNetworkService : public NavigationURLLoader,
 
   mojo::Binding<mojom::URLLoaderClient> binding_;
   std::unique_ptr<NavigationRequestInfo> request_info_;
-  mojom::URLLoaderAssociatedPtr url_loader_associated_ptr_;
+  mojom::URLLoaderPtr url_loader_ptr_;
   scoped_refptr<ResourceResponse> response_;
   SSLStatus ssl_status_;
 
