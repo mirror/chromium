@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "600bb468_a7dbcda2",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-24T07:45:52Z",
+      "side": 1,
+      "message": "We do need the call to Dispose here.\nDocument::Shutdown calls SetWidget(nullptr) which then executes this code path.",
+      "parentUuid": "e6b3747c_c5b19c5e",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 31
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "997e07f7_3ba14b91",
         "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
         "patchSetId": 15
