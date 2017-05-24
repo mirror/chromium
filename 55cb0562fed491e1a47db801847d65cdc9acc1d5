@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f709c38f_e75a8127",
+        "filename": "cc/blink/web_display_item_list_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-24T20:36:44Z",
+      "side": 1,
+      "message": "It\u0027s code like this as well as the visual rect saving/restore stack thoughts that make me wonder if this should all be going through RecordPaintCanvas instead of directly pushing ops into PaintOpBuffer.  I guess it\u0027s a question of how smart PaintOpBuffer should be, and if RecordPaintCanvas should be more stateful or if it should be the thin one with pob holding all the logic.\n\nNot suggesting to change it for this patch, but I\u0027d like to take some time in the future to think about what the division of logic should be here.",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e39790_05d26aaf",
+        "filename": "cc/layers/picture_image_layer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-24T20:36:44Z",
+      "side": 1,
+      "message": "base::MakeRefCounted?",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4097b60_26369252",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-24T20:36:44Z",
+      "side": 1,
+      "message": "discrete? :3",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28d9111_e03a4101",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-24T20:36:44Z",
+      "side": 1,
+      "message": "Looks pretty renamed.",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d574a58f_71c089ea",
+        "filename": "cc/paint/paint_canvas.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-24T20:36:44Z",
+      "side": 1,
+      "message": "default value on a virtual \u003c_\u003c",
+      "revId": "55cb0562fed491e1a47db801847d65cdc9acc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
