@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c3e7e2e3_ed920452",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-24T03:24:43Z",
+      "side": 1,
+      "message": "Maybe a good solution would be to move the plugin to be stored on HTMLPlugInElement.  I did have the code this way earlier, but ended up bringing the plugin back into HTMLFrameOwnerElement to avoid lots of duplication.  Maybe with deferred operations gone, this is a good option again.",
+      "parentUuid": "c73e7a1f_f7c906ac",
+      "range": {
+        "startLine": 161,
+        "startChar": 28,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6b3747c_c5b19c5e",
         "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
         "patchSetId": 15
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8a23cdd4_352aade7",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-24T03:24:43Z",
+      "side": 1,
+      "message": "This code path can have FrameView and RemoteFrameView.",
+      "parentUuid": "997e07f7_3ba14b91",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 29
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c8967bb_dc3776f3",
         "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
         "patchSetId": 15
@@ -82,6 +130,30 @@
       "writtenOn": "2017-05-24T03:08:43Z",
       "side": 1,
       "message": "Also, is this a Plugin only thing as well? My recollection is this is only used for persisting plugin widgets.",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 22
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4af9aa_afecedc8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-05-24T03:24:43Z",
+      "side": 1,
+      "message": "This one is plugins-only.  I\u0027ll do a CL to move plugins into HTMLPlugInElement, and this code will move to HTMLPlugInElement.  I will also move the SuspendScope to HTMLPlugInElement.",
+      "parentUuid": "4c8967bb_dc3776f3",
       "range": {
         "startLine": 255,
         "startChar": 0,
