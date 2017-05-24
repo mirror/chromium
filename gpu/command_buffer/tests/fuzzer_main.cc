@@ -49,7 +49,11 @@ const size_t kTransferBufferSize = 16384;
 const size_t kSmallTransferBufferSize = 16;
 const size_t kTinyTransferBufferSize = 3;
 
-#if !defined(GPU_FUZZER_USE_ANGLE)
+#if !defined(GPU_FUZZER_USE_ANGLE) && !defined(GPU_FUZZER_USE_SWIFTSHADER)
+#define GPU_FUZZER_USE_STUB
+#endif
+
+#if defined(GPU_FUZZER_USE_STUB)
 static const char kExtensions[] =
     "GL_AMD_compressed_ATC_texture "
     "GL_ANGLE_texture_compression_dxt3 "
@@ -95,7 +99,7 @@ class CommandBufferSetup {
         mailbox_manager_(new gles2::MailboxManagerImpl),
         share_group_(new gl::GLShareGroup),
         command_buffer_id_(CommandBufferId::FromUnsafeValue(1)) {
-    logging::SetMinLogLevel(logging::LOG_FATAL);
+    // logging::SetMinLogLevel(logging::LOG_FATAL);
     base::CommandLine::Init(0, NULL);
 
     auto* command_line = base::CommandLine::ForCurrentProcess();
@@ -112,19 +116,26 @@ class CommandBufferSetup {
                                     gl::kGLImplementationANGLEName);
     command_line->AppendSwitchASCII(switches::kUseANGLE,
                                     gl::kANGLEImplementationNullName);
-    gl::init::InitializeGLOneOffImplementation(gl::kGLImplementationEGLGLES2,
-                                               false, false, false);
+    CHECK(gl::init::InitializeGLOneOffImplementation(
+        gl::kGLImplementationEGLGLES2, false, false, false));
+#elif defined(GPU_FUZZER_USE_SWIFTSHADER)
+    command_line->AppendSwitchASCII(switches::kUseGL,
+                                    gl::kGLImplementationSwiftShaderName);
+    CHECK(gl::init::InitializeGLOneOffImplementation(
+        gl::kGLImplementationSwiftShaderGL, false, false, false));
+#endif
 
+#if !defined(GPU_FUZZER_USE_STUB)
     surface_ = new gl::PbufferGLSurfaceEGL(gfx::Size());
     surface_->Initialize();
     if (!recreate_context_) {
       InitContext();
     }
-#else
+#else   // defined(GPU_FUZZER_USE_STUB)
     surface_ = new gl::GLSurfaceStub;
     InitContext();
     gl::GLSurfaceTestSupport::InitializeOneOffWithMockBindings();
-#endif
+#endif  // defined(GPU_FUZZER_USE_STUB)
 
     sync_point_client_state_ = sync_point_manager_->CreateSyncPointClientState(
         CommandBufferNamespace::IN_PROCESS, command_buffer_id_,
@@ -172,7 +183,11 @@ class CommandBufferSetup {
     attrib_helper.alpha_size = 8;
     attrib_helper.depth_size = 0;
     attrib_helper.stencil_size = 0;
+#if defined(GPU_FUZZER_USE_SWIFTSHADER)
+    attrib_helper.context_type = gles2::CONTEXT_TYPE_OPENGLES2;
+#else
     attrib_helper.context_type = gles2::CONTEXT_TYPE_OPENGLES3;
+#endif
 
     bool result =
         decoder_->Initialize(surface_.get(), context_.get(), true,
@@ -285,7 +300,7 @@ class CommandBufferSetup {
   }
 
   void InitContext() {
-#if defined(GPU_FUZZER_USE_ANGLE)
+#if !defined(GPU_FUZZER_USE_STUB)
     context_ = new gl::GLContextEGL(share_group_.get());
     context_->Initialize(surface_.get(), gl::GLContextAttribs());
 #else
