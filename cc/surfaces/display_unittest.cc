@@ -114,11 +114,12 @@ class DisplayTest : public testing::Test {
     std::unique_ptr<TestDisplayScheduler> scheduler(
         new TestDisplayScheduler(task_runner_.get()));
     scheduler_ = scheduler.get();
+    scheduler->SetBeginFrameSource(begin_frame_source_.get());
 
     display_ = base::MakeUnique<Display>(
         &shared_bitmap_manager_, nullptr /* gpu_memory_buffer_manager */,
-        settings, kArbitraryFrameSinkId, begin_frame_source_.get(),
-        std::move(output_surface), std::move(scheduler),
+        settings, kArbitraryFrameSinkId, std::move(output_surface),
+        std::move(scheduler),
         base::MakeUnique<TextureMailboxDeleter>(task_runner_.get()));
     display_->SetVisible(true);
   }
