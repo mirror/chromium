@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b2154b8_d400a9cb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-24T19:25:52Z",
+      "side": 1,
+      "message": "doh, thought it was lazy allocated without checking. removed",
+      "parentUuid": "7ca02115_3192faa9",
+      "range": {
+        "startLine": 210,
+        "startChar": 31,
+        "endLine": 210,
+        "endChar": 68
+      },
+      "revId": "b1ef768b7ef6b880957153abc2e835c7c4aa64a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff8d3155_e2d17b6f",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-24T19:16:13Z",
       "side": 1,
       "message": "Nit: is there a case where this wouldn\u0027t be true?",
+      "range": {
+        "startLine": 211,
+        "startChar": 31,
+        "endLine": 211,
+        "endChar": 68
+      },
+      "revId": "b1ef768b7ef6b880957153abc2e835c7c4aa64a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3c4d14_3ba4e7ff",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-24T19:25:52Z",
+      "side": 1,
+      "message": "yeah, when a privileged service gets freed :p",
+      "parentUuid": "ff8d3155_e2d17b6f",
       "range": {
         "startLine": 211,
         "startChar": 31,
