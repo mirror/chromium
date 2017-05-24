@@ -305,12 +305,15 @@ class PLATFORM_EXPORT PaintController {
   void GenerateRasterInvalidations(PaintChunk& new_chunk);
   void GenerateRasterInvalidationsComparingChunks(PaintChunk& new_chunk,
                                                   const PaintChunk& old_chunk);
+  enum OldOrNewItem { kOldItem, kNewItem };
   inline void AddRasterInvalidation(const DisplayItemClient&,
                                     PaintChunk&,
-                                    const FloatRect&);
+                                    const FloatRect&,
+                                    OldOrNewItem);
   void TrackRasterInvalidation(const DisplayItemClient&,
                                PaintChunk&,
-                               const FloatRect&);
+                               const FloatRect&,
+                               OldOrNewItem);
 
   // The following two methods are for checking under-invalidations
   // (when RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled).
