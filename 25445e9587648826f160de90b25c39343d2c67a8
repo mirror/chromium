@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3d3444b_a56a8ac5",
+        "filename": "ios/chrome/browser/tabs/tab.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-24T19:20:26Z",
+      "side": 1,
+      "message": "Since this is a reverting, the diff on the right hand side is the original code, as Rohit suggested, we\u0027re not going to touch tab and BVC, so this file should eventually look like left hand side.",
+      "parentUuid": "e6607709_af55bb66",
+      "range": {
+        "startLine": 243,
+        "startChar": 14,
+        "endLine": 243,
+        "endChar": 23
+      },
+      "revId": "25445e9587648826f160de90b25c39343d2c67a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95e42ca5_72604160",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-24T19:05:49Z",
       "side": 1,
       "message": "Sorry, is this enableMobileUserAgent still supposed to be included here in this revert CL?",
+      "range": {
+        "startLine": 731,
+        "startChar": 8,
+        "endLine": 731,
+        "endChar": 29
+      },
+      "revId": "25445e9587648826f160de90b25c39343d2c67a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659d32b6_7b87e47a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-24T19:20:26Z",
+      "side": 1,
+      "message": "Nope, Rohit and Eugene suggested keeping BVC untouched.",
+      "parentUuid": "95e42ca5_72604160",
       "range": {
         "startLine": 731,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bf825c96_1811f0e5",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4077,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-24T19:20:26Z",
+      "side": 1,
+      "message": "Same reply as above.",
+      "parentUuid": "3c398ded_ae9e852c",
+      "range": {
+        "startLine": 4077,
+        "startChar": 12,
+        "endLine": 4077,
+        "endChar": 33
+      },
+      "revId": "25445e9587648826f160de90b25c39343d2c67a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f49725d_5b96b08e",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-24T19:05:49Z",
       "side": 1,
       "message": "should be \"the correct behavior of \"Request Desktop/Mobile Site\"\n\nBut also, this crbug is marked as fixed so can this comment be updated?",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 30
+      },
+      "revId": "25445e9587648826f160de90b25c39343d2c67a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a78fec_04cfb742",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-24T19:20:26Z",
+      "side": 1,
+      "message": "Yes, but this is not a concern for this CL, will update the comments later.",
+      "parentUuid": "2f49725d_5b96b08e",
       "range": {
         "startLine": 103,
         "startChar": 20,
