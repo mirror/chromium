@@ -307,6 +307,11 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   }
 
   virtual bool CanReuse(const FetchParameters&) const { return true; }
+  virtual bool IsShareable() const {
+    // MemoryCache works only on the main thread, so we don't add a resource
+    // on another thread.
+    return IsMainThread() && options_.data_buffering_policy != kDoNotBufferData;
+  }
 
   // If cache-aware loading is activated, this callback is called when the first
   // disk-cache-only request failed due to cache miss. After this callback,

@@ -132,6 +132,8 @@ MemoryCache::ResourceMap* MemoryCache::EnsureResourceMap(
 
 void MemoryCache::Add(Resource* resource) {
   DCHECK(resource);
+  DCHECK(resource->IsShareable());
+
   ResourceMap* resources = EnsureResourceMap(resource->CacheIdentifier());
   AddInternal(resources, MemoryCacheEntry::Create(resource));
   RESOURCE_LOADING_DVLOG(1)
