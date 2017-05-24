@@ -27,32 +27,44 @@ bool ImageEncoder::Encode(Vector<unsigned char>* dst,
   return SkWebpEncoder::Encode(&dst_stream, src, options);
 }
 
-std::unique_ptr<ImageEncoder> ImageEncoder::Create(
-    Vector<unsigned char>* dst,
-    const SkPixmap& src,
-    const SkJpegEncoder::Options& options) {
-  std::unique_ptr<ImageEncoder> image_encoder(new ImageEncoder(dst));
-  image_encoder->encoder_ =
-      SkJpegEncoder::Make(&image_encoder->dst_, src, options);
-  if (!image_encoder->encoder_) {
-    return nullptr;
+std::unique_ptr<ImageEncoder> ImageEncoder::Create(Vector<unsigned char>* dst,
+                                                   const SkPixmap& src,
+                                                   const MimeType type,
+                                                   const double quality) {
+  // TODO(Savago): When we have C++14, use std::make_unique.
+  auto encoder = std::unique_ptr<ImageEncoder>(new ImageEncoder(dst));
+  switch (type) {
+    case kMimeTypeJpeg: {
+      SkJpegEncoder::Options jpgOptions;
+      jpgOptions.fQuality = ImageEncoder::ComputeJpegQuality(quality);
+      jpgOptions.fAlphaOption = SkJpegEncoder::AlphaOption::kBlendOnBlack;
+      jpgOptions.fBlendBehavior = SkTransferFunctionBehavior::kIgnore;
+      if (jpgOptions.fQuality == 100) {
+        jpgOptions.fDownsample = SkJpegEncoder::Downsample::k444;
+      }
+      encoder->encoder_ = SkJpegEncoder::Make(&encoder->dst_, src, jpgOptions);
+      break;
+    }
+    case kMimeTypePng: {
+      // This parameter is only used for JPEG.
+      DCHECK(quality == 1.0);
+      SkPngEncoder::Options pngOptions;
+      pngOptions.fFilterFlags = SkPngEncoder::FilterFlag::kSub;
+      pngOptions.fZLibLevel = 3;
+      pngOptions.fUnpremulBehavior = SkTransferFunctionBehavior::kIgnore;
+      encoder->encoder_ = SkPngEncoder::Make(&encoder->dst_, src, pngOptions);
+      break;
+    }
+    // TODO(Savago): should we have a factory for WebP encoder?
+    default:
+      encoder->encoder_ = nullptr;
+      break;
   }
 
-  return image_encoder;
-}
-
-std::unique_ptr<ImageEncoder> ImageEncoder::Create(
-    Vector<unsigned char>* dst,
-    const SkPixmap& src,
-    const SkPngEncoder::Options& options) {
-  std::unique_ptr<ImageEncoder> image_encoder(new ImageEncoder(dst));
-  image_encoder->encoder_ =
-      SkPngEncoder::Make(&image_encoder->dst_, src, options);
-  if (!image_encoder->encoder_) {
+  if (!encoder->encoder_) {
     return nullptr;
   }
-
-  return image_encoder;
+  return encoder;
 }
 
 int ImageEncoder::ComputeJpegQuality(double quality) {

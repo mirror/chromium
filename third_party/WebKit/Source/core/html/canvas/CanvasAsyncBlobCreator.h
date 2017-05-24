@@ -41,12 +41,6 @@ class CORE_EXPORT CanvasAsyncBlobCreator
       ScriptPromiseResolver*);
   void ScheduleAsyncBlobCreation(const double& quality);
   virtual ~CanvasAsyncBlobCreator();
-  enum MimeType {
-    kMimeTypePng,
-    kMimeTypeJpeg,
-    kMimeTypeWebp,
-    kNumberOfMimeTypeSupported
-  };
   // This enum is used to back an UMA histogram, and should therefore be treated
   // as append-only.
   enum IdleTaskStatus {
@@ -74,7 +68,7 @@ class CORE_EXPORT CanvasAsyncBlobCreator
 
  protected:
   CanvasAsyncBlobCreator(DOMUint8ClampedArray* data,
-                         MimeType,
+                         ImageEncoder::MimeType,
                          const IntSize&,
                          BlobCallback*,
                          double,
@@ -105,7 +99,7 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   Member<Document> document_;
 
   SkPixmap src_data_;
-  const MimeType mime_type_;
+  const ImageEncoder::MimeType mime_type_;
   double start_time_;
   double schedule_initiate_start_time_;
   double elapsed_time_;

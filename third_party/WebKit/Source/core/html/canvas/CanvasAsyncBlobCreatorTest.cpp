@@ -20,7 +20,7 @@ class MockCanvasAsyncBlobCreator : public CanvasAsyncBlobCreator {
  public:
   MockCanvasAsyncBlobCreator(DOMUint8ClampedArray* data,
                              const IntSize& size,
-                             MimeType mime_type,
+                             ImageEncoder::MimeType mime_type,
                              Document* document)
       : CanvasAsyncBlobCreator(data,
                                mime_type,
@@ -69,7 +69,10 @@ class MockCanvasAsyncBlobCreatorWithoutStartPng
   MockCanvasAsyncBlobCreatorWithoutStartPng(DOMUint8ClampedArray* data,
                                             const IntSize& size,
                                             Document* document)
-      : MockCanvasAsyncBlobCreator(data, size, kMimeTypePng, document) {}
+      : MockCanvasAsyncBlobCreator(data,
+                                   size,
+                                   ImageEncoder::kMimeTypePng,
+                                   document) {}
 
  protected:
   void ScheduleInitiateEncoding(double) override {
@@ -86,7 +89,10 @@ class MockCanvasAsyncBlobCreatorWithoutCompletePng
   MockCanvasAsyncBlobCreatorWithoutCompletePng(DOMUint8ClampedArray* data,
                                                const IntSize& size,
                                                Document* document)
-      : MockCanvasAsyncBlobCreator(data, size, kMimeTypePng, document) {}
+      : MockCanvasAsyncBlobCreator(data,
+                                   size,
+                                   ImageEncoder::kMimeTypePng,
+                                   document) {}
 
  protected:
   void ScheduleInitiateEncoding(double quality) override {
@@ -113,7 +119,10 @@ class MockCanvasAsyncBlobCreatorWithoutStartJpeg
   MockCanvasAsyncBlobCreatorWithoutStartJpeg(DOMUint8ClampedArray* data,
                                              const IntSize& size,
                                              Document* document)
-      : MockCanvasAsyncBlobCreator(data, size, kMimeTypeJpeg, document) {}
+      : MockCanvasAsyncBlobCreator(data,
+                                   size,
+                                   ImageEncoder::kMimeTypeJpeg,
+                                   document) {}
 
  protected:
   void ScheduleInitiateEncoding(double) override {
@@ -130,7 +139,10 @@ class MockCanvasAsyncBlobCreatorWithoutCompleteJpeg
   MockCanvasAsyncBlobCreatorWithoutCompleteJpeg(DOMUint8ClampedArray* data,
                                                 const IntSize& size,
                                                 Document* document)
-      : MockCanvasAsyncBlobCreator(data, size, kMimeTypeJpeg, document) {}
+      : MockCanvasAsyncBlobCreator(data,
+                                   size,
+                                   ImageEncoder::kMimeTypeJpeg,
+                                   document) {}
 
  protected:
   void ScheduleInitiateEncoding(double quality) override {

@@ -35,6 +35,14 @@ class VectorWStream : public SkWStream {
 
 class PLATFORM_EXPORT ImageEncoder {
  public:
+  // Maybe Skia has something for MimeTypes.
+  enum MimeType {
+    kMimeTypePng,
+    kMimeTypeJpeg,
+    kMimeTypeWebp,
+    kNumberOfMimeTypeSupported
+  };
+  // TODO(Savago): find a way to unify Encode() calls.
   static bool Encode(Vector<unsigned char>* dst,
                      const SkPixmap& src,
                      const SkJpegEncoder::Options&);
@@ -47,13 +55,11 @@ class PLATFORM_EXPORT ImageEncoder {
                      const SkPixmap& src,
                      const SkWebpEncoder::Options&);
 
+  // Implements a factory pattern for Encoder object creation.
   static std::unique_ptr<ImageEncoder> Create(Vector<unsigned char>* dst,
                                               const SkPixmap& src,
-                                              const SkJpegEncoder::Options&);
-
-  static std::unique_ptr<ImageEncoder> Create(Vector<unsigned char>* dst,
-                                              const SkPixmap& src,
-                                              const SkPngEncoder::Options&);
+                                              const MimeType,
+                                              const double quality = 1.0);
 
   bool encodeRows(int numRows) { return encoder_->encodeRows(numRows); }
 
