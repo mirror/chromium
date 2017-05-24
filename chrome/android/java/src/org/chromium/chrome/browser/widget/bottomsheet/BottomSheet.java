@@ -850,6 +850,7 @@ public class BottomSheet
     private void onSheetClosed() {
         if (!mIsSheetOpen) return;
 
+        clearFocus();
         mIsSheetOpen = false;
         for (BottomSheetObserver o : mObservers) o.onSheetClosed();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_closed));
