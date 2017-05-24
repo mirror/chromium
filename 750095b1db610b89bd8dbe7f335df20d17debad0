@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e7a1f_f7c906ac",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-24T03:08:43Z",
+      "side": 1,
+      "message": "This name is slightly confusing now: maybe we should just call it DisposePluginSoon, and synchronously Dispose() in other cases.",
+      "range": {
+        "startLine": 161,
+        "startChar": 28,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b3747c_c5b19c5e",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-24T03:08:43Z",
+      "side": 1,
+      "message": "Do we actually need to call DIspose() here, or is Document::Shutdown() sufficient to handle this?",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 31
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997e07f7_3ba14b91",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-24T03:08:43Z",
+      "side": 1,
+      "message": "Similar to the earlier question, is it only possible to hit this case for a deferred plugin disposal now? Or can we still hit it for FrameView/RemoteFrameView?",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 29
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8967bb_dc3776f3",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-24T03:08:43Z",
+      "side": 1,
+      "message": "Also, is this a Plugin only thing as well? My recollection is this is only used for persisting plugin widgets.",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 22
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
