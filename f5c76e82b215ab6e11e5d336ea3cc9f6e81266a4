@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f729417_879cb30a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-05-24T03:25:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure subpixel accumulation is updated at this point. IIRC it is computed during compositing input update.\n\nBTW I remember there is some difficult chicken-egg problem for overflow:auto: Need updated layout to compute subpixel accumulation ---\u003e Need subpixel accumulation to calculate snapped padding box and snapped layout overflow rect (to determine whether scrolling is needed) --\u003e Need to determine whether scrolling is needed to finish layout. For example:\n\n\u003cdiv style\u003d\"position:absolute; top:0.375px\"\u003e\n  \u003cdiv style\u003d\"height:99.25px; width:100px; overflow:auto;\"\u003e\n    \u003cdiv style\u003d\"position:relative; height:100px;\"\u003e\u003c/div\u003e\n  \u003c/div\u003e\n\u003c/div\u003e\n\nThe snapped border box rect for both elements are 100px long, but is difficult to tell during layout. I believe our existing behavior just use the incorrectly snapped box, thus a (disabled) scrollbar will be generated.",
+      "range": {
+        "startLine": 856,
+        "startChar": 6,
+        "endLine": 856,
+        "endChar": 11
+      },
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf0c59f4_d6c11889",
         "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 3
@@ -42,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "e4d19298_674de398",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2643,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-05-24T03:25:39Z",
+      "side": 1,
+      "message": "PaintLayer::UpdateSize() doesn\u0027t look correct either. It uses PixelSnappedIntSize(box-\u003eSize(), box-\u003eLocation()), but the box location is relative to its containing block, not the actual paint offset.\n\nIMO it never makes sense to snap rects without an associated paint offset. I\u0027ve tried to remove LayoutBox::PixelSnappedBorderBoxRect() in the past, but it involved too much efforts. I think this CL is going toward the right direction by reducing the use of LayoutBox::PixelSnappedBorderBoxRect().\n\nPaintLayer is a very weird place for this though. PaintLayer is mainly used as an abstraction of stacking context, or an overflow clip. For either purpose, border box rect is not a very useful thing. My two cents is that we should make LayoutBox::PixelSnappedBorderBoxRect() to accept an optional paint offset parameter, and eventually make it mandatory once we eliminate all the misuses.",
+      "parentUuid": "282ea780_eaa8937c",
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b77c18f_7394e36e",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
         "patchSetId": 3
@@ -53,6 +94,24 @@
       "writtenOn": "2017-05-23T19:50:54Z",
       "side": 1,
       "message": "I\u0027d prefer something like PixelSnappedLayerRect or PixelSnappedLayerBounds.",
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554860ab_bdae181e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-05-24T03:25:39Z",
+      "side": 1,
+      "message": "As explained below, PaintLayer is mostly an abstraction of stacking context and overflow clip. PaintLayer::size() is already confusing enough. I would have totally mistook it as the visual bound of the layer if there were no comments to tell it\u0027s in fact the owner object\u0027s border box.",
+      "parentUuid": "4b77c18f_7394e36e",
       "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
