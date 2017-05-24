@@ -31,6 +31,7 @@
 #ifndef ShapeResult_h
 #define ShapeResult_h
 
+#include <deque>
 #include <memory>
 #include "platform/LayoutUnit.h"
 #include "platform/PlatformExport.h"
@@ -39,7 +40,6 @@
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/RefCounted.h"
-#include "platform/wtf/Vector.h"
 
 struct hb_buffer_t;
 
@@ -113,7 +113,7 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
 
   float width_;
   FloatRect glyph_bounding_box_;
-  Vector<std::unique_ptr<RunInfo>> runs_;
+  std::deque<std::unique_ptr<RunInfo>> runs_;
   RefPtr<SimpleFontData> primary_font_;
 
   unsigned num_characters_;

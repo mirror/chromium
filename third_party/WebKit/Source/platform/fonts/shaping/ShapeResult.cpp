@@ -168,7 +168,6 @@ ShapeResult::ShapeResult(const ShapeResult& other)
       num_glyphs_(other.num_glyphs_),
       direction_(other.direction_),
       has_vertical_offsets_(other.has_vertical_offsets_) {
-  runs_.ReserveCapacity(other.runs_.size());
   for (const auto& run : other.runs_)
     runs_.push_back(WTF::WrapUnique(new ShapeResult::RunInfo(*run)));
 }
@@ -417,14 +416,18 @@ void ShapeResult::InsertRun(std::unique_ptr<ShapeResult::RunInfo> run_to_insert,
   if (HB_DIRECTION_IS_FORWARD(run->direction_)) {
     for (size_t pos = 0; pos < runs_.size(); ++pos) {
       if (runs_.at(pos)->start_index_ > run->start_index_) {
-        runs_.insert(pos, std::move(run));
+        auto place = runs_.begin();
+        place += pos;
+        runs_.insert(place, std::move(run));
         break;
       }
     }
   } else {
     for (size_t pos = 0; pos < runs_.size(); ++pos) {
       if (runs_.at(pos)->start_index_ < run->start_index_) {
-        runs_.insert(pos, std::move(run));
+        auto place = runs_.begin();
+        place += pos;
+        runs_.insert(place, std::move(run));
         break;
       }
     }
