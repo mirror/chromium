@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "11c072bd_9feac129",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-05-24T21:37:52Z",
+      "side": 1,
+      "message": "Should be safe to do for all cases.\n\nThe reason was whether transform is animating could change what layer we draw, but not the opacity and filter animation. This was added here: https://codereview.chromium.org/1409393005.",
+      "parentUuid": "7b76e622_31af67b4",
+      "range": {
+        "startLine": 1747,
+        "startChar": 12,
+        "endLine": 1747,
+        "endChar": 29
+      },
+      "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e7edbbe_f961c694",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 2
@@ -60,6 +84,24 @@
       "writtenOn": "2017-05-24T19:05:02Z",
       "side": 1,
       "message": "Just for my own knowledge, why do we only check for node existence some of the time? It seems like this should always be important?",
+      "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3a2d64_e9a70fa7",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-05-24T21:37:52Z",
+      "side": 1,
+      "message": "I have vague memory of trying this for impl but don\u0027t remember why, possibly unittests?",
+      "parentUuid": "5e7edbbe_f961c694",
       "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
