@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0af47259_b09d6c26",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-05-24T18:48:31Z",
+      "side": 1,
+      "message": "nit: if (it \u003d\u003d resources_.end()) continue;\nIs there a valid case where we receive an id that doesn\u0027t exist? Could we DCHECK?",
+      "range": {
+        "startLine": 474,
+        "startChar": 4,
+        "endLine": 474,
+        "endChar": 6
+      },
+      "revId": "bf6b50156276616c5cdff9132752b4764f9f218c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e59da7_99069def",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-05-24T18:48:31Z",
+      "side": 1,
+      "message": "nit: FrameResource?",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 23
+      },
+      "revId": "bf6b50156276616c5cdff9132752b4764f9f218c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
