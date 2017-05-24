@@ -117,6 +117,30 @@
       "revId": "b1ef768b7ef6b880957153abc2e835c7c4aa64a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85275a70_265c3d1b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-24T19:53:48Z",
+      "side": 1,
+      "message": "No.\n\nThere is a sandboxed allocator and a privileged allocator with the same package name. This check is to prevent the case of all privileged services being freed wrongly removing the sandboxed allocator in the same package.\n\nHonestly, I would have preferred using a WeakHashMap, but it doesn\u0027t really work with strings as the key :/",
+      "parentUuid": "597b5d2a_6f2a55b3",
+      "range": {
+        "startLine": 211,
+        "startChar": 31,
+        "endLine": 211,
+        "endChar": 68
+      },
+      "revId": "b1ef768b7ef6b880957153abc2e835c7c4aa64a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
