@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a213fa68_133fbac7",
+        "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-05-24T22:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ef8506c_b6068ab2",
+      "revId": "8f73b1482744b069f054359d74204cf0076f421e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc017a64_b79d8f11",
         "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
         "patchSetId": 4
