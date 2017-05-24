@@ -1,22 +1,20 @@
-<!DOCTYPE html>
-<script src="../../../resources/testharness.js"></script>
-<script src="../../../resources/testharnessreport.js"></script>
-<script src="../../../resources/bluetooth/bluetooth-helpers.js"></script>
-<script>
 'use strict';
 promise_test(() => {
   return setBluetoothFakeAdapter('HeartRateAdapter')
     .then(() => requestDeviceWithKeyDown({
-      filters: [{services: ['heart_rate']}],
-      optionalServices: ['generic_access']}))
+      filters: [{services: ['heart_rate']}]
+    }))
     .then(device => device.gatt.connect())
-    .then(gattServer => {
+    .then(gatt => {
       return setBluetoothFakeAdapter('EmptyAdapter')
         .then(() => assert_promise_rejects_with_message(
-          gattServer.getPrimaryService('generic_access'),
+          gatt.CALLS([
+            getPrimaryService('heart_rate')|
+            getPrimaryServices()|
+            getPrimaryServices('heart_rate')[UUID]
+          ]),
           new DOMException('Bluetooth Device is no longer in range.',
                            'NetworkError'),
           'Device went out of range.'));
     });
 }, 'Device goes out of range. Reject with NetworkError.');
-</script>
