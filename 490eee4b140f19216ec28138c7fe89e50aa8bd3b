@@ -52,6 +52,24 @@
       "revId": "490eee4b140f19216ec28138c7fe89e50aa8bd3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93901ea_ae8eef65",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/idlharness.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-05-24T21:14:04Z",
+      "side": 1,
+      "message": "Yes, that\u0027s a good idea. I\u0027ll make that change once the other spec/implementation details are figured out.",
+      "parentUuid": "93a0cf56_9e080ec7",
+      "revId": "490eee4b140f19216ec28138c7fe89e50aa8bd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
