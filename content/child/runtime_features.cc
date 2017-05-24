@@ -336,6 +336,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableOffMainThreadFetch(
       base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
 
+  WebRuntimeFeatures::EnableMojoBlobs(
+      base::FeatureList::IsEnabled(features::kMojoBlobs));
+
   if (base::FeatureList::IsEnabled(features::kGamepadExtensions))
     WebRuntimeFeatures::EnableGamepadExtensions(true);
 
