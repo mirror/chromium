@@ -38,13 +38,9 @@ Console.ConsoleViewport = class {
   constructor(provider) {
     this.element = createElement('div');
     this.element.style.overflow = 'auto';
-    this._topGapElement = this.element.createChild('div');
-    this._topGapElement.style.height = '0px';
-    this._topGapElement.style.color = 'transparent';
+    this._topGapElement = this.element.createChild('div', 'console-viewport-gap');
     this._contentElement = this.element.createChild('div');
-    this._bottomGapElement = this.element.createChild('div');
-    this._bottomGapElement.style.height = '0px';
-    this._bottomGapElement.style.color = 'transparent';
+    this._bottomGapElement = this.element.createChild('div', 'console-viewport-gap');
 
     // Text content needed for range intersection checks in _updateSelectionModel.
     // Use Unicode ZERO WIDTH NO-BREAK SPACE, which avoids contributing any height to the element's layout overflow.

@@ -181,8 +181,10 @@ TextEditor.CodeMirrorTextEditor = class extends UI.VBox {
     this._mimeType = '';
     if (options.mimeType)
       this.setMimeType(options.mimeType);
-    if (options.autoHeight)
+    if (options.autoHeight) {
       this._codeMirror.setSize(null, 'auto');
+      this.element.style.height = '100%';
+    }
   }
 
   /**
@@ -985,7 +987,7 @@ TextEditor.CodeMirrorTextEditor = class extends UI.VBox {
       var width = parentElement.offsetWidth;
       var height = parentElement.offsetHeight - this.element.offsetTop;
       if (this._options.autoHeight) {
-        this._codeMirror.setSize(width, 'auto');
+        this._codeMirror.setSize(width, '100%');
       } else {
         this._codeMirror.setSize(width, height);
         this._updatePaddingBottom(width, height);
