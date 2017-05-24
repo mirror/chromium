@@ -37,8 +37,11 @@ void AnimationWorklet::Initialize() {
       document->GetFrame()->GetChromeClient().CreateAnimationWorkletProxyClient(
           document->GetFrame());
 
+  WorkerClients* worker_clients = WorkerClients::Create();
+  ProvideAnimationWorkletProxyClientTo(worker_clients, proxy_client);
+
   worklet_messaging_proxy_ =
-      new AnimationWorkletMessagingProxy(GetExecutionContext(), proxy_client);
+      new AnimationWorkletMessagingProxy(GetExecutionContext(), worker_clients);
   worklet_messaging_proxy_->Initialize();
 }
 

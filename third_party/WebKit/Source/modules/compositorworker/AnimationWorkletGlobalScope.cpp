@@ -8,7 +8,9 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
+#include "core/dom/AnimationWorkletProxyClient.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/workers/WorkerClients.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 
@@ -21,9 +23,11 @@ AnimationWorkletGlobalScope* AnimationWorkletGlobalScope::Create(
     const String& user_agent,
     PassRefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
-    WorkerThread* thread) {
-  return new AnimationWorkletGlobalScope(
-      url, user_agent, std::move(security_origin), isolate, thread);
+    WorkerThread* thread,
+    WorkerClients* worker_clients) {
+  return new AnimationWorkletGlobalScope(url, user_agent,
+                                         std::move(security_origin), isolate,
+                                         thread, worker_clients);
 }
 
 AnimationWorkletGlobalScope::AnimationWorkletGlobalScope(
@@ -31,12 +35,19 @@ AnimationWorkletGlobalScope::AnimationWorkletGlobalScope(
     const String& user_agent,
     PassRefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
-    WorkerThread* thread)
+    WorkerThread* thread,
+    WorkerClients* worker_clients)
     : ThreadedWorkletGlobalScope(url,
                                  user_agent,
                                  std::move(security_origin),
                                  isolate,
-                                 thread) {}
+                                 thread),
+      worker_clients_(worker_clients) {
+  worker_clients_->ReattachThread();
+
+  DCHECK(AnimationWorkletProxyClient::From(worker_clients_));
+  AnimationWorkletProxyClient::From(worker_clients_)->SetGlobalScope(this);
+}
 
 AnimationWorkletGlobalScope::~AnimationWorkletGlobalScope() {}
 
@@ -52,6 +63,10 @@ void AnimationWorkletGlobalScope::Dispose() {
   m_animatorDefinitions.clear();
   m_animators.clear();
   ThreadedWorkletGlobalScope::Dispose();
+}
+
+void AnimationWorkletGlobalScope::Mutate() {
+  // TODO(majidvp): mutate
 }
 
 void AnimationWorkletGlobalScope::registerAnimator(

@@ -13,6 +13,7 @@
 namespace blink {
 
 class ThreadedWorkletObjectProxy;
+class WorkerClients;
 
 class CORE_EXPORT ThreadedWorkletMessagingProxy
     : public ThreadedMessagingProxyBase,
@@ -25,7 +26,7 @@ class CORE_EXPORT ThreadedWorkletMessagingProxy
   void Initialize();
 
  protected:
-  explicit ThreadedWorkletMessagingProxy(ExecutionContext*);
+  explicit ThreadedWorkletMessagingProxy(ExecutionContext*, WorkerClients*);
 
   ThreadedWorkletObjectProxy& WorkletObjectProxy() {
     return *worklet_object_proxy_;
@@ -35,6 +36,7 @@ class CORE_EXPORT ThreadedWorkletMessagingProxy
   friend class ThreadedWorkletMessagingProxyForTest;
 
   std::unique_ptr<ThreadedWorkletObjectProxy> worklet_object_proxy_;
+  Persistent<WorkerClients> worker_clients_;
 
   WeakPtrFactory<ThreadedWorkletMessagingProxy> weak_ptr_factory_;
 };

@@ -26,6 +26,7 @@ class AnimatorDefinition final
   DEFINE_INLINE_TRACE() {}
 
   v8::Local<v8::Function> ConstructorLocal(v8::Isolate*);
+  v8::Local<v8::Function> AnimateLocal(v8::Isolate*);
 
  private:
   // This object keeps the constructor function, and animate function alive.
