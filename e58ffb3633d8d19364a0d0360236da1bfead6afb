@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b5d2b7e_0b93dacb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-05-24T19:24:20Z",
+      "side": 1,
+      "message": "This generally seems fine, but will you please do  quick test with Talk Back on? When focus is cleared from the bottom sheet, something else will probably gain focus. We may want to wait until after the announceForAccessibility() call below (or move that announcement up) before clearing focus so that \"Navigation panel closed\" is read before the content description for whatever gains focus.",
+      "range": {
+        "startLine": 853,
+        "startChar": 8,
+        "endLine": 853,
+        "endChar": 18
+      },
+      "revId": "e58ffb3633d8d19364a0d0360236da1bfead6afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
