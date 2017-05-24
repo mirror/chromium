@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "484a1a71_0918c5c4",
+        "filename": "third_party/WebKit/LayoutTests/media/deprecated-css-selectors.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-24T09:02:17Z",
+      "side": 0,
+      "message": "If I understand correctly, you are removing this because the rule would become invalid?",
+      "revId": "193a454cb1ee78b5a6cecc6c6e6fb63c1598c40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
