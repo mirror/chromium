@@ -13,9 +13,18 @@
 #include "base/memory/singleton.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "third_party/icu/source/i18n/unicode/timezone.h"
 
+#if 0
+#if defined(OS_ANDROID)
+#include "base/android/timezone_utils.h"
+#include "third_party/icu/source/common/unicode/unistr.h"
+#endif
+#endif
+
 namespace base {
+namespace i18n {
 
 namespace {
 
@@ -615,4 +624,5 @@ std::string CountryCodeForCurrentTimezone() {
       id.toUTF8String(olson_code));
 }
 
+}  // namespace i18n
 }  // namespace base

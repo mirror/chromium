@@ -976,7 +976,7 @@ bool PersonalDataManager::IsAutofillEnabled() const {
 }
 
 std::string PersonalDataManager::CountryCodeForCurrentTimezone() const {
-  return base::CountryCodeForCurrentTimezone();
+  return base::i18n::CountryCodeForCurrentTimezone();
 }
 
 void PersonalDataManager::SetPrefService(PrefService* pref_service) {

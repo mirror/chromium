@@ -45,7 +45,7 @@ void ArcTermsOfServiceScreenHandler::RegisterMessages() {
 }
 
 void ArcTermsOfServiceScreenHandler::UpdateTimeZone() {
-  const std::string country_code = base::CountryCodeForCurrentTimezone();
+  const std::string country_code = base::i18n::CountryCodeForCurrentTimezone();
   if (country_code == last_applied_contry_code_)
     return;
   last_applied_contry_code_ = country_code;

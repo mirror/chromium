@@ -45,7 +45,8 @@ void VideoCaptureDevice::TakePhoto(TakePhotoCallback callback) {}
 
 PowerLineFrequency VideoCaptureDevice::GetPowerLineFrequencyForLocation()
     const {
-  const std::string current_country = base::CountryCodeForCurrentTimezone();
+  const std::string current_country =
+      base::i18n::CountryCodeForCurrentTimezone();
   if (current_country.empty())
     return PowerLineFrequency::FREQUENCY_DEFAULT;
   // Sorted out list of countries with 60Hz power line frequency, from
