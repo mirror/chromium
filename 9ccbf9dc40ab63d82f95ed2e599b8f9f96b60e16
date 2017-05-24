@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1356662_8221b4a7",
+        "filename": "chrome/browser/metrics/perf/perf_provider_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1170679
+      },
+      "writtenOn": "2017-05-24T23:49:19Z",
+      "side": 1,
+      "message": "Do you know how many samples a second this generates when Chrome is busy?\nHow did you come up with this sampling period?",
+      "range": {
+        "startLine": 162,
+        "startChar": 34,
+        "endLine": 162,
+        "endChar": 41
+      },
+      "revId": "9ccbf9dc40ab63d82f95ed2e599b8f9f96b60e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
