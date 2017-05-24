@@ -6264,6 +6264,11 @@ void RenderFrameImpl::NavigateInternal(
   // In case LoadRequest failed before didCreateDataSource was called.
   pending_navigation_params_.reset();
 
+  // Notify the MediaPermissionDispatcher that its connection is able to be
+  // closed.
+  if (media_permission_dispatcher_)
+    media_permission_dispatcher_->OnNavigation();
+
   // PlzNavigate: reset the source location now that the commit checks have been
   // processed.
   if (IsBrowserSideNavigationEnabled()) {
