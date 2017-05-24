@@ -124,7 +124,7 @@ allowed_hosts = [
 
 deps = {
   'src/breakpad/src':
-    Var('chromium_git') + '/breakpad/breakpad/src.git' + '@' + '47e51739fd00badbceba5bc26b8abc8bbd530989',
+    Var('chromium_git') + '/breakpad/breakpad/src.git' + '@' + 'dfd753fd76dfd0d4d8e8a37e9bdecbfb1f4d29e7',
 
   'src/buildtools':
     Var('chromium_git') + '/chromium/buildtools.git' + '@' +  Var('buildtools_revision'),
