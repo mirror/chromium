@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "e9091208_589a1e78",
+        "filename": "chrome/browser/spellchecker/spellcheck_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-24T13:48:16Z",
+      "side": 1,
+      "message": "\u003e \u003e DCHECKing the validity of data provided by an untrusted process seems bad.\n\u003e \n\u003e I wonder if spell checking data from an untrusted process would seem bad too?\n\u003e \n\u003e Martin might have some thoughts here.\n\nAnyho. Removed the DCHECK, and used mojo::ReportBadMessage(...) instead to report rouge renderers.",
+      "parentUuid": "97efc39e_ab08ee3d",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 24
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8d1302e_f1f8f50d",
         "filename": "chrome/browser/spellchecker/spellcheck_host_impl.h",
         "patchSetId": 7
@@ -495,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "93d2f51a_e70db0f2",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-24T13:48:16Z",
+      "side": 1,
+      "message": "\u003e \u003e Why is this call to GetSpellCheckHost() not gated by content::RenderThread::Get()?\n\u003e \n\u003e That would break the spellcheck_provider_hunspell_unittest.cc, which provides the SpellCheckHost, but content::RenderThread::Get() is NULL in that test.\n\u003e \n\u003e Perhaps we could handle that with:\n\u003e \n\u003e if (spell_check_host_ || content::RenderThread::Get())\n\u003e   GetSpellCheckHost().CallSpellingService(...)\n\u003e \n\u003e at the cost of breaking the encapsulation of GetSpellCheckHost() a little?\n\nWe decided on:\n\n if (!spell_check_host_ \u0026\u0026 !content::RenderThread::Get())\n   return;  // NULL in tests that do not provide a spell_check_host_.\n GetSpellCheckHost().CallSpellingService(...);",
+      "parentUuid": "1efa94d1_a90311cc",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad0cecb1_a956345a",
         "filename": "components/spellcheck/renderer/spellcheck_provider.h",
         "patchSetId": 7
@@ -589,6 +637,30 @@
     },
     {
       "key": {
+        "uuid": "d7d88613_0f05c78e",
+        "filename": "components/spellcheck/renderer/spellcheck_provider_hunspell_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-24T13:48:16Z",
+      "side": 1,
+      "message": "\u003e Yeah.  Seems that most test fixtures herein call RequestTextChecking, which maybe means that Hunspell is used, not sure.\n\u003e \n\u003e Added the TODO.\n\nResolved this TODO: removed this test.  It is covered by tests in fixture MultiLineText.",
+      "parentUuid": "0ca9eb6b_a9d59aa9",
+      "range": {
+        "startLine": 22,
+        "startChar": 31,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db276137_ac15e7cb",
         "filename": "components/spellcheck/renderer/spellcheck_provider_test.h",
         "patchSetId": 7
@@ -624,6 +696,30 @@
       "side": 1,
       "message": "\u003e The test fixture should be responsible for ensuring a MessageLoop exists.\n\nNot quite following here, sorry - perhaps we should chat off-line to clarify.",
       "parentUuid": "db276137_ac15e7cb",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 35
+      },
+      "revId": "8a4ab0ea5c161f081e3a4c2f7a7821ab537b19f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18eee0d0_64d40564",
+        "filename": "components/spellcheck/renderer/spellcheck_provider_test.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-05-24T13:48:16Z",
+      "side": 1,
+      "message": "Some users of this TestingSpellCheckProvider class already have a MessageLoop.  But some don\u0027t, so we have to dynamically create one in that case.",
+      "parentUuid": "fa2ce303_973f10a0",
       "range": {
         "startLine": 76,
         "startChar": 24,
