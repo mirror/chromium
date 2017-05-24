@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cead74fa_03298928",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-05-24T15:54:11Z",
+      "side": 1,
+      "message": "I\u0027d prefer to call this feature ContentSuggestionsVerticals, as categories is already a slightly different thing in our code.",
+      "range": {
+        "startLine": 159,
+        "startChar": 31,
+        "endLine": 159,
+        "endChar": 61
+      },
+      "revId": "d81561a034cb20ad9deeb980bcbdee2e4b651e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
