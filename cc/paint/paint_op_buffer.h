@@ -85,6 +85,12 @@ struct CC_PAINT_EXPORT PaintOp {
   void Raster(SkCanvas* canvas, const SkMatrix& original_ctm) const;
   bool IsDrawOp() const;
 
+  // Subclasses should provide a static Serialize() method called from here.
+  // If the op can be serialized to |memory| in no more than |size| bytes,
+  // then return the number of bytes written.  If it won't fit, return 0
+  // and return nothing.
+  size_t Serialize(void* memory, size_t size) const;
+
   // Only valid for draw ops.
   void RasterWithAlpha(SkCanvas* canvas, uint8_t alpha) const;
 
@@ -238,6 +244,7 @@ struct CC_PAINT_EXPORT AnnotateOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   PaintCanvas::AnnotationType annotation_type;
   SkRect rect;
@@ -251,6 +258,7 @@ struct CC_PAINT_EXPORT ClipPathOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
   int CountSlowPaths() const;
 
   ThreadsafePath path;
@@ -265,6 +273,7 @@ struct CC_PAINT_EXPORT ClipRectOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkRect rect;
   SkClipOp op;
@@ -278,6 +287,7 @@ struct CC_PAINT_EXPORT ClipRRectOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkRRect rrect;
   SkClipOp op;
@@ -290,6 +300,7 @@ struct CC_PAINT_EXPORT ConcatOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   ThreadsafeMatrix matrix;
 };
@@ -317,6 +328,7 @@ struct CC_PAINT_EXPORT DrawArcOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkRect oval;
   SkScalar start_angle;
@@ -342,6 +354,7 @@ struct CC_PAINT_EXPORT DrawCircleOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkScalar cx;
   SkScalar cy;
@@ -355,6 +368,7 @@ struct CC_PAINT_EXPORT DrawColorOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkColor color;
   SkBlendMode mode;
@@ -373,6 +387,7 @@ struct CC_PAINT_EXPORT DrawDisplayItemListOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
   size_t AdditionalBytesUsed() const;
   bool HasDiscardableImages() const;
   // TODO(enne): DisplayItemList should know number of slow paths.
@@ -397,6 +412,7 @@ struct CC_PAINT_EXPORT DrawDRRectOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkRRect outer;
   SkRRect inner;
@@ -420,6 +436,7 @@ struct CC_PAINT_EXPORT DrawImageOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
   bool HasDiscardableImages() const;
 
   PaintImage image;
@@ -446,6 +463,7 @@ struct CC_PAINT_EXPORT DrawImageRectOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
   bool HasDiscardableImages() const;
 
   PaintImage image;
@@ -469,6 +487,7 @@ struct CC_PAINT_EXPORT DrawIRectOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkIRect rect;
 };
@@ -492,6 +511,7 @@ struct CC_PAINT_EXPORT DrawLineOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   int CountSlowPaths() const;
 
@@ -516,6 +536,7 @@ struct CC_PAINT_EXPORT DrawOvalOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkRect oval;
 };
@@ -535,6 +556,7 @@ struct CC_PAINT_EXPORT DrawPathOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
   int CountSlowPaths() const;
 
   ThreadsafePath path;
@@ -555,6 +577,7 @@ struct CC_PAINT_EXPORT DrawPosTextOp final : PaintOpWithArray<SkPoint> {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   const void* GetData() const { return GetDataForThis(this); }
   void* GetData() { return GetDataForThis(this); }
@@ -570,6 +593,7 @@ struct CC_PAINT_EXPORT DrawRecordOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
   size_t AdditionalBytesUsed() const;
   bool HasDiscardableImages() const;
   int CountSlowPaths() const;
@@ -592,6 +616,7 @@ struct CC_PAINT_EXPORT DrawRectOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkRect rect;
 };
@@ -611,6 +636,7 @@ struct CC_PAINT_EXPORT DrawRRectOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkRRect rrect;
 };
@@ -630,6 +656,7 @@ struct CC_PAINT_EXPORT DrawTextOp final : PaintOpWithData {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   void* GetData() { return GetDataForThis(this); }
   const void* GetData() const { return GetDataForThis(this); }
@@ -656,6 +683,7 @@ struct CC_PAINT_EXPORT DrawTextBlobOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   sk_sp<SkTextBlob> blob;
   SkScalar x;
@@ -667,6 +695,7 @@ struct CC_PAINT_EXPORT NoopOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm) {}
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 };
 
 struct CC_PAINT_EXPORT RestoreOp final : PaintOp {
@@ -674,6 +703,7 @@ struct CC_PAINT_EXPORT RestoreOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 };
 
 struct CC_PAINT_EXPORT RotateOp final : PaintOp {
@@ -682,6 +712,7 @@ struct CC_PAINT_EXPORT RotateOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkScalar degrees;
 };
@@ -691,6 +722,7 @@ struct CC_PAINT_EXPORT SaveOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 };
 
 struct CC_PAINT_EXPORT SaveLayerOp final : PaintOpWithFlags {
@@ -708,6 +740,7 @@ struct CC_PAINT_EXPORT SaveLayerOp final : PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkRect bounds;
 };
@@ -719,6 +752,7 @@ struct CC_PAINT_EXPORT SaveLayerAlphaOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkRect bounds;
   uint8_t alpha;
@@ -730,6 +764,7 @@ struct CC_PAINT_EXPORT ScaleOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkScalar sx;
   SkScalar sy;
@@ -747,6 +782,7 @@ struct CC_PAINT_EXPORT SetMatrixOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   ThreadsafeMatrix matrix;
 };
@@ -757,6 +793,7 @@ struct CC_PAINT_EXPORT TranslateOp final : PaintOp {
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
+  static size_t Serialize(const PaintOp* op, void* memory, size_t size);
 
   SkScalar dx;
   SkScalar dy;
