@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e8176d9_c60f21ab",
+        "filename": "media/gpu/surface_texture_gl_owner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-24T20:29:48Z",
+      "side": 1,
+      "message": "\"lets us safely\"",
+      "revId": "97a5bf5b22ccbfe620119b55857a55a844d668a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74397635_5e9d4cd2",
+        "filename": "media/gpu/surface_texture_gl_owner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-24T20:29:48Z",
+      "side": 1,
+      "message": "i agree that it\u0027s a race condition.  why did you add it?  i don\u0027t see any calls to it.  delete?",
+      "revId": "97a5bf5b22ccbfe620119b55857a55a844d668a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
