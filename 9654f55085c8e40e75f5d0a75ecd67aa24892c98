@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b50b2e6_f3f70ee5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-05-24T16:47:33Z",
+      "side": 1,
+      "message": "IIUC, it should be possible to rm this method, and use recordDataUsage() method below (provided we add mine_type and drp_used there -- both of which should be simple enough to do).\nIf yes, add a comment.",
+      "range": {
+        "startLine": 65,
+        "startChar": 47,
+        "endLine": 65,
+        "endChar": 55
+      },
+      "revId": "9654f55085c8e40e75f5d0a75ecd67aa24892c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286efde2_4cbf4fee",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-05-24T16:47:33Z",
+      "side": 1,
+      "message": "May be call this RecordDataUseWithMimeType",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "9654f55085c8e40e75f5d0a75ecd67aa24892c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3afb8b_88db6367",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-05-24T16:47:33Z",
+      "side": 1,
+      "message": "may be rename this to RecordDataUseByHost()",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "9654f55085c8e40e75f5d0a75ecd67aa24892c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a762e2ca_39f47dbb",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-05-24T16:47:33Z",
+      "side": 1,
+      "message": "nit: May be rename this to RecordRequestMimeTypeInternal() or RecordDataUseWithMimeTypeInternal(), or even better just rm this method and combine it with RecordRequestMimeType() above.",
+      "range": {
+        "startLine": 241,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 17
+      },
+      "revId": "9654f55085c8e40e75f5d0a75ecd67aa24892c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4ea0c3_62f65b75",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-05-24T16:47:33Z",
+      "side": 1,
+      "message": "nit: Add parens since the if-statement spans multiple lines.",
+      "range": {
+        "startLine": 92,
+        "startChar": 21,
+        "endLine": 92,
+        "endChar": 29
+      },
+      "revId": "9654f55085c8e40e75f5d0a75ecd67aa24892c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e239d84_f9025113",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-05-24T16:47:33Z",
+      "side": 1,
+      "message": "DCHECK(data_use_ascriber);",
+      "range": {
+        "startLine": 416,
+        "startChar": 2,
+        "endLine": 416,
+        "endChar": 8
+      },
+      "revId": "9654f55085c8e40e75f5d0a75ecd67aa24892c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
