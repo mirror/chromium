@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6540ea15_74e5b809",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-24T08:54:52Z",
+      "side": 1,
+      "message": "nit: STACK_ALLOCATED as it keeps const ref to the parameter?",
+      "revId": "884e28073d56bebbbec799d07375c6fb7f30e6d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f53a7fd_4e1d1e95",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-24T08:54:52Z",
+      "side": 1,
+      "message": "nit: explicit (unless it\u0027s intentional)",
+      "revId": "884e28073d56bebbbec799d07375c6fb7f30e6d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2314fcec_1772b954",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CrossOriginAccessControl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-24T08:54:52Z",
+      "side": 1,
+      "message": "is pos_ \u003c value_.length() implied by !IsTokenChar(c) ?",
+      "revId": "884e28073d56bebbbec799d07375c6fb7f30e6d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
