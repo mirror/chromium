@@ -1605,6 +1605,9 @@ class CORE_EXPORT UseCounter {
     kShapeDetection_TextDetectorConstructor = 1993,
     kCredentialManagerCredentialRequestOptionsOnlyUnmediated = 1994,
     kInertAttribute = 1995,
+    kRequestFullscreenForDialogElement = 1996,
+    kRequestFullscreenForDialogElementInTopLayer = 1997,
+    kShowModalForElementInFullscreenStack = 1998,
 
     // Add new features immediately above this line. Don't change assigned
     // numbers of any item, and don't reuse removed slots.
