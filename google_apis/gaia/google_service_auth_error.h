@@ -24,7 +24,16 @@
 
 #include <string>
 
+// TODO(blundell): Do this via a forward instead?
+#include "mojo/public/cpp/bindings/struct_traits.h"
+
 #include "url/gurl.h"
+
+namespace identity {
+namespace mojom {
+class GoogleServiceAuthErrorDataView;
+}
+}
 
 namespace base {
 class DictionaryValue;
@@ -146,6 +155,10 @@ class GoogleServiceAuthError {
   // Construct a GoogleServiceAuthError from a State with no additional data.
   explicit GoogleServiceAuthError(State s);
 
+  // Equivalent to calling GoogleServiceAuthError(NONE). Needed to exist and be
+  // public for Mojo bindings code.
+  GoogleServiceAuthError();
+
   GoogleServiceAuthError(const GoogleServiceAuthError& other);
 
   // Construct a GoogleServiceAuthError from a network error.
@@ -199,6 +212,10 @@ class GoogleServiceAuthError {
   bool IsTransientError() const;
 
  private:
+  friend struct mojo::StructTraits<
+      identity::mojom::GoogleServiceAuthErrorDataView,
+      GoogleServiceAuthError>;
+
   GoogleServiceAuthError(State s, int error);
 
   // Construct a GoogleServiceAuthError from |state| and |error_message|.
