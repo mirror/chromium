@@ -2832,6 +2832,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kMojoLoadingDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kLoadingWithMojo)},
 
+    {"enable-fetch-keepalive", flag_descriptions::kFetchKeepaliveName,
+     flag_descriptions::kFetchKeepaliveDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kFetchKeepalive)},
+
 #if defined(OS_CHROMEOS)
     {"force-tablet-mode", flag_descriptions::kForceTabletModeName,
      flag_descriptions::kForceTabletModeDescription, kOsCrOS,

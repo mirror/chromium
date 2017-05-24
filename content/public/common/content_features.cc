@@ -70,6 +70,10 @@ const base::Feature kFeaturePolicy{"FeaturePolicy",
 const base::Feature kFilterSameOriginTinyPlugin{
     "FilterSameOriginTinyPlugins", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables Fetch API keepalive (with timeout parameter).
+const base::Feature kFetchKeepalive{"FetchKeepalive",
+                                    base::FEATURE_ENABLED_BY_DEFAULT};
+
 // Enables a blink::FontCache optimization that reuses a font to serve different
 // size of font.
 const base::Feature kFontCacheScaling{"FontCacheScaling",
