@@ -788,11 +788,12 @@ void CompositorImpl::InitializeDisplay(
   auto compositor_frame_sink =
       vulkan_context_provider
           ? base::MakeUnique<cc::DirectCompositorFrameSink>(
-                frame_sink_id_, manager, display_.get(),
-                vulkan_context_provider)
+                frame_sink_id_, manager, root_window_->GetBeginFrameSource(),
+                display_.get(), vulkan_context_provider)
           : base::MakeUnique<cc::DirectCompositorFrameSink>(
-                frame_sink_id_, manager, display_.get(), context_provider,
-                nullptr, BrowserGpuMemoryBufferManager::current(),
+                frame_sink_id_, manager, root_window_->GetBeginFrameSource(),
+                display_.get(), context_provider, nullptr,
+                BrowserGpuMemoryBufferManager::current(),
                 viz::HostSharedBitmapManager::current());
 
   display_->SetVisible(true);
