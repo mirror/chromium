@@ -120,7 +120,7 @@ class VPNListProviderEntry : public views::ButtonListener, public views::View {
 class VPNListNetworkEntry : public HoverHighlightView,
                             public network_icon::AnimationObserver {
  public:
-  VPNListNetworkEntry(ViewClickListener* listener,
+  VPNListNetworkEntry(VPNListView* vpn_list_view,
                       const chromeos::NetworkState* network);
   ~VPNListNetworkEntry() override;
 
@@ -132,11 +132,8 @@ class VPNListNetworkEntry : public HoverHighlightView,
 
  private:
   void UpdateFromNetworkState(const chromeos::NetworkState* network);
-  void SetupConnectedItem(const base::string16& text,
-                          const gfx::ImageSkia& image);
-  void SetupConnectingItem(const base::string16& text,
-                           const gfx::ImageSkia& image);
 
+  VPNListView* const owner_;
   const std::string guid_;
 
   views::LabelButton* disconnect_button_ = nullptr;
@@ -144,9 +141,9 @@ class VPNListNetworkEntry : public HoverHighlightView,
   DISALLOW_COPY_AND_ASSIGN(VPNListNetworkEntry);
 };
 
-VPNListNetworkEntry::VPNListNetworkEntry(ViewClickListener* listener,
+VPNListNetworkEntry::VPNListNetworkEntry(VPNListView* owner,
                                          const chromeos::NetworkState* network)
-    : HoverHighlightView(listener), guid_(network->guid()) {
+    : HoverHighlightView(owner), owner_(owner), guid_(network->guid()) {
   UpdateFromNetworkState(network);
 }
 
@@ -189,13 +186,13 @@ void VPNListNetworkEntry::UpdateFromNetworkState(
       network_icon::GetImageForNetwork(network, network_icon::ICON_TYPE_LIST);
   base::string16 label = network_icon::GetLabelForNetwork(
       network, network_icon::ICON_TYPE_MENU_LIST);
+  AddIconAndLabel(image, label);
   if (network->IsConnectedState())
-    SetupConnectedItem(label, image);
+    owner_->SetupConnectedScrollListItem(this);
   else if (network->IsConnectingState())
-    SetupConnectingItem(label, image);
-  else
-    AddIconAndLabel(image, label);
+    owner_->SetupConnectingScrollListItem(this);
 
+  // XXX: use addrightview
   if (network->IsConnectedState()) {
     disconnect_button_ = TrayPopupUtils::CreateTrayPopupButton(
         this, l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_VPN_DISCONNECT));
@@ -206,27 +203,6 @@ void VPNListNetworkEntry::UpdateFromNetworkState(
         views::CreateEmptyBorder(0, 0, 0, kTrayPopupButtonEndMargin));
   }
   Layout();
-}
-
-// TODO(varkha|mohsen): Consolidate with a similar method in
-// BluetoothDetailedView. See https://crbug.com/686924.
-void VPNListNetworkEntry::SetupConnectedItem(const base::string16& text,
-                                             const gfx::ImageSkia& image) {
-  AddIconAndLabels(
-      image, text,
-      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTED));
-  TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::CAPTION);
-  style.set_color_style(TrayPopupItemStyle::ColorStyle::CONNECTED);
-  style.SetupLabel(sub_text_label());
-}
-
-// TODO(varkha|mohsen): Consolidate with a similar method in
-// BluetoothDetailedView. See https://crbug.com/686924.
-void VPNListNetworkEntry::SetupConnectingItem(const base::string16& text,
-                                              const gfx::ImageSkia& image) {
-  AddIconAndLabels(
-      image, text,
-      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTING));
 }
 
 }  // namespace
