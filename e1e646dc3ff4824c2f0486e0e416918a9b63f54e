@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "3de4288b_b2d9a4d7",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-24T17:26:09Z",
+      "side": 1,
+      "message": "This is subtle (at least the part about changing the link_destination). Please add test coverage.",
+      "range": {
+        "startLine": 416,
+        "startChar": 15,
+        "endLine": 416,
+        "endChar": 35
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973ef7d8_2715f4b8",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-24T17:26:09Z",
+      "side": 1,
+      "message": "Please make these names match the ids, e.g. security_details_label_. Same comment for similar fields.",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 17
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b28f143e_724e6790",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
         "patchSetId": 8
@@ -133,6 +179,29 @@
         "startChar": 0,
         "endLine": 140,
         "endChar": 22
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010e9a05_81546907",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-24T17:26:09Z",
+      "side": 1,
+      "message": "sort.",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 47
       },
       "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
