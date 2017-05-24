@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "413ef192_b41a0ca3",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-05-24T19:14:29Z",
+      "side": 1,
+      "message": "I thought about that, I think it may be a bit better to yield before finishing rendering since the current method can take quite a long time, and event processing in VrShellGl was stopped during that time. If there was nothing else to do, the scheduled call seems to happen immediately. But I don\u0027t have a strong opinion about it either way.",
+      "parentUuid": "7d587925_5ff81852",
+      "range": {
+        "startLine": 1061,
+        "startChar": 37,
+        "endLine": 1061,
+        "endChar": 53
+      },
+      "revId": "d53d7f08e48f35a8e27a0b2375a4535beb0a4bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29d7dcc2_b7b99f5f",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-24T17:43:06Z",
       "side": 1,
       "message": "Consider moving up to the top as a constant, same for initial_delay.",
+      "range": {
+        "startLine": 1082,
+        "startChar": 42,
+        "endLine": 1082,
+        "endChar": 43
+      },
+      "revId": "d53d7f08e48f35a8e27a0b2375a4535beb0a4bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98eea5ed_b7d032a1",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-05-24T19:14:29Z",
+      "side": 1,
+      "message": "Done. Also shortened to 0.25 ms, and added a TODO comment + new bug http://crbug.com/726026 to replace this with a wait-with-timeout.",
+      "parentUuid": "29d7dcc2_b7b99f5f",
       "range": {
         "startLine": 1082,
         "startChar": 42,
