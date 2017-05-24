@@ -46,6 +46,17 @@ class CORE_EXPORT HTMLPlugInElement : public HTMLFrameOwnerElement {
   ~HTMLPlugInElement() override;
   DECLARE_VIRTUAL_TRACE();
 
+  class DisposeSuspendScope {
+    STACK_ALLOCATED();
+
+   public:
+    DisposeSuspendScope();
+    ~DisposeSuspendScope();
+
+   private:
+    void PerformDeferredDispose();
+  };
+
   void SetFocused(bool, WebFocusType) override;
   void ResetInstance();
   // TODO(dcheng): Consider removing this, since HTMLEmbedElementLegacyCall
@@ -58,7 +69,8 @@ class CORE_EXPORT HTMLPlugInElement : public HTMLFrameOwnerElement {
   // create the plugin if required by calling LayoutPartForJSBindings.
   // Possibly the PluginWidget code can be inlined into PluginWrapper.
   PluginView* PluginWidget() const;
-  PluginView* OwnedPlugin() const;
+  void SetPlugin(PluginView*);
+  PluginView* OwnedPlugin() const { return plugin_; };
   bool CanProcessDrag() const;
   const String& Url() const { return url_; }
 
@@ -166,7 +178,9 @@ class CORE_EXPORT HTMLPlugInElement : public HTMLFrameOwnerElement {
   bool AllowedToLoadObject(const KURL&, const String& mime_type);
   bool WouldLoadAsNetscapePlugin(const String& url, const String& service_type);
 
+  void DisposePluginSoon(PluginView*);
   void SetPersistedPlugin(PluginView*);
+  PluginView* ReleasePlugin();
 
   bool RequestObjectInternal(const String& url,
                              const String& mime_type,
@@ -181,6 +195,7 @@ class CORE_EXPORT HTMLPlugInElement : public HTMLFrameOwnerElement {
   // avoid accessing |layoutObject()| in layoutObjectIsFocusable().
   bool plugin_is_available_ = false;
 
+  Member<PluginView> plugin_;
   // Normally the plugin is stored in HTMLFrameOwnerElement::widget_.
   // However, plugins can persist even when not rendered. In order to
   // prevent confusing code which may assume that OwnedWidget() != null

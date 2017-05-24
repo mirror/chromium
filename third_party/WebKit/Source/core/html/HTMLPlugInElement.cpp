@@ -70,6 +70,33 @@ enum PluginRequestObjectResult {
 
 }  // anonymous namespace
 
+using PluginSet = HeapHashSet<Member<PluginView>>;
+static PluginSet& PluginsPendingDispose() {
+  DEFINE_STATIC_LOCAL(PluginSet, set, (new PluginSet));
+  return set;
+}
+
+static unsigned g_dispose_suspend_count = 0;
+
+HTMLPlugInElement::DisposeSuspendScope::DisposeSuspendScope() {
+  ++g_dispose_suspend_count;
+}
+
+void HTMLPlugInElement::DisposeSuspendScope::PerformDeferredDispose() {
+  PluginSet dispose_set;
+  PluginsPendingDispose().swap(dispose_set);
+  for (const auto& plugin : dispose_set) {
+    plugin->Dispose();
+  }
+}
+
+HTMLPlugInElement::DisposeSuspendScope::~DisposeSuspendScope() {
+  DCHECK_GT(g_dispose_suspend_count, 0u);
+  if (g_dispose_suspend_count == 1)
+    PerformDeferredDispose();
+  --g_dispose_suspend_count;
+}
+
 HTMLPlugInElement::HTMLPlugInElement(
     const QualifiedName& tag_name,
     Document& doc,
@@ -92,8 +119,56 @@ HTMLPlugInElement::~HTMLPlugInElement() {
 
 DEFINE_TRACE(HTMLPlugInElement) {
   visitor->Trace(image_loader_);
+  visitor->Trace(plugin_);
   visitor->Trace(persisted_plugin_);
   HTMLFrameOwnerElement::Trace(visitor);
+}
+
+void HTMLPlugInElement::DisposePluginSoon(PluginView* plugin) {
+  if (g_dispose_suspend_count)
+    PluginsPendingDispose().insert(plugin);
+  else
+    plugin->Dispose();
+}
+
+void HTMLPlugInElement::SetPlugin(PluginView* plugin) {
+  if (plugin == plugin_)
+    return;
+
+  Document* doc = contentDocument();
+  if (doc && doc->GetFrame()) {
+    bool will_be_display_none = !plugin;
+    if (IsDisplayNone() != will_be_display_none) {
+      doc->WillChangeFrameOwnerProperties(
+          MarginWidth(), MarginHeight(), ScrollingMode(), will_be_display_none);
+    }
+  }
+
+  if (plugin_) {
+    if (plugin_->IsAttached()) {
+      plugin_->Detach();
+      DisposePluginSoon(plugin_);
+    }
+  }
+
+  plugin_ = plugin;
+  FrameOwnerPropertiesChanged();
+
+  LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
+  LayoutPartItem layout_part_item = LayoutPartItem(layout_part);
+  if (layout_part_item.IsNull())
+    return;
+
+  if (plugin_) {
+    layout_part_item.UpdateOnWidgetChange();
+
+    DCHECK_EQ(GetDocument().View(), layout_part_item.GetFrameView());
+    DCHECK(layout_part_item.GetFrameView());
+    plugin_->Attach();
+  }
+
+  if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
+    cache->ChildrenChanged(layout_part);
 }
 
 void HTMLPlugInElement::SetPersistedPlugin(PluginView* plugin) {
@@ -101,9 +176,22 @@ void HTMLPlugInElement::SetPersistedPlugin(PluginView* plugin) {
     return;
   if (persisted_plugin_) {
     persisted_plugin_->Hide();
-    DisposeFrameOrPluginSoon(persisted_plugin_.Release());
+    DisposePluginSoon(persisted_plugin_.Release());
   }
   persisted_plugin_ = plugin;
+}
+
+PluginView* HTMLPlugInElement::ReleasePlugin() {
+  if (!plugin_)
+    return nullptr;
+  if (plugin_->IsAttached())
+    plugin_->Detach();
+  LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
+  if (layout_part) {
+    if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
+      cache->ChildrenChanged(layout_part);
+  }
+  return plugin_.Release();
 }
 
 void HTMLPlugInElement::SetFocused(bool focused, WebFocusType focus_type) {
@@ -177,8 +265,7 @@ void HTMLPlugInElement::AttachLayoutTree(const AttachContext& context) {
     // If we don't have a layoutObject we have to dispose of any plugins
     // which we persisted over a reattach.
     if (persisted_plugin_) {
-      HTMLFrameOwnerElement::UpdateSuspendScope
-          suspend_widget_hierarchy_updates;
+      HTMLPlugInElement::DisposeSuspendScope suspend_plugin_dispose;
       SetPersistedPlugin(nullptr);
     }
     return;
@@ -212,7 +299,7 @@ void HTMLPlugInElement::RemovedFrom(ContainerNode* insertion_point) {
   if (persisted_plugin_) {
     // TODO(dcheng): This UpdateSuspendScope doesn't seem to provide much;
     // investigate removing it.
-    HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+    HTMLPlugInElement::DisposeSuspendScope suspend_plugin_dispose;
     SetPersistedPlugin(nullptr);
   }
   HTMLFrameOwnerElement::RemovedFrom(insertion_point);
@@ -279,10 +366,10 @@ void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
   // Only try to persist a plugin we actually own.
   PluginView* plugin = OwnedPlugin();
   if (plugin && context.performing_reattach) {
-    SetPersistedPlugin(ToPluginView(ReleaseWidget()));
+    SetPersistedPlugin(ReleasePlugin());
   } else {
     // Clear the plugin; will trigger disposal of it with Oilpan.
-    SetWidget(nullptr);
+    SetPlugin(nullptr);
   }
 
   ResetInstance();
@@ -348,13 +435,6 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
 PluginView* HTMLPlugInElement::PluginWidget() const {
   if (LayoutPart* layout_part = LayoutPartForJSBindings())
     return layout_part->Plugin();
-  return nullptr;
-}
-
-PluginView* HTMLPlugInElement::OwnedPlugin() const {
-  FrameOrPlugin* frame_or_plugin = OwnedWidget();
-  if (frame_or_plugin && frame_or_plugin->IsPluginView())
-    return ToPluginView(frame_or_plugin);
   return nullptr;
 }
 
@@ -545,7 +625,7 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
   loaded_url_ = url;
 
   if (persisted_plugin_) {
-    SetWidget(persisted_plugin_.Release());
+    SetPlugin(persisted_plugin_.Release());
   } else {
     bool load_manually =
         GetDocument().IsPluginDocument() && !GetDocument().ContainsPlugins();
@@ -564,7 +644,7 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
     }
 
     if (!layout_item.IsNull()) {
-      SetWidget(plugin);
+      SetPlugin(plugin);
       layout_item.GetFrameView()->AddPlugin(plugin);
     } else {
       SetPersistedPlugin(plugin);

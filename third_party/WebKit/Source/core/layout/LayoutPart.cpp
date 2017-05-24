@@ -99,17 +99,20 @@ FrameView* LayoutPart::ChildFrameView() const {
 }
 
 PluginView* LayoutPart::Plugin() const {
-  FrameOrPlugin* frame_or_plugin = GetFrameOrPlugin();
-  if (frame_or_plugin && frame_or_plugin->IsPluginView())
-    return ToPluginView(frame_or_plugin);
+  Node* node = GetNode();
+  if (node && IsHTMLPlugInElement(node))
+    return ToHTMLPlugInElement(node)->OwnedPlugin();
   return nullptr;
 }
 
 FrameOrPlugin* LayoutPart::GetFrameOrPlugin() const {
+  FrameOrPlugin* result = nullptr;
   Node* node = GetNode();
   if (node && node->IsFrameOwnerElement())
-    return ToHTMLFrameOwnerElement(node)->OwnedWidget();
-  return nullptr;
+    result = ToHTMLFrameOwnerElement(node)->OwnedWidget();
+  if (!result)
+    result = Plugin();
+  return result;
 }
 
 PaintLayerType LayoutPart::LayerTypeRequired() const {

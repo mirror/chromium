@@ -62,19 +62,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   virtual void DidLoadNonEmptyDocument() {}
 
   void SetWidget(FrameOrPlugin*);
-  FrameOrPlugin* ReleaseWidget();
   FrameOrPlugin* OwnedWidget() const { return widget_; }
-
-  class UpdateSuspendScope {
-    STACK_ALLOCATED();
-
-   public:
-    UpdateSuspendScope();
-    ~UpdateSuspendScope();
-
-   private:
-    void PerformDeferredWidgetTreeOperations();
-  };
 
   // FrameOwner overrides:
   Frame* ContentFrame() const final { return content_frame_; }
@@ -111,7 +99,6 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
                               bool replace_current_item);
   bool IsKeyboardFocusable() const override;
 
-  void DisposeFrameOrPluginSoon(FrameOrPlugin*);
   void FrameOwnerPropertiesChanged();
 
   // Return the origin which is to be used for feature policy container

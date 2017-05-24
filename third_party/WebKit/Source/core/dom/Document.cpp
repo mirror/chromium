@@ -2123,8 +2123,7 @@ void Document::UpdateStyle() {
 
   unsigned initial_element_count = GetStyleEngine().StyleForElementCount();
 
-  HTMLFrameOwnerElement::UpdateSuspendScope
-      suspend_frame_view_base_hierarchy_updates;
+  HTMLPlugInElement::DisposeSuspendScope suspend_plugin_dispose;
   lifecycle_.AdvanceTo(DocumentLifecycle::kInStyleRecalc);
 
   StyleRecalcChange change = kNoChange;
@@ -2547,8 +2546,7 @@ void Document::Shutdown() {
   // Defer FrameViewBase updates to avoid plugins trying to run script inside
   // ScriptForbiddenScope, which will crash the renderer after
   // https://crrev.com/200984
-  HTMLFrameOwnerElement::UpdateSuspendScope
-      suspend_frame_view_base_hierarchy_updates;
+  HTMLPlugInElement::DisposeSuspendScope suspend_plugin_dispose;
   // Don't allow script to run in the middle of detachLayoutTree() because a
   // detaching Document is not in a consistent state.
   ScriptForbiddenScope forbid_script;
