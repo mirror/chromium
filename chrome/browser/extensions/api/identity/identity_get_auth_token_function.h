@@ -12,6 +12,7 @@
 #include "extensions/browser/extension_function_histogram_value.h"
 #include "google_apis/gaia/oauth2_mint_token_flow.h"
 #include "google_apis/gaia/oauth2_token_service.h"
+#include "services/identity/public/interfaces/identity_manager.mojom.h"
 
 namespace extensions {
 
@@ -115,6 +116,10 @@ class IdentityGetAuthTokenFunction : public ChromeAsyncExtensionFunction,
   void OnMintTokenFailure(const GoogleServiceAuthError& error) override;
   void OnIssueAdviceSuccess(const IssueAdviceInfo& issue_advice) override;
 
+  void OnGetAccessTokenComplete(const base::Optional<std::string>& access_token,
+                                base::Time expiration_time,
+                                const GoogleServiceAuthError& error);
+
 #if defined(OS_CHROMEOS)
   // Starts a login access token request for device robot account. This method
   // will be called only in Chrome OS for:
@@ -152,6 +157,8 @@ class IdentityGetAuthTokenFunction : public ChromeAsyncExtensionFunction,
   IssueAdviceInfo issue_advice_;
   std::unique_ptr<GaiaWebAuthFlow> gaia_web_auth_flow_;
   std::unique_ptr<IdentitySigninFlow> signin_flow_;
+
+  identity::mojom::IdentityManagerPtr identity_manager_;
 };
 
 }  // namespace extensions
