@@ -131,7 +131,7 @@ ShelfTooltipManager* ShelfViewTestAPI::tooltip_manager() {
   return &shelf_view_->tooltip_;
 }
 
-gfx::Size ShelfViewTestAPI::GetPreferredSize() {
+gfx::Size ShelfViewTestAPI::GetShelfViewPreferredSize() {
   return shelf_view_->GetPreferredSize();
 }
 
