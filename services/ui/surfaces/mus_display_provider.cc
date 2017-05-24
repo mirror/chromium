@@ -84,11 +84,12 @@ std::unique_ptr<cc::Display> MusDisplayProvider::CreateDisplay(
 
   // The ownership of the BeginFrameSource is transfered to the caller.
   *begin_frame_source = std::move(synthetic_begin_frame_source);
+  scheduler->SetBeginFrameSource(begin_frame_source->get());
 
   return base::MakeUnique<cc::Display>(
       viz::HostSharedBitmapManager::current(), gpu_memory_buffer_manager_.get(),
-      settings, frame_sink_id, begin_frame_source->get(),
-      std::move(display_output_surface), std::move(scheduler),
+      settings, frame_sink_id, std::move(display_output_surface),
+      std::move(scheduler),
       base::MakeUnique<cc::TextureMailboxDeleter>(task_runner_.get()));
 }
 
