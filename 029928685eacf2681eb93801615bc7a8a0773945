@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a779b444_bb0e0095",
+        "filename": "ui/base/l10n/l10n_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-05-24T18:38:24Z",
+      "side": 1,
+      "message": "nit: maybe, \"Make sure that there is no placeholder, as no replacement is passed in\" ?\n\nBTW, I believe that the tool used by Google for translation already does this kind of check for translated strings. \nIf not, it should.",
+      "revId": "029928685eacf2681eb93801615bc7a8a0773945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
