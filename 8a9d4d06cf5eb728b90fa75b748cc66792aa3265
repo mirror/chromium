@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b1489c0_4df5bc1b",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-24T05:05:07Z",
+      "side": 1,
+      "message": "IIRC, finch parameters can be specified via --force-fieldtrial-params command line parameter, not via this flag, and the identifier to dispatch to which experiment the parameter should be delivered is the string specified in content_features.cc.\n\nSo, it looks we should exclude the comment about timeout value here, or slightly change the wording to say that when the feature is enabled, timeout value configuration via Finch is also enabled.",
+      "range": {
+        "startLine": 406,
+        "startChar": 36,
+        "endLine": 406,
+        "endChar": 0
+      },
+      "revId": "8a9d4d06cf5eb728b90fa75b748cc66792aa3265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
