@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea92a74_8651d09e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/idlharness.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-24T17:55:04Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be adding this file back. idlharness.js doesn\u0027t understand [SecureContext] so it will report test failures because these things aren\u0027t exposed.",
+      "revId": "490eee4b140f19216ec28138c7fe89e50aa8bd3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
