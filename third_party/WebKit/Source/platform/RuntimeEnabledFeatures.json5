@@ -550,6 +550,7 @@
     },
     {
       name: "LoadingWithMojo",
+      status: "stable",
     },
     {
       name: "LocationHardReload",
