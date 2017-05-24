@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "293660a1_a4149f74",
+        "filename": "components/about_ui/OWNERS",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-24T14:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "939f8879_ef3b04aa",
+      "range": {
+        "startLine": 4,
+        "startChar": 6,
+        "endLine": 4,
+        "endChar": 14
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10a8f213_a602cd8c",
         "filename": "components/about_ui/resources/about_credits.js",
         "patchSetId": 7
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "errr, which platform that this UI runs on isn\u0027t running about_credits.js?",
       "parentUuid": "67ef5656_b286a984",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "7fb7289a44cd03b49525b0febbd3ea9289b2bfab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8aa4f4_0383cb84",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-24T14:57:40Z",
+      "side": 1,
+      "message": "The webview doesn\u0027t run about_credits.js. That\u0027s why we set \"html_content \u003d GetCredits(false);\" on 54th line of components/about_ui/credit_utils.cc",
+      "parentUuid": "10014266_c2f97ca1",
       "range": {
         "startLine": 14,
         "startChar": 18,

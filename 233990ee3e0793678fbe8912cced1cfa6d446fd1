@@ -22,6 +22,30 @@
       "revId": "233990ee3e0793678fbe8912cced1cfa6d446fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a5c91a_5d3b6d1a",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-05-24T14:57:40Z",
+      "side": 1,
+      "message": "I asked the author of this part  @eustas,  he replied \"Just a habit. Formally, pointer is not a Boolean. !! casts null to false and non-null to true.\"",
+      "parentUuid": "1b16dfd7_efebfabb",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "233990ee3e0793678fbe8912cced1cfa6d446fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
