@@ -1952,7 +1952,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kEnableTouchDragDrop,
     switches::kEnableUseZoomForDSF,
     switches::kEnableViewport,
-    switches::kEnableVp9InMp4,
     switches::kEnableVtune,
     switches::kEnableWebFontsInterventionTrigger,
     switches::kEnableWebFontsInterventionV2,
