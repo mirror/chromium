@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51e5109f_72b1208a",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/ScreenShooter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-05-24T15:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25577e58_07c5bfb9",
+      "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e50e9c34_ba9e92c9",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de55be1f_62027654",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-05-24T15:35:46Z",
+      "side": 1,
+      "message": "Latest failures were caused by an overnight change in Chrome Home, see https://crbug/725905. Fixed.",
+      "parentUuid": "e50e9c34_ba9e92c9",
+      "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
