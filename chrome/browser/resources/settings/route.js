@@ -167,6 +167,12 @@ cr.define('settings', function() {
     r.SITE_SETTINGS_ALL = r.SITE_SETTINGS.createChild('all');
     r.SITE_SETTINGS_SITE_DETAILS =
         r.SITE_SETTINGS_ALL.createChild('/content/siteDetails');
+  } else if (loadTimeData.getBoolean('enableSiteDetails')) {
+    // When there is no "All Sites", pressing 'back' from "Site Details" should
+    // return to "Content Settings". This should only occur when |kSiteSettings|
+    // is off and |kSiteDetails| is on.
+    r.SITE_SETTINGS_SITE_DETAILS =
+        r.SITE_SETTINGS.createChild('/content/siteDetails');
   }
 
   r.SITE_SETTINGS_HANDLERS = r.SITE_SETTINGS.createChild('/handlers');
@@ -307,7 +313,7 @@ cr.define('settings', function() {
   var currentQueryParameters = new URLSearchParams();
 
   /** @private {boolean} */
-  var lastRouteChangeWasPopstate_ = false;
+  var lastRouteChangeWasPopstate = false;
 
   /** @private */
   var initializeRouteFromUrlCalled = false;
@@ -331,7 +337,7 @@ cr.define('settings', function() {
 
   function resetRouteForTesting() {
     initializeRouteFromUrlCalled = false;
-    lastRouteChangeWasPopstate_ = false;
+    lastRouteChangeWasPopstate = false;
     currentRoute = Route.BASIC;
     currentQueryParameters = new URLSearchParams();
   }
@@ -346,7 +352,7 @@ cr.define('settings', function() {
     var oldRoute = currentRoute;
     currentRoute = route;
     currentQueryParameters = queryParameters;
-    lastRouteChangeWasPopstate_ = isPopstate;
+    lastRouteChangeWasPopstate = isPopstate;
     routeObservers.forEach(function(observer) {
       observer.currentRouteChanged(currentRoute, oldRoute);
     });
@@ -361,8 +367,8 @@ cr.define('settings', function() {
   };
 
   /** @return {boolean} */
-  var lastRouteChangeWasPopstate = function() {
-    return lastRouteChangeWasPopstate_;
+  var getLastRouteChangeWasPopstate = function() {
+    return lastRouteChangeWasPopstate;
   };
 
   /**
@@ -428,7 +434,7 @@ cr.define('settings', function() {
     resetRouteForTesting: resetRouteForTesting,
     getCurrentRoute: getCurrentRoute,
     getQueryParameters: getQueryParameters,
-    lastRouteChangeWasPopstate: lastRouteChangeWasPopstate,
+    getLastRouteChangeWasPopstate: getLastRouteChangeWasPopstate,
     navigateTo: navigateTo,
     navigateToPreviousRoute: navigateToPreviousRoute,
   };

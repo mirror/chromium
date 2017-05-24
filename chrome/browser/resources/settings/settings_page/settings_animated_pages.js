@@ -61,7 +61,7 @@ Polymer({
 
     // Don't attempt to focus any anchor element, unless last navigation was a
     // 'pop' (backwards) navigation.
-    if (!settings.lastRouteChangeWasPopstate())
+    if (!settings.getLastRouteChangeWasPopstate())
       return;
 
     // Only handle iron-select events from neon-animatable elements and the
