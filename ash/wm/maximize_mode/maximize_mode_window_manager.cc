@@ -263,7 +263,7 @@ bool MaximizeModeWindowManager::ShouldHandleWindow(WmWindow* window) {
   if (window->GetWindowState()->allow_set_bounds_direct())
     return false;
 
-  return window->GetType() == ui::wm::WINDOW_TYPE_NORMAL;
+  return window->GetType() == aura::client::WINDOW_TYPE_NORMAL;
 }
 
 void MaximizeModeWindowManager::AddWindowCreationObservers() {
