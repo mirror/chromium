@@ -52,6 +52,24 @@
       "revId": "7ccce807f8c19b9dc134758fd24746090e7cbf49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd36862_52a4e411",
+        "filename": "base/win/scoped_comptr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-24T00:38:46Z",
+      "side": 1,
+      "message": "Possibly. I don\u0027t have one strong preference or another since they do the same thing. I\u0027ll leave this to the owners.",
+      "parentUuid": "52ebe8d4_e774551b",
+      "revId": "7ccce807f8c19b9dc134758fd24746090e7cbf49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
