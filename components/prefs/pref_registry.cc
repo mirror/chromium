@@ -23,9 +23,10 @@ PrefRegistry::~PrefRegistry() {
 uint32_t PrefRegistry::GetRegistrationFlags(
     const std::string& pref_name) const {
   const auto& it = registration_flags_.find(pref_name);
-  if (it == registration_flags_.end())
-    return NO_REGISTRATION_FLAGS;
-  return it->second;
+  if (it != registration_flags_.end())
+    return it->second;
+
+  return NO_REGISTRATION_FLAGS;
 }
 
 scoped_refptr<PrefStore> PrefRegistry::defaults() {
@@ -52,6 +53,16 @@ void PrefRegistry::SetDefaultPrefValue(const std::string& pref_name,
   defaults_->ReplaceDefaultValue(pref_name, base::WrapUnique(value));
 }
 
+void PrefRegistry::SetRemoteDefaultPrefValues(base::DictionaryValue defaults) {
+  for (auto& key : unowned_pref_keys_) {
+    std::unique_ptr<base::Value> value;
+    defaults.Remove(key, &value);
+    DCHECK(value);
+    defaults_->SetDefaultValue(key, std::move(value));
+  }
+  unowned_pref_keys_.clear();
+}
+
 void PrefRegistry::RegisterPreference(
     const std::string& path,
     std::unique_ptr<base::Value> default_value,
@@ -68,4 +79,9 @@ void PrefRegistry::RegisterPreference(
   defaults_->SetDefaultValue(path, std::move(default_value));
   if (flags != NO_REGISTRATION_FLAGS)
     registration_flags_[path] = flags;
+}
+
+void PrefRegistry::RegisterUnownedPref(const std::string path) {
+  bool inserted = unowned_pref_keys_.insert(path).second;
+  DCHECK(inserted);
 }

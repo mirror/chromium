@@ -38,6 +38,8 @@ class PendingPrefConnection : public base::RefCounted<PendingPrefConnection> {
   void ProvidePersistentPrefStore(
       PersistentPrefStoreImpl* persistent_pref_store);
 
+  void ProvideDefaults(std::unique_ptr<base::DictionaryValue> defaults);
+
  private:
   friend class base::RefCounted<PendingPrefConnection>;
   ~PendingPrefConnection();
@@ -57,6 +59,7 @@ class PendingPrefConnection : public base::RefCounted<PendingPrefConnection> {
 
   std::set<PrefValueStore::PrefStoreType> required_remote_types_;
 
+  std::unique_ptr<base::DictionaryValue> defaults_;
   mojom::PersistentPrefStoreConnectionPtr persistent_pref_store_connection_;
 
   DISALLOW_COPY_AND_ASSIGN(PendingPrefConnection);
