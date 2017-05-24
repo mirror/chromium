@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e74d2db5_f7877096",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-05-24T22:52:08Z",
+      "side": 1,
+      "message": "FWIW, I think we should remove the ChromeHome specific stuff from the model and find a way to keep that closer to the UI bits (granted, we really need to remove access to the toolbarmodel from anyone but the toolbar manager and allow the toolbardataprovider to encapsulate more of the ui quirks).",
+      "range": {
+        "startLine": 1037,
+        "startChar": 0,
+        "endLine": 1037,
+        "endChar": 35
+      },
+      "revId": "718384cbfa4756350cd777ef5a426c8478ff531b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
