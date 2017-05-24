@@ -8,6 +8,17 @@
 
 namespace content {
 
+namespace {
+
+void SetDefaultValues(ServiceWorkerProviderHostInfo* info) {
+  info->provider_id = kInvalidServiceWorkerProviderId;
+  info->route_id = MSG_ROUTING_NONE;
+  info->type = SERVICE_WORKER_PROVIDER_UNKNOWN;
+  info->is_parent_frame_secure = false;
+}
+
+}  // namespace
+
 ServiceWorkerProviderHostInfo::ServiceWorkerProviderHostInfo()
     : provider_id(kInvalidServiceWorkerProviderId),
       route_id(MSG_ROUTING_NONE),
@@ -20,10 +31,7 @@ ServiceWorkerProviderHostInfo::ServiceWorkerProviderHostInfo(
       route_id(other.route_id),
       type(other.type),
       is_parent_frame_secure(other.is_parent_frame_secure) {
-  other.provider_id = kInvalidServiceWorkerProviderId;
-  other.route_id = MSG_ROUTING_NONE;
-  other.type = SERVICE_WORKER_PROVIDER_UNKNOWN;
-  other.is_parent_frame_secure = false;
+  SetDefaultValues(&other);
 }
 
 ServiceWorkerProviderHostInfo::ServiceWorkerProviderHostInfo(
@@ -37,5 +45,16 @@ ServiceWorkerProviderHostInfo::ServiceWorkerProviderHostInfo(
       is_parent_frame_secure(is_parent_frame_secure) {}
 
 ServiceWorkerProviderHostInfo::~ServiceWorkerProviderHostInfo() {}
+
+ServiceWorkerProviderHostInfo& ServiceWorkerProviderHostInfo::operator=(
+    ServiceWorkerProviderHostInfo&& other) {
+  provider_id = other.provider_id;
+  route_id = other.route_id;
+  type = other.type;
+  is_parent_frame_secure = other.is_parent_frame_secure;
+
+  SetDefaultValues(&other);
+  return *this;
+}
 
 }  // namespace content

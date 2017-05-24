@@ -358,7 +358,6 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
 
   // Finalizes cross-site transfers and navigation-initalized hosts.
   void FinalizeInitialization(int process_id,
-                              int frame_routing_id,
                               ServiceWorkerDispatcherHost* dispatcher_host);
 
   // Clears the information of the ServiceWorkerWorkerClient of dedicated (or

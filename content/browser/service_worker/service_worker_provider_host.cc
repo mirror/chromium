@@ -566,11 +566,9 @@ void ServiceWorkerProviderHost::CompleteCrossSiteTransfer(
   DCHECK_NE(MSG_ROUTING_NONE, provisional_host->frame_id());
 
   render_thread_id_ = kDocumentMainThreadId;
-  info_.provider_id = provisional_host->provider_id();
-  info_.type = provisional_host->provider_type();
+  info_ = std::move(provisional_host->info_);
 
   FinalizeInitialization(provisional_host->process_id(),
-                         provisional_host->frame_id(),
                          provisional_host->dispatcher_host());
 }
 
@@ -587,7 +585,8 @@ void ServiceWorkerProviderHost::CompleteNavigationInitialized(
   DCHECK_NE(ChildProcessHost::kInvalidUniqueID, process_id);
   DCHECK_NE(MSG_ROUTING_NONE, frame_routing_id);
 
-  FinalizeInitialization(process_id, frame_routing_id, dispatcher_host);
+  info_.route_id = frame_routing_id;
+  FinalizeInitialization(process_id, dispatcher_host);
 }
 
 void ServiceWorkerProviderHost::SendUpdateFoundMessage(
@@ -756,10 +755,8 @@ void ServiceWorkerProviderHost::Send(IPC::Message* message) const {
 
 void ServiceWorkerProviderHost::FinalizeInitialization(
     int process_id,
-    int frame_routing_id,
     ServiceWorkerDispatcherHost* dispatcher_host) {
   render_process_id_ = process_id;
-  info_.route_id = frame_routing_id;
   dispatcher_host_ = dispatcher_host;
 
   for (const GURL& pattern : associated_patterns_)
