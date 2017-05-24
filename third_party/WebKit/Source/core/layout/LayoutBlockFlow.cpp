@@ -4246,13 +4246,20 @@ void LayoutBlockFlow::PositionSpannerDescendant(
   DetermineLogicalLeftPositionForChild(spanner);
 }
 
+DISABLE_CFI_PERF
+bool LayoutBlockFlow::CreatesNewFormattingContext() const {
+  return IsInlineBlockOrInlineTable() || IsFloatingOrOutOfFlowPositioned() ||
+         HasOverflowClip() || IsFlexItemIncludingDeprecated() || IsRubyText() ||
+         Style()->SpecifiesColumns() || IsLayoutFlowThread() || IsTableCell() ||
+         IsTableCaption() || IsFieldset() || IsWritingModeRoot() ||
+         IsDocumentElement() || IsGridItem() || IsHR() || IsLegend() ||
+         IsTextControl() || Style()->GetColumnSpan() == kColumnSpanAll ||
+         Style()->ContainsPaint() || Style()->ContainsLayout() ||
+         IsSVGForeignObject() || Style()->Display() == EDisplay::kFlowRoot;
+}
+
 bool LayoutBlockFlow::AvoidsFloats() const {
-  // Floats can't intrude into our box if we have a non-auto column count or
-  // width.
-  // Note: we need to use LayoutBox::avoidsFloats here since
-  // LayoutBlock::avoidsFloats is always true.
-  return LayoutBox::AvoidsFloats() || !Style()->HasAutoColumnCount() ||
-         !Style()->HasAutoColumnWidth();
+  return ShouldBeConsideredAsReplaced() || CreatesNewFormattingContext();
 }
 
 void LayoutBlockFlow::MoveChildrenTo(LayoutBoxModelObject* to_box_model_object,
