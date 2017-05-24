@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a08f2d24_8fe3f1b2",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-24T23:35:06Z",
+      "side": 1,
+      "message": "Use benchmark_finders. GetAllPerfBenchmarks()",
+      "revId": "d0c98c2e13a7ba6f37a0fb654b586710056963ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
