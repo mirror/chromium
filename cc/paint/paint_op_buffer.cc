@@ -8,6 +8,7 @@
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/paint_record.h"
 #include "third_party/skia/include/core/SkAnnotation.h"
+#include "third_party/skia/include/core/SkCanvas.h"
 
 namespace cc {
 
@@ -414,7 +415,14 @@ void SaveLayerAlphaOp::Raster(const PaintOp* base_op,
   auto* op = static_cast<const SaveLayerAlphaOp*>(base_op);
   // See PaintOp::kUnsetRect
   bool unset = op->bounds.left() == SK_ScalarInfinity;
-  canvas->saveLayerAlpha(unset ? nullptr : &op->bounds, op->alpha);
+  if (op->preserve_lcd_text_requests) {
+    SkPaint paint;
+    paint.setAlpha(op->alpha);
+    canvas->saveLayerPreserveLCDTextRequests(unset ? nullptr : &op->bounds,
+                                             &paint);
+  } else {
+    canvas->saveLayerAlpha(unset ? nullptr : &op->bounds, op->alpha);
+  }
 }
 
 void ScaleOp::Raster(const PaintOp* base_op,
@@ -505,11 +513,11 @@ DrawDisplayItemListOp::DrawDisplayItemListOp(
     : list(list) {}
 
 size_t DrawDisplayItemListOp::AdditionalBytesUsed() const {
-  return list->ApproximateMemoryUsage();
+  return list->BytesUsed();
 }
 
 bool DrawDisplayItemListOp::HasDiscardableImages() const {
-  return list->has_discardable_images();
+  return list->HasDiscardableImages();
 }
 
 DrawDisplayItemListOp::DrawDisplayItemListOp(const DrawDisplayItemListOp& op) =
@@ -678,6 +686,9 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
     DCHECK_LT(range_indices[i], range_starts.size());
   }
 #endif
+
+  // Prevent PaintOpBuffers from having side effects back into the canvas.
+  SkAutoCanvasRestore save_restore(canvas, true);
 
   // TODO(enne): a PaintRecord that contains a SetMatrix assumes that the
   // SetMatrix is local to that PaintRecord itself.  Said differently, if you
