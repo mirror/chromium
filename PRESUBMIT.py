@@ -1140,9 +1140,6 @@ def _ExtractAddRulesFromParsedDeps(parsed_deps):
 def _ParseDeps(contents):
   """Simple helper for parsing DEPS files."""
   # Stubs for handling special syntax in the root DEPS file.
-  def FromImpl(*_):
-    pass  # NOP function so "From" doesn't fail.
-
   def FileImpl(_):
     pass  # NOP function so "File" doesn't fail.
 
@@ -1161,7 +1158,6 @@ def _ParseDeps(contents):
   local_scope = {}
   global_scope = {
       'File': FileImpl,
-      'From': FromImpl,
       'Var': _VarImpl(local_scope).Lookup,
   }
   exec contents in global_scope, local_scope
