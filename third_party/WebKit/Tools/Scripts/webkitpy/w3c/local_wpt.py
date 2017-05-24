@@ -92,9 +92,10 @@ class LocalWPT(object):
 
         # TODO(jeffcarp): Use git am -p<n> where n is len(CHROMIUM_WPT_DIR.split(/'))
         # or something not off-by-one.
+        author_str = '%s <%s>' % (author, author)
         self.run(['git', 'apply', '-'], input=patch)
         self.run(['git', 'add', '.'])
-        self.run(['git', 'commit', '--author', author, '-am', message])
+        self.run(['git', 'commit', '--author', author_str, '-am', message])
 
         # Force push is necessary when updating a PR with a new patch
         # from Gerrit.
