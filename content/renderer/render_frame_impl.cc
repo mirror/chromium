@@ -4,6 +4,7 @@
 
 #include "content/renderer/render_frame_impl.h"
 
+#include <algorithm>
 #include <map>
 #include <string>
 #include <utility>
@@ -907,6 +908,102 @@ struct RenderFrameImpl::PendingFileChooser {
   blink::WebFileChooserCompletion* completion;  // MAY BE NULL to skip callback.
 };
 
+const std::string& UniqueNameForWebFrame(blink::WebFrame* frame) {
+  return frame->IsWebLocalFrame()
+             ? RenderFrameImpl::FromWebFrame(frame)->unique_name()
+             : RenderFrameProxy::FromWebFrame(frame)->unique_name();
+}
+
+RenderFrameImpl::RenderFrameAdapter::RenderFrameAdapter(
+    RenderFrameImpl* render_frame)
+    : render_frame_(render_frame) {}
+
+RenderFrameImpl::RenderFrameAdapter::~RenderFrameAdapter() {}
+
+bool RenderFrameImpl::RenderFrameAdapter::IsMainFrame() const {
+  return render_frame_->IsMainFrame();
+}
+
+bool RenderFrameImpl::RenderFrameAdapter::IsCandidateUnique(
+    const std::string& name) const {
+  // This method is currently O(N), where N = number of frames in the tree.
+  DCHECK(!name.empty());
+
+  for (blink::WebFrame* frame = GetWebFrame()->Top(); frame;
+       frame = frame->TraverseNext()) {
+    if (frame == GetWebFrame())
+      continue;
+    if (UniqueNameForWebFrame(frame) == name)
+      return false;
+  }
+
+  return true;
+}
+
+int RenderFrameImpl::RenderFrameAdapter::GetSiblingCount() const {
+  int sibling_count = 0;
+  for (blink::WebFrame* frame = GetWebFrame()->Parent()->FirstChild(); frame;
+       frame = frame->NextSibling()) {
+    if (frame == GetWebFrame())
+      continue;
+    ++sibling_count;
+  }
+  return sibling_count;
+}
+
+int RenderFrameImpl::RenderFrameAdapter::GetChildCount() const {
+  int child_count = 0;
+  for (blink::WebFrame* frame = GetWebFrame()->FirstChild(); frame;
+       frame = frame->NextSibling()) {
+    ++child_count;
+  }
+  return child_count;
+}
+
+std::vector<base::StringPiece>
+RenderFrameImpl::RenderFrameAdapter::CollectAncestorNames(
+    BeginPoint begin_point,
+    bool (*should_stop)(base::StringPiece)) const {
+  std::vector<base::StringPiece> result;
+  for (blink::WebFrame* frame = begin_point == BeginPoint::kParentFrame
+                                    ? GetWebFrame()->Parent()
+                                    : GetWebFrame();
+       frame; frame = frame->Parent()) {
+    result.push_back(UniqueNameForWebFrame(frame));
+    if (should_stop(result.back()))
+      break;
+  }
+  std::reverse(result.begin(), result.end());
+  return result;
+}
+
+std::vector<int> RenderFrameImpl::RenderFrameAdapter::GetFramePosition(
+    BeginPoint begin_point) const {
+  std::vector<int> result;
+  blink::WebFrame* parent = begin_point == BeginPoint::kParentFrame
+                                ? GetWebFrame()->Parent()
+                                : GetWebFrame();
+  blink::WebFrame* child =
+      begin_point == BeginPoint::kParentFrame ? GetWebFrame() : nullptr;
+  while (parent) {
+    int position_in_parent = 0;
+    blink::WebFrame* sibling = parent->FirstChild();
+    while (sibling != child) {
+      sibling = sibling->NextSibling();
+      ++position_in_parent;
+    }
+    result.push_back(position_in_parent);
+
+    child = parent;
+    parent = parent->Parent();
+  }
+  return result;
+}
+
+blink::WebLocalFrame* RenderFrameImpl::RenderFrameAdapter::GetWebFrame() const {
+  return render_frame_->frame_;
+}
+
 // static
 RenderFrameImpl* RenderFrameImpl::Create(RenderViewImpl* render_view,
                                          int32_t routing_id) {
@@ -1106,7 +1203,8 @@ blink::WebURL RenderFrameImpl::OverrideFlashEmbedWithHTML(
 RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
     : frame_(NULL),
       is_main_frame_(true),
-      unique_name_helper_(this),
+      render_frame_adapter_(this),
+      unique_name_helper_(&render_frame_adapter_),
       in_browser_initiated_detach_(false),
       in_frame_tree_(false),
       render_view_(params.render_view),
@@ -3140,6 +3238,8 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
     blink::WebSandboxFlags sandbox_flags,
     const blink::WebParsedFeaturePolicy& container_policy,
     const blink::WebFrameOwnerProperties& frame_owner_properties) {
+  DCHECK_EQ(frame_, parent);
+
   // Synchronously notify the browser of a child frame creation to get the
   // routing_id for the RenderFrame.
   int child_routing_id = MSG_ROUTING_NONE;
@@ -3161,8 +3261,7 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   // Note that Blink can't be changed to just pass |fallback_name| as |name| in
   // the case |name| is empty: |fallback_name| should never affect the actual
   // browsing context name, only unique name generation.
-  params.frame_unique_name = UniqueNameHelper::GenerateNameForNewChildFrame(
-      parent,
+  params.frame_unique_name = unique_name_helper_.GenerateNameForNewChildFrame(
       params.frame_name.empty() ? fallback_name.Utf8() : params.frame_name);
   params.sandbox_flags = sandbox_flags;
   params.container_policy = FeaturePolicyHeaderFromWeb(container_policy);
