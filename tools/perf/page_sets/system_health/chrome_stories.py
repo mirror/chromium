@@ -30,6 +30,7 @@ class BlankAboutBlankStory(system_health_story.SystemHealthStory):
     action_runner.WaitForJavaScriptCondition("window.__hasRunRAF")
 
 
+# TODO(rnephew): Move to StoryExpectation when they support android-webview.
 @decorators.Disabled('android-webview')  # Webview does not have omnibox
 class SearchOmniboxStory(system_health_story.SystemHealthStory):
   """Story that peforms search by using omnibox search provider
@@ -57,6 +58,7 @@ class SearchOmniboxStory(system_health_story.SystemHealthStory):
     action_runner.ScrollPage(use_touch=True, distance=500)
 
 
+# TODO(rnephew): Move to StoryExpectation when they support android-webview.
 @decorators.Disabled('android-webview')  # Webview does not have new tab page.
 class MobileNewTabPageStory(system_health_story.SystemHealthStory):
   """Story that loads new tab page and performs searches.

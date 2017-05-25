@@ -100,8 +100,8 @@ class LongRunningGmailDesktopForegroundStory(_LongRunningGmailDesktopBase):
   NAME = 'long_running:tools:gmail-foreground'
 
 
-@decorators.Disabled('android-webview',  # Weview does not have tabs.
-                     'android')  # crbug.com/657433
+# TODO(rnephew): Move to StoryExpectation when they support android-webview.
+@decorators.Disabled('android-webview')  # Weview does not have tabs.
 class LongRunningGmailMobileBackgroundStory(_LongRunningGmailMobileBase):
   BACKGROUND = True
   NAME = 'long_running:tools:gmail-background'
