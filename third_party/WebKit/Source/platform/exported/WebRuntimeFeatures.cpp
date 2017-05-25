@@ -178,6 +178,10 @@ void WebRuntimeFeatures::EnableMediaSession(bool enable) {
   RuntimeEnabledFeatures::setMediaSessionEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableMojoBlobs(bool enable) {
+  RuntimeEnabledFeatures::setMojoBlobsEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableNotificationConstructor(bool enable) {
   RuntimeEnabledFeatures::setNotificationConstructorEnabled(enable);
 }
