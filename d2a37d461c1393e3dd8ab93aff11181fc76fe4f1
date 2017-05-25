@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b723a19_4da0f549",
+        "filename": "chrome/browser/file_select_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-25T02:46:35Z",
+      "side": 1,
+      "message": "why do you need the nativeview check? if the webcontents is destroyed isn\u0027t web_contents_ set to null? So that that should really be the only check you need.",
+      "range": {
+        "startLine": 359,
+        "startChar": 21,
+        "endLine": 359,
+        "endChar": 34
+      },
+      "revId": "d2a37d461c1393e3dd8ab93aff11181fc76fe4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
