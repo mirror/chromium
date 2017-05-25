@@ -397,13 +397,59 @@ the [chrome-perf swarming pool](https://chromium-swarm.appspot.com/botlist?c=id&
                 the trigger command.  The output dirs must be in quotes when
                 triggering on swarming bot
 
-### Disabling Telemetry Tests
+### Disabling Telemetry Stories
 
-If the test is a telemetry test, its name will have a '.' in it, such as
+If a benchmark only has a few stories failing and not everything failing, the
+stories should be disabled, not the entire benchmark. You can find the story
+names at the end of a telemetry run. It will look like this:
+`
+[  PASSED  ] XX tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ]  TEST_NAME_HERE@{GROUPING_KEYS_HERE}
+`
+In order to disable the story, you must add it to the `StoryExpectation` object,
+usually found in the same file as the page set. To find the name of the
+`StoryExpectation` class you can look in the benchmark file under the
+'GetExpectations' method.
+
+[Example Benchmark GetExpectation()](https://cs.chromium.org/chromium/src/tools/perf/benchmarks/loading.py?dr=CSs&l=40)
+[Example StorySet Expectations](https://cs.chromium.org/chromium/src/tools/perf/page_sets/loading_desktop.py?dr=CSs&l=113)
+
+Disabling a story looks like this:
+`
+class StorySetFoo():
+  def SetExpectations(self):
+    self.DisableStory('story_name', [conditions], 'reason')
+`
+
+Story name is the name of the story to disable, conditions is a list of
+test environment conditions you would like to disable on, and reason is
+usually the crbug related to the disabling.
+
+[List of current TestConditions:](https://cs.chromium.org/chromium/src/third_party/catapult/telemetry/telemetry/story/expectations.py?l=179)
+
+*   `ALL`                Disable on all platforms.
+*   `ALL_MAC`            Disable on all mac platforms.
+*   `ALL_WIN`            Disable on all win platforms.
+*   `ALL_LINUX`          Disable on all linux platforms.
+*   `ALL_ANDROID`        Disable on all android platforms.
+*   `ALL_DESKTOP`        Disable on all desktop platforms.
+*   `ALL_MOBILE`         Disable on all mobile platforms.
+*   `ANDROID_NEXUS5`     Disable on Nexus 5 devices.
+*   `ANDROID_NEXUS5X`    Disable on Nexus 5X devices.
+*   `ANDROID_NEXUS6`     Disable on Nexus 6 devices.
+*   `ANDROID_NEXUS6P`    Disable on Nexus 6P devices.
+*   `ANDROID_NEXUS7`     Disable on Nexus 7 devices.
+*   `ANDROID_ONE`        Disable on Cherry Mobile Android One devices.
+*   `ANDROID_SVELTE`     Disable on Android Svelte low memory builds.
+
+### Disabling Telemetry Benchmarks
+
+If the test is a telemetry benchmark, its name will have a '.' in it, such as
 `thread_times.key_mobile_sites` or `page_cycler.top_10`. The part before the
 first dot will be a python file in [tools/perf/benchmarks](https://code.google.com/p/chromium/codesearch#chromium/src/tools/perf/benchmarks/).
 
-If a telemetry test is failing and there is no clear culprit to revert
+If a telemetry benchmark is failing and there is no clear culprit to revert
 immediately, disable the test. You can do this with the `@benchmark.Disabled`
 decorator. **Always add a comment next to your decorator with the bug id which
 has background on why the test was disabled, and also include a BUG= line in
