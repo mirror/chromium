@@ -14,6 +14,7 @@
 #include "extensions/common/extension.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/events/event.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/layout_constants.h"
@@ -38,10 +39,10 @@ AppInfoFooterPanel::AppInfoFooterPanel(gfx::NativeWindow parent_window,
       weak_ptr_factory_(this) {
   CreateButtons();
 
-  SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal,
-                                        views::kButtonHEdgeMargin,
-                                        views::kButtonVEdgeMargin,
-                                        views::kRelatedButtonHSpacing));
+  SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kHorizontal,
+      gfx::Insets(views::kButtonVEdgeMargin, views::kButtonHEdgeMargin),
+      views::kRelatedButtonHSpacing));
 
   LayoutButtons();
 }

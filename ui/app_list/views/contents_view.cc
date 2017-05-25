@@ -22,6 +22,7 @@
 #include "ui/app_list/views/search_result_tile_item_list_view.h"
 #include "ui/app_list/views/start_page_view.h"
 #include "ui/events/event.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/view_model.h"
@@ -37,7 +38,7 @@ class SearchAnswerContainerView : public views::View {
   explicit SearchAnswerContainerView(views::View* search_results_page_view)
       : search_results_page_view_(search_results_page_view) {
     views::BoxLayout* answer_container_layout =
-        new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
+        new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 0);
     answer_container_layout->set_main_axis_alignment(
         views::BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
     SetLayoutManager(answer_container_layout);

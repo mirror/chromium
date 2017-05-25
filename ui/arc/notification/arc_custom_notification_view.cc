@@ -17,6 +17,7 @@
 #include "ui/gfx/animation/linear_animation.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/transform.h"
 #include "ui/message_center/message_center_style.h"
 #include "ui/message_center/views/custom_notification_view.h"
@@ -310,7 +311,7 @@ void ArcCustomNotificationView::MaybeCreateFloatingControlButtons() {
   // a horizontal box.
   control_buttons_view_ = new views::View();
   control_buttons_view_->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0));
+      new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 0));
 
   if (item_->IsOpeningSettingsSupported())
     CreateSettingsButton();

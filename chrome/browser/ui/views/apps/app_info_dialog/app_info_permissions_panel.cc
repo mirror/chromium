@@ -20,6 +20,7 @@
 #include "extensions/common/permissions/permissions_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/text_constants.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/border.h"
@@ -200,8 +201,7 @@ AppInfoPermissionsPanel::AppInfoPermissionsPanel(
     const extensions::Extension* app)
     : AppInfoPanel(profile, app) {
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical,
-                                        0,
-                                        0,
+                                        gfx::Insets(),
                                         views::kRelatedControlVerticalSpacing));
 
   CreatePermissionsList();

@@ -60,6 +60,7 @@
 #include "ui/compositor/paint_recorder.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/image/canvas_image_source.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_skia.h"
@@ -1225,7 +1226,7 @@ views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded() {
   // Sets an overall horizontal layout.
   views::View* view = new views::View();
   views::BoxLayout* layout = new views::BoxLayout(
-      views::BoxLayout::kHorizontal, kMenuEdgeMargin, kMenuEdgeMargin,
+      views::BoxLayout::kHorizontal, gfx::Insets(kMenuEdgeMargin),
       views::kUnrelatedControlHorizontalSpacing);
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
@@ -1240,7 +1241,7 @@ views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded() {
   // Adds a vertical view to organize the error title, message, and button.
   views::View* vertical_view = new views::View();
   views::BoxLayout* vertical_layout =
-      new views::BoxLayout(views::BoxLayout::kVertical, 0, 0,
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(),
                            views::kRelatedControlSmallVerticalSpacing);
   vertical_layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
@@ -1286,9 +1287,9 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
     const AvatarMenu::Item& avatar_item,
     bool is_guest) {
   views::View* view = new views::View();
-  view->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical, 0,
-                           views::kRelatedControlVerticalSpacing, 0));
+  view->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical,
+      gfx::Insets(views::kRelatedControlVerticalSpacing, 0), 0));
 
   // Container for the profile photo and avatar/user name.
   BackgroundColorHoverButton* current_profile_card =
@@ -1389,8 +1390,9 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   if (signin_manager->IsSigninAllowed()) {
     views::View* extra_links_view = new views::View();
     views::BoxLayout* extra_links_layout = new views::BoxLayout(
-        views::BoxLayout::kVertical, kMenuEdgeMargin,
-        views::kRelatedControlVerticalSpacing, kMenuEdgeMargin);
+        views::BoxLayout::kVertical,
+        gfx::Insets(views::kRelatedControlVerticalSpacing, kMenuEdgeMargin),
+        kMenuEdgeMargin);
     extra_links_layout->set_cross_axis_alignment(
         views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
     extra_links_view->SetLayoutManager(extra_links_layout);
