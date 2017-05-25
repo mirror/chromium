@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "15c66190_e465c249",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-25T23:38:12Z",
+      "side": 1,
+      "message": "That\u0027s a fair point, but I\u0027d rather move the other way on this: try the simple thing first, and if it really is problematic, limit the number of dropped tasks / move them to a dedicated queue to drop when the MessageLoop is idle.",
+      "parentUuid": "9df31708_e2bb1397",
+      "range": {
+        "startLine": 392,
+        "startChar": 6,
+        "endLine": 392,
+        "endChar": 14
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8891fe37_8556ceda",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 2
@@ -116,6 +140,30 @@
       "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1102c755_6426c462",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-25T23:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8891fe37_8556ceda",
+      "range": {
+        "startLine": 452,
+        "startChar": 10,
+        "endLine": 452,
+        "endChar": 14
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
