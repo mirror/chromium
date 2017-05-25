@@ -19,7 +19,6 @@ import android.provider.Browser;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,10 +58,12 @@ import org.chromium.chrome.browser.contextualsearch.ContextualSearchTabHelper;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.download.ChromeDownloadDelegate;
+import org.chromium.chrome.browser.feature_engagement_tracker.FeatureEngagementTrackerFactory;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.infobar.InfoBarContainer;
 import org.chromium.chrome.browser.media.ui.MediaSessionTabHelper;
+import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.ntp.NativePageAssassin;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
@@ -84,6 +85,8 @@ import org.chromium.chrome.browser.tabmodel.TabReparentingParams;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
+import org.chromium.components.feature_engagement_tracker.EventConstants;
+import org.chromium.components.feature_engagement_tracker.FeatureEngagementTracker;
 import org.chromium.components.navigation_interception.InterceptNavigationDelegate;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.components.sync.SyncConstants;
@@ -359,6 +362,12 @@ public class Tab
      * successful page load.
      */
     private int mSadTabSuccessiveRefreshCounter;
+
+    /**
+     * Stores total data saved at the start of page load. Used to calculate delta in finish page
+     * load.
+     */
+    private long mSadTabSuccessiveRefreshCounter;
 
     private final int mDefaultThemeColor;
     private int mThemeColor;
@@ -1498,6 +1507,9 @@ public class Tab
         updateTitle();
         removeSadTabIfPresent();
 
+        mDataSavedOnStartPageLoad =
+                DataReductionProxySettings.getInstance().getContentLengthSavedInHistorySummary();
+
         if (mIsRendererUnresponsive) handleRendererResponsive();
 
         if (mTabUma != null) mTabUma.onPageLoadStarted();
@@ -1524,6 +1536,17 @@ public class Tab
 
         for (TabObserver observer : mObservers) observer.onPageLoadFinished(this);
         mIsBeingRestored = false;
+
+        long dataSaved =
+                DataReductionProxySettings.getInstance().getContentLengthSavedInHistorySummary()
+                - mDataSavedOnStartPageLoad;
+
+        if (dataSaved > 0) {
+            FeatureEngagementTracker tracker =
+                    FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
+                            Profile.getLastUsedProfile());
+            tracker.notifyEvent(EventConstants.DATA_SAVED_ON_PAGE_LOAD);
+        }
     }
 
     /**

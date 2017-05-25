@@ -938,6 +938,11 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             public void run() {
                 RecordUserAction.record("MobileToolbarShowMenu");
                 mToolbar.onMenuShown();
+
+                FeatureEngagementTracker tracker =
+                        FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
+                                Profile.getLastUsedProfile());
+                tracker.notifyEvent(EventConstants.OVERFLOW_MENU_OPENED);
             }
         });
     }
