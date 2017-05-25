@@ -12,12 +12,15 @@
 namespace blink {
 
 class AnimatorDefinition;
+class ScriptState;
 
 class Animator final : public GarbageCollectedFinalized<Animator> {
  public:
   Animator(v8::Isolate*, AnimatorDefinition*, v8::Local<v8::Object> instance);
   ~Animator();
   DECLARE_TRACE();
+
+  void Animate(ScriptState*) const;
 
  private:
   // This object keeps the definition object, and animator instance alive.
