@@ -73,6 +73,52 @@
     },
     {
       "key": {
+        "uuid": "9df31708_e2bb1397",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-25T23:34:08Z",
+      "side": 1,
+      "message": "At this point we\u0027ll be dropping the queue\u0027s reference to the BindState, potentially causing parameter deletion, where previously that would happen in RunTask(), and we\u0027d then spin back through the loop looking for more work - I can\u0027t see a problem with that offhand, but if we had a huge number of cancelled tasks holding complex objects alive, it might conceivably introduce jank.\n\nSeems unlikely to be a big issue but perhaps we should temporarily limit the number of tasks we\u0027ll sweep, to play safe?",
+      "range": {
+        "startLine": 392,
+        "startChar": 6,
+        "endLine": 392,
+        "endChar": 14
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8891fe37_8556ceda",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-25T23:34:08Z",
+      "side": 1,
+      "message": "nit: |auto| doesn\u0027t feel appropriate here; is the type of delayed_work_queue_.top() really so verbose?",
+      "range": {
+        "startLine": 452,
+        "startChar": 10,
+        "endLine": 452,
+        "endChar": 14
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "352d3b0d_172c9965",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 2
