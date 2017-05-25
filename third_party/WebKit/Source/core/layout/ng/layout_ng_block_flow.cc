@@ -62,4 +62,14 @@ void LayoutNGBlockFlow::ResetNGInlineNodeData() {
   ng_inline_node_data_ = WTF::MakeUnique<NGInlineNodeData>();
 }
 
+RefPtr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResult(
+    NGConstraintSpace* constraint_space,
+    NGBreakToken* break_token) const {
+  if (break_token || NeedsLayout())
+    return nullptr;
+  if (*constraint_space != *cached_constraint_space_)
+    return nullptr;
+  return cached_result_;
+}
+
 }  // namespace blink

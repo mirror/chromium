@@ -129,8 +129,15 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(NGConstraintSpace* constraint_space,
   if (!CanUseNewLayout()) {
     return RunOldLayout(*constraint_space);
   }
+  RefPtr<NGLayoutResult> layout_result;
+  if (layout_box_->IsLayoutNGBlockFlow()) {
+    layout_result = ToLayoutNGBlockFlow(layout_box_)
+                        ->CachedLayoutResult(constraint_space, break_token);
+    if (layout_result)
+      return layout_result;
+  }
 
-  RefPtr<NGLayoutResult> layout_result =
+  layout_result =
       LayoutWithAlgorithm(Style(), this, constraint_space, break_token);
 
   CopyFragmentDataToLayoutBox(*constraint_space, layout_result.Get());
