@@ -288,6 +288,14 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
             'INFO: Failed to fetch results for Build(builder_name=\'MOCK Try Win\', build_number=5000)\n',
             'INFO: Results URL: https://storage.googleapis.com/chromium-layout-test-archives'
             '/MOCK_Try_Win/5000/layout-test-results/results.html\n',
+            'INFO: Retry job by running: git cl try -b MOCK Try Win\n',
+            'INFO: There are some builders with no results:\n',
+            'INFO:   MOCK Try Win\n',
+            'INFO: Would you like to try to fill in missing results with\n'
+            'available results? This assumes that layout test results\n'
+            'for the platforms with missing results are the same as\n'
+            'results on other platforms.\n',
+            'INFO: Aborting.\n'
         ])
 
     def test_continues_with_missing_results_when_filling_results(self):
@@ -298,6 +306,9 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
             'INFO: Failed to fetch results for Build(builder_name=\'MOCK Try Win\', build_number=5000)\n',
             'INFO: Results URL: https://storage.googleapis.com/chromium-layout-test-archives'
             '/MOCK_Try_Win/5000/layout-test-results/results.html\n',
+            'INFO: Retry job by running: git cl try -b MOCK Try Win\n',
+            'INFO: There are some builders with no results:\n',
+            'INFO:   MOCK Try Win\n',
             'INFO: For one/flaky-fail.html:\n',
             'INFO: Using Build(builder_name=\'MOCK Try Linux\', build_number=6000) to supply results for test-win-win7.\n',
             'INFO: Rebaselining one/flaky-fail.html\n'
