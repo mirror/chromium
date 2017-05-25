@@ -1,0 +1,61 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [8, 708, 300, 400],
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [8, 708, 300, 400],
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [8, 308, 300, 400],
+          "reason": "disappeared"
+        },
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [8, 308, 300, 400],
+          "reason": "disappeared"
+        },
+        {
+          "object": "VerticalScrollbar",
+          "rect": [754, 0, 15, 400],
+          "reason": "scroll control"
+        },
+        {
+          "object": "VerticalScrollbar",
+          "rect": [754, 0, 15, 400],
+          "reason": "scroll control"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutBlockFlow DIV id='innerDiv'",
+      "reason": "subtree"
+    },
+    {
+      "object": "VerticalScrollbar",
+      "reason": "scroll control"
+    },
+    {
+      "object": "LayoutBlockFlow DIV",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow DIV",
+      "reason": "subtree"
+    }
+  ]
+}
+
