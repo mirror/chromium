@@ -22,6 +22,30 @@
       "revId": "313824855b8b3ae1cf7d0f6bf5fd877d223bb635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a8b89d_321265fa",
+        "filename": "third_party/WebKit/Source/platform/wtf/Optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-25T10:20:59Z",
+      "side": 1,
+      "message": "Thanks, fixed.",
+      "parentUuid": "57fefad6_f4c3ad75",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "313824855b8b3ae1cf7d0f6bf5fd877d223bb635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
