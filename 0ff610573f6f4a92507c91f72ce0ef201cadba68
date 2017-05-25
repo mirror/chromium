@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6a71134_d173cf32",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildConnectionAllocator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-25T23:32:19Z",
+      "side": 1,
+      "message": "assert no repeat",
+      "revId": "0ff610573f6f4a92507c91f72ce0ef201cadba68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e48deab_fb8f64b0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-25T23:32:19Z",
+      "side": 1,
+      "message": "this is not enough. the death callback is not hooked up afaict?",
+      "revId": "0ff610573f6f4a92507c91f72ce0ef201cadba68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2aee44f_fef4a2f3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-25T23:32:19Z",
+      "side": 1,
+      "message": "this used to happen when warmup connection is allocated, not when it\u0027s used.",
+      "revId": "0ff610573f6f4a92507c91f72ce0ef201cadba68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
