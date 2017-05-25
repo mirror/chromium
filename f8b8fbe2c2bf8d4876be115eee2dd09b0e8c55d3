@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80619332_244813b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-05-25T23:59:56Z",
+      "side": 1,
+      "message": "what happens if a fling/scroll returns false in the middle of the gesture?  Does the bottom bar return to the bottom and the scroll continue to the page underneath?",
+      "range": {
+        "startLine": 358,
+        "startChar": 17,
+        "endLine": 358,
+        "endChar": 40
+      },
+      "revId": "f8b8fbe2c2bf8d4876be115eee2dd09b0e8c55d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec98a9a9_c5ed714e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-05-25T23:59:56Z",
+      "side": 1,
+      "message": "II think we\u0027d want to cache this onLayout of the view instead of calculating per frame, but it might be cheaper than I think",
+      "revId": "f8b8fbe2c2bf8d4876be115eee2dd09b0e8c55d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a6eebc_7ab7b443",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-05-25T23:59:56Z",
+      "side": 1,
+      "message": "I find this a bit hard to grok.\n\nI would find something like the following to be easier:\nint allowedSwipeWidth \u003d mContainerWidth * SWIPE_ALLOWED_FRACTION;\nint startX \u003d mCachedWindowRect.left + (mContainerWidth - allowedSwipeWidth) / 2;\nint endX \u003d startX + allowedSwipeWidth;",
+      "range": {
+        "startLine": 423,
+        "startChar": 12,
+        "endLine": 423,
+        "endChar": 21
+      },
+      "revId": "f8b8fbe2c2bf8d4876be115eee2dd09b0e8c55d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
