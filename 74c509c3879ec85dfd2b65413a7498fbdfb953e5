@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9ded8f2f_d7c78b8f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-05-25T04:32:30Z",
+      "side": 1,
+      "message": "Can you somehow DCHECK here that the previous SubmitFrame/WhenReady was finished and we\u0027re not running into re-entrant behaviour?",
+      "revId": "74c509c3879ec85dfd2b65413a7498fbdfb953e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b78b5b1e_a1083af8",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 4
