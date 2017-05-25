@@ -46,6 +46,30 @@
       "revId": "9ccbf9dc40ab63d82f95ed2e599b8f9f96b60e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e513842_de0a75ac",
+        "filename": "chrome/browser/metrics/perf/perf_provider_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1151970
+      },
+      "writtenOn": "2017-05-25T00:20:59Z",
+      "side": 1,
+      "message": "I tested this on a kip board, recording cycles and cache-misses for 30 seconds each while running the `jetstream` benchmark suite.\nLike Simon mentioned, this value was chosen to get a similar number of samples (~100k for cache-misses, ~200k for cycles).\nThe ratio in -c between cycles and cache-misses is also order-of consistent with that of GWP collection.",
+      "parentUuid": "a3a9e7b5_167a3fc9",
+      "range": {
+        "startLine": 162,
+        "startChar": 34,
+        "endLine": 162,
+        "endChar": 41
+      },
+      "revId": "9ccbf9dc40ab63d82f95ed2e599b8f9f96b60e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
