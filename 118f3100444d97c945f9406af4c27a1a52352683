@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4349995c_972acd92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T18:43:20Z",
+      "side": 1,
+      "message": "Could you add a paragraph for each of the events you are adding? For example explaining how the data saved-one works and why we\u0027re tracking it there and why it\u0027s fine for it to be correct-ish (multiple tabs loading data at the same time), etc.?",
+      "revId": "118f3100444d97c945f9406af4c27a1a52352683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6d29ce_e6f43a98",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T18:43:20Z",
+      "side": 1,
+      "message": "s/in finish/at the end of/",
+      "range": {
+        "startLine": 367,
+        "startChar": 82,
+        "endLine": 367,
+        "endChar": 91
+      },
+      "revId": "118f3100444d97c945f9406af4c27a1a52352683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7958892_799217d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T18:43:20Z",
+      "side": 1,
+      "message": "Could you add another sentence that this is just an estimate (in case there are multiple pages loading at the same time in different tabs, for example) , and that we\u0027re OK with that?",
+      "revId": "118f3100444d97c945f9406af4c27a1a52352683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b14d6c_deada1c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T18:43:20Z",
+      "side": 1,
+      "message": "Should this be named mDataSavedOnStartPageLoad?",
+      "range": {
+        "startLine": 370,
+        "startChar": 17,
+        "endLine": 370,
+        "endChar": 48
+      },
+      "revId": "118f3100444d97c945f9406af4c27a1a52352683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721c0f7e_cb8f97bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T18:43:20Z",
+      "side": 1,
+      "message": "Do we also need to have an event for when the user taps the data saver item, to track that the feature we want to highlight has been used?",
+      "revId": "118f3100444d97c945f9406af4c27a1a52352683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
