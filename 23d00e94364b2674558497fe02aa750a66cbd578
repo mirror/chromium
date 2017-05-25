@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28d68815_9de463eb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/ObjectPropertiesSection.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-25T00:53:04Z",
+      "side": 1,
+      "message": "errorPromise",
+      "range": {
+        "startLine": 895,
+        "startChar": 8,
+        "endLine": 895,
+        "endChar": 21
+      },
+      "revId": "23d00e94364b2674558497fe02aa750a66cbd578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ab4d55_be7b3c33",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-25T00:53:04Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we do the following comment?\n\n// ------------- ASYNC -------------",
+      "range": {
+        "startLine": 238,
+        "startChar": 8,
+        "endLine": 238,
+        "endChar": 13
+      },
+      "revId": "23d00e94364b2674558497fe02aa750a66cbd578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a1dd10_a0cac948",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-25T00:53:04Z",
+      "side": 1,
+      "message": "var location \u003d (response.locations || []).map(payload \u003d\u003e SDK.DebuggerModel.Location.fromPayload(this, payload));",
+      "range": {
+        "startLine": 243,
+        "startChar": 27,
+        "endLine": 243,
+        "endChar": 30
+      },
+      "revId": "23d00e94364b2674558497fe02aa750a66cbd578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cdb4460_c982152f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Script.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-25T00:53:04Z",
+      "side": 1,
+      "message": "Drop this.",
+      "range": {
+        "startLine": 173,
+        "startChar": 20,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "23d00e94364b2674558497fe02aa750a66cbd578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
