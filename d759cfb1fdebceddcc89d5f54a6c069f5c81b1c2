@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efe42f75_5ca99e11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-05-25T01:30:42Z",
+      "side": 1,
+      "message": "On Linux it isn\u0027t modal, it auto-dismisses when tabs change already. I think this happens because it is dismissed when it loses focus. Maybe Mac should just do the same?\n\nSorry if I\u0027m missing something obvious.",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "d759cfb1fdebceddcc89d5f54a6c069f5c81b1c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
