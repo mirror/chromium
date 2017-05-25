@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46963689_fd0851fb",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-25T16:17:36Z",
+      "side": 1,
+      "message": "This doesn\u0027t include benchmarks in contrib/, which I think should be using the same standard. Can you add s.t like benchmark_finders.GetAllBenchmarks()",
+      "revId": "3797a572e3f6b41b84eebf1d25c3e85789ff4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
