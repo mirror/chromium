@@ -19,6 +19,7 @@
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font_list.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/label.h"
@@ -319,8 +320,8 @@ const char TabStrip::kViewClassName[] = "TabStrip";
 
 TabStrip::TabStrip() {
   const int kTabStripLeadingEdgePadding = 9;
-  BoxLayout* layout =
-      new BoxLayout(BoxLayout::kHorizontal, kTabStripLeadingEdgePadding, 0, 0);
+  BoxLayout* layout = new BoxLayout(
+      BoxLayout::kHorizontal, gfx::Insets(0, kTabStripLeadingEdgePadding), 0);
   layout->set_main_axis_alignment(BoxLayout::MAIN_AXIS_ALIGNMENT_START);
   layout->set_cross_axis_alignment(BoxLayout::CROSS_AXIS_ALIGNMENT_END);
   layout->SetDefaultFlex(0);
@@ -391,7 +392,7 @@ Tab* TabStrip::GetTabAtDeltaFromSelected(int delta) const {
 }
 
 MdTabStrip::MdTabStrip() {
-  BoxLayout* layout = new BoxLayout(BoxLayout::kHorizontal, 0, 0, 0);
+  BoxLayout* layout = new BoxLayout(BoxLayout::kHorizontal, gfx::Insets(), 0);
   layout->set_main_axis_alignment(BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
   layout->set_cross_axis_alignment(BoxLayout::CROSS_AXIS_ALIGNMENT_STRETCH);
   layout->SetDefaultFlex(1);

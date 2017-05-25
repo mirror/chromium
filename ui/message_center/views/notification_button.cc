@@ -5,6 +5,7 @@
 #include "ui/message_center/views/notification_button.h"
 
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/message_center/message_center_style.h"
 #include "ui/message_center/views/constants.h"
 #include "ui/views/background.h"
@@ -29,11 +30,11 @@ NotificationButton::NotificationButton(views::ButtonListener* listener)
   set_background(views::Background::CreateSolidBackground(
       kNotificationBackgroundColor));
   set_notify_enter_exit_on_child(true);
-  SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kHorizontal,
-                           message_center::kButtonHorizontalPadding,
-                           kButtonVecticalPadding,
-                           message_center::kButtonIconToTitlePadding));
+  SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kHorizontal,
+      gfx::Insets(kButtonVecticalPadding,
+                  message_center::kButtonHorizontalPadding),
+      message_center::kButtonIconToTitlePadding));
 }
 
 NotificationButton::~NotificationButton() {

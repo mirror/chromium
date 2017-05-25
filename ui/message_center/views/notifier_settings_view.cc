@@ -21,6 +21,7 @@
 #include "ui/events/event_utils.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/image/image.h"
 #include "ui/message_center/message_center_style.h"
@@ -489,12 +490,14 @@ void NotifierSettingsView::UpdateContentsView(
   buttons_.clear();
 
   views::View* contents_view = new views::View();
-  contents_view->SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kVertical, settings::kHorizontalMargin, 0, 0));
+  contents_view->SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kVertical,
+                           gfx::Insets(0, settings::kHorizontalMargin), 0));
 
   views::View* contents_title_view = new views::View();
-  contents_title_view->SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kVertical, 0, 0, kComputedTitleElementSpacing));
+  contents_title_view->SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(),
+                           kComputedTitleElementSpacing));
 
   bool need_account_switcher =
       provider_ && provider_->GetNotifierGroupCount() > 1;
