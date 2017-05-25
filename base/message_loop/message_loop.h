@@ -29,6 +29,8 @@
 // TODO(sky): these includes should not be necessary. Nuke them.
 #if defined(OS_WIN)
 #include "base/message_loop/message_pump_win.h"
+#elif defined(OS_FUCHSIA)
+#include "base/message_loop/message_pump_fuchsia.h"
 #elif defined(OS_IOS)
 #include "base/message_loop/message_pump_io_ios.h"
 #elif defined(OS_POSIX)
@@ -560,6 +562,13 @@ class BASE_EXPORT MessageLoopForIO : public MessageLoop {
     WATCH_WRITE = MessagePumpIOSForIO::WATCH_WRITE,
     WATCH_READ_WRITE = MessagePumpIOSForIO::WATCH_READ_WRITE
   };
+#elif defined(OS_FUCHSIA)
+  typedef MessagePumpFuchsia::Watcher Watcher;
+  typedef MessagePumpFuchsia::FileDescriptorWatcher FileDescriptorWatcher;
+
+  enum Mode{WATCH_READ = MessagePumpFuchsia::WATCH_READ,
+            WATCH_WRITE = MessagePumpFuchsia::WATCH_WRITE,
+            WATCH_READ_WRITE = MessagePumpFuchsia::WATCH_READ_WRITE};
 #elif defined(OS_POSIX)
   typedef MessagePumpLibevent::Watcher Watcher;
   typedef MessagePumpLibevent::FileDescriptorWatcher
