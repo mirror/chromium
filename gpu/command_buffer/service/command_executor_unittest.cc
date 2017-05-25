@@ -11,8 +11,9 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "gpu/command_buffer/client/client_test_helper.h"
-#include "gpu/command_buffer/service/command_executor.h"
+#include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/mocks.h"
+#include "gpu/command_buffer/service/transfer_buffer_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace gpu {
@@ -27,6 +28,9 @@ using testing::SetArgPointee;
 // a fixed size memory buffer. Also provides a simple API to create a
 // CommandExecutor.
 class CommandExecutorTest : public testing::Test {
+ public:
+  MOCK_METHOD0(OnCommandProcessed, void());
+
  protected:
   virtual void SetUp() { api_mock_.reset(new AsyncAPIMock(false)); }
   virtual void TearDown() {}
@@ -41,8 +45,11 @@ class CommandExecutorTest : public testing::Test {
 
   // Creates an executor, with a buffer of the specified size (in entries).
   void MakeExecutor(unsigned int entry_count) {
-    command_buffer_ = base::MakeUnique<FakeCommandBufferServiceBase>();
-    executor_.reset(new CommandExecutor(command_buffer_.get(), api_mock()));
+    transfer_buffer_manager_ = base::MakeUnique<TransferBufferManager>(nullptr);
+    command_buffer_service_ = base::MakeUnique<CommandBufferService>(
+        transfer_buffer_manager_.get(), api_mock());
+    command_buffer_service_->SetParseErrorCallback(
+        base::Bind(&CommandExecutorTest::OnParseError, base::Unretained(this)));
     SetNewGetBuffer(entry_count * sizeof(CommandBufferEntry));
   }
 
@@ -51,42 +58,57 @@ class CommandExecutorTest : public testing::Test {
     return static_cast<CommandBufferEntry*>(buffer_->memory());
   }
 
-  FakeCommandBufferServiceBase* command_buffer() {
-    return command_buffer_.get();
+  CommandBufferService* command_buffer_service() {
+    return command_buffer_service_.get();
   }
-  CommandExecutor* executor() { return executor_.get(); }
-
-  int32_t GetGet() { return command_buffer_->GetState().get_offset; }
-  int32_t GetPut() { return command_buffer_->GetPutOffset(); }
+  int32_t GetGet() { return command_buffer_service_->GetState().get_offset; }
+  int32_t GetPut() { return command_buffer_service_->put_offset(); }
 
   error::Error SetPutAndProcessAllCommands(int32_t put) {
-    command_buffer_->FlushHelper(put);
+    command_buffer_service_->Flush(put);
     EXPECT_EQ(put, GetPut());
-    executor_->PutChanged();
-    return command_buffer_->GetState().error;
+    return command_buffer_service_->GetState().error;
   }
 
   int32_t SetNewGetBuffer(size_t size) {
     int32_t id = 0;
-    buffer_ = command_buffer_->CreateTransferBufferHelper(size, &id);
-    command_buffer_->SetGetBufferHelper(id);
-    executor_->SetGetBuffer(id);
+    buffer_ = command_buffer_service_->CreateTransferBuffer(size, &id);
+    command_buffer_service_->SetGetBuffer(id);
     return id;
   }
 
+  void AdvancePut(int32_t entries) {
+    DCHECK(entries > 0);
+    CommandBufferOffset put = GetPut();
+    CommandHeader header;
+    header.size = entries;
+    header.command = 1;
+    buffer()[put].value_header = header;
+    put += entries;
+    AddDoCommandsExpect(error::kNoError, entries, entries);
+    EXPECT_EQ(error::kNoError, SetPutAndProcessAllCommands(put));
+    EXPECT_EQ(put, GetPut());
+    Mock::VerifyAndClearExpectations(api_mock());
+  }
+
+  MOCK_METHOD0(OnParseError, void());
+
  private:
   std::unique_ptr<AsyncAPIMock> api_mock_;
-  std::unique_ptr<FakeCommandBufferServiceBase> command_buffer_;
+  std::unique_ptr<TransferBufferManager> transfer_buffer_manager_;
+  std::unique_ptr<CommandBufferService> command_buffer_service_;
   scoped_refptr<Buffer> buffer_;
-  std::unique_ptr<CommandExecutor> executor_;
   Sequence sequence_;
 };
 
 // Tests initialization conditions.
 TEST_F(CommandExecutorTest, TestInit) {
   MakeExecutor(10);
+  CommandBuffer::State state = command_buffer_service()->GetState();
   EXPECT_EQ(0, GetGet());
   EXPECT_EQ(0, GetPut());
+  EXPECT_EQ(0, state.token);
+  EXPECT_EQ(error::kNoError, state.error);
 }
 
 TEST_F(CommandExecutorTest, TestEmpty) {
@@ -224,9 +246,11 @@ TEST_F(CommandExecutorTest, TestError) {
   buffer()[put++].value_header = header;
 
   AddDoCommandsExpect(error::kInvalidSize, 1, 0);
+  EXPECT_CALL(*this, OnParseError()).Times(1);
   EXPECT_EQ(error::kInvalidSize, SetPutAndProcessAllCommands(put));
   // check that no DoCommand call was made.
   Mock::VerifyAndClearExpectations(api_mock());
+  Mock::VerifyAndClearExpectations(this);
 
   MakeExecutor(5);
   put = GetPut();
@@ -237,9 +261,11 @@ TEST_F(CommandExecutorTest, TestError) {
   buffer()[put++].value_header = header;
 
   AddDoCommandsExpect(error::kOutOfBounds, 1, 0);
+  EXPECT_CALL(*this, OnParseError()).Times(1);
   EXPECT_EQ(error::kOutOfBounds, SetPutAndProcessAllCommands(put));
   // check that no DoCommand call was made.
   Mock::VerifyAndClearExpectations(api_mock());
+  Mock::VerifyAndClearExpectations(this);
 
   MakeExecutor(5);
   put = GetPut();
@@ -255,39 +281,225 @@ TEST_F(CommandExecutorTest, TestError) {
 
   // have the first command fail to parse.
   AddDoCommandsExpect(error::kUnknownCommand, 2, 1);
+  EXPECT_CALL(*this, OnParseError()).Times(1);
   EXPECT_EQ(error::kUnknownCommand, SetPutAndProcessAllCommands(put));
   // check that only one command was executed, and that get reflects that
   // correctly.
   EXPECT_EQ(put_post_fail, GetGet());
   Mock::VerifyAndClearExpectations(api_mock());
+  Mock::VerifyAndClearExpectations(this);
   // make the second one succeed, and check that the executor doesn't try to
   // recover.
+  EXPECT_CALL(*this, OnParseError()).Times(0);
   EXPECT_EQ(error::kUnknownCommand, SetPutAndProcessAllCommands(put));
   EXPECT_EQ(put_post_fail, GetGet());
   Mock::VerifyAndClearExpectations(api_mock());
+  Mock::VerifyAndClearExpectations(this);
+
+  // Try to flush out-of-bounds, should fail.
+  MakeExecutor(kNumEntries);
+  AdvancePut(2);
+  EXPECT_EQ(2, GetPut());
+
+  EXPECT_CALL(*this, OnParseError()).Times(1);
+  command_buffer_service()->Flush(kNumEntries + 1);
+  CommandBuffer::State state1 = command_buffer_service()->GetState();
+  EXPECT_EQ(2, GetPut());
+  EXPECT_EQ(error::kOutOfBounds, state1.error);
+  Mock::VerifyAndClearExpectations(this);
+
+  MakeExecutor(kNumEntries);
+  AdvancePut(2);
+  EXPECT_EQ(2, GetPut());
+
+  EXPECT_CALL(*this, OnParseError()).Times(1);
+  command_buffer_service()->Flush(-1);
+  CommandBuffer::State state2 = command_buffer_service()->GetState();
+  EXPECT_EQ(2, GetPut());
+  EXPECT_EQ(error::kOutOfBounds, state2.error);
+  Mock::VerifyAndClearExpectations(this);
 }
 
 TEST_F(CommandExecutorTest, SetBuffer) {
   MakeExecutor(3);
-  CommandBufferOffset put = GetPut();
-  CommandHeader header;
-
-  // add a single command, no args
-  header.size = 2;
-  header.command = 123;
-  buffer()[put++].value_header = header;
-  buffer()[put++].value_int32 = 456;
-
-  AddDoCommandsExpect(error::kNoError, 2, 2);
-  EXPECT_EQ(error::kNoError, SetPutAndProcessAllCommands(put));
-  // We should have advanced 2 entries
+  AdvancePut(2);
+  // We should have advanced 2 entries.
   EXPECT_EQ(2, GetGet());
-  Mock::VerifyAndClearExpectations(api_mock());
 
-  SetNewGetBuffer(2 * sizeof(CommandBufferEntry));
+  CommandBuffer::State state1 = command_buffer_service()->GetState();
+  int32_t id = SetNewGetBuffer(3 * sizeof(CommandBufferEntry));
+  CommandBuffer::State state2 = command_buffer_service()->GetState();
   // The put and get should have reset to 0.
   EXPECT_EQ(0, GetGet());
   EXPECT_EQ(0, GetPut());
+  EXPECT_EQ(error::kNoError, state2.error);
+  EXPECT_EQ(state1.token, state2.token);
+  EXPECT_EQ(state1.set_get_buffer_count + 1, state2.set_get_buffer_count);
+
+  AdvancePut(2);
+  // We should have advanced 2 entries.
+  EXPECT_EQ(2, GetGet());
+
+  // Destroy current get buffer, should reset.
+  command_buffer_service()->DestroyTransferBuffer(id);
+  CommandBuffer::State state3 = command_buffer_service()->GetState();
+  EXPECT_EQ(0, GetGet());
+  EXPECT_EQ(0, GetPut());
+  EXPECT_EQ(error::kNoError, state3.error);
+  // Should not update the set_get_buffer_count however, since SetGetBuffer was
+  // not called.
+  EXPECT_EQ(state2.set_get_buffer_count, state3.set_get_buffer_count);
+
+  // Trying to execute commands should fail however.
+  EXPECT_CALL(*this, OnParseError()).Times(1);
+  command_buffer_service()->Flush(2);
+  CommandBuffer::State state4 = command_buffer_service()->GetState();
+  EXPECT_EQ(0, GetPut());
+  EXPECT_EQ(error::kOutOfBounds, state4.error);
+  Mock::VerifyAndClearExpectations(this);
+}
+
+TEST_F(CommandExecutorTest, InvalidSetBuffer) {
+  MakeExecutor(3);
+  CommandBuffer::State state1 = command_buffer_service()->GetState();
+
+  // Set an invalid transfer buffer, should succeed.
+  command_buffer_service()->SetGetBuffer(0);
+  CommandBuffer::State state2 = command_buffer_service()->GetState();
+  EXPECT_EQ(0, GetGet());
+  EXPECT_EQ(0, GetPut());
+  EXPECT_EQ(error::kNoError, state2.error);
+  EXPECT_EQ(state1.token, state2.token);
+  EXPECT_EQ(state1.set_get_buffer_count + 1, state2.set_get_buffer_count);
+
+  // Trying to execute commands should fail however.
+  EXPECT_CALL(*this, OnParseError()).Times(1);
+  command_buffer_service()->Flush(2);
+  CommandBuffer::State state3 = command_buffer_service()->GetState();
+  EXPECT_EQ(0, GetPut());
+  EXPECT_EQ(error::kOutOfBounds, state3.error);
+  Mock::VerifyAndClearExpectations(this);
+}
+
+TEST_F(CommandExecutorTest, Token) {
+  MakeExecutor(3);
+  command_buffer_service()->SetToken(7);
+  EXPECT_EQ(7, command_buffer_service()->GetState().token);
+}
+
+TEST_F(CommandExecutorTest, CanSetParseError) {
+  MakeExecutor(3);
+
+  EXPECT_CALL(*this, OnParseError()).Times(1);
+  command_buffer_service()->SetParseError(error::kInvalidSize);
+  EXPECT_EQ(error::kInvalidSize, command_buffer_service()->GetState().error);
+  Mock::VerifyAndClearExpectations(this);
+}
+
+TEST_F(CommandExecutorTest, CommandsProcessed) {
+  MakeExecutor(3);
+  command_buffer_service()->SetCommandProcessedCallback(base::Bind(
+      &CommandExecutorTest::OnCommandProcessed, base::Unretained(this)));
+  AddDoCommandsExpect(error::kNoError, 2, 1);
+  AddDoCommandsExpect(error::kNoError, 1, 1);
+  EXPECT_CALL(*this, OnCommandProcessed()).Times(2);
+  EXPECT_EQ(error::kNoError, SetPutAndProcessAllCommands(2));
+}
+
+class CommandExecutorPauseExecutionTest : public CommandExecutorTest {
+ public:
+  // Will pause the command buffer execution after 2 runs.
+  error::Error DoCommands(unsigned int num_commands,
+                          const volatile void* buffer,
+                          int num_entries,
+                          int* entries_processed) {
+    ++calls_;
+    if (calls_ == 2)
+      pause_ = true;
+    *entries_processed = 1;
+    return error::kNoError;
+  }
+
+  bool PauseExecution() { return pause_; }
+
+ protected:
+  int calls_ = 0;
+  bool pause_ = false;
+};
+
+TEST_F(CommandExecutorPauseExecutionTest, PauseExecution) {
+  MakeExecutor(5);
+  command_buffer_service()->SetPauseExecutionCallback(
+      base::Bind(&CommandExecutorPauseExecutionTest::PauseExecution,
+                 base::Unretained(this)));
+  EXPECT_CALL(*api_mock(), DoCommands(_, _, _, _))
+      .WillRepeatedly(
+          Invoke(this, &CommandExecutorPauseExecutionTest::DoCommands));
+  // Command buffer processing should stop after 2 commands.
+  EXPECT_EQ(error::kNoError, SetPutAndProcessAllCommands(4));
+  EXPECT_EQ(2, GetGet());
+  EXPECT_EQ(4, GetPut());
+  EXPECT_EQ(2, calls_);
+  EXPECT_TRUE(pause_);
+
+  // Processing shouldn't do anything while paused.
+  EXPECT_EQ(error::kNoError, SetPutAndProcessAllCommands(4));
+  EXPECT_EQ(2, GetGet());
+  EXPECT_EQ(4, GetPut());
+  EXPECT_EQ(2, calls_);
+  EXPECT_TRUE(pause_);
+
+  // Processing should continue after resume.
+  pause_ = false;
+  EXPECT_EQ(error::kNoError, SetPutAndProcessAllCommands(4));
+  EXPECT_EQ(4, GetGet());
+  EXPECT_EQ(4, GetPut());
+  EXPECT_EQ(4, calls_);
+  EXPECT_FALSE(pause_);
+}
+
+class CommandExecutorUnscheduleExecutionTest : public CommandExecutorTest {
+ public:
+  enum { kUnscheduleAfterCalls = 2 };
+
+  // Will unschedule the command buffer execution after 2 runs.
+  error::Error DoCommands(unsigned int num_commands,
+                          const volatile void* buffer,
+                          int num_entries,
+                          int* entries_processed) {
+    ++calls_;
+    if (calls_ == kUnscheduleAfterCalls) {
+      command_buffer_service()->SetScheduled(false);
+      *entries_processed = 0;
+      return error::kDeferCommandUntilLater;
+    }
+    *entries_processed = 1;
+    return error::kNoError;
+  }
+
+ protected:
+  int calls_ = 0;
+};
+
+TEST_F(CommandExecutorUnscheduleExecutionTest, Unschedule) {
+  MakeExecutor(5);
+  EXPECT_CALL(*api_mock(), DoCommands(_, _, _, _))
+      .WillRepeatedly(
+          Invoke(this, &CommandExecutorUnscheduleExecutionTest::DoCommands));
+  // Command buffer processing should stop after 2 commands.
+  EXPECT_EQ(error::kNoError, SetPutAndProcessAllCommands(4));
+  EXPECT_EQ(1, GetGet());
+  EXPECT_EQ(4, GetPut());
+  EXPECT_EQ(kUnscheduleAfterCalls, calls_);
+  EXPECT_FALSE(command_buffer_service()->scheduled());
+
+  // Processing should continue after rescheduling.
+  command_buffer_service()->SetScheduled(true);
+  EXPECT_EQ(error::kNoError, SetPutAndProcessAllCommands(4));
+  EXPECT_EQ(4, GetGet());
+  EXPECT_EQ(4, GetPut());
+  EXPECT_EQ(5, calls_);
+  EXPECT_TRUE(command_buffer_service()->scheduled());
 }
 
 }  // namespace gpu
