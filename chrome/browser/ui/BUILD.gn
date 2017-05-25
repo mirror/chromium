@@ -627,6 +627,10 @@ split_static_library("ui") {
   ]
   allow_circular_includes_from = []
 
+  if (is_chromeos) {
+    allow_circular_includes_from = [ "//chrome/browser/chromeos" ]
+  }
+
   if (enable_extensions) {
     deps += [
       "//components/drive",

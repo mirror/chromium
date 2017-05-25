@@ -1462,6 +1462,10 @@ split_static_library("browser") {
 
   allow_circular_includes_from = [ "//chrome/browser/ui" ]
 
+  if (is_chromeos) {
+    allow_circular_includes_from += [ "//chrome/browser/chromeos" ]
+  }
+
   # iOS/non-iOS shared deps. New dependencies should generally be added in the
   # non-iOS deps below.
   public_deps = [
