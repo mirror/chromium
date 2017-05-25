@@ -9,7 +9,6 @@ from page_sets.system_health import system_health_story
 
 from page_sets.login_helpers import pinterest_login
 
-from telemetry import decorators
 from telemetry.util import js_template
 
 
@@ -159,8 +158,6 @@ class FlipboardDesktopStory(_ArticleBrowsingStory):
   SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
 
 
-# crbug.com/657665 for win and mac
-@decorators.Disabled('win', 'mac')
 class HackerNewsDesktopStory(_ArticleBrowsingStory):
   NAME = 'browse:news:hackernews'
   URL = 'https://news.ycombinator.com'
@@ -246,7 +243,6 @@ class WashingtonPostMobileStory(_ArticleBrowsingStory):
 ##############################################################################
 
 
-@decorators.Disabled('win')  # crbug.com/673775
 class GoogleDesktopStory(_ArticleBrowsingStory):
   """
   A typical google search story:
@@ -512,7 +508,6 @@ class PinterestDesktopStory(_MediaBrowsingStory):
 ##############################################################################
 
 
-@decorators.Disabled('android')  # crbug.com/708300.
 class BrowseFlipKartMobileStory(_ArticleBrowsingStory):
   NAME = 'browse:shopping:flipkart'
   URL = 'https://flipkart.com/search?q=Sunglasses'
@@ -572,7 +567,6 @@ class BrowseTOIMobileStory(_ArticleBrowsingStory):
   ITEM_SELECTOR = '.dummy-img'
 
 
-@decorators.Disabled('android')  # crbug.com/714650
 class BrowseGloboMobileStory(_ArticleBrowsingStory):
   NAME = 'browse:news:globo'
   URL = 'http://www.globo.com'
@@ -650,8 +644,6 @@ class GoogleMapsMobileStory(system_health_story.SystemHealthStory):
     action_runner.ClickElement(selector=selector)
 
 
-# crbug.com/712694 on all platforms.
-@decorators.Disabled('all')
 class GoogleMapsStory(_BrowsingStory):
   """
   Google maps story:
@@ -734,8 +726,6 @@ class GoogleMapsStory(_BrowsingStory):
     action_runner.Wait(2)
 
 
-# crbug.com/708590 on all platforms.
-@decorators.Disabled('all')
 class GoogleEarthStory(_BrowsingStory):
   """
   Google Earth story:
