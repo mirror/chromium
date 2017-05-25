@@ -199,10 +199,12 @@ class PerfDataGeneratorTest(unittest.TestCase):
             'dimension_sets': [{
                 'id': 'build1-b1',
             }]
-        }
+        },
+        'name': 'test',
     }]
     self.assertEqual(
-        perf_data_generator.RemoveBlacklistedTests(tests, []), tests)
+        perf_data_generator.RemoveBlacklistedTests(tests, []), (
+            tests, {}))
 
   def testRemoveBlacklistedTestsShouldRemove(self):
     tests = [{
@@ -210,9 +212,11 @@ class PerfDataGeneratorTest(unittest.TestCase):
             'dimension_sets': [{
                 'id': 'build1-b1',
             }]
-        }
+        },
+        'name': 'test',
     }]
     self.assertEqual(
-        perf_data_generator.RemoveBlacklistedTests(tests, ['build1-b1']), [])
+        perf_data_generator.RemoveBlacklistedTests(tests, ['build1-b1']), (
+            [], {'build1-b1': ['test']}))
 
 
