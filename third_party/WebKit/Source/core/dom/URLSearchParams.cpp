@@ -38,6 +38,11 @@ class URLSearchParamsIterationSource final
   size_t current_;
 };
 
+bool CompareParams(const std::pair<String, String>& a,
+                   const std::pair<String, String>& b) {
+  return WTF::CodePointCompareLessThan(a.first, b.first);
+}
+
 }  // namespace
 
 URLSearchParams* URLSearchParams::Create(const URLSearchParamsInit& init,
@@ -220,6 +225,11 @@ void URLSearchParams::set(const String& name, const String& value) {
     append(name, value);
   else
     RunUpdateSteps();
+}
+
+void URLSearchParams::sort() {
+  std::stable_sort(params_.begin(), params_.end(), CompareParams);
+  RunUpdateSteps();
 }
 
 void URLSearchParams::EncodeAsFormData(Vector<char>& encoded_data) const {
