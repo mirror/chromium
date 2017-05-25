@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "afb098f3_b29fb331",
+        "filename": "gpu/command_buffer/service/command_executor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-25T23:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1078d8b0_89e70b0b",
+      "range": {
+        "startLine": 62,
+        "startChar": 11,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "df87a54b7899c39157d89fbadeeaaacdb9d1827a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83330779_906fbb2d",
         "filename": "gpu/command_buffer/service/command_executor_unittest.cc",
         "patchSetId": 2
@@ -53,6 +77,30 @@
       "writtenOn": "2017-05-25T22:31:25Z",
       "side": 1,
       "message": "EXPECT_EQ(false, ...) seems to fail on Android build.  Should we use EXPECT_TRUE and EXPECT_FALSE for these?",
+      "range": {
+        "startLine": 458,
+        "startChar": 2,
+        "endLine": 458,
+        "endChar": 11
+      },
+      "revId": "df87a54b7899c39157d89fbadeeaaacdb9d1827a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a34c80_ffb69e22",
+        "filename": "gpu/command_buffer/service/command_executor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-25T23:05:38Z",
+      "side": 1,
+      "message": "Not sure why it fails... very odd. I replaced with EXPECT_{TRUE,FALSE} since that\u0027s better.",
+      "parentUuid": "83330779_906fbb2d",
       "range": {
         "startLine": 458,
         "startChar": 2,
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "2d56e9c0_d6674718",
+        "filename": "gpu/command_buffer/service/command_executor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-25T23:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa810e65_6afdc9fe",
+      "range": {
+        "startLine": 469,
+        "startChar": 18,
+        "endLine": 469,
+        "endChar": 19
+      },
+      "revId": "df87a54b7899c39157d89fbadeeaaacdb9d1827a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31232578_9af9643e",
         "filename": "gpu/ipc/in_process_command_buffer.cc",
         "patchSetId": 2
@@ -99,6 +171,30 @@
       "writtenOn": "2017-05-25T22:31:25Z",
       "side": 1,
       "message": "Now we merge the two classes, we could actually merge SetParserErrorCallBack into the constructor, could we?",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 17
+      },
+      "revId": "df87a54b7899c39157d89fbadeeaaacdb9d1827a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796cfc41_7957b911",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-25T23:05:38Z",
+      "side": 1,
+      "message": "I have a follow-up CL that replaces all 3 callbacks by a single client interface that is passed to the constructor. I think that will do what you want.",
+      "parentUuid": "31232578_9af9643e",
       "range": {
         "startLine": 313,
         "startChar": 2,
