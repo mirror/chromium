@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e16f2d59_e9fb9b26",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/ScreenShooter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-05-25T15:18:44Z",
+      "side": 1,
+      "message": "Seems like there might be real model names that contain SDK in the middle - how about checking against SDK_build_for  ?",
+      "range": {
+        "startLine": 97,
+        "startChar": 53,
+        "endLine": 97,
+        "endChar": 56
+      },
+      "revId": "a44cc74c543d581151ad12bceba7d8ad663fa853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
