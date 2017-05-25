@@ -7,10 +7,12 @@
 
 #include "core/CoreExport.h"
 #include "platform/bindings/ScriptWrappable.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
+class DOMResizeObserverCallback;
 class Document;
 class Element;
 class ResizeObserverCallback;
@@ -26,6 +28,7 @@ class CORE_EXPORT ResizeObserver final
 
  public:
   static ResizeObserver* Create(Document&, ResizeObserverCallback*);
+  static ResizeObserver* Create(Document&, DOMResizeObserverCallback*);
 
   virtual ~ResizeObserver(){};
 
@@ -42,13 +45,17 @@ class CORE_EXPORT ResizeObserver final
   void ElementSizeChanged();
   bool HasElementSizeChanged() { return element_size_changed_; }
   DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
  private:
   ResizeObserver(ResizeObserverCallback*, Document&);
+  ResizeObserver(DOMResizeObserverCallback*, Document&);
 
   using ObservationList = HeapLinkedHashSet<WeakMember<ResizeObservation>>;
 
-  Member<ResizeObserverCallback> callback_;
+  TraceWrapperMember<ResizeObserverCallback> callback_;
+  Member<DOMResizeObserverCallback> dom_callback_;
+
   // List of elements we are observing
   ObservationList observations_;
   // List of elements that have changes

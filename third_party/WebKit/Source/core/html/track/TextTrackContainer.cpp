@@ -29,8 +29,8 @@
 
 #include "core/html/track/TextTrackContainer.h"
 
+#include "core/dom/DOMResizeObserverCallback.h"
 #include "core/dom/ResizeObserver.h"
-#include "core/dom/ResizeObserverCallback.h"
 #include "core/dom/ResizeObserverEntry.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/track/CueTimeline.h"
@@ -41,13 +41,13 @@ namespace blink {
 
 namespace {
 
-class VideoElementResizeCallback final : public ResizeObserverCallback {
+class VideoElementResizeCallback final : public DOMResizeObserverCallback {
  public:
   VideoElementResizeCallback(TextTrackContainer& container)
-      : ResizeObserverCallback(), text_track_container_(container) {}
+      : DOMResizeObserverCallback(), text_track_container_(container) {}
 
-  void handleEvent(const HeapVector<Member<ResizeObserverEntry>>& entries,
-                   ResizeObserver*) override {
+  void call(const HeapVector<Member<ResizeObserverEntry>>& entries,
+            ResizeObserver*) override {
     DCHECK_EQ(entries.size(), 1u);
     DCHECK(isHTMLVideoElement(entries[0]->target()));
     text_track_container_->UpdateDefaultFontSize(
@@ -56,7 +56,7 @@ class VideoElementResizeCallback final : public ResizeObserverCallback {
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(text_track_container_);
-    ResizeObserverCallback::Trace(visitor);
+    DOMResizeObserverCallback::Trace(visitor);
   }
 
  private:

@@ -4,9 +4,10 @@
 
 #include "core/dom/ResizeObserver.h"
 
+#include "bindings/core/v8/ResizeObserverCallback.h"
+#include "core/dom/DOMResizeObserverCallback.h"
 #include "core/dom/Element.h"
 #include "core/dom/ResizeObservation.h"
-#include "core/dom/ResizeObserverCallback.h"
 #include "core/dom/ResizeObserverController.h"
 #include "core/dom/ResizeObserverEntry.h"
 #include "core/frame/FrameView.h"
@@ -18,9 +19,24 @@ ResizeObserver* ResizeObserver::Create(Document& document,
   return new ResizeObserver(callback, document);
 }
 
+ResizeObserver* ResizeObserver::Create(Document& document,
+                                       DOMResizeObserverCallback* callback) {
+  return new ResizeObserver(callback, document);
+}
+
 ResizeObserver::ResizeObserver(ResizeObserverCallback* callback,
                                Document& document)
-    : callback_(callback),
+    : callback_(this, callback),
+      skipped_observations_(false),
+      element_size_changed_(false) {
+  controller_ = &document.EnsureResizeObserverController();
+  controller_->AddObserver(*this);
+}
+
+ResizeObserver::ResizeObserver(DOMResizeObserverCallback* callback,
+                               Document& document)
+    : callback_(this, nullptr),
+      dom_callback_(callback),
       skipped_observations_(false),
       element_size_changed_(false) {
   controller_ = &document.EnsureResizeObserverController();
@@ -100,7 +116,10 @@ void ResizeObserver::DeliverObservations() {
                                          LayoutRect(location, size));
     entries.push_back(entry);
   }
-  callback_->handleEvent(entries, this);
+  if (callback_)
+    callback_->call(this, entries, this);
+  if (dom_callback_)
+    dom_callback_->call(entries, this);
   ClearObservations();
 }
 
@@ -117,9 +136,14 @@ void ResizeObserver::ElementSizeChanged() {
 
 DEFINE_TRACE(ResizeObserver) {
   visitor->Trace(callback_);
+  visitor->Trace(dom_callback_);
   visitor->Trace(observations_);
   visitor->Trace(active_observations_);
   visitor->Trace(controller_);
+}
+
+DEFINE_TRACE_WRAPPERS(ResizeObserver) {
+  visitor->TraceWrappers(callback_);
 }
 
 }  // namespace blink

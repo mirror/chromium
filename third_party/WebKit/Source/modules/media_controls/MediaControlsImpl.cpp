@@ -28,13 +28,13 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ClientRect.h"
+#include "core/dom/DOMResizeObserverCallback.h"
 #include "core/dom/Fullscreen.h"
 #include "core/dom/MutationCallback.h"
 #include "core/dom/MutationObserver.h"
 #include "core/dom/MutationObserverInit.h"
 #include "core/dom/MutationRecord.h"
 #include "core/dom/ResizeObserver.h"
-#include "core/dom/ResizeObserverCallback.h"
 #include "core/dom/ResizeObserverEntry.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MouseEvent.h"
@@ -178,7 +178,7 @@ class MediaControlsImpl::BatchedControlUpdate {
 int MediaControlsImpl::BatchedControlUpdate::batch_depth_ = 0;
 
 class MediaControlsImpl::MediaControlsResizeObserverCallback final
-    : public ResizeObserverCallback {
+    : public DOMResizeObserverCallback {
  public:
   explicit MediaControlsResizeObserverCallback(MediaControlsImpl* controls)
       : controls_(controls) {
@@ -186,8 +186,8 @@ class MediaControlsImpl::MediaControlsResizeObserverCallback final
   }
   ~MediaControlsResizeObserverCallback() override = default;
 
-  void handleEvent(const HeapVector<Member<ResizeObserverEntry>>& entries,
-                   ResizeObserver* observer) override {
+  void call(const HeapVector<Member<ResizeObserverEntry>>& entries,
+            ResizeObserver* observer) override {
     DCHECK_EQ(1u, entries.size());
     DCHECK_EQ(entries[0]->target(), controls_->MediaElement());
     controls_->NotifyElementSizeChanged(entries[0]->contentRect());
@@ -195,7 +195,7 @@ class MediaControlsImpl::MediaControlsResizeObserverCallback final
 
   DEFINE_INLINE_TRACE() {
     visitor->Trace(controls_);
-    ResizeObserverCallback::Trace(visitor);
+    DOMResizeObserverCallback::Trace(visitor);
   }
 
  private:
