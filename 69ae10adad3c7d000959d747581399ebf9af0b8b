@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac793e3e_35009a46",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-25T18:08:17Z",
+      "side": 1,
+      "message": "They\u0027re definitely always done together, wasn\u0027t sure about what to call it :P I think I\u0027ll use IncrementAndAddTime().",
+      "parentUuid": "4770874f_4c08d7fd",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1965287_0989d95a",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6850dc04_bdfe47a0",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-25T18:08:17Z",
+      "side": 1,
+      "message": "I copied V8\u0027s API, but yeah I don\u0027t see a good reason to keep these two methods as static. Making them regular members.",
+      "parentUuid": "a1965287_0989d95a",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "23b4be25_b4f75c73",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-25T18:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88272d52_8f12654f",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f78a3b4_1867beb1",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46cdb1d6_5023dd29",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-25T18:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f78a3b4_1867beb1",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2d2a6abc_8120addc",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-25T18:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ffe735_7fb6b944",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c98665db_aefd565c",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-05-25T15:30:46Z",
       "side": 1,
       "message": "On second thought, a test to check that your test works seems a little overkill. Surely the below tests would break if this were wrong?",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3be0d2_895fcf11",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-25T18:08:17Z",
+      "side": 1,
+      "message": "I thought it would help save some time figuring out what broke all the tests if TimeTicks::Now breaks again :P I can remove it if you want.",
+      "parentUuid": "c98665db_aefd565c",
       "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba16807e_04277679",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-25T18:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06739116_6b366598",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
