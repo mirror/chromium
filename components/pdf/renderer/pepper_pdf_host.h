@@ -99,6 +99,8 @@ class PepperPDFHost : public ppapi::host::ResourceHost {
       const PP_PrivateAccessibilityPageInfo& page_info,
       const std::vector<PP_PrivateAccessibilityTextRunInfo>& text_runs,
       const std::vector<PP_PrivateAccessibilityCharInfo>& chars);
+  int32_t OnHostMsgSetPastable(ppapi::host::HostMessageContext* context,
+                               bool is_pastable);
 
   void CreatePdfAccessibilityTreeIfNeeded();
 

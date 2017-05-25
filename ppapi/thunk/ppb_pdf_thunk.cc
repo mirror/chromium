@@ -169,6 +169,13 @@ void SetCrashData(PP_Instance instance,
   enter.functions()->SetCrashData(pdf_url, top_level_url);
 }
 
+void SetPastable(PP_Instance instance, bool is_pastable) {
+  EnterInstanceAPI<PPB_PDF_API> enter(instance);
+  if (enter.failed())
+    return;
+  enter.functions()->SetPastable(is_pastable);
+}
+
 const PPB_PDF g_ppb_pdf_thunk = {
     &GetFontFileWithFallback,
     &GetFontTableForPrivateFontFile,
@@ -188,6 +195,7 @@ const PPB_PDF g_ppb_pdf_thunk = {
     &SetAccessibilityDocInfo,
     &SetAccessibilityPageInfo,
     &SetCrashData,
+    &SetPastable,
 };
 
 }  // namespace

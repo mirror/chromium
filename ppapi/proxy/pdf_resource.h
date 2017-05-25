@@ -61,6 +61,7 @@ class PPAPI_PROXY_EXPORT PDFResource
       PP_PrivateAccessibilityTextRunInfo text_runs[],
       PP_PrivateAccessibilityCharInfo chars[]) override;
   void SetCrashData(const char* pdf_url, const char* top_level_url) override;
+  void SetPastable(bool pastable) override;
 
  private:
   std::string locale_;

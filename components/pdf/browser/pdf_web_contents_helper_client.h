@@ -25,6 +25,9 @@ class PDFWebContentsHelperClient {
   virtual void OnPDFHasUnsupportedFeature(content::WebContents* contents) = 0;
 
   virtual void OnSaveURL(content::WebContents* contents) = 0;
+
+  virtual void OnSetPastable(content::WebContents* contents,
+                             bool is_pastable) = 0;
 };
 
 }  // namespace pdf

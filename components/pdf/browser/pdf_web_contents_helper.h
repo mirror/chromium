@@ -43,6 +43,7 @@ class PDFWebContentsHelper
   void HasUnsupportedFeature() override;
   void SaveUrlAs(const GURL& url, const content::Referrer& referrer) override;
   void UpdateContentRestrictions(int32_t content_restrictions) override;
+  void SetPastable(bool is_pastable) override;
 
   content::WebContentsFrameBindingSet<mojom::PdfService> pdf_service_bindings_;
   std::unique_ptr<PDFWebContentsHelperClient> client_;

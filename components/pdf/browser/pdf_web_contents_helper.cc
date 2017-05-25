@@ -51,4 +51,8 @@ void PDFWebContentsHelper::UpdateContentRestrictions(
   client_->UpdateContentRestrictions(web_contents(), content_restrictions);
 }
 
+void PDFWebContentsHelper::SetPastable(bool is_pastable) {
+  client_->OnSetPastable(web_contents(), is_pastable);
+}
+
 }  // namespace pdf

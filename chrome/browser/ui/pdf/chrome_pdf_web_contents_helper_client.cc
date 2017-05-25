@@ -51,3 +51,9 @@ void ChromePDFWebContentsHelperClient::OnSaveURL(
     content::WebContents* contents) {
   RecordDownloadSource(DOWNLOAD_INITIATED_BY_PDF_SAVE);
 }
+
+void ChromePDFWebContentsHelperClient::OnSetPastable(
+    content::WebContents* contents,
+    bool is_pastable) {
+  fprintf(stderr, "SET PASTABLE: %d\n", is_pastable);
+}

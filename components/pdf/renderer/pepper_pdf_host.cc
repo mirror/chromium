@@ -91,6 +91,8 @@ int32_t PepperPDFHost::OnResourceMessageReceived(
     PPAPI_DISPATCH_HOST_RESOURCE_CALL(
         PpapiHostMsg_PDF_SetAccessibilityPageInfo,
         OnHostMsgSetAccessibilityPageInfo)
+    PPAPI_DISPATCH_HOST_RESOURCE_CALL(PpapiHostMsg_PDF_SetPastable,
+                                      OnHostMsgSetPastable)
   PPAPI_END_MESSAGE_MAP()
   return PP_ERROR_FAILED;
 }
@@ -223,6 +225,17 @@ int32_t PepperPDFHost::OnHostMsgSetAccessibilityPageInfo(
   CreatePdfAccessibilityTreeIfNeeded();
   pdf_accessibility_tree_->SetAccessibilityPageInfo(
       page_info, text_run_info, chars);
+  return PP_OK;
+}
+
+int32_t PepperPDFHost::OnHostMsgSetPastable(
+    ppapi::host::HostMessageContext* context,
+    bool is_pastable) {
+  mojom::PdfService* service = GetRemotePdfService();
+  if (!service)
+    return PP_ERROR_FAILED;
+
+  service->SetPastable(is_pastable);
   return PP_OK;
 }
 

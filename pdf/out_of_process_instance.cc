@@ -1505,6 +1505,9 @@ void OutOfProcessInstance::FormTextFieldFocusChange(bool in_focus) {
 
   text_input_->SetTextInputType(in_focus ? PP_TEXTINPUT_TYPE_DEV_TEXT
                                          : PP_TEXTINPUT_TYPE_DEV_NONE);
+
+  // Notify the embedder if we can accept a paste.
+  pp::PDF::SetPastable(this, in_focus);
 }
 
 void OutOfProcessInstance::ResetRecentlySentFindUpdate(int32_t /* unused */) {

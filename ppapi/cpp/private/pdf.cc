@@ -193,4 +193,11 @@ void PDF::SetCrashData(const InstanceHandle& instance,
   }
 }
 
+// static
+void PDF::SetPastable(const InstanceHandle& instance, bool is_pastable) {
+  if (has_interface<PPB_PDF>()) {
+    get_interface<PPB_PDF>()->SetPastable(instance.pp_instance(), is_pastable);
+  }
+}
+
 }  // namespace pp
