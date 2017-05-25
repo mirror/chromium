@@ -37,7 +37,7 @@ const char* RequestOutcomeToString(RequestOutcome outcome) {
 // incurred if the trace category is disabled. See https://crbug.com/669666.
 
 namespace {
-
+#if 0
 std::unique_ptr<TracedValue> scopedResourceTrackerBeginData(
     const blink::ResourceRequest& request) {
   std::unique_ptr<TracedValue> data = TracedValue::create();
@@ -57,7 +57,7 @@ std::unique_ptr<TracedValue> endResourceLoadData(RequestOutcome outcome) {
   data->setString("outcome", RequestOutcomeToString(outcome));
   return data;
 }
-
+#endif
 }  // namespace
 
 ScopedResourceLoadTracker::ScopedResourceLoadTracker(

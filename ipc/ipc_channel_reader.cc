@@ -23,12 +23,12 @@ namespace internal {
 #ifdef IPC_MESSAGE_LOG_ENABLED
 
 namespace {
-std::string GetMessageText(const Message& message) {
-  std::string name;
-  Logging::GetInstance()->GetMessageText(
-      message.type(), &name, &message, nullptr);
-  return name;
-}
+//std::string GetMessageText(const Message& message) {
+//  std::string name;
+//  Logging::GetInstance()->GetMessageText(
+//      message.type(), &name, &message, nullptr);
+//  return name;
+//}
 }  // namespace
 
 #define EMIT_TRACE_EVENT(message)                                       \

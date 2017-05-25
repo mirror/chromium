@@ -44,6 +44,7 @@ mojom::MemoryState ToMojomMemoryState(MemoryState state) {
   }
 }
 
+#if 0
 const char* MemoryConditionToString(MemoryCondition condition) {
   switch (condition) {
     case MemoryCondition::NORMAL:
@@ -56,6 +57,7 @@ const char* MemoryConditionToString(MemoryCondition condition) {
   NOTREACHED();
   return "N/A";
 }
+#endif
 
 MemoryState CalculateMemoryStateForProcess(MemoryCondition condition,
                                            bool is_visible) {
@@ -289,8 +291,8 @@ void MemoryCoordinatorImpl::UpdateConditionIfNeeded(
   if (memory_condition_ == next_condition)
     return;
 
-  MemoryCondition prev_condition = memory_condition_;
-  memory_condition_ = next_condition;
+  //  MemoryCondition prev_condition = memory_condition_;
+    memory_condition_ = next_condition;
 
   TRACE_EVENT2(TRACE_DISABLED_BY_DEFAULT("memory_coordinator"),
                "MemoryCoordinatorImpl::UpdateConditionIfNeeded", "prev",

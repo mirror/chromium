@@ -29,8 +29,8 @@ namespace internal {
 namespace {
 
 constexpr char kParallelExecutionMode[] = "parallel";
-constexpr char kSequencedExecutionMode[] = "sequenced";
-constexpr char kSingleThreadExecutionMode[] = "single thread";
+  //constexpr char kSequencedExecutionMode[] = "sequenced";
+  //constexpr char kSingleThreadExecutionMode[] = "single thread";
 
 // An immutable copy of a scheduler task's info required by tracing.
 class TaskTracingInfo : public trace_event::ConvertableToTraceFormat {
@@ -71,7 +71,7 @@ const char kQueueFunctionName[] = "base::PostTask";
 
 // This name conveys that a Task is run by the task scheduler without revealing
 // its implementation details.
-const char kRunFunctionName[] = "TaskSchedulerRunTask";
+//const char kRunFunctionName[] = "TaskSchedulerRunTask";
 
 HistogramBase* GetTaskLatencyHistogram(const char* suffix) {
   // Mimics the UMA_HISTOGRAM_TIMES macro.
@@ -275,6 +275,7 @@ bool TaskTracker::RunTask(std::unique_ptr<Task> task,
 
       TRACE_TASK_EXECUTION(kRunFunctionName, *task);
 
+#if 0      
       const char* const execution_mode =
           task->single_thread_task_runner_ref
               ? kSingleThreadExecutionMode
@@ -286,7 +287,7 @@ bool TaskTracker::RunTask(std::unique_ptr<Task> task,
       TRACE_EVENT1("task_scheduler", "TaskTracker::RunTask", "task_info",
                    MakeUnique<TaskTracingInfo>(task->traits, execution_mode,
                                                sequence_token));
-
+#endif
       PerformRunTask(std::move(task));
     }
 

@@ -2005,7 +2005,7 @@ void Document::updateStyleAndLayoutTree() {
   TRACE_EVENT_BEGIN1("blink,devtools.timeline", "UpdateLayoutTree", "beginData",
                      InspectorRecalculateStylesEvent::data(frame()));
 
-  unsigned startElementCount = styleEngine().styleForElementCount();
+  //  unsigned startElementCount = styleEngine().styleForElementCount();
 
   probe::RecalculateStyle recalculateStyleScope(this);
 
@@ -2042,13 +2042,13 @@ void Document::updateStyleAndLayoutTree() {
   layoutViewItem().clearHitTestCache();
 
   DCHECK(!DocumentAnimations::needsAnimationTimingUpdate(*this));
-
+#if 0
   unsigned elementCount =
       styleEngine().styleForElementCount() - startElementCount;
 
   TRACE_EVENT_END1("blink,devtools.timeline", "UpdateLayoutTree",
                    "elementCount", elementCount);
-
+#endif
 #if DCHECK_IS_ON()
   assertLayoutTreeUpdated(*this);
 #endif
@@ -2066,7 +2066,7 @@ void Document::updateStyle() {
   TRACE_EVENT_BEGIN0("blink,blink_style", "Document::updateStyle");
   double startTime = monotonicallyIncreasingTime();
 
-  unsigned initialElementCount = styleEngine().styleForElementCount();
+  //  unsigned initialElementCount = styleEngine().styleForElementCount();
 
   HTMLFrameOwnerElement::UpdateSuspendScope
       suspendFrameViewBaseHierarchyUpdates;

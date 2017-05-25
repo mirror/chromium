@@ -42,7 +42,7 @@ CopyOutputRequest::~CopyOutputRequest() {
 }
 
 void CopyOutputRequest::SendResult(std::unique_ptr<CopyOutputResult> result) {
-  bool success = !result->IsEmpty();
+  //  bool success = !result->IsEmpty();
   base::ResetAndReturn(&result_callback_).Run(std::move(result));
   TRACE_EVENT_ASYNC_END1("cc", "CopyOutputRequest", this, "success", success);
 }

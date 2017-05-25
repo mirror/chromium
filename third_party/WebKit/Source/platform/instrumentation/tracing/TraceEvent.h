@@ -15,10 +15,12 @@ namespace WTF {
 static inline void SetTraceValue(const CString& arg,
                                  unsigned char* type,
                                  unsigned long long* value) {
+#if 0
   trace_event_internal::TraceValueUnion typeValue;
   typeValue.as_string = arg.data();
   *type = TRACE_VALUE_TYPE_COPY_STRING;
   *value = typeValue.as_uint;
+#endif  
 }
 
 }  // namespace WTF

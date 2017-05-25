@@ -1241,7 +1241,7 @@ void RenderFrameImpl::Initialize() {
   TRACE_EVENT_CATEGORY_GROUP_ENABLED("navigation", &is_tracing_navigation);
   TRACE_EVENT_CATEGORY_GROUP_ENABLED("rail", &is_tracing_rail);
   if (is_tracing_rail || is_tracing_navigation) {
-    int parent_id = GetRoutingIdForFrameOrProxy(frame_->parent());
+    //    int parent_id = GetRoutingIdForFrameOrProxy(frame_->parent());
     TRACE_EVENT2("navigation,rail", "RenderFrameImpl::Initialize",
                  "id", routing_id_,
                  "parent", parent_id);

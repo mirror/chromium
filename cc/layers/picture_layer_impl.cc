@@ -308,7 +308,7 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
       viewport_rect_for_tile_priority_in_content_space_, max_contents_scale);
 
   size_t missing_tile_count = 0u;
-  size_t on_demand_missing_tile_count = 0u;
+  //  size_t on_demand_missing_tile_count = 0u;
   only_used_low_res_last_append_quads_ = true;
   gfx::Rect scaled_recorded_viewport = gfx::ScaleToEnclosingRect(
       raster_source_->RecordedViewport(), max_contents_scale);
