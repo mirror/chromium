@@ -2654,7 +2654,6 @@ crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtm
 crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-6.htm [ Crash Pass ]
 crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-7.htm [ Crash Pass ]
 crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-9.htm [ Crash Pass ]
-crbug.com/720545 external/wpt/html/semantics/scripting-1/the-script-element/module/import-subgraph-404.html [ Crash Pass ]
 
 # Manual tests that have not been automated.
 crbug.com/626703 external/wpt/fullscreen/api/element-request-fullscreen-two-iframes-manual.html [ Timeout ]
