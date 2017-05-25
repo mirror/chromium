@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9428221_1a54e73c",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-05-25T05:30:29Z",
+      "side": 1,
+      "message": "Nit: make this \"Pass\"? Or does it need to be \"Pass Failure\"?",
+      "revId": "6fdd9c76d677b0b64654be9ba336475a1a20be04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4274bab_0904db71",
+        "filename": "third_party/WebKit/Source/core/paint/FramePainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-05-25T05:30:29Z",
+      "side": 1,
+      "message": "Can you add a unittest for this? I am thinking something like the tests in PaintControllerPaintTest.cpp but with three rects: one at the origin, one at 3000px, and one at 5000px.",
+      "revId": "6fdd9c76d677b0b64654be9ba336475a1a20be04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
