@@ -51,30 +51,6 @@ class PowerTypical10Mobile(perf_benchmark.PerfBenchmark):
     return 'power.typical_10_mobile'
 
 
-@benchmark.Enabled('mac')
-@benchmark.Owner(emails=['erikchen@chromium.org'])
-class PowerScrollingTrivialPage(perf_benchmark.PerfBenchmark):
-  """Measure power consumption for some very simple pages."""
-  test = power.QuiescentPower
-  page_set = page_sets.TrivialSitesStorySet
-
-  @classmethod
-  def Name(cls):
-    return 'power.trivial_pages'
-
-
-@benchmark.Enabled('mac')
-class PowerSteadyStatePages(perf_benchmark.PerfBenchmark):
-  """Measure power consumption for real web sites in steady state (no user
-  interactions)."""
-  test = power.QuiescentPower
-  page_set = page_sets.IdleAfterLoadingStories
-
-  @classmethod
-  def Name(cls):
-    return 'power.steady_state'
-
-
 class IdlePlatformBenchmark(perf_benchmark.PerfBenchmark):
   """Idle platform benchmark.
 
