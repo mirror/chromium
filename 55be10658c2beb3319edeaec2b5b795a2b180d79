@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f5e1723_895d592e",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T20:19:08Z",
+      "side": 1,
+      "message": "Hrm. Alright. Normally we don\u0027t like std::function in Chromium, but this is a test and the alternatives are kinda verbose, so okay. For reference, generally prefer WTF::Bind or just defining a plain old function or functor struct.",
+      "revId": "55be10658c2beb3319edeaec2b5b795a2b180d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

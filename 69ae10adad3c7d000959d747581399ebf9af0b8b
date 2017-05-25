@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f26378d6_1989cc79",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T20:19:08Z",
+      "side": 1,
+      "message": "That\u0027s fine. I might have gone with something slightly less explicit (\"AddTime\", \"AddSample\", or something), but I\u0027m 100% okay with this.",
+      "parentUuid": "ac793e3e_35009a46",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1965287_0989d95a",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 2
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "I thought it would help save some time figuring out what broke all the tests if TimeTicks::Now breaks again :P I can remove it if you want.",
       "parentUuid": "c98665db_aefd565c",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413fc588_fd2e5525",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T20:19:08Z",
+      "side": 1,
+      "message": "Mildly prefer omitting it, but I don\u0027t feel strongly.",
+      "parentUuid": "dd3be0d2_895fcf11",
       "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
