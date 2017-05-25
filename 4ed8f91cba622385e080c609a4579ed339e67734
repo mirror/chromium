@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cd3b364_3d3a3d30",
+        "filename": "chrome/android/monochrome/java/src/com/android/webview/chromium/LicenseContentProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-05-25T18:57:53Z",
+      "side": 1,
+      "message": "update comment  as it\u0027s no longer true (you\u0027re pulling in chrome deps)",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "4ed8f91cba622385e080c609a4579ed339e67734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eca0a7f_f1cd7797",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-05-25T18:57:53Z",
+      "side": 1,
+      "message": "I\u0027m missing this - where is this called?",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "4ed8f91cba622385e080c609a4579ed339e67734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
