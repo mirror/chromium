@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b274ac7_692746bb",
+        "filename": "third_party/WebKit/LayoutTests/intersection-observer/text-target.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-05-25T19:21:58Z",
+      "side": 1,
+      "message": "Would you mind adding a comment explaining the numbers?",
+      "revId": "d49ec73fa2cfe2dd7e326e323d0a776aec73ddb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
