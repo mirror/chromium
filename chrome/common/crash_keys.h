@@ -72,14 +72,13 @@ extern const char kShutdownType[];
 // invalid attempt to Pin the browser process after that.
 extern const char kBrowserUnpinTrace[];
 
-#if defined(OS_WIN)
-extern const char kHungAudioThreadDetails[];
-
-// Hung renderer crash reports are only sent on Windows.
 extern const char kHungRendererOutstandingAckCount[];
 extern const char kHungRendererOutstandingEventType[];
 extern const char kHungRendererLastEventType[];
 extern const char kHungRendererReason[];
+
+#if defined(OS_WIN)
+extern const char kHungAudioThreadDetails[];
 
 // Third-party module crash keys are sent only on Windows.
 extern const char kThirdPartyModulesLoaded[];
