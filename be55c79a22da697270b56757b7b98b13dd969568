@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13204a7e_0cc00ac4",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-25T05:15:46Z",
+      "side": 1,
+      "message": "\u0026\u0026 overlay_-\u003eIsInitializationComplete()?",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "be55c79a22da697270b56757b7b98b13dd969568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdd9dd1_5aa7a633",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-25T05:15:46Z",
+      "side": 1,
+      "message": "written_overlay_names_.insert(key);?",
+      "revId": "be55c79a22da697270b56757b7b98b13dd969568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e6b6be_dc6b3867",
+        "filename": "components/prefs/overlay_user_pref_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-25T05:15:46Z",
+      "side": 1,
+      "message": "This could be incorrect for an overlay with non-trivial initialization. Alternatively, we could require that the overlay is already initialized.",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 34
+      },
+      "revId": "be55c79a22da697270b56757b7b98b13dd969568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
