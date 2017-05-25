@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc614938_537741d4",
+        "filename": "base/sequenced_task_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-05-25T11:55:27Z",
+      "side": 1,
+      "message": "Can we have similar one for ReleaseSoon too? Plus, content::BrowserThread version will alse be useful.",
+      "revId": "85a6645491456bc027f3065865008e4f581bea31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
