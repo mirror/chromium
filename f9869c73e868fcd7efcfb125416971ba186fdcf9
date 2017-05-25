@@ -16,6 +16,24 @@
       "revId": "f9869c73e868fcd7efcfb125416971ba186fdcf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ce9731_02fa59fd",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T15:07:25Z",
+      "side": 1,
+      "message": "Yeah, it seems that the only difference has to do with whether we\u0027ve detached the document from the window (but I think that still targets the same use counter), or is there subtlety with HTML imports that matters here in particular?\n\nIf you don\u0027t end up making this change, you can put the call to ExecutingFrame after the comparison between the two validity checks, so that in the common case we don\u0027t have to call ExecutingFrame.",
+      "parentUuid": "fb1075d7_637d5a08",
+      "revId": "f9869c73e868fcd7efcfb125416971ba186fdcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
