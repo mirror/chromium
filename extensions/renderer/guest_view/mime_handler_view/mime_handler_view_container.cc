@@ -151,8 +151,7 @@ void MimeHandlerViewContainer::OnReady() {
   blink::WebAssociatedURLLoaderOptions options;
   // The embedded plugin is allowed to be cross-origin and we should always
   // send credentials/cookies with the request.
-  options.cross_origin_request_policy =
-      blink::WebAssociatedURLLoaderOptions::kCrossOriginRequestPolicyAllow;
+  options.fetch_request_mode = blink::WebURLRequest::kFetchRequestModeNoCORS;
   options.allow_credentials = true;
   DCHECK(!loader_);
   loader_.reset(frame->CreateAssociatedURLLoader(options));
