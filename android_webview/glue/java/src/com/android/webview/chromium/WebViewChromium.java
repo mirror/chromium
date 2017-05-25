@@ -1467,6 +1467,25 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
         return true;
     }
 
+    /**
+     * Starts Safe Browsing initialization. This should only be called once.
+     * @param context is the activity context the WebView will be used in.
+     * @param callback will be called with the value true if initialization is successful. The
+     * callback will be run on the UI thread.
+     */
+    // TODO(ntfschr): add @Override once O MR1 SDK rolls
+    public static void initSafeBrowsing(Context context, ValueCallback<Boolean> callback) {
+        AwContentsStatics.initSafeBrowsing(context, callback);
+    }
+
+    /**
+     * Shuts down Safe Browsing. This should only be called once.
+     */
+    // TODO(ntfschr): add @Override once O MR1 SDK rolls
+    public static void shutdownSafeBrowsing() {
+        AwContentsStatics.shutdownSafeBrowsing();
+    }
+
     @Override
     public void dumpViewHierarchyWithProperties(BufferedWriter out, int level) {
         // Intentional no-op
