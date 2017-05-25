@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77ddbfdb_9898fa68",
+        "filename": "docs/threading_and_tasks.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-25T16:24:03Z",
+      "side": 1,
+      "message": "... through a lot of components only to be used in an eventual leaf. The leaf can and should now obtain its TaskRunner directly from base/task_scheduler/post_task.h.",
+      "revId": "5203573a74f1153dc7e888d83de80d1dac490550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
