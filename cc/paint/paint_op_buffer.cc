@@ -8,6 +8,7 @@
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/paint_record.h"
 #include "third_party/skia/include/core/SkAnnotation.h"
+#include "third_party/skia/include/core/SkCanvas.h"
 
 namespace cc {
 
@@ -102,30 +103,6 @@ struct Rasterizer<T, true> {
                   "This function expects the PaintOp to have PaintFlags");
     DCHECK(T::kIsDrawOp);
     RasterWithAlphaInternalForFlags(&T::RasterWithFlags, op, canvas, alpha);
-  }
-};
-
-template <>
-struct Rasterizer<DrawRecordOp, false> {
-  static void RasterWithAlpha(const DrawRecordOp* op,
-                              SkCanvas* canvas,
-                              uint8_t alpha) {
-    // This "looking into records" optimization is done here instead of
-    // in the PaintOpBuffer::Raster function as DisplayItemList calls
-    // into RasterWithAlpha directly.
-    if (op->record->size() == 1u) {
-      PaintOp* single_op = op->record->GetFirstOp();
-      // RasterWithAlpha only supported for draw ops.
-      if (single_op->IsDrawOp()) {
-        single_op->RasterWithAlpha(canvas, alpha);
-        return;
-      }
-    }
-
-    canvas->saveLayerAlpha(nullptr, alpha);
-    SkMatrix unused_matrix;
-    DrawRecordOp::Raster(op, canvas, unused_matrix);
-    canvas->restore();
   }
 };
 
@@ -414,7 +391,14 @@ void SaveLayerAlphaOp::Raster(const PaintOp* base_op,
   auto* op = static_cast<const SaveLayerAlphaOp*>(base_op);
   // See PaintOp::kUnsetRect
   bool unset = op->bounds.left() == SK_ScalarInfinity;
-  canvas->saveLayerAlpha(unset ? nullptr : &op->bounds, op->alpha);
+  if (op->preserve_lcd_text_requests) {
+    SkPaint paint;
+    paint.setAlpha(op->alpha);
+    canvas->saveLayerPreserveLCDTextRequests(unset ? nullptr : &op->bounds,
+                                             &paint);
+  } else {
+    canvas->saveLayerAlpha(unset ? nullptr : &op->bounds, op->alpha);
+  }
 }
 
 void ScaleOp::Raster(const PaintOp* base_op,
@@ -505,11 +489,11 @@ DrawDisplayItemListOp::DrawDisplayItemListOp(
     : list(list) {}
 
 size_t DrawDisplayItemListOp::AdditionalBytesUsed() const {
-  return list->ApproximateMemoryUsage();
+  return list->BytesUsed();
 }
 
 bool DrawDisplayItemListOp::HasDiscardableImages() const {
-  return list->has_discardable_images();
+  return list->HasDiscardableImages();
 }
 
 DrawDisplayItemListOp::DrawDisplayItemListOp(const DrawDisplayItemListOp& op) =
@@ -679,6 +663,9 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
   }
 #endif
 
+  // Prevent PaintOpBuffers from having side effects back into the canvas.
+  SkAutoCanvasRestore save_restore(canvas, true);
+
   // TODO(enne): a PaintRecord that contains a SetMatrix assumes that the
   // SetMatrix is local to that PaintRecord itself.  Said differently, if you
   // translate(x, y), then draw a paint record with a SetMatrix(identity),
@@ -699,8 +686,9 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
   while (const PaintOp* op =
              NextOp(range_starts, range_indices, &stack, &iter, &range_index)) {
     // Optimize out save/restores or save/draw/restore that can be a single
-    // draw.  See also: similar code in SkRecordOpts and cc's DisplayItemList.
+    // draw.  See also: similar code in SkRecordOpts.
     // TODO(enne): consider making this recursive?
+    // TODO(enne): should we avoid this if the SaveLayerAlphaOp has bounds?
     if (op->GetType() == PaintOpType::SaveLayerAlpha) {
       const PaintOp* second =
           NextOp(range_starts, range_indices, &stack, &iter, &range_index);
@@ -709,7 +697,26 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
         if (second->GetType() == PaintOpType::Restore) {
           continue;
         }
-        if (second->IsDrawOp()) {
+        bool second_op_draws = second->IsDrawOp();
+        // Unwrap DrawRecordOp with a single op inside (recursively).
+        while (second->GetType() == PaintOpType::DrawRecord ||
+               second->GetType() == PaintOpType::DrawDisplayItemList) {
+          if (second->GetType() == PaintOpType::DrawDisplayItemList) {
+            // TODO(danakj): If we could inspect the PaintOpBuffer here, then
+            // we could see if it is a single draw op.
+            second_op_draws = false;
+            break;
+          }
+          auto* draw_record_op = static_cast<const DrawRecordOp*>(second);
+          if (draw_record_op->record->size() > 1) {
+            // If there's more than one op, then we need to keep the SaveLayer.
+            second_op_draws = false;
+            break;
+          }
+          second = draw_record_op->record->GetFirstOp();
+          second_op_draws = second->IsDrawOp();
+        }
+        if (second_op_draws) {
           third =
               NextOp(range_starts, range_indices, &stack, &iter, &range_index);
           if (third && third->GetType() == PaintOpType::Restore) {
