@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "080eb724_d6365496",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-25T21:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb965356_6f056fc4",
+      "range": {
+        "startLine": 200,
+        "startChar": 4,
+        "endLine": 200,
+        "endChar": 36
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d84d9eee_9c66b083",
         "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e08fa5_2c50e37f",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-25T21:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d84d9eee_9c66b083",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 36
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a4f9e70d_c2a9fd47",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-25T21:14:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "339f36c7_cac376c7",
+      "range": {
+        "startLine": 288,
+        "startChar": 47,
+        "endLine": 288,
+        "endChar": 68
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fca5af93_3a0617aa",
         "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2a258c_8b27e9cd",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-25T21:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fca5af93_3a0617aa",
+      "range": {
+        "startLine": 321,
+        "startChar": 25,
+        "endLine": 321,
+        "endChar": 39
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4a31b2b6_1daf5ae9",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-25T21:14:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bec3bc76_bf27066f",
+      "range": {
+        "startLine": 323,
+        "startChar": 33,
+        "endLine": 323,
+        "endChar": 46
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5495dbf0_dc528516",
         "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-05-25T20:48:53Z",
       "side": 1,
       "message": "not selected?",
+      "range": {
+        "startLine": 329,
+        "startChar": 44,
+        "endLine": 329,
+        "endChar": 52
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38658841_104f3dc2",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-25T21:14:25Z",
+      "side": 1,
+      "message": "I mean the combobox has the elements \"Month\", \"01\", \"02\", etc. This branch is taken when \"Month\" is selected. Updated the comment to make this clearer.",
+      "parentUuid": "5495dbf0_dc528516",
       "range": {
         "startLine": 329,
         "startChar": 44,
