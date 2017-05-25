@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae30aabf_ae12fb47",
+        "filename": "tools/perf/core/benchmark_finders.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-25T18:57:03Z",
+      "side": 1,
+      "message": "Nice! Not in this CL but in a subsequent CL, you can refactor GetAllContribBenchmarks, ... to use this.",
+      "range": {
+        "startLine": 66,
+        "startChar": 43,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "82441fcff284c5687f6b062180b7940495f41d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
