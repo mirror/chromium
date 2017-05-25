@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0d4d272_79ce93a3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-05-25T18:33:07Z",
+      "side": 1,
+      "message": "I think that\u0027s the assumption for RendererScheduler-class metrics. We have a todo somewhere for per-page metrics (instead of per-process).",
+      "parentUuid": "6432b0cc_eec75e2a",
+      "range": {
+        "startLine": 1873,
+        "startChar": 26,
+        "endLine": 1873,
+        "endChar": 47
+      },
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b644dc7e_ed1d901c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-25T18:00:48Z",
       "side": 1,
       "message": "Let\u0027s swap TaskDurationPerQueueType2 and Background since I tend to think of Background as the primary key. WDYT?",
+      "range": {
+        "startLine": 59422,
+        "startChar": 35,
+        "endLine": 59422,
+        "endChar": 60
+      },
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ddcdd0e_fd87108e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59422,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-05-25T18:33:07Z",
+      "side": 1,
+      "message": "I like this ordering because the main metric is TaskDurationPerQueueType and we split it further based on additional properties.\n\nMost likely we\u0027ll also have RS.TaskDurationPerQueueType.FirstMinuteAfterBackgrounding and some others.",
+      "parentUuid": "b644dc7e_ed1d901c",
       "range": {
         "startLine": 59422,
         "startChar": 35,
