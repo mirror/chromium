@@ -149,6 +149,25 @@
                     "shortcut": "]"
                 }
             ]
+        },
+        {
+            "type": "@UI.ActionDelegate",
+            "actionId": "timeline.show-history",
+            "iconClass": "largeicon-history",
+            "className": "Timeline.TimelinePanel.ActionDelegate",
+            "category": "Performance",
+            "title": "Show recent timeline sessions",
+            "experiment": "timelineKeepHistory",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+H"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+Y"
+                }
+            ]
         }
     ],
     "dependencies": [
@@ -173,6 +192,7 @@
         "TimelineFlameChartDataProvider.js",
         "TimelineFlameChartNetworkDataProvider.js",
         "TimelineFlameChartView.js",
+        "TimelineHistoryManager.js",
         "TimelineTreeModeView.js",
         "TimelineTreeView.js",
         "EventsTimelineTreeView.js",
@@ -184,6 +204,7 @@
     "resources": [
         "invalidationsTree.css",
         "timelineFlamechartPopover.css",
+        "timelineHistoryManager.css",
         "timelinePanel.css",
         "timelinePaintProfiler.css",
         "timelineStatusDialog.css"
