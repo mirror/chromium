@@ -22,6 +22,30 @@
       "revId": "d0db26c7265056c80a714bde6d77f187c1cc53cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c374320_c9c524c1",
+        "filename": "build/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-05-25T23:22:31Z",
+      "side": 1,
+      "message": "I left it here because of the package configuration in this file, bringing libgio. If we remove this group, we\u0027ll have to remove the package settings above because they\u0027ll have nothing to apply to and gn will complain.",
+      "parentUuid": "7eff5f33_69485a94",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "d0db26c7265056c80a714bde6d77f187c1cc53cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
