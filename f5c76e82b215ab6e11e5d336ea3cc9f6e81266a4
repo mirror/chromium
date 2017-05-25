@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcdd431f_3f1acc46",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-05-25T20:36:31Z",
+      "side": 1,
+      "message": "Interesting. So it sounds like to know for sure we should be accumulating the offset to the origin during the layout walk so that we can know the effective subpixel accumulation / where the actual floating point position on screen of something is in order to determine snapping. This would imply transform independent snapping but I think this makes sense - we shouldn\u0027t change size based on a translation transform.\n\nFor now how about we can keep the old behavior and even though the layout box size will not be correct we should at least correctly position the compositing layers w.r.t where we paint.",
+      "parentUuid": "9f729417_879cb30a",
+      "range": {
+        "startLine": 856,
+        "startChar": 6,
+        "endLine": 856,
+        "endChar": 11
+      },
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf0c59f4_d6c11889",
         "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 3
@@ -77,6 +101,24 @@
       "side": 1,
       "message": "PaintLayer::UpdateSize() doesn\u0027t look correct either. It uses PixelSnappedIntSize(box-\u003eSize(), box-\u003eLocation()), but the box location is relative to its containing block, not the actual paint offset.\n\nIMO it never makes sense to snap rects without an associated paint offset. I\u0027ve tried to remove LayoutBox::PixelSnappedBorderBoxRect() in the past, but it involved too much efforts. I think this CL is going toward the right direction by reducing the use of LayoutBox::PixelSnappedBorderBoxRect().\n\nPaintLayer is a very weird place for this though. PaintLayer is mainly used as an abstraction of stacking context, or an overflow clip. For either purpose, border box rect is not a very useful thing. My two cents is that we should make LayoutBox::PixelSnappedBorderBoxRect() to accept an optional paint offset parameter, and eventually make it mandatory once we eliminate all the misuses.",
       "parentUuid": "282ea780_eaa8937c",
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9df7d3c_f6ba70a5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2643,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-05-25T20:36:31Z",
+      "side": 1,
+      "message": "Done, I\u0027ve moved this into an optional offset on LayoutBox::PixelSnappedBorderBoxRect.",
+      "parentUuid": "e4d19298_674de398",
       "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -147,6 +189,24 @@
       "side": 1,
       "message": "There are a whole bunch of places in this file where Box() geometry calls should be replaced by Layer::Size() calls.  I\u0027m working on it.",
       "parentUuid": "ae8aa6c7_659964ee",
+      "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "429d0ba3_0b2a3d42",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-05-25T20:36:31Z",
+      "side": 1,
+      "message": "The left position from PixelSnappedBorderBoxRect is always (0, 0) now (it should have been before too if I understand subpixel accumulation correctly) so the x position doesn\u0027t need to be updated.",
+      "parentUuid": "119826f9_ac376838",
       "revId": "f5c76e82b215ab6e11e5d336ea3cc9f6e81266a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
