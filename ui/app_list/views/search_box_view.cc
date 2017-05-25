@@ -286,7 +286,7 @@ void SearchBoxView::SetBackButtonLabel(bool folder) {
   back_button_->SetTooltipText(back_button_label);
 }
 
-gfx::Size SearchBoxView::GetPreferredSize() const {
+gfx::Size SearchBoxView::CalculatePreferredSize() const {
   return gfx::Size(kPreferredWidth, kPreferredHeight);
 }
 

@@ -25,7 +25,7 @@ class FillLayoutTest : public testing::Test {
 
  protected:
   // Convenience function to get the preferred size from |layout_|.
-  gfx::Size GetPreferredSize() const {
+  gfx::Size CalculatePreferredSize() const {
     return layout_->GetPreferredSize(host_.get());
   }
 
