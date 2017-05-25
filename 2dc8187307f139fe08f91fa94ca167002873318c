@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c8e6a26_cbd1eb71",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-25T21:43:14Z",
+      "side": 1,
+      "message": "Is it the case that if this CHECK fires then something fundamental has changed in the way the world works, such that we should be concerned?",
+      "parentUuid": "450f00c8_09ca940b",
+      "range": {
+        "startLine": 389,
+        "startChar": 8,
+        "endLine": 389,
+        "endChar": 45
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "352d3b0d_172c9965",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 2
@@ -41,6 +65,52 @@
         "startChar": 0,
         "endLine": 467,
         "endChar": 14
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e030d8_068033c8",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-25T21:43:14Z",
+      "side": 1,
+      "message": "Naming makes it non-obvious what the result of Sweep...Queue() means, IMO - looks like it means \"queue is empty\".  Would it make sense to change the function to HaveDelayedWorkAfterSweep() or something along those lines?",
+      "range": {
+        "startLine": 564,
+        "startChar": 6,
+        "endLine": 564,
+        "endChar": 27
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38a3b0f_b842d1ff",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-25T21:43:14Z",
+      "side": 1,
+      "message": "Needs moar explanatory comment.",
+      "range": {
+        "startLine": 368,
+        "startChar": 7,
+        "endLine": 368,
+        "endChar": 28
       },
       "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
