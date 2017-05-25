@@ -365,6 +365,10 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // Adds the pending task to delayed_work_queue_.
   void AddToDelayedWorkQueue(PendingTask pending_task);
 
+  // Sweeps any cancelled tasks from the front of the delayed work queue and
+  // returns true if there is remaining work.
+  bool SweepDelayedWorkQueueAndReturnTrueIfStillHasWork();
+
   // Delete tasks that haven't run yet without running them.  Used in the
   // destructor to make sure all the task's destructors get called.  Returns
   // true if some work was done.
