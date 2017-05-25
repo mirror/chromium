@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "282958b6_76acca8b",
+        "filename": "gpu/command_buffer/tests/gl_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-25T00:35:43Z",
+      "side": 0,
+      "message": "note: most of this logic moved to CommandBufferDirect::Flush. Since virtually all that CommandBufferService::Flush does is update the put pointer and call the callback, all the logic around MakeCurrent or sync points can live outside the callback and in the function that calls CommandBufferService::Flush (i.e. CommandBufferDirect::Flush).\n\nThe point is to move all PutOffsetChangeCallback to be CommandExecutor::PutChanged directly in all clients of CommandBufferService, which is a prerequisite to merging CommandExecutor with CommandBufferService and remove said callback (follow-up CLs)",
+      "revId": "2064d334c9817b83d54f945e03edd2c7e626b128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
