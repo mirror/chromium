@@ -325,7 +325,7 @@ void InstallMockInterceptors(
       search_url.scheme(), search_url.host(),
       net::URLRequestMockHTTPJob::CreateInterceptorForSingleFile(
           root_http.AppendASCII("title3.html"),
-          BrowserThread::GetBlockingPool()));
+          BrowserThread::tutu()));
 }
 
 class ErrorPageTest : public InProcessBrowserTest {
@@ -1549,3 +1549,4 @@ IN_PROC_BROWSER_TEST_F(ErrorPageWithHttp09OnNonDefaultPortsTest,
 }
 
 }  // namespace
+
