@@ -179,8 +179,8 @@ PerformanceEntry* UserTiming::measure(const String& measureName,
   // User timing events are stored as integer milliseconds from the start of
   // navigation, whereas trace events accept double seconds based off of
   // CurrentTime::monotonicallyIncreasingTime().
-  double startTimeMonotonic = m_performance->timeOrigin() + startTime / 1000.0;
-  double endTimeMonotonic = m_performance->timeOrigin() + endTime / 1000.0;
+  //  double startTimeMonotonic = m_performance->timeOrigin() + startTime / 1000.0;
+  //  double endTimeMonotonic = m_performance->timeOrigin() + endTime / 1000.0;
 
   TRACE_EVENT_COPY_NESTABLE_ASYNC_BEGIN_WITH_TIMESTAMP0(
       "blink.user_timing", measureName.utf8().data(),

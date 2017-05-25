@@ -13,8 +13,8 @@ namespace trace_event {
 
 AutoOpenCloseEvent::AutoOpenCloseEvent(AutoOpenCloseEvent::Type type,
   const char* category, const char* event_name):
-  category_(category),
-  event_name_(event_name),
+  //  category_(category),
+  //  event_name_(event_name),
   weak_factory_(this) {
   base::trace_event::TraceLog::GetInstance()->AddAsyncEnabledStateObserver(
       weak_factory_.GetWeakPtr());

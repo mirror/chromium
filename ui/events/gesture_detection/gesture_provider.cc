@@ -26,7 +26,8 @@ namespace {
 // Double-tap drag zoom sensitivity (speed).
 const float kDoubleTapDragZoomSpeed = 0.005f;
 
-const char* GetMotionEventActionName(MotionEvent::Action action) {
+#if 0
+  const char* GetMotionEventActionName(MotionEvent::Action action) {
   switch (action) {
     case MotionEvent::ACTION_NONE:
       return "ACTION_NONE";
@@ -55,6 +56,7 @@ const char* GetMotionEventActionName(MotionEvent::Action action) {
   }
   return "";
 }
+  #endif
 
 gfx::RectF ClampBoundingBox(const gfx::RectF& bounds,
                             float min_length,

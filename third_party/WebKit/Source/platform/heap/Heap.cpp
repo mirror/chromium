@@ -429,7 +429,7 @@ void ThreadHeap::reportMemoryUsageForTracing() {
   if (!gcTracingEnabled)
     return;
 
-  ThreadHeap& heap = ThreadState::current()->heap();
+  //  ThreadHeap& heap = ThreadState::current()->heap();
   // These values are divided by 1024 to avoid overflow in practical cases
   // (TRACE_COUNTER values are 32-bit ints).
   // They are capped to INT_MAX just in case.

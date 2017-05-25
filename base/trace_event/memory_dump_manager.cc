@@ -43,9 +43,9 @@ namespace trace_event {
 
 namespace {
 
-const int kTraceEventNumArgs = 1;
-const char* kTraceEventArgNames[] = {"dumps"};
-const unsigned char kTraceEventArgTypes[] = {TRACE_VALUE_TYPE_CONVERTABLE};
+  //const int kTraceEventNumArgs = 1;
+  //const char* kTraceEventArgNames[] = {"dumps"};
+  //const unsigned char kTraceEventArgTypes[] = {TRACE_VALUE_TYPE_CONVERTABLE};
 
 StaticAtomicSequenceNumber g_next_guid;
 MemoryDumpManager* g_instance_for_testing = nullptr;
@@ -746,7 +746,7 @@ void MemoryDumpManager::FinalizeDumpAndAddToTrace(
                         Passed(&pmd_async_state)));
     return;
   }
-
+#if 0
   TRACE_EVENT_WITH_FLOW0(kTraceCategory,
                          "MemoryDumpManager::FinalizeDumpAndAddToTrace",
                          TRACE_ID_MANGLE(dump_guid), TRACE_EVENT_FLAG_FLOW_IN);
@@ -773,6 +773,7 @@ void MemoryDumpManager::FinalizeDumpAndAddToTrace(
         TRACE_EVENT_FLAG_HAS_ID);
   }
 
+#endif    
   bool tracing_still_enabled;
   TRACE_EVENT_CATEGORY_GROUP_ENABLED(kTraceCategory, &tracing_still_enabled);
   if (!tracing_still_enabled) {
@@ -827,7 +828,8 @@ void MemoryDumpManager::OnTraceLogEnabled() {
     session_state->SetTypeNameDeduplicator(
         WrapUnique(new TypeNameDeduplicator));
 
-    TRACE_EVENT_API_ADD_METADATA_EVENT(
+#if 0
+  TRACE_EVENT_API_ADD_METADATA_EVENT(
         TraceLog::GetCategoryGroupEnabled("__metadata"), "stackFrames",
         "stackFrames",
         MakeUnique<SessionStateConvertableProxy<StackFrameDeduplicator>>(
@@ -838,6 +840,7 @@ void MemoryDumpManager::OnTraceLogEnabled() {
         "typeNames",
         MakeUnique<SessionStateConvertableProxy<TypeNameDeduplicator>>(
             session_state, &MemoryDumpSessionState::type_name_deduplicator));
+#endif    
   }
 
   std::unique_ptr<MemoryDumpScheduler> dump_scheduler(

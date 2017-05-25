@@ -314,8 +314,8 @@ void ServiceWorkerControlleeRequestHandler::
       active_version->site_for_uma(), stripped_url_, is_main_frame_load_,
       GetPageTransition(job_->request()), job_->request()->url_chain().size());
 
-  bool is_forwarded =
-      MaybeForwardToServiceWorker(job_.get(), active_version.get());
+  //  bool is_forwarded =
+  //      MaybeForwardToServiceWorker(job_.get(), active_version.get());
 
   TRACE_EVENT_ASYNC_END2(
       "ServiceWorker",

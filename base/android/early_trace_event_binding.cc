@@ -23,8 +23,10 @@ static void RecordEarlyEvent(JNIEnv* env,
                              jlong end_time_ms,
                              jint thread_id) {
   std::string name = ConvertJavaStringToUTF8(env, jname);
+#if 0
   int64_t begin_us = begin_time_ms * 1000;
   int64_t end_us = end_time_ms * 1000;
+#endif  
 
   INTERNAL_TRACE_EVENT_ADD_WITH_ID_TID_AND_TIMESTAMP(
       TRACE_EVENT_PHASE_BEGIN, kEarlyJavaCategory, name.c_str(),

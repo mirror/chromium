@@ -544,7 +544,7 @@ bool FrameFetchContext::shouldLoadNewResource(Resource::Type type) const {
     return m_documentLoader == loader.provisionalDocumentLoader();
   return m_documentLoader == loader.documentLoader();
 }
-
+#if 0
 static std::unique_ptr<TracedValue>
 loadResourceTraceData(unsigned long identifier, const KURL& url, int priority) {
   String requestId = IdentifiersFactory::requestId(identifier);
@@ -555,7 +555,7 @@ loadResourceTraceData(unsigned long identifier, const KURL& url, int priority) {
   value->setInteger("priority", priority);
   return value;
 }
-
+#endif
 void FrameFetchContext::willStartLoadingResource(
     unsigned long identifier,
     ResourceRequest& request,
