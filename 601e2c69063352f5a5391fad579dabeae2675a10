@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "3cb4f5c4_1e70633a",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T16:40:40Z",
+      "side": 1,
+      "message": "Move this comment below the RecordConfigParsingEvent (got confused at first).  Then say, \"Return early.  If no field trial, ...\"",
+      "range": {
+        "startLine": 216,
+        "startChar": 26,
+        "endLine": 216,
+        "endChar": 53
+      },
+      "revId": "601e2c69063352f5a5391fad579dabeae2675a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3f3c58_87f56bcb",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T16:40:40Z",
+      "side": 1,
+      "message": "Need {} here IIUC.  Even if you don\u0027t, add it :).",
+      "range": {
+        "startLine": 284,
+        "startChar": 2,
+        "endLine": 287,
+        "endChar": 72
+      },
+      "revId": "601e2c69063352f5a5391fad579dabeae2675a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c791dd_6baa7260",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T16:40:40Z",
+      "side": 1,
+      "message": "static_cast\u003cint\u003e(...) might be shorter than \"ConfigParsingEventToInt\"!  Fine either way though.",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "601e2c69063352f5a5391fad579dabeae2675a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b92f79e_58079edf",
         "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
         "patchSetId": 1
@@ -13,6 +82,52 @@
       "writtenOn": "2017-05-25T08:45:43Z",
       "side": 1,
       "message": "Nit: Should this be part of stats::...?",
+      "revId": "601e2c69063352f5a5391fad579dabeae2675a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7129f76c_9e4ef080",
+        "filename": "components/feature_engagement_tracker/internal/stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T16:40:40Z",
+      "side": 1,
+      "message": "Does \"for (auto it : features) {\" work?",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "601e2c69063352f5a5391fad579dabeae2675a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca868c42_9fc7453a",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4496,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T16:40:40Z",
+      "side": 1,
+      "message": "Add a TODO and file a bug to migrate these to an suffix once those are supported.",
+      "range": {
+        "startLine": 4496,
+        "startChar": 14,
+        "endLine": 4496,
+        "endChar": 64
+      },
       "revId": "601e2c69063352f5a5391fad579dabeae2675a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
