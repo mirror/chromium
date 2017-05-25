@@ -1500,7 +1500,8 @@ void TraceLog::AddMetadataEventsWhileLocked() {
                             process_name_);
   }
 
-#if !defined(OS_NACL) && !defined(OS_IOS)
+// See https://crbug.com/726484 for Fuchsia.
+#if !defined(OS_NACL) && !defined(OS_IOS) && !defined(OS_FUCHSIA)
   Time process_creation_time = CurrentProcessInfo::CreationTime();
   if (!process_creation_time.is_null()) {
     TimeDelta process_uptime = Time::Now() - process_creation_time;
