@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f28ad9_52689d7b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-05-25T05:58:38Z",
+      "side": 1,
+      "message": "There is an assumption here that this can only be reached if we are in WebVR mode (or this is incorrectly named). That is the case^, but it\u0027s still an assumption we should probably address in the future.\n\n^ Actually, it is WebVR \u0026\u0026 surfaceless, the latter of which is not in the name.",
+      "range": {
+        "startLine": 1084,
+        "startChar": 8,
+        "endLine": 1084,
+        "endChar": 32
+      },
+      "revId": "04ca8e3f7cb4ef5449cb3113023ac26755b6e639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
