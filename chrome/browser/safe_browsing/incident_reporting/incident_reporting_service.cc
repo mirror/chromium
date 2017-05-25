@@ -316,7 +316,7 @@ IncidentReportingService::IncidentReportingService(
                                 : nullptr),
       collect_environment_data_fn_(&CollectEnvironmentData),
       environment_collection_task_runner_(
-          content::BrowserThread::GetBlockingPool()
+          content::BrowserThread::tutu()
               ->GetTaskRunnerWithShutdownBehavior(GetShutdownBehavior())),
       environment_collection_pending_(),
       collation_timeout_pending_(),
@@ -326,9 +326,9 @@ IncidentReportingService::IncidentReportingService(
                        &IncidentReportingService::OnCollationTimeout),
       delayed_analysis_callbacks_(
           base::TimeDelta::FromMilliseconds(kDefaultCallbackIntervalMs),
-          content::BrowserThread::GetBlockingPool()
+          content::BrowserThread::tutu()
               ->GetTaskRunnerWithShutdownBehavior(GetShutdownBehavior())),
-      download_metadata_manager_(content::BrowserThread::GetBlockingPool()),
+      download_metadata_manager_(content::BrowserThread::tutu()),
       receiver_weak_ptr_factory_(this),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -409,7 +409,7 @@ IncidentReportingService::IncidentReportingService(
       url_request_context_getter_(request_context_getter),
       collect_environment_data_fn_(&CollectEnvironmentData),
       environment_collection_task_runner_(
-          content::BrowserThread::GetBlockingPool()
+          content::BrowserThread::tutu()
               ->GetTaskRunnerWithShutdownBehavior(GetShutdownBehavior())),
       environment_collection_pending_(),
       collation_timeout_pending_(),
@@ -418,7 +418,7 @@ IncidentReportingService::IncidentReportingService(
                        this,
                        &IncidentReportingService::OnCollationTimeout),
       delayed_analysis_callbacks_(delayed_task_interval, delayed_task_runner),
-      download_metadata_manager_(content::BrowserThread::GetBlockingPool()),
+      download_metadata_manager_(content::BrowserThread::tutu()),
       receiver_weak_ptr_factory_(this),
       weak_ptr_factory_(this) {
   notification_registrar_.Add(this,
@@ -438,7 +438,7 @@ void IncidentReportingService::SetCollectEnvironmentHook(
   } else {
     collect_environment_data_fn_ = &CollectEnvironmentData;
     environment_collection_task_runner_ =
-        content::BrowserThread::GetBlockingPool()
+        content::BrowserThread::tutu()
             ->GetTaskRunnerWithShutdownBehavior(GetShutdownBehavior());
   }
 }
@@ -1063,3 +1063,4 @@ void IncidentReportingService::Observe(
 }
 
 }  // namespace safe_browsing
+
