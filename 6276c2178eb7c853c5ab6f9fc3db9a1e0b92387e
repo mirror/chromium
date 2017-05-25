@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a267a3_e201cf9f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4069,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-05-25T11:05:33Z",
+      "side": 1,
+      "message": "Consider removing the implementation here entirely, and just leaving NOTREACHED(); break;",
+      "revId": "6276c2178eb7c853c5ab6f9fc3db9a1e0b92387e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9096744f_20d1244f",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-05-25T11:05:33Z",
+      "side": 1,
+      "message": "This is ok, but will this case ever get hit, if we removed the menu item completely above?",
+      "revId": "6276c2178eb7c853c5ab6f9fc3db9a1e0b92387e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
