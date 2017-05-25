@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "16390a8d_73f4d4d0",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-25T23:30:21Z",
+      "side": 1,
+      "message": "I don\u0027t know that that\u0027s true. I talked to Bruce earlier and he mentioned that it might be OK to just DCHECK this. The danger here is that if something breaks, we won\u0027t notice the power regression as easily. Not sure if we have power bots for Windows? If we do, then It probably makes sense for these to just be DCHECKs.",
+      "parentUuid": "9c8e6a26_cbd1eb71",
+      "range": {
+        "startLine": 389,
+        "startChar": 8,
+        "endLine": 389,
+        "endChar": 45
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "352d3b0d_172c9965",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 2
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "38e7a09a_0ef7bef0",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-25T23:30:21Z",
+      "side": 1,
+      "message": "Per the discussion, renamed to SweepDelayedQueueAndReturnFalseIfEmpty",
+      "parentUuid": "28e030d8_068033c8",
+      "range": {
+        "startLine": 564,
+        "startChar": 6,
+        "endLine": 564,
+        "endChar": 27
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d38a3b0f_b842d1ff",
         "filename": "base/message_loop/message_loop.h",
         "patchSetId": 2
@@ -115,6 +163,30 @@
       "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e898e34_b6f353aa",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-25T23:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d38a3b0f_b842d1ff",
+      "range": {
+        "startLine": 368,
+        "startChar": 7,
+        "endLine": 368,
+        "endChar": 28
+      },
+      "revId": "2dc8187307f139fe08f91fa94ca167002873318c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
