@@ -36,6 +36,47 @@
     },
     {
       "key": {
+        "uuid": "3a71d487_2cccbc14",
+        "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1166504
+      },
+      "writtenOn": "2017-05-25T15:25:05Z",
+      "side": 1,
+      "message": "I don\u0027t think so.",
+      "parentUuid": "89de84d3_e576865a",
+      "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae99a979_9f5f41f2",
+        "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1166504
+      },
+      "writtenOn": "2017-05-25T15:25:05Z",
+      "side": 1,
+      "message": "Yes, let\u0027s use SkEncodedImageFormat.\nhttps://github.com/google/skia/blob/master/include/core/SkEncodedImageFormat.h",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 44
+      },
+      "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f602680_acb99fe3",
         "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.h",
         "patchSetId": 1
@@ -47,6 +88,24 @@
       "writtenOn": "2017-05-25T14:55:19Z",
       "side": 1,
       "message": "I like the factory approach, but IIRC Matt kept the options public on purpose for client flexibility.",
+      "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3106b3e5_f524830b",
+        "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1166504
+      },
+      "writtenOn": "2017-05-25T15:25:05Z",
+      "side": 1,
+      "message": "Yes, I don\u0027t like hiding the options from the client.  But I can see the motivation for this change...\n\nIf we want to add this function, I would suggest adding it in addition to the other two (rather than as a replacement).   I would also suggest that it not even pass in the quality and just comment that it \"uses the default options\".  Of course, this may make it unusable in CanvasAsyncToBlob...\n\nIn general, I don\u0027t like the old idea of mimeType+quality.  Quality means nothing for PNG.  For WEBP and JPEG it means something weird based on Chrome only heuristics (different than the definition of the underlying library).  I prefer Sk*Encoder::Options because I think the behavior is more clearly specified and format specific differences are separated.",
+      "parentUuid": "7f602680_acb99fe3",
       "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
