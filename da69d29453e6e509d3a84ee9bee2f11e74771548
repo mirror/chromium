@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6432b0cc_eec75e2a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-05-25T18:00:48Z",
+      "side": 1,
+      "message": "This will be somewhat wrong for renderers that host a mix of of background and foreground tabs in that we\u0027ll think everything if foreground. Maybe leave a TODO for dealing with that?",
+      "range": {
+        "startLine": 1873,
+        "startChar": 26,
+        "endLine": 1873,
+        "endChar": 47
+      },
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b644dc7e_ed1d901c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59422,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-05-25T18:00:48Z",
+      "side": 1,
+      "message": "Let\u0027s swap TaskDurationPerQueueType2 and Background since I tend to think of Background as the primary key. WDYT?",
+      "range": {
+        "startLine": 59422,
+        "startChar": 35,
+        "endLine": 59422,
+        "endChar": 60
+      },
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
