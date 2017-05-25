@@ -60,6 +60,10 @@ class MojoAndroidOverlayTest : public ::testing::Test {
       OverlayCreated();
     }
 
+    void IsEnabled(const base::Callback<void(bool)>& is_enabled) override {
+      is_enabled.Run(true);
+    }
+
     MOCK_METHOD0(OverlayCreated, void(void));
 
     mojom::AndroidOverlayRequest overlay_request_;

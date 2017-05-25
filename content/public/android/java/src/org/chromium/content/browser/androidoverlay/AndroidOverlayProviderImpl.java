@@ -68,6 +68,12 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
         DialogOverlayImpl.MANAGER.bind(impl, request);
     }
 
+    @Override
+    public void isEnabled(IsEnabledResponse response) {
+        // TODO(liberato): We should check with the embedder.
+        response.call(true);
+    }
+
     /**
      * Make sure that mOverlayUiThread and mHandler are ready for use, if needed.
      */

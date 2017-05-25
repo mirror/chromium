@@ -18,6 +18,10 @@ interface AndroidOverlayProvider {
   // configuration.  |overlay| will hold the overlay object.
   CreateOverlay(AndroidOverlay& overlay, AndroidOverlayClient client,
     AndroidOverlayConfig config);
+
+  // Return true if and only if AndroidOverlay is enabled.  For example, not all
+  // embedders support it.
+  IsEnabled() => (bool is_enabled);
 };
 
 // One overlay instance.  This will be provided by the provider to clients
