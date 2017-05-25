@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68089fbe_9116a923",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-25T18:11:02Z",
+      "side": 1,
+      "message": "nits \"3 hours\"",
+      "range": {
+        "startLine": 546,
+        "startChar": 79,
+        "endLine": 546,
+        "endChar": 0
+      },
+      "revId": "c3867d532696c8efdfa979083cf5262b74f025b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
