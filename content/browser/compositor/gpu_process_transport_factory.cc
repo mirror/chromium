@@ -593,13 +593,13 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
 #endif
 
   std::unique_ptr<cc::DisplayScheduler> scheduler(new cc::DisplayScheduler(
-      compositor->task_runner().get(),
+      begin_frame_source, compositor->task_runner().get(),
       display_output_surface->capabilities().max_frames_pending));
 
   // The Display owns and uses the |display_output_surface| created above.
   data->display = base::MakeUnique<cc::Display>(
       viz::HostSharedBitmapManager::current(), GetGpuMemoryBufferManager(),
-      renderer_settings_, compositor->frame_sink_id(), begin_frame_source,
+      renderer_settings_, compositor->frame_sink_id(),
       std::move(display_output_surface), std::move(scheduler),
       base::MakeUnique<cc::TextureMailboxDeleter>(
           compositor->task_runner().get()));
@@ -615,12 +615,12 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       vulkan_context_provider
           ? base::MakeUnique<cc::DirectCompositorFrameSink>(
                 compositor->frame_sink_id(), GetSurfaceManager(),
-                data->display.get(),
+                begin_frame_source, data->display.get(),
                 static_cast<scoped_refptr<cc::VulkanContextProvider>>(
                     vulkan_context_provider))
           : base::MakeUnique<cc::DirectCompositorFrameSink>(
                 compositor->frame_sink_id(), GetSurfaceManager(),
-                data->display.get(), context_provider,
+                begin_frame_source, data->display.get(), context_provider,
                 shared_worker_context_provider_, GetGpuMemoryBufferManager(),
                 viz::HostSharedBitmapManager::current());
   data->display->Resize(compositor->size());
@@ -662,7 +662,13 @@ void GpuProcessTransportFactory::RemoveCompositor(ui::Compositor* compositor) {
   if (data->surface_handle)
     gpu::GpuSurfaceTracker::Get()->RemoveSurface(data->surface_handle);
 #endif
-
+  if (data->synthetic_begin_frame_source) {
+    GetSurfaceManager()->UnregisterBeginFrameSource(
+        data->synthetic_begin_frame_source.get());
+  } else if (data->gpu_vsync_begin_frame_source) {
+    GetSurfaceManager()->UnregisterBeginFrameSource(
+        data->gpu_vsync_begin_frame_source.get());
+  }
   per_compositor_data_.erase(it);
   if (per_compositor_data_.empty()) {
     // Destroying the GLHelper may cause some async actions to be cancelled,

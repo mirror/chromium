@@ -46,8 +46,9 @@ class TestSoftwareOutputDevice : public SoftwareOutputDevice {
 
 class TestDisplayScheduler : public DisplayScheduler {
  public:
-  explicit TestDisplayScheduler(base::SingleThreadTaskRunner* task_runner)
-      : DisplayScheduler(task_runner, 1),
+  explicit TestDisplayScheduler(BeginFrameSource* begin_frame_source,
+                                base::SingleThreadTaskRunner* task_runner)
+      : DisplayScheduler(begin_frame_source, task_runner, 1),
         damaged(false),
         display_resized_(false),
         has_new_root_surface(false),
@@ -111,14 +112,14 @@ class DisplayTest : public testing::Test {
     }
     output_surface_ = output_surface.get();
 
-    std::unique_ptr<TestDisplayScheduler> scheduler(
-        new TestDisplayScheduler(task_runner_.get()));
+    std::unique_ptr<TestDisplayScheduler> scheduler(new TestDisplayScheduler(
+        begin_frame_source_.get(), task_runner_.get()));
     scheduler_ = scheduler.get();
 
     display_ = base::MakeUnique<Display>(
         &shared_bitmap_manager_, nullptr /* gpu_memory_buffer_manager */,
-        settings, kArbitraryFrameSinkId, begin_frame_source_.get(),
-        std::move(output_surface), std::move(scheduler),
+        settings, kArbitraryFrameSinkId, std::move(output_surface),
+        std::move(scheduler),
         base::MakeUnique<TextureMailboxDeleter>(task_runner_.get()));
     display_->SetVisible(true);
   }
@@ -167,6 +168,8 @@ TEST_F(DisplayTest, DisplayDamaged) {
 
   StubDisplayClient client;
   display_->Initialize(&client, &manager_);
+  manager_.RegisterBeginFrameSource(begin_frame_source_.get(),
+                                    kArbitraryFrameSinkId);
   display_->SetColorSpace(color_space_1, color_space_1);
 
   LocalSurfaceId local_surface_id(id_allocator_.GenerateId());
@@ -411,6 +414,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
               software_output_device_->damage_rect());
     EXPECT_EQ(0u, output_surface_->last_sent_frame()->latency_info.size());
   }
+  manager_.UnregisterBeginFrameSource(begin_frame_source_.get());
 }
 
 class MockedContext : public TestWebGraphicsContext3D {
@@ -434,6 +438,8 @@ TEST_F(DisplayTest, Finish) {
 
   StubDisplayClient client;
   display_->Initialize(&client, &manager_);
+  manager_.RegisterBeginFrameSource(begin_frame_source_.get(),
+                                    kArbitraryFrameSinkId);
 
   display_->SetLocalSurfaceId(local_surface_id1, 1.f);
 
@@ -483,6 +489,7 @@ TEST_F(DisplayTest, Finish) {
 
   EXPECT_CALL(*context_ptr, shallowFinishCHROMIUM());
   display_->Resize(gfx::Size(250, 250));
+  manager_.UnregisterBeginFrameSource(begin_frame_source_.get());
   testing::Mock::VerifyAndClearExpectations(context_ptr);
 }
 
@@ -503,6 +510,8 @@ TEST_F(DisplayTest, ContextLossInformsClient) {
 
   CountLossDisplayClient client;
   display_->Initialize(&client, &manager_);
+  manager_.RegisterBeginFrameSource(begin_frame_source_.get(),
+                                    kArbitraryFrameSinkId);
 
   // Verify DidLoseOutputSurface callback is hooked up correctly.
   EXPECT_EQ(0, client.loss_count());
@@ -510,6 +519,7 @@ TEST_F(DisplayTest, ContextLossInformsClient) {
       GL_GUILTY_CONTEXT_RESET_ARB, GL_INNOCENT_CONTEXT_RESET_ARB);
   output_surface_->context_provider()->ContextGL()->Flush();
   EXPECT_EQ(1, client.loss_count());
+  manager_.UnregisterBeginFrameSource(begin_frame_source_.get());
 }
 
 }  // namespace
