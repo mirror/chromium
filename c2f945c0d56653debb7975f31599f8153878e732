@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfebcdbf_f49e26c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionMainMenuFooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T17:12:45Z",
+      "side": 1,
+      "message": "Nit: This seems unnecessary.",
+      "revId": "c2f945c0d56653debb7975f31599f8153878e732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b2da57_41faee13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T17:12:45Z",
+      "side": 1,
+      "message": "So now that you\u0027ve already written this; maybe we could do even better by\nstoring the result of a call to this in didStartPageLoad above, and then\ncalculating the delta here instead?",
+      "revId": "c2f945c0d56653debb7975f31599f8153878e732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9d7053_bbc31751",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T17:12:45Z",
+      "side": 1,
+      "message": "Is this for tablets as well?",
+      "revId": "c2f945c0d56653debb7975f31599f8153878e732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d211f02c_9d573e15",
+        "filename": "components/feature_engagement_tracker/public/android/java/src/org/chromium/components/feature_engagement_tracker/EventConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T17:12:45Z",
+      "side": 1,
+      "message": "Nit: OVERFLOW_...",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "c2f945c0d56653debb7975f31599f8153878e732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
