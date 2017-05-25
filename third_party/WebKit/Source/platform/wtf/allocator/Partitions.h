@@ -146,7 +146,6 @@ using base::kSystemPageSize;
 
 using base::AllocPages;
 using base::DecommitSystemPages;
-using base::DiscardSystemPages;
 using base::PartitionFree;
 using base::FreePages;
 using base::GetAllocPageErrorCode;
