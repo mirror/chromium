@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e839295f_4d84df1c",
+        "filename": "services/preferences/pref_store_manager_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-25T06:41:25Z",
+      "side": 1,
+      "message": "Doc:\n\n// The same |ScopedPrefConnectionBuilder| instance may appear multiple times in |pending_connections_|, once per type of pref store it\u0027s waiting for, and at most once in |pending_persistent_connections_|.",
+      "revId": "ee2bf0e07ff08c7c9ff602061d746f25a9bde065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
