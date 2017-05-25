@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74d8adc7_8a26fa50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/ObjectPropertiesSection.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-25T19:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28d68815_9de463eb",
+      "range": {
+        "startLine": 895,
+        "startChar": 8,
+        "endLine": 895,
+        "endChar": 21
+      },
+      "revId": "23d00e94364b2674558497fe02aa750a66cbd578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44ab4d55_be7b3c33",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-25T00:53:04Z",
       "side": 1,
       "message": "Shouldn\u0027t we do the following comment?\n\n// ------------- ASYNC -------------",
+      "range": {
+        "startLine": 238,
+        "startChar": 8,
+        "endLine": 238,
+        "endChar": 13
+      },
+      "revId": "23d00e94364b2674558497fe02aa750a66cbd578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b58ae4_ca1c1ca6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-25T19:10:51Z",
+      "side": 1,
+      "message": "We don\u0027t do it anymore. Pavel said an empty line after await is sufficient.",
+      "parentUuid": "44ab4d55_be7b3c33",
       "range": {
         "startLine": 238,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "741658db_b6de8e6d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-25T19:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a1dd10_a0cac948",
+      "range": {
+        "startLine": 243,
+        "startChar": 27,
+        "endLine": 243,
+        "endChar": 30
+      },
+      "revId": "23d00e94364b2674558497fe02aa750a66cbd578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cdb4460_c982152f",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Script.js",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "23d00e94364b2674558497fe02aa750a66cbd578",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41cd561_d19197d4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Script.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-25T19:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cdb4460_c982152f",
+      "range": {
+        "startLine": 173,
+        "startChar": 20,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "23d00e94364b2674558497fe02aa750a66cbd578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
