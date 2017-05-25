@@ -1290,18 +1290,6 @@ void NormalPage::RemoveFromHeap() {
   ArenaForNormalPage()->FreePage(this);
 }
 
-#if !DCHECK_IS_ON() && !defined(LEAK_SANITIZER) && !defined(ADDRESS_SANITIZER)
-static void DiscardPages(Address begin, Address end) {
-  uintptr_t begin_address =
-      WTF::RoundUpToSystemPage(reinterpret_cast<uintptr_t>(begin));
-  uintptr_t end_address =
-      WTF::RoundDownToSystemPage(reinterpret_cast<uintptr_t>(end));
-  if (begin_address < end_address)
-    WTF::DiscardSystemPages(reinterpret_cast<void*>(begin_address),
-                            end_address - begin_address);
-}
-#endif
-
 void NormalPage::Sweep() {
   size_t marked_object_size = 0;
   Address start_of_gap = Payload();
@@ -1346,12 +1334,6 @@ void NormalPage::Sweep() {
     }
     if (start_of_gap != header_address) {
       page_arena->AddToFreeList(start_of_gap, header_address - start_of_gap);
-#if !DCHECK_IS_ON() && !defined(LEAK_SANITIZER) && !defined(ADDRESS_SANITIZER)
-      // Discarding pages increases page faults and may regress performance.
-      // So we enable this only on low-RAM devices.
-      if (MemoryCoordinator::IsLowEndDevice())
-        DiscardPages(start_of_gap + sizeof(FreeListEntry), header_address);
-#endif
     }
     header->Unmark();
     header_address += size;
@@ -1360,10 +1342,6 @@ void NormalPage::Sweep() {
   }
   if (start_of_gap != PayloadEnd()) {
     page_arena->AddToFreeList(start_of_gap, PayloadEnd() - start_of_gap);
-#if !DCHECK_IS_ON() && !defined(LEAK_SANITIZER) && !defined(ADDRESS_SANITIZER)
-    if (MemoryCoordinator::IsLowEndDevice())
-      DiscardPages(start_of_gap + sizeof(FreeListEntry), PayloadEnd());
-#endif
   }
 
   if (marked_object_size)

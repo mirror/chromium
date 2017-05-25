@@ -91,23 +91,6 @@ BASE_EXPORT void DecommitSystemPages(void* address, size_t length);
 // len must be a multiple of kSystemPageSize bytes.
 BASE_EXPORT void RecommitSystemPages(void* address, size_t length);
 
-// Discard one or more system pages. Discarding is a hint to the system that
-// the page is no longer required. The hint may:
-// - Do nothing.
-// - Discard the page immediately, freeing up physical pages.
-// - Discard the page at some time in the future in response to memory pressure.
-// Only committed pages should be discarded. Discarding a page does not
-// decommit it, and it is valid to discard an already-discarded page.
-// A read or write to a discarded page will not fault.
-// Reading from a discarded page may return the original page content, or a
-// page full of zeroes.
-// Writing to a discarded page is the only guaranteed way to tell the system
-// that the page is required again. Once written to, the content of the page is
-// guaranteed stable once more. After being written to, the page content may be
-// based on the original page content, or a page of zeroes.
-// len must be a multiple of kSystemPageSize bytes.
-BASE_EXPORT void DiscardSystemPages(void* address, size_t length);
-
 ALWAYS_INLINE uintptr_t RoundUpToSystemPage(uintptr_t address) {
   return (address + kSystemPageOffsetMask) & kSystemPageBaseMask;
 }

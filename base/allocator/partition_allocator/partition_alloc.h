@@ -365,7 +365,6 @@ struct PartitionMemoryStats {
   size_t total_resident_bytes;   // Total bytes provisioned by the partition.
   size_t total_active_bytes;     // Total active bytes in the partition.
   size_t total_decommittable_bytes;  // Total bytes that could be decommitted.
-  size_t total_discardable_bytes;    // Total bytes that could be discarded.
 };
 
 // Struct used to retrieve memory statistics about a partition bucket. Used by
@@ -412,11 +411,6 @@ BASE_EXPORT void PartitionAllocGenericInit(PartitionRootGeneric*);
 enum PartitionPurgeFlags {
   // Decommitting the ring list of empty pages is reasonably fast.
   PartitionPurgeDecommitEmptyPages = 1 << 0,
-  // Discarding unused system pages is slower, because it involves walking all
-  // freelists in all active partition pages of all buckets >= system page
-  // size. It often frees a similar amount of memory to decommitting the empty
-  // pages, though.
-  PartitionPurgeDiscardUnusedSystemPages = 1 << 1,
 };
 
 BASE_EXPORT void PartitionPurgeMemory(PartitionRoot*, int);

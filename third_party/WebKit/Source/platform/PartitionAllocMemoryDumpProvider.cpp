@@ -82,8 +82,6 @@ void PartitionStatsDumperImpl::PartitionDumpTotals(
                             memory_stats->total_committed_bytes);
   allocator_dump->AddScalar("decommittable_size", "bytes",
                             memory_stats->total_decommittable_bytes);
-  allocator_dump->AddScalar("discardable_size", "bytes",
-                            memory_stats->total_discardable_bytes);
 }
 
 void PartitionStatsDumperImpl::PartitionsDumpBucketStats(

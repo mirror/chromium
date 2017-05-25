@@ -245,40 +245,6 @@ void RecommitSystemPages(void* address, size_t length) {
 #endif
 }
 
-void DiscardSystemPages(void* address, size_t length) {
-  DCHECK(!(length & kSystemPageOffsetMask));
-#if defined(OS_POSIX)
-  // On POSIX, the implementation detail is that discard and decommit are the
-  // same, and lead to pages that are returned to the system immediately and
-  // get replaced with zeroed pages when touched. So we just call
-  // DecommitSystemPages() here to avoid code duplication.
-  DecommitSystemPages(address, length);
-#else
-  // On Windows discarded pages are not returned to the system immediately and
-  // not guaranteed to be zeroed when returned to the application.
-  using DiscardVirtualMemoryFunction =
-      DWORD(WINAPI*)(PVOID virtualAddress, SIZE_T size);
-  static DiscardVirtualMemoryFunction discard_virtual_memory =
-      reinterpret_cast<DiscardVirtualMemoryFunction>(-1);
-  if (discard_virtual_memory ==
-      reinterpret_cast<DiscardVirtualMemoryFunction>(-1))
-    discard_virtual_memory =
-        reinterpret_cast<DiscardVirtualMemoryFunction>(GetProcAddress(
-            GetModuleHandle(L"Kernel32.dll"), "DiscardVirtualMemory"));
-  // Use DiscardVirtualMemory when available because it releases faster than
-  // MEM_RESET.
-  DWORD ret = 1;
-  if (discard_virtual_memory)
-    ret = discard_virtual_memory(address, length);
-  // DiscardVirtualMemory is buggy in Win10 SP0, so fall back to MEM_RESET on
-  // failure.
-  if (ret) {
-    void* ret = VirtualAlloc(address, length, MEM_RESET, PAGE_READWRITE);
-    CHECK(ret);
-  }
-#endif
-}
-
 uint32_t GetAllocPageErrorCode() {
   return s_allocPageErrorCode;
 }
