@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eab0abe_211c0ab2",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-05-25T21:47:28Z",
+      "side": 1,
+      "message": "Can you clarify this is a special case that should be avoided? Maybe after your sentence you can say \" - only valid is special cases.\"\n\nOur blob system will basically only accept an unknown size file element if it is the ONLY data element for the blob. Otherwise we don\u0027t handle it correctly and hopefully fail somewhere. I\u0027m not sure the best way to communicate this succinctly.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 78
+      },
+      "revId": "34cc3eb9f5f2dbcb003b65f005f1ed0b5aad0da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fc212b_f0a02468",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobDataTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-05-25T21:47:28Z",
+      "side": 1,
+      "message": "There would be less lines here if you used gmock :P\n\nNo pressure to use that though - I think that\u0027s totally personal preference, especially given the move-only issues.",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 18
+      },
+      "revId": "34cc3eb9f5f2dbcb003b65f005f1ed0b5aad0da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
