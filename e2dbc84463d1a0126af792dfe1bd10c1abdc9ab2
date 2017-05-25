@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75c97932_7ea8674f",
+        "filename": "services/preferences/pref_service_factory_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-25T01:23:55Z",
+      "side": 1,
+      "message": "I think some words are missing in this sentence.",
+      "revId": "e2dbc84463d1a0126af792dfe1bd10c1abdc9ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37be4e91_c53eb7f2",
+        "filename": "services/preferences/pref_store_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-25T01:23:55Z",
+      "side": 1,
+      "message": "Would it make sense to move this to the constructor to avoid the possibility that other Provide calls are made before it?",
+      "revId": "e2dbc84463d1a0126af792dfe1bd10c1abdc9ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fcba458_679c404e",
+        "filename": "services/preferences/scoped_pref_connection_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-25T01:23:55Z",
+      "side": 1,
+      "message": "Doc:\n\n// |required_types| lists all the |Provide*| calls the client of this object is expected to make. Once all these |Provide*| calls have been made, the |callback| will be invoked.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "e2dbc84463d1a0126af792dfe1bd10c1abdc9ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39fd9b13_83be9a82",
+        "filename": "services/preferences/scoped_pref_connection_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-25T01:23:55Z",
+      "side": 1,
+      "message": "Doc:\n\n// Must be called before any of the other |Provide*| methods are called.",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "e2dbc84463d1a0126af792dfe1bd10c1abdc9ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
