@@ -34,6 +34,21 @@ public final class EventConstants {
     public static final String DATA_SAVER_PREVIEW_INFOBAR_SHOWN = "data_saver_preview_opened";
 
     /**
+     * Data was saved when page loaded.
+     */
+    public static final String DATA_SAVED_ON_PAGE_LOAD = "data_saved_page_load";
+
+    /**
+     * The overflow menu was opened.
+     */
+    public static final String OVERFLOW_MENU_OPENED = "overflow_opened";
+
+    /**
+     * The data saver footer was used (tapped).
+     */
+    public static final String DATA_SAVER_USED = "data_saver_used";
+
+    /**
      * Do not instantiate.
      */
     private EventConstants() {}

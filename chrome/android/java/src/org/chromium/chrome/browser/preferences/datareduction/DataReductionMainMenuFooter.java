@@ -104,5 +104,10 @@ public class DataReductionMainMenuFooter extends FrameLayout implements View.OnC
         RecordUserAction.record("MobileMenuDataSaverOpened");
         intent.putExtra(DataReductionPreferences.FROM_MAIN_MENU, true);
         getContext().startActivity(intent);
+
+        FeatureEngagementTracker tracker =
+                FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
+                        Profile.getLastUsedProfile());
+        tracker.notifyEvent(EventConstants.DATA_SAVER_USED);
     }
 }
