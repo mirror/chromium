@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "040fc1a6_20d282b4",
+        "filename": "third_party/WebKit/Source/core/dom/DOMResizeObserverCallback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-25T12:53:45Z",
+      "side": 1,
+      "message": "nit: Simple class header comment is welcome.\nOnly a link to the spec is much better than nothing.\n(Supposing that DOMResizeObserverCallback should implement a DOM.\nSee another comment of mine.)",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "f31172cc49f7fe4ba76a53ff7061f2a0a5ac193a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e32e1d_2d46b466",
+        "filename": "third_party/WebKit/Source/core/dom/DOMResizeObserverCallback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-25T12:53:45Z",
+      "side": 1,
+      "message": "nit: \u003d default;\nis preferred to {}.",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "f31172cc49f7fe4ba76a53ff7061f2a0a5ac193a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13feddd9_5160b17d",
+        "filename": "third_party/WebKit/Source/core/dom/ResizeObserver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-25T12:53:45Z",
+      "side": 1,
+      "message": "I think that this is quite strange...\n\nDOMWindow implements Window interface of DOM.\n\nThis seems that ResizeObserverCallback implements a callback function of DOM, and DOMResizeObserverCallback does *NOT* implement any DOM spec\u0027ed.  Seems quite confusing to me.\n\nYou\u0027d better support [ImplementedAs\u003dDOMResizeObserverCallback] extended attribute for callback functions, or choose different naming.",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "f31172cc49f7fe4ba76a53ff7061f2a0a5ac193a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
