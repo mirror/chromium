@@ -59419,6 +59419,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="RendererScheduler.TaskDurationPerQueueType2.Background"
+    enum="RendererSchedulerTaskQueueType" units="ms">
+  <owner>altimin@chromium.org</owner>
+  <summary>
+    Same as RendererScheduler.TaskDurationPerQueueType2, but only for the tasks
+    which ran when the renderer was in the background.
+  </summary>
+</histogram>
+
+<histogram name="RendererScheduler.TaskDurationPerQueueType2.Foreground"
+    enum="RendererSchedulerTaskQueueType" units="ms">
+  <owner>altimin@chromium.org</owner>
+  <summary>
+    Same as RendererScheduler.TaskDurationPerQueueType2, but only for the tasks
+    which ran when the renderer was in the foreground.
+  </summary>
+</histogram>
+
 <histogram name="RendererScheduler.TaskQueueManager.DelayedTaskLateness"
     units="ms">
   <owner>alexclarke@chromium.org</owner>
