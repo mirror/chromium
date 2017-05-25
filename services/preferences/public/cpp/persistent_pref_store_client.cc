@@ -73,7 +73,7 @@ PersistentPrefStoreClient::PersistentPrefStoreClient(
 PersistentPrefStoreClient::PersistentPrefStoreClient(
     mojom::PersistentPrefStoreConnectionPtr connection)
     : weak_factory_(this) {
-  OnConnect(std::move(connection),
+  OnConnect(std::move(connection), std::vector<mojom::PrefRegistrationPtr>(),
             std::unordered_map<PrefValueStore::PrefStoreType,
                                prefs::mojom::PrefStoreConnectionPtr>());
 }
@@ -139,16 +139,18 @@ PersistentPrefStore::PrefReadError PersistentPrefStoreClient::GetReadError()
 
 PersistentPrefStore::PrefReadError PersistentPrefStoreClient::ReadPrefs() {
   mojom::PersistentPrefStoreConnectionPtr connection;
+  std::vector<mojom::PrefRegistrationPtr> defaults;
   std::unordered_map<PrefValueStore::PrefStoreType,
                      prefs::mojom::PrefStoreConnectionPtr>
       other_pref_stores;
   mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_calls;
   bool success = connector_->Connect(SerializePrefRegistry(*pref_registry_),
                                      already_connected_types_, &connection,
-                                     &other_pref_stores);
+                                     &defaults, &other_pref_stores);
   DCHECK(success);
   pref_registry_ = nullptr;
-  OnConnect(std::move(connection), std::move(other_pref_stores));
+  OnConnect(std::move(connection), std::move(defaults),
+            std::move(other_pref_stores));
   return read_error_;
 }
 
@@ -188,6 +190,7 @@ PersistentPrefStoreClient::~PersistentPrefStoreClient() {
 
 void PersistentPrefStoreClient::OnConnect(
     mojom::PersistentPrefStoreConnectionPtr connection,
+    std::vector<mojom::PrefRegistrationPtr> defaults,
     std::unordered_map<PrefValueStore::PrefStoreType,
                        prefs::mojom::PrefStoreConnectionPtr>
         other_pref_stores) {

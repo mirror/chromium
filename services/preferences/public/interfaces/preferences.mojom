@@ -96,6 +96,7 @@ interface PrefStoreConnector {
   Connect(PrefRegistry pref_registry,
           array<PrefStoreType> already_connected_types) =>
       (PersistentPrefStoreConnection connection,
+       array<PrefRegistration> remote_defaults,
        map<PrefStoreType, PrefStoreConnection> connections);
 };
 
@@ -138,10 +139,14 @@ interface PersistentPrefStore {
 
 // A registry of all prefs registered by a single client.
 struct PrefRegistry {
-  array<string> registrations;
+  array<string> private_registrations;
+  array<string> unowned_registrations;
+  array<PrefRegistration> public_registrations;
 };
 
 struct PrefRegistration {
+  string key;
+
   mojo.common.mojom.Value default_value;
 
   // A bitfield of flags. Flag values are defined in
