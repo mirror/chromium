@@ -31,6 +31,7 @@ import org.chromium.third_party.android.datausagechart.ChartDataUsageView;
  * footer.
  */
 public class DataReductionMainMenuFooter extends FrameLayout implements View.OnClickListener {
+
     /**
      * Constructs a new {@link DataReductionMainMenuFooter} with the appropriate context.
      */
