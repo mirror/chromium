@@ -36,10 +36,8 @@ class AvailabilityStore {
       bool success,
       std::unique_ptr<std::map<const base::Feature*, uint32_t>>)>;
 
-  // Loads the availability data, updates the DB with newly enabled features,
-  // deletes features that are not enabled anymore, and asynchronously invokes
-  // |on_loaded_callback| with the result. The result will mirror the content
-  // of the database.
+  // Loads the availability data and asynchronously invokes |on_loaded_callback|
+  // with the result.
   // The |feature_filter| is used to filter the data from the DB and ensure
   // that only enabled features listed in this filter are tracked. For enabled
   // features that are in the |feature_filter|, but not in the DB, they are
@@ -55,6 +53,7 @@ class AvailabilityStore {
   AvailabilityStore() = default;
   ~AvailabilityStore() = default;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(AvailabilityStore);
 };
 
