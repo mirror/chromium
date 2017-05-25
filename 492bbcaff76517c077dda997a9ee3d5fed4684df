@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1b096d_77be6059",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-05-25T22:36:22Z",
+      "side": 1,
+      "message": "Since this is the only call site of CreateViewForNetwork(), and its implementation is a couple of lines, I suggest removing the helper and just inlining the implementation here. Then you can also get rid of the documentation \"Note that |view| is...\" above UpdateViewForNetwork().",
+      "revId": "492bbcaff76517c077dda997a9ee3d5fed4684df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
