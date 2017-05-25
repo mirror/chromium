@@ -408,11 +408,10 @@ class TestImporter(object):
             description += 'Build: %s\n\n' % build_link
 
         description += (
-            'Background: https://chromium.googlesource.com'
-            '/chromium/src/+/master/docs/testing/web_platform_tests.md\n\n'
-            'Note to sheriffs: If this CL causes a small number of new layout\n'
-            'test failures, it may be easier to add lines to TestExpectations\n'
-            'rather than reverting.\n')
+            'Note to sheriffs: If this CL causes new layout test failures,\n'
+            'it may be easier to add lines to TestExpectations rather than reverting.\n'
+            'For more information about web-platform-tests auto-import CLs, see:\n'
+            'https://chromium.googlesource.com/chromium/src/+/master/docs/testing/web_platform_tests.md\n\n')
 
         if directory_owners:
             description += self._format_directory_owners(directory_owners) + '\n\n'
