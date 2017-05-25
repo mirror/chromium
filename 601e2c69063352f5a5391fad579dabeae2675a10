@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b92f79e_58079edf",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T08:45:43Z",
+      "side": 1,
+      "message": "Nit: Should this be part of stats::...?",
+      "revId": "601e2c69063352f5a5391fad579dabeae2675a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
