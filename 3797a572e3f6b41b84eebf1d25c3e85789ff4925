@@ -52,6 +52,24 @@
       "revId": "3797a572e3f6b41b84eebf1d25c3e85789ff4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346c018a_1c765e46",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-05-25T18:30:27Z",
+      "side": 1,
+      "message": "They require a lot of custom options. The one that is causing the issue in particular that I do not think is worth working around is here:\nhttps://cs.chromium.org/chromium/src/tools/perf/contrib/cluster_telemetry/page_set.py?l\u003d47\n\nThe stories in the page_set are determined by an option. That does not mesh well with our \u0027Expectations\u0027 model.",
+      "parentUuid": "a9891bcd_9f23ea29",
+      "revId": "3797a572e3f6b41b84eebf1d25c3e85789ff4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
