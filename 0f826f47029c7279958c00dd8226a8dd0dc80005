@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "baef771d_fa8b5a42",
+        "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-05-25T21:10:51Z",
+      "side": 1,
+      "message": "IIRC, that would require to make the constructor public. Can we do this change (and maybe mark it as explicit)?",
+      "parentUuid": "4a6aeb44_71e0fcaf",
+      "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89de84d3_e576865a",
         "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.cpp",
         "patchSetId": 1
@@ -74,6 +92,30 @@
       "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6aa9e2_4b67a12f",
+        "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-05-25T21:10:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ae99a979_9f5f41f2",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 44
+      },
+      "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
