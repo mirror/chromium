@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4925d0e_50efe92a",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/VoidCallbackFunctionTestInterfaceSequenceArg.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-05-25T06:26:46Z",
+      "side": 1,
+      "message": "This line is what was missing before this CL.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "61645da43c398ca2e48d40edeae5d66c3ecbe74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
