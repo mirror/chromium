@@ -71,6 +71,9 @@ class DesktopCommonSystemHealth(_CommonSystemHealthBenchmark):
   def Name(cls):
     return 'system_health.common_desktop'
 
+  def GetExpectations(self):
+    return page_sets.SystemHealthDesktopExpectations()
+
 
 @benchmark.Enabled('android')
 @benchmark.Owner(emails=['charliea@chromium.org', 'nednguyen@chromium.org'])
@@ -81,6 +84,9 @@ class MobileCommonSystemHealth(_CommonSystemHealthBenchmark):
   @classmethod
   def Name(cls):
     return 'system_health.common_mobile'
+
+  def GetExpectations(self):
+    return page_sets.SystemHealthMobileExpectations()
 
 
 class _MemorySystemHealthBenchmark(perf_benchmark.PerfBenchmark):
@@ -132,6 +138,9 @@ class DesktopMemorySystemHealth(_MemorySystemHealthBenchmark):
   def Name(cls):
     return 'system_health.memory_desktop'
 
+  def GetExpectations(self):
+    return page_sets.SystemHealthDesktopExpectations()
+
 
 @benchmark.Enabled('android')
 @benchmark.Owner(emails=['perezju@chromium.org'])
@@ -151,6 +160,9 @@ class MobileMemorySystemHealth(_MemorySystemHealthBenchmark):
   @classmethod
   def Name(cls):
     return 'system_health.memory_mobile'
+
+  def GetExpectations(self):
+    return page_sets.SystemHealthMobileExpectations()
 
 
 @benchmark.Enabled('android-webview')
@@ -184,6 +196,9 @@ class WebviewStartupSystemHealthBenchmark(perf_benchmark.PerfBenchmark):
   def Name(cls):
     return 'system_health.webview_startup'
 
+  def GetExpectations(self):
+    return page_sets.SystemHealthMobileExpectations()
+
 
 @benchmark.Enabled('android-webview')
 class WebviewMultiprocessStartupSystemHealthBenchmark(
@@ -201,3 +216,6 @@ class WebviewMultiprocessStartupSystemHealthBenchmark(
   @classmethod
   def Name(cls):
     return 'system_health.webview_startup_multiprocess'
+
+  def GetExpectations(self):
+    return page_sets.SystemHealthMobileExpectations()
