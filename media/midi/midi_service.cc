@@ -53,8 +53,16 @@ MidiService::~MidiService() {
 
 void MidiService::Shutdown() {
   base::AutoLock lock(lock_);
-  if (manager_.get())
+  if (manager_.get()) {
     manager_->Shutdown();
+    manager_destructor_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&MidiService::DestructMidiManager, base::Unretained(this)));
+
+    // Reset the runner to protect a race condition happening when EndSession()
+    // is called after this MidiService::Shutdown() call.
+    manager_destructor_runner_ = nullptr;
+  }
 }
 
 void MidiService::StartSession(MidiManagerClient* client) {
@@ -63,6 +71,8 @@ void MidiService::StartSession(MidiManagerClient* client) {
     CHECK(is_dynamic_instantiation_enabled_);
     CHECK_EQ(0u, active_clients_);
     manager_.reset(MidiManager::Create(this));
+    if (!manager_destructor_runner_)
+      manager_destructor_runner_ = base::ThreadTaskRunnerHandle::Get();
   }
   active_clients_++;
   manager_->StartSession(client);
@@ -70,16 +80,23 @@ void MidiService::StartSession(MidiManagerClient* client) {
 
 void MidiService::EndSession(MidiManagerClient* client) {
   base::AutoLock lock(lock_);
-  CHECK(manager_.get());
   CHECK_NE(0u, active_clients_);
-  manager_->EndSession(client);
   active_clients_--;
+
+  // Do nothing if MidiManager::Shutdown() is already called in
+  // MidiService::Shutdown() or below.
+  if (!manager_destructor_runner_)
+    return;
+
+  CHECK(manager_.get());
+  manager_->EndSession(client);
   if (is_dynamic_instantiation_enabled_ && !active_clients_) {
     // MidiManager for each platform should be able to shutdown correctly even
     // if following Shutdown() call happens in the middle of
     // StartInitialization() to support the dynamic instantiation feature.
     manager_->Shutdown();
     manager_.reset();
+    manager_destructor_runner_ = nullptr;
   }
 }
 
@@ -105,6 +122,11 @@ scoped_refptr<base::SingleThreadTaskRunner> MidiService::GetTaskRunner(
     threads_[runner_id]->Start();
   }
   return threads_[runner_id]->task_runner();
+}
+
+void MidiService::DestructMidiManager() {
+  base::AutoLock lock(lock_);
+  manager_.reset();
 }
 
 }  // namespace midi

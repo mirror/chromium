@@ -57,10 +57,16 @@ class MIDI_EXPORT MidiService final {
   scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(size_t runner_id);
 
  private:
+  // Destucts |manager_| on a right thread. Called via PostTask.
+  void DestructMidiManager();
+
   // Holds MidiManager instance. If the dynamic instantiation feature is
   // enabled, the MidiManager would be constructed and destructed on the I/O
   // thread, and all MidiManager methods would be called on the I/O thread.
   std::unique_ptr<MidiManager> manager_;
+
+  // TaskRunner to destruct |manager_| on a right thread.
+  scoped_refptr<base::SingleThreadTaskRunner> manager_destructor_runner_;
 
   // A flag to indicate if the dynamic instantiation feature is supported and
   // actually enabled.
