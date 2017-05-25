@@ -22,6 +22,30 @@
       "revId": "d19f774edd22de10c8cacc45b293aed4afc8755a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d257f64d_37c691f3",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-25T15:51:12Z",
+      "side": 1,
+      "message": "Yes.\n\nI thought I had uploaded the initial reland but no :(. Otherwise we should be able to see the new changed code.\n\nAdded a comment here:\n  // Visual rect can change without needing invalidation of the client, e.g.\n  // when ancestor clip changes. Update the visual rect to the current value.\n\nAlso updated the CL description.",
+      "parentUuid": "86427d6e_8b099a9c",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "d19f774edd22de10c8cacc45b293aed4afc8755a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
