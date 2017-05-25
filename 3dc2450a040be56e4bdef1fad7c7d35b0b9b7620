@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52bc4929_35c05cf9",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-05-25T23:07:38Z",
+      "side": 1,
+      "message": "Check (status !\u003d NO_ERROR) and do an early return?",
+      "revId": "3dc2450a040be56e4bdef1fad7c7d35b0b9b7620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
