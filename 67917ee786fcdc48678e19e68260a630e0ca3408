@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4570446_2da4bd84",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-25T18:31:28Z",
+      "side": 1,
+      "message": "Instead of hardcoding these, I suggest using inspect to discover all benchmarks in contrib.cluster_telemetry module: https://stackoverflow.com/questions/1796180/how-can-i-get-a-list-of-all-classes-within-current-module-in-python",
+      "revId": "67917ee786fcdc48678e19e68260a630e0ca3408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
