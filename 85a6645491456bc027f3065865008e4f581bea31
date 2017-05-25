@@ -16,6 +16,24 @@
       "revId": "85a6645491456bc027f3065865008e4f581bea31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1588d849_f8ac2170",
+        "filename": "base/sequenced_task_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-25T12:14:04Z",
+      "side": 1,
+      "message": "As we talked offline, I think it\u0027s good to have another CL for ReleaseSoon. I added one for BrowserThread.",
+      "parentUuid": "fc614938_537741d4",
+      "revId": "85a6645491456bc027f3065865008e4f581bea31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
