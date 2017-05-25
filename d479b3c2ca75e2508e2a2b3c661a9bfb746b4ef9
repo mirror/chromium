@@ -16,6 +16,24 @@
       "revId": "d479b3c2ca75e2508e2a2b3c661a9bfb746b4ef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a266bf0_f47a26eb",
+        "filename": "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-05-25T14:50:06Z",
+      "side": 0,
+      "message": "I verified this works, yes (it\u0027s the post-signin sync confirmation dialog). I actually don\u0027t know why this was ever here. Layout will occur after a bounds change (SetBounds) and should be unnecessary otherwise.",
+      "parentUuid": "852ee5d9_1ac297b0",
+      "revId": "d479b3c2ca75e2508e2a2b3c661a9bfb746b4ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
