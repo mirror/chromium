@@ -12,6 +12,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.Region;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.TabLoadStatus;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
@@ -111,6 +113,9 @@ public class BottomSheet
     /** The height ratio for the sheet in the SHEET_STATE_HALF state. */
     private static final float HALF_HEIGHT_RATIO = 0.55f;
 
+    /** The fraction of the width of the screen that, when swiped, will cause the sheet to move. */
+    private static final float SWIPE_ALLOWED_FRACTION = 0.2f;
+
     /**
      * Information about the different scroll states of the sheet. Order is important for these,
      * they go from smallest to largest.
@@ -127,6 +132,9 @@ public class BottomSheet
 
     /** This is a cached array for getting the window location of different views. */
     private final int[] mLocationArray = new int[2];
+
+    /** A cached Rect to get the visible window bounds. */
+    private final Rect mCachedWindowRect = new Rect();
 
     /** The minimum distance between half and full states to allow the half state. */
     private final float mMinHalfFullDistance;
@@ -276,7 +284,7 @@ public class BottomSheet
     private class BottomSheetSwipeDetector extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onDown(MotionEvent e) {
-            return true;
+            return isTouchInSwipableXRange(e);
         }
 
         @Override
@@ -290,6 +298,8 @@ public class BottomSheet
                 setSheetState(SHEET_STATE_PEEK, false);
                 return false;
             }
+
+            if (!isTouchInSwipableXRange(e2)) return false;
 
             // Only start scrolling if the scroll is up or down. If the user is already scrolling,
             // continue moving the sheet.
@@ -345,6 +355,8 @@ public class BottomSheet
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (!isTouchInSwipableXRange(e2)) return false;
+
             cancelAnimation();
             boolean wasOpenBeforeSwipe = mIsSheetOpen;
 
@@ -386,6 +398,32 @@ public class BottomSheet
                 assert false;
                 return false;
         }
+    }
+
+    /**
+     * Check if a touch event is in the swipable x-axis range of the toolbar when in peeking mode.
+     * If the "chrome-home-swipe-logic" flag is not set to "restrict-area" or the sheet is open,
+     * this function returns true.
+     * @param e The touch event.
+     * @return True if the touch is inside the swipable area of the toolbar.
+     */
+    private boolean isTouchInSwipableXRange(MotionEvent e) {
+        // If the sheet is already open or the experiment is not enabled, no need to restrict the
+        // swipe area.
+        if (mActivity == null || isSheetOpen()
+                || !ChromeSwitches.CHROME_HOME_SWIPE_LOGIC_RESTRICT_AREA.equals(
+                           FeatureUtilities.getChromeHomeSwipeLogicType())) {
+            return true;
+        }
+
+        if (mActivity == null) return true;
+        mActivity.getWindow().getDecorView().getWindowVisibleDisplayFrame(mCachedWindowRect);
+
+        // Determine an area in the middle of the toolbar that is swipable.
+        int endMargin = (int) (mContainerWidth * ((1 - SWIPE_ALLOWED_FRACTION) / 2));
+        int startX = endMargin + mCachedWindowRect.left;
+        int endX = (int) (mContainerWidth - endMargin) + mCachedWindowRect.left;
+        return e.getRawX() > startX && e.getRawX() < endX;
     }
 
     /**
