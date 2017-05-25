@@ -7,18 +7,32 @@
 
 #include "core/CoreExport.h"
 #include "core/dom/CompositorProxyClient.h"
+#include "core/workers/WorkerClients.h"
 #include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-class CORE_EXPORT AnimationWorkletProxyClient : public GarbageCollectedMixin {
+class WorkletGlobalScope;
+
+class CORE_EXPORT AnimationWorkletProxyClient
+    : public Supplement<WorkerClients> {
   WTF_MAKE_NONCOPYABLE(AnimationWorkletProxyClient);
 
  public:
   AnimationWorkletProxyClient() {}
-  virtual ~AnimationWorkletProxyClient() {}
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+  static AnimationWorkletProxyClient* From(WorkerClients*);
+  static const char* SupplementName();
+
+  virtual void SetGlobalScope(WorkletGlobalScope*) = 0;
+  virtual void Dispose() = 0;
+
+  virtual CompositorProxyClient* GetCompositorProxyClient() = 0;
 };
+
+CORE_EXPORT void ProvideAnimationWorkletProxyClientTo(
+    WorkerClients*,
+    AnimationWorkletProxyClient*);
 
 }  // namespace blink
 
