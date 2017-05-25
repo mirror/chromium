@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "356d4997_dffeb38c",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-05-25T20:45:21Z",
+      "side": 1,
+      "message": "can we not change this file? it\u0027ll cause chrome to be add more logspam in the normal case",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "212ff1573d2f1b4bf3f78562cbf7cdc5255c5f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
