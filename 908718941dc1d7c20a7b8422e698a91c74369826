@@ -16,6 +16,24 @@
       "revId": "908718941dc1d7c20a7b8422e698a91c74369826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde74d61_ebd2cebb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-25T17:23:28Z",
+      "side": 0,
+      "message": "Good point; with the current behavior, it is indeed possible that the job is started but not finished!\n\nAlthough, very soon I\u0027d like to change the behavior of rebaseline-cl to not try to fetch results for unfinished jobs (which will never have results anyway), and to print a more useful message in a different place; filed bug http://crbug.com/726376.\n\nSo, I think I\u0027d like to improve this in a separate CL and submit this CL as-is.",
+      "parentUuid": "0aa1bde6_95034551",
+      "revId": "908718941dc1d7c20a7b8422e698a91c74369826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
