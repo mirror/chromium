@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da873730_09289f16",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-05-25T18:05:13Z",
+      "side": 1,
+      "message": "Could you make this a named constant?",
+      "range": {
+        "startLine": 343,
+        "startChar": 40,
+        "endLine": 343,
+        "endChar": 41
+      },
+      "revId": "19726b36aec32f81d25ccfb71b25f7520e07ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe9c6f7_d2a8cc8c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-05-25T18:05:13Z",
+      "side": 1,
+      "message": "Could you add/adapt a test that checks this isn\u0027t best_effort anymore?",
+      "range": {
+        "startLine": 1043,
+        "startChar": 54,
+        "endLine": 1043,
+        "endChar": 63
+      },
+      "revId": "19726b36aec32f81d25ccfb71b25f7520e07ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
