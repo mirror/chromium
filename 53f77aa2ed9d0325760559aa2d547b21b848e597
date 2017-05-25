@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7727e388_eeec3181",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-25T11:41:48Z",
+      "side": 1,
+      "message": "Can we use DeleteSoon?",
+      "revId": "53f77aa2ed9d0325760559aa2d547b21b848e597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1875b544_9d296747",
+        "filename": "media/midi/midi_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-25T11:41:48Z",
+      "side": 1,
+      "message": "Maybe \"the\" right thread? Ditto below.",
+      "range": {
+        "startLine": 60,
+        "startChar": 28,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "53f77aa2ed9d0325760559aa2d547b21b848e597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
