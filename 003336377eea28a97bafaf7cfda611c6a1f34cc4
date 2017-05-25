@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a561d63d_22ae7376",
+        "filename": "android_webview/browser/surfaces_instance.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-05-25T17:42:02Z",
+      "side": 1,
+      "message": "This seems to be missing the calls to Register/UnregisterBFS?",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 22
+      },
+      "revId": "003336377eea28a97bafaf7cfda611c6a1f34cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc992dab_b22e9c11",
+        "filename": "cc/surfaces/direct_compositor_frame_sink.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-05-25T17:42:02Z",
+      "side": 1,
+      "message": "Only do this if BindToClient/RegisterBFS happened.",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 48
+      },
+      "revId": "003336377eea28a97bafaf7cfda611c6a1f34cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe030a4e_ea555817",
+        "filename": "components/viz/frame_sinks/gpu_root_compositor_frame_sink.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-05-25T17:42:02Z",
+      "side": 1,
+      "message": "Nit: add DCHECK that it is non-null",
+      "range": {
+        "startLine": 46,
+        "startChar": 44,
+        "endLine": 46,
+        "endChar": 71
+      },
+      "revId": "003336377eea28a97bafaf7cfda611c6a1f34cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
