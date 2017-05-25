@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4fb6b3f_e9a90fd0",
+        "filename": "services/preferences/pref_service_factory_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-25T23:41:59Z",
+      "side": 1,
+      "message": "Check that local read-only pref store changes are observed.",
+      "range": {
+        "startLine": 304,
+        "startChar": 14,
+        "endLine": 304,
+        "endChar": 18
+      },
+      "revId": "92ddab8be662f8d4ea46b71cf68944f1e5e8003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
