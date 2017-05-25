@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72816c06_4dc3a233",
+        "filename": "components/feature_engagement_tracker/internal/availability_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T17:08:17Z",
+      "side": 1,
+      "message": "Looks like this is guaranteed to not be null.  Maybe just use the bottom line and pass \"success\" instead of true?",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "c9c716c8137fecd6184e24bd61a0c8f68427ad1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5b55b4_d415ceda",
+        "filename": "components/feature_engagement_tracker/internal/availability_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T17:08:17Z",
+      "side": 1,
+      "message": "std::make_pair(...)",
+      "range": {
+        "startLine": 106,
+        "startChar": 25,
+        "endLine": 106,
+        "endChar": 44
+      },
+      "revId": "c9c716c8137fecd6184e24bd61a0c8f68427ad1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5115891_892e168b",
+        "filename": "components/feature_engagement_tracker/internal/availability_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T17:08:17Z",
+      "side": 1,
+      "message": "Can you mention that this also mutates the data as well?",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "c9c716c8137fecd6184e24bd61a0c8f68427ad1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e707d183_560e51be",
+        "filename": "components/feature_engagement_tracker/internal/availability_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T17:08:17Z",
+      "side": 1,
+      "message": "remove extra private?",
+      "revId": "c9c716c8137fecd6184e24bd61a0c8f68427ad1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e220e98_3f962efc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 87688,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-25T17:08:17Z",
+      "side": 1,
+      "message": "Remove the s for these (Databases -\u003e Database).  My bad!",
+      "range": {
+        "startLine": 87688,
+        "startChar": 13,
+        "endLine": 87688,
+        "endChar": 22
+      },
+      "revId": "c9c716c8137fecd6184e24bd61a0c8f68427ad1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
