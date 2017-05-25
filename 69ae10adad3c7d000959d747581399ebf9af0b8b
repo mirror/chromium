@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4770874f_4c08d7fd",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T15:30:46Z",
+      "side": 1,
+      "message": "Is it ever reasonable for Increment and AddTime to be done separately? If not, maybe these should be one operation? (\"V8 does it this way\" might be a legitimate excuse. :P)",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1965287_0989d95a",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T15:30:46Z",
+      "side": 1,
+      "message": "Why make these static members, as opposed to having |stats| just be |*this|?",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88272d52_8f12654f",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T15:30:46Z",
+      "side": 1,
+      "message": "nit: For clarity, is it possible use WTF::Time* types, or does this cause some problem (e.g. static intializers)?\n\nWTF::TimeTicks g_now;\n\nvoid AdvanceClock(WTF::TimeDelta delta) { g_now +\u003d delta; }\n// maybe an overload called AdvanceClockMilliseconds, but having callers just use TimeDelta::FromMilliseconds isn\u0027t too bad.\n\nvoid SetUp() override {\n  original_time_function_ \u003d SetTimeFunctionsForTesting([] {\n    return g_now.InSeconds();\n  });\n}\n\nvoid TearDown() override {\n  SetTimeFunctionsForTesting(original_time_function_);\n}",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f78a3b4_1867beb1",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T15:30:46Z",
+      "side": 1,
+      "message": "nit: slightly confusing as I had to wonder if this actually slept the thread; maybe AdvanceClock?",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ffe735_7fb6b944",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T15:30:46Z",
+      "side": 1,
+      "message": "nit: reset ticks_ so that the times used are the same regardless of test filter/order? This also avoids the need to grab \"start\" in the sanity check below.",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98665db_aefd565c",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T15:30:46Z",
+      "side": 1,
+      "message": "On second thought, a test to check that your test works seems a little overkill. Surely the below tests would break if this were wrong?",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06739116_6b366598",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-25T15:30:46Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ should work fine on TimeDelta, which seems more natural to me:\n\nEXPECT_EQ(TimeDelta::FromMilliseconds(50), TimeTicks::Now() - start);\n\nhere and below",
+      "revId": "69ae10adad3c7d000959d747581399ebf9af0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
