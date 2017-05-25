@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5af2d67c_c6f53931",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-25T17:32:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the \"Pass\" is related to this patch, but I saw sometimes \"unexpected pass\" of the test with the patch, while the test still failed sometimes with the patch.",
+      "parentUuid": "c9428221_1a54e73c",
+      "revId": "6fdd9c76d677b0b64654be9ba336475a1a20be04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4274bab_0904db71",
         "filename": "third_party/WebKit/Source/core/paint/FramePainter.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6fdd9c76d677b0b64654be9ba336475a1a20be04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf68591c_44d16bb2",
+        "filename": "third_party/WebKit/Source/core/paint/FramePainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-25T17:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4274bab_0904db71",
+      "revId": "6fdd9c76d677b0b64654be9ba336475a1a20be04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
