@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a6aeb44_71e0fcaf",
+        "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-05-25T14:55:19Z",
+      "side": 1,
+      "message": "WTF::MakeUnique\u003cImageEncoder\u003e(dst);",
+      "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89de84d3_e576865a",
+        "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-05-25T14:55:19Z",
+      "side": 1,
+      "message": "e.g. are these options reasonable for all (future) clients?",
+      "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f602680_acb99fe3",
+        "filename": "third_party/WebKit/Source/platform/image-encoders/ImageEncoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-05-25T14:55:19Z",
+      "side": 1,
+      "message": "I like the factory approach, but IIRC Matt kept the options public on purpose for client flexibility.",
+      "revId": "0f826f47029c7279958c00dd8226a8dd0dc80005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
