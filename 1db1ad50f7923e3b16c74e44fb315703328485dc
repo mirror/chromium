@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "339f36c7_cac376c7",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-25T21:05:17Z",
+      "side": 1,
+      "message": "This seems weird, setting the year as the index of the dropdown?\n\nI think you want GetItemAt(selected_index())",
+      "range": {
+        "startLine": 288,
+        "startChar": 47,
+        "endLine": 288,
+        "endChar": 68
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fca5af93_3a0617aa",
         "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
         "patchSetId": 1
@@ -64,6 +87,29 @@
         "startChar": 25,
         "endLine": 321,
         "endChar": 39
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec3bc76_bf27066f",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-25T21:05:17Z",
+      "side": 1,
+      "message": "GetItemAt",
+      "range": {
+        "startLine": 323,
+        "startChar": 33,
+        "endLine": 323,
+        "endChar": 46
       },
       "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
