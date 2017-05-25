@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86427d6e_8b099a9c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-05-25T05:15:46Z",
+      "side": 1,
+      "message": "Is this the change that\u0027s new in this patch?\n\n\nCan you describe the issue this caused and how this fixes it?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "d19f774edd22de10c8cacc45b293aed4afc8755a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
