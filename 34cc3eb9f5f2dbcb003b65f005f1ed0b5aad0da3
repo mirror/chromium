@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "806d0491_70d162ed",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-25T23:14:00Z",
+      "side": 1,
+      "message": "I wasn\u0027t quite sure in what circumstances it was actually allowed to be unknown... WebBlobData::Item::length sas \"-1 means go to the end of the file/blob\", kind of implying any file or blob item can have a -1 length, but I failed at fully tracing through to code to figure out when in practice it would actually be set to -1.\n\nOnly BlobData::AppendFile seems to check that length is !\u003d -1 while all the other Append methods will happily append stuff with unknown length.  Anyway, updated the comment to try to explain what I think is intended (and removed the comment from DataElementFilesystemURL and DataElementBlob since I believe those are not actually supposed to have -1 length). We should probably add assertions to the various BlobData::Append* methods though to make sure that\u0027s the case.",
+      "parentUuid": "8eab0abe_211c0ab2",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 78
+      },
+      "revId": "34cc3eb9f5f2dbcb003b65f005f1ed0b5aad0da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2fc212b_f0a02468",
         "filename": "third_party/WebKit/Source/platform/blob/BlobDataTest.cpp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "34cc3eb9f5f2dbcb003b65f005f1ed0b5aad0da3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50873e2d_8ccfe42d",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobDataTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-25T23:14:00Z",
+      "side": 1,
+      "message": "There\u0027s definitely situations where gmock might help write tests, but I find it often overused, resulting in tests that are either more complicated/harder to understand than necessary, or more fragile to refactoring as they are testing implementation details that aren\u0027t relevant. Also I\u0027m not convinced that the equivalent test using gmock would have actually ben any shorter in lines of code.",
+      "parentUuid": "a2fc212b_f0a02468",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 18
+      },
+      "revId": "34cc3eb9f5f2dbcb003b65f005f1ed0b5aad0da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
