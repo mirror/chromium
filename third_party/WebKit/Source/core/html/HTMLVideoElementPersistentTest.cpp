@@ -6,13 +6,12 @@
 
 #include <memory>
 
-#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/Fullscreen.h"
+#include "core/dom/UserGestureIndicator.h"
 #include "core/html/HTMLDivElement.h"
 #include "core/layout/LayoutFullScreen.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
-#include "platform/UserGestureIndicator.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -106,7 +105,7 @@ TEST_F(HTMLVideoElementPersistentTest, videoIsFullscreen) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      DocumentUserGestureToken::Create(&GetDocument()));
+      UserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*VideoElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), VideoElement());
@@ -133,7 +132,7 @@ TEST_F(HTMLVideoElementPersistentTest, divIsFullscreen) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      DocumentUserGestureToken::Create(&GetDocument()));
+      UserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -167,7 +166,7 @@ TEST_F(HTMLVideoElementPersistentTest, exitFullscreenBeforePersistence) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(1);
 
   UserGestureIndicator gesture_indicator(
-      DocumentUserGestureToken::Create(&GetDocument()));
+      UserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -202,7 +201,7 @@ TEST_F(HTMLVideoElementPersistentTest, internalPseudoClassOnlyUAStyleSheet) {
   EXPECT_FALSE(VideoElement()->matches(":-internal-video-persistent-ancestor"));
 
   UserGestureIndicator gesture_indicator(
-      DocumentUserGestureToken::Create(&GetDocument()));
+      UserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   SimulateBecamePersistentVideo(true);
@@ -226,7 +225,7 @@ TEST_F(HTMLVideoElementPersistentTest, removeContainerWhilePersisting) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(1);
 
   UserGestureIndicator gesture_indicator(
-      DocumentUserGestureToken::Create(&GetDocument()));
+      UserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -248,7 +247,7 @@ TEST_F(HTMLVideoElementPersistentTest, removeVideoWhilePersisting) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      DocumentUserGestureToken::Create(&GetDocument()));
+      UserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -274,7 +273,7 @@ TEST_F(HTMLVideoElementPersistentTest, removeVideoWithLayerWhilePersisting) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      DocumentUserGestureToken::Create(&GetDocument()));
+      UserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -296,7 +295,7 @@ TEST_F(HTMLVideoElementPersistentTest, containsPersistentVideoScopedToFS) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      DocumentUserGestureToken::Create(&GetDocument()));
+      UserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());

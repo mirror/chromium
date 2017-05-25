@@ -30,7 +30,7 @@
 
 #include "public/web/WebUserGestureIndicator.h"
 
-#include "platform/UserGestureIndicator.h"
+#include "core/dom/UserGestureIndicator.h"
 #include "public/web/WebUserGestureToken.h"
 #include "web/WebLocalFrameImpl.h"
 
