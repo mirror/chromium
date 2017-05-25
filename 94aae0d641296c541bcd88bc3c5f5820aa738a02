@@ -22,6 +22,30 @@
       "revId": "94aae0d641296c541bcd88bc3c5f5820aa738a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0c140e_deab0070",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-05-25T01:20:51Z",
+      "side": 1,
+      "message": "Good idea! Done.",
+      "parentUuid": "2d0231bd_74c4dc2f",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "94aae0d641296c541bcd88bc3c5f5820aa738a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
