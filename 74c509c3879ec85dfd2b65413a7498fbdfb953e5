@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7642a51_8f7517fe",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-05-25T05:29:27Z",
+      "side": 1,
+      "message": "I think this should be moot for the non-WebVR case since that now submits synchronously without yielding. For WebVR, the submit frame client ensures no parallel submission. I can\u0027t think of an obvious way to explicitly DCHECK that without adding extra logic to track, and that may introduce its own complications. I\u0027d be in favor of refactoring this to make it simpler in the future.",
+      "parentUuid": "9ded8f2f_d7c78b8f",
+      "revId": "74c509c3879ec85dfd2b65413a7498fbdfb953e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b78b5b1e_a1083af8",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 4
@@ -65,6 +83,30 @@
       "writtenOn": "2017-05-25T04:28:09Z",
       "side": 1,
       "message": "You should call the DrawFrameSubmitWhenReady directly here. No need to postTask and potentially add extra latency here by making this async in this case.\n\nAlso this would prevent me from having to think about the complicated case of what if DrawFrame takes so long that we queue up another DrawFrame that runs when we post to DrawFrameSubmitWhenReady.\n\nI assume this can\u0027t happen with webVR because of the submit client.",
+      "range": {
+        "startLine": 1059,
+        "startChar": 4,
+        "endLine": 1059,
+        "endChar": 25
+      },
+      "revId": "74c509c3879ec85dfd2b65413a7498fbdfb953e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5c04da_8ef2df41",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-05-25T05:29:27Z",
+      "side": 1,
+      "message": "Done, doing a synchronous call in that branch now.",
+      "parentUuid": "6971edfc_35be9e5e",
       "range": {
         "startLine": 1059,
         "startChar": 4,
@@ -124,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f8725af1_d5ff2a76",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-05-25T05:29:27Z",
+      "side": 1,
+      "message": "Done, after banging my head against the desk for a bit trying to get the passing-a-unique-ptr-to-a-bound-callback syntax sorted out.",
+      "parentUuid": "d1deaa7e_aedcdc79",
+      "range": {
+        "startLine": 1074,
+        "startChar": 6,
+        "endLine": 1074,
+        "endChar": 27
+      },
+      "revId": "74c509c3879ec85dfd2b65413a7498fbdfb953e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22eb0fc8_ed9d2724",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 4
@@ -159,6 +225,30 @@
       "side": 1,
       "message": "yes, it\u0027s used a few lines below for FPS metrics, it used to get that from DrawFrame above.. I assigned it a bit early to reduce conflicts between the multiple open changes.",
       "parentUuid": "22eb0fc8_ed9d2724",
+      "range": {
+        "startLine": 1084,
+        "startChar": 18,
+        "endLine": 1084,
+        "endChar": 30
+      },
+      "revId": "74c509c3879ec85dfd2b65413a7498fbdfb953e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0afd966_843907cf",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-05-25T05:29:27Z",
+      "side": 1,
+      "message": "I\u0027ve moved the Now() call down to where it\u0027s used since the prerequisite patches are now all submitted.",
+      "parentUuid": "ab177606_89a24bd7",
       "range": {
         "startLine": 1084,
         "startChar": 18,
