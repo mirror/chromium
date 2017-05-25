@@ -16,6 +16,24 @@
       "revId": "7ac563eb479d7473610888e8185da1b1c2ab67fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b41952d_56771fc9",
+        "filename": "net/dns/dns_config_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-05-25T00:11:22Z",
+      "side": 1,
+      "message": "Oh, this is so embarrassing. :(\n\nSorry, I totally mislooked at the documentation, read too quickly and confused the constructor by the destrutor, probably because of the way the screen changed from one to another in Emacs. :/",
+      "parentUuid": "b8feffbd_96e9b818",
+      "revId": "7ac563eb479d7473610888e8185da1b1c2ab67fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
