@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "6971edfc_35be9e5e",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-05-25T04:28:09Z",
+      "side": 1,
+      "message": "You should call the DrawFrameSubmitWhenReady directly here. No need to postTask and potentially add extra latency here by making this async in this case.\n\nAlso this would prevent me from having to think about the complicated case of what if DrawFrame takes so long that we queue up another DrawFrame that runs when we post to DrawFrameSubmitWhenReady.\n\nI assume this can\u0027t happen with webVR because of the submit client.",
+      "range": {
+        "startLine": 1059,
+        "startChar": 4,
+        "endLine": 1059,
+        "endChar": 25
+      },
+      "revId": "74c509c3879ec85dfd2b65413a7498fbdfb953e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "543ebad5_6a07923f",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 4
@@ -48,6 +71,30 @@
       "writtenOn": "2017-05-25T04:12:37Z",
       "side": 1,
       "message": "Why is vrshell_submit_fence_ a member rather than being passed with the bind?",
+      "range": {
+        "startLine": 1074,
+        "startChar": 6,
+        "endLine": 1074,
+        "endChar": 27
+      },
+      "revId": "74c509c3879ec85dfd2b65413a7498fbdfb953e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1deaa7e_aedcdc79",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-05-25T04:28:09Z",
+      "side": 1,
+      "message": "+1 to being passed with the bind.",
+      "parentUuid": "543ebad5_6a07923f",
       "range": {
         "startLine": 1074,
         "startChar": 6,
