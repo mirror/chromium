@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "299b515e_94619be0",
+        "filename": "third_party/WebKit/Source/core/frame/ResizeViewportAnchor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-05-25T12:14:32Z",
+      "side": 1,
+      "message": "Yeah, ResizeViewportAnchor is only used in WebViewImpl which, if I understand correctly, implies we\u0027re in the process that contains the main frame. Is that right?",
+      "parentUuid": "b7801c67_bf245114",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "8983db0d988a24492556da5d00b82ab37d27dbee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d766758_a9aa6ef0",
         "filename": "third_party/WebKit/Source/web/WebAXObject.cpp",
         "patchSetId": 1
