@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8abf4714_bbfda92d",
+        "filename": "chrome/browser/ui/views/payments/order_summary_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-05-25T19:07:43Z",
+      "side": 1,
+      "message": "does this line do anything?",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 17
+      },
+      "revId": "57e76cb1e6301bd522772056b3b9abd563a322c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
