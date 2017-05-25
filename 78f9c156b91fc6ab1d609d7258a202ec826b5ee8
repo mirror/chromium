@@ -275,6 +275,30 @@
       "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e65883_371b3454",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-05-25T13:09:19Z",
+      "side": 1,
+      "message": "Yes, but I would prefer to do it in my next CL, when this starts being needed in more than one place. At the same time I will convert the existing Chrome Home tests to using that rule.",
+      "parentUuid": "fbb636a4_dee39788",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
