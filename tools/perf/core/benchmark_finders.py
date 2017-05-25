@@ -57,3 +57,8 @@ def GetAllContribBenchmarks():
       top_level_dir=path_util.GetPerfDir(),
       base_class=benchmark_module.Benchmark,
       index_by_class_name=True).values()
+
+def GetAllBenchmarks():
+  all_perf_benchmarks = GetAllPerfBenchmarks()
+  all_contrib_benchmarks = GetAllContribBenchmarks()
+  return all_perf_benchmarks + all_contrib_benchmarks
