@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c78ed35_9596acdf",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ConditionalFeaturesForCore.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-25T04:09:59Z",
+      "side": 1,
+      "message": "Or you can add ContextFeatureSettings::existingInstance() instead of introducing the enum.",
+      "revId": "48a0c9bb37bd2fc048246ada3b77c4dbe44c42d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
