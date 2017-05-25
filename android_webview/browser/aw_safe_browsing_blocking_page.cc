@@ -60,7 +60,6 @@ void AwSafeBrowsingBlockingPage::ShowBlockingPage(
             false,  // is_extended_reporting
             false,  // is_scout
             false,  // kSafeBrowsingProceedAnywayDisabled
-            true,   // is_resource_cancellable
             "cpn_safe_browsing_wv");  // help_center_article_link
     AwSafeBrowsingBlockingPage* blocking_page = new AwSafeBrowsingBlockingPage(
         ui_manager, web_contents, entry ? entry->GetURL() : GURL(),
