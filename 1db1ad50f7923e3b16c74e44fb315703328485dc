@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb965356_6f056fc4",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-25T20:48:53Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 200,
+        "startChar": 4,
+        "endLine": 200,
+        "endChar": 36
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84d9eee_9c66b083",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-25T20:48:53Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 36
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca5af93_3a0617aa",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-25T20:48:53Z",
+      "side": 1,
+      "message": "Must be on its own line, according to the style guide, I believe.\n\nint month_value \u003d 0;\nint year_value \u003d 0;",
+      "range": {
+        "startLine": 321,
+        "startChar": 25,
+        "endLine": 321,
+        "endChar": 39
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5495dbf0_dc528516",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-05-25T20:48:53Z",
+      "side": 1,
+      "message": "not selected?",
+      "range": {
+        "startLine": 329,
+        "startChar": 44,
+        "endLine": 329,
+        "endChar": 52
+      },
+      "revId": "1db1ad50f7923e3b16c74e44fb315703328485dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
