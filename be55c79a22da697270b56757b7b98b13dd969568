@@ -62,6 +62,23 @@
       "revId": "be55c79a22da697270b56757b7b98b13dd969568",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391461c3_a4602392",
+        "filename": "components/prefs/overlay_user_pref_store.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-25T10:02:15Z",
+      "side": 1,
+      "message": "Can these be private methods? I think ObserverAdapter should have private access, and clients of this class shouldn\u0027t use the methods anyway.",
+      "revId": "be55c79a22da697270b56757b7b98b13dd969568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
