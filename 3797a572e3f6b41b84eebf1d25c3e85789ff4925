@@ -34,6 +34,24 @@
       "revId": "3797a572e3f6b41b84eebf1d25c3e85789ff4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9891bcd_9f23ea29",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-25T18:26:33Z",
+      "side": 1,
+      "message": "What error were you seeing?",
+      "parentUuid": "fc69e25d_5483527d",
+      "revId": "3797a572e3f6b41b84eebf1d25c3e85789ff4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
