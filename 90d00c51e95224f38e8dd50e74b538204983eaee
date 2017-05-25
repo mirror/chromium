@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "194508eb_ecbf31af",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-25T21:12:29Z",
+      "side": 1,
+      "message": "Added comment to note why we track whether a transform was updated.\n\nI talked with flackr@ about OPACITY/FILTER cases and we believe the fields mutated don\u0027t require any add\u0027l propagation that warrants UDP.\n\nSo I think the answer to my question is both (1) and (2) -- we do intentionally write logic to micro-manage property tree nodes and only set bits to recompute what/when needed, but we strive to uphold (2) and not get things wrong in our micro-management. The tree state should be the same were it to be re-computed fully vs. what we do in our micro-mutations.",
+      "parentUuid": "36d618e9_eccc36ee",
+      "range": {
+        "startLine": 1747,
+        "startChar": 12,
+        "endLine": 1747,
+        "endChar": 29
+      },
+      "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e7edbbe_f961c694",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 2
@@ -144,6 +168,47 @@
       "side": 1,
       "message": "I did see some test failures when I did this all the time. I\u0027ll look into and follow up.",
       "parentUuid": "2a3a2d64_e9a70fa7",
+      "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a7eefa_375cc58d",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-25T21:12:29Z",
+      "side": 1,
+      "message": "If we DCHECK from LayerTreeHostImpl we see test failures below. I claim that this patch strictly improves the code base, and we could further improve through exploring/fixing this separately. Added comment.\n\n9 tests crashed:\n    LayerTreeHostCommonTest.AnimationsForRenderSurfaceHierarchy (../../cc/trees/layer_tree_host_common_unittest.cc:2009)\n    LayerTreeHostCommonTest.DrawPropertyScales (../../cc/trees/layer_tree_host_common_unittest.cc:7883)\n    LayerTreeHostCommonTest.MaximumAnimationScaleFactor (../../cc/trees/layer_tree_host_common_unittest.cc:7404)\n    LayerTreeHostCommonTest/LCDTextTest.CanUseLCDTextWithAnimationContentsOpaque/0 (../../cc/trees/layer_tree_host_common_unittest.cc:4591)\n    LayerTreeHostCommonTest/LCDTextTest.CanUseLCDTextWithAnimationContentsOpaque/2 (../../cc/trees/layer_tree_host_common_unittest.cc:4591)\n    LayerTreeHostCommonTest/LCDTextTest.CanUseLCDTextWithAnimationContentsOpaque/4 (../../cc/trees/layer_tree_host_common_unittest.cc:4591)\n    LayerTreeHostCommonTest/LCDTextTest.CanUseLCDTextWithAnimationContentsOpaque/6 (../../cc/trees/layer_tree_host_common_unittest.cc:4591)\n    LayerTreeHostImplTest.PrepareToDrawSucceedsAndFails (../../cc/trees/layer_tree_host_impl_unittest.cc:3930)\n    LayerTreeHostImplTest.PrepareToDrawWhenDrawAndSwapFullViewportEveryFrame (../../cc/trees/layer_tree_host_impl_unittest.cc:4043)",
+      "parentUuid": "4db1fa3f_6d155fae",
+      "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de09c802_12f95fba",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1764,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-25T21:12:29Z",
+      "side": 1,
+      "message": "flackr@ noted draw_property_utils::UpdatePropertyTrees doesn\u0027t check needs_update_draw_properties, so this case shouldn\u0027t need UDP. I am still wrapping head around when we need to update what, and what the overall cc per frame call stacks into these methods look like, so if I\u0027m missing something here let me know.",
+      "range": {
+        "startLine": 1764,
+        "startChar": 12,
+        "endLine": 1764,
+        "endChar": 47
+      },
       "revId": "90d00c51e95224f38e8dd50e74b538204983eaee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
