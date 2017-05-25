@@ -31,6 +31,7 @@
 #include "ui/events/devices/input_device_manager.h"
 #include "ui/events/devices/stylus_state.h"
 #include "ui/gfx/color_palette.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
@@ -85,7 +86,7 @@ class TitleView : public views::View, public views::ButtonListener {
     // TODO(tdanderson|jdufault): Use TriView to handle the layout of the title.
     // See crbug.com/614453.
     auto* box_layout =
-        new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
+        new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 0);
     SetLayoutManager(box_layout);
 
     auto* title_label =

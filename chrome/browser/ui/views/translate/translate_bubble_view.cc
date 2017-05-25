@@ -35,6 +35,7 @@
 #include "ui/base/models/combobox_model.h"
 #include "ui/base/models/simple_combobox_model.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/button/blue_button.h"
@@ -156,7 +157,8 @@ void TranslateBubbleView::CloseBubble() {
 }
 
 void TranslateBubbleView::Init() {
-  SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical, 0, 0, 0));
+  SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0));
 
   should_always_translate_ = model_->ShouldAlwaysTranslate();
   if (Use2016Q2UI() && !is_in_incognito_window_) {
