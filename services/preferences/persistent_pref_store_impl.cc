@@ -17,29 +17,23 @@
 
 namespace prefs {
 
-class PersistentPrefStoreImpl::Connection : public mojom::PersistentPrefStore {
+class PersistentPrefStoreImpl::Connection {
  public:
   Connection(PersistentPrefStoreImpl* pref_store,
-             mojom::PersistentPrefStoreRequest request,
              mojom::PrefStoreObserverPtr observer,
              ObservedPrefs observed_keys)
       : pref_store_(pref_store),
-        binding_(this, std::move(request)),
         observer_(std::move(observer)),
         observed_keys_(std::move(observed_keys)) {
-    auto error_callback =
+    observer_.set_connection_error_handler(
         base::Bind(&PersistentPrefStoreImpl::Connection::OnConnectionError,
-                   base::Unretained(this));
-    binding_.set_connection_error_handler(error_callback);
-    observer_.set_connection_error_handler(error_callback);
+                   base::Unretained(this)));
   }
 
-  ~Connection() override = default;
+  virtual ~Connection() = default;
 
-  void OnPrefValuesChanged(const std::vector<mojom::PrefUpdatePtr>& updates) {
-    if (write_in_progress_)
-      return;
-
+  virtual void OnPrefsChanged(
+      const std::vector<mojom::PrefUpdatePtr>& updates) {
     std::vector<mojom::PrefUpdatePtr> filtered_updates;
     for (const auto& update : updates) {
       if (base::ContainsKey(observed_keys_, update->key)) {
@@ -48,6 +42,43 @@ class PersistentPrefStoreImpl::Connection : public mojom::PersistentPrefStore {
     }
     if (!filtered_updates.empty())
       observer_->OnPrefsChanged(std::move(filtered_updates));
+  }
+
+ protected:
+  // Owns |this|.
+  PersistentPrefStoreImpl* const pref_store_;
+
+  void OnConnectionError() { pref_store_->OnConnectionError(this); }
+
+ private:
+  mojom::PrefStoreObserverPtr observer_;
+  const ObservedPrefs observed_keys_;
+
+  DISALLOW_COPY_AND_ASSIGN(Connection);
+};
+
+class PersistentPrefStoreImpl::WritableConnection
+    : public PersistentPrefStoreImpl::Connection,
+      public mojom::PersistentPrefStore {
+ public:
+  WritableConnection(PersistentPrefStoreImpl* pref_store,
+                     mojom::PersistentPrefStoreRequest request,
+                     mojom::PrefStoreObserverPtr observer,
+                     ObservedPrefs observed_keys)
+      : Connection(pref_store, std::move(observer), std::move(observed_keys)),
+        binding_(this, std::move(request)) {
+    binding_.set_connection_error_handler(base::Bind(
+        &PersistentPrefStoreImpl::WritableConnection::OnConnectionError,
+        base::Unretained(this)));
+  }
+
+  ~WritableConnection() override = default;
+
+  void OnPrefsChanged(
+      const std::vector<mojom::PrefUpdatePtr>& updates) override {
+    if (write_in_progress_)
+      return;
+    Connection::OnPrefsChanged(updates);
   }
 
  private:
@@ -63,20 +94,17 @@ class PersistentPrefStoreImpl::Connection : public mojom::PersistentPrefStore {
   }
   void ClearMutableValues() override { pref_store_->ClearMutableValues(); }
 
-  void OnConnectionError() { pref_store_->OnConnectionError(this); }
-
-  // Owns |this|.
-  PersistentPrefStoreImpl* const pref_store_;
+  // MSVC requires this as using a reference to the protected version in the
+  // super class in base::Bind doesn't work.
+  void OnConnectionError() { Connection::OnConnectionError(); }
 
   mojo::Binding<mojom::PersistentPrefStore> binding_;
-  mojom::PrefStoreObserverPtr observer_;
-  const ObservedPrefs observed_keys_;
 
   // If true then a write is in progress and any update notifications should be
   // ignored, as those updates would originate from ourselves.
   bool write_in_progress_ = false;
 
-  DISALLOW_COPY_AND_ASSIGN(Connection);
+  DISALLOW_COPY_AND_ASSIGN(WritableConnection);
 };
 
 PersistentPrefStoreImpl::PersistentPrefStoreImpl(
@@ -106,7 +134,7 @@ PersistentPrefStoreImpl::CreateConnection(ObservedPrefs observed_prefs) {
   mojom::PrefStoreObserverPtr observer;
   mojom::PrefStoreObserverRequest observer_request =
       mojo::MakeRequest(&observer);
-  auto connection = base::MakeUnique<Connection>(
+  auto connection = base::MakeUnique<WritableConnection>(
       this, mojo::MakeRequest(&pref_store_ptr), std::move(observer),
       std::move(observed_prefs));
   auto* connection_ptr = connection.get();
@@ -127,10 +155,25 @@ void PersistentPrefStoreImpl::OnInitializationCompleted(bool succeeded) {
   std::move(on_initialized_).Run();
 }
 
+void PersistentPrefStoreImpl::AddObserver(
+    const std::vector<std::string>& prefs_to_observe,
+    const AddObserverCallback& callback) {
+  mojom::PrefStoreObserverPtr observer;
+  auto observer_request = mojo::MakeRequest(&observer);
+  auto connection = base::MakeUnique<Connection>(
+      this, std::move(observer),
+      ObservedPrefs(prefs_to_observe.begin(), prefs_to_observe.end()));
+  auto* connection_ptr = connection.get();
+  connections_.insert(std::make_pair(connection_ptr, std::move(connection)));
+  callback.Run(mojom::PrefStoreConnection::New(
+      std::move(observer_request), backing_pref_store_->GetValues(),
+      backing_pref_store_->IsInitializationComplete()));
+}
+
 void PersistentPrefStoreImpl::SetValues(
     std::vector<mojom::PrefUpdatePtr> updates) {
   for (auto& entry : connections_)
-    entry.first->OnPrefValuesChanged(updates);
+    entry.first->OnPrefsChanged(updates);
 
   for (auto& update : updates) {
     if (update->value->is_atomic_update()) {

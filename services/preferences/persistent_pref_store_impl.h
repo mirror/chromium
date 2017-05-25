@@ -16,7 +16,8 @@
 
 namespace prefs {
 
-class PersistentPrefStoreImpl : public PrefStore::Observer {
+class PersistentPrefStoreImpl : public PrefStore::Observer,
+                                public mojom::PrefStore {
  public:
   using ObservedPrefs = std::set<std::string>;
 
@@ -35,6 +36,7 @@ class PersistentPrefStoreImpl : public PrefStore::Observer {
 
  private:
   class Connection;
+  class WritableConnection;
 
   void SetValues(std::vector<mojom::PrefUpdatePtr> updates);
 
@@ -45,6 +47,10 @@ class PersistentPrefStoreImpl : public PrefStore::Observer {
   // PrefStore::Observer:
   void OnPrefValueChanged(const std::string& key) override;
   void OnInitializationCompleted(bool succeeded) override;
+
+  // prefs::mojom::PrefStore:
+  void AddObserver(const std::vector<std::string>& prefs_to_observe,
+                   const AddObserverCallback& callback) override;
 
   void OnConnectionError(Connection* connection);
 
