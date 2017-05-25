@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63236f9e_72b9a2f6",
+        "filename": "components/feature_engagement_tracker/internal/feature_config_condition_validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T18:00:34Z",
+      "side": 1,
+      "message": "Yeah, I thought about this for a while, and I realized that if someone said ANY here, they really don\u0027t care at all about the availability. There are other things that will fail, such as:\nresult.feature_enabled_ok \u003d base::FeatureList::IsEnabled(feature);\nif the feature is not currently available.\n\nSo yeah, it\u0027s at least intentional and thought through on my part.\n\nReally appreciate you checking though!",
+      "parentUuid": "7b4f3db6_25982b89",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 16
+      },
+      "revId": "ea85ea55602a43249f590b9c430292a52ad8c45e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59c6af5c_5f8737b3",
         "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ea85ea55602a43249f590b9c430292a52ad8c45e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59efad2c_a96e77c3",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-25T18:00:34Z",
+      "side": 1,
+      "message": "Just so much ouch! So yeah :-) b::MU-ing the Impl now!",
+      "parentUuid": "59c6af5c_5f8737b3",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 68
+      },
+      "revId": "ea85ea55602a43249f590b9c430292a52ad8c45e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
