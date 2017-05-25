@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9292951c_c3e08183",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-05-25T19:38:16Z",
+      "side": 1,
+      "message": "The direct bytes here can actually be ignored when the system is \u0027full\u0027 and waiting to page stuff to disk. Based on the bytes element, this would also need a BytesProvider.",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84427d1b_25826468",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-05-25T19:38:16Z",
+      "side": 1,
+      "message": "If we want to save bytes, we could use a varint here and elsewhere, but I\u0027m ok if we think that\u0027s unnecessary complexity / cpu usage.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595a5fdd_bd1c6f17",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-05-25T19:38:16Z",
+      "side": 1,
+      "message": "I like this idea - and how it\u0027s couples with each item. I might mean a little more state/object storage (if there are ton of bytes +nonbyte entries there will be a lot of these) BUT it lets us clear storage after it has been requested in a much better way - we don\u0027t do this now.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb42c539_62e7277c",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-05-25T19:38:16Z",
+      "side": 1,
+      "message": "Please put a comment that says this can be uint64_max for the special case where the user creates a file object.",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f750d84_3aa65855",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-05-25T19:38:16Z",
+      "side": 1,
+      "message": "I think this also has a valid \u0027unknown\u0027 value of max value.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 52
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3340657f_1f7569ab",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-05-25T19:38:16Z",
+      "side": 1,
+      "message": "same comments as file element.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e185ec80_716da1af",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-05-25T19:38:16Z",
+      "side": 1,
+      "message": "We can maybe have a blobregistry per-thread (so a worker will have its own).",
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
