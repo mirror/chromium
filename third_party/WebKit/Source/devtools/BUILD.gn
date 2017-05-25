@@ -624,6 +624,7 @@ all_devtools_files = [
   "front_end/timeline/TimelineFlameChartNetworkDataProvider.js",
   "front_end/timeline/timelineFlamechartPopover.css",
   "front_end/timeline/TimelineFlameChartView.js",
+  "front_end/timeline/timelineHistoryManager.css",
   "front_end/timeline/TimelineLayersView.js",
   "front_end/timeline/TimelineLoader.js",
   "front_end/timeline/timelinePaintProfiler.css",

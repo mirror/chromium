@@ -39,6 +39,13 @@ Timeline.PerformanceModel = class extends Common.Object {
   }
 
   /**
+   * @return {number|undefined}
+   */
+  recordStartTime() {
+    return this._recordStartTime;
+  }
+
+  /**
    * @param {!SDK.TracingModel} model
    */
   setTracingModel(model) {
@@ -144,7 +151,14 @@ Timeline.PerformanceModel = class extends Common.Object {
     var filmStripFrame = this._filmStripModel.frameByTimestamp(screenshotTime);
     return filmStripFrame && filmStripFrame.timestamp - frame.endTime < 10 ? filmStripFrame : null;
   }
+
+  /**
+   * return {string}
+   */
+  displayName() {
+  }
 };
+
 
 /**
  * @enum {symbol}
