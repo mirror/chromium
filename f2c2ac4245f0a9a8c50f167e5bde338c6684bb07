@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df5838e3_0d3b560d",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-25T22:13:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7023245_af30c79a",
+      "revId": "f2c2ac4245f0a9a8c50f167e5bde338c6684bb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d9b900c_b8f1554f",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-05-24T21:45:04Z",
       "side": 1,
       "message": "Would it be better?\n\nauto it \u003d per_sequence_.begin();\nwhile (it !\u003d per_sequence_.end() \u0026\u0026 it-\u003etask_runner() !\u003d task_runner) {\n  ++it;\n}\nif (it \u003d\u003d per_sequence_.end()) {\n  per_sequence_.emplace_back(std::move(task_runner), value_);\n  it \u003d per_sequence_.back();\n}\nit-\u003eAddObserver(observer);\nreturn it-\u003evalue();",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 40
+      },
+      "revId": "f2c2ac4245f0a9a8c50f167e5bde338c6684bb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a872d169_07b6001a",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-25T22:13:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d9b900c_b8f1554f",
       "range": {
         "startLine": 213,
         "startChar": 0,

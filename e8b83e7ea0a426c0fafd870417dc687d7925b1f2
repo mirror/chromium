@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "bb637d33_e7d0d29b",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-25T22:13:09Z",
+      "side": 1,
+      "message": "I think sequenced task runner doesn\u0027t make a big difference to us at the moment.",
+      "parentUuid": "0673058b_18889fc3",
+      "revId": "e8b83e7ea0a426c0fafd870417dc687d7925b1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a224ccd_33d8ffdd",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 4
