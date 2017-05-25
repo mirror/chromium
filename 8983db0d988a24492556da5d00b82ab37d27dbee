@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "27fcdaf4_9423d7a6",
+        "filename": "third_party/WebKit/Source/core/frame/ResizeViewportAnchor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-05-25T22:02:49Z",
+      "side": 1,
+      "message": "Ah, ok thanks - my understanding was incorrect. As Steve mentioned, this gets called from layout though so it should be local.",
+      "parentUuid": "57875cf8_8eca58f6",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "8983db0d988a24492556da5d00b82ab37d27dbee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d766758_a9aa6ef0",
         "filename": "third_party/WebKit/Source/web/WebAXObject.cpp",
         "patchSetId": 1
