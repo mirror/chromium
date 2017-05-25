@@ -9,6 +9,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/arc/common/app.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/layout_constants.h"
@@ -23,7 +24,8 @@ ArcAppInfoLinksPanel::ArcAppInfoLinksPanel(Profile* profile,
     : AppInfoPanel(profile, app),
       app_list_observer_(this),
       manage_link_(nullptr) {
-  SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical, 0, 0,
+  SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical,
+                                        gfx::Insets(),
                                         views::kRelatedControlVerticalSpacing));
   manage_link_ = new views::Link(
       l10n_util::GetStringUTF16(IDS_ARC_APPLICATION_INFO_MANAGE_LINK));
