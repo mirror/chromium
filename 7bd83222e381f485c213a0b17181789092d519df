@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63af0b9b_cc3da276",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-25T02:22:45Z",
+      "side": 1,
+      "message": "rm \u0027to\u0027 before \u0027for\u0027 (I think)",
+      "range": {
+        "startLine": 105,
+        "startChar": 41,
+        "endLine": 105,
+        "endChar": 43
+      },
+      "revId": "7bd83222e381f485c213a0b17181789092d519df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
