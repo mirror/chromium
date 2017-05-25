@@ -99,14 +99,17 @@ class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
     control->Init(std::move(config));
     above_user_prefs_pref_store_ = new ValueMapPrefStore();
     below_user_prefs_pref_store_ = new ValueMapPrefStore();
-    mojom::PrefStoreRegistryPtr registry;
-    connector()->BindInterface(mojom::kServiceName, &registry);
-    above_user_prefs_impl_ =
-        PrefStoreImpl::Create(registry.get(), above_user_prefs_pref_store_,
-                              PrefValueStore::COMMAND_LINE_STORE);
-    below_user_prefs_impl_ =
-        PrefStoreImpl::Create(registry.get(), below_user_prefs_pref_store_,
-                              PrefValueStore::RECOMMENDED_STORE);
+    connector()->BindInterface(mojom::kServiceName, &pref_store_registry_);
+    CreateLayeredPrefStores();
+  }
+
+  virtual void CreateLayeredPrefStores() {
+    above_user_prefs_impl_ = PrefStoreImpl::Create(
+        pref_store_registry(), above_user_prefs_pref_store_,
+        PrefValueStore::COMMAND_LINE_STORE);
+    below_user_prefs_impl_ = PrefStoreImpl::Create(
+        pref_store_registry(), below_user_prefs_pref_store_,
+        PrefValueStore::RECOMMENDED_STORE);
   }
 
   // service_manager::test::ServiceTest:
@@ -139,19 +142,6 @@ class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
     run_loop.Run();
   }
 
-  WriteablePrefStore* above_user_prefs_pref_store() {
-    return above_user_prefs_pref_store_.get();
-  }
-  WriteablePrefStore* below_user_prefs_pref_store() {
-    return below_user_prefs_pref_store_.get();
-  }
-
- private:
-  // Called when the PrefService has been initialized.
-  static void OnInit(const base::Closure& quit_closure, bool success) {
-    quit_closure.Run();
-  }
-
   // Called when the PrefService has been created.
   static void OnCreate(const base::Closure& quit_closure,
                        std::unique_ptr<PrefService>* out,
@@ -164,6 +154,22 @@ class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
           base::Bind(PrefServiceFactoryTest::OnInit, quit_closure));
       return;
     }
+    quit_closure.Run();
+  }
+
+  WriteablePrefStore* above_user_prefs_pref_store() {
+    return above_user_prefs_pref_store_.get();
+  }
+  WriteablePrefStore* below_user_prefs_pref_store() {
+    return below_user_prefs_pref_store_.get();
+  }
+  mojom::PrefStoreRegistry* pref_store_registry() {
+    return pref_store_registry_.get();
+  }
+
+ private:
+  // Called when the PrefService has been initialized.
+  static void OnInit(const base::Closure& quit_closure, bool success) {
     quit_closure.Run();
   }
 
@@ -180,6 +186,7 @@ class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
   std::unique_ptr<PrefStoreImpl> above_user_prefs_impl_;
   scoped_refptr<WriteablePrefStore> below_user_prefs_pref_store_;
   std::unique_ptr<PrefStoreImpl> below_user_prefs_impl_;
+  mojom::PrefStoreRegistryPtr pref_store_registry_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefServiceFactoryTest);
 };
@@ -477,6 +484,72 @@ TEST_F(PrefServiceFactoryTest,
   registrar.Add(kDictionaryKey, base::Bind(&Fail, pref_service2.get()));
   pref_service->SetInteger(kKey, kUpdatedValue);
   WaitForPrefChange(pref_service2.get(), kKey);
+}
+
+class PrefServiceFactoryManualPrefStoreRegistrationTest
+    : public PrefServiceFactoryTest {
+ protected:
+  void CreateLayeredPrefStores() override {}
+};
+
+class PrefStoreImpl : public mojom::PrefStore {
+ public:
+  PrefStoreImpl(base::OnceClosure on_add_observer,
+                mojom::PrefStoreRequest request)
+      : on_add_observer_(std::move(on_add_observer)),
+        binding_(this, std::move(request)) {}
+
+  void AddObserver(const std::vector<std::string>& prefs_to_observe,
+                   const AddObserverCallback& callback) override {
+    observer_added_ = true;
+    if (on_add_observer_)
+      std::move(on_add_observer_).Run();
+
+    mojom::PrefStoreObserverPtr observer;
+    callback.Run(mojom::PrefStoreConnection::New(
+        mojo::MakeRequest(&observer), base::MakeUnique<base::DictionaryValue>(),
+        true));
+  }
+
+  bool observer_added() { return observer_added_; }
+
+ private:
+  bool observer_added_ = false;
+  base::OnceClosure on_add_observer_;
+  mojo::Binding<mojom::PrefStore> binding_;
+};
+
+// Check that registering a read-only PrefStore after a connect request is
+// received correctly services that connect request.
+TEST_F(PrefServiceFactoryManualPrefStoreRegistrationTest,
+       RegistrationBeforeAndAfterConnect) {
+  base::RunLoop add_observer_run_loop;
+
+  mojom::PrefStorePtr below_ptr;
+  PrefStoreImpl below_user_prefs(add_observer_run_loop.QuitClosure(),
+                                 mojo::MakeRequest(&below_ptr));
+  pref_store_registry()->Register(PrefValueStore::RECOMMENDED_STORE,
+                                  std::move(below_ptr));
+
+  std::unique_ptr<PrefService> pref_service;
+  base::RunLoop run_loop;
+  ConnectToPrefService(connector(), base::MakeRefCounted<PrefRegistrySimple>(),
+                       std::vector<PrefValueStore::PrefStoreType>(),
+                       base::Bind(&PrefServiceFactoryTest::OnCreate,
+                                  run_loop.QuitClosure(), &pref_service));
+
+  add_observer_run_loop.Run();
+  ASSERT_TRUE(below_user_prefs.observer_added());
+
+  EXPECT_FALSE(pref_service);
+
+  mojom::PrefStorePtr above_ptr;
+  PrefStoreImpl above_user_prefs({}, mojo::MakeRequest(&above_ptr));
+  pref_store_registry()->Register(PrefValueStore::COMMAND_LINE_STORE,
+                                  std::move(above_ptr));
+
+  run_loop.Run();
+  EXPECT_TRUE(above_user_prefs.observer_added());
 }
 
 }  // namespace
