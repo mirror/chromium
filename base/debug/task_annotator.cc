@@ -35,9 +35,10 @@ void TaskAnnotator::RunTask(const char* queue_function,
 
   tracked_objects::TaskStopwatch stopwatch;
   stopwatch.Start();
+#if 0
   tracked_objects::Duration queue_duration =
       stopwatch.StartTime() - pending_task->EffectiveTimePosted();
-
+#endif
   TRACE_EVENT_WITH_FLOW1(
       TRACE_DISABLED_BY_DEFAULT("toplevel.flow"), queue_function,
       TRACE_ID_MANGLE(GetTaskTraceID(*pending_task)), TRACE_EVENT_FLAG_FLOW_IN,

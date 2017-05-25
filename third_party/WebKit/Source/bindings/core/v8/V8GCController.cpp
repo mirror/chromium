@@ -280,11 +280,13 @@ v8::HeapProfiler::RetainerInfos V8GCController::getRetainerInfos(
   return v8::HeapProfiler::RetainerInfos{tracer->groups(), tracer->edges()};
 }
 
+#if 0  
 static unsigned long long usedHeapSize(v8::Isolate* isolate) {
   v8::HeapStatistics heapStatistics;
   isolate->GetHeapStatistics(&heapStatistics);
   return heapStatistics.used_heap_size();
 }
+#endif
 
 namespace {
 

@@ -47,12 +47,14 @@ SkEventTracer::Handle
                                          const uint8_t* argTypes,
                                          const uint64_t* argValues,
                                          uint8_t flags) {
+#if 0
   base::trace_event::TraceEventHandle handle = TRACE_EVENT_API_ADD_TRACE_EVENT(
       phase, categoryEnabledFlag, name, trace_event_internal::kGlobalScope, id,
       numArgs, argNames, argTypes, (const long long unsigned int*)argValues,
       NULL, flags);
+#endif  
       SkEventTracer::Handle result;
-      memcpy(&result, &handle, sizeof(result));
+      //      memcpy(&result, &handle, sizeof(result));
       return result;
 }
 
@@ -61,10 +63,12 @@ void
         const uint8_t* categoryEnabledFlag,
         const char *name,
         SkEventTracer::Handle handle) {
+#if 0  
   base::trace_event::TraceEventHandle traceEventHandle;
       memcpy(&traceEventHandle, &handle, sizeof(handle));
       TRACE_EVENT_API_UPDATE_TRACE_EVENT_DURATION(
           categoryEnabledFlag, name, traceEventHandle);
+#endif      
 }
 
 }  // namespace skia

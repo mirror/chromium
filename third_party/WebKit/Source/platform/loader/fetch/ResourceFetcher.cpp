@@ -329,11 +329,13 @@ void ResourceFetcher::requestLoadStarted(unsigned long identifier,
   m_validatedURLs.insert(request.resourceRequest().url());
 }
 
+#if 0
 static std::unique_ptr<TracedValue> urlForTraceEvent(const KURL& url) {
   std::unique_ptr<TracedValue> value = TracedValue::create();
   value->setString("url", url.getString());
   return value;
 }
+#endif  
 
 Resource* ResourceFetcher::resourceForStaticData(
     const FetchRequest& request,

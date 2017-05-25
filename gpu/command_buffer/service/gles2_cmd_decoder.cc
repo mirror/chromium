@@ -15378,7 +15378,7 @@ error::Error GLES2DecoderImpl::HandleShaderBinary(
 void GLES2DecoderImpl::DoSwapBuffers() {
   bool is_offscreen = !!offscreen_target_frame_buffer_.get();
 
-  int this_frame_number = frame_number_++;
+  //  int this_frame_number = frame_number_++;
   // TRACE_EVENT for gpu tests:
   TRACE_EVENT_INSTANT2(
       "test_gpu", "SwapBuffersLatency", TRACE_EVENT_SCOPE_THREAD, "GLImpl",

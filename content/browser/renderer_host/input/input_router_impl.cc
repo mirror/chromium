@@ -52,6 +52,7 @@ using ui::WebInputEventTraits;
 namespace content {
 namespace {
 
+#if 0
 const char* GetEventAckName(InputEventAckState ack_result) {
   switch(ack_result) {
     case INPUT_EVENT_ACK_STATE_UNKNOWN: return "UNKNOWN";
@@ -67,6 +68,7 @@ const char* GetEventAckName(InputEventAckState ack_result) {
   DLOG(WARNING) << "Unhandled InputEventAckState in GetEventAckName.";
   return "";
 }
+#endif
 
 } // namespace
 

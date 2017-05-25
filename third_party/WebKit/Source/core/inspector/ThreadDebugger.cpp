@@ -443,7 +443,7 @@ void ThreadDebugger::consoleTimeEnd(const v8_inspector::StringView& title) {
 }
 
 void ThreadDebugger::consoleTimeStamp(const v8_inspector::StringView& title) {
-  v8::Isolate* isolate = m_isolate;
+  //  v8::Isolate* isolate = m_isolate;
   // TODO(dgozman): we can save on a copy here if TracedValue would take a
   // StringView.
   TRACE_EVENT_INSTANT1(

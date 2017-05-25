@@ -42,8 +42,8 @@ class BASE_EXPORT AutoOpenCloseEvent
   void OnTraceLogDisabled() override;
 
  private:
-  const char* const category_;
-  const char* const event_name_;
+  //  const char* const category_;
+  //  const char* const event_name_;
   base::TimeTicks start_time_;
   base::ThreadChecker thread_checker_;
   WeakPtrFactory<AutoOpenCloseEvent> weak_factory_;

@@ -534,7 +534,7 @@ void SourceBuffer::abortIfUpdating() {
 
   DCHECK_EQ(m_pendingRemoveStart, -1);
 
-  const char* traceEventName = "SourceBuffer::appendBuffer";
+  //  const char* traceEventName = "SourceBuffer::appendBuffer";
 
   // 4.1. Abort the buffer append and stream append loop algorithms if they are
   //      running.

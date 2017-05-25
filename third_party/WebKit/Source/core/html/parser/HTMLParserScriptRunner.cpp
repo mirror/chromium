@@ -55,6 +55,7 @@ namespace {
 
 // TODO(bmcquade): move this to a shared location if we find ourselves wanting
 // to trace similar data elsewhere in the codebase.
+#if 0
 std::unique_ptr<TracedValue> getTraceArgsForScriptElement(
     Element* element,
     const TextPosition& textPosition) {
@@ -76,7 +77,8 @@ std::unique_ptr<TracedValue> getTraceArgsForScriptElement(
   }
   return value;
 }
-
+#endif
+  
 bool doExecuteScript(Element* scriptElement,
                      const ScriptSourceCode& sourceCode,
                      const TextPosition& textPosition) {
@@ -111,7 +113,7 @@ void traceParserBlockingScript(const PendingScript* pendingScript,
   Element* element = pendingScript->element();
   if (!element)
     return;
-  TextPosition scriptStartPosition = pendingScript->startingPosition();
+  //  TextPosition scriptStartPosition = pendingScript->startingPosition();
   if (!pendingScript->isReady()) {
     if (waitingForResources) {
       TRACE_EVENT_WITH_FLOW1(
