@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "543ebad5_6a07923f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-05-25T04:12:37Z",
+      "side": 1,
+      "message": "Why is vrshell_submit_fence_ a member rather than being passed with the bind?",
+      "range": {
+        "startLine": 1074,
+        "startChar": 6,
+        "endLine": 1074,
+        "endChar": 27
+      },
+      "revId": "74c509c3879ec85dfd2b65413a7498fbdfb953e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22eb0fc8_ed9d2724",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 4
