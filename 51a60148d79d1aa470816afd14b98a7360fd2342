@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6332a6af_a4372471",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-05-25T23:09:00Z",
+      "side": 1,
+      "message": "This is never exposed in the public interface. Are clients meant to call the internal class?",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7ac7d6_b41cc943",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-05-25T23:09:00Z",
+      "side": 1,
+      "message": "nit: Did you consider making this method locking, and instead exposing a GetValueNonThreadsafe() method?",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 20
+      },
+      "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcc692cb_b4eb8fe1",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 7
@@ -13,6 +59,30 @@
       "writtenOn": "2017-05-25T22:50:19Z",
       "side": 1,
       "message": "you mean, it \u003d per_sequence_.end() - 1?",
+      "range": {
+        "startLine": 224,
+        "startChar": 6,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cb3c62d_b023da74",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-05-25T23:09:00Z",
+      "side": 1,
+      "message": "Why not per_sequence_.back()?",
+      "parentUuid": "bcc692cb_b4eb8fe1",
       "range": {
         "startLine": 224,
         "startChar": 6,
