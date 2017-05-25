@@ -162,6 +162,9 @@ bool MockRenderProcessHost::Shutdown(int exit_code, bool wait) {
   return true;
 }
 
+void MockRenderProcessHost::TerminateHungRenderProcess(
+    const base::StringPairs& crash_key) {}
+
 bool MockRenderProcessHost::FastShutdownIfPossible() {
   // We aren't actually going to do anything, but set |fast_shutdown_started_|
   // to true so that tests know we've been called.

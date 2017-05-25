@@ -66,6 +66,7 @@ class MockRenderProcessHost : public RenderProcessHost {
   StoragePartition* GetStoragePartition() const override;
   virtual void AddWord(const base::string16& word);
   bool Shutdown(int exit_code, bool wait) override;
+  void TerminateHungRenderProcess(const base::StringPairs& crash_key) override;
   bool FastShutdownIfPossible() override;
   bool FastShutdownStarted() const override;
   base::ProcessHandle GetHandle() const override;

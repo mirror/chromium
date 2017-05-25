@@ -99,6 +99,7 @@
 #include "content/renderer/cache_storage/cache_storage_dispatcher.h"
 #include "content/renderer/cache_storage/cache_storage_message_filter.h"
 #include "content/renderer/categorized_worker_pool.h"
+#include "content/renderer/crasher_impl.h"
 #include "content/renderer/devtools/devtools_agent_filter.h"
 #include "content/renderer/dom_storage/dom_storage_dispatcher.h"
 #include "content/renderer/dom_storage/webstoragearea_impl.h"
@@ -746,6 +747,7 @@ void RenderThreadImpl::Init(
                          base::ThreadTaskRunnerHandle::Get());
   registry->AddInterface(base::Bind(&EmbeddedWorkerInstanceClientImpl::Create),
                          base::ThreadTaskRunnerHandle::Get());
+  registry->AddInterface(base::Bind(&CrasherImpl::Create), GetIOTaskRunner());
   GetServiceManagerConnection()->AddConnectionFilter(
       base::MakeUnique<SimpleConnectionFilter>(std::move(registry)));
 
@@ -759,6 +761,8 @@ void RenderThreadImpl::Init(
   GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&RenderThreadImpl::OnRendererInterfaceRequest,
                  base::Unretained(this)));
+
+  GetIOTaskRunner();
 
   InitSkiaEventTracer();
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(

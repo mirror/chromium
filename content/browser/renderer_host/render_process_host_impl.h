@@ -29,6 +29,7 @@
 #include "content/common/associated_interface_registry_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
 #include "content/common/content_export.h"
+#include "content/common/crasher.mojom.h"
 #include "content/common/indexed_db/indexed_db.mojom.h"
 #include "content/common/renderer.mojom.h"
 #include "content/common/storage_partition_service.mojom.h"
@@ -132,6 +133,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   StoragePartition* GetStoragePartition() const override;
   bool Shutdown(int exit_code, bool wait) override;
   bool FastShutdownIfPossible() override;
+  void TerminateHungRenderProcess(const base::StringPairs& crash_keys) override;
   base::ProcessHandle GetHandle() const override;
   bool IsReady() const override;
   BrowserContext* GetBrowserContext() const override;
@@ -675,6 +677,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   mojom::RouteProviderAssociatedPtr remote_route_provider_;
   mojom::RendererAssociatedPtr renderer_interface_;
+  mojom::CrasherPtr crasher_interface_;
 
   // Tracks active audio streams within the render process; used to determine if
   // if a process should be backgrounded.

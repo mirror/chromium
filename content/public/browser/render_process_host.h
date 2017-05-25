@@ -14,6 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/process/kill.h"
 #include "base/process/process_handle.h"
+#include "base/strings/string_split.h"
 #include "base/supports_user_data.h"
 #include "content/common/content_export.h"
 #include "content/public/common/bind_interface_helpers.h"
@@ -145,6 +146,9 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // function does nothing.
   // Returns true if it was able to do fast shutdown.
   virtual bool FastShutdownIfPossible() = 0;
+
+  virtual void TerminateHungRenderProcess(
+      const base::StringPairs& crash_keys) = 0;
 
   // Returns true if fast shutdown was started for the renderer.
   virtual bool FastShutdownStarted() const = 0;
