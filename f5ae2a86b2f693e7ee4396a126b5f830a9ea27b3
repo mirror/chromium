@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ae54fe8_90ba3d8e",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-05-25T06:21:47Z",
+      "side": 1,
+      "message": "I don\u0027t want to do this.\nThe issue happens very rare case and we want to know cases.\nNote: The issue\u0027s case is caused by Shadow DOM V0 being deprecated. So, it isn\u0027t good sample.",
+      "revId": "f5ae2a86b2f693e7ee4396a126b5f830a9ea27b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
