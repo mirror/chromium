@@ -49,7 +49,6 @@ class MockBaseFetchContext final : public BaseFetchContext {
   }
   Settings* GetSettings() const override { return nullptr; }
   SubresourceFilter* GetSubresourceFilter() const override { return nullptr; }
-  SecurityContext* GetParentSecurityContext() const override { return nullptr; }
   bool ShouldBlockRequestByInspector(const ResourceRequest&) const override {
     return false;
   }
@@ -66,6 +65,21 @@ class MockBaseFetchContext final : public BaseFetchContext {
       SecurityViolationReportingPolicy) const override {
     return false;
   }
+  ReferrerPolicy GetReferrerPolicy() const override {
+    return kReferrerPolicyDefault;
+  }
+  String OutgoingReferrer() const override { return String(); }
+  const KURL& Url() const override { return BlankURL(); }
+  const SecurityOrigin* GetParentSecurityOrigin() const override {
+    return nullptr;
+  }
+  Optional<WebAddressSpace> AddressSpace() const override {
+    return WTF::nullopt;
+  }
+  const ContentSecurityPolicy* GetContentSecurityPolicy() const override {
+    return nullptr;
+  }
+  void AddConsoleMessage(ConsoleMessage*) const override {}
 };
 
 class BaseFetchContextTest : public ::testing::Test {
