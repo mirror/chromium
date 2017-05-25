@@ -35,6 +35,7 @@
 #include "ui/gl/android/surface_texture.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
+#include "ui/gl/gl_fence_egl.h"
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
@@ -89,6 +90,12 @@ static constexpr unsigned kWebVRSlidingAverageSize = 5;
 // Criteria for considering holding the app button in combination with
 // controller movement as a gesture.
 static constexpr float kMinAppButtonGestureAngleRad = 0.25;
+
+// Interval for checking for the WebVR rendering GL fence. Ideally we'd want to
+// wait for completion with a short timeout, but GLFenceEGL doesn't currently
+// support that, see TODO(klausw,crbug.com/726026).
+static constexpr base::TimeDelta kWebVRFenceCheckInterval =
+    base::TimeDelta::FromMicroseconds(250);
 
 static constexpr gfx::PointF kInvalidTargetPoint =
     gfx::PointF(std::numeric_limits<float>::max(),
@@ -394,13 +401,6 @@ void VrShellGl::SubmitWebVRFrame(int16_t frame_index,
     // OnWebVRFrameAvailable where we'd normally report that.
     submit_client_->OnSubmitFrameRendered();
   }
-
-  TRACE_EVENT0("gpu", "VrShellGl::glFinish");
-  // This is a load-bearing glFinish, please don't remove it without
-  // before/after timing comparisons. Goal is to clear the GPU queue
-  // of the native GL context to avoid stalls later in GVR frame
-  // acquire/submit.
-  glFinish();
 }
 
 void VrShellGl::SetSubmitClient(
@@ -1055,12 +1055,48 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
     frame.Unbind();
   }
 
-  {
-    TRACE_EVENT0("gpu", "VrShellGl::Submit");
-    gvr::Mat4f mat;
-    MatfToGvrMat(head_pose, &mat);
-    frame.Submit(*buffer_viewport_list_, mat);
+  std::unique_ptr<gl::GLFence> vrshell_submit_fence;
+
+  base::TimeDelta initial_delay;
+  if (ShouldDrawWebVr() && surfaceless_rendering_) {
+    vrshell_submit_fence_ = base::MakeUnique<gl::GLFenceEGL>();
+    initial_delay = kWebVRFenceCheckInterval;
+  } else {
+    vrshell_submit_fence_ = nullptr;
+    initial_delay = base::TimeDelta::FromMilliseconds(0);
   }
+
+  task_runner_->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&VrShellGl::DrawFrameSubmitWhenReady,
+                 weak_ptr_factory_.GetWeakPtr(), frame_index, frame.release(),
+                 head_pose, std::move(vrshell_submit_fence)),
+      initial_delay);
+}
+
+void VrShellGl::DrawFrameSubmitWhenReady(
+    int16_t frame_index,
+    gvr_frame* frame_ptr,
+    const vr::Mat4f& head_pose,
+    std::unique_ptr<gl::GLFence> vrshell_submit_fence) {
+  if (vrshell_submit_fence && !vrshell_submit_fence->HasCompleted()) {
+    task_runner_->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&VrShellGl::DrawFrameSubmitWhenReady,
+                   weak_ptr_factory_.GetWeakPtr(), frame_index, frame_ptr,
+                   head_pose, vrshell_submit_fence),
+        kWebVRFenceCheckInterval);
+    return;
+  }
+  vrshell_submit_fence_ = nullptr;
+
+  TRACE_EVENT1("gpu", "VrShellGl::DrawFrameSubmitWhenReady", "frame",
+               frame_index);
+
+  gvr::Frame frame(frame_ptr);
+  gvr::Mat4f mat;
+  MatfToGvrMat(head_pose, &mat);
+  frame.Submit(*buffer_viewport_list_, mat);
 
   // No need to swap buffers for surfaceless rendering.
   if (!surfaceless_rendering_) {
@@ -1079,7 +1115,7 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
 
   // After saving the timestamp, fps will be available via GetFPS().
   // TODO(vollick): enable rendering of this framerate in a HUD.
-  fps_meter_->AddFrame(current_time);
+  fps_meter_->AddFrame(base::TimeTicks::Now());
   DVLOG(1) << "fps: " << fps_meter_->GetFPS();
   TRACE_COUNTER1("gpu", "WebVR FPS", fps_meter_->GetFPS());
 }
