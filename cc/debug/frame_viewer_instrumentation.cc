@@ -26,6 +26,7 @@ const char kSourceFrameNumber[] = "sourceFrameNumber";
 const char kAnalyzeTask[] = "AnalyzeTask";
 const char kRasterTask[] = "RasterTask";
 
+#if 0
 std::unique_ptr<base::trace_event::ConvertableToTraceFormat> TileDataAsValue(
     const void* tile_id,
     TileResolution tile_resolution,
@@ -39,7 +40,7 @@ std::unique_ptr<base::trace_event::ConvertableToTraceFormat> TileDataAsValue(
   res->SetInteger(kLayerId, layer_id);
   return std::move(res);
 }
-
+#endif
 }  // namespace
 
 ScopedAnalyzeTask::ScopedAnalyzeTask(const void* tile_id,

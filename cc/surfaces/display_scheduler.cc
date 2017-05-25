@@ -154,7 +154,7 @@ bool DisplayScheduler::DrawAndSwap() {
 }
 
 bool DisplayScheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
-  base::TimeTicks now = base::TimeTicks::Now();
+  //  base::TimeTicks now = base::TimeTicks::Now();
   TRACE_EVENT2("cc", "DisplayScheduler::BeginFrame", "args", args.AsValue(),
                "now", now);
 

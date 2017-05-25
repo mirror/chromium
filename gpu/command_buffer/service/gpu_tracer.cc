@@ -114,7 +114,7 @@ void TraceOutputter::TraceServiceEnd(GpuTracerSource source,
                                      const std::string& name) {
   DCHECK(source >= 0 && source < NUM_TRACER_SOURCES);
   DCHECK(!trace_service_id_stack_[source].empty());
-  const uint64_t local_trace_id = trace_service_id_stack_[source].top();
+  //  const uint64_t local_trace_id = trace_service_id_stack_[source].top();
   trace_service_id_stack_[source].pop();
 
   TRACE_EVENT_COPY_NESTABLE_ASYNC_END_WITH_TTS2(

@@ -264,7 +264,7 @@ void addJsonObjectForRect(TracedValue* value, const char* name, const T& rect) {
   value->setDouble("height", rect.height());
   value->endDictionary();
 }
-
+#if 0
 static std::unique_ptr<TracedValue> jsonObjectForPaintInvalidationInfo(
     const LayoutRect& rect,
     const String& invalidationReason) {
@@ -273,7 +273,7 @@ static std::unique_ptr<TracedValue> jsonObjectForPaintInvalidationInfo(
   value->setString("invalidation_reason", invalidationReason);
   return value;
 }
-
+#endif
 static void invalidatePaintRectangleOnWindow(
     const LayoutBoxModelObject& paintInvalidationContainer,
     const IntRect& dirtyRect) {

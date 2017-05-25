@@ -353,8 +353,8 @@ void Scheduler::BeginImplFrameWithDeadline(const BeginFrameArgs& args) {
   DCHECK_EQ(state_machine_.begin_impl_frame_state(),
             SchedulerStateMachine::BEGIN_IMPL_FRAME_STATE_IDLE);
 
-  bool main_thread_is_in_high_latency_mode =
-      state_machine_.main_thread_missed_last_deadline();
+  //  bool main_thread_is_in_high_latency_mode =
+  //  state_machine_.main_thread_missed_last_deadline();
   TRACE_EVENT2("cc,benchmark", "Scheduler::BeginImplFrame", "args",
                adjusted_args.AsValue(), "main_thread_missed_last_deadline",
                main_thread_is_in_high_latency_mode);

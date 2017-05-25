@@ -452,7 +452,8 @@ void TraceEvent::AppendPrettyPrinted(std::ostringstream* out) const {
 
 namespace trace_event_internal {
 
-std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
+#if 0
+  std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
 TraceID::AsConvertableToTraceFormat() const {
   auto value = base::MakeUnique<base::trace_event::TracedValue>();
 
@@ -486,5 +487,5 @@ TraceID::AsConvertableToTraceFormat() const {
 
   return std::move(value);
 }
-
+#endif
 }  // namespace trace_event_internal

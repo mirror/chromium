@@ -24,6 +24,8 @@
 #include "base/trace_event/trace_log.h"
 #include "build/build_config.h"
 
+#if 0
+
 // By default, const char* argument values are assumed to have long-lived scope
 // and will not be copied. Use this macro to force a const char* to be copied.
 #define TRACE_STR_COPY(str) \
@@ -1114,5 +1116,105 @@ template<typename IDType> class TraceScopedTrackableObject {
 
 }  // namespace trace_event
 }  // namespace base
+
+#else
+
+#define INTERNAL_TRACE_EVENT_UID3(a,b) \
+    trace_event_unique_##a##b
+#define INTERNAL_TRACE_EVENT_UID2(a,b) \
+    INTERNAL_TRACE_EVENT_UID3(a,b)
+#define INTERNAL_TRACE_EVENT_UID(name_prefix) \
+    INTERNAL_TRACE_EVENT_UID2(name_prefix, __LINE__)
+
+#define TRACE_STR_COPY(str)
+#define TRACE_ID_MANGLE(id)
+#define TRACE_ID_DONT_MANGLE(id)
+#define TRACE_ID_WITH_SCOPE(scope, ...)
+#define TRACE_ID_GLOBAL(id)
+#define TRACE_ID_LOCAL(id)
+#define TRACE_EVENT_API_CURRENT_THREAD_ID 0
+#define INTERNAL_TRACE_EVENT_CATEGORY_GROUP_ENABLED_FOR_RECORDING_MODE() false
+#define INTERNAL_TRACE_EVENT_CATEGORY_GROUP_ENABLED() false
+
+
+const uint8_t g_false = 0;
+extern const uint8_t g_false;
+
+#define TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(a) &g_false
+#define TRACE_EVENT_API_GET_NUM_TRACES_RECORDED() 0
+#define TRACE_EVENT_API_ADD_TRACE_EVENT
+#define TRACE_EVENT_API_ADD_TRACE_EVENT_WITH_BIND_ID
+#define TRACE_EVENT_API_ADD_TRACE_EVENT_WITH_PROCESS_ID
+#define TRACE_EVENT_API_ADD_TRACE_EVENT_WITH_THREAD_ID_AND_TIMESTAMP
+#define TRACE_EVENT_API_UPDATE_TRACE_EVENT_DURATION
+#define TRACE_EVENT_API_ADD_METADATA_EVENT
+#define TRACE_EVENT_API_ATOMIC_LOAD(var)
+#define TRACE_EVENT_API_ATOMIC_STORE(var, value)
+#define TRACE_EVENT_BINARY_EFFICIENT0(category_group, name)
+#define INTERNAL_TRACE_EVENT_ADD_SCOPED(...)
+#define INTERNAL_TRACE_EVENT_ADD_SCOPED_WITH_FLOW(...)
+#define INTERNAL_TRACE_EVENT_ADD_WITH_ID_TID_AND_TIMESTAMP(...)
+#define INTERNAL_TRACE_TASK_EXECUTION(run_function, task)
+#define INTERNAL_TRACE_EVENT_ADD(...)
+#define INTERNAL_TRACE_EVENT_ADD_WITH_ID(...)
+#define INTERNAL_TRACE_EVENT_GET_CATEGORY_INFO(category_group)
+#define INTERNAL_TRACE_EVENT_ADD_WITH_TIMESTAMP(...)
+
+namespace base {
+namespace trace_event {
+
+template<typename IDType> class TraceScopedTrackableObject {
+ public:
+  TraceScopedTrackableObject(const char* category_group, const char* name,
+                             IDType id) {
+  }
+};
+
+}  // namespace trace_event
+}  // namespace base
+
+#define TRACE_EVENT_API_CLASS_EXPORT BASE_EXPORT
+#define TRACE_EVENT_API_ATOMIC_WORD base::subtle::AtomicWord
+ 
+namespace trace_event_internal {
+const std::nullptr_t kGlobalScope = nullptr;
+const unsigned long long kNoId = 0;
+
+class TRACE_EVENT_API_CLASS_EXPORT ScopedTraceBinaryEfficient {
+ public:
+  ScopedTraceBinaryEfficient(const char* category_group, const char* name);
+  ~ScopedTraceBinaryEfficient();
+ private:
+  //  const unsigned char* category_group_enabled_;
+  //  const char* name_;
+  //  base::trace_event::TraceEventHandle event_handle_;
+};
+ 
+static inline void SetTraceValue(const std::string& arg,
+                                 unsigned char* type,
+                                 unsigned long long* value) {
+}
+static inline void SetTraceValue(const base::Time arg,
+                                 unsigned char* type,
+                                 unsigned long long* value) {
+}
+
+static inline void SetTraceValue(const base::TimeTicks arg,
+                                 unsigned char* type,
+                                 unsigned long long* value) {
+}
+
+static inline void SetTraceValue(const base::ThreadTicks arg,
+                                 unsigned char* type,
+                                 unsigned long long* value) {
+} 
+
+static inline void SetTraceValue(int,
+                                 unsigned char* type,
+                                 unsigned long long* value) {
+} 
+}
+
+#endif
 
 #endif  // BASE_TRACE_EVENT_TRACE_EVENT_H_

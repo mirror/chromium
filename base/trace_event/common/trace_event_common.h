@@ -982,6 +982,7 @@
 #define TRACE_EVENT_WARMUP_CATEGORY(category_group) \
   INTERNAL_TRACE_EVENT_GET_CATEGORY_INFO(category_group)
 
+#if 0
 // Macro to efficiently determine, through polling, if a new trace has begun.
 #define TRACE_EVENT_IS_NEW_TRACE(ret)                                      \
   do {                                                                     \
@@ -996,6 +997,9 @@
       *ret = false;                                                        \
     }                                                                      \
   } while (0)
+#else
+#define TRACE_EVENT_IS_NEW_TRACE(ret) {*ret = false;}
+#endif
 
 // Notes regarding the following definitions:
 // New values can be added and propagated to third party libraries, but existing

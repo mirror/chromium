@@ -150,6 +150,7 @@ bool IsInstalled(ServiceWorkerVersion::Status status) {
   return false;
 }
 
+#if 0
 std::string VersionStatusToString(ServiceWorkerVersion::Status status) {
   switch (status) {
     case ServiceWorkerVersion::NEW:
@@ -168,7 +169,7 @@ std::string VersionStatusToString(ServiceWorkerVersion::Status status) {
   NOTREACHED() << status;
   return std::string();
 }
-
+#endif
 const int kInvalidTraceId = -1;
 
 int NextTraceId() {

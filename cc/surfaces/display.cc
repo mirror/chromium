@@ -342,6 +342,7 @@ bool Display::DrawAndSwap() {
   bool should_swap = should_draw && size_matches;
   if (should_swap) {
     swapped_since_resize_ = true;
+#if 0    
     for (auto& latency : frame.metadata.latency_info) {
       TRACE_EVENT_WITH_FLOW1(
           "input,benchmark", "LatencyInfo.Flow",
@@ -349,6 +350,7 @@ bool Display::DrawAndSwap() {
           TRACE_EVENT_FLAG_FLOW_IN | TRACE_EVENT_FLAG_FLOW_OUT, "step",
           "Display::DrawAndSwap");
     }
+#endif    
     benchmark_instrumentation::IssueDisplayRenderingStatsEvent();
     renderer_->SwapBuffers(std::move(frame.metadata.latency_info));
     if (scheduler_)
