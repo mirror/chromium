@@ -221,6 +221,8 @@ class Manager(object):
 
             results_path = self._filesystem.join(self._results_directory, "results.html")
             self._copy_results_html_file(results_path)
+            expectations_path = self._filesystem.join(self._results_directory, "test-expectations.html")
+            self._copy_testexpectations_html_file(expectations_path)
             if initial_results.keyboard_interrupted:
                 exit_code = exit_codes.INTERRUPTED_EXIT_STATUS
             else:
@@ -547,6 +549,12 @@ class Manager(object):
         # so make sure it exists before we try to copy it.
         if self._filesystem.exists(results_file):
             self._filesystem.copyfile(results_file, destination_path)
+
+    def _copy_testexpectations_html_file(self, destination_path):
+        base_dir = self._path_finder.path_from_layout_tests('fast', 'harness')
+        expectations_file = self._filesystem.join(base_dir, 'test-expectations.html')
+        if self._filesystem.exists(expectations_file):
+            self._filesystem.copyfile(expectations_file, destination_path)
 
     def _stats_trie(self, initial_results):
         def _worker_number(worker_name):

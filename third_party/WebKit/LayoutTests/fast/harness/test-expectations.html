@@ -1,0 +1,158 @@
+<!doctype html>
+<title>Results query</title>
+<body>
+<div id="serverError" style="display:none;color:red;font-size:larger">
+  Error: cannot load results.json.<br>
+  test-expectations.html must be loaded over http, because file:// does
+  not work with xhr JSON.<br>
+  Start a server in your results directory (or src if you want test links to work).
+</div>
+<h3>layout test results <a style="font-target="dashboard" href="results.html">original</a></h3>
+<pre id="summary">
+</pre>
+<div>Unexpected:
+  <button onclick="javascript:generateReport(Filters.unexpectedPass)">Pass</button>
+  <button onclick="javascript:generateReport(Filters.unexpectedFailure)">Failure</button>
+</div>
+<div>Results as:
+  <button onclick="javascript:generateReport(Filters.failure)">TestExpectations</button>
+  <button onclick="javascript:generateReport(Filters.all, debugPrint)">Debug</button>
+</div>
+<pre id="report">
+</pre>
+<script>
+
+function loadJson(path) {
+  return fetch(path).then( response => response.json() );
+}
+
+var fullResults = "";
+loadJson("full_results.json")
+  .then( result => {
+      fullResults = result;
+      return fullResults;
+  })
+  .then( result => printSummary(result))
+  .catch( reason => {
+    document.querySelector('#serverError').style.display = "block";
+  });
+
+function printSummary(r) {
+  let html = [];
+  html.push("Total: " + (r.num_passes + r.num_regressions));
+  html.push("Passed: " + r.num_passes);
+  html.push("Regressions: " + r.num_regressions);
+  let failures = r['num_failures_by_type'];
+  var totalFailures = 0;
+  for (p in failures) {
+    if (failures[p] != 0 && p != 'PASS') {
+      totalFailures += failures[p];
+      html.push(p + ": " + failures[p]);
+    }
+  }
+  html.push("Total typed failures: " + totalFailures);
+  document.querySelector("#summary").innerHTML = html.join('\n');
+}
+
+var testCount = 0;
+function testTraverseHelper(node, path, filter, action) {
+  if ('actual' in node) {
+    testCount++;
+    if (filter(node))
+      action(node, path);
+  }
+  else {
+    var keys = Object.keys(node).sort();
+    for (p of keys)
+      testTraverseHelper(node[p], path + "/" + p, filter, action);
+  }
+}
+
+function testTraverse(node, path, filter, action) {
+  lastDir = "";
+  testCount = 0;
+  document.querySelector('#report').innerHTML = '';
+  testTraverseHelper(node, path, filter, action);
+  document.querySelector('#report').innerHTML += 'Total tests: ' + testCount;
+}
+
+var lastDir;
+
+function reportAction(test, path) {
+   // crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/line-height-002.xht [ Skip ]
+    let html = "";
+
+    var dir, file, href;
+    [href, dir, file] = path.match("/(.*)/(.*)");
+    // print headers
+    if (dir != lastDir) {
+      html += "\n### " + dir + "\n";
+      lastDir = dir;
+    }
+    href = "../../third_party/WebKit/LayoutTests" + href.replace("/virtual/layout_ng", "");
+    // Crash, Failure, Pass, Rebaseline, Slow, Skip, Timeout, WontFix, Missing, NeedsRebaseline, NeedsManualRebaseline
+    let status = "";
+    switch(test.actual) {
+      case 'CRASH':
+        status = "Crash";
+        break;
+      case 'MISSING':
+        status = "Skip";
+        break;
+      case 'PASS':
+        status = "Pass";
+        break;
+      case 'TEXT':
+      case 'IMAGE':
+        status = "Failure";
+        break;
+      case 'SKIP':
+        status = "Skip";
+        break;
+      default:
+        console.error("Unexpected actual", test.actual);
+    }
+
+    let bug = "";
+    if ('bugs' in test && test.bugs.length > 0) {
+      bug = test.bugs.join(' ');
+    }
+    else {
+      if (test.actual != 'PASS')
+        console.error("failing test without bug", path);
+      bug = "crbug.com/635619";
+    }
+    html += bug;
+    html += " " + dir + "/" + "<a target='test' href='" + href + "'>" + file + "</a>";
+    html += " [ " + status + " ]\n";
+    document.querySelector('#report').innerHTML += html;
+    // console.log(path + " " + test.actual + " " + test.expected);
+}
+
+let Filters = {
+  unexpectedPass: test => {
+    return test.actual == 'PASS' && test.expected.indexOf(test.actual) == -1;
+  },
+  unexpectedFailure: test => {
+    var unexpected = test.actual != 'PASS'
+      && test.actual != test.expected
+      && test.expected != 'SKIP'
+      && test.expected != 'FAIL';
+    if (unexpected)
+      console.log(test.expected, test.actual);
+    return unexpected;
+    // return test.actual != 'PASS' && test.actual != test.expected && test.expected != 'SKIP';
+  },
+  all: _ => true,
+  failure: test => test.actual != 'PASS'
+}
+
+function debugPrint(test, path) {
+  console.log(test.actual, test.expected, path);
+}
+
+function generateReport(filter, report) {
+  report = report || reportAction;
+  testTraverse(fullResults.tests, "", filter, report);
+}
+</script>
