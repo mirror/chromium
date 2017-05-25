@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "caf81f5c_b1ecc6de",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/ScreenShooter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-25T10:41:46Z",
+      "side": 1,
+      "message": "My opinion on the color of the bike shed: I think technically \"shooting\" is not the correct term for taking a screenshot, but it\u0027s still straightforward to infer from the name what a ScreenShooter is supposed to do, and it does feel... well, lighthearted and whimsical (we have a CookieMonster class too!), so I would be okay with it.",
+      "parentUuid": "282a9995_d952ea3d",
+      "range": {
+        "startLine": 58,
+        "startChar": 13,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25577e58_07c5bfb9",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/ScreenShooter.java",
         "patchSetId": 5
@@ -228,6 +252,29 @@
       "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbb636a4_dee39788",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-25T10:41:46Z",
+      "side": 1,
+      "message": "Could we extract this into a rule?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "78f9c156b91fc6ab1d609d7258a202ec826b5ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
