@@ -11,8 +11,10 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/overview/cleanup_animation_observer.h"
 #include "ash/wm/overview/overview_animation_type.h"
 #include "ash/wm/overview/scoped_overview_animation_settings.h"
@@ -114,8 +116,9 @@ void SetupFadeInAfterLayout(views::Widget* widget) {
   window->layer()->SetOpacity(1.0f);
 }
 
-// A Button that has a listener and listens to mouse clicks on the visible part
-// of an overview window.
+// A Button that has a listener and listens to mouse / gesture events on the
+// visible part of an overview window. Note the drag events are only handled in
+// maximized mode.
 class ShieldButton : public views::CustomButton {
  public:
   ShieldButton(views::ButtonListener* listener, const base::string16& name)
@@ -130,6 +133,51 @@ class ShieldButton : public views::CustomButton {
   // necessary to prevent a crash when a user clicks on the fading out widget
   // after the WindowSelectorItem has been destroyed.
   void ResetListener() { listener_ = nullptr; }
+
+  // views::CustomButton overrides:
+  bool OnMousePressed(const ui::MouseEvent& event) override {
+    views::CustomButton::OnMousePressed(event);
+
+    if (listener() && Shell::Get()
+                          ->maximize_mode_controller()
+                          ->IsMaximizeModeWindowManagerEnabled()) {
+      listener()->HandleMousePressed(event);
+    }
+    return true;
+  }
+
+  void OnMouseReleased(const ui::MouseEvent& event) override {
+    views::CustomButton::OnMouseReleased(event);
+
+    if (listener() && Shell::Get()
+                          ->maximize_mode_controller()
+                          ->IsMaximizeModeWindowManagerEnabled()) {
+      listener()->HandleMouseReleased(event);
+    }
+  }
+
+  bool OnMouseDragged(const ui::MouseEvent& event) override {
+    views::CustomButton::OnMouseDragged(event);
+    if (listener() && Shell::Get()
+                          ->maximize_mode_controller()
+                          ->IsMaximizeModeWindowManagerEnabled()) {
+      listener()->HandleMouseDragged(event);
+    }
+    return true;
+  }
+
+  void OnGestureEvent(ui::GestureEvent* event) override {
+    views::CustomButton::OnGestureEvent(event);
+    if (listener() && Shell::Get()
+                          ->maximize_mode_controller()
+                          ->IsMaximizeModeWindowManagerEnabled()) {
+      listener()->HandleGestureEvent(event);
+    }
+  }
+
+  WindowSelectorItem* listener() {
+    return static_cast<WindowSelectorItem*>(listener_);
+  }
 
  protected:
   // views::View:
@@ -537,10 +585,20 @@ void WindowSelectorItem::ButtonPressed(views::Button* sender,
     return;
   }
   CHECK(sender == caption_container_view_->listener_button());
-  window_selector_->SelectWindow(this);
+
+  // For maximized mode, the event is handled in OverviewWindowDragController.
+  if (!Shell::Get()
+           ->maximize_mode_controller()
+           ->IsMaximizeModeWindowManagerEnabled()) {
+    window_selector_->SelectWindow(this);
+  }
 }
 
-void WindowSelectorItem::OnWindowDestroying(aura::Window* window) {
+void WindowSelectorItem::OnWindowDestroyed(aura::Window* window) {
+  // If it's WindowSelectorItem::OnWindowDestroying(), it might be called before
+  // WindowGrid::OnWindowDestroying(), in which |transform_window_.window()| is
+  // still used. In order to prevent a nullptr dereference, we changed it to
+  // OnWindowDestroyed().
   window->RemoveObserver(this);
   transform_window_.OnWindowDestroyed();
 }
@@ -558,6 +616,38 @@ float WindowSelectorItem::GetItemScale(const gfx::Size& size) {
       transform_window_.GetTargetBoundsInScreen().size(), inset_size,
       transform_window_.GetTopInset(),
       close_button_->GetPreferredSize().height());
+}
+
+void WindowSelectorItem::HandleMousePressed(const ui::MouseEvent& event) {
+  PrepareForDrag();
+  window_selector_->InitiateDrag(this, event);
+}
+
+void WindowSelectorItem::HandleMouseReleased(const ui::MouseEvent& event) {
+  window_selector_->CompleteDrag(this);
+}
+
+void WindowSelectorItem::HandleMouseDragged(const ui::MouseEvent& event) {
+  window_selector_->Drag(this, event.location(), event.flags());
+}
+
+void WindowSelectorItem::HandleGestureEvent(ui::GestureEvent* event) {
+  switch (event->type()) {
+    case ui::ET_GESTURE_SCROLL_BEGIN:
+    case ui::ET_GESTURE_TAP_DOWN:
+      PrepareForDrag();
+      window_selector_->InitiateDrag(this, *event);
+      break;
+    case ui::ET_GESTURE_SCROLL_UPDATE:
+      window_selector_->Drag(this, event->location(), event->flags());
+      break;
+    case ui::ET_GESTURE_END:
+      window_selector_->CompleteDrag(this);
+      break;
+    default:
+      break;
+  }
+  event->StopPropagation();
 }
 
 gfx::Rect WindowSelectorItem::GetTargetBoundsInScreen() const {
@@ -748,6 +838,14 @@ gfx::SlideAnimation* WindowSelectorItem::GetBackgroundViewAnimation() {
 
 aura::Window* WindowSelectorItem::GetOverviewWindowForMinimizedStateForTest() {
   return transform_window_.GetOverviewWindowForMinimizedState();
+}
+
+void WindowSelectorItem::PrepareForDrag() {
+  aura::Window* widget_window = item_widget_->GetNativeWindow();
+  if (widget_window && widget_window->parent() == GetWindow()->parent()) {
+    widget_window->parent()->StackChildAtTop(widget_window);
+    widget_window->parent()->StackChildBelow(GetWindow(), widget_window);
+  }
 }
 
 }  // namespace ash

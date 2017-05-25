@@ -153,6 +153,7 @@ class ShellObserver;
 class ShutdownController;
 class ShutdownObserver;
 class SmsObserver;
+class SplitViewController;
 class StickyKeysController;
 class SystemGestureEventFilter;
 class SystemModalContainerEventFilter;
@@ -435,6 +436,10 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   ToastManager* toast_manager() { return toast_manager_.get(); }
 
+  SplitViewController* split_view_controller() {
+    return split_view_controller_.get();
+  }
+
   aura::client::ActivationClient* activation_client();
 
   // Force the shelf to query for it's current visibility state.
@@ -584,6 +589,12 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // Notifies observers that overview mode has ended.
   void NotifyOverviewModeEnded();
+
+  // Notifies observers that split view mode has started.
+  void NotifySplitViewModeStarted();
+
+  // Notifies observers that split view mode has ended.
+  void NotifySplitViewModeEnded();
 
   // Notifies observers that fullscreen mode has changed for |root_window|.
   void NotifyFullscreenStateChanged(bool is_fullscreen, WmWindow* root_window);
@@ -806,6 +817,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<LaserPointerController> laser_pointer_controller_;
   std::unique_ptr<PartialMagnificationController>
       partial_magnification_controller_;
+
+  // The split view controller for Chrome OS in tablet mode.
+  std::unique_ptr<SplitViewController> split_view_controller_;
 
   // |native_cursor_manager_| is owned by |cursor_manager_|, but we keep a
   // pointer to vend to test code.

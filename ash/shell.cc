@@ -107,6 +107,7 @@
 #include "ash/wm/resize_shadow_controller.h"
 #include "ash/wm/root_window_finder.h"
 #include "ash/wm/screen_pinning_controller.h"
+#include "ash/wm/splitscreen/split_view_controller.h"
 #include "ash/wm/system_gesture_event_filter.h"
 #include "ash/wm/system_modal_container_event_filter.h"
 #include "ash/wm/system_modal_container_layout_manager.h"
@@ -512,6 +513,16 @@ void Shell::NotifyOverviewModeEnded() {
     observer.OnOverviewModeEnded();
 }
 
+void Shell::NotifySplitViewModeStarted() {
+  for (auto& observer : shell_observers_)
+    observer.OnSplitViewModeStarted();
+}
+
+void Shell::NotifySplitViewModeEnded() {
+  for (auto& observer : shell_observers_)
+    observer.OnSplitViewModeEnded();
+}
+
 void Shell::NotifyFullscreenStateChanged(bool is_fullscreen,
                                          WmWindow* root_window) {
   for (auto& observer : shell_observers_)
@@ -709,6 +720,8 @@ Shell::~Shell() {
   lock_state_controller_.reset();
 
   screen_pinning_controller_.reset();
+
+  split_view_controller_.reset();
 
   resolution_notification_controller_.reset();
   screenshot_controller_.reset();
@@ -1100,6 +1113,8 @@ void Shell::Init(const ShellInitParams& init_params) {
     screen_layout_observer_.reset(new ScreenLayoutObserver());
   }
   sms_observer_.reset(new SmsObserver());
+
+  split_view_controller_.reset(new SplitViewController());
 
   // The compositor thread and main message loop have to be running in
   // order to create mirror window. Run it after the main message loop

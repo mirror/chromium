@@ -117,8 +117,13 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
   // aura::WindowObserver:
-  void OnWindowDestroying(aura::Window* window) override;
+  void OnWindowDestroyed(aura::Window* window) override;
   void OnWindowTitleChanged(aura::Window* window) override;
+
+  void HandleMousePressed(const ui::MouseEvent& event);
+  void HandleMouseReleased(const ui::MouseEvent& event);
+  void HandleMouseDragged(const ui::MouseEvent& event);
+  void HandleGestureEvent(ui::GestureEvent* event);
 
  private:
   class CaptionContainerView;
@@ -165,6 +170,9 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   gfx::SlideAnimation* GetBackgroundViewAnimation();
 
   aura::Window* GetOverviewWindowForMinimizedStateForTest();
+
+  // Stack the window at the top in order to keep it alive when dragging around.
+  void PrepareForDrag();
 
   // True if the item is being shown in the overview, false if it's being
   // filtered.

@@ -87,6 +87,10 @@ void MaximizeModeWindowManager::OnOverviewModeEnded() {
   SetDeferBoundsUpdates(false);
 }
 
+void MaximizeModeWindowManager::OnSplitViewModeStarted() {}
+
+void MaximizeModeWindowManager::OnSplitViewModeEnded() {}
+
 void MaximizeModeWindowManager::OnWindowDestroying(aura::Window* window) {
   if (IsContainerWindow(window)) {
     // container window can be removed on display destruction.

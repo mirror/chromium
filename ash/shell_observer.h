@@ -50,6 +50,12 @@ class ASH_EXPORT ShellObserver {
   // Called after overview mode has ended.
   virtual void OnOverviewModeEnded() {}
 
+  // Called after split view mode has started.
+  virtual void OnSplitViewModeStarted() {}
+
+  // Called after split view mode has ended.
+  virtual void OnSplitViewModeEnded() {}
+
   // Called when the always maximize mode has started. Windows might still
   // animate though.
   virtual void OnMaximizeModeStarted() {}
