@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb1075d7_637d5a08",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-25T14:31:34Z",
+      "side": 1,
+      "message": "Can you simply use UseCounter::Count(document, ...) ?",
+      "revId": "f9869c73e868fcd7efcfb125416971ba186fdcf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
