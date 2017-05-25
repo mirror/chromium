@@ -174,6 +174,13 @@ class CONTENT_EXPORT BrowserThread {
   }
 
   template <class T>
+  static bool DeleteSoon(ID identifier,
+                         const tracked_objects::Location& from_here,
+                         std::unique_ptr<T> object) {
+    return DeleteSoon(identifier, from_here, object.release());
+  }
+
+  template <class T>
   static bool ReleaseSoon(ID identifier,
                           const tracked_objects::Location& from_here,
                           const T* object) {
