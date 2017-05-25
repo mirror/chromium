@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f34ce547_9d086dd5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Resource.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-25T16:59:19Z",
+      "side": 1,
+      "message": "It\u0027s usually a good idea to reset the callbacks array before calling any of them.",
+      "revId": "93fba6da28e9622e2a8676beb02bfa3ddc8c0933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
