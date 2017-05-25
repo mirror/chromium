@@ -33,6 +33,7 @@ class WebFrameWidget;
 class WebInputMethodController;
 class WebRange;
 class WebScriptExecutionCallback;
+class WebSpellCheckPanelClient;
 class WebTextCheckClient;
 class WebURLLoader;
 enum class WebCachePolicy;
@@ -395,7 +396,7 @@ class WebLocalFrame : public WebFrame {
                                     WebString& clip_text,
                                     WebString& clip_html) = 0;
 
-  // Spell-checking support -------------------------------------------------
+  // SpellCheck support -----------------------------------------------------
   virtual void SetTextCheckClient(WebTextCheckClient*) = 0;
   virtual void ReplaceMisspelledRange(const WebString&) = 0;
   virtual void EnableSpellChecking(bool) = 0;
@@ -403,6 +404,10 @@ class WebLocalFrame : public WebFrame {
   virtual void RemoveSpellingMarkers() = 0;
   virtual void RemoveSpellingMarkersUnderWords(
       const WebVector<WebString>& words) = 0;
+
+  // SpellCheck panel support -----------------------------------------------
+  virtual void SetSpellCheckPanelClient(WebSpellCheckPanelClient*) = 0;
+  virtual WebSpellCheckPanelClient* SpellCheckPanelClient() const = 0;
 
   // Content Settings -------------------------------------------------------
 

@@ -585,7 +585,7 @@ source_set("blink_headers") {
     "web/WebSpeechRecognitionResult.h",
     "web/WebSpeechRecognizer.h",
     "web/WebSpeechRecognizerClient.h",
-    "web/WebSpellCheckClient.h",
+    "web/WebSpellCheckPanelClient.h",
     "web/WebStorageEventDispatcher.h",
     "web/WebSurroundingText.h",
     "web/WebTestingSupport.h",

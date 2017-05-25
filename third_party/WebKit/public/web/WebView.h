@@ -55,7 +55,6 @@ class WebPageImportanceSignals;
 class WebPrerendererClient;
 class WebRemoteFrame;
 class WebSettings;
-class WebSpellCheckClient;
 class WebString;
 class WebViewClient;
 class WebViewScheduler;
@@ -133,7 +132,6 @@ class WebView : protected WebWidget {
   // Initializes the various client interfaces.
   virtual void SetCredentialManagerClient(WebCredentialManagerClient*) = 0;
   virtual void SetPrerendererClient(WebPrerendererClient*) = 0;
-  virtual void SetSpellCheckClient(WebSpellCheckClient*) = 0;
 
   // Options -------------------------------------------------------------
 

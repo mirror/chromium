@@ -1034,6 +1034,10 @@ void LocalFrameClientImpl::AbortClientNavigation() {
     web_frame_->Client()->AbortClientNavigation();
 }
 
+WebSpellCheckPanelClient* LocalFrameClientImpl::SpellCheckPanelClient() const {
+  return web_frame_->SpellCheckPanelClient();
+}
+
 TextCheckerClient& LocalFrameClientImpl::GetTextCheckerClient() const {
   return web_frame_->GetTextCheckerClient();
 }

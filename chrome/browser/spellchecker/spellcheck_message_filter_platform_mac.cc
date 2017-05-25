@@ -184,8 +184,14 @@ SpellCheckMessageFilterPlatform::SpellCheckMessageFilterPlatform(
 
 void SpellCheckMessageFilterPlatform::OverrideThreadForMessage(
     const IPC::Message& message, BrowserThread::ID* thread) {
-  if (message.type() == SpellCheckHostMsg_RequestTextCheck::ID)
-    *thread = BrowserThread::UI;
+  switch (message.type()) {
+    case SpellCheckHostMsg_RequestTextCheck::ID:
+    case SpellCheckHostMsg_ShowSpellingPanel::ID:
+      *thread = BrowserThread::UI;
+      break;
+    default:
+      break;
+  }
 }
 
 bool SpellCheckMessageFilterPlatform::OnMessageReceived(
@@ -250,6 +256,7 @@ void SpellCheckMessageFilterPlatform::OnFillSuggestionList(
 }
 
 void SpellCheckMessageFilterPlatform::OnShowSpellingPanel(bool show) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   spellcheck_platform::ShowSpellingPanel(show);
 }
 

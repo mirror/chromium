@@ -37,8 +37,6 @@ namespace blink {
 
 class WebViewBase;
 
-// TODO(xiaochengh): Split SpellCheckerClientImpl into two classes according to
-// the split that should be done to its interface.
 class SpellCheckerClientImpl final : public SpellCheckerClient {
  public:
   explicit SpellCheckerClientImpl(WebViewBase*);
@@ -47,9 +45,6 @@ class SpellCheckerClientImpl final : public SpellCheckerClient {
 
   bool IsSpellCheckingEnabled() override;
   void ToggleSpellCheckingEnabled() override;
-  void UpdateSpellingUIWithMisspelledWord(const String&) override;
-  void ShowSpellingUI(bool show) override;
-  bool SpellingUIIsShowing() override;
 
  private:
   // Returns whether or not the focused control needs spell-checking.
