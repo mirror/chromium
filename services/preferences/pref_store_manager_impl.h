@@ -55,13 +55,18 @@ class PrefStoreManagerImpl : public mojom::PrefStoreRegistry,
   void Register(PrefValueStore::PrefStoreType type,
                 mojom::PrefStorePtr pref_store_ptr) override;
 
-  // mojom::PrefStoreConnector: |already_connected_types| must not include
-  // PrefValueStore::DEFAULT_STORE and PrefValueStore::USER_STORE as these must
-  // always be accessed through the service.
+  // mojom::PrefStoreConnector:
+  // |already_connected_types| must not include PrefValueStore::DEFAULT_STORE
+  // and PrefValueStore::USER_STORE as these must always be accessed through the
+  // service.
   void Connect(
       mojom::PrefRegistryPtr pref_registry,
       const std::vector<PrefValueStore::PrefStoreType>& already_connected_types,
       const ConnectCallback& callback) override;
+  void ConnectToUserPrefStore(
+      const std::vector<std::string>& observed_prefs,
+      const mojom::PrefStoreConnector::ConnectToUserPrefStoreCallback& callback)
+      override;
 
   void BindPrefStoreConnectorRequest(
       const service_manager::BindSourceInfo& source_info,
@@ -113,6 +118,8 @@ class PrefStoreManagerImpl : public mojom::PrefStoreRegistry,
   mojo::BindingSet<mojom::PrefStoreRegistry> registry_bindings_;
   std::unique_ptr<PersistentPrefStoreImpl> persistent_pref_store_;
   mojo::Binding<mojom::PrefServiceControl> init_binding_;
+
+  mojom::PrefStoreConnectorPtr incognito_connector_;
 
   const scoped_refptr<DefaultPrefStore> defaults_;
   const std::unique_ptr<PrefStoreImpl> defaults_wrapper_;
