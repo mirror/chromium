@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "783ba029_9e070f0a",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-25T00:29:23Z",
+      "side": 1,
+      "message": "Can you add unittest for this before landing?",
+      "range": {
+        "startLine": 781,
+        "startChar": 47,
+        "endLine": 781,
+        "endChar": 0
+      },
+      "revId": "6b0bdf5ebedbc4d752f1f4efe639ecce70668209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
