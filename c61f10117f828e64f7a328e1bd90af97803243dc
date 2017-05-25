@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cae2a794_a4808576",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-25T21:31:35Z",
+      "side": 1,
+      "message": "Ah, okay, I didn\u0027t realize that that was an option. Changed the mojom to always represent bytes as DataElementBytes, and add an optional array to that struct for embedded data.",
+      "parentUuid": "9292951c_c3e08183",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84427d1b_25826468",
         "filename": "storage/public/interfaces/blobs.mojom",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6770a48_babd6aec",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-25T21:31:35Z",
+      "side": 1,
+      "message": "Good point. Don\u0027t think that is something to quite worry about yet (and I believe mojo\u0027s serialization 8-byte aligns certain things as well, so it\u0027s in general a bit tricky to figure out if/how much bytes we\u0027d actually save).",
+      "parentUuid": "84427d1b_25826468",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8f0a23ed_a37897d5",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-25T21:31:35Z",
+      "side": 1,
+      "message": "Yeah, I considered just having one BytesProvider for all the concatenated bytes elements of the blob (skipping over all non-bytes elements), which might be a bit more efficient in some ways, but also harder to actually code against. (if you haven\u0027t already, you can peek at https://codereview.chromium.org/2892953006 to see how this might actually be implemented/what possible methods BytesProvider might get).\nFrom the renderer side it actually would be pretty straightforward to only have a single BytesProvider rather than one per element, in the browser it would require a bit more logic to map from offsets in the one byte stream to the right elements though, so it seemed simplest to just do it this way...",
+      "parentUuid": "595a5fdd_bd1c6f17",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb42c539_62e7277c",
         "filename": "storage/public/interfaces/blobs.mojom",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38799cc1_e72adc34",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-25T21:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb42c539_62e7277c",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e5f3d696_1ab5cb26",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-25T21:31:35Z",
+      "side": 1,
+      "message": "max value or 0? Either way marked it as nullable now (not sure that actually does something with \"native\" struct types like mojom.Time), and I\u0027ll figure out the right thing to do when actually tranporting data.",
+      "parentUuid": "1f750d84_3aa65855",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 52
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3340657f_1f7569ab",
         "filename": "storage/public/interfaces/blobs.mojom",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f025bcb4_35499643",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-25T21:31:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3340657f_1f7569ab",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e185ec80_716da1af",
         "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
         "patchSetId": 3
@@ -154,6 +298,24 @@
       "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520752c6_8f4da5b1",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-05-25T21:31:35Z",
+      "side": 1,
+      "message": "Yeah, not sure what the current state-of-the-art is with regards to getting an interface from a worker thread. Platform::GetInterfaceProvider as used here always post-tasks through the main thread, and I don\u0027t believe workers currently have the equivalent of the per-frame (or per-document? I forgot) interface provider that windows have (which presumably would live on the worker thread), although presumably they\u0027ll need that for the browser to be able to do some of the origin/security checks that it can do for interface requests over the per-frame interface provider.\n\nSo for now I think just keeping this as a TODO is the easiest thing to do. We can figure out how to properly connect later (also since there isn\u0027t actually anything in the browser yet this connection will currently always fail anyway).",
+      "parentUuid": "e185ec80_716da1af",
+      "revId": "c61f10117f828e64f7a328e1bd90af97803243dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
