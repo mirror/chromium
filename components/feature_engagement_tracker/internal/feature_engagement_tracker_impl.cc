@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/user_metrics.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/feature_engagement_tracker/internal/chrome_variations_configuration.h"
 #include "components/feature_engagement_tracker/internal/editable_configuration.h"
@@ -18,6 +19,7 @@
 #include "components/feature_engagement_tracker/internal/never_storage_validator.h"
 #include "components/feature_engagement_tracker/internal/once_condition_validator.h"
 #include "components/feature_engagement_tracker/internal/persistent_store.h"
+#include "components/feature_engagement_tracker/internal/stats.h"
 #include "components/feature_engagement_tracker/internal/system_time_provider.h"
 #include "components/feature_engagement_tracker/public/feature_constants.h"
 #include "components/feature_engagement_tracker/public/feature_list.h"
@@ -109,19 +111,16 @@ FeatureEngagementTrackerImpl::FeatureEngagementTrackerImpl(
 FeatureEngagementTrackerImpl::~FeatureEngagementTrackerImpl() = default;
 
 void FeatureEngagementTrackerImpl::NotifyEvent(const std::string& event) {
-  // TODO(nyquist): Track this event in UMA.
   model_->IncrementEvent(event, time_provider_->GetCurrentDay());
+  stats::RecordNotifyEvent(event, configuration_.get());
 }
 
 bool FeatureEngagementTrackerImpl::ShouldTriggerHelpUI(
     const base::Feature& feature) {
-  // TODO(nyquist): Track this event in UMA.
-  bool result =
-      condition_validator_
-          ->MeetsConditions(feature, configuration_->GetFeatureConfig(feature),
-                            *model_, time_provider_->GetCurrentDay())
-          .NoErrors();
-  if (result) {
+  ConditionValidator::Result result = condition_validator_->MeetsConditions(
+      feature, configuration_->GetFeatureConfig(feature), *model_,
+      time_provider_->GetCurrentDay());
+  if (result.NoErrors()) {
     condition_validator_->NotifyIsShowing(feature);
     FeatureConfig feature_config = configuration_->GetFeatureConfig(feature);
     DCHECK_NE("", feature_config.trigger.name);
@@ -129,12 +128,13 @@ bool FeatureEngagementTrackerImpl::ShouldTriggerHelpUI(
                            time_provider_->GetCurrentDay());
   }
 
-  return result;
+  stats::RecordShouldTriggerHelpUI(feature, result);
+  return result.NoErrors();
 }
 
 void FeatureEngagementTrackerImpl::Dismissed(const base::Feature& feature) {
-  // TODO(nyquist): Track this event in UMA.
   condition_validator_->NotifyDismissed(feature);
+  stats::RecordUserDismiss();
 }
 
 bool FeatureEngagementTrackerImpl::IsInitialized() {

@@ -11,11 +11,13 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/user_action_tester.h"
 #include "components/feature_engagement_tracker/internal/editable_configuration.h"
 #include "components/feature_engagement_tracker/internal/in_memory_store.h"
 #include "components/feature_engagement_tracker/internal/model_impl.h"
 #include "components/feature_engagement_tracker/internal/never_storage_validator.h"
 #include "components/feature_engagement_tracker/internal/once_condition_validator.h"
+#include "components/feature_engagement_tracker/internal/stats.h"
 #include "components/feature_engagement_tracker/internal/time_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -369,10 +371,24 @@ TEST_F(FeatureEngagementTrackerImplTest, TestNotifyEvent) {
   tracker_->AddOnInitializedCallback(base::Bind(
       &StoringInitializedCallback::OnInitialized, base::Unretained(&callback)));
   base::RunLoop().RunUntilIdle();
+  base::UserActionTester user_action_tester;
 
   tracker_->NotifyEvent("foo");
   tracker_->NotifyEvent("foo");
   tracker_->NotifyEvent("bar");
+  tracker_->NotifyEvent(kTestFeatureFoo.name + std::string("_used"));
+  tracker_->NotifyEvent(kTestFeatureFoo.name + std::string("_trigger"));
+
+  // Used event will record both NotifyEvent and NotifyUsedEvent. Explicitly
+  // specify the whole user action string here.
+  EXPECT_EQ(1, user_action_tester.GetActionCount(
+                   "FeatureEngagement.NotifyUsedEvent.test_foo"));
+  EXPECT_EQ(2, user_action_tester.GetActionCount(
+                   "FeatureEngagement.NotifyEvent.test_foo"));
+  EXPECT_EQ(0, user_action_tester.GetActionCount(
+                   "FeatureEngagement.NotifyUsedEvent.test_bar"));
+  EXPECT_EQ(0, user_action_tester.GetActionCount(
+                   "FeatureEngagement.NotifyEvent.test_bar"));
 
   Event foo_event = store_->GetEvent("foo");
   ASSERT_EQ(1, foo_event.events_size());
