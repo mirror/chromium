@@ -16,6 +16,24 @@
       "revId": "3797a572e3f6b41b84eebf1d25c3e85789ff4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc69e25d_5483527d",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-05-25T17:18:32Z",
+      "side": 1,
+      "message": "Done. I created a list of benchmarks for it to not run this test on in contrib/. Its all cluster_telemetry benchmarks. They are atypical telemetry tests and do not mesh that well with this.",
+      "parentUuid": "46963689_fd0851fb",
+      "revId": "3797a572e3f6b41b84eebf1d25c3e85789ff4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
