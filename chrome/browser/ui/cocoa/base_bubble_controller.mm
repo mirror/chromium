@@ -17,7 +17,9 @@
 #include "chrome/browser/ui/cocoa/l10n_util.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_model_observer_bridge.h"
 #include "components/bubble/bubble_controller.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
+#include "ui/base/l10n/l10n_util_mac.h"
 
 @interface BaseBubbleController (Private)
 - (void)registerForNotifications;
@@ -47,6 +49,17 @@
 @synthesize shouldOpenAsKeyWindow = shouldOpenAsKeyWindow_;
 @synthesize shouldCloseOnResignKey = shouldCloseOnResignKey_;
 @synthesize bubbleReference = bubbleReference_;
+
++ (NSButton*)doneTouchBarButtonWithTarget:(id)target action:(SEL)action {
+  NSButton* button = [NSButton buttonWithTitle:l10n_util::GetNSString(IDS_DONE)
+                                        target:target
+                                        action:action];
+  [button setBezelColor:[NSColor colorWithSRGBRed:0.168
+                                            green:0.51
+                                             blue:0.843
+                                            alpha:1.0]];
+  return button;
+}
 
 - (id)initWithWindowNibPath:(NSString*)nibPath
                parentWindow:(NSWindow*)parentWindow
