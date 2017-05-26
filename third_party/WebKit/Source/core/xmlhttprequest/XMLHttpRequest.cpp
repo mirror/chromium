@@ -987,7 +987,7 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
   // in case the upload listeners are added after the request is started.
   upload_events_allowed_ =
       same_origin_request_ || upload_events ||
-      !FetchUtils::IsSimpleRequest(method_, request_headers_);
+      !FetchUtils::IsCORSSafelistedRequest(method_, request_headers_);
 
   ResourceRequest request(url_);
   request.SetHTTPMethod(method_);

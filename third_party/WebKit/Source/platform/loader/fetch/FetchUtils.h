@@ -17,19 +17,20 @@ class PLATFORM_EXPORT FetchUtils {
   STATIC_ONLY(FetchUtils);
 
  public:
-  static bool IsSimpleMethod(const String& method);
-  static bool IsSimpleHeader(const AtomicString& name,
-                             const AtomicString& value);
-  static bool IsSimpleContentType(const AtomicString& media_type);
-  static bool IsSimpleRequest(const String& method, const HTTPHeaderMap&);
+  static bool IsCORSSafelistedMethod(const String& method);
+  static bool IsCORSSafelistedHeader(const AtomicString& name,
+                                     const AtomicString& value);
+  static bool IsCORSSafelistedContentType(const AtomicString& media_type);
+  static bool IsCORSSafelistedRequest(const String& method,
+                                      const HTTPHeaderMap&);
   static bool IsForbiddenMethod(const String& method);
   static bool IsUsefulMethod(const String& method) {
     return !IsForbiddenMethod(method);
   }
   static bool IsForbiddenHeaderName(const String& name);
   static bool IsForbiddenResponseHeaderName(const String& name);
-  static bool IsSimpleOrForbiddenRequest(const String& method,
-                                         const HTTPHeaderMap&);
+  static bool IsCORSSafelistedOrForbiddenRequest(const String& method,
+                                                 const HTTPHeaderMap&);
   static AtomicString NormalizeMethod(const AtomicString& method);
   static String NormalizeHeaderValue(const String& value);
 
