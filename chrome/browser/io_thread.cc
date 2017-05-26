@@ -1048,6 +1048,8 @@ net::URLRequestContext* IOThread::ConstructProxyScriptFetcherContext(
   context->set_http_auth_handler_factory(
       globals->http_auth_handler_factory.get());
   context->set_proxy_service(globals->proxy_script_fetcher_proxy_service.get());
+  context->set_network_quality_estimator(
+      globals->network_quality_estimator.get());
 
   context->set_job_factory(
       globals->proxy_script_fetcher_url_request_job_factory.get());

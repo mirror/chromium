@@ -272,6 +272,7 @@ void URLRequestContextBuilder::SetHttpNetworkSessionComponents(
   params->http_server_properties = context->http_server_properties();
   params->net_log = context->net_log();
   params->channel_id_service = context->channel_id_service();
+  params->network_quality_estimator = context->network_quality_estimator();
 }
 
 void URLRequestContextBuilder::EnableHttpCache(const HttpCacheParams& params) {

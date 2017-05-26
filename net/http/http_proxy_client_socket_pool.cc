@@ -32,6 +32,34 @@
 
 namespace net {
 
+namespace {
+
+// Configure using net session params.
+base::TimeDelta GetConnectionTimeout(
+    NetworkQualityEstimator* network_quality_estimator,
+    base::TimeDelta default_timeout) {
+  // TODO(tbansal): Use NQE and field trial to determine the connection timeout.
+  return default_timeout;
+}
+
+base::TimeDelta GetMaxPoolTimeout(TransportClientSocketPool* transport_pool,
+                                  SSLClientSocketPool* ssl_pool) {
+  base::TimeDelta max_pool_timeout = base::TimeDelta();
+
+#if (defined(OS_ANDROID) || defined(OS_IOS))
+#else
+  if (transport_pool)
+    max_pool_timeout = transport_pool->ConnectionTimeout();
+  if (ssl_pool) {
+    max_pool_timeout =
+        std::max(max_pool_timeout, ssl_pool->ConnectionTimeout());
+  }
+#endif
+  return max_pool_timeout;
+}
+
+}  // namespace
+
 HttpProxySocketParams::HttpProxySocketParams(
     const scoped_refptr<TransportSocketParams>& transport_params,
     const scoped_refptr<SSLSocketParams>& ssl_params,
@@ -149,29 +177,19 @@ int HttpProxyConnectJob::HandleConnectResult(int result) {
   return result;
 }
 
-HttpProxyClientSocketPool::
-HttpProxyConnectJobFactory::HttpProxyConnectJobFactory(
-    TransportClientSocketPool* transport_pool,
-    SSLClientSocketPool* ssl_pool,
-    NetLog* net_log)
+HttpProxyClientSocketPool::HttpProxyConnectJobFactory::
+    HttpProxyConnectJobFactory(
+        TransportClientSocketPool* transport_pool,
+        SSLClientSocketPool* ssl_pool,
+        NetworkQualityEstimator* network_quality_estimator,
+        NetLog* net_log)
     : transport_pool_(transport_pool),
       ssl_pool_(ssl_pool),
-      net_log_(net_log) {
-  base::TimeDelta max_pool_timeout = base::TimeDelta();
-
-// TODO(kundaji): Proxy connect timeout should be independent of platform and be
-// based on proxy. Bug http://crbug.com/407446.
-#if (defined(OS_ANDROID) || defined(OS_IOS))
-#else
-  if (transport_pool_)
-    max_pool_timeout = transport_pool_->ConnectionTimeout();
-  if (ssl_pool_)
-    max_pool_timeout = std::max(max_pool_timeout,
-                                ssl_pool_->ConnectionTimeout());
-#endif
-  timeout_ = max_pool_timeout +
-    base::TimeDelta::FromSeconds(kHttpProxyConnectJobTimeoutInSeconds);
-}
+      network_quality_estimator_(network_quality_estimator),
+      default_timeout_(
+          GetMaxPoolTimeout(transport_pool, ssl_pool) +
+          base::TimeDelta::FromSeconds(kHttpProxyConnectJobTimeoutInSeconds)),
+      net_log_(net_log) {}
 
 std::unique_ptr<ConnectJob>
 HttpProxyClientSocketPool::HttpProxyConnectJobFactory::NewConnectJob(
@@ -187,7 +205,7 @@ HttpProxyClientSocketPool::HttpProxyConnectJobFactory::NewConnectJob(
 base::TimeDelta
 HttpProxyClientSocketPool::HttpProxyConnectJobFactory::ConnectionTimeout(
     ) const {
-  return timeout_;
+  return GetConnectionTimeout(network_quality_estimator_, default_timeout_);
 }
 
 HttpProxyClientSocketPool::HttpProxyClientSocketPool(
@@ -195,6 +213,7 @@ HttpProxyClientSocketPool::HttpProxyClientSocketPool(
     int max_sockets_per_group,
     TransportClientSocketPool* transport_pool,
     SSLClientSocketPool* ssl_pool,
+    NetworkQualityEstimator* network_quality_estimator,
     NetLog* net_log)
     : transport_pool_(transport_pool),
       ssl_pool_(ssl_pool),
@@ -203,7 +222,10 @@ HttpProxyClientSocketPool::HttpProxyClientSocketPool(
             max_sockets_per_group,
             ClientSocketPool::unused_idle_socket_timeout(),
             ClientSocketPool::used_idle_socket_timeout(),
-            new HttpProxyConnectJobFactory(transport_pool, ssl_pool, net_log)) {
+            new HttpProxyConnectJobFactory(transport_pool,
+                                           ssl_pool,
+                                           network_quality_estimator,
+                                           net_log)) {
   // We should always have a |transport_pool_| except in unit tests.
   if (transport_pool_)
     base_.AddLowerLayeredPool(transport_pool_);

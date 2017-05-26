@@ -57,7 +57,8 @@ ClientSocketPoolManager* CreateSocketPoolManager(
       params.net_log,
       params.client_socket_factory ? params.client_socket_factory
                                    : ClientSocketFactory::GetDefaultFactory(),
-      params.socket_performance_watcher_factory, params.host_resolver,
+      params.socket_performance_watcher_factory,
+      params.network_quality_estimator, params.host_resolver,
       params.cert_verifier, params.channel_id_service,
       params.transport_security_state, params.cert_transparency_verifier,
       params.ct_policy_enforcer, ssl_session_cache_shard,
@@ -111,6 +112,7 @@ HttpNetworkSession::Params::Params()
       net_log(nullptr),
       host_mapping_rules(nullptr),
       socket_performance_watcher_factory(nullptr),
+      network_quality_estimator(nullptr),
       ignore_certificate_errors(false),
       testing_fixed_http_port(0),
       testing_fixed_https_port(0),
