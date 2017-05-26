@@ -101,7 +101,8 @@ void Headers::append(const String& name,
   // "4. Otherwise, if guard is |request-no-CORS| and |name|/|value| is not a
   //     simple header, return."
   if (guard_ == kRequestNoCORSGuard &&
-      !FetchUtils::IsSimpleHeader(AtomicString(name), AtomicString(value)))
+      !FetchUtils::IsCORSSafelistedHeader(AtomicString(name),
+                                          AtomicString(value)))
     return;
   // "5. Otherwise, if guard is |response| and |name| is a forbidden response
   //     header name, return."
@@ -131,7 +132,7 @@ void Headers::remove(const String& name, ExceptionState& exception_state) {
   // "4. Otherwise, if guard is |request-no-CORS| and |name|/`invalid` is not
   //     a simple header, return."
   if (guard_ == kRequestNoCORSGuard &&
-      !FetchUtils::IsSimpleHeader(AtomicString(name), "invalid"))
+      !FetchUtils::IsCORSSafelistedHeader(AtomicString(name), "invalid"))
     return;
   // "5. Otherwise, if guard is |response| and |name| is a forbidden response
   //     header name, return."
@@ -195,7 +196,8 @@ void Headers::set(const String& name,
   // "4. Otherwise, if guard is |request-no-CORS| and |name|/|value| is not a
   //     simple header, return."
   if (guard_ == kRequestNoCORSGuard &&
-      !FetchUtils::IsSimpleHeader(AtomicString(name), AtomicString(value)))
+      !FetchUtils::IsCORSSafelistedHeader(AtomicString(name),
+                                          AtomicString(value)))
     return;
   // "5. Otherwise, if guard is |response| and |name| is a forbidden response
   //     header name, return."
