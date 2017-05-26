@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81064dc0_dfd60e32",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-26T01:22:39Z",
+      "side": 1,
+      "message": "It\u0027s a bit odd to check IsCancelled() and then dispatch it anyway \u003d)\n\nThere\u0027s several issues with trying to combine this code:\n- deferred_non_nestable_work_queue_ and delayed_work_queue_ are different types: the former is a queue, the latter is a priority_queue. We\u0027d have to template it.\n- they don\u0027t have quite the same semantics: sweeping only pops if the task is cancelled, while this one unconditionally pops. We could have it just pop as well here.\n\nI just added a helper to decrement the count if needed, which saves a few lines of copied and pasted code.",
+      "parentUuid": "4fc8b39c_b2a8451b",
+      "revId": "aefa3ed6da5c37a19e7a007e5e161a0f608c5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c02b1e15_996c0214",
         "filename": "base/message_loop/message_loop.h",
         "patchSetId": 5

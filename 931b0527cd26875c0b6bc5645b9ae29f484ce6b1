@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97204cf0_1b92b29e",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-26T01:22:39Z",
+      "side": 0,
+      "message": "I don\u0027t think so? My understanding is this is just to scope traces when dispatching a task.",
+      "parentUuid": "ff353e1e_2a8c1fb6",
+      "revId": "931b0527cd26875c0b6bc5645b9ae29f484ce6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "610d9361_3d85db7b",
         "filename": "chrome/browser/metrics/thread_watcher.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-26T00:48:36Z",
       "side": 0,
       "message": "IIUC this is intended for jank debugging - are we sure we want to  remove it?",
+      "revId": "931b0527cd26875c0b6bc5645b9ae29f484ce6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d28ac4d_6de2ba7c",
+        "filename": "chrome/browser/metrics/thread_watcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-26T01:22:39Z",
+      "side": 0,
+      "message": "Well, as written, it\u0027s not really very safe to use anyway. If someone really wants it, it\u0027s relatively easy to resurrect it from git history.\n\nFor the record, it hasn\u0027t been referenced by any non-test code ever since it first landed in https://codereview.chromium.org/1063473003.",
+      "parentUuid": "610d9361_3d85db7b",
       "revId": "931b0527cd26875c0b6bc5645b9ae29f484ce6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f44c138b_d2933263",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-26T01:22:39Z",
+      "side": 1,
+      "message": "Done, now that some of the shared stuff is in a helper.",
+      "parentUuid": "83103c61_1ba57f83",
+      "revId": "c0685c4ee1f6ef62cde0fea320f997f6b2dafcb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2f8043e_7879165b",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "c0685c4ee1f6ef62cde0fea320f997f6b2dafcb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d862af3_ab5b7c51",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-26T01:22:39Z",
+      "side": 1,
+      "message": "I guess it\u0027s possible we could lose some tail call optimization. I think we should be sweeping--there may be cancelled tasks at the top of the queue after popping to the next non-cancelled task. However, I think it\u0027s fine to change the ordering back to avoid the awkward bool did_work--we can sweep before dispatching the task. If the dispatched task queues more work, we have to handle that elsewhere already.\n\n(See https://cs.chromium.org/chromium/src/base/message_loop/message_pump.h?rcl\u003d96bd408ae32e5925624d5f4359687df707205de3\u0026l\u003d37 for some documentation about these crazy semantics)",
+      "parentUuid": "f2f8043e_7879165b",
+      "range": {
+        "startLine": 587,
+        "startChar": 18,
+        "endLine": 587,
+        "endChar": 39
+      },
+      "revId": "c0685c4ee1f6ef62cde0fea320f997f6b2dafcb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
