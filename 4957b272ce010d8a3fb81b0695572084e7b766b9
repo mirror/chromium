@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d792a4a6_52051366",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-26T03:40:17Z",
+      "side": 1,
+      "message": "This deserves a bit more elaborate description. What does this mean for services?",
+      "revId": "4957b272ce010d8a3fb81b0695572084e7b766b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f66032f6_20a3cedd",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-26T03:40:17Z",
+      "side": 1,
+      "message": "I would expect that a single pref is only registered once, either in RegisterPrefs or RegisterUnownedPrefs. Why is it needed twice? If it\u0027s indeed needed RegisterUnownedPrefs needs some docs so people can understand when they\u0027re supposed to use it.",
+      "revId": "4957b272ce010d8a3fb81b0695572084e7b766b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7a7f37_882f6c1d",
+        "filename": "components/prefs/pref_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-26T03:40:17Z",
+      "side": 1,
+      "message": "At this point I\u0027ve already forgotten the difference between remote, unowned, etc. It seems to me that all this needs to be documented in some place, probably in the pref_registry.h file.",
+      "revId": "4957b272ce010d8a3fb81b0695572084e7b766b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c505dc_030140be",
+        "filename": "components/prefs/pref_registry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-26T03:40:17Z",
+      "side": 1,
+      "message": "Do we expect most prefs that Chrome currently defines have to be changed to PUBLIC?",
+      "range": {
+        "startLine": 53,
+        "startChar": 18,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "4957b272ce010d8a3fb81b0695572084e7b766b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371a8565_08b1f3a9",
+        "filename": "components/prefs/pref_registry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-26T03:40:17Z",
+      "side": 1,
+      "message": "Docs",
+      "revId": "4957b272ce010d8a3fb81b0695572084e7b766b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312ba339_f9b3cf10",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-26T03:40:17Z",
+      "side": 1,
+      "message": "Document fields.",
+      "revId": "4957b272ce010d8a3fb81b0695572084e7b766b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c35c90_24c9e5b8",
+        "filename": "services/preferences/shared_pref_registry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-05-26T03:40:17Z",
+      "side": 1,
+      "message": "Document why this class exists.",
+      "revId": "4957b272ce010d8a3fb81b0695572084e7b766b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
