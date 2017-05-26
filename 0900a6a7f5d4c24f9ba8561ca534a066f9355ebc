@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a508b03_a9444e8f",
+        "filename": "gpu/command_buffer/service/command_buffer_direct.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-05-26T00:44:15Z",
+      "side": 1,
+      "message": "nit: public CommandBufferServiceClient",
+      "range": {
+        "startLine": 24,
+        "startChar": 39,
+        "endLine": 24,
+        "endChar": 65
+      },
+      "revId": "0900a6a7f5d4c24f9ba8561ca534a066f9355ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
