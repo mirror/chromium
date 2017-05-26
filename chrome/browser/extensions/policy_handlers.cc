@@ -286,6 +286,8 @@ bool ExtensionSettingsPolicyHandler::CheckPolicySettings(
   const base::DictionaryValue* dict_value = NULL;
   DCHECK(policy_value->IsType(base::Value::Type::DICTIONARY));
   policy_value->GetAsDictionary(&dict_value);
+  const int extension_scheme_mask =
+      URLPattern::GetValidSchemeMaskForExtensions();
 
   for (base::DictionaryValue::Iterator it(*dict_value); !it.IsAtEnd();
        it.Advance()) {
@@ -318,6 +320,46 @@ bool ExtensionSettingsPolicyHandler::CheckPolicySettings(
           errors->AddError(
               policy_name(), IDS_POLICY_INVALID_UPDATE_URL_ERROR, it.key());
           return false;
+        }
+      }
+    }
+    const base::ListValue* unparsed_urls;
+    // Host keys that don't support user defined paths.
+    const std::string host_keys[] = {schema_constants::kRuntimeBlockedHosts,
+                                     schema_constants::kRuntimeAllowedHosts};
+    for (const auto& key : host_keys) {
+      if (sub_dict->GetList(key, &unparsed_urls)) {
+        for (size_t i = 0; i < unparsed_urls->GetSize(); ++i) {
+          std::string unparsed_url;
+          unparsed_urls->GetString(i, &unparsed_url);
+          URLPattern pattern = URLPattern(extension_scheme_mask);
+          URLPattern::ParseResult parse_result = pattern.Parse(
+              unparsed_url, URLPattern::ALLOW_WILDCARD_FOR_EFFECTIVE_TLD);
+          // These keys don't support paths due to how we track the initiator
+          // of a webRequest and cookie security policy. We expect a valid
+          // pattern to return a PARSE_ERROR_EMPTY_PATH.
+          if (parse_result == URLPattern::PARSE_ERROR_EMPTY_PATH) {
+            // Add a wildcard path to the URL as it should match any path.
+            parse_result =
+                pattern.Parse(unparsed_url + "/*",
+                              URLPattern::ALLOW_WILDCARD_FOR_EFFECTIVE_TLD);
+          } else if (parse_result == URLPattern::PARSE_SUCCESS) {
+            // The user supplied a path, notify them that this is not supported.
+            if (unparsed_url != "<all_urls>") {
+              errors->AddError(
+                  policy_name(), it.key(),
+                  "Your URL pattern '" + unparsed_url + "' for attribute " +
+                      key + " contains a path. Paths are not supported, " +
+                      "please remove it and try again.");
+              return false;
+            }
+          }
+          // Any other issue with parsing the URL.
+          if (parse_result != URLPattern::PARSE_SUCCESS) {
+            errors->AddError(policy_name(), it.key(),
+                             "Invalid URL pattern '" + unparsed_url +
+                                 "' for attribute " + key);
+          }
         }
       }
     }
