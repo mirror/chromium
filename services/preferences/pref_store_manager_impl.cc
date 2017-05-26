@@ -15,6 +15,7 @@
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/preferences/persistent_pref_store_factory.h"
 #include "services/preferences/persistent_pref_store_impl.h"
+#include "services/preferences/public/cpp/pref_store_client.h"
 #include "services/preferences/public/cpp/pref_store_impl.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 
@@ -32,10 +33,12 @@ class ConnectionBarrier : public base::RefCounted<ConnectionBarrier> {
   static void Create(
       const PrefStorePtrs& pref_store_ptrs,
       mojom::PersistentPrefStoreConnectionPtr persistent_pref_store_connection,
+      mojom::PrefStoreConnector* incognito_connector,
       const std::vector<std::string>& observed_prefs,
       const ConnectCallback& callback);
 
   void Init(const PrefStorePtrs& pref_store_ptrs,
+            mojom::PrefStoreConnector* incognito_connector,
             const std::vector<std::string>& observed_prefs);
 
  private:
@@ -43,11 +46,19 @@ class ConnectionBarrier : public base::RefCounted<ConnectionBarrier> {
   ConnectionBarrier(
       const PrefStorePtrs& pref_store_ptrs,
       mojom::PersistentPrefStoreConnectionPtr persistent_pref_store_connection,
+      mojom::PrefStoreConnector* incognito_connector,
       const ConnectCallback& callback);
   ~ConnectionBarrier() = default;
 
   void OnConnect(PrefValueStore::PrefStoreType type,
                  mojom::PrefStoreConnectionPtr connection_ptr);
+
+  void OnIncognitoConnect(
+      mojom::PersistentPrefStoreConnectionPtr connection_ptr);
+
+  // Called when some connections finish and we need to check if everything is
+  // done.
+  void CheckIfAllConnected();
 
   ConnectCallback callback_;
 
@@ -58,6 +69,12 @@ class ConnectionBarrier : public base::RefCounted<ConnectionBarrier> {
   const size_t expected_connections_;
 
   mojom::PersistentPrefStoreConnectionPtr persistent_pref_store_connection_;
+  // Null until |OnIncognitoConnect| has been called.
+  mojom::PersistentPrefStoreConnectionPtr incognito_connection_;
+
+  // True if we need to wait for a connection to the underlying profile's user
+  // pref store before finishing.
+  const bool connecting_to_incognito_;
 
   DISALLOW_COPY_AND_ASSIGN(ConnectionBarrier);
 };
@@ -66,22 +83,31 @@ class ConnectionBarrier : public base::RefCounted<ConnectionBarrier> {
 void ConnectionBarrier::Create(
     const PrefStorePtrs& pref_store_ptrs,
     mojom::PersistentPrefStoreConnectionPtr persistent_pref_store_connection,
+    mojom::PrefStoreConnector* incognito_connector,
     const std::vector<std::string>& observed_prefs,
     const ConnectCallback& callback) {
-  make_scoped_refptr(new ConnectionBarrier(
-                         pref_store_ptrs,
-                         std::move(persistent_pref_store_connection), callback))
-      ->Init(pref_store_ptrs, observed_prefs);
+  make_scoped_refptr(
+      new ConnectionBarrier(pref_store_ptrs,
+                            std::move(persistent_pref_store_connection),
+                            incognito_connector, callback))
+      ->Init(pref_store_ptrs, incognito_connector, observed_prefs);
 }
 
 void ConnectionBarrier::Init(const PrefStorePtrs& pref_store_ptrs,
+                             mojom::PrefStoreConnector* incognito_connector,
                              const std::vector<std::string>& observed_prefs) {
-  if (pref_store_ptrs.empty()) {
+  if (pref_store_ptrs.empty() && !incognito_connector) {
     // After this method exits |this| will get destroyed so it's safe to move
     // out the members.
     callback_.Run(std::move(persistent_pref_store_connection_),
+                  mojom::PersistentPrefStoreConnectionPtr(),
                   std::move(connections_));
     return;
+  }
+  if (incognito_connector) {
+    incognito_connector->ConnectToUserPrefStore(
+        observed_prefs,
+        base::Bind(&ConnectionBarrier::OnIncognitoConnect, this));
   }
   for (const auto& ptr : pref_store_ptrs) {
     ptr.second->AddObserver(
@@ -93,21 +119,37 @@ void ConnectionBarrier::Init(const PrefStorePtrs& pref_store_ptrs,
 ConnectionBarrier::ConnectionBarrier(
     const PrefStorePtrs& pref_store_ptrs,
     mojom::PersistentPrefStoreConnectionPtr persistent_pref_store_connection,
+    mojom::PrefStoreConnector* incognito_connector,
     const ConnectCallback& callback)
     : callback_(callback),
       expected_connections_(pref_store_ptrs.size()),
       persistent_pref_store_connection_(
-          std::move(persistent_pref_store_connection)) {}
+          std::move(persistent_pref_store_connection)),
+      connecting_to_incognito_(bool(incognito_connector)) {}
 
 void ConnectionBarrier::OnConnect(
     PrefValueStore::PrefStoreType type,
     mojom::PrefStoreConnectionPtr connection_ptr) {
   connections_.insert(std::make_pair(type, std::move(connection_ptr)));
-  if (connections_.size() == expected_connections_) {
+  CheckIfAllConnected();
+}
+
+void ConnectionBarrier::OnIncognitoConnect(
+    mojom::PersistentPrefStoreConnectionPtr connection_ptr) {
+  incognito_connection_ = std::move(connection_ptr);
+  CheckIfAllConnected();
+}
+
+void ConnectionBarrier::CheckIfAllConnected() {
+  const bool all_pref_stores_connected =
+      connections_.size() == expected_connections_;
+  const bool incognito_connected =
+      connecting_to_incognito_ ? bool(incognito_connection_) : true;
+  if (all_pref_stores_connected && incognito_connected) {
     // After this method exits |this| will get destroyed so it's safe to move
     // out the members.
     callback_.Run(std::move(persistent_pref_store_connection_),
-                  std::move(connections_));
+                  std::move(incognito_connection_), std::move(connections_));
   }
 }
 
@@ -128,9 +170,13 @@ PrefStoreManagerImpl::PrefStoreManagerImpl(
       base::ContainsValue(expected_pref_stores_, PrefValueStore::DEFAULT_STORE))
       << "expected_pref_stores must always include PrefValueStore::USER_STORE "
          "and PrefValueStore::DEFAULT_STORE.";
-  // The user store is not actually connected to in the implementation, but
-  // accessed directly.
+  // The user store is not actually registered or connected to in the
+  // implementation, but accessed directly.
   expected_pref_stores_.erase(PrefValueStore::USER_STORE);
+  DVLOG(1) << "Expecting " << expected_pref_stores_.size()
+           << " pref store(s) to register";
+  // This store is done in-process so it's already "registered":
+  DVLOG(1) << "Registering pref store: " << PrefValueStore::DEFAULT_STORE;
   registry_.AddInterface<prefs::mojom::PrefStoreConnector>(
       base::Bind(&PrefStoreManagerImpl::BindPrefStoreConnectorRequest,
                  base::Unretained(this)));
@@ -142,7 +188,10 @@ PrefStoreManagerImpl::PrefStoreManagerImpl(
                  base::Unretained(this)));
 }
 
-PrefStoreManagerImpl::~PrefStoreManagerImpl() = default;
+PrefStoreManagerImpl::~PrefStoreManagerImpl() {
+  // For logging consistency:
+  DVLOG(1) << "Deregistering pref store: " << PrefValueStore::DEFAULT_STORE;
+}
 
 struct PrefStoreManagerImpl::PendingConnect {
   mojom::PrefRegistryPtr pref_registry;
@@ -176,12 +225,23 @@ void PrefStoreManagerImpl::Connect(
     mojom::PrefRegistryPtr pref_registry,
     const std::vector<PrefValueStore::PrefStoreType>& already_connected_types,
     const ConnectCallback& callback) {
+  DVLOG(1) << "Will connect to "
+           << expected_pref_stores_.size() - already_connected_types.size()
+           << " pref store(s)";
   if (AllConnected()) {
     ConnectImpl(std::move(pref_registry), already_connected_types, callback);
   } else {
     pending_connects_.push_back(
         {std::move(pref_registry), already_connected_types, callback});
   }
+}
+
+void PrefStoreManagerImpl::ConnectToUserPrefStore(
+    const std::vector<std::string>& observed_prefs,
+    const mojom::PrefStoreConnector::ConnectToUserPrefStoreCallback& callback) {
+  callback.Run(persistent_pref_store_->CreateConnection(
+      PersistentPrefStoreImpl::ObservedPrefs(observed_prefs.begin(),
+                                             observed_prefs.end())));
 }
 
 void PrefStoreManagerImpl::BindPrefStoreConnectorRequest(
@@ -213,6 +273,10 @@ void PrefStoreManagerImpl::Init(
     mojom::PersistentPrefStoreConfigurationPtr configuration) {
   DCHECK(!persistent_pref_store_);
 
+  if (configuration->is_incognito_configuration()) {
+    incognito_connector_ =
+        std::move(configuration->get_incognito_configuration()->connector);
+  }
   persistent_pref_store_ = CreatePersistentPrefStore(
       std::move(configuration), worker_pool_.get(),
       base::Bind(&PrefStoreManagerImpl::OnPersistentPrefStoreReady,
@@ -239,11 +303,13 @@ void PrefStoreManagerImpl::OnPrefStoreDisconnect(
 }
 
 bool PrefStoreManagerImpl::AllConnected() const {
+  DCHECK_LE(pref_store_ptrs_.size(), expected_pref_stores_.size());
   return pref_store_ptrs_.size() == expected_pref_stores_.size() &&
          persistent_pref_store_ && persistent_pref_store_->initialized();
 }
 
 void PrefStoreManagerImpl::ProcessPendingConnects() {
+  DCHECK(persistent_pref_store_);
   for (auto& connect : pending_connects_)
     ConnectImpl(std::move(connect.pref_registry),
                 connect.already_connected_types, connect.callback);
@@ -270,6 +336,7 @@ void PrefStoreManagerImpl::ConnectImpl(
                                 PersistentPrefStoreImpl::ObservedPrefs(
                                     pref_registry->registrations.begin(),
                                     pref_registry->registrations.end())),
+                            incognito_connector_.get(),
                             pref_registry->registrations, callback);
 }
 
