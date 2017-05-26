@@ -61,7 +61,15 @@ async_test(function(t) {
     .then(function() {
       return videoTrack.applyConstraints(constraints);
     })
-    .then(function() {
+    .then(function(returnedConstraints) {
+
+
+      assert_equals(Object.keys(returnedConstraints.advanced[0]).length,
+                    Object.keys(constraints.advanced[0]).length);
+      Object.keys(returnedConstraints.advanced[0]).forEach(function(key) {
+        console.log(' [field ' + key + ']');
+      });
+
       assert_equals(constraints.advanced[0].whiteBalanceMode,
                     meteringModeNames[theMock.options().white_balance_mode],
                     'whiteBalanceMode');
