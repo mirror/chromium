@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "999d99a9_7f4fd9a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-26T10:58:09Z",
+      "side": 1,
+      "message": "Hm, the second option seems somewhat suboptimal -- we\u0027d have a larger memory footprint from caching images at a potentially unnecessarily large size, and we\u0027d have to make copies and resize them any time we need an image, which would somewhat defeat the purpose of a cache.\n\nCould we keep the image size as part of the ThumbnailProvider and just pass in a different ThumbnailProvider if we need the images at a different size?",
+      "parentUuid": "8b576aee_2184874b",
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "880867be_8919fe27",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 2
