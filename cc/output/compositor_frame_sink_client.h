@@ -45,6 +45,22 @@ class CC_EXPORT CompositorFrameSinkClient {
   // so that frames are submitted only at the rate it can handle them.
   virtual void DidReceiveCompositorFrameAck() = 0;
 
+  // Notification that the frame with |presentation_token| has been presented to
+  // user. The |timestamp| corresponds to the time when the content updat turned
+  // into light the first time on the display. The |refresh| is prediction of
+  // how long the next output refresh may occur.
+  // Note: If the |presentation_token| is zero, |DidPresentCompositorFrame| and
+  // |DidDiscardCompositorFrame| will never be called.
+  virtual void DidPresentCompositorFrame(uint32_t presentation_token,
+                                         base::TimeTicks timestamp,
+                                         const base::TimeDelta& refresh) {}
+
+  // Notification that the frame with |presentation_token| has been discarded.
+  // The content of the frame was never displayed to the user.
+  // Note: If the |presentation_token| is zero, |DidPresentCompositorFrame| and
+  // |DidDiscardCompositorFrame| will never be called.
+  virtual void DidDiscardCompositorFrame(uint32_t presentation_token) {}
+
   // The CompositorFrameSink is lost when the ContextProviders held by it
   // encounter an error. In this case the CompositorFrameSink (and the
   // ContextProviders) must be recreated.

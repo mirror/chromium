@@ -76,6 +76,12 @@ void FrameGenerator::ReclaimResources(
 void FrameGenerator::DidReceiveCompositorFrameAck(
     const cc::ReturnedResourceArray& resources) {}
 
+void FrameGenerator::DidPresentCompositorFrame(uint32_t presentation_token,
+                                               base::TimeTicks timestamp,
+                                               base::TimeDelta refresh) {}
+
+void FrameGenerator::DidDiscardCompositorFrame(uint32_t presentation_token) {}
+
 void FrameGenerator::OnBeginFrame(const cc::BeginFrameArgs& begin_frame_args) {
   DCHECK(compositor_frame_sink_);
   current_begin_frame_ack_ = cc::BeginFrameAck(

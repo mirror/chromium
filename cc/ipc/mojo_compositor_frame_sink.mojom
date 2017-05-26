@@ -13,6 +13,7 @@ import "cc/ipc/surface_id.mojom";
 import "cc/ipc/returned_resource.mojom";
 import "cc/ipc/surface_sequence.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
+import "mojo/common/time.mojom";
 
 // A MojoCompositorFrameSink is an interface for receiving CompositorFrame
 // structs. A CompositorFrame contains the complete output meant for display.
@@ -53,6 +54,12 @@ interface MojoCompositorFrameSinkClient {
   // However, there's a fair amount of cleanup and refactoring necessary to get
   // rid of it.
   DidReceiveCompositorFrameAck(ReturnedResourceArray resources);
+
+  DidPresentCompositorFrame(uint32 presentation_token,
+                            mojo.common.mojom.TimeTicks timestamp,
+                            mojo.common.mojom.TimeDelta refresh);
+
+  DidDiscardCompositorFrame(uint32 presentation_token);
 
   // Notification for the client to generate a CompositorFrame.
   OnBeginFrame(BeginFrameArgs args);

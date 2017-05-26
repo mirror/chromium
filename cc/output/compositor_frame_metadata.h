@@ -116,6 +116,11 @@ class CC_EXPORT CompositorFrameMetadata {
   // the embedder wants to do something after a particular frame is processed.
   uint32_t frame_token = 0;
 
+  // Once a frame with a non-zero presentation_token is presented to user,
+  // a notification will be sent to |CompositorFrameSinkClient|.
+  // See |CompositorFrameSinkClient| for the detail.
+  uint32_t presentation_token = 0;
+
  private:
   CompositorFrameMetadata(const CompositorFrameMetadata& other);
   CompositorFrameMetadata operator=(const CompositorFrameMetadata&) = delete;
