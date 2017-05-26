@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e452b7c1_71d49758",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-26T00:07:29Z",
+      "side": 1,
+      "message": "I think this method should be renamed. S.t like: remove_tests_on_blacklist_devices(tests, blacklist_devices)\n\nThe naming convention we have been using here for methods are lower_case_underscore, so I think we should keep it consistent. If we change them to CamelCase to be consistent with everywhere in tools/perf, let do it in a different CL.",
+      "revId": "2299fb3d865ac8c57f8084a94ed244126f20da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850c4071_3ff8e2d8",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-26T00:07:29Z",
+      "side": 1,
+      "message": "nits: \"are not scheduled\"",
+      "revId": "2299fb3d865ac8c57f8084a94ed244126f20da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbad83d_6bdc3f4c",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-26T00:07:29Z",
+      "side": 1,
+      "message": "this is already sorted above?",
+      "revId": "2299fb3d865ac8c57f8084a94ed244126f20da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
