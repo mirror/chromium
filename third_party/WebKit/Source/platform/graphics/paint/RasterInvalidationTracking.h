@@ -6,7 +6,7 @@
 #define RasterInvalidationTracking_h
 
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/geometry/IntRect.h"
+#include "platform/geometry/FloatRect.h"
 #include "platform/geometry/Region.h"
 #include "platform/graphics/PaintInvalidationReason.h"
 #include "platform/graphics/paint/PaintRecord.h"
@@ -25,7 +25,7 @@ struct RasterInvalidationInfo {
   // died.
   const DisplayItemClient* client = nullptr;
   String client_debug_name;
-  IntRect rect;
+  FloatRect rect;
   PaintInvalidationReason reason = PaintInvalidationReason::kFull;
 };
 
