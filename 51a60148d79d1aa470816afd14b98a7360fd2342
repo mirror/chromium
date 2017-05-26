@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8e64a9a_04fb06a6",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-26T17:02:54Z",
+      "side": 1,
+      "message": "Added to public interface",
+      "parentUuid": "6332a6af_a4372471",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e7ac7d6_b41cc943",
         "filename": "chromecast/base/observer.h",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-25T23:09:00Z",
       "side": 1,
       "message": "nit: Did you consider making this method locking, and instead exposing a GetValueNonThreadsafe() method?",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 20
+      },
+      "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b9e352_0fcc7c5e",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-26T17:02:54Z",
+      "side": 1,
+      "message": "I think the default should be non-threadsafe, since in most cases a single thread owns the Observable.",
+      "parentUuid": "4e7ac7d6_b41cc943",
       "range": {
         "startLine": 204,
         "startChar": 0,
