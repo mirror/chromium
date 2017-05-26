@@ -13,8 +13,10 @@
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_flags.h"
+#include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkPicture.h"
 #include "third_party/skia/include/core/SkRect.h"
+#include "third_party/skia/include/core/SkScalar.h"
 #include "third_party/skia/include/core/SkTextBlob.h"
 
 // PaintOpBuffer is a reimplementation of SkLiteDL.
@@ -110,7 +112,8 @@ struct CC_PAINT_EXPORT PaintOpWithFlags : PaintOp {
 
   int CountSlowPathsFromFlags() const { return flags.getPathEffect() ? 1 : 0; }
   bool HasDiscardableImagesFromFlags() const {
-    if (!IsDrawOp())
+    if (!IsDrawOp() && GetType() != PaintOpType::DrawRecord &&
+        GetType() != PaintOpType::DrawDisplayItemList)
       return false;
 
     SkShader* shader = flags.getShader();
@@ -564,7 +567,6 @@ struct CC_PAINT_EXPORT DrawPosTextOp final : PaintOpWithArray<SkPoint> {
 
 struct CC_PAINT_EXPORT DrawRecordOp final : PaintOp {
   static constexpr PaintOpType kType = PaintOpType::DrawRecord;
-  static constexpr bool kIsDrawOp = true;
   explicit DrawRecordOp(sk_sp<const PaintRecord> record);
   ~DrawRecordOp();
   static void Raster(const PaintOp* op,
@@ -714,14 +716,19 @@ struct CC_PAINT_EXPORT SaveLayerOp final : PaintOpWithFlags {
 
 struct CC_PAINT_EXPORT SaveLayerAlphaOp final : PaintOp {
   static constexpr PaintOpType kType = PaintOpType::SaveLayerAlpha;
-  SaveLayerAlphaOp(const SkRect* bounds, uint8_t alpha)
-      : bounds(bounds ? *bounds : kUnsetRect), alpha(alpha) {}
+  SaveLayerAlphaOp(const SkRect* bounds,
+                   uint8_t alpha,
+                   bool preserve_lcd_text_requests)
+      : bounds(bounds ? *bounds : kUnsetRect),
+        alpha(alpha),
+        preserve_lcd_text_requests(preserve_lcd_text_requests) {}
   static void Raster(const PaintOp* op,
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
 
   SkRect bounds;
   uint8_t alpha;
+  bool preserve_lcd_text_requests;
 };
 
 struct CC_PAINT_EXPORT ScaleOp final : PaintOp {
