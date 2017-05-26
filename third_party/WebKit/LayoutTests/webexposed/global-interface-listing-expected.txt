@@ -6469,6 +6469,9 @@ interface SensorErrorEvent : Event
     attribute @@toStringTag
     getter error
     method constructor
+interface ServiceManager
+    attribute @@toStringTag
+    method bindInterface
 interface ServiceWorker : EventTarget
     attribute @@toStringTag
     getter onerror

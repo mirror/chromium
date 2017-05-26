@@ -13,6 +13,8 @@
       <include name="IDR_CONTENT_SHELL_MISSING_IMAGE_GIF" file="resources/missingImage.gif" type="BINDATA" />
       <include name="IDR_CONTENT_SHELL_MISSING_IMAGE_PNG" file="resources/missingImage.png" type="BINDATA" />
       <include name="IDR_CONTENT_SHELL_BROWSER_MANIFEST_OVERLAY" file="browser/content_shell_browser_manifest_overlay.json" type="BINDATA" />
+      <include name="IDR_CONTENT_SHELL_LAYOUT_TEST_HELPER_MANIFEST" file="browser/layout_test/layout_test_helper_manifest.json" type="BINDATA" />
+      <include name="IDR_CONTENT_SHELL_PACKAGED_SERVICES_MANIFEST_OVERLAY" file="${root_gen_dir}\content\shell\content_shell_packaged_services_manifest_overlay.json" use_base_dir="false" type="BINDATA" />
       <include name="IDR_CONTENT_SHELL_RENDERER_MANIFEST_OVERLAY" file="browser/content_shell_renderer_manifest_overlay.json" type="BINDATA" />
       <include name="IDR_CONTENT_SHELL_UTILITY_MANIFEST_OVERLAY" file="browser/content_shell_utility_manifest_overlay.json" type="BINDATA" />
     </includes>

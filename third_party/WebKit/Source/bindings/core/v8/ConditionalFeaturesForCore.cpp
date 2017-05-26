@@ -43,11 +43,15 @@ void InstallConditionalFeaturesCore(const WrapperTypeInfo* wrapper_type_info,
     auto* settings = ContextFeatureSettings::From(
         execution_context,
         ContextFeatureSettings::CreationMode::kDontCreateIfNotExists);
+    v8::Local<v8::Object> instance_object =
+        script_state->GetContext()->Global();
     if (settings && settings->isMojoJSEnabled()) {
-      v8::Local<v8::Object> instance_object =
-          script_state->GetContext()->Global();
       V8Window::installMojoJS(isolate, world, instance_object, prototype_object,
                               interface_object);
+    }
+    if (settings && settings->isServiceManagerEnabled()) {
+      V8Window::installServiceManager(isolate, world, instance_object,
+                                      prototype_object, interface_object);
     }
   } else if (wrapper_type_info == &V8HTMLLinkElement::wrapperTypeInfo) {
     if (OriginTrials::linkServiceWorkerEnabled(execution_context)) {

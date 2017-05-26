@@ -6,3 +6,7 @@
 window.isNativeMojoAvailable = () => {
   return 'Mojo' in self && 'MojoHandle' in self && 'MojoWatcher' in self;
 };
+
+window.isNativeServiceManagerAvailable = () => {
+  return 'ServiceManager' in self;
+};

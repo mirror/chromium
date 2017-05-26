@@ -10,6 +10,8 @@ import("//build/config/win/manifest.gni")
 import("//media/media_options.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 import("//ppapi/features/features.gni")
+import("//services/service_manager/public/service_manifest.gni")
+
 import("//tools/grit/repack.gni")
 import("//tools/grit/grit_rule.gni")
 if (is_android) {
@@ -78,6 +80,8 @@ static_library("content_shell_lib") {
     "browser/layout_test/layout_test_download_manager_delegate.h",
     "browser/layout_test/layout_test_first_device_bluetooth_chooser.cc",
     "browser/layout_test/layout_test_first_device_bluetooth_chooser.h",
+    "browser/layout_test/layout_test_helper_service.cc",
+    "browser/layout_test/layout_test_helper_service.h",
     "browser/layout_test/layout_test_javascript_dialog_manager.cc",
     "browser/layout_test/layout_test_javascript_dialog_manager.h",
     "browser/layout_test/layout_test_message_filter.cc",
@@ -257,6 +261,7 @@ static_library("content_shell_lib") {
     "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:features",
     "//third_party/WebKit/public:image_resources",
+    "//third_party/WebKit/public:layout_test_helper_mojom",
     "//third_party/WebKit/public:resources",
     "//third_party/WebKit/public:test_support",
     "//third_party/icu",
@@ -381,6 +386,16 @@ static_library("content_shell_lib") {
   }
 }
 
+service_manifest("layout_test_helper_manifest") {
+  name = "layout_test_helper"
+  source = "browser/layout_test/layout_test_helper_manifest.json"
+}
+
+service_manifest("content_shell_packaged_services_manifest_overlay") {
+  source = "browser/content_shell_packaged_services_manifest_overlay.json"
+  packaged_services = [ ":layout_test_helper_manifest" ]
+}
+
 grit("content_shell_resources_grit") {
   # External code should depend on ":resources" instead.
   visibility = [ ":*" ]
@@ -388,6 +403,13 @@ grit("content_shell_resources_grit") {
   outputs = [
     "grit/shell_resources.h",
     "shell_resources.pak",
+  ]
+  grit_flags = [
+    "-E",
+    "root_gen_dir=" + rebase_path(root_gen_dir, root_build_dir),
+  ]
+  deps = [
+    ":content_shell_packaged_services_manifest_overlay",
   ]
 }
 

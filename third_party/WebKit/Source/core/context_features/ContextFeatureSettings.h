@@ -35,10 +35,15 @@ class CORE_EXPORT ContextFeatureSettings final
   void enableMojoJS(bool enable) { enable_mojo_js_ = enable; }
   bool isMojoJSEnabled() const { return enable_mojo_js_; }
 
+  // ContextEnabled=ServiceManager feature
+  void enableServiceManager(bool enable) { enable_service_manager_ = enable; }
+  bool isServiceManagerEnabled() const { return enable_service_manager_; }
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
   bool enable_mojo_js_ = false;
+  bool enable_service_manager_ = false;
 };
 
 }  // namespace blink

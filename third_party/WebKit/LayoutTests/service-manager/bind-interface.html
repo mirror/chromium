@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="file:///gen/layout_test_data/mojo/public/js/mojo_bindings.js"></script>
+<script src="file:///gen/third_party/WebKit/public/platform/layout_test_helper.mojom.js"></script>
+<script>
+'use strict';
+
+async_test((test) => {
+  let helper = new blink.mojom.LayoutTestHelperPtr();
+  ServiceManager.bindInterface(blink.mojom.kLayoutTestHelperServiceName,
+                               blink.mojom.LayoutTestHelper.name,
+                               mojo.makeRequest(helper).handle);
+
+  const kMessage = 'hello world.';
+  const kExpectedResponse = '.dlrow olleh';
+  helper.reflect(kMessage).then(response => {
+    assert_equals(response.reversedMessage, kExpectedResponse);
+    test.done();
+  });
+}, 'can bind interfaces');
+
+</script>
