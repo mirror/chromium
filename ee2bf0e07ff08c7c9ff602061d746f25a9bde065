@@ -16,6 +16,24 @@
       "revId": "ee2bf0e07ff08c7c9ff602061d746f25a9bde065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b72b8ec_6eb887fa",
+        "filename": "services/preferences/pref_store_manager_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-26T00:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e839295f_4d84df1c",
+      "revId": "ee2bf0e07ff08c7c9ff602061d746f25a9bde065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
