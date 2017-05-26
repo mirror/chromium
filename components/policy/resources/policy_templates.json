@@ -2475,6 +2475,8 @@
               'installation_mode': 'force_installed',
               'update_url': 'https://example.com/update_url',
               'allowed_permissions': ['downloads'],
+              'runtime_blocked_hosts': ['*://*.example.com'],
+              'runtime_allowed_hosts': ['*://good.example.com'],
             },
             'update_url:https://www.example.com/update.xml': {
               'blocked_permissions': ['wallpaper'],
@@ -2519,6 +2521,9 @@
 
           "allowed_types": This setting whitelists the allowed types of extension/apps that can be installed in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph>.  The value is a list of strings, each of which should be one of the following: "extension", "theme", "user_script", "hosted_app", "legacy_packaged_app", "platform_app". See the <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> extensions documentation for more information on these types.
           "blocked_install_message": If a user tries to install an extension, but it is blocked by policy the Chrome Webstore displays a generic error message. This setting allows you to append text to the error message. This could be be used to direct users to your help desk, explain why a particular extension is blocked, or something else. This error message will be truncated if longer than 1000 characters.
+          "runtime_blocked_hosts": Accepts a list of hosts that an extension will be blocked from interacting with. This includes injecting javascript, altering and viewing webRequests / webNavigation, viewing and altering cookies. The format is similar to Match Patterns except no paths may be defined. e.g. "*://*.example.com". This also supports effective TLD wildcarding e.g. "*://example.*".
+          "runtime_allowed_hosts": Accepts a list of hosts that an extension can interact with regardless of whether they are listed in "runtime_blocked_hosts". This is the same format as "runtime_blocked_hosts".
+
 
           This policy isn't ready for usage yet, please don't use it.
           '''

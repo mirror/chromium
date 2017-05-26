@@ -133,8 +133,15 @@ bool IndividualSettings::Parse(const base::DictionaryValue* dict,
         std::string unparsed_str;
         host_list_value->GetString(i, &unparsed_str);
         URLPattern pattern = URLPattern(extension_scheme_mask);
-        URLPattern::ParseResult parse_result = pattern.Parse(
-            unparsed_str, URLPattern::ALLOW_WILDCARD_FOR_EFFECTIVE_TLD);
+        URLPattern::ParseResult parse_result;
+        if (unparsed_str == "<all_urls>") {
+          parse_result = pattern.Parse(
+              unparsed_str, URLPattern::ALLOW_WILDCARD_FOR_EFFECTIVE_TLD);
+        } else {
+          parse_result =
+              pattern.Parse(unparsed_str + "/*",
+                            URLPattern::ALLOW_WILDCARD_FOR_EFFECTIVE_TLD);
+        }
         if (parse_result != URLPattern::PARSE_SUCCESS) {
           LOG(WARNING) << kMalformedPreferenceWarning;
           LOG(WARNING) << "Invalid URL pattern '" + unparsed_str +
