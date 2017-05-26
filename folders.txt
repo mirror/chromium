@@ -1,0 +1,10 @@
+chrome/android/java/res/drawable-xxxhdpi/
+chrome/android/java/res/drawable-sw600dp-xxxhdpi/
+chrome/android/java/res/drawable-ldrtl-xxxhdpi-v17/
+chrome/android/java/res/drawable-ldrtl-sw600dp-xxxhdpi-v17/
+remoting/android/java/res/drawable-xxxhdpi/
+ui/android/java/res/drawable-xxxhdpi/
+android_webview/java/res/drawable-xxxhdpi/
+clank/android_webview/java/res/drawable-xxxhdpi/
+clank/java/res/drawable-xxxhdpi/
+clank/java/res_google_chrome/drawable-xxxhdpi/
