@@ -48,6 +48,10 @@ class CompositorFrameSinkLocal : public cc::CompositorFrameSink,
   // cc::CompositorFrameSinkSupportClient:
   void DidReceiveCompositorFrameAck(
       const cc::ReturnedResourceArray& resources) override;
+  void DidPresentCompositorFrame(uint32_t presentation_token,
+                                 base::TimeTicks timestamp,
+                                 base::TimeDelta refresh) override;
+  void DidDiscardCompositorFrame(uint32_t presentation_token) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
   void ReclaimResources(const cc::ReturnedResourceArray& resources) override;
   void WillDrawSurface(const cc::LocalSurfaceId& local_surface_id,
@@ -65,8 +69,9 @@ class CompositorFrameSinkLocal : public cc::CompositorFrameSink,
   cc::LocalSurfaceIdAllocator id_allocator_;
   cc::LocalSurfaceId local_surface_id_;
   std::unique_ptr<cc::ExternalBeginFrameSource> begin_frame_source_;
-  std::unique_ptr<base::ThreadChecker> thread_checker_;
   SurfaceChangedCallback surface_changed_callback_;
+
+  THREAD_CHECKER(thread_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(CompositorFrameSinkLocal);
 };

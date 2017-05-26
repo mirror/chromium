@@ -130,6 +130,11 @@ struct StructTraits<cc::mojom::CompositorFrameMetadataDataView,
     return metadata.frame_token;
   }
 
+  static uint32_t presentation_token(
+      const cc::CompositorFrameMetadata& metadata) {
+    return metadata.presentation_token;
+  }
+
   static bool Read(cc::mojom::CompositorFrameMetadataDataView data,
                    cc::CompositorFrameMetadata* out);
 };

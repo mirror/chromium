@@ -141,6 +141,18 @@ void DirectCompositorFrameSink::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
+void DirectCompositorFrameSink::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  client_->DidPresentCompositorFrame(presentation_token, timestamp, refresh);
+}
+
+void DirectCompositorFrameSink::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  client_->DidDiscardCompositorFrame(presentation_token);
+}
+
 void DirectCompositorFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
   begin_frame_source_->OnBeginFrame(args);
 }

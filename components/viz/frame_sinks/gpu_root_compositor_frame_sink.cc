@@ -124,6 +124,20 @@ void GpuRootCompositorFrameSink::DidReceiveCompositorFrameAck(
     client_->DidReceiveCompositorFrameAck(resources);
 }
 
+void GpuRootCompositorFrameSink::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  if (client_)
+    client_->DidPresentCompositorFrame(presentation_token, timestamp, refresh);
+}
+
+void GpuRootCompositorFrameSink::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  if (client_)
+    client_->DidDiscardCompositorFrame(presentation_token);
+}
+
 void GpuRootCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
   if (client_)
     client_->OnBeginFrame(args);
