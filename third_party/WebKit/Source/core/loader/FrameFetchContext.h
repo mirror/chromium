@@ -192,11 +192,14 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   const ContentSecurityPolicy* GetContentSecurityPolicy() const override;
   void AddConsoleMessage(ConsoleMessage*) const override;
 
+  void Detach() {
+    // This is needed to break a reference cycle which off-heap
+    // ComputedStyle is involved. See https://crbug.com/383860 for details.
+    document_ = nullptr;
+  }
+
   Member<DocumentLoader> document_loader_;
-  // FIXME: Oilpan: Ideally this should just be a traced Member but that will
-  // currently leak because ComputedStyle and its data are not on the heap.
-  // See crbug.com/383860 for details.
-  WeakMember<Document> document_;
+  Member<Document> document_;
 };
 
 }  // namespace blink

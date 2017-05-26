@@ -513,6 +513,7 @@ void FrameLoader::DetachDocumentLoader(Member<DocumentLoader>& loader) {
   if (!loader)
     return;
 
+  loader->Fetcher()->Context().Detach();
   FrameNavigationDisabler navigation_disabler(*frame_);
   loader->DetachFromFrame();
   loader = nullptr;
