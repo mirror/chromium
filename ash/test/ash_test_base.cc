@@ -164,6 +164,16 @@ void AshTestBase::SetUp() {
   if (Shell::GetAshConfig() == Config::CLASSIC)
     Shell::Get()->cursor_manager()->EnableMouseEvents();
 
+  // In order for frames to be generated, a cc::LocalSurfaceId must be given to
+  // the ui::Compositor. Normally that cc::LocalSurfaceId comes from the window
+  // server but in unit tests, there is no window server so we just make up a
+  // cc::LocalSurfaceId to allow the layer compositor to make forward progress.
+  if (Shell::GetAshConfig() == Config::MUS) {
+    cc::LocalSurfaceId id(1, base::UnguessableToken::Create());
+    Shell::GetPrimaryRootWindow()->GetHost()->compositor()->SetLocalSurfaceId(
+        id);
+  }
+
   // Changing GestureConfiguration shouldn't make tests fail. These values
   // prevent unexpected events from being generated during tests. Such as
   // delayed events which create race conditions on slower tests.
