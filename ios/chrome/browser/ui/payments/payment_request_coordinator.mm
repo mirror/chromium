@@ -26,6 +26,7 @@ using ::payments::data_util::GetPaymentAddressFromAutofillProfile;
 
 @implementation PaymentRequestCoordinator {
   UINavigationController* _navigationController;
+  ContactInfoSelectionCoordinator* _contactInfoSelectionCoordinator;
   PaymentRequestViewController* _viewController;
   PaymentRequestErrorCoordinator* _errorCoordinator;
   PaymentItemsDisplayCoordinator* _itemsDisplayCoordinator;
@@ -83,6 +84,8 @@ using ::payments::data_util::GetPaymentAddressFromAutofillProfile;
                          completion:nil];
   [_itemsDisplayCoordinator stop];
   _itemsDisplayCoordinator = nil;
+  [_contactInfoSelectionCoordinator stop];
+  _contactInfoSelectionCoordinator = nil;
   [_shippingAddressSelectionCoordinator stop];
   _shippingAddressSelectionCoordinator = nil;
   [_shippingOptionSelectionCoordinator stop];
@@ -195,6 +198,16 @@ using ::payments::data_util::GetPaymentAddressFromAutofillProfile;
   [_itemsDisplayCoordinator start];
 }
 
+- (void)paymentRequestViewControllerDidSelectContactInfoItem:
+    (PaymentRequestViewController*)controller {
+  _contactInfoSelectionCoordinator = [[ContactInfoSelectionCoordinator alloc]
+      initWithBaseViewController:_viewController];
+  [_contactInfoSelectionCoordinator setPaymentRequest:_paymentRequest];
+  [_contactInfoSelectionCoordinator setDelegate:self];
+
+  [_contactInfoSelectionCoordinator start];
+}
+
 - (void)paymentRequestViewControllerDidSelectShippingAddressItem:
     (PaymentRequestViewController*)controller {
   _shippingAddressSelectionCoordinator =
@@ -254,6 +267,25 @@ using ::payments::data_util::GetPaymentAddressFromAutofillProfile;
 - (void)paymentItemsDisplayCoordinatorDidConfirm:
     (PaymentItemsDisplayCoordinator*)coordinator {
   [self sendPaymentResponse];
+}
+
+#pragma mark - ContactInfoSelectionCoordinatorDelegate
+
+- (void)
+contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
+        didSelectContactProfile:(autofill::AutofillProfile*)contactProfile {
+  DCHECK(contactProfile);
+  [_delegate paymentRequestCoordinator:self
+               didSelectContactProfile:contactProfile];
+
+  [_contactInfoSelectionCoordinator stop];
+  _contactInfoSelectionCoordinator = nil;
+}
+
+- (void)contactInfoSelectionCoordinatorDidReturn:
+    (ContactInfoSelectionCoordinator*)coordinator {
+  [_contactInfoSelectionCoordinator stop];
+  _contactInfoSelectionCoordinator = nil;
 }
 
 #pragma mark - ShippingAddressSelectionCoordinatorDelegate

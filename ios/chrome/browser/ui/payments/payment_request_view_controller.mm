@@ -559,7 +559,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
       break;
     case ItemTypeContactInfo:
     case ItemTypeAddContactInfo:
-      // TODO(crbug.com/602666): Handle displaying contact info selection view.
+      [_delegate paymentRequestViewControllerDidSelectContactInfoItem:self];
       break;
     case ItemTypeFooterText:
       // Selecting the footer item should not trigger an action, unless the
