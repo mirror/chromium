@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "420ab132_1a24c6cb",
+        "filename": "gpu/command_buffer/service/command_buffer_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-26T00:27:29Z",
+      "side": 0,
+      "message": "Note: there is a slight behavior difference in this CL, which is that we will only attempt to pause after the first batch. This is because in any case the client shouldn\u0027t (and actually doesn\u0027t) call Flush if it wants to interrupt it anyway (e.g. preempted).",
+      "revId": "3b63de25cff45452ee3c15ba22b54e36808b6d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
