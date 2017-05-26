@@ -51,7 +51,6 @@ class CORE_EXPORT HTMLOutputElement final : public HTMLFormControlElement,
   void setValue(const String&);
   String defaultValue() const;
   void setDefaultValue(const String&);
-  void SetFor(const AtomicString&);
   DOMTokenList* htmlFor() const;
 
   bool CanContainRangeEndPoint() const override { return false; }

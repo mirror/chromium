@@ -76,10 +76,6 @@ DOMTokenList* HTMLOutputElement::htmlFor() const {
   return tokens_.Get();
 }
 
-void HTMLOutputElement::SetFor(const AtomicString& value) {
-  setAttribute(HTMLNames::forAttr, value);
-}
-
 void HTMLOutputElement::ChildrenChanged(const ChildrenChange& change) {
   HTMLFormControlElement::ChildrenChanged(change);
 
