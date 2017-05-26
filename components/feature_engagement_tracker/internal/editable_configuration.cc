@@ -28,4 +28,10 @@ const FeatureConfig& EditableConfiguration::GetFeatureConfig(
   return it->second;
 }
 
+const Configuration::ConfigMap& EditableConfiguration::GetRegisteredFeatures()
+    const {
+  // Returns empty map here.
+  return configs_;
+}
+
 }  // namespace feature_engagement_tracker
