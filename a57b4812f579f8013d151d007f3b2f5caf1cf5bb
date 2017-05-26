@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "02b9f5da_4b6a66da",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-26T17:59:39Z",
+      "side": 1,
+      "message": "Sorry! We have the InitAwareModel to take care of this. But we could still track maybe to figure out how often it happens.\n\nstats::RecordNotifyEventReadyState(model_-\u003eIsReady());\n\nDon\u0027t to the early bail out! :-) My bad.",
+      "parentUuid": "7e307390_6c7b3c65",
+      "revId": "a57b4812f579f8013d151d007f3b2f5caf1cf5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d027c61d_36b7b73e",
         "filename": "components/feature_engagement_tracker/internal/stats.cc",
         "patchSetId": 4
