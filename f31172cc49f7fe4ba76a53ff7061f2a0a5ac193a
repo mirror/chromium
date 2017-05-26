@@ -92,6 +92,30 @@
       "revId": "f31172cc49f7fe4ba76a53ff7061f2a0a5ac193a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e91d95_8e067786",
+        "filename": "third_party/WebKit/Source/core/dom/ResizeObserver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-05-26T07:34:20Z",
+      "side": 1,
+      "message": "Chatted offline. We are going to use inner class for internal version.",
+      "parentUuid": "b2e49b8b_e3eae98e",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "f31172cc49f7fe4ba76a53ff7061f2a0a5ac193a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
