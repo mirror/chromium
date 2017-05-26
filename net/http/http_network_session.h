@@ -54,6 +54,7 @@ class HttpProxyClientSocketPool;
 class HttpResponseBodyDrainer;
 class HttpServerProperties;
 class NetLog;
+class NetworkQualityEstimator;
 class NetworkThrottleManager;
 class ProxyDelegate;
 class ProxyService;
@@ -97,6 +98,7 @@ class NET_EXPORT HttpNetworkSession
     NetLog* net_log;
     HostMappingRules* host_mapping_rules;
     SocketPerformanceWatcherFactory* socket_performance_watcher_factory;
+    NetworkQualityEstimator* network_quality_estimator;
     bool ignore_certificate_errors;
     uint16_t testing_fixed_http_port;
     uint16_t testing_fixed_https_port;
