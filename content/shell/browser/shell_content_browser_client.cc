@@ -27,6 +27,7 @@
 #include "content/public/common/url_constants.h"
 #include "content/public/common/web_preferences.h"
 #include "content/public/test/test_service.h"
+#include "content/shell/browser/layout_test/layout_test_helper_service.h"
 #include "content/shell/browser/shell.h"
 #include "content/shell/browser/shell_browser_context.h"
 #include "content/shell/browser/shell_browser_main_parts.h"
@@ -41,6 +42,7 @@
 #include "media/mojo/features.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "storage/browser/quota/quota_settings.h"
+#include "third_party/WebKit/public/platform/layout_test_helper.mojom.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -194,11 +196,16 @@ bool ShellContentBrowserClient::IsHandledURL(const GURL& url) {
 
 void ShellContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
+  {
+    content::ServiceInfo info;
+    info.factory = base::Bind(&LayoutTestHelperService::Create);
+    services->emplace(blink::mojom::kLayoutTestHelperServiceName, info);
+  }
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
   {
     content::ServiceInfo info;
     info.factory = base::Bind(&media::CreateMediaServiceForTesting);
-    services->insert(std::make_pair("media", info));
+    services->emplace("media", info);
   }
 #endif
 }
@@ -214,6 +221,8 @@ ShellContentBrowserClient::GetServiceManifestOverlay(base::StringPiece name) {
   int id = -1;
   if (name == content::mojom::kBrowserServiceName)
     id = IDR_CONTENT_SHELL_BROWSER_MANIFEST_OVERLAY;
+  else if (name == content::mojom::kPackagedServicesServiceName)
+    id = IDR_CONTENT_SHELL_PACKAGED_SERVICES_MANIFEST_OVERLAY;
   else if (name == content::mojom::kRendererServiceName)
     id = IDR_CONTENT_SHELL_RENDERER_MANIFEST_OVERLAY;
   else if (name == content::mojom::kUtilityServiceName)
@@ -225,6 +234,14 @@ ShellContentBrowserClient::GetServiceManifestOverlay(base::StringPiece name) {
       ui::ResourceBundle::GetSharedInstance().GetRawDataResourceForScale(
           id, ui::ScaleFactor::SCALE_FACTOR_NONE);
   return base::JSONReader::Read(manifest_contents);
+}
+
+std::vector<ContentBrowserClient::ServiceManifestInfo>
+ShellContentBrowserClient::GetExtraServiceManifests() {
+  return std::vector<ServiceManifestInfo>{
+      ServiceManifestInfo{blink::mojom::kLayoutTestHelperServiceName,
+                          IDR_CONTENT_SHELL_LAYOUT_TEST_HELPER_MANIFEST},
+  };
 }
 
 void ShellContentBrowserClient::AppendExtraCommandLineSwitches(

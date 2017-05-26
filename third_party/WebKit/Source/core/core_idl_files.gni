@@ -292,6 +292,7 @@ core_idl_files = get_path_info([
                                  "page/PagePopupController.idl",
                                  "page/scrolling/ScrollState.idl",
                                  "page/scrolling/ScrollStateCallback.idl",
+                                 "service_manager/ServiceManager.idl",
                                  "streams/UnderlyingSourceBase.idl",
                                  "svg/SVGAElement.idl",
                                  "svg/SVGAngle.idl",

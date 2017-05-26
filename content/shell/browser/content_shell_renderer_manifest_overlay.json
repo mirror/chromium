@@ -6,6 +6,9 @@
         "browser": [
           "content::mojom::TestService"
         ]
+      },
+      "requires": {
+        "layout_test_helper": [ "renderer" ]
       }
     },
     "navigation:frame": {

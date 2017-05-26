@@ -815,6 +815,13 @@ mojom("offscreen_canvas_mojo_bindings") {
   export_header_blink = "third_party/WebKit/public/platform/WebCommon.h"
 }
 
+mojom("layout_test_helper_mojom") {
+  sources = [
+    "platform/layout_test_helper.mojom",
+  ]
+  use_new_js_bindings = true
+}
+
 group("generate_mojo_bindings") {
   deps = [
     ":mojo_bindings_blink__generator",

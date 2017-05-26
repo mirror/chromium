@@ -1,0 +1,14 @@
+{
+  "name": "layout_test_helper",
+  "display_name": "LayoutTest helper",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "renderer": [ "*" ]
+      },
+      "requires": {
+        "service_manager": [ "service_manager:all_users" ]
+      }
+    }
+  }
+}

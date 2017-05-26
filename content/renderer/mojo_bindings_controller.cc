@@ -70,17 +70,19 @@ MojoContextState* MojoBindingsController::GetContextState() {
 void MojoBindingsController::DidCreateScriptContext(
     v8::Local<v8::Context> context,
     int world_id) {
-  // NOTE: Layout tests already get this turned on by the RuntimeEnabled feature
-  // setting. We avoid manually installing them here for layout tests, because
-  // some layout tests (namely at
+  // NOTE: Layout tests already get these turned on by the RuntimeEnabled
+  // feature settings. We avoid manually installing them here for layout tests,
+  // because some layout tests (namely at
   // least virtual/stable/webexposed/global-interface-listing.html) may be run
   // with such features explicitly disabled. We do not want to unconditionally
-  // install Mojo bindings in such environments.
+  // install them in such environments.
   //
   // We also only allow these bindings to be installed when creating the main
   // world context.
-  if (bindings_type_ != MojoBindingsType::FOR_LAYOUT_TESTS && world_id == 0)
+  if (bindings_type_ != MojoBindingsType::FOR_LAYOUT_TESTS && world_id == 0) {
     blink::WebContextFeatures::EnableMojoJS(context, true);
+    blink::WebContextFeatures::EnableServiceManager(context, true);
+  }
 }
 
 void MojoBindingsController::WillReleaseScriptContext(

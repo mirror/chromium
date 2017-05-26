@@ -196,6 +196,7 @@ component("core") {
     "//third_party/WebKit/Source/core/paint",
     "//third_party/WebKit/Source/core/plugins",
     "//third_party/WebKit/Source/core/probe",
+    "//third_party/WebKit/Source/core/service_manager",
     "//third_party/WebKit/Source/core/streams",
     "//third_party/WebKit/Source/core/style:rendering",
     "//third_party/WebKit/Source/core/style:svg_style",
