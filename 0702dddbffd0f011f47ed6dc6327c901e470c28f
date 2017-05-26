@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8f9783da_d1f5ddb7",
+        "filename": "media/blink/webcontentdecryptionmodulesession_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-05-26T22:47:31Z",
+      "side": 1,
+      "message": "Yeah, I thought about only reporting one count per key status update, but apparently we could have different system code on different keys in one update, e.g. some keys are usable and some are output restricted. I don\u0027t see a perfect solution here, so just do the simplest way.",
+      "parentUuid": "4a4aea5a_ed77e3c0",
+      "revId": "0702dddbffd0f011f47ed6dc6327c901e470c28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97bb1a3e_c84ce049",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
