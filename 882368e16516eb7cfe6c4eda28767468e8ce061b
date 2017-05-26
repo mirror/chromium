@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "412f7562_fac5356c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-26T09:52:04Z",
+      "side": 1,
+      "message": "wrap to 72 character lines and leave an empty line between the title and the commit description. see https://chris.beams.io/posts/git-commit/",
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44f7935a_81ea233a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
         "patchSetId": 2
@@ -47,6 +64,52 @@
       "writtenOn": "2017-05-26T09:48:48Z",
       "side": 1,
       "message": "I think my comment from https://codereview.chromium.org/2896853003/diff/100001/chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java#newcode112 still applies: What if two clients request the same file at different sizes?",
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880867be_8919fe27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-26T09:52:04Z",
+      "side": 1,
+      "message": "can be final",
+      "range": {
+        "startLine": 593,
+        "startChar": 16,
+        "endLine": 593,
+        "endChar": 19
+      },
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b0da3e_f60f531a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-26T09:52:04Z",
+      "side": 1,
+      "message": "can be final",
+      "range": {
+        "startLine": 40,
+        "startChar": 30,
+        "endLine": 40,
+        "endChar": 48
+      },
       "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

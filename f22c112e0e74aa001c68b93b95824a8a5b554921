@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c0952a3_dffa78e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-26T09:52:04Z",
+      "side": 0,
+      "message": "so we never update the icon if it\u0027s not a completed image download?",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 22
+      },
+      "revId": "f22c112e0e74aa001c68b93b95824a8a5b554921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
