@@ -446,10 +446,11 @@ def get_waterfall_config():
        'os': 'Mac-10.11',
        'pool': 'Chrome-perf',
        'device_ids': [
-           'build4-b1', 'build5-b1', 'build6-b1', 'build7-b1', 'build8-b1'
+           'build4-b1', 'build5-b1', 'build6-b1', 'build7-b1',
+           'build30-b4' # replacing build8-b1. crbug.com/724998
           ],
        'perf_tests': [
-         ('performance_browser_tests', 'build8-b1')
+         ('performance_browser_tests', 'build30-b4')
        ]
       }
     ])
