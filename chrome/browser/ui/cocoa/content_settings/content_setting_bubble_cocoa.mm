@@ -8,6 +8,8 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/mac/foundation_util.h"
+#import "base/mac/sdk_forward_declarations.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
@@ -20,6 +22,7 @@
 #import "chrome/browser/ui/cocoa/subresource_filter/subresource_filter_bubble_controller.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "chrome/browser/ui/content_settings/content_setting_media_menu_model.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "content/public/browser/navigation_handle.h"
@@ -84,6 +87,13 @@ const int kMIDISysExPadding = 8;
 
 // Padding between host names in the MIDI bubble.
 const int kMIDISysExHostPadding = 4;
+
+// Touch bar identifier.
+NSString* const kContentSettingsBubbleTouchBarId = @"content-settings-bubble";
+
+// Touch bar item identifiers.
+NSString* const kManageTouchBarId = @"MANAGE";
+NSString* const kDoneTouchBarId = @"DONE";
 
 void SetControlSize(NSControl* control, NSControlSize controlSize) {
   CGFloat fontSize = [NSFont systemFontSizeForControlSize:controlSize];
@@ -851,6 +861,60 @@ const ContentTypeToNibPath kNibPaths[] = {
 - (void)awakeFromNib {
   [super awakeFromNib];
   [self layoutView];
+}
+
+- (NSTouchBar*)makeTouchBar {
+  if (!base::FeatureList::IsEnabled(features::kBrowserTouchBar))
+    return nil;
+
+  if (!manageButton_ && !doneButton_)
+    return nil;
+
+  base::scoped_nsobject<NSTouchBar> touchBar(
+      [[NSClassFromString(@"NSTouchBar") alloc] init]);
+  [touchBar setCustomizationIdentifier:base::mac::CreateTouchBarId(
+                                           kContentSettingsBubbleTouchBarId)];
+  [touchBar setDelegate:self];
+
+  NSMutableArray* dialogItems = [NSMutableArray array];
+  if (manageButton_) {
+    [dialogItems
+        addObject:base::mac::CreateTouchBarItemId(
+                      kContentSettingsBubbleTouchBarId, kManageTouchBarId)];
+  }
+
+  if (doneButton_) {
+    [dialogItems
+        addObject:base::mac::CreateTouchBarItemId(
+                      kContentSettingsBubbleTouchBarId, kDoneTouchBarId)];
+  }
+
+  [touchBar setDefaultItemIdentifiers:dialogItems];
+  [touchBar setCustomizationAllowedItemIdentifiers:dialogItems];
+  return touchBar.autorelease();
+}
+
+- (NSTouchBarItem*)touchBar:(NSTouchBar*)touchBar
+      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier {
+  NSButton* button = nil;
+  if ([identifier hasSuffix:kManageTouchBarId]) {
+    NSString* title = base::SysUTF16ToNSString(
+        contentSettingBubbleModel_->bubble_content().manage_text);
+    button = [NSButton buttonWithTitle:title
+                                target:self
+                                action:@selector(manageBlocking:)];
+  } else if ([identifier hasSuffix:kDoneTouchBarId]) {
+    button = [BaseBubbleController
+        doneTouchBarButtonWithTarget:self
+                              action:@selector(closeBubble:)];
+  } else {
+    return nil;
+  }
+
+  base::scoped_nsobject<NSCustomTouchBarItem> item([[NSClassFromString(
+      @"NSCustomTouchBarItem") alloc] initWithIdentifier:identifier]);
+  [item setView:button];
+  return item.autorelease();
 }
 
 - (void)layoutView {

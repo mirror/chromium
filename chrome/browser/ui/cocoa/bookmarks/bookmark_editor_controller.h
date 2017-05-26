@@ -6,6 +6,9 @@
 #define CHROME_BROWSER_UI_COCOA_BOOKMARKS_BOOKMARK_EDITOR_CONTROLLER_H_
 
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_editor_base_controller.h"
+#import "ui/base/cocoa/touch_bar_forward_declarations.h"
+
+@class DialogTextFieldEditor;
 
 // A controller for the bookmark editor, opened by 1) Edit... from the
 // context menu of a bookmark button, and 2) Bookmark this Page...'s Edit
@@ -17,6 +20,10 @@
   NSString* displayURL_;  // Bound to a text field in the dialog.
   IBOutlet NSTextField* urlField_;
   IBOutlet NSTextField* nameTextField_;
+
+  // Field editors for |urlField_| and |nameTextField_|.
+  base::scoped_nsobject<DialogTextFieldEditor> urlFieldEditor_;
+  base::scoped_nsobject<DialogTextFieldEditor> nameFieldEditor_;
 }
 
 @property(nonatomic, copy) NSString* displayURL;

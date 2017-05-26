@@ -443,6 +443,17 @@ FilePath NSStringToFilePath(NSString* str) {
   return FilePath([str fileSystemRepresentation]);
 }
 
+NSString* CreateTouchBarId(NSString* touch_bar_id) {
+  NSString* chrome_bundle_id =
+      base::SysUTF8ToNSString(base::mac::BaseBundleID());
+  return [NSString stringWithFormat:@"%@.%@", chrome_bundle_id, touch_bar_id];
+}
+
+NSString* CreateTouchBarItemId(NSString* touch_bar_id, NSString* item_id) {
+  return [NSString
+      stringWithFormat:@"%@-%@", CreateTouchBarId(touch_bar_id), item_id];
+}
+
 bool CFRangeToNSRange(CFRange range, NSRange* range_out) {
   if (base::IsValueInRangeForNumericType<decltype(range_out->location)>(
           range.location) &&
