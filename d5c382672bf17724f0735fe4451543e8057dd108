@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "402c5e8b_d180a995",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-05-26T23:46:34Z",
+      "side": 1,
+      "message": "As the compiler told us, this field needed to be initialized\nexplicitly, so I guess your comment on my comment does\nnot apply anymore.",
+      "range": {
+        "startLine": 219,
+        "startChar": 37,
+        "endLine": 219,
+        "endChar": 41
+      },
+      "revId": "d5c382672bf17724f0735fe4451543e8057dd108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
