@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37aae509_914f03c5",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-26T19:57:29Z",
+      "side": 1,
+      "message": "Remove this?\n\nOn another note, probably perf_data_generator.py should assert that every device id in the black list must belong to one builder to avoid user making mistake like this.",
+      "revId": "28f5e1b800bafefe429a0067382340320adca9e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
