@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5a3395a6_d74a9ced",
+        "filename": "tools/perf/benchmarks/system_health.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-05-26T15:40:03Z",
+      "side": 1,
+      "message": "Ahh, that\u0027s a real pitty! :(\n\nStill, splitting between memory/common might be desired anyway?\n\nOn the one hand I welcome the flexibility; on the other I fear the code duplication when we just want to \"disable this story EVERYWHERE\"",
+      "parentUuid": "1df7923a_8a6743d4",
+      "range": {
+        "startLine": 142,
+        "startChar": 21,
+        "endLine": 142,
+        "endChar": 52
+      },
+      "revId": "37a636424b34c5f08a64bd8b2f97eeece2ee9a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f57d07cd_0b064195",
         "filename": "tools/perf/benchmarks/system_health.py",
         "patchSetId": 5
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "c3b827b0_8bdd9d93",
+        "filename": "tools/perf/benchmarks/v8_browsing.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-05-26T15:40:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "157efd05_ca261929",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "37a636424b34c5f08a64bd8b2f97eeece2ee9a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fecd9c10_03942fed",
         "filename": "tools/perf/page_sets/system_health/chrome_stories.py",
         "patchSetId": 5
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "We expect permanent \u0027this should not run here\u0027 disabling  to be done with CanRunOnBrowser similar to the example below. If people were to want to perm disable using this, I would assume they would make the reason reflect that... but the plan is CanRunOnBrowser\n\nhttps://cs.chromium.org/chromium/src/tools/perf/page_sets/repeatable_synthesize_scroll_gesture_shared_state.py?l\u003d12",
       "parentUuid": "fecd9c10_03942fed",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "37a636424b34c5f08a64bd8b2f97eeece2ee9a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4465d6c_2db9370c",
+        "filename": "tools/perf/page_sets/system_health/chrome_stories.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-05-26T15:40:03Z",
+      "side": 1,
+      "message": "Yeah, then change to comment to \"move to CanRunOnBrowser\" instead.",
+      "parentUuid": "f2fb2ae4_8c025563",
       "range": {
         "startLine": 33,
         "startChar": 0,
