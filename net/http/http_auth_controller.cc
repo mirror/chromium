@@ -223,8 +223,7 @@ void HttpAuthController::AddAuthorizationHeader(
 int HttpAuthController::HandleAuthChallenge(
     scoped_refptr<HttpResponseHeaders> headers,
     const SSLInfo& ssl_info,
-    bool do_not_send_server_auth,
-    bool establishing_tunnel,
+    const CompletionCallback& callback,
     const NetLogWithSource& net_log) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(headers.get());
@@ -273,18 +272,13 @@ int HttpAuthController::HandleAuthChallenge(
             INVALIDATE_HANDLER :
             INVALIDATE_HANDLER_AND_CACHED_CREDENTIALS);
         break;
-      default:
-        NOTREACHED();
-        break;
     }
   }
 
   identity_.invalid = true;
-  bool can_send_auth = (target_ != HttpAuth::AUTH_SERVER ||
-                        !do_not_send_server_auth);
 
   do {
-    if (!handler_.get() && can_send_auth) {
+    if (!handler_.get()) {
       // Find the best authentication challenge that we support.
       HttpAuth::ChooseBestChallenge(http_auth_handler_factory_, *headers,
                                     ssl_info, target_, auth_origin_,
@@ -294,13 +288,6 @@ int HttpAuthController::HandleAuthChallenge(
     }
 
     if (!handler_.get()) {
-      if (establishing_tunnel) {
-        // We are establishing a tunnel, we can't show the error page because an
-        // active network attacker could control its contents.  Instead, we just
-        // fail to establish the tunnel.
-        DCHECK(target_ == HttpAuth::AUTH_PROXY);
-        return ERR_PROXY_AUTH_UNSUPPORTED;
-      }
       // We found no supported challenge -- let the transaction continue so we
       // end up displaying the error page.
       return OK;

@@ -30,12 +30,15 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
     DONE
   };
 
-  enum Resolve {
-    RESOLVE_INIT,
-    RESOLVE_SKIP,
-    RESOLVE_SYNC,
-    RESOLVE_ASYNC,
-    RESOLVE_TESTED,
+  // Expected behavior of NeedsCanonicalName() and ResolveCanonicalName().
+  enum NameResolverExpectation {
+    RESOLVE_UNINITIALIZED,  // Resolver behavior is undefined.
+    RESOLVE_SKIP,           // NeedsCanonicalName() returns false.
+    RESOLVE_SYNC,    // NeedsCanonicalName() return true, ResolveCanonicalName()
+                     // resolves synchornously.
+    RESOLVE_ASYNC,   // NeedsCanonicalName() return true. ResolveCanonicalName()
+                     // resolves asynchronously.
+    RESOLVE_TESTED,  // Test expectations met.
   };
 
   // The Factory class returns handlers in the order they were added via
@@ -71,7 +74,7 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
 
   ~HttpAuthHandlerMock() override;
 
-  void SetResolveExpectation(Resolve resolve);
+  void SetResolveExpectation(NameResolverExpectation resolve);
 
   virtual bool NeedsCanonicalName();
 
@@ -121,7 +124,7 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
   void OnGenerateAuthToken();
 
   State state_;
-  Resolve resolve_;
+  NameResolverExpectation resolve_;
   CompletionCallback callback_;
   bool generate_async_;
   int generate_rv_;

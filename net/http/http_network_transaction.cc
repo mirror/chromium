@@ -788,6 +788,16 @@ int HttpNetworkTransaction::DoLoop(int result) {
         net_log_.EndEventWithNetErrorCode(
             NetLogEventType::HTTP_TRANSACTION_READ_HEADERS, rv);
         break;
+      case STATE_HANDLE_AUTH_CHALLENGE:
+        net_log_.BeginEvent(
+            NetLog::TYPE_HTTP_TRANSACTION_HANDLE_AUTH_CHALLENGE);
+        rv = DoHandleAuthChallenge();
+        break;
+      case STATE_HANDLE_AUTH_CHALLENGE_COMPLETE:
+        rv = DoHandleAuthChallengeComplete(rv);
+        net_log_.EndEventWithNetErrorCode(
+            NetLog::TYPE_HTTP_TRANSACTION_HANDLE_AUTH_CHALLENGE, rv);
+        break;
       case STATE_READ_BODY:
         DCHECK_EQ(OK, rv);
         net_log_.BeginEvent(NetLogEventType::HTTP_TRANSACTION_READ_BODY);
@@ -1321,25 +1331,78 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
     }
   }
 
-  int rv = HandleAuthChallenge();
-  if (rv != OK)
-    return rv;
-
-  headers_valid_ = true;
-
-  // We have reached the end of Start state machine, set the RequestInfo to
-  // null.
-  // RequestInfo is a member of the HttpTransaction's consumer and is useful
-  // only until the final response headers are received. Clearing it will ensure
-  // that HttpRequestInfo is only used up until final response headers are
-  // received. Clearing is allowed so that the transaction can be disassociated
-  // from its creating consumer in cases where it is shared for writing to the
-  // cache. It is also safe to set it to null at this point since
-  // upload_data_stream is also not used in the Read state machine.
-  if (pending_auth_target_ == HttpAuth::AUTH_NONE)
-    request_ = nullptr;
-
   return OK;
+}
+
+int HttpNetworkTransaction::DoHandleAuthChallenge() {
+  const HttpResponseHeaders* headers = GetResponseHeaders();
+  DCHECK(headers);
+  // Note that the server or a proxy can send an authentication header with a
+  // response that doesn't have a 401 or 407 status code. This method is
+  // typically used to send the final authentication token for a multi-round
+  // authentication handshake where no further responses are necessary from the
+  // client.
+  // TODO(asanka): The logic below doesn't handle authentication headers if the
+  // status code isn't 401 or 407. Fix it.
+
+  int status = headers->response_code();
+  if (status != HTTP_UNAUTHORIZED &&
+      status != HTTP_PROXY_AUTHENTICATION_REQUIRED)
+    return OK;
+  HttpAuth::Target target = status == HTTP_PROXY_AUTHENTICATION_REQUIRED
+                                ? HttpAuth::AUTH_PROXY
+                                : HttpAuth::AUTH_SERVER;
+  if (target == HttpAuth::AUTH_PROXY && proxy_info_.is_direct())
+    return ERR_UNEXPECTED_PROXY_AUTH;
+
+  // This case can trigger when an HTTPS server responds with a "Proxy
+  // authentication required" status code through a non-authenticating
+  // proxy.
+  if (!auth_controllers_[target].get())
+    return ERR_UNEXPECTED_PROXY_AUTH;
+
+  if (target == HttpAuth::AUTH_SERVER && !ShouldApplyServerAuth())
+    return OK;
+
+  pending_auth_target_ = target;
+  next_state_ = STATE_HANDLE_AUTH_CHALLENGE_COMPLETE;
+  return auth_controllers_[target]->HandleAuthChallenge(response_, io_callback_,
+                                                        net_log_);
+}
+
+int HttpNetworkTransaction::DoHandleAuthChallengeComplete(int result) {
+  DCHECK(pending_auth_target_ == HttpAuth::AUTH_PROXY ||
+         pending_auth_target_ == HttpAuth::AUTH_SERVER);
+  if (result == OK) {
+    headers_valid_ = true;
+
+    // We have reached the end of Start state machine, set the RequestInfo to
+    // null.
+    // RequestInfo is a member of the HttpTransaction's consumer and is useful
+    // only until the final response headers are received. Clearing it will
+    // ensure that HttpRequestInfo is only used up until final response headers
+    // are received. Clearing is allowed so that the transaction can be
+    // disassociated from its creating consumer in cases where it is shared for
+    // writing to the cache. It is also safe to set it to null at this point
+    // since upload_data_stream is also not used in the Read state machine.
+    if (pending_auth_target_ == HttpAuth::AUTH_NONE)
+      request_ = nullptr;
+  }
+
+  // If there's no AuthHandler, then we won't be able to generate an
+  // authentication token next time around regardless of whether the caller
+  // provides credentials via ResetAuth().
+  if (!auth_controllers_[pending_auth_target_]->HaveAuthHandler()) {
+    pending_auth_target_ = HttpAuth::AUTH_NONE;
+    request_ = nullptr;
+    return result;
+  }
+  scoped_refptr<AuthChallengeInfo> auth_info =
+      auth_controllers_[pending_auth_target_]->auth_info();
+  if (auth_info.get())
+    response_.auth_challenge = auth_info;
+
+  return result;
 }
 
 int HttpNetworkTransaction::DoReadBody() {
@@ -1686,40 +1749,6 @@ bool HttpNetworkTransaction::ShouldApplyProxyAuth() const {
 
 bool HttpNetworkTransaction::ShouldApplyServerAuth() const {
   return !(request_->load_flags & LOAD_DO_NOT_SEND_AUTH_DATA);
-}
-
-int HttpNetworkTransaction::HandleAuthChallenge() {
-  scoped_refptr<HttpResponseHeaders> headers(GetResponseHeaders());
-  DCHECK(headers.get());
-
-  int status = headers->response_code();
-  if (status != HTTP_UNAUTHORIZED &&
-      status != HTTP_PROXY_AUTHENTICATION_REQUIRED)
-    return OK;
-  HttpAuth::Target target = status == HTTP_PROXY_AUTHENTICATION_REQUIRED ?
-                            HttpAuth::AUTH_PROXY : HttpAuth::AUTH_SERVER;
-  if (target == HttpAuth::AUTH_PROXY && proxy_info_.is_direct())
-    return ERR_UNEXPECTED_PROXY_AUTH;
-
-  // This case can trigger when an HTTPS server responds with a "Proxy
-  // authentication required" status code through a non-authenticating
-  // proxy.
-  if (!auth_controllers_[target].get())
-    return ERR_UNEXPECTED_PROXY_AUTH;
-
-  int rv = auth_controllers_[target]->HandleAuthChallenge(
-      headers, response_.ssl_info,
-      (request_->load_flags & LOAD_DO_NOT_SEND_AUTH_DATA) != 0, false,
-      net_log_);
-  if (auth_controllers_[target]->HaveAuthHandler())
-    pending_auth_target_ = target;
-
-  scoped_refptr<AuthChallengeInfo> auth_info =
-      auth_controllers_[target]->auth_info();
-  if (auth_info.get())
-      response_.auth_challenge = auth_info;
-
-  return rv;
 }
 
 bool HttpNetworkTransaction::HaveAuth(HttpAuth::Target target) const {

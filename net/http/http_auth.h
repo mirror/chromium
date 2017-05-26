@@ -24,10 +24,13 @@ class NetLogWithSource;
 class SSLInfo;
 
 // Utility class for http authentication.
+// TODO(asanka): Consider merging this with HttpAuthController.
 class NET_EXPORT_PRIVATE HttpAuth {
  public:
   // Http authentication can be done the the proxy server, origin server,
   // or both. This enum tracks who the target is.
+  // TODO(asanka): Rename this to TargetType. The actual authentication target
+  // is a function of target type and target URL.
   enum Target {
     AUTH_NONE = -1,
     // We depend on the valid targets (!= AUTH_NONE) being usable as indexes
@@ -40,26 +43,24 @@ class NET_EXPORT_PRIVATE HttpAuth {
   // What the HTTP WWW-Authenticate/Proxy-Authenticate headers indicate about
   // the previous authorization attempt.
   enum AuthorizationResult {
-    AUTHORIZATION_RESULT_ACCEPT,   // The authorization attempt was accepted,
-                                   // although there still may be additional
-                                   // rounds of challenges.
+    // The authorization attempt was accepted, although there still may be
+    // additional rounds of challenges.
+    AUTHORIZATION_RESULT_ACCEPT,
 
-    AUTHORIZATION_RESULT_REJECT,   // The authorization attempt was rejected.
+    // The authorization attempt was rejected.
+    AUTHORIZATION_RESULT_REJECT,
 
-    AUTHORIZATION_RESULT_STALE,    // (Digest) The nonce used in the
-                                   // authorization attempt is stale, but
-                                   // otherwise the attempt was valid.
+    // (Digest) The nonce used in the authorization attempt is stale, but
+    // otherwise the attempt was valid.
+    AUTHORIZATION_RESULT_STALE,
 
-    AUTHORIZATION_RESULT_INVALID,  // The authentication challenge headers are
-                                   // poorly formed (the authorization attempt
-                                   // itself may have been fine).
+    // The authentication challenge headers are poorly formed (the authorization
+    // attempt itself may have been fine).
+    AUTHORIZATION_RESULT_INVALID,
 
-    AUTHORIZATION_RESULT_DIFFERENT_REALM,  // The authorization
-                                           // attempt was rejected,
-                                           // but the realm associated
-                                           // with the new challenge
-                                           // is different from the
-                                           // previous attempt.
+    // The authorization attempt was rejected, but the realm associated with the
+    // new challenge is different from the previous attempt.
+    AUTHORIZATION_RESULT_DIFFERENT_REALM,
   };
 
   // Describes where the identity used for authentication came from.
@@ -67,27 +68,29 @@ class NET_EXPORT_PRIVATE HttpAuth {
     // Came from nowhere -- the identity is not initialized.
     IDENT_SRC_NONE,
 
-    // The identity came from the auth cache, by doing a path-based
-    // lookup (premptive authorization).
+    // The identity came from the auth cache, by doing a path-based lookup
+    // (premptive authorization).
     IDENT_SRC_PATH_LOOKUP,
 
     // The identity was extracted from a URL of the form:
     // http://<username>:<password>@host:port
     IDENT_SRC_URL,
 
-    // The identity was retrieved from the auth cache, by doing a
-    // realm lookup.
+    // The identity was retrieved from the auth cache, by doing a realm lookup.
     IDENT_SRC_REALM_LOOKUP,
 
-    // The identity was provided by RestartWithAuth -- it likely
-    // came from a prompt (or maybe the password manager).
+    // The identity was provided by RestartWithAuth -- it likely came from a
+    // prompt (or maybe the password manager).
     IDENT_SRC_EXTERNAL,
 
-    // The identity used the default credentials for the computer,
-    // on schemes that support single sign-on.
+    // The identity used the default credentials for the computer, on schemes
+    // that support single sign-on.
     IDENT_SRC_DEFAULT_CREDENTIALS,
   };
 
+  // TODO(asanka): Get rid of enum based schemes. Identify schemes by name
+  // instead. http://tools.ietf.org/html/rfc2617#section-1.2 specifies that a
+  // scheme is a RFC 622 token.
   enum Scheme {
     AUTH_SCHEME_BASIC = 0,
     AUTH_SCHEME_DIGEST,
