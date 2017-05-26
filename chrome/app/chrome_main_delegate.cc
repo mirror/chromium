@@ -193,6 +193,14 @@ extern int CloudPrintServiceProcessMain(const content::MainFunctionParams&);
 
 namespace {
 
+const char kProductPlaceholder[] = "%(product)";
+
+#if defined(GOOGLE_CHROME_BUILD)
+const char kProductName[] = "chrome";
+#else
+const char kProductName[] = "chromium";
+#endif
+
 #if defined(OS_WIN)
 // Early versions of Chrome incorrectly registered a chromehtml: URL handler,
 // which gives us nothing but trouble. Avoid launching chrome this way since
@@ -384,6 +392,14 @@ struct MainFunction {
   int (*function)(const content::MainFunctionParams&);
 };
 
+void ExpandProductPlaceholder(std::string& str) {
+  size_t product_placeholder_pos = str.find(kProductPlaceholder);
+  if (product_placeholder_pos == std::string::npos)
+    return;
+  str.replace(product_placeholder_pos, sizeof(kProductPlaceholder) - 1,
+              kProductName);
+}
+
 // Initializes the user data dir. Must be called before InitializeLocalState().
 void InitializeUserDataDir(base::CommandLine* command_line) {
 #if defined(OS_WIN)
@@ -429,6 +445,7 @@ void InitializeUserDataDir(base::CommandLine* command_line) {
     std::unique_ptr<base::Environment> environment(base::Environment::Create());
     if (environment->GetVar("CHROME_USER_DATA_DIR", &user_data_dir_string) &&
         base::IsStringUTF8(user_data_dir_string)) {
+      ExpandProductPlaceholder(user_data_dir_string);
       user_data_dir = base::FilePath::FromUTF8Unsafe(user_data_dir_string);
     }
   }
