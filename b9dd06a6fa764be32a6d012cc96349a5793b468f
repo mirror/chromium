@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9641fdc7_4775bbd1",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-26T19:21:08Z",
+      "side": 1,
+      "message": "s/blacklist/blacklist_devices/",
+      "revId": "b9dd06a6fa764be32a6d012cc96349a5793b468f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9d4923_8c32cde3",
+        "filename": "tools/perf/core/perf_data_generator_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-26T19:21:08Z",
+      "side": 1,
+      "message": "nits: remove the 4 extra blank lines",
+      "revId": "b9dd06a6fa764be32a6d012cc96349a5793b468f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
