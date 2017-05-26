@@ -83,8 +83,8 @@ void AutofillPaymentInstrument::InvokePaymentApp(
 
 bool AutofillPaymentInstrument::IsCompleteForPayment() {
   return autofill::GetCompletionStatusForCard(credit_card_, app_locale_,
-                                              billing_profiles_) ==
-         autofill::CREDIT_CARD_COMPLETE;
+                                              billing_profiles_) <=
+         autofill::CREDIT_CARD_EXPIRED;
 }
 
 base::string16 AutofillPaymentInstrument::GetMissingInfoLabel() {
