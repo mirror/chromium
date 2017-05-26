@@ -72,7 +72,8 @@ class CORE_EXPORT HTMLOutputElement final : public HTMLFormControlElement,
   void ResetImpl() override;
   int tabIndex() const override;
 
-  void ValueWasSet() final;
+  // DOMTokenListObserver function
+  void ValueWasSet(const AtomicString&) final;
 
   bool is_default_value_mode_;
   String default_value_;

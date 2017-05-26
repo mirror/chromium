@@ -67,7 +67,7 @@ bool HTMLOutputElement::SupportsFocus() const {
 void HTMLOutputElement::ParseAttribute(
     const AttributeModificationParams& params) {
   if (params.name == HTMLNames::forAttr)
-    SetFor(params.new_value);
+    tokens_->DidUpdateAttributeValue(params.old_value, params.new_value);
   else
     HTMLFormControlElement::ParseAttribute(params);
 }
@@ -77,7 +77,7 @@ DOMTokenList* HTMLOutputElement::htmlFor() const {
 }
 
 void HTMLOutputElement::SetFor(const AtomicString& value) {
-  tokens_->setValue(value);
+  setAttribute(HTMLNames::forAttr, value);
 }
 
 void HTMLOutputElement::ChildrenChanged(const ChildrenChange& change) {
@@ -109,8 +109,8 @@ void HTMLOutputElement::setValue(const String& value) {
   setTextContent(value);
 }
 
-void HTMLOutputElement::ValueWasSet() {
-  SetSynchronizedLazyAttribute(HTMLNames::forAttr, tokens_->value());
+void HTMLOutputElement::ValueWasSet(const AtomicString& value) {
+  setAttribute(HTMLNames::forAttr, value);
 }
 
 String HTMLOutputElement::defaultValue() const {
