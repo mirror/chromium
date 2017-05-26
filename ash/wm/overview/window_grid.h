@@ -88,6 +88,16 @@ class ASH_EXPORT WindowGrid : public aura::WindowObserver,
   // this grid owns.
   bool Contains(const aura::Window* window) const;
 
+  // If |window| is contained in any of the WindowSelectorItem this grid owns,
+  // removes the corresponding WindowSelectorItem from the grid and returns it.
+  std::unique_ptr<WindowSelectorItem> RemoveItem(aura::Window* window,
+                                                 size_t* position);
+
+  // Insert |window_item| in the grid at |position|. If |positon| is larger than
+  // the grid's size, insert it at the end of the grid.
+  void InsertItem(std::unique_ptr<WindowSelectorItem> window_item,
+                  const size_t position);
+
   // Dims the items whose titles do not contain |pattern| and prevents their
   // selection. The pattern has its accents removed and is converted to
   // lowercase in a l10n sensitive context.
@@ -98,6 +108,8 @@ class ASH_EXPORT WindowGrid : public aura::WindowObserver,
   // selected the implementation fades out |selection_widget_| to transparent
   // opacity, effectively hiding the selector widget.
   void WindowClosing(WindowSelectorItem* window);
+
+  void SetBoundsInScreen(const gfx::Rect bounds);
 
   // Returns true if the grid has no more windows.
   bool empty() const { return window_list_.empty(); }
@@ -189,6 +201,9 @@ class ASH_EXPORT WindowGrid : public aura::WindowObserver,
 
   // True only after all windows have been prepared for overview.
   bool prepared_for_overview_;
+
+  // The bound in screen coordinates for the window grid.
+  gfx::Rect bounds_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowGrid);
 };

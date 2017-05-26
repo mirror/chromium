@@ -12,6 +12,7 @@
 #include "ash/wm/maximize_mode/maximize_mode_window_manager.h"
 #include "ash/wm/screen_pinning_controller.h"
 #include "ash/wm/window_animation_types.h"
+#include "ash/wm/window_positioning_utils.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_state_util.h"
 #include "ash/wm/wm_event.h"
@@ -72,6 +73,18 @@ gfx::Rect GetCenteredBounds(const gfx::Rect& bounds_in_parent,
 gfx::Rect GetBoundsInMaximizedMode(wm::WindowState* state_object) {
   if (state_object->IsFullscreen() || state_object->IsPinned())
     return ScreenUtil::GetDisplayBoundsInParent(state_object->window());
+
+  if (state_object->CanSnap() &&
+      state_object->GetStateType() == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED) {
+    return wm::GetDefaultLeftSnappedWindowBoundsInParent(
+        state_object->window());
+  }
+
+  if (state_object->CanSnap() &&
+      state_object->GetStateType() == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED) {
+    return wm::GetDefaultRightSnappedWindowBoundsInParent(
+        state_object->window());
+  }
 
   gfx::Rect bounds_in_parent;
   // Make the window as big as possible.
@@ -170,12 +183,16 @@ void MaximizeModeWindowState::OnWMEvent(wm::WindowState* window_state,
     case wm::WM_EVENT_CYCLE_SNAP_LEFT:
     case wm::WM_EVENT_CYCLE_SNAP_RIGHT:
     case wm::WM_EVENT_CENTER:
-    case wm::WM_EVENT_SNAP_LEFT:
-    case wm::WM_EVENT_SNAP_RIGHT:
     case wm::WM_EVENT_NORMAL:
     case wm::WM_EVENT_MAXIMIZE:
       UpdateWindow(window_state, GetMaximizedOrCenteredWindowType(window_state),
                    true);
+      return;
+    case wm::WM_EVENT_SNAP_LEFT:
+      UpdateWindow(window_state, wm::WINDOW_STATE_TYPE_LEFT_SNAPPED, true);
+      return;
+    case wm::WM_EVENT_SNAP_RIGHT:
+      UpdateWindow(window_state, wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED, true);
       return;
     case wm::WM_EVENT_MINIMIZE:
       UpdateWindow(window_state, wm::WINDOW_STATE_TYPE_MINIMIZED, true);
@@ -183,10 +200,14 @@ void MaximizeModeWindowState::OnWMEvent(wm::WindowState* window_state,
     case wm::WM_EVENT_SHOW_INACTIVE:
       return;
     case wm::WM_EVENT_SET_BOUNDS:
-      if (current_state_type_ == wm::WINDOW_STATE_TYPE_MAXIMIZED) {
+      if (current_state_type_ == wm::WINDOW_STATE_TYPE_MAXIMIZED ||
+          current_state_type_ == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED ||
+          current_state_type_ == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED) {
         // Having a maximized window, it could have been created with an empty
         // size and the caller should get his size upon leaving the maximized
-        // mode. As such we set the restore bounds to the requested bounds.
+        // mode. For a snapped window, we don't allow change its bounds while it
+        // is in maximized mode but the caller should get the size after leaving
+        // the mode. As such we set the restore bounds to the requested bounds.
         gfx::Rect bounds_in_parent =
             (static_cast<const wm::SetBoundsEvent*>(event))->requested_bounds();
         if (!bounds_in_parent.IsEmpty())
@@ -275,7 +296,9 @@ void MaximizeModeWindowState::UpdateWindow(wm::WindowState* window_state,
          target_state == wm::WINDOW_STATE_TYPE_TRUSTED_PINNED ||
          (target_state == wm::WINDOW_STATE_TYPE_NORMAL &&
           !window_state->CanMaximize()) ||
-         target_state == wm::WINDOW_STATE_TYPE_FULLSCREEN);
+         target_state == wm::WINDOW_STATE_TYPE_FULLSCREEN ||
+         target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED ||
+         target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED);
 
   if (current_state_type_ == target_state) {
     if (target_state == wm::WINDOW_STATE_TYPE_MINIMIZED)
@@ -298,6 +321,16 @@ void MaximizeModeWindowState::UpdateWindow(wm::WindowState* window_state,
       window_state->Deactivate();
   } else {
     UpdateBounds(window_state, animated);
+  }
+
+  if (target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED ||
+      target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED) {
+    gfx::Rect bounds = (target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED)
+                           ? wm::GetDefaultLeftSnappedWindowBoundsInParent(
+                                 window_state->window())
+                           : wm::GetDefaultRightSnappedWindowBoundsInParent(
+                                 window_state->window());
+    window_state->SetBoundsDirectAnimated(bounds);
   }
 
   window_state->NotifyPostStateTypeChange(old_state_type);

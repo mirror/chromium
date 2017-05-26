@@ -13,10 +13,13 @@
 #include <vector>
 
 #include "ash/ash_export.h"
+#include "ash/wm/splitscreen/split_view_controller.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "ui/aura/window_observer.h"
 #include "ui/display/display_observer.h"
+#include "ui/events/event.h"
+#include "ui/gfx/geometry/point.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
 #include "ui/wm/public/activation_change_observer.h"
@@ -31,13 +34,15 @@ class WindowSelectorDelegate;
 class WindowSelectorItem;
 class WindowSelectorTest;
 class WindowGrid;
+class OverviewWindowDragController;
 
 // The WindowSelector shows a grid of all of your windows, allowing to select
 // one by clicking or tapping on it.
 class ASH_EXPORT WindowSelector : public display::DisplayObserver,
                                   public aura::WindowObserver,
                                   public aura::client::ActivationChangeObserver,
-                                  public views::TextfieldController {
+                                  public views::TextfieldController,
+                                  public SplitViewController::Observer {
  public:
   // Returns true if the window can be selected in overview mode.
   static bool IsSelectable(aura::Window* window);
@@ -75,6 +80,9 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   // Called when |window| is about to get closed.
   void WindowClosing(WindowSelectorItem* window);
 
+  // Called to set bounds for window grids. Used for split view.
+  void SetBoundsForWindowGridsInScreen(const gfx::Rect bounds);
+
   WindowSelectorDelegate* delegate() { return delegate_; }
 
   bool restoring_minimized_windows() const {
@@ -84,6 +92,8 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   int text_filter_bottom() const { return text_filter_bottom_; }
 
   bool is_shut_down() const { return is_shut_down_; }
+
+  std::vector<std::unique_ptr<WindowGrid>>& grid_list() { return grid_list_; }
 
   // display::DisplayObserver:
   void OnDisplayAdded(const display::Display& display) override;
@@ -107,6 +117,14 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
                        const base::string16& new_contents) override;
   bool HandleKeyEvent(views::Textfield* sender,
                       const ui::KeyEvent& key_event) override;
+
+  // SplitViewController::Observer:
+  void OnSplitViewStateChanged(SplitViewController::State state,
+                               aura::Window* window) override;
+
+  void InitiateDrag(WindowSelectorItem* item, const ui::LocatedEvent& event);
+  void Drag(WindowSelectorItem* item, const gfx::Point& point, int event_flag);
+  void CompleteDrag(WindowSelectorItem* item);
 
  private:
   friend class WindowSelectorTest;
@@ -192,6 +210,9 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   int text_filter_bottom_;
 
   bool is_shut_down_ = false;
+
+  // The drag controller for a window in the overview mode.
+  std::unique_ptr<OverviewWindowDragController> window_drag_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowSelector);
 };

@@ -63,6 +63,8 @@ class BackdropController : public ShellObserver, public AccessibilityObserver {
   // ShellObserver:
   void OnOverviewModeStarting() override;
   void OnOverviewModeEnded() override;
+  void OnSplitViewModeStarted() override;
+  void OnSplitViewModeEnded() override;
 
   // AccessibilityObserver:
   void OnAccessibilityModeChanged(

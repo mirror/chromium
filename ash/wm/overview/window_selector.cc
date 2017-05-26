@@ -20,11 +20,13 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/overview/overview_window_drag_controller.h"
 #include "ash/wm/overview/window_grid.h"
 #include "ash/wm/overview/window_selector_delegate.h"
 #include "ash/wm/overview/window_selector_item.h"
 #include "ash/wm/panels/panel_layout_manager.h"
 #include "ash/wm/switchable_windows.h"
+#include "ash/wm/window_positioning_utils.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm_window.h"
@@ -232,6 +234,7 @@ WindowSelector::WindowSelector(WindowSelectorDelegate* delegate)
       restoring_minimized_windows_(false),
       text_filter_bottom_(0) {
   DCHECK(delegate_);
+  Shell::Get()->split_view_controller()->AddObserver(this);
 }
 
 WindowSelector::~WindowSelector() {
@@ -378,6 +381,7 @@ void WindowSelector::RemoveAllObservers() {
   display::Screen::GetScreen()->RemoveObserver(this);
   if (restore_focus_window_)
     restore_focus_window_->RemoveObserver(this);
+  Shell::Get()->split_view_controller()->RemoveObserver(this);
 }
 
 void WindowSelector::CancelSelection() {
@@ -443,6 +447,11 @@ void WindowSelector::SelectWindow(WindowSelectorItem* item) {
 
 void WindowSelector::WindowClosing(WindowSelectorItem* window) {
   grid_list_[selected_grid_index_]->WindowClosing(window);
+}
+
+void WindowSelector::SetBoundsForWindowGridsInScreen(const gfx::Rect bounds) {
+  for (std::unique_ptr<WindowGrid>& grid : grid_list_)
+    grid->SetBoundsInScreen(bounds);
 }
 
 bool WindowSelector::HandleKeyEvent(views::Textfield* sender,
@@ -621,6 +630,54 @@ void WindowSelector::ContentsChanged(views::Textfield* sender,
   if (grid_list_[selected_grid_index_]->is_selecting())
     return;
   Move(WindowSelector::RIGHT, false);
+}
+
+void WindowSelector::OnSplitViewStateChanged(SplitViewController::State state,
+                                             aura::Window* window) {
+  if (state != SplitViewController::INACTIVE) {
+    // If |window| got snapped, remove it from WindowSelector's observed window
+    // list and activate it.
+    window->RemoveObserver(this);
+    observed_windows_.erase(window);
+
+    base::AutoReset<bool> restoring_focus(&ignore_activations_, true);
+    wm::ActivateWindow(window);
+    ResetFocusRestoreWindow(false);
+
+    // Adjust the bounds of the overview grid if necessary.
+    if (state == SplitViewController::LEFT_ACTIVE) {
+      SetBoundsForWindowGridsInScreen(
+          wm::GetDefaultRightSnappedWindowBoundsInParent(window));
+    } else if (state == SplitViewController::RIGHT_ACTIVE) {
+      SetBoundsForWindowGridsInScreen(
+          wm::GetDefaultLeftSnappedWindowBoundsInParent(window));
+    } else if (state == SplitViewController::BOTH_ACTIVE) {
+      CancelSelection();
+    }
+  } else {
+    // If any snapped window got closed while overview mode is still active,
+    // i.e., |state| equals SplitViewController::INACTIVE, exit the overview
+    // mode and split view mode at the same time.
+    CancelSelection();
+  }
+}
+
+void WindowSelector::InitiateDrag(WindowSelectorItem* item,
+                                  const ui::LocatedEvent& event) {
+  window_drag_controller_.reset(new OverviewWindowDragController(this));
+  window_drag_controller_->InitiateDrag(item, event);
+}
+
+void WindowSelector::Drag(WindowSelectorItem* item,
+                          const gfx::Point& point,
+                          int event_flag) {
+  DCHECK(window_drag_controller_.get());
+  window_drag_controller_->Drag(item, point, event_flag);
+}
+
+void WindowSelector::CompleteDrag(WindowSelectorItem* item) {
+  DCHECK(window_drag_controller_.get());
+  window_drag_controller_->CompleteDrag(item);
 }
 
 aura::Window* WindowSelector::GetTextFilterWidgetWindow() {

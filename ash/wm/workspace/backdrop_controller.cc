@@ -10,6 +10,7 @@
 #include "ash/shared/app_types.h"
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray_notifier.h"
+#include "ash/wm/splitscreen/split_view_controller.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace/backdrop_delegate.h"
 #include "ash/wm_window.h"
@@ -142,6 +143,19 @@ void BackdropController::OnOverviewModeStarting() {
 }
 
 void BackdropController::OnOverviewModeEnded() {
+  if (Shell::Get()->split_view_controller()->IsSplitViewModeActive())
+    return;
+
+  force_hidden_ = false;
+  UpdateBackdrop();
+}
+
+void BackdropController::OnSplitViewModeStarted() {
+  force_hidden_ = true;
+  Hide();
+}
+
+void BackdropController::OnSplitViewModeEnded() {
   force_hidden_ = false;
   UpdateBackdrop();
 }

@@ -84,6 +84,17 @@ void MaximizeModeWindowManager::OnOverviewModeStarting() {
 }
 
 void MaximizeModeWindowManager::OnOverviewModeEnded() {
+  if (Shell::Get()->split_view_controller()->IsSplitViewModeActive())
+    return;
+
+  SetDeferBoundsUpdates(false);
+}
+
+void MaximizeModeWindowManager::OnSplitViewModeStarted() {
+  SetDeferBoundsUpdates(true);
+}
+
+void MaximizeModeWindowManager::OnSplitViewModeEnded() {
   SetDeferBoundsUpdates(false);
 }
 
