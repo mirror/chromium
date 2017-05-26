@@ -646,6 +646,9 @@
       status: "experimental",
     },
     {
+      name: "MojoBlobs",
+    },
+    {
       name: "MojoJS",
       status: "test",
     },
