@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c14c3ea_b22f6240",
+        "filename": "chrome/browser/ui/autofill/autofill_dialog_models.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-26T14:32:45Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. What do you mean by \"is not in the current decade\"? Do you expect |additional_year| to be something like \"2017\"? Is this meant to force a year in the model that wouldn\u0027t be there otherwise?\n\nAnyways, might be worth clarifying the comment.",
+      "revId": "f58e5dc9eeb356fdc1c958b2ef3056003c9324e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf388d7_9f7fb2bc",
+        "filename": "components/payments/core/autofill_payment_instrument.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-05-26T14:32:45Z",
+      "side": 1,
+      "message": "Are we sure this works/is the expected behavior for local expired cards?",
+      "revId": "f58e5dc9eeb356fdc1c958b2ef3056003c9324e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
