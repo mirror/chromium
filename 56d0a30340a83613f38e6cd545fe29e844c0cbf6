@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f781e5f_019a21d8",
+        "filename": "base/sys_info_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-26T21:19:24Z",
+      "side": 1,
+      "message": "This is only used by the other function so it might be clearer if you just inlined it.. not a huge deal though",
+      "revId": "56d0a30340a83613f38e6cd545fe29e844c0cbf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa9db94_bc3e2bed",
+        "filename": "base/sys_info_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-05-26T21:19:24Z",
+      "side": 1,
+      "message": "nit: no it doesn\u0027t, delete this comment?",
+      "range": {
+        "startLine": 96,
+        "startChar": 3,
+        "endLine": 96,
+        "endChar": 10
+      },
+      "revId": "56d0a30340a83613f38e6cd545fe29e844c0cbf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
