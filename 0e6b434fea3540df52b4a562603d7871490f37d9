@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d8bc7b3_ec43feac",
+        "filename": "base/sys_info_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-26T21:37:12Z",
+      "side": 1,
+      "message": "\"And and\"?",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "0e6b434fea3540df52b4a562603d7871490f37d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
