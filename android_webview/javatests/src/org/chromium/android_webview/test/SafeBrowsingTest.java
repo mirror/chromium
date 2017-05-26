@@ -372,6 +372,22 @@ public class SafeBrowsingTest extends AwTestBase {
     @SmallTest
     @Feature({"AndroidWebView"})
     @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    public void testSafeBrowsingDontProceedNavigatesBackForMainFrame() throws Throwable {
+        loadGreenPage();
+        final String originalTitle = getTitleOnUiThread(mAwContents);
+        int interstitialCount =
+                mWebContentsObserver.getAttachedInterstitialPageHelper().getCallCount();
+        final String responseUrl = mTestServer.getURL(MALWARE_HTML_PATH);
+        loadUrlAsync(mAwContents, responseUrl);
+        mWebContentsObserver.getAttachedInterstitialPageHelper().waitForCallback(interstitialCount);
+        dontProceedThroughInterstitial();
+        assertEquals(
+                "Navigates back to previous page", originalTitle, getTitleOnUiThread(mAwContents));
+    }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
     public void testSafeBrowsingCanBeDisabledPerWebview() throws Throwable {
         getAwSettingsOnUiThread(mAwContents).setSafeBrowsingEnabled(false);
 
