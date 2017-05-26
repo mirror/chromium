@@ -46,6 +46,10 @@ class PaymentRequest;
 - (void)paymentRequestViewControllerDidSelectPaymentSummaryItem:
     (PaymentRequestViewController*)controller;
 
+// Notifies the delegate that the user has selected the contact info item.
+- (void)paymentRequestViewControllerDidSelectContactInfoItem:
+    (PaymentRequestViewController*)controller;
+
 // Notifies the delegate that the user has selected the shipping address item.
 - (void)paymentRequestViewControllerDidSelectShippingAddressItem:
     (PaymentRequestViewController*)controller;
