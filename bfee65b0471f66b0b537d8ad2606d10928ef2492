@@ -16,6 +16,24 @@
       "revId": "bfee65b0471f66b0b537d8ad2606d10928ef2492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3174e401_96743b3d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6270,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-26T19:33:16Z",
+      "side": 1,
+      "message": "From a security perspective it is safe to close the connection for such non-navigation navigations however it may break sites because it means that requests made before the non-navigation will fail instead of completing afterwards.",
+      "parentUuid": "400603f4_6018b2b5",
+      "revId": "bfee65b0471f66b0b537d8ad2606d10928ef2492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
