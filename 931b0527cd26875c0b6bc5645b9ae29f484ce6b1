@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "bf3ad993_bc3402bb",
+        "filename": "chrome/browser/metrics/thread_watcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-26T17:01:59Z",
+      "side": 0,
+      "message": "Does removing this code also make some includes not needed? If so, please remove them too.",
+      "range": {
+        "startLine": 41,
+        "startChar": 31,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "931b0527cd26875c0b6bc5645b9ae29f484ce6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "610d9361_3d85db7b",
         "filename": "chrome/browser/metrics/thread_watcher.h",
         "patchSetId": 6
