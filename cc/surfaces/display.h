@@ -32,7 +32,6 @@ class Size;
 
 namespace cc {
 
-class BeginFrameSource;
 class DirectRenderer;
 class DisplayClient;
 class OutputSurface;
@@ -56,7 +55,6 @@ class CC_SURFACES_EXPORT Display : public DisplaySchedulerClient,
           gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
           const RendererSettings& settings,
           const FrameSinkId& frame_sink_id,
-          BeginFrameSource* begin_frame_source,
           std::unique_ptr<OutputSurface> output_surface,
           std::unique_ptr<DisplayScheduler> scheduler,
           std::unique_ptr<TextureMailboxDeleter> texture_mailbox_deleter);
@@ -116,9 +114,6 @@ class CC_SURFACES_EXPORT Display : public DisplaySchedulerClient,
   bool swapped_since_resize_ = false;
   bool output_is_secure_ = false;
 
-  // The begin_frame_source_ is not owned here, and also often known by the
-  // output_surface_ and the scheduler_.
-  BeginFrameSource* begin_frame_source_;
   std::unique_ptr<OutputSurface> output_surface_;
   std::unique_ptr<DisplayScheduler> scheduler_;
   std::unique_ptr<ResourceProvider> resource_provider_;
