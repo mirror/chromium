@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95267eb9_257e96c9",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParserTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-05-26T14:16:16Z",
+      "side": 1,
+      "message": "struct ASCIILowerTestCase { ... } instead of typedef? Also make it part of the preceding anonymous namespace?",
+      "range": {
+        "startLine": 387,
+        "startChar": 2,
+        "endLine": 387,
+        "endChar": 20
+      },
+      "revId": "1c84cf16fb15cea3989b9d4dbf39a0cdf903690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
