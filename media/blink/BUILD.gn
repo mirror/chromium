@@ -37,6 +37,8 @@ component("blink") {
     "resource_multibuffer_data_provider.h",
     "texttrack_impl.cc",
     "texttrack_impl.h",
+    "underflow_reporter.cc",
+    "underflow_reporter.h",
     "url_index.cc",
     "url_index.h",
     "video_frame_compositor.cc",

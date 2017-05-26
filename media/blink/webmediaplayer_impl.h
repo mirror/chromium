@@ -76,6 +76,7 @@ namespace media {
 class ChunkDemuxer;
 class ContentDecryptionModule;
 class MediaLog;
+class UnderflowReporter;
 class UrlIndex;
 class VideoFrameCompositor;
 class WatchTimeReporter;
@@ -394,6 +395,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   bool IsPrerollAttemptNeeded();
 
   void CreateWatchTimeReporter();
+  void CreateUnderflowReporter();
 
   // Returns true if the player is hidden.
   bool IsHidden() const;
@@ -699,9 +701,13 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // OnFrameHidden(), causing the state to change to paused.
   base::OneShotTimer background_pause_timer_;
 
+  bool is_encrypted_;
+
   // Monitors the watch time of the played content.
   std::unique_ptr<WatchTimeReporter> watch_time_reporter_;
-  bool is_encrypted_;
+
+  // Monitors underflow states for played content.
+  std::unique_ptr<UnderflowReporter> underflow_reporter_;
 
   // Elapsed time since we've last reached BUFFERING_HAVE_NOTHING.
   std::unique_ptr<base::ElapsedTimer> underflow_timer_;

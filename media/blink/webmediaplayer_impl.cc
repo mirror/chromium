@@ -41,6 +41,7 @@
 #include "media/base/timestamp_constants.h"
 #include "media/base/video_frame.h"
 #include "media/blink/texttrack_impl.h"
+#include "media/blink/underflow_reporter.h"
 #include "media/blink/watch_time_reporter.h"
 #include "media/blink/webaudiosourceprovider_impl.h"
 #include "media/blink/webcontentdecryptionmodule_impl.h"
@@ -1015,11 +1016,13 @@ void WebMediaPlayerImpl::SetContentDecryptionModule(
   DCHECK(!set_cdm_result_);
   set_cdm_result_.reset(new blink::WebContentDecryptionModuleResult(result));
 
-  // Recreate the watch time reporter if necessary.
+  // Recreate reporters if necessary.
   const bool was_encrypted = is_encrypted_;
   is_encrypted_ = true;
   if (!was_encrypted && watch_time_reporter_)
     CreateWatchTimeReporter();
+  if (!was_encrypted && underflow_reporter_)
+    CreateUnderflowReporter();
 
   SetCdm(cdm);
 }
@@ -1032,11 +1035,13 @@ void WebMediaPlayerImpl::OnEncryptedMediaInitData(
   // TODO(xhwang): Update this UMA name. https://crbug.com/589251
   UMA_HISTOGRAM_COUNTS("Media.EME.NeedKey", 1);
 
-  // Recreate the watch time reporter if necessary.
+  // Recreate reporters if necessary.
   const bool was_encrypted = is_encrypted_;
   is_encrypted_ = true;
   if (!was_encrypted && watch_time_reporter_)
     CreateWatchTimeReporter();
+  if (!was_encrypted && underflow_reporter_)
+    CreateUnderflowReporter();
 
   encrypted_client_->Encrypted(
       ConvertToWebInitDataType(init_data_type), init_data.data(),
@@ -1310,6 +1315,7 @@ void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
     observer_->OnMetadataChanged(pipeline_metadata_);
 
   CreateWatchTimeReporter();
+  CreateUnderflowReporter();
   UpdatePlayState();
 }
 
@@ -1390,6 +1396,8 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
       RecordUnderflowDuration(underflow_timer_->Elapsed());
       underflow_timer_.reset();
     }
+
+    underflow_reporter_->OnLoaded();
   } else {
     // Buffering has underflowed.
     DCHECK_EQ(state, BUFFERING_HAVE_NOTHING);
@@ -1397,8 +1405,11 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
     // Report the number of times we've entered the underflow state. Ensure we
     // only report the value when transitioning from HAVE_ENOUGH to
     // HAVE_NOTHING.
-    if (ready_state_ == WebMediaPlayer::kReadyStateHaveEnoughData)
+    if (ready_state_ == WebMediaPlayer::kReadyStateHaveEnoughData &&
+        !seeking_) {
       underflow_timer_.reset(new base::ElapsedTimer());
+      underflow_reporter_->OnUnderflow();
+    }
 
     // It shouldn't be possible to underflow if we've not advanced past
     // HAVE_CURRENT_DATA.
@@ -2283,6 +2294,11 @@ void WebMediaPlayerImpl::CreateWatchTimeReporter() {
     watch_time_reporter_->OnHidden();
   else
     watch_time_reporter_->OnShown();
+}
+
+void WebMediaPlayerImpl::CreateUnderflowReporter() {
+  underflow_reporter_.reset(new UnderflowReporter(
+      HasAudio(), HasVideo(), !!chunk_demuxer_, is_encrypted_));
 }
 
 bool WebMediaPlayerImpl::IsHidden() const {
