@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec2cec50_5308dd71",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-05-26T18:20:16Z",
+      "side": 1,
+      "message": "Is it possible to narrow this further by channel (Stable/Beta/Dev/Canary)? I think running multiple channels is probably a more common use-case than running Chrome and Chromium (it\u0027s explicitly supported by https://cs.chromium.org/chromium/src/chrome/installer/linux/common/wrapper, for example), so it would be nice if we could address that as well. If it\u0027s not possible, then feel free to ignore this.",
+      "revId": "e40c2896f174e4f80878a4c47c1b7d9e30469a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5ddfdb_d73242bb",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-05-26T18:20:16Z",
+      "side": 1,
+      "message": "I think non-const references are forbidden (https://google.github.io/styleguide/cppguide.html#Reference_Arguments). Pass by pointer instead, or return a new string.",
+      "range": {
+        "startLine": 207,
+        "startChar": 49,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "e40c2896f174e4f80878a4c47c1b7d9e30469a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
