@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4128c87f_260400b1",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-05-26T08:59:15Z",
+      "side": 1,
+      "message": "As an aside in the blink scheduler we had to go further than this, periodically removing all cancelled delayed tasks.  See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d680815 for details.  Hopefully that\u0027s not needed here but I thought I\u0027d mention it.",
+      "range": {
+        "startLine": 368,
+        "startChar": 41,
+        "endLine": 368,
+        "endChar": 46
+      },
+      "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
