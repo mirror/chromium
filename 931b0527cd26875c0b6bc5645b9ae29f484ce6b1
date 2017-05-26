@@ -69,6 +69,24 @@
       "revId": "931b0527cd26875c0b6bc5645b9ae29f484ce6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7983767d_904cdc32",
+        "filename": "chrome/browser/metrics/thread_watcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-05-26T16:48:45Z",
+      "side": 0,
+      "message": "Looking at it again this does not look safe. It relies on invoking the Alarm function via WeakPtr on a different thread than the one owning the object.\n\nI\u0027m OK with removing given that it would be non-trivial to fix this. We do intend to eventually use similar functionality to profile janky executions but can resurrect from git and fix later.",
+      "parentUuid": "3d28ac4d_6de2ba7c",
+      "revId": "931b0527cd26875c0b6bc5645b9ae29f484ce6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
