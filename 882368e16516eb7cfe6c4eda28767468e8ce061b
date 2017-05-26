@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bd40f99_5fc2c84d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-26T09:48:48Z",
+      "side": 1,
+      "message": "The first paragraph of the commit message should only consist of a single line, because it will end up as the title in a lot of places. See https://chris.beams.io/posts/git-commit/ for some advice.\n\nAlso, add a Bug: label so you can group your commits together and better keep track of them?",
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f7935a_81ea233a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-26T09:48:48Z",
+      "side": 1,
+      "message": "This comment is now out of date. Also, you should at least mention that the callback will be called immediately if there is a thumbnail available, so callers know to watch out for reentrancy issues.",
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1a489b_a426aba3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-26T09:48:48Z",
+      "side": 1,
+      "message": "I think my comment from https://codereview.chromium.org/2896853003/diff/100001/chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java#newcode112 still applies: What if two clients request the same file at different sizes?",
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
