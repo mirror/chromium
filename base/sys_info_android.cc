@@ -67,7 +67,9 @@ const int kDefaultAndroidMinorVersion = 0;
 const int kDefaultAndroidBugfixVersion = 99;
 
 // Parse out the OS version numbers from the system properties.
-void ParseOSVersionNumbers(const char* os_version_str,
+// Returns whether the version string is parsed correctly. If false, a fallback
+// value is used instead.
+bool ParseOSVersionNumbers(const char* os_version_str,
                            int32_t* major_version,
                            int32_t* minor_version,
                            int32_t* bugfix_version) {
@@ -80,7 +82,7 @@ void ParseOSVersionNumbers(const char* os_version_str,
       // If we don't have a full set of version numbers, make the extras 0.
       if (num_read < 2) *minor_version = 0;
       if (num_read < 3) *bugfix_version = 0;
-      return;
+      return true;
     }
   }
 
@@ -88,6 +90,24 @@ void ParseOSVersionNumbers(const char* os_version_str,
   *major_version = kDefaultAndroidMajorVersion;
   *minor_version = kDefaultAndroidMinorVersion;
   *bugfix_version = kDefaultAndroidBugfixVersion;
+  return false;
+}
+
+// Returns if successfully parsed version string.
+void GetOsVersionStringAndNumbers(std::string* version_string,
+                                  int32_t* major_version,
+                                  int32_t* minor_version,
+                                  int32_t* bugfix_version) {
+  // Read the version number string out from the properties.
+  char os_version_str[PROP_VALUE_MAX];
+  __system_property_get("ro.build.version.release", os_version_str);
+  if (ParseOSVersionNumbers(os_version_str, major_version, minor_version,
+                            bugfix_version)) {
+    *version_string = std::string(os_version_str);
+    return;
+  }
+  *version_string = ::base::StringPrintf("%d.%d.%d", *major_version,
+                                         *minor_version, *bugfix_version);
 }
 
 // Parses a system property (specified with unit 'k','m' or 'g').
@@ -171,21 +191,18 @@ std::string SysInfo::OperatingSystemName() {
 }
 
 std::string SysInfo::OperatingSystemVersion() {
+  std::string version_string;
   int32_t major, minor, bugfix;
-  OperatingSystemVersionNumbers(&major, &minor, &bugfix);
-  return StringPrintf("%d.%d.%d", major, minor, bugfix);
+  GetOsVersionStringAndNumbers(&version_string, &major, &minor, &bugfix);
+  return version_string;
 }
 
 void SysInfo::OperatingSystemVersionNumbers(int32_t* major_version,
                                             int32_t* minor_version,
                                             int32_t* bugfix_version) {
-  // Read the version number string out from the properties.
-  char os_version_str[PROP_VALUE_MAX];
-  __system_property_get("ro.build.version.release", os_version_str);
-
-  // Parse out the numbers.
-  ParseOSVersionNumbers(os_version_str, major_version, minor_version,
-                        bugfix_version);
+  std::string version_string;
+  GetOsVersionStringAndNumbers(&version_string, major_version, minor_version,
+                               bugfix_version);
 }
 
 std::string SysInfo::GetAndroidBuildCodename() {
