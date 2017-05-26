@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e307390_6c7b3c65",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-26T00:53:48Z",
+      "side": 1,
+      "message": "Could we bail out here before we call increment, and then count that as well in UMA?\n\nif (!model_-\u003eIsReady()) {\n  UMA.RecordCount(... model not ready ...)\n  return;\n}\n\nMaybe even remove the TODO in ModelImpl::IncrementEvent",
+      "revId": "a57b4812f579f8013d151d007f3b2f5caf1cf5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d027c61d_36b7b73e",
+        "filename": "components/feature_engagement_tracker/internal/stats.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-26T00:53:48Z",
+      "side": 1,
+      "message": "UNMET? also above?",
+      "range": {
+        "startLine": 119,
+        "startChar": 73,
+        "endLine": 119,
+        "endChar": 74
+      },
+      "revId": "a57b4812f579f8013d151d007f3b2f5caf1cf5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7767c7b1_1b5516af",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 35697,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-26T00:53:48Z",
+      "side": 1,
+      "message": "\"UNMET\"?",
+      "range": {
+        "startLine": 35697,
+        "startChar": 63,
+        "endLine": 35697,
+        "endChar": 64
+      },
+      "revId": "a57b4812f579f8013d151d007f3b2f5caf1cf5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
