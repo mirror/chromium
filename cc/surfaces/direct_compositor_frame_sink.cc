@@ -18,6 +18,7 @@ namespace cc {
 DirectCompositorFrameSink::DirectCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     SurfaceManager* surface_manager,
+    BeginFrameSource* display_begin_frame_source,
     Display* display,
     scoped_refptr<ContextProvider> context_provider,
     scoped_refptr<ContextProvider> worker_context_provider,
@@ -29,6 +30,7 @@ DirectCompositorFrameSink::DirectCompositorFrameSink(
                           shared_bitmap_manager),
       frame_sink_id_(frame_sink_id),
       surface_manager_(surface_manager),
+      display_begin_frame_source_(display_begin_frame_source),
       display_(display) {
   DCHECK(thread_checker_.CalledOnValidThread());
   capabilities_.must_always_swap = true;
@@ -40,11 +42,13 @@ DirectCompositorFrameSink::DirectCompositorFrameSink(
 DirectCompositorFrameSink::DirectCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     SurfaceManager* surface_manager,
+    BeginFrameSource* display_begin_frame_source,
     Display* display,
     scoped_refptr<VulkanContextProvider> vulkan_context_provider)
     : CompositorFrameSink(std::move(vulkan_context_provider)),
       frame_sink_id_(frame_sink_id),
       surface_manager_(surface_manager),
+      display_begin_frame_source_(display_begin_frame_source),
       display_(display) {
   DCHECK(thread_checker_.CalledOnValidThread());
   capabilities_.must_always_swap = true;
@@ -78,6 +82,10 @@ bool DirectCompositorFrameSink::BindToClient(
 
   // Avoid initializing GL context here, as this should be sharing the
   // Display's context.
+  if (display_begin_frame_source_) {
+    surface_manager_->RegisterBeginFrameSource(display_begin_frame_source_,
+                                               frame_sink_id_);
+  }
   display_->Initialize(this, surface_manager_);
   return true;
 }
