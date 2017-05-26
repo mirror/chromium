@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea3e43ec_df744e93",
+        "filename": "third_party/WebKit/Source/core/dom/UserGestureIndicator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-05-26T15:47:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b899e1b8_aad63728",
+      "revId": "56ae6dafc723be2c0f23034ad0e6d90a27e633cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a726e3a_3687d134",
         "filename": "third_party/WebKit/Source/core/frame/FrameTest.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-26T12:56:56Z",
       "side": 1,
       "message": "Why not merging this into UserGestureIndicatorTest?",
+      "revId": "56ae6dafc723be2c0f23034ad0e6d90a27e633cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e624a9_2b984008",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-05-26T15:47:03Z",
+      "side": 1,
+      "message": "- All the asserts here are for the sticky bit in Frame.\n- Although all asserts are triggered by UserGestureToken::Create, we are not checking anything in the tokens at all.\n\n\u003d\u003e UserGestureIndicatorTest is not a better place.\n\nWdyt?",
+      "parentUuid": "2a726e3a_3687d134",
       "revId": "56ae6dafc723be2c0f23034ad0e6d90a27e633cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
