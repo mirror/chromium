@@ -388,13 +388,6 @@ bool WebAXObject::IsPasswordField() const {
   return private_->IsPasswordField();
 }
 
-bool WebAXObject::IsPressed() const {
-  if (IsDetached())
-    return false;
-
-  return private_->IsPressed();
-}
-
 bool WebAXObject::IsReadOnly() const {
   if (IsDetached())
     return false;
