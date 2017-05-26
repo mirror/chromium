@@ -16,6 +16,24 @@
       "revId": "3f4840653f6bc6bfeb1ac3a43d3cd36e8cc8aaa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd325ff9_e7433998",
+        "filename": "chrome/app/vector_icons/profile_switcher_outline.icon",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-05-26T14:31:09Z",
+      "side": 1,
+      "message": "\u003e Do we need a 1x version?\n\nWe probably could use one, but the designers have deemed this one to look good enough I suppose? Filed a bug.",
+      "parentUuid": "58a37761_6dd703f2",
+      "revId": "3f4840653f6bc6bfeb1ac3a43d3cd36e8cc8aaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
