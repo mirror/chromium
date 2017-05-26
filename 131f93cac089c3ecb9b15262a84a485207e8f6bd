@@ -88,6 +88,24 @@
       "revId": "131f93cac089c3ecb9b15262a84a485207e8f6bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "367f046d_b402eb82",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-05-26T01:59:58Z",
+      "side": 1,
+      "message": "To be honest, I don\u0027t fully understand the mechanism for getting the title.\n\nThe title gets updated as soon as the interstitial loads, because we\u0027re just using the \u003ctitle\u003e element in interstitial HTML https://cs.chromium.org/chromium/src/components/security_interstitials/core/browser/resources/interstitial_webview_quiet.html?type\u003dcs\u0026q\u003df:components/security_inter+tabtitle\u0026l\u003d7\n\nI suppose interstitialPageAttached gets fired before blink fully processes the interstitial page and updates the the page title, which is why there\u0027s the delay.\n\nWhen we click \"back to safety,\" we\u0027re just tearing down the interstitial page and showing the already-rendered page from before. But I don\u0027t know how AwContents#getTitle() really works. It looks like it\u0027s tied to navigationcontroller::GetVisibileEntry(), but I\u0027m not sure if that really chooses between interstitial vs. main frame.\n\nUnless you know for sure, I\u0027ll just follow your suggestion in the next patchset.",
+      "parentUuid": "7ca6f2d1_6cae1c19",
+      "revId": "131f93cac089c3ecb9b15262a84a485207e8f6bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
