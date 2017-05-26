@@ -188,6 +188,30 @@
       "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6725c7fd_e58f708d",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1191210
+      },
+      "writtenOn": "2017-05-26T17:13:59Z",
+      "side": 1,
+      "message": "Wonder if --(it \u003d per_sequence_.end()) is more correct conceptually. It looks weird to me to change value of temporary return value.",
+      "parentUuid": "e49f8ec8_f298e09f",
+      "range": {
+        "startLine": 224,
+        "startChar": 6,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
