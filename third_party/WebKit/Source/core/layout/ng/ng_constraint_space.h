@@ -135,6 +135,9 @@ class CORE_EXPORT NGConstraintSpace final
 
   String ToString() const;
 
+  bool operator==(const NGConstraintSpace&) const;
+  bool operator!=(const NGConstraintSpace&) const;
+
  private:
   friend class NGConstraintSpaceBuilder;
   // Default constructor.
