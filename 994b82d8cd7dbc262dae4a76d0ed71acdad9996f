@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5eff74e_14d008f7",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/resources/animation-worklet-tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-05-26T15:38:46Z",
+      "side": 1,
+      "message": "I feel like this has come up before, but the promise from calling animationWorklet.addModule should not be resolved until the animation worklet script has run (including the registerAnimator call). What was the problem with using the promise resolution?\n\nAs for waiting for the animation call, it seems like giving it a full main frame (i.e. double raf) after registration (which instantiates the instance) should ensure that animate has been called at least once right?",
+      "revId": "994b82d8cd7dbc262dae4a76d0ed71acdad9996f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
