@@ -151,19 +151,19 @@ suite('route', function() {
 
   test('popstate flag works', function() {
     settings.navigateTo(settings.Route.BASIC);
-    assertFalse(settings.lastRouteChangeWasPopstate());
+    assertFalse(settings.getLastRouteChangeWasPopstate());
 
     settings.navigateTo(settings.Route.PEOPLE);
-    assertFalse(settings.lastRouteChangeWasPopstate());
+    assertFalse(settings.getLastRouteChangeWasPopstate());
 
     return whenPopState(function() {
       window.history.back();
     }).then(function() {
       assertEquals(settings.Route.BASIC, settings.getCurrentRoute());
-      assertTrue(settings.lastRouteChangeWasPopstate());
+      assertTrue(settings.getLastRouteChangeWasPopstate());
 
       settings.navigateTo(settings.Route.ADVANCED);
-      assertFalse(settings.lastRouteChangeWasPopstate());
+      assertFalse(settings.getLastRouteChangeWasPopstate());
     });
   });
 

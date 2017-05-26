@@ -81,7 +81,7 @@ var MainPageBehaviorImpl = {
     // Scroll to the section except for back/forward. Also scroll for any
     // in-page back/forward navigations (from a section or the root page).
     // Also always scroll when coming from either the About or root page.
-    var scrollToSection = !settings.lastRouteChangeWasPopstate() ||
+    var scrollToSection = !settings.getLastRouteChangeWasPopstate() ||
         oldRouteWasSection || oldRoute == settings.Route.BASIC ||
         oldRoute == settings.Route.ABOUT;
 
@@ -110,7 +110,7 @@ var MainPageBehaviorImpl = {
       return;
 
     if (!inSearchMode)
-      this.tryTransitionToSection_(!settings.lastRouteChangeWasPopstate());
+      this.tryTransitionToSection_(!settings.getLastRouteChangeWasPopstate());
   },
 
   /**
@@ -299,7 +299,7 @@ var MainPageBehaviorImpl = {
             this.getSection(settings.getCurrentRoute().section);
 
         // Scroll to the new section or the original position.
-        if (newSection && !settings.lastRouteChangeWasPopstate() &&
+        if (newSection && !settings.getLastRouteChangeWasPopstate() &&
             !settings.getCurrentRoute().isSubpage()) {
           newSection.scrollIntoView();
         } else {
