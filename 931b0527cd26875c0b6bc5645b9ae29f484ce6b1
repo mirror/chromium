@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff353e1e_2a8c1fb6",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-26T00:48:36Z",
+      "side": 0,
+      "message": "Since we\u0027re no longer doing this tracing, are we losing insight into the # of tasks that are being cancelled \u0026 swept?",
+      "revId": "931b0527cd26875c0b6bc5645b9ae29f484ce6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610d9361_3d85db7b",
+        "filename": "chrome/browser/metrics/thread_watcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-26T00:48:36Z",
+      "side": 0,
+      "message": "IIUC this is intended for jank debugging - are we sure we want to  remove it?",
+      "revId": "931b0527cd26875c0b6bc5645b9ae29f484ce6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

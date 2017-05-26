@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fc8b39c_b2a8451b",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-26T00:48:36Z",
+      "side": 1,
+      "message": "\u003cterrible-idea\u003e\nCould/should we just RunTask() the |pending_task| here but continue in the case of it having already been cancelled, to minimize the semantic effect of this change?  We\u0027d still have the overhead of tracing, Did/WillProcessTask, etc, but we\u0027d be avoiding the overhead of returning to the task processing loop.\n\u003c/terrible-idea\u003e\n\nOr, just move this logic into a static helper method that  accepts |pending_task| and |pending_high_res_tasks_| and decrements the latter if the former is a high-res task and we\u0027re on Windows, to avoid duplicating this code another three times.",
+      "revId": "aefa3ed6da5c37a19e7a007e5e161a0f608c5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02b1e15_996c0214",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-26T00:48:36Z",
+      "side": 1,
+      "message": "nit: This name is not quite the longest in the codebase. :(",
+      "revId": "aefa3ed6da5c37a19e7a007e5e161a0f608c5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

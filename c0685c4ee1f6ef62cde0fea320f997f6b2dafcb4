@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83103c61_1ba57f83",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-26T00:48:36Z",
+      "side": 1,
+      "message": "nit: This would read more naturally, to me, as an if (!IsCancelled()) early-exit, which avoids the continue.\n\nHowever, this layout has the advantage of consistency with the other call-sites, so OK, I suppose.",
+      "revId": "c0685c4ee1f6ef62cde0fea320f997f6b2dafcb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f8043e_7879165b",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-26T00:48:36Z",
+      "side": 1,
+      "message": "Are we losing some tail optimization by re-ordering the running of pending task here?\n\nDo we actually need to reorder this? Is the concern that the cancelled task\u0027s BindStates may end up being torn-down before we get around to running |pending_task| otherwise, leading reordering of any destructor work and subtle issues?  If so then we should at least have a comment to document that concern.\n\nAlternatively, do we actually *need* to sweep here, given that we will presumably do so as a result of Process...(), which will collapse multiple consecutive cancelled tasks into one wake-up?  Bearing in mind that in general we can\u0027t preserve the invariant that the next deferred task be not-cancelled, I think it\u0027s just a question of whether interleaving of cancelled and non-cancelled deferred events is common?",
+      "range": {
+        "startLine": 587,
+        "startChar": 18,
+        "endLine": 587,
+        "endChar": 39
+      },
+      "revId": "c0685c4ee1f6ef62cde0fea320f997f6b2dafcb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
