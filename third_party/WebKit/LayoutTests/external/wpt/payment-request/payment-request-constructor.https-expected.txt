@@ -2,7 +2,7 @@ This is a testharness.js-based test.
 PASS If details.id is missing, assign a identifier 
 PASS If details.id is missing, assign a unique identifier 
 PASS If the same id is provided, then use it 
-PASS Use ids even if they are strange 
+FAIL Use ids even if they are strange Failed to construct 'PaymentRequest': ID cannot be longer than 1024 characters
 PASS Use provided request ID 
 PASS If the length of the methodData sequence is zero, then throw a TypeError 
 PASS If the length of the paymentMethod.supportedMethods sequence is zero, then throw a TypeError 
