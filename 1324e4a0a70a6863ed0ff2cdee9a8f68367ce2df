@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a90c7fe_a6121416",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-05-26T14:55:01Z",
+      "side": 1,
+      "message": "nit: extra line",
+      "revId": "1324e4a0a70a6863ed0ff2cdee9a8f68367ce2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
