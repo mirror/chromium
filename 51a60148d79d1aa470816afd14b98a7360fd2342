@@ -92,6 +92,54 @@
       "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e49f8ec8_f298e09f",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-26T16:42:21Z",
+      "side": 1,
+      "message": "--per_sequence_.end() is equivalent to per_sequence_.end() - 1 in this case (although, note that --per_sequence.end() works even if the iterator isn\u0027t random-access, whereas per_sequence.end()-1 requires random-access iterator).",
+      "parentUuid": "bcc692cb_b4eb8fe1",
+      "range": {
+        "startLine": 224,
+        "startChar": 6,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af41db50_f41c61ec",
+        "filename": "chromecast/base/observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-05-26T16:42:21Z",
+      "side": 1,
+      "message": "per_sequence_.back() returns a reference to the actual last element, not an iterator. I considered doing it that way too, but this way seemed slightly nicer",
+      "parentUuid": "5cb3c62d_b023da74",
+      "range": {
+        "startLine": 224,
+        "startChar": 6,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "51a60148d79d1aa470816afd14b98a7360fd2342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
