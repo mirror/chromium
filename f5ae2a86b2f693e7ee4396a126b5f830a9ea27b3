@@ -16,6 +16,23 @@
       "revId": "f5ae2a86b2f693e7ee4396a126b5f830a9ea27b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681aeb44_1d720122",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-05-26T01:16:44Z",
+      "side": 1,
+      "message": "Because of ComputeVSInFlatTree() is not expensive. Let\u0027s add check here and log selection.\n\nif (ComputeVisibleSelectionInFlatTree().IsNone()) {\n  DLOG(FATAL) \u003c\u003c selection;\n  return false;\n}",
+      "revId": "f5ae2a86b2f693e7ee4396a126b5f830a9ea27b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
