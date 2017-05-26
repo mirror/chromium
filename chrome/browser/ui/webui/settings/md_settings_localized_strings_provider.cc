@@ -1855,6 +1855,8 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
   html_source->AddBoolean("enableSiteSettings",
                           base::CommandLine::ForCurrentProcess()->HasSwitch(
                               switches::kEnableSiteSettings));
+  html_source->AddBoolean("enableSiteDetails",
+                          base::FeatureList::IsEnabled(features::kSiteDetails));
   html_source->AddBoolean(
       "enableSafeBrowsingSubresourceFilter",
       base::FeatureList::IsEnabled(
