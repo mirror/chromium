@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d82950f_acd915e5",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-05-26T01:16:10Z",
+      "side": 1,
+      "message": "Can we just add the |watcher_| member later?",
+      "range": {
+        "startLine": 15,
+        "startChar": 22,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "237d88c48b37b9a6c9d9c4146632b9b111493847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
