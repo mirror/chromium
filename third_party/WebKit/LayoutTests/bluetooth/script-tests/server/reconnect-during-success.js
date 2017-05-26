@@ -1,24 +1,22 @@
-<!DOCTYPE html>
-<script src="../../../resources/testharness.js"></script>
-<script src="../../../resources/testharnessreport.js"></script>
-<script src="../../../resources/bluetooth/bluetooth-helpers.js"></script>
-<script>
 'use strict';
 promise_test(() => {
   return setBluetoothFakeAdapter('ServicesDiscoveredAfterReconnectionAdapter')
     .then(() => requestDeviceWithKeyDown({
       filters: [{services: ['heart_rate']}]}))
     .then(device => device.gatt.connect())
-    .then(gattServer => {
+    .then(gatt => {
       let promise = assert_promise_rejects_with_message(
-        gattServer.getPrimaryService('heart_rate'),
+        gatt.CALLS([
+          getPrimaryService('heart_rate')|
+          getPrimaryServices()|
+          getPrimaryServices('heart_rate')[UUID]
+        ]),
         new DOMException('GATT Server is disconnected. ' +
-                           'Cannot retrieve services. ' +
-                           '(Re)connect first with `device.gatt.connect`.',
+                         'Cannot retrieve services. ' +
+                         '(Re)connect first with `device.gatt.connect`.',
                          'NetworkError'));
-      gattServer.disconnect();
-      return gattServer.connect().then(() => promise);
+      gatt.disconnect();
+      return gatt.connect().then(() => promise);
     });
 }, 'disconnect() and connect() called during a getPrimaryService call that ' +
    'succeeds. Reject with NetworkError.');
-</script>
