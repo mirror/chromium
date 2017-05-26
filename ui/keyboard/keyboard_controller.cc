@@ -54,6 +54,48 @@ const int kHideAnimationDurationMs = 100;
 // allowed to be shown with zero opacity, we always animate to 0.01 instead.
 const float kAnimationStartOrAfterHideOpacity = 0.01f;
 
+const std::set<std::pair<keyboard::KeyboardControllerState,
+                         keyboard::KeyboardControllerState>>
+    kAllowedStateTransition = {
+        {keyboard::KeyboardControllerState::UNKNOWN,
+         keyboard::KeyboardControllerState::INITIAL},
+        {keyboard::KeyboardControllerState::INITIAL,
+         keyboard::KeyboardControllerState::WAIT_RESIZE},
+        {keyboard::KeyboardControllerState::WAIT_RESIZE,
+         keyboard::KeyboardControllerState::SHOWING},
+        {keyboard::KeyboardControllerState::SHOWING,
+         keyboard::KeyboardControllerState::SHOWN},
+        {keyboard::KeyboardControllerState::SHOWN,
+         keyboard::KeyboardControllerState::WILL_HIDE},
+        {keyboard::KeyboardControllerState::WILL_HIDE,
+         keyboard::KeyboardControllerState::SHOWN},
+        {keyboard::KeyboardControllerState::WILL_HIDE,
+         keyboard::KeyboardControllerState::HIDING},
+        {keyboard::KeyboardControllerState::HIDING,
+         keyboard::KeyboardControllerState::HIDDEN},
+        {keyboard::KeyboardControllerState::HIDDEN,
+         keyboard::KeyboardControllerState::SHOWING},
+
+        // HideKeyboard can be called at anytime for example on shutdown.
+        {keyboard::KeyboardControllerState::SHOWN,
+         keyboard::KeyboardControllerState::HIDING},
+        {keyboard::KeyboardControllerState::SHOWING,
+         keyboard::KeyboardControllerState::HIDING},
+        {keyboard::KeyboardControllerState::WAIT_RESIZE,
+         keyboard::KeyboardControllerState::HIDING},
+
+        // SHOWN -> SHOWN is possible when keyboard mode is changed.
+        // See KeyboardControllerTest.SwitchToFullWidthVirtualKeyboard.
+        {keyboard::KeyboardControllerState::SHOWN,
+         keyboard::KeyboardControllerState::SHOWN},
+
+        // HIDING -> SHOWING is possible when ShowKeyboard is called during hide
+        // animation. See
+        // KeyboardControllerAnimationTest.ContainerShowWhileHide.
+        {keyboard::KeyboardControllerState::HIDING,
+         keyboard::KeyboardControllerState::SHOWING},
+};
+
 // The KeyboardWindowDelegate makes sure the keyboard-window does not get focus.
 // This is necessary to make sure that the synthetic key-events reach the target
 // window.
@@ -117,6 +159,27 @@ void ToggleTouchEventLogging(bool enable) {
 #endif  // defined(OS_CHROMEOS)
 }
 
+std::string StateToStr(keyboard::KeyboardControllerState state) {
+  switch (state) {
+    case keyboard::KeyboardControllerState::UNKNOWN:
+      return "UNKNOWN";
+    case keyboard::KeyboardControllerState::SHOWN:
+      return "SHOWN";
+    case keyboard::KeyboardControllerState::SHOWING:
+      return "SHOWING";
+    case keyboard::KeyboardControllerState::WAIT_RESIZE:
+      return "WAIT_RESIZE";
+    case keyboard::KeyboardControllerState::WILL_HIDE:
+      return "WILL_HIDE";
+    case keyboard::KeyboardControllerState::HIDING:
+      return "HIDING";
+    case keyboard::KeyboardControllerState::HIDDEN:
+      return "HIDDEN";
+    case keyboard::KeyboardControllerState::INITIAL:
+      return "INITIAL";
+  }
+}
+
 }  // namespace
 
 namespace keyboard {
@@ -176,11 +239,13 @@ KeyboardController::KeyboardController(KeyboardUI* ui,
       show_on_resize_(false),
       keyboard_locked_(false),
       keyboard_mode_(FULL_WIDTH),
+      state_(KeyboardControllerState::UNKNOWN),
       weak_factory_(this) {
   CHECK(ui);
   input_method_ = ui_->GetInputMethod();
   input_method_->AddObserver(this);
   ui_->SetController(this);
+  ChangeState(KeyboardControllerState::INITIAL);
 }
 
 KeyboardController::~KeyboardController() {
@@ -242,6 +307,13 @@ void KeyboardController::NotifyKeyboardBoundsChanging(
 }
 
 void KeyboardController::HideKeyboard(HideReason reason) {
+  if (state_ == KeyboardControllerState::HIDING ||
+      state_ == KeyboardControllerState::HIDDEN ||
+      state_ == KeyboardControllerState::INITIAL) {
+    // Do nothing if keyboard is already hidden or being hidden.
+    return;
+  }
+  weak_factory_.InvalidateWeakPtrs();
   keyboard_visible_ = false;
   ToggleTouchEventLogging(true);
 
@@ -253,6 +325,11 @@ void KeyboardController::HideKeyboard(HideReason reason) {
   NotifyKeyboardBoundsChanging(gfx::Rect());
 
   set_keyboard_locked(false);
+
+  // Change the state here instead of at the end of the function because
+  // the animation immediately starts and may finish before the end of the
+  // function is reached.
+  ChangeState(KeyboardControllerState::HIDING);
 
   ui::LayerAnimator* container_animator = container_->layer()->GetAnimator();
   animation_observer_.reset(new CallbackAnimationObserver(
@@ -370,8 +447,10 @@ void KeyboardController::Reload() {
 
 void KeyboardController::OnTextInputStateChanged(
     const ui::TextInputClient* client) {
-  if (!container_.get())
+  if (!container_.get()) {
+    DCHECK(state_ == KeyboardControllerState::HIDDEN);
     return;
+  }
 
   ui::TextInputType type =
       client ? client->GetTextInputType() : ui::TEXT_INPUT_TYPE_NONE;
@@ -386,12 +465,14 @@ void KeyboardController::OnTextInputStateChanged(
           base::Bind(&KeyboardController::HideKeyboard,
                      weak_factory_.GetWeakPtr(), HIDE_REASON_AUTOMATIC),
           base::TimeDelta::FromMilliseconds(kHideKeyboardDelayMs));
+      ChangeState(KeyboardControllerState::WILL_HIDE);
     }
   } else {
     // Abort a pending keyboard hide.
     if (WillHideKeyboard()) {
       weak_factory_.InvalidateWeakPtrs();
       keyboard_visible_ = true;
+      ChangeState(KeyboardControllerState::SHOWN);
     }
     ui_->SetUpdateInputType(type);
     // Do not explicitly show the Virtual keyboard unless it is in the process
@@ -419,6 +500,14 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
   // |Shell::CreateKeyboard| is called.
   DCHECK(container_.get());
 
+  if (state_ == KeyboardControllerState::WAIT_RESIZE &&
+      ui()->GetKeyboardWindow()->bounds().height() == 0) {
+    // Do nothing if the function is called while waiting for extensions to be
+    // loaded. This path should be excercised in
+    // VirtualKeyboardStateTest/OpenTwice.
+    return;
+  }
+
   if (container_->children().empty()) {
     keyboard::MarkKeyboardLoadStarted();
     aura::Window* keyboard = ui_->GetKeyboardWindow();
@@ -440,6 +529,7 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
     return;
   } else if (ui_->GetKeyboardWindow()->bounds().height() == 0) {
     show_on_resize_ = true;
+    ChangeState(KeyboardControllerState::WAIT_RESIZE);
     return;
   }
 
@@ -447,18 +537,27 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
 
   // If the controller is in the process of hiding the keyboard, do not log
   // the stat here since the keyboard will not actually be shown.
-  if (!WillHideKeyboard())
+  if (!WillHideKeyboard()) {
     keyboard::LogKeyboardControlEvent(keyboard::KEYBOARD_CONTROL_SHOW);
-
-  weak_factory_.InvalidateWeakPtrs();
+  } else {
+    weak_factory_.InvalidateWeakPtrs();
+  }
 
   // If |container_| has hide animation, its visibility is set to false when
   // hide animation finished. So even if the container is visible at this
   // point, it may in the process of hiding. We still need to show keyboard
   // container in this case.
   if (container_->IsVisible() &&
-      !container_->layer()->GetAnimator()->is_animating())
+      !container_->layer()->GetAnimator()->is_animating()) {
+    DCHECK(state_ == KeyboardControllerState::HIDING
+           // TODO(oka) The state was WAIT_RESIZE in
+           // KeyboardControllerTest.CloseKeyboard. Check if it's expected and
+           // resolve it if not.
+           || state_ == KeyboardControllerState::WAIT_RESIZE)
+        << StateToStr(state_);
+
     return;
+  }
 
   ToggleTouchEventLogging(false);
   ui::LayerAnimator* container_animator = container_->layer()->GetAnimator();
@@ -474,6 +573,11 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
 
   container_animator->set_preemption_strategy(
       ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+
+  // Change the state here instead of at the end of the function because
+  // the animation immediately starts and may finish before the end of the
+  // function is reached.
+  ChangeState(KeyboardControllerState::SHOWING);
   if (keyboard_mode_ == FLOATING) {
     animation_observer_.reset();
   } else {
@@ -509,12 +613,14 @@ void KeyboardController::ShowAnimationFinished() {
   // background during animation.
   NotifyKeyboardBoundsChanging(container_->bounds());
   ui_->EnsureCaretInWorkArea();
+  ChangeState(KeyboardControllerState::SHOWN);
 }
 
 void KeyboardController::HideAnimationFinished() {
   ui_->HideKeyboardContainer(container_.get());
   for (KeyboardControllerObserver& observer : observer_list_)
     observer.OnKeyboardHidden();
+  ChangeState(KeyboardControllerState::HIDDEN);
 }
 
 void KeyboardController::AdjustKeyboardBounds() {
@@ -532,6 +638,29 @@ void KeyboardController::AdjustKeyboardBounds() {
     new_bounds.set_height(keyboard_height);
     GetContainerWindow()->SetBounds(new_bounds);
   }
+}
+
+void KeyboardController::CheckStateTransition(KeyboardControllerState prev,
+                                              KeyboardControllerState next) {
+  std::stringstream error_message;
+  if (!kAllowedStateTransition.count(std::make_pair(prev, next))) {
+    error_message << "Unexpected transition";
+  }
+  // TODO(oka): Add more condition check.
+
+  // Crash on error even on release build for debug.
+  // TODO(oka): Change this to DCHECK once enough data is collected.
+  CHECK(error_message.str().empty())
+      << "State: " << StateToStr(prev) << " -> " << StateToStr(next) << " "
+      << error_message.str()
+      << "  stack trace: " << base::debug::StackTrace(10).ToString();
+}
+
+void KeyboardController::ChangeState(KeyboardControllerState state) {
+  CheckStateTransition(state_, state);
+  state_ = state;
+  for (KeyboardControllerObserver& observer : observer_list_)
+    observer.OnStateChanged(state);
 }
 
 }  // namespace keyboard
