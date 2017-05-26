@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f56332_fe469d94",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-05-26T20:45:48Z",
+      "side": 1,
+      "message": "contactInfo",
+      "range": {
+        "startLine": 114,
+        "startChar": 20,
+        "endLine": 114,
+        "endChar": 35
+      },
+      "revId": "e787444032331e506af2c83c7a0a2ba8dd8bb193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4000ec3c_f59254ef",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-05-26T20:45:48Z",
+      "side": 1,
+      "message": "afaik, I don\u0027t think this view controller has a header item. Simply return nil. You can also get rid of the state and headerText properties.",
+      "revId": "e787444032331e506af2c83c7a0a2ba8dd8bb193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772d5e86_3188fa85",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-05-26T20:45:48Z",
+      "side": 1,
+      "message": "nit: please drop \"info\"",
+      "range": {
+        "startLine": 67,
+        "startChar": 62,
+        "endLine": 67,
+        "endChar": 66
+      },
+      "revId": "e787444032331e506af2c83c7a0a2ba8dd8bb193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ff91c4_ffe648dd",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-05-26T20:45:48Z",
+      "side": 1,
+      "message": "Could you please leave a comment to update the view controller with the new contact profile?",
+      "revId": "e787444032331e506af2c83c7a0a2ba8dd8bb193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd672187_378e312e",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-05-26T20:45:48Z",
+      "side": 1,
+      "message": "nit: s/TODO(macourteau)/TODO(602666)\nIt\u0027s easier to grep for these TODOs if we followed one naming standard.\nCould you also please elaborate the comment? like, normalize the phone number and add to the payment response...",
+      "revId": "e787444032331e506af2c83c7a0a2ba8dd8bb193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
