@@ -65,7 +65,7 @@ class ConditionValidator {
 
     // Returns true if this result object has no errors, i.e. no values that
     // are false.
-    bool NoErrors();
+    bool NoErrors() const;
   };
 
   virtual ~ConditionValidator() = default;
