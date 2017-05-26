@@ -97,6 +97,8 @@ blink_core_sources("animation") {
     "ColorPropertyFunctions.h",
     "CompositorAnimations.cpp",
     "CompositorAnimations.h",
+    "CompositorMutatorImpl.cpp",
+    "CompositorMutatorImpl.h",
     "CompositorPendingAnimations.cpp",
     "CompositorPendingAnimations.h",
     "CustomCompositorAnimationManager.cpp",

@@ -48,8 +48,6 @@ component("web") {
     "ColorChooserUIController.cpp",
     "ColorChooserUIController.h",
     "CompositorAnimator.h",
-    "CompositorMutatorImpl.cpp",
-    "CompositorMutatorImpl.h",
     "CompositorProxyClientImpl.cpp",
     "CompositorProxyClientImpl.h",
     "CompositorWorkerProxyClientImpl.cpp",
