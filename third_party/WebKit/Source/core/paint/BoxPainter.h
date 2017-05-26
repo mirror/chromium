@@ -104,6 +104,8 @@ class BoxPainter : public BoxPainterBase {
                        const Color& background_color,
                        BackgroundBleedAvoidance = kBackgroundBleedNone);
 
+  bool IsRootScroller() const;
+
   const LayoutBox& layout_box_;
 };
 

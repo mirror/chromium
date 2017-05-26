@@ -70,6 +70,7 @@
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/StickyPositionScrollingConstraints.h"
+#include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/BoxReflectionUtils.h"
 #include "core/paint/FilterEffectBuilder.h"
 #include "core/paint/ObjectPaintInvalidator.h"
@@ -2583,14 +2584,22 @@ LayoutRect PaintLayer::BoundingBoxForCompositingInternal(
       !HasVisibleDescendant())
     return LayoutRect();
 
-  if (IsRootLayer()) {
+  Page* page = GetLayoutObject().GetFrame()->GetPage();
+  if (!page)
+    return LayoutRect();
+
+  bool is_root_scroller =
+      page->GlobalRootScrollerController().GlobalRootScroller() ==
+      GetLayoutObject().GetNode();
+
+  if (IsRootLayer() || is_root_scroller) {
     // In root layer scrolling mode, the main GraphicsLayer is the size of the
     // layout viewport. In non-RLS mode, it is the union of the layout viewport
     // and the document's layout overflow rect.
     IntRect result = IntRect();
     if (FrameView* frame_view = GetLayoutObject().GetFrameView())
       result = IntRect(IntPoint(), frame_view->VisibleContentSize());
-    if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled())
+    if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled() && IsRootLayer())
       result.Unite(GetLayoutObject().View()->DocumentRect());
     return LayoutRect(result);
   }
@@ -3339,7 +3348,11 @@ void showLayerTree(const blink::PaintLayer* layer) {
                                    blink::kLayoutAsTextDontUpdateLayout |
                                    blink::kLayoutAsTextShowLayoutState,
                                layer);
-    LOG(INFO) << output.Utf8().data();
+    Vector<WTF::String> out;
+    output.Split('\n', true, out);
+    for (WTF::String s : out) {
+      LOG(INFO) << s.Utf8().data();
+    }
   }
 }
 
