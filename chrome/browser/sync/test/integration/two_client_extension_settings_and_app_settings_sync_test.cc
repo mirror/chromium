@@ -33,28 +33,37 @@ void MutateSomeSettings(
     // Write to extension0 from profile 0 but not profile 1.
     base::DictionaryValue settings;
     settings.SetString("asdf", base::StringPrintf("asdfasdf-%d", seed));
-    SetExtensionSettings(test()->verifier(),    extension0, settings);
-    SetExtensionSettings(test()->GetProfile(0), extension0, settings);
+    SetExtensionSettings(test()->verifier(), extension0,
+                         settings.CreateDeepCopy());
+    SetExtensionSettings(test()->GetProfile(0), extension0,
+                         settings.CreateDeepCopy());
   }
   {
     // Write the same data to extension1 from both profiles.
-    base::DictionaryValue settings;
-    settings.SetString("asdf", base::StringPrintf("asdfasdf-%d", seed));
-    settings.SetString("qwer", base::StringPrintf("qwerqwer-%d", seed));
-    SetExtensionSettingsForAllProfiles(extension1, settings);
+    std::unique_ptr<base::DictionaryValue> settings(
+        new base::DictionaryValue());
+    settings->SetString("asdf", base::StringPrintf("asdfasdf-%d", seed));
+    settings->SetString("qwer", base::StringPrintf("qwerqwer-%d", seed));
+    SetExtensionSettingsForAllProfiles(extension1, std::move(settings));
   }
   {
     // Write different data to extension2 from each profile.
-    base::DictionaryValue settings0;
-    settings0.SetString("zxcv", base::StringPrintf("zxcvzxcv-%d", seed));
-    SetExtensionSettings(test()->verifier(),    extension2, settings0);
-    SetExtensionSettings(test()->GetProfile(0), extension2, settings0);
+    std::unique_ptr<base::DictionaryValue> settings0(
+        new base::DictionaryValue());
+    settings0->SetString("zxcv", base::StringPrintf("zxcvzxcv-%d", seed));
+    SetExtensionSettings(test()->verifier(), extension2,
+                         settings0->CreateDeepCopy());
+    SetExtensionSettings(test()->GetProfile(0), extension2,
+                         std::move(settings0));
 
-    base::DictionaryValue settings1;
-    settings1.SetString("1324", base::StringPrintf("12341234-%d", seed));
-    settings1.SetString("5687", base::StringPrintf("56785678-%d", seed));
-    SetExtensionSettings(test()->verifier(),    extension2, settings1);
-    SetExtensionSettings(test()->GetProfile(1), extension2, settings1);
+    std::unique_ptr<base::DictionaryValue> settings1(
+        new base::DictionaryValue());
+    settings1->SetString("1324", base::StringPrintf("12341234-%d", seed));
+    settings1->SetString("5687", base::StringPrintf("56785678-%d", seed));
+    SetExtensionSettings(test()->verifier(), extension2,
+                         settings1->CreateDeepCopy());
+    SetExtensionSettings(test()->GetProfile(1), extension2,
+                         std::move(settings1));
   }
 }
 
@@ -80,15 +89,17 @@ testing::AssertionResult StartWithSameSettingsTest(
     // Leave extension0 empty.
   }
   {
-    base::DictionaryValue settings;
-    settings.SetString("foo", "bar");
-    SetExtensionSettingsForAllProfiles(extension1, settings);
+    std::unique_ptr<base::DictionaryValue> settings(
+        new base::DictionaryValue());
+    settings->SetString("foo", "bar");
+    SetExtensionSettingsForAllProfiles(extension1, std::move(settings));
   }
   {
-    base::DictionaryValue settings;
-    settings.SetString("foo", "bar");
-    settings.SetString("baz", "qux");
-    SetExtensionSettingsForAllProfiles(extension2, settings);
+    std::unique_ptr<base::DictionaryValue> settings(
+        new base::DictionaryValue());
+    settings->SetString("foo", "bar");
+    settings->SetString("baz", "qux");
+    SetExtensionSettingsForAllProfiles(extension2, std::move(settings));
   }
 
   if (!test()->SetupSync())
@@ -130,17 +141,23 @@ testing::AssertionResult StartWithDifferentSettingsTest(
     // results, so test (empty, empty).
   }
   {
-    base::DictionaryValue settings;
-    settings.SetString("foo", "bar");
-    SetExtensionSettings(test()->verifier(), extension1, settings);
-    SetExtensionSettings(test()->GetProfile(0), extension1, settings);
+    std::unique_ptr<base::DictionaryValue> settings(
+        new base::DictionaryValue());
+    settings->SetString("foo", "bar");
+    SetExtensionSettings(test()->verifier(), extension1,
+                         settings->CreateDeepCopy());
+    SetExtensionSettings(test()->GetProfile(0), extension1,
+                         std::move(settings));
   }
   {
-    base::DictionaryValue settings;
-    settings.SetString("foo", "bar");
-    settings.SetString("baz", "qux");
-    SetExtensionSettings(test()->verifier(), extension2, settings);
-    SetExtensionSettings(test()->GetProfile(1), extension2, settings);
+    std::unique_ptr<base::DictionaryValue> settings(
+        new base::DictionaryValue());
+    settings->SetString("foo", "bar");
+    settings->SetString("baz", "qux");
+    SetExtensionSettings(test()->verifier(), extension2,
+                         settings->CreateDeepCopy());
+    SetExtensionSettings(test()->GetProfile(1), extension2,
+                         std::move(settings));
   }
 
   if (!test()->SetupSync())

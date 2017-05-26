@@ -41,12 +41,13 @@ void PolicyValueStore::SetCurrentPolicy(const policy::PolicyMap& policy) {
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   // Convert |policy| to a dictionary value. Only include mandatory policies
   // for now.
-  base::DictionaryValue current_policy;
+  std::unique_ptr<base::DictionaryValue> current_policy(
+      new base::DictionaryValue());
   for (policy::PolicyMap::const_iterator it = policy.begin();
        it != policy.end(); ++it) {
     if (it->second.level == policy::POLICY_LEVEL_MANDATORY) {
-      current_policy.SetWithoutPathExpansion(
-          it->first, it->second.value->CreateDeepCopy());
+      current_policy->SetWithoutPathExpansion(
+          it->first, base::WrapUnique(it->second.value->DeepCopy()));
     }
   }
 
@@ -72,7 +73,7 @@ void PolicyValueStore::SetCurrentPolicy(const policy::PolicyMap& policy) {
   std::vector<std::string> removed_keys;
   for (base::DictionaryValue::Iterator it(previous_policy);
        !it.IsAtEnd(); it.Advance()) {
-    if (!current_policy.HasKey(it.key()))
+    if (!current_policy->HasKey(it.key()))
       removed_keys.push_back(it.key());
   }
 
@@ -87,7 +88,7 @@ void PolicyValueStore::SetCurrentPolicy(const policy::PolicyMap& policy) {
   // IGNORE_QUOTA because these settings aren't writable by the extension, and
   // are configured by the domain administrator.
   ValueStore::WriteOptions options = ValueStore::IGNORE_QUOTA;
-  result = delegate_->Set(options, current_policy);
+  result = delegate_->Set(options, std::move(current_policy));
   if (result->status().ok()) {
     changes.insert(
         changes.end(), result->changes().begin(), result->changes().end());
@@ -142,7 +143,8 @@ ValueStore::WriteResult PolicyValueStore::Set(
 }
 
 ValueStore::WriteResult PolicyValueStore::Set(
-    WriteOptions options, const base::DictionaryValue& settings) {
+    WriteOptions options,
+    std::unique_ptr<base::DictionaryValue> settings) {
   return MakeWriteResult(ReadOnlyError());
 }
 

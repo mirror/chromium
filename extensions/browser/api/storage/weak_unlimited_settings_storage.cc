@@ -46,8 +46,9 @@ ValueStore::WriteResult WeakUnlimitedSettingsStorage::Set(
 }
 
 ValueStore::WriteResult WeakUnlimitedSettingsStorage::Set(
-    WriteOptions options, const base::DictionaryValue& values) {
-  return delegate_->Set(IGNORE_QUOTA, values);
+    WriteOptions options,
+    std::unique_ptr<base::DictionaryValue> values) {
+  return delegate_->Set(IGNORE_QUOTA, std::move(values));
 }
 
 ValueStore::WriteResult WeakUnlimitedSettingsStorage::Remove(

@@ -148,7 +148,7 @@ ValueStore::WriteResult LeveldbValueStore::Set(WriteOptions options,
 
 ValueStore::WriteResult LeveldbValueStore::Set(
     WriteOptions options,
-    const base::DictionaryValue& settings) {
+    std::unique_ptr<base::DictionaryValue> settings) {
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   Status status = EnsureDbIsOpen();
@@ -158,8 +158,8 @@ ValueStore::WriteResult LeveldbValueStore::Set(
   leveldb::WriteBatch batch;
   std::unique_ptr<ValueStoreChangeList> changes(new ValueStoreChangeList());
 
-  for (base::DictionaryValue::Iterator it(settings);
-       !it.IsAtEnd(); it.Advance()) {
+  for (base::DictionaryValue::Iterator it(*settings); !it.IsAtEnd();
+       it.Advance()) {
     status.Merge(
         AddToBatch(options, it.key(), it.value(), &batch, changes.get()));
     if (!status.ok())

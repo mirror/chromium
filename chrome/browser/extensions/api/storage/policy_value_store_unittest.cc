@@ -61,8 +61,8 @@ class MutablePolicyValueStore : public PolicyValueStore {
   }
 
   WriteResult Set(WriteOptions options,
-                  const base::DictionaryValue& values) override {
-    return delegate()->Set(options, values);
+                  std::unique_ptr<base::DictionaryValue> values) override {
+    return delegate()->Set(options, std::move(values));
   }
 
   WriteResult Remove(const std::string& key) override {
@@ -143,9 +143,9 @@ TEST_F(PolicyValueStoreTest, ReadOnly) {
   base::Value string_value("value");
   EXPECT_FALSE(store_->Set(options, "key", string_value)->status().ok());
 
-  base::DictionaryValue dict;
-  dict.SetString("key", "value");
-  EXPECT_FALSE(store_->Set(options, dict)->status().ok());
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->SetString("key", "value");
+  EXPECT_FALSE(store_->Set(options, std::move(dict))->status().ok());
 
   EXPECT_FALSE(store_->Remove("key")->status().ok());
   std::vector<std::string> keys;

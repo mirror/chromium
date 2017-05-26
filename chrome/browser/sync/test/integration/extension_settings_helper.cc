@@ -85,35 +85,35 @@ bool AreSettingsSame(Profile* expected_profile, Profile* actual_profile) {
   return same;
 }
 
-void SetSettingsOnFileThread(
-    const base::DictionaryValue* settings,
-    base::WaitableEvent* signal,
-    ValueStore* storage) {
+void SetSettingsOnFileThread(std::unique_ptr<base::DictionaryValue> settings,
+                             base::WaitableEvent* signal,
+                             ValueStore* storage) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::FILE));
-  storage->Set(ValueStore::DEFAULTS, *settings);
+  storage->Set(ValueStore::DEFAULTS, std::move(settings));
   signal->Signal();
 }
 
 }  // namespace
 
-void SetExtensionSettings(
-    Profile* profile,
-    const std::string& id,
-    const base::DictionaryValue& settings) {
+void SetExtensionSettings(Profile* profile,
+                          const std::string& id,
+                          std::unique_ptr<base::DictionaryValue> settings) {
   base::WaitableEvent signal(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                              base::WaitableEvent::InitialState::NOT_SIGNALED);
   extensions::StorageFrontend::Get(profile)->RunWithStorage(
       ExtensionRegistry::Get(profile)->enabled_extensions().GetByID(id),
       extensions::settings_namespace::SYNC,
-      base::Bind(&SetSettingsOnFileThread, &settings, &signal));
+      base::Bind(&SetSettingsOnFileThread, base::Passed(std::move(settings)),
+                 &signal));
   signal.Wait();
 }
 
 void SetExtensionSettingsForAllProfiles(
-    const std::string& id, const base::DictionaryValue& settings) {
+    const std::string& id,
+    std::unique_ptr<base::DictionaryValue> settings) {
   for (int i = 0; i < test()->num_clients(); ++i)
-    SetExtensionSettings(test()->GetProfile(i), id, settings);
-  SetExtensionSettings(test()->verifier(), id, settings);
+    SetExtensionSettings(test()->GetProfile(i), id, settings->CreateDeepCopy());
+  SetExtensionSettings(test()->verifier(), id, std::move(settings));
 }
 
 bool AllExtensionSettingsSameAsVerifier() {

@@ -48,7 +48,7 @@ class LeveldbValueStore : public ValueStore,
                   const std::string& key,
                   const base::Value& value) override;
   WriteResult Set(ValueStore::WriteOptions options,
-                  const base::DictionaryValue& values) override;
+                  std::unique_ptr<base::DictionaryValue> values) override;
   WriteResult Remove(const std::string& key) override;
   WriteResult Remove(const std::vector<std::string>& keys) override;
   WriteResult Clear() override;

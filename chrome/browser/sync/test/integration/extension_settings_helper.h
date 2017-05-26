@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_SYNC_TEST_INTEGRATION_EXTENSION_SETTINGS_HELPER_H_
 #define CHROME_BROWSER_SYNC_TEST_INTEGRATION_EXTENSION_SETTINGS_HELPER_H_
 
+#include <memory>
 #include <string>
 
 class Profile;
@@ -15,14 +16,14 @@ class DictionaryValue;
 namespace extension_settings_helper {
 
 // Calls Set() with |settings| for |profile| and the extension with ID |id|.
-void SetExtensionSettings(
-    Profile* profile,
-    const std::string& id,
-    const base::DictionaryValue& settings);
+void SetExtensionSettings(Profile* profile,
+                          const std::string& id,
+                          std::unique_ptr<base::DictionaryValue> settings);
 
 // Calls Set() with |settings| for all profiles the extension with ID |id|.
 void SetExtensionSettingsForAllProfiles(
-    const std::string& id, const base::DictionaryValue& settings);
+    const std::string& id,
+    std::unique_ptr<base::DictionaryValue> settings);
 
 // Returns whether the extension settings are the same across all profiles.
 bool AllExtensionSettingsSameAsVerifier();

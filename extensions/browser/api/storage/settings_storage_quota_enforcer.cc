@@ -137,11 +137,12 @@ ValueStore::WriteResult SettingsStorageQuotaEnforcer::Set(
 }
 
 ValueStore::WriteResult SettingsStorageQuotaEnforcer::Set(
-    WriteOptions options, const base::DictionaryValue& values) {
+    WriteOptions options,
+    std::unique_ptr<base::DictionaryValue> values) {
   LazyCalculateUsage();
   size_t new_used_total = used_total_;
   std::map<std::string, size_t> new_used_per_setting = used_per_setting_;
-  for (base::DictionaryValue::Iterator it(values); !it.IsAtEnd();
+  for (base::DictionaryValue::Iterator it(*values); !it.IsAtEnd();
        it.Advance()) {
     Allocate(it.key(), it.value(), &new_used_total, &new_used_per_setting);
 
@@ -158,7 +159,7 @@ ValueStore::WriteResult SettingsStorageQuotaEnforcer::Set(
       return MakeWriteResult(QuotaExceededError(MAX_ITEMS));
   }
 
-  WriteResult result = HandleResult(delegate_->Set(options, values));
+  WriteResult result = HandleResult(delegate_->Set(options, std::move(values)));
   if (!result->status().ok())
     return result;
 

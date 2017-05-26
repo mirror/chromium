@@ -96,9 +96,10 @@ ValueStore::WriteResult SyncableSettingsStorage::Set(
 }
 
 ValueStore::WriteResult SyncableSettingsStorage::Set(
-    WriteOptions options, const base::DictionaryValue& values) {
+    WriteOptions options,
+    std::unique_ptr<base::DictionaryValue> values) {
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-  WriteResult result = HandleResult(delegate_->Set(options, values));
+  WriteResult result = HandleResult(delegate_->Set(options, std::move(values)));
   if (!result->status().ok())
     return result;
   SyncResultIfEnabled(result);

@@ -72,20 +72,21 @@ ValueStore::ReadResult TestingValueStore::Get() {
 
 ValueStore::WriteResult TestingValueStore::Set(
     WriteOptions options, const std::string& key, const base::Value& value) {
-  base::DictionaryValue settings;
-  settings.SetWithoutPathExpansion(key, value.CreateDeepCopy());
-  return Set(options, settings);
+  std::unique_ptr<base::DictionaryValue> settings(new base::DictionaryValue());
+  settings->SetWithoutPathExpansion(key, value.CreateDeepCopy());
+  return Set(options, std::move(settings));
 }
 
 ValueStore::WriteResult TestingValueStore::Set(
-    WriteOptions options, const base::DictionaryValue& settings) {
+    WriteOptions options,
+    std::unique_ptr<base::DictionaryValue> settings) {
   write_count_++;
   if (!status_.ok())
     return MakeWriteResult(status_);
 
   std::unique_ptr<ValueStoreChangeList> changes(new ValueStoreChangeList());
-  for (base::DictionaryValue::Iterator it(settings);
-       !it.IsAtEnd(); it.Advance()) {
+  for (base::DictionaryValue::Iterator it(*settings); !it.IsAtEnd();
+       it.Advance()) {
     base::Value* old_value = NULL;
     if (!storage_.GetWithoutPathExpansion(it.key(), &old_value) ||
         !old_value->Equals(&it.value())) {

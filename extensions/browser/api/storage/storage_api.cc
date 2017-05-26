@@ -225,7 +225,8 @@ ExtensionFunction::ResponseValue StorageStorageAreaSetFunction::RunWithStorage(
   base::DictionaryValue* input = NULL;
   if (!args_->GetDictionary(0, &input))
     return BadMessage();
-  return UseWriteResult(storage->Set(ValueStore::DEFAULTS, *input));
+  return UseWriteResult(
+      storage->Set(ValueStore::DEFAULTS, input->CreateDeepCopy()));
 }
 
 void StorageStorageAreaSetFunction::GetQuotaLimitHeuristics(

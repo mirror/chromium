@@ -207,7 +207,8 @@ TEST_P(ValueStoreTest, GetWithMultipleValues) {
         ValueStoreChange(key1_, nullptr, val1_->CreateDeepCopy()));
     changes.push_back(
         ValueStoreChange(key2_, nullptr, val2_->CreateDeepCopy()));
-    EXPECT_PRED_FORMAT2(ChangesEq, changes, storage_->Set(DEFAULTS, *dict12_));
+    EXPECT_PRED_FORMAT2(ChangesEq, changes,
+                        storage_->Set(DEFAULTS, dict12_->CreateDeepCopy()));
   }
 
   EXPECT_PRED_FORMAT2(SettingsEq, *dict1_, storage_->Get(key1_));
@@ -227,7 +228,7 @@ TEST_P(ValueStoreTest, RemoveWhenEmpty) {
 }
 
 TEST_P(ValueStoreTest, RemoveWithSingleValue) {
-  storage_->Set(DEFAULTS, *dict1_);
+  storage_->Set(DEFAULTS, dict1_->CreateDeepCopy());
   {
     ValueStoreChangeList changes;
     changes.push_back(
@@ -243,7 +244,7 @@ TEST_P(ValueStoreTest, RemoveWithSingleValue) {
 }
 
 TEST_P(ValueStoreTest, RemoveWithMultipleValues) {
-  storage_->Set(DEFAULTS, *dict123_);
+  storage_->Set(DEFAULTS, dict123_->CreateDeepCopy());
   {
     ValueStoreChangeList changes;
     changes.push_back(
@@ -287,7 +288,8 @@ TEST_P(ValueStoreTest, SetWhenOverwriting) {
                                        val1_->CreateDeepCopy()));
     changes.push_back(
         ValueStoreChange(key2_, nullptr, val2_->CreateDeepCopy()));
-    EXPECT_PRED_FORMAT2(ChangesEq, changes, storage_->Set(DEFAULTS, *dict12_));
+    EXPECT_PRED_FORMAT2(ChangesEq, changes,
+                        storage_->Set(DEFAULTS, dict12_->CreateDeepCopy()));
   }
 
   EXPECT_PRED_FORMAT2(SettingsEq, *dict1_, storage_->Get(key1_));
@@ -310,7 +312,7 @@ TEST_P(ValueStoreTest, ClearWhenEmpty) {
 }
 
 TEST_P(ValueStoreTest, ClearWhenNotEmpty) {
-  storage_->Set(DEFAULTS, *dict12_);
+  storage_->Set(DEFAULTS, dict12_->CreateDeepCopy());
   {
     ValueStoreChangeList changes;
     changes.push_back(
@@ -362,7 +364,8 @@ TEST_P(ValueStoreTest, DotsInKeyNames) {
     ValueStoreChangeList changes;
     changes.push_back(
         ValueStoreChange(dot_key, nullptr, dot_value.CreateDeepCopy()));
-    EXPECT_PRED_FORMAT2(ChangesEq, changes, storage_->Set(DEFAULTS, dot_dict));
+    EXPECT_PRED_FORMAT2(ChangesEq, changes,
+                        storage_->Set(DEFAULTS, dot_dict.CreateDeepCopy()));
   }
 
   EXPECT_PRED_FORMAT2(SettingsEq, dot_dict, storage_->Get(dot_list));
@@ -390,7 +393,7 @@ TEST_P(ValueStoreTest, DotsInKeyNamesWithDicts) {
     changes.push_back(
         ValueStoreChange("foo", nullptr, inner_dict.CreateDeepCopy()));
     EXPECT_PRED_FORMAT2(ChangesEq, changes,
-                        storage_->Set(DEFAULTS, outer_dict));
+                        storage_->Set(DEFAULTS, outer_dict.CreateDeepCopy()));
   }
 
   EXPECT_PRED_FORMAT2(SettingsEq, outer_dict, storage_->Get("foo"));
@@ -444,22 +447,24 @@ TEST_P(ValueStoreTest, ComplexChangedKeysScenarios) {
         ValueStoreChange(key1_, nullptr, val1_->CreateDeepCopy()));
     changes.push_back(
         ValueStoreChange(key2_, nullptr, val2_->CreateDeepCopy()));
-    EXPECT_PRED_FORMAT2(ChangesEq, changes, storage_->Set(DEFAULTS, *dict12_));
-    EXPECT_PRED_FORMAT2(ChangesEq,
-        ValueStoreChangeList(), storage_->Set(DEFAULTS, *dict12_));
+    EXPECT_PRED_FORMAT2(ChangesEq, changes,
+                        storage_->Set(DEFAULTS, dict12_->CreateDeepCopy()));
+    EXPECT_PRED_FORMAT2(ChangesEq, ValueStoreChangeList(),
+                        storage_->Set(DEFAULTS, dict12_->CreateDeepCopy()));
   }
   {
     ValueStoreChangeList changes;
     changes.push_back(
         ValueStoreChange(key3_, nullptr, val3_->CreateDeepCopy()));
-    EXPECT_PRED_FORMAT2(ChangesEq, changes, storage_->Set(DEFAULTS, *dict123_));
+    EXPECT_PRED_FORMAT2(ChangesEq, changes,
+                        storage_->Set(DEFAULTS, dict123_->CreateDeepCopy()));
   }
   {
-    base::DictionaryValue to_set;
-    to_set.Set(key1_, val2_->CreateDeepCopy());
-    to_set.Set(key2_, val2_->CreateDeepCopy());
-    to_set.Set("asdf", val1_->CreateDeepCopy());
-    to_set.Set("qwerty", val3_->CreateDeepCopy());
+    std::unique_ptr<base::DictionaryValue> to_set(new base::DictionaryValue());
+    to_set->Set(key1_, val2_->CreateDeepCopy());
+    to_set->Set(key2_, val2_->CreateDeepCopy());
+    to_set->Set("asdf", val1_->CreateDeepCopy());
+    to_set->Set("qwerty", val3_->CreateDeepCopy());
 
     ValueStoreChangeList changes;
     changes.push_back(ValueStoreChange(key1_, val1_->CreateDeepCopy(),
@@ -468,7 +473,8 @@ TEST_P(ValueStoreTest, ComplexChangedKeysScenarios) {
         ValueStoreChange("asdf", nullptr, val1_->CreateDeepCopy()));
     changes.push_back(
         ValueStoreChange("qwerty", nullptr, val3_->CreateDeepCopy()));
-    EXPECT_PRED_FORMAT2(ChangesEq, changes, storage_->Set(DEFAULTS, to_set));
+    EXPECT_PRED_FORMAT2(ChangesEq, changes,
+                        storage_->Set(DEFAULTS, std::move(to_set)));
   }
   {
     ValueStoreChangeList changes;

@@ -201,8 +201,8 @@ class ValueStore {
                           const base::Value& value) = 0;
 
   // Sets multiple keys to new values.
-  virtual WriteResult Set(
-      WriteOptions options, const base::DictionaryValue& values) = 0;
+  virtual WriteResult Set(WriteOptions options,
+                          std::unique_ptr<base::DictionaryValue> values) = 0;
 
   // Removes a key from the storage.
   virtual WriteResult Remove(const std::string& key) = 0;
