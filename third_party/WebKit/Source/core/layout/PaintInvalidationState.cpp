@@ -179,11 +179,13 @@ PaintInvalidationState::PaintInvalidationState(
     }
   }
 
-  if (current_object == paint_invalidation_container_) {
-    // When we hit a new paint invalidation container, we don't need to
-    // continue forcing a check for paint invalidation, since we're
-    // descending into a different invalidation container. (For instance if
-    // our parents were moved, the entire container will just move.)
+  if (current_object == paint_invalidation_container_ &&
+      !ToLayoutBoxModelObject(current_object).Layer()->GroupedMapping()) {
+    // When we hit a new non-squashed paint invalidation container, we don't
+    // need to continue forcing a check for paint invalidation, since we're
+    // descending into a different backing. (For instance if our parents were
+    // moved, the entire container will just move, without change of any visual
+    // rect in the subtree.)
     if (current_object != paint_invalidation_container_for_stacked_contents_) {
       // However, we need to keep the FullInvalidationForStackedContents flag
       // if the current object isn't the paint invalidation container of
