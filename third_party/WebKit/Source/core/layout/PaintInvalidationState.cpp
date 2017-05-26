@@ -180,32 +180,38 @@ PaintInvalidationState::PaintInvalidationState(
   }
 
   if (current_object == paint_invalidation_container_) {
-    // When we hit a new paint invalidation container, we don't need to
-    // continue forcing a check for paint invalidation, since we're
-    // descending into a different invalidation container. (For instance if
-    // our parents were moved, the entire container will just move.)
-    if (current_object != paint_invalidation_container_for_stacked_contents_) {
-      // However, we need to keep the FullInvalidationForStackedContents flag
-      // if the current object isn't the paint invalidation container of
-      // stacked contents.
-      forced_subtree_invalidation_flags_ &=
-          PaintInvalidatorContext::kSubtreeFullInvalidationForStackedContents;
-    } else {
-      forced_subtree_invalidation_flags_ = 0;
-      if (current_object != container_for_absolute_position_ &&
-          cached_offsets_for_absolute_position_enabled_ &&
-          cached_offsets_enabled_) {
-        // The current object is the new paintInvalidationContainer for
-        // absolute-position descendants but is not their container.
-        // Call updateForCurrentObject() before resetting m_paintOffset to get
-        // paint offset of the current object from the original
-        // paintInvalidationContainerForStackingContents, then use this paint
-        // offset to adjust m_paintOffsetForAbsolutePosition.
-        UpdateForCurrentObject(parent_state);
-        paint_offset_for_absolute_position_ -= paint_offset_;
-        if (clipped_for_absolute_position_)
-          clip_rect_for_absolute_position_.Move(-paint_offset_);
+    // When we hit a new non-squashed paint invalidation container, we don't
+    // need to continue forcing a check for paint invalidation, since we're
+    // descending into a different backing. (For instance if our parents were
+    // moved, the entire container will just move, without change of any visual
+    // rect in the subtree.)
+    if (!ToLayoutBoxModelObject(current_object).Layer()->GroupedMapping()) {
+      if (current_object !=
+          paint_invalidation_container_for_stacked_contents_) {
+        // However, we need to keep the FullInvalidationForStackedContents flag
+        // if the current object isn't the paint invalidation container of
+        // stacked contents.
+        forced_subtree_invalidation_flags_ &=
+            PaintInvalidatorContext::kSubtreeFullInvalidationForStackedContents;
+      } else {
+        forced_subtree_invalidation_flags_ = 0;
       }
+    }
+
+    if (current_object == paint_invalidation_container_for_stacked_contents_ &&
+        current_object != container_for_absolute_position_ &&
+        cached_offsets_for_absolute_position_enabled_ &&
+        cached_offsets_enabled_) {
+      // The current object is the new paintInvalidationContainer for
+      // absolute-position descendants but is not their container.
+      // Call updateForCurrentObject() before resetting m_paintOffset to get
+      // paint offset of the current object from the original
+      // paintInvalidationContainerForStackingContents, then use this paint
+      // offset to adjust m_paintOffsetForAbsolutePosition.
+      UpdateForCurrentObject(parent_state);
+      paint_offset_for_absolute_position_ -= paint_offset_;
+      if (clipped_for_absolute_position_)
+        clip_rect_for_absolute_position_.Move(-paint_offset_);
     }
 
     clipped_ = false;  // Will be updated in updateForChildren().

@@ -334,11 +334,13 @@ void PaintInvalidator::UpdatePaintInvalidationContainer(
     }
   }
 
-  if (object == context.paint_invalidation_container) {
-    // When we hit a new paint invalidation container, we don't need to
-    // continue forcing a check for paint invalidation, since we're
-    // descending into a different invalidation container. (For instance if
-    // our parents were moved, the entire container will just move.)
+  if (object == context.paint_invalidation_container &&
+      !ToLayoutBoxModelObject(object).Layer()->GroupedMapping()) {
+    // When we hit a new non-squashed paint invalidation container, we don't
+    // need to continue forcing a check for paint invalidation, since we're
+    // descending into a different backing. (For instance if our parents were
+    // moved, the entire container will just move, without change of any visual
+    // rect in the subtree).
     if (object != context.paint_invalidation_container_for_stacked_contents) {
       // However, we need to keep kSubtreeVisualRectUpdate and
       // kSubtreeFullInvalidationForStackedContents flags if the current
