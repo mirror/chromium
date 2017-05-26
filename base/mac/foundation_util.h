@@ -383,6 +383,13 @@ BASE_EXPORT NSString* FilePathToNSString(const FilePath& path);
 // Converts |str| to a FilePath. Returns an empty path if |str| is nil.
 BASE_EXPORT FilePath NSStringToFilePath(NSString* str);
 
+// Creates a Touch Bar identifier with the given |id|.
+BASE_EXPORT NSString* CreateTouchBarId(NSString* touch_bar_id);
+
+// Creates a Touch Bar Item identifier.
+BASE_EXPORT NSString* CreateTouchBarItemId(NSString* touch_bar_id,
+                                           NSString* item_id);
+
 #if defined(__OBJC__)
 // Converts |range| to an NSRange, returning the new range in |range_out|.
 // Returns true if conversion was successful, false if the values of |range|
