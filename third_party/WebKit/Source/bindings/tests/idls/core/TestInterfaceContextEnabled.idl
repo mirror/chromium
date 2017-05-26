@@ -1,0 +1,23 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Test for [ContextEnabled] extended attribute applied to an interface.
+
+[
+    ContextEnabled=InterfaceFeatureName,
+] interface TestInterfaceContextEnabled {
+    const unsigned long UNSIGNED_LONG = 0;
+    const short CONST_JAVASCRIPT = 1;
+
+    attribute double doubleAttribute;
+    [RuntimeEnabled=FeatureName] attribute long conditionalLongAttribute;
+    [RuntimeEnabled=FeatureName] readonly attribute long conditionalReadOnlyLongAttribute;
+    static attribute DOMString staticStringAttribute;
+    [RuntimeEnabled=FeatureName] static readonly attribute long staticConditionalReadOnlyLongAttribute;
+
+    void voidMethodDoubleArgFloatArg(double doubleArg, float floatArg);
+
+    void voidMethodPartialOverload();
+    void voidMethodPartialOverload(double doubleArg);
+};
