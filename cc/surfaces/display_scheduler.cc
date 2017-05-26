@@ -13,10 +13,11 @@
 
 namespace cc {
 
-DisplayScheduler::DisplayScheduler(base::SingleThreadTaskRunner* task_runner,
+DisplayScheduler::DisplayScheduler(BeginFrameSource* begin_frame_source,
+                                   base::SingleThreadTaskRunner* task_runner,
                                    int max_pending_swaps)
     : client_(nullptr),
-      begin_frame_source_(nullptr),
+      begin_frame_source_(begin_frame_source),
       task_runner_(task_runner),
       inside_surface_damaged_(false),
       visible_(false),
@@ -43,11 +44,6 @@ DisplayScheduler::~DisplayScheduler() {
 
 void DisplayScheduler::SetClient(DisplaySchedulerClient* client) {
   client_ = client;
-}
-
-void DisplayScheduler::SetBeginFrameSource(
-    BeginFrameSource* begin_frame_source) {
-  begin_frame_source_ = begin_frame_source;
 }
 
 void DisplayScheduler::SetVisible(bool visible) {
