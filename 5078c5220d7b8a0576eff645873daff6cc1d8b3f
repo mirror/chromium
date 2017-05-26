@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9216679f_4bfaca31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-26T18:41:38Z",
+      "side": 1,
+      "message": "Hmm, actually on second look, YouTube\u0027s MTBR is based on watch time, so we should probably base ours on watch time as well. I\u0027ll redo this to be based on elapsed play time instead of elapsed real time. The one small caveat is that being based on watch time means we skip short playbacks and would have no metric for video-only at present.\n\nI\u0027ll see about how to integrate this properly such that we don\u0027t lose any values we care about.",
+      "parentUuid": "a711a0e6_a253929e",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "5078c5220d7b8a0576eff645873daff6cc1d8b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "764974b7_500771e5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-26T18:22:58Z",
       "side": 1,
       "message": "ISTM UnderflowDuration still has it\u0027s value, it measures how long the underflow duration is, while this new metric measures the time between underflows. It\u0027s related but still are different. For example, for EME playback. Let\u0027s assume a JS player run a heavy JS function every 1 minute. Then we\u0027ll have TimeBetweenRebuffers being around 1 minute. But UnderflowDuration will depend on how fast the decoder can finish the preroll, where faster decoder, or parallel decoding will be helpful. But they will not help TimeBetweenRebuffers too much. To improve TimeBetweenRebuffers, we need to switch to mojo CDM, which is a totally different solution.\n\nBut I agree no-auto-zero-weighting is still odd and we can probably improve there.",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "5078c5220d7b8a0576eff645873daff6cc1d8b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ce8888_cd95219a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-26T18:41:38Z",
+      "side": 1,
+      "message": "Yes that sounds reasonable. Perhaps we should land a Media.UnderflowDuration2 metric without the zero-weighting after this lands.",
+      "parentUuid": "764974b7_500771e5",
       "range": {
         "startLine": 12,
         "startChar": 38,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "dfd28b21_07a55a87",
+        "filename": "media/blink/underflow_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-26T18:41:38Z",
+      "side": 1,
+      "message": "Good point, this will be resolved once based on watch time.",
+      "parentUuid": "7de8addb_73747529",
+      "revId": "5078c5220d7b8a0576eff645873daff6cc1d8b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94140ac8_ac6cd701",
         "filename": "media/blink/underflow_reporter.cc",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-05-26T18:22:58Z",
       "side": 1,
       "message": "Does it make sense to reset |last_underflow_time_| at OnResume(), similar to how we set it at OnLoaded()? But as you pointed out, I guess it doesn\u0027t matter too much since it\u0027s a rare case.",
+      "range": {
+        "startLine": 66,
+        "startChar": 41,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "5078c5220d7b8a0576eff645873daff6cc1d8b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e163f24_a398d09a",
+        "filename": "media/blink/underflow_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-26T18:41:38Z",
+      "side": 1,
+      "message": "Won\u0027t be necessary anymore for watch time.",
+      "parentUuid": "94140ac8_ac6cd701",
       "range": {
         "startLine": 66,
         "startChar": 41,
