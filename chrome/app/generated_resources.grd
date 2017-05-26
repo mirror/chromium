@@ -1865,7 +1865,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       <message name="IDS_FEEDBACK_SERVICE_DIALOG_CANCEL_BUTTON_LABEL" desc="Button that elects not to upload suspected malicious files for analysis (default button)">
         No, thanks
       </message>
-
+        <message name="IDS_PICTURE_IN_PICTURE_MENU_ITEM_TITLE" desc="The string used for the menu item for picture in picture.">
+          Picture in Picture
+        </message>
       <!-- Bookmark app bubble -->
       <if expr="is_macosx">
         <message name="IDS_ADD_TO_APPLICATIONS_BUBBLE_TITLE" desc="Title of the bubble adding a bookmark app to the Applications Folder.">
