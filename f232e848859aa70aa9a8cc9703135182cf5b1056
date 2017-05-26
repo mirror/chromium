@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbb6d25e_8a3fddbc",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-26T18:16:30Z",
+      "side": 1,
+      "message": "Would it make sense to change \"Debug\" to \"Debug (on console)\"?",
+      "revId": "f232e848859aa70aa9a8cc9703135182cf5b1056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02f9c0a_1cdea900",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-26T18:16:30Z",
+      "side": 1,
+      "message": "Nit: You could make the single quotes/double quotes more consistent in this file.",
+      "revId": "f232e848859aa70aa9a8cc9703135182cf5b1056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b9a1eb_cc7a06fe",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-26T18:16:30Z",
+      "side": 1,
+      "message": "Is this an example output line?\nNit: fix alignment and expand comment",
+      "revId": "f232e848859aa70aa9a8cc9703135182cf5b1056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d95066_26e7025e",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-26T18:16:30Z",
+      "side": 1,
+      "message": "-\u003e \"Print directory header if this test\u0027s directory is different from the last.\"",
+      "revId": "f232e848859aa70aa9a8cc9703135182cf5b1056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c00d50_0837a2dd",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-26T18:16:30Z",
+      "side": 1,
+      "message": "This only works for layout_ng, not for other virtual tests; if we want this to work for other virtual tests, maybe replace \"/virtual/[^/]*\" with \"\"?",
+      "revId": "f232e848859aa70aa9a8cc9703135182cf5b1056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10fa77a_d6d7a2c9",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-26T18:16:30Z",
+      "side": 1,
+      "message": "This is just for reference to list the possible expectations in expectation lines, right?\nYou could probably remove this comment, or possibly expand it.",
+      "revId": "f232e848859aa70aa9a8cc9703135182cf5b1056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171e8d60_df6c64d9",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-26T18:16:30Z",
+      "side": 1,
+      "message": "Nit: the commented-out lines of code here and below could be removed.",
+      "revId": "f232e848859aa70aa9a8cc9703135182cf5b1056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
