@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5e7d4e8a_86f71ea3",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-05-26T22:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "614d3cfc_4298d08c",
+      "range": {
+        "startLine": 542,
+        "startChar": 39,
+        "endLine": 542,
+        "endChar": 40
+      },
+      "revId": "0432c72332e043123a3948365bbf1b33014c744b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a304c6d4_4b28071f",
         "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera2.java",
         "patchSetId": 2
@@ -127,6 +151,30 @@
       "revId": "0432c72332e043123a3948365bbf1b33014c744b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d828fbed_8d617eab",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-05-26T22:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a304c6d4_4b28071f",
+      "range": {
+        "startLine": 633,
+        "startChar": 8,
+        "endLine": 633,
+        "endChar": 9
+      },
+      "revId": "0432c72332e043123a3948365bbf1b33014c744b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
