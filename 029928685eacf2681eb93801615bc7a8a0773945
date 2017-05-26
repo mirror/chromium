@@ -16,6 +16,24 @@
       "revId": "029928685eacf2681eb93801615bc7a8a0773945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f562392_ae4d22e9",
+        "filename": "ui/base/l10n/l10n_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-05-26T11:25:01Z",
+      "side": 1,
+      "message": "done.\n\nIf this check exists, it\u0027s not effective (see e.g. crbug.com/725510)",
+      "parentUuid": "a779b444_bb0e0095",
+      "revId": "029928685eacf2681eb93801615bc7a8a0773945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
