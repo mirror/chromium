@@ -68,6 +68,30 @@
       "revId": "f31172cc49f7fe4ba76a53ff7061f2a0a5ac193a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e49b8b_e3eae98e",
+        "filename": "third_party/WebKit/Source/core/dom/ResizeObserver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-05-26T00:33:53Z",
+      "side": 1,
+      "message": "ImplementedAs doesn\u0027t seem a good solution. It\u0027s used to specify a blink class correspond to an IDL definiton. Ideally there is no blink class correspond to `callback  ResizeObserverCallback \u003d void\n (sequence\u003cResizeObserverEntry\u003e entries, ResizeObserver observer)`.\n\nPlease suggest better naming then?",
+      "parentUuid": "13feddd9_5160b17d",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "f31172cc49f7fe4ba76a53ff7061f2a0a5ac193a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
