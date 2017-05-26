@@ -34,10 +34,10 @@
 
 #include "bindings/core/v8/V8Document.h"
 #include "core/dom/Document.h"
-#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/Element.h"
 #include "core/dom/Fullscreen.h"
 #include "core/dom/NodeComputedStyle.h"
+#include "core/dom/UserGestureIndicator.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/markers/DocumentMarkerController.h"
@@ -62,7 +62,6 @@
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "platform/KeyboardCodes.h"
-#include "platform/UserGestureIndicator.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/Color.h"
@@ -1781,7 +1780,7 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleFullscreenStyles) {
   Document* document =
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   Element* element = document->getElementById("fullscreenElement");
-  UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
+  UserGestureIndicator gesture(UserGestureToken::Create(document));
   Fullscreen::RequestFullscreen(*element);
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
@@ -1821,7 +1820,7 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleExitAndReenter) {
   Document* document =
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   Element* element = document->getElementById("fullscreenElement");
-  UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
+  UserGestureIndicator gesture(UserGestureToken::Create(document));
   Fullscreen::RequestFullscreen(*element);
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
@@ -1877,7 +1876,7 @@ TEST_P(WebViewTest, EnterFullscreenResetScrollAndScaleState) {
   Document* document =
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   Element* element = document->body();
-  UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
+  UserGestureIndicator gesture(UserGestureToken::Create(document));
   Fullscreen::RequestFullscreen(*element);
   web_view_impl->DidEnterFullscreen();
 

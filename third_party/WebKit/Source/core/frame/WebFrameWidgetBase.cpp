@@ -4,7 +4,7 @@
 
 #include "core/frame/WebFrameWidgetBase.h"
 
-#include "core/dom/DocumentUserGestureToken.h"
+#include "core/dom/UserGestureIndicator.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
@@ -17,7 +17,6 @@
 #include "core/page/DragSession.h"
 #include "core/page/Page.h"
 #include "core/page/PointerLockController.h"
-#include "platform/UserGestureIndicator.h"
 #include "public/web/WebWidgetClient.h"
 
 namespace blink {
@@ -255,11 +254,11 @@ void WebFrameWidgetBase::PointerLockMouseEvent(const WebInputEvent& event) {
       if (!GetPage() || !GetPage()->GetPointerLockController().GetElement())
         break;
       gesture_indicator = WTF::WrapUnique(new UserGestureIndicator(
-          DocumentUserGestureToken::Create(&GetPage()
-                                                ->GetPointerLockController()
-                                                .GetElement()
-                                                ->GetDocument(),
-                                           UserGestureToken::kNewGesture)));
+          UserGestureToken::Create(&GetPage()
+                                        ->GetPointerLockController()
+                                        .GetElement()
+                                        ->GetDocument(),
+                                   UserGestureToken::kNewGesture)));
       pointer_lock_gesture_token_ = gesture_indicator->CurrentToken();
       break;
     case WebInputEvent::kMouseUp:
