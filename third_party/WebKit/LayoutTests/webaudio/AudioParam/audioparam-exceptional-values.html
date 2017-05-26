@@ -118,6 +118,22 @@
             task.done();
           });
 
+      audit.define('special cases', (task, should) => {
+        let context = new AudioContext();
+        let gain = context.createGain();
+
+        let cases = [0, -1e-100, 1e-100];
+
+        cases.forEach(v => {
+          should(
+              () => gain.gain.exponentialRampToValueAtTime(v, 1),
+              `gain.gain.exponentialRampToValueAtTime(${v}, 1)`)
+              .throw('RangeError');
+        });
+
+        task.done();
+      });
+
       audit.run();
     </script>
   </body>

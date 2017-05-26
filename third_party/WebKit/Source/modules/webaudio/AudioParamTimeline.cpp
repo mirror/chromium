@@ -444,12 +444,11 @@ void AudioParamTimeline::ExponentialRampToValueAtTime(
     return;
 
   if (!value) {
-    exception_state.ThrowDOMException(
-        kInvalidAccessError,
+    exception_state.ThrowRangeError(
         "The float target value provided (" + String::Number(value) +
-            ") should not be in the range (" +
-            String::Number(-std::numeric_limits<float>::denorm_min()) + ", " +
-            String::Number(std::numeric_limits<float>::denorm_min()) + ").");
+        ") should not be in the range (" +
+        String::Number(-std::numeric_limits<float>::denorm_min()) + ", " +
+        String::Number(std::numeric_limits<float>::denorm_min()) + ").");
     return;
   }
 
