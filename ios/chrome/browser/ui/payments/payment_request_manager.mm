@@ -756,6 +756,12 @@ struct PendingPaymentResponse {
   [self setUpdateEventTimeoutTimer];
 }
 
+- (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
+          didSelectContactProfile:
+              (const autofill::AutofillProfile*)contactProfile {
+  // TODO(macourteau): do something with |contactProfile|.
+}
+
 #pragma mark - CRWWebStateObserver methods
 
 - (void)webState:(web::WebState*)webState
