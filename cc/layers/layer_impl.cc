@@ -771,7 +771,9 @@ gfx::Vector2dF LayerImpl::ClampScrollToMaxScrollOffset() {
 }
 
 void LayerImpl::SetNeedsPushProperties() {
-  if (layer_tree_impl_ && !needs_push_properties_) {
+  bool is_pending = layer_tree_impl_ && !layer_tree_impl_->IsActiveTree();
+  // There's no need to push layer properties on the active tree.
+  if (is_pending && !needs_push_properties_) {
     needs_push_properties_ = true;
     layer_tree_impl()->AddLayerShouldPushProperties(this);
   }
