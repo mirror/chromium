@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b55655c9_73fd3e26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-05-26T21:18:28Z",
+      "side": 1,
+      "message": "Nit: could you update the description to mention that this is landing behind a flag?\n\ne.g. Desktop Page Info: point \"Site settings\" link to \"Site details\" when the latter is enabled",
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37b4eca3_d5909763",
         "filename": "chrome/browser/resources/settings/route.js",
         "patchSetId": 1

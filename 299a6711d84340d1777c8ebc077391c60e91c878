@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4879fd1_ec13649e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-05-26T21:18:28Z",
+      "side": 1,
+      "message": "Nit: Mention that this is still behind a flag.",
+      "revId": "299a6711d84340d1777c8ebc077391c60e91c878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7c6019_b266f96f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-05-26T21:18:28Z",
+      "side": 1,
+      "message": "Nit: Add a negative test that disabling those flags keeps the old behaviour.",
+      "revId": "299a6711d84340d1777c8ebc077391c60e91c878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d55e0ee7_39483ede",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 10
