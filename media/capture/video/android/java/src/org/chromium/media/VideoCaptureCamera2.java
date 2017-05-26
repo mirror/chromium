@@ -314,7 +314,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
                         Context.CAMERA_SERVICE);
         try {
             return manager.getCameraCharacteristics(Integer.toString(id));
-        } catch (CameraAccessException ex) {
+        } catch (CameraAccessException | IllegalArgumentException ex) {
             Log.e(TAG, "getCameraCharacteristics: ", ex);
         }
         return null;
@@ -571,12 +571,17 @@ public class VideoCaptureCamera2 extends VideoCapture {
     }
 
     static int getNumberOfCameras() {
-        final CameraManager manager =
-                (CameraManager) ContextUtils.getApplicationContext().getSystemService(
-                        Context.CAMERA_SERVICE);
+        CameraManager manager = null;
+        try {
+            manager = (CameraManager) ContextUtils.getApplicationContext().getSystemService(
+                    Context.CAMERA_SERVICE);
+        } catch (IllegalArgumentException ex) {
+            Log.e(TAG, "getSystemService(Context.CAMERA_SERVICE): ", ex);
+            return 0;
+        }
         try {
             return manager.getCameraIdList().length;
-        } catch (CameraAccessException | SecurityException ex) {
+        } catch (CameraAccessException | SecurityException | AssertionError ex) {
             // SecurityException is undocumented but seen in the wild: https://crbug/605424.
             Log.e(TAG, "getNumberOfCameras: getCameraIdList(): ", ex);
             return 0;
@@ -656,8 +661,12 @@ public class VideoCaptureCamera2 extends VideoCapture {
     VideoCaptureCamera2(int id, long nativeVideoCaptureDeviceAndroid) {
         super(id, nativeVideoCaptureDeviceAndroid);
         final CameraCharacteristics cameraCharacteristics = getCameraCharacteristics(id);
-        mMaxZoom =
-                cameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
+        if (cameraCharacteristics == null) {
+            mMaxZoom = 1.0f; // Fallback value
+        } else {
+            mMaxZoom = cameraCharacteristics.get(
+                    CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
+        }
     }
 
     @Override
