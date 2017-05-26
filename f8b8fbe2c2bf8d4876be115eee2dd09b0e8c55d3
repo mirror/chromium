@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c96bad4_69ab99d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-05-26T17:21:38Z",
+      "side": 1,
+      "message": "If a scroll turns into a fling the sheet will already be open, so this test will fail. The special case is where a user happens to scroll back to the peeking state while also having moved outside the swipable range. In that case the sheet sticks to the bottom. I can handle this case if we need to.",
+      "parentUuid": "80619332_244813b5",
+      "range": {
+        "startLine": 358,
+        "startChar": 17,
+        "endLine": 358,
+        "endChar": 40
+      },
+      "revId": "f8b8fbe2c2bf8d4876be115eee2dd09b0e8c55d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec98a9a9_c5ed714e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "676f90f6_97805c0e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-05-26T17:21:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec98a9a9_c5ed714e",
+      "revId": "f8b8fbe2c2bf8d4876be115eee2dd09b0e8c55d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49a6eebc_7ab7b443",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-05-25T23:59:56Z",
       "side": 1,
       "message": "I find this a bit hard to grok.\n\nI would find something like the following to be easier:\nint allowedSwipeWidth \u003d mContainerWidth * SWIPE_ALLOWED_FRACTION;\nint startX \u003d mCachedWindowRect.left + (mContainerWidth - allowedSwipeWidth) / 2;\nint endX \u003d startX + allowedSwipeWidth;",
+      "range": {
+        "startLine": 423,
+        "startChar": 12,
+        "endLine": 423,
+        "endChar": 21
+      },
+      "revId": "f8b8fbe2c2bf8d4876be115eee2dd09b0e8c55d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91765752_d9d3da02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-05-26T17:21:38Z",
+      "side": 1,
+      "message": "simplified!",
+      "parentUuid": "49a6eebc_7ab7b443",
       "range": {
         "startLine": 423,
         "startChar": 12,
