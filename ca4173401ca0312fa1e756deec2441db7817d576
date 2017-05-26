@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac22cd89_0d72fc1d",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "FYI: I changed this on the V8 side to use a static array of names rather than generating code for each name, because for a large number of counters (like V8 has) it makes a dent on binary size.",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def138b4_930765c6",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "nit: I think \"for (CounterId id : counters)\" should work here, and be slightly simpler. If not, keep as-is.",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7403d8_aa00f562",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "nit: I do love \u003calgorithm\u003e, but here it might be simpler to avoid computing strlen quite so many times:\n\nsize_t max_length \u003d 0;\nfor (CounterId id : counters_) {\n  max_length \u003d std::max(max_length, strlen((this-\u003e*id).GetName());\n}\nreturn max_length;\n\nOr if you really want to use the STL, std::accumulate from \u003cnumeric\u003e works (but isn\u0027t a big readability win):\n\nreturn std::accumulate(std::begin(counters_),\n                       std::end(counters_),\n                       0,\n                       [this](size_t max, CounterId id) {\n                         return std::max(max, strlen((this-\u003e*id).GetName());\n                       });\n\nBut also see below.",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65814950_39dc05f9",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "operator\u003c\u003c overloads are discouraged, except where needed for base/logging.h or gtest output. We\u0027ve generally done something along the lines of having a ToString or Show method (usually built only for debug). What is this function intended for use for? (debugging, or more?)",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416ad1fb_ce0de069",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "This might be a little overkill, and especially in Blink we\u0027re not big fans of \u003ciomanip\u003e. Something like this seems sufficient (I\u0027m envisioning a member function, but there are other variations):\n\n// adjust number of spaces / column widths to be appropriate for typical uses\nStringBuilder builder;\nbuilder.Append(\"Runtime Call Stats for Blink\\n\\nName      Count      Time (ms)\\n\");\nfor (CounterId id : counters_) {\n  const RuntimeCallCounter\u0026 counter \u003d this-\u003e*id;\n  builder.Append(String::Format(\"%32s  %6d  %8.2f\\n\", counter.GetName(), counter.GetCount(), counter.GetTime().InMillisecondsF()));\n}\nreturn builder.ToString();",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ada9930_ae3454cd",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "counters_ is static; prefer to call it RuntimeCallStats::counters_ for clarity. Also, this copies the counter.",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70fc7e0_14491d59",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "This leaves the setw and other settings changed on the ostream, which can affect future output. (One of the many reasons \u003ciostream\u003e isn\u0027t great).",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a08a7c0_85a8a280",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "TimeDelta::InMillisecondsF() does exactly this",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769051c1_cb76305a",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "nit: Space before brace; no semicolon after member function",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5429b6_84817ff7",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "nit: \"using\" syntax is clearer here, IMHO, as it doesn\u0027t put the declared name in a weird position:\n\nusing CounterId \u003d RuntimeCallCounter (RuntimeCallStats::*);",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e746b56d_98c49073",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "nit: constructor above other member functions",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ad455f_212ad1db",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "Not necessary to act now, but I do wonder whether we\u0027ll ultimately rather have a plain array of RuntimeCallCounter rather than a bunch of separate members (and then the ID can just be a uint16_t or something rather than a pointer-to-member. It might be simpler in a few places, especially if we end up wanting to extract part of the counter list out of platform/.",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aee92e0_b1fe24b8",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-26T18:25:06Z",
+      "side": 1,
+      "message": "Don\u0027t need the extra braces on this line; destruction always happens in the reverse order of construction.",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
