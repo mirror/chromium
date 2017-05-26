@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b128c330_161c86b0",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-05-26T23:14:27Z",
+      "side": 1,
+      "message": "nit: comment?",
+      "revId": "6015fbb18aabcd3338b156ae9a69f5f618804f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86679e9c_2c1caf81",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-05-26T23:14:27Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "6015fbb18aabcd3338b156ae9a69f5f618804f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c4cd52_ad9e5186",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-05-26T23:14:27Z",
+      "side": 1,
+      "message": "so this isn\u0027t actually affecting hit testing, right? This just propagates a transform from parent to child?",
+      "range": {
+        "startLine": 324,
+        "startChar": 15,
+        "endLine": 324,
+        "endChar": 24
+      },
+      "revId": "6015fbb18aabcd3338b156ae9a69f5f618804f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
