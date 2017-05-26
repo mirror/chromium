@@ -183,21 +183,3 @@ class WebviewStartupSystemHealthBenchmark(perf_benchmark.PerfBenchmark):
   @classmethod
   def Name(cls):
     return 'system_health.webview_startup'
-
-
-@benchmark.Enabled('android-webview')
-class WebviewMultiprocessStartupSystemHealthBenchmark(
-    WebviewStartupSystemHealthBenchmark):
-  """Webview multiprocess startup time benchmark
-
-  Benchmark that measures how long WebView takes to start up
-  and load a blank page with multiprocess enabled.
-  """
-
-  def SetExtraBrowserOptions(self, options):
-    options.AppendExtraBrowserArgs(
-        ['--webview-sandboxed-renderer'])
-
-  @classmethod
-  def Name(cls):
-    return 'system_health.webview_startup_multiprocess'
