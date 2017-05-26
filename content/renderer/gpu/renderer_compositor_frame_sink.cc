@@ -170,6 +170,18 @@ void RendererCompositorFrameSink::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
+void RendererCompositorFrameSink::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  client_->DidPresentCompositorFrame(presentation_token, timestamp, refresh);
+}
+
+void RendererCompositorFrameSink::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  client_->DidDiscardCompositorFrame(presentation_token);
+}
+
 void RendererCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
   // See crbug.com/709689.
   NOTREACHED() << "BeginFrames are delivered using Chrome IPC.";
