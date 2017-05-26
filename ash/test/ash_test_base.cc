@@ -219,13 +219,24 @@ display::Display::Rotation AshTestBase::GetCurrentInternalDisplayRotation() {
   return GetActiveDisplayRotation(display::Display::InternalDisplayId());
 }
 
-// static
 void AshTestBase::UpdateDisplay(const std::string& display_specs) {
   if (Shell::GetAshConfig() == Config::MASH) {
     ash_test_helper_->UpdateDisplayForMash(display_specs);
   } else {
     display::test::DisplayManagerTestApi(Shell::Get()->display_manager())
         .UpdateDisplay(display_specs);
+  }
+  // In order for frames to be generated, a cc::LocalSurfaceId must be given to
+  // the ui::Compositor. Normally that cc::LocalSurfaceId comes from the window
+  // server but in unit tests, there is no window server so we just make up a
+  // cc::LocalSurfaceId to allow the layer compositor to make forward progress.
+  if (Shell::GetAshConfig() == Config::MUS ||
+      Shell::GetAshConfig() == Config::MASH) {
+    aura::Window::Windows root_windows = Shell::GetAllRootWindows();
+    for (aura::Window* root : root_windows) {
+      cc::LocalSurfaceId id(1, base::UnguessableToken::Create());
+      root->GetHost()->compositor()->SetLocalSurfaceId(id);
+    }
   }
 }
 
