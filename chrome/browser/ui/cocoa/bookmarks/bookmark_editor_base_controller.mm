@@ -10,6 +10,7 @@
 #include "base/logging.h"
 #include "base/mac/bundle_locations.h"
 #include "base/mac/foundation_util.h"
+#import "base/mac/sdk_forward_declarations.h"
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/bookmarks/managed_bookmark_service_factory.h"
@@ -20,6 +21,7 @@
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_name_folder_controller.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_tree_browser_cell.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/managed/managed_bookmark_service.h"
@@ -27,10 +29,23 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/material_design/material_design_controller.h"
+#include "ui/strings/grit/ui_strings.h"
 
 using bookmarks::BookmarkExpandedStateTracker;
 using bookmarks::BookmarkModel;
 using bookmarks::BookmarkNode;
+
+namespace {
+
+// Touch bar identifier.
+NSString* const kBookmarkEditDialogTouchBarId = @"bookmark-edit-dialog";
+
+// Touch bar item identifiers.
+NSString* const kNewFolderTouchBarId = @"NEW-FOLDER";
+NSString* const kCancelTouchBarId = @"CANCEL";
+NSString* const kSaveTouchBarId = @"SAVE";
+
+}  // end namespace
 
 @interface BookmarkEditorBaseController ()
 
@@ -340,6 +355,61 @@ NSString* const kOkEnabledName = @"okEnabled";
 
 - (void)windowWillClose:(NSNotification*)notification {
   [self autorelease];
+}
+
+- (NSTouchBar*)makeTouchBar {
+  if (!base::FeatureList::IsEnabled(features::kBrowserTouchBar))
+    return nil;
+
+  base::scoped_nsobject<NSTouchBar> touchBar(
+      [[NSClassFromString(@"NSTouchBar") alloc] init]);
+  [touchBar setCustomizationIdentifier:base::mac::CreateTouchBarId(
+                                           kBookmarkEditDialogTouchBarId)];
+  [touchBar setDelegate:self];
+
+  NSArray* dialogItems = @[
+    base::mac::CreateTouchBarItemId(kBookmarkEditDialogTouchBarId,
+                                    kNewFolderTouchBarId),
+    base::mac::CreateTouchBarItemId(kBookmarkEditDialogTouchBarId,
+                                    kCancelTouchBarId),
+    base::mac::CreateTouchBarItemId(kBookmarkEditDialogTouchBarId,
+                                    kSaveTouchBarId)
+  ];
+
+  [touchBar setDefaultItemIdentifiers:dialogItems];
+  [touchBar setCustomizationAllowedItemIdentifiers:dialogItems];
+  return touchBar.autorelease();
+}
+
+- (NSTouchBarItem*)touchBar:(NSTouchBar*)touchBar
+      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier {
+  NSButton* button = nil;
+  if ([identifier hasSuffix:kNewFolderTouchBarId]) {
+    button =
+        [NSButton buttonWithTitle:l10n_util::GetNSString(
+                                      IDS_BOOKMARK_EDITOR_NEW_FOLDER_BUTTON)
+                           target:self
+                           action:@selector(newFolder:)];
+  } else if ([identifier hasSuffix:kCancelTouchBarId]) {
+    button = [NSButton buttonWithTitle:l10n_util::GetNSString(IDS_APP_CANCEL)
+                                target:self
+                                action:@selector(cancel:)];
+  } else if ([identifier hasSuffix:kSaveTouchBarId]) {
+    button = [NSButton buttonWithTitle:l10n_util::GetNSString(IDS_SAVE)
+                                target:self
+                                action:@selector(ok:)];
+    [button setBezelColor:[NSColor colorWithSRGBRed:0.168
+                                              green:0.51
+                                               blue:0.843
+                                              alpha:1.0]];
+  } else {
+    return nil;
+  }
+
+  base::scoped_nsobject<NSCustomTouchBarItem> item([[NSClassFromString(
+      @"NSCustomTouchBarItem") alloc] initWithIdentifier:identifier]);
+  [item setView:button];
+  return item.autorelease();
 }
 
 #pragma mark Folder Tree Management

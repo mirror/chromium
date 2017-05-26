@@ -58,15 +58,11 @@ class BrowserWindowTouchBarUnitTest : public CocoaProfileTest {
   id bwc() const { return bwc_; }
 
   NSString* GetFullscreenTouchBarItemId(NSString* id) {
-    return
-        [BrowserWindowTouchBar identifierForTouchBarId:kTabFullscreenTouchBarId
-                                                itemId:id];
+    return base::mac::CreateTouchBarItemId(kTabFullscreenTouchBarId, id);
   }
 
   NSString* GetBrowserTouchBarItemId(NSString* id) {
-    return
-        [BrowserWindowTouchBar identifierForTouchBarId:kBrowserWindowTouchBarId
-                                                itemId:id];
+    return base::mac::CreateTouchBarItemId(kBrowserWindowTouchBarId, id);
   }
 
   void TearDown() override { CocoaProfileTest::TearDown(); }

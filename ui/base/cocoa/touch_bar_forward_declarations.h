@@ -93,6 +93,12 @@ typedef NSString* NSTouchBarCustomizationIdentifier;
                makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier;
 @end
 
+@interface NSTextView (TouchBarSDK)
+- (NSTouchBar*)makeTouchBar;
+- (nullable NSTouchBarItem*)touchBar:(NSTouchBar*)touchBar
+               makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier;
+@end
+
 #elif MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_12_1
 
 // When compiling against the 10.12.1 SDK or later, just provide forward
