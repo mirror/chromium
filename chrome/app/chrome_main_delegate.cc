@@ -193,6 +193,27 @@ extern int CloudPrintServiceProcessMain(const content::MainFunctionParams&);
 
 namespace {
 
+#if defined(OS_LINUX)
+
+// Parameters expanded in $CHROME_USER_DATA_DIR.
+const char kProductPlaceholder[] = "%(product)";
+
+#if defined(GOOGLE_CHROME_BUILD)
+const char kProductName[] = "chrome";
+#else
+const char kProductName[] = "chromium";
+#endif
+
+void ExpandProductPlaceholder(std::string& str) {
+  size_t product_placeholder_pos = str.find(kProductPlaceholder);
+  if (product_placeholder_pos != std::string::npos) {
+    str.replace(product_placeholder_pos, sizeof(kProductPlaceholder) - 1,
+                kProductName);
+  }
+}
+
+#endif  // defined(OS_LINUX)
+
 #if defined(OS_WIN)
 // Early versions of Chrome incorrectly registered a chromehtml: URL handler,
 // which gives us nothing but trouble. Avoid launching chrome this way since
@@ -429,6 +450,7 @@ void InitializeUserDataDir(base::CommandLine* command_line) {
     std::unique_ptr<base::Environment> environment(base::Environment::Create());
     if (environment->GetVar("CHROME_USER_DATA_DIR", &user_data_dir_string) &&
         base::IsStringUTF8(user_data_dir_string)) {
+      ExpandProductPlaceholder(user_data_dir_string);
       user_data_dir = base::FilePath::FromUTF8Unsafe(user_data_dir_string);
     }
   }
