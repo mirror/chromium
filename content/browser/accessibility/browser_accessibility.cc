@@ -734,41 +734,6 @@ bool BrowserAccessibility::GetIntListAttribute(
   return GetData().GetIntListAttribute(attribute, value);
 }
 
-bool BrowserAccessibility::GetHtmlAttribute(
-    const char* html_attr, std::string* value) const {
-  return GetData().GetHtmlAttribute(html_attr, value);
-}
-
-bool BrowserAccessibility::GetHtmlAttribute(
-    const char* html_attr, base::string16* value) const {
-  return GetData().GetHtmlAttribute(html_attr, value);
-}
-
-bool BrowserAccessibility::GetAriaTristate(
-    const char* html_attr,
-    bool* is_defined,
-    bool* is_mixed) const {
-  *is_defined = false;
-  *is_mixed = false;
-
-  base::string16 value;
-  if (!GetHtmlAttribute(html_attr, &value) ||
-      value.empty() ||
-      base::EqualsASCII(value, "undefined")) {
-    return false;  // Not set (and *is_defined is also false)
-  }
-
-  *is_defined = true;
-
-  if (base::EqualsASCII(value, "true"))
-    return true;
-
-  if (base::EqualsASCII(value, "mixed"))
-    *is_mixed = true;
-
-  return false;  // Not set.
-}
-
 BrowserAccessibility* BrowserAccessibility::GetTable() const {
   BrowserAccessibility* table = const_cast<BrowserAccessibility*>(this);
   while (table && !table->IsTableLikeRole())
@@ -984,15 +949,8 @@ bool BrowserAccessibility::IsMenuRelated() const {
 
 bool BrowserAccessibility::IsNativeTextControl() const {
   const std::string& html_tag = GetStringAttribute(ui::AX_ATTR_HTML_TAG);
-  if (html_tag == "input") {
-    std::string input_type;
-    if (!GetHtmlAttribute("type", &input_type))
-      return true;
-    return input_type.empty() || input_type == "email" ||
-           input_type == "password" || input_type == "search" ||
-           input_type == "tel" || input_type == "text" || input_type == "url" ||
-           input_type == "number";
-  }
+  if (html_tag == "input")
+    return HasState(ui::AX_STATE_EDITABLE);
   return html_tag == "textarea";
 }
 
