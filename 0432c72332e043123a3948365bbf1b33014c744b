@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a70c1ea7_997ef29c",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-05-26T21:35:47Z",
+      "side": 1,
+      "message": "Merge l. 225-227 here:\nList\u003cInteger\u003e pixelFormats \u003d new ArrayList\u003cInteger\u003e();",
+      "range": {
+        "startLine": 219,
+        "startChar": 22,
+        "endLine": 219,
+        "endChar": 34
+      },
+      "revId": "0432c72332e043123a3948365bbf1b33014c744b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55baec5d_f33cadd6",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-05-26T21:35:47Z",
+      "side": 1,
+      "message": "Same here, merge l.245-247 here:\nList\u003cint[]\u003e listFpsRange \u003d new ArrayList\u003cint[]\u003e();",
+      "revId": "0432c72332e043123a3948365bbf1b33014c744b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614d3cfc_4298d08c",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-05-26T21:35:47Z",
+      "side": 1,
+      "message": "|manager| should be declared out of the try{}\nso it can be used in l.550, sth like:\nCameraManager manager \u003d null;\ntry {\n} catch {\n}\nif (manager \u003d\u003d null) return 0;\n// the rest\n\nJava style guide allows such one-liner if (bad stuff) return;",
+      "range": {
+        "startLine": 542,
+        "startChar": 39,
+        "endLine": 542,
+        "endChar": 40
+      },
+      "revId": "0432c72332e043123a3948365bbf1b33014c744b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a304c6d4_4b28071f",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-05-26T21:35:47Z",
+      "side": 1,
+      "message": "You could initialized |mMaxZoom| to 1.0f at\nhttps://cs.chromium.org/chromium/src/media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera2.java?q\u003dVideoCaptureCamera2.java\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d294\nand here just do\nif (cameraCharacteristics !\u003d null) {\n    mMaxZoom \u003d cameraCharacteristics.get(\n            CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);\n}",
+      "range": {
+        "startLine": 633,
+        "startChar": 8,
+        "endLine": 633,
+        "endChar": 9
+      },
+      "revId": "0432c72332e043123a3948365bbf1b33014c744b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
