@@ -10,13 +10,12 @@
 #include "base/memory/ref_counted.h"
 #include "base/stl_util.h"
 #include "base/threading/sequenced_worker_pool.h"
-#include "components/prefs/default_pref_store.h"
 #include "components/prefs/pref_value_store.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/preferences/persistent_pref_store_factory.h"
 #include "services/preferences/persistent_pref_store_impl.h"
-#include "services/preferences/public/cpp/pref_store_impl.h"
 #include "services/preferences/scoped_pref_connection_builder.h"
+#include "services/preferences/shared_pref_registry.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace prefs {
@@ -26,10 +25,7 @@ PrefStoreManagerImpl::PrefStoreManagerImpl(
     scoped_refptr<base::SequencedWorkerPool> worker_pool)
     : expected_pref_stores_(std::move(expected_pref_stores)),
       init_binding_(this),
-      defaults_(new DefaultPrefStore),
-      defaults_wrapper_(base::MakeUnique<PrefStoreImpl>(
-          defaults_,
-          mojo::MakeRequest(&pref_store_ptrs_[PrefValueStore::DEFAULT_STORE]))),
+      shared_pref_registry_(base::MakeUnique<SharedPrefRegistry>()),
       worker_pool_(std::move(worker_pool)) {
   DCHECK(
       base::ContainsValue(expected_pref_stores_, PrefValueStore::USER_STORE) &&
@@ -85,8 +81,8 @@ void PrefStoreManagerImpl::Connect(
       required_remote_types.insert(type);
     }
   }
-  auto connection = base::MakeRefCounted<ScopedPrefConnectionBuilder>(
-      std::move(pref_registry->registrations), std::move(required_remote_types),
+  auto connection = shared_pref_registry_->CreateConnectionBuilder(
+      std::move(pref_registry), std::move(required_remote_types),
       std::move(callback));
   if (persistent_pref_store_ && persistent_pref_store_->initialized()) {
     connection->ProvidePersistentPrefStore(persistent_pref_store_.get());
