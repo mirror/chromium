@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdca5d19_f01a799e",
+        "filename": "content/renderer/manifest/manifest_parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-26T13:07:41Z",
+      "side": 1,
+      "message": "dcheng@, can you explain why you would prefer this over sanitising when sending the data to the browser process?",
+      "revId": "c73619a0858ef10b69e8ac58501b1c62f3cc5a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
