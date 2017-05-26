@@ -44,9 +44,12 @@
 
 #include "core/paint/PaintLayerClipper.h"
 
+#include "core/frame/Frame.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/layout/LayoutView.h"
+#include "core/page/Page.h"
+#include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/ObjectPaintProperties.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/graphics/paint/GeometryMapper.h"
@@ -509,12 +512,22 @@ void PaintLayerClipper::InitializeCommonClipRectState(
 
 LayoutRect PaintLayerClipper::LocalVisualRect() const {
   const LayoutObject& layout_object = layer_.GetLayoutObject();
-  // The LayoutView is special since its overflow clipping rect may be larger
-  // than its box rect (crbug.com/492871).
+
+  if (!layout_object.GetFrame() || !layout_object.GetFrame()->GetPage())
+    return LayoutRect();
+
+  const Page& page = *layout_object.GetFrame()->GetPage();
+
+  // The LayoutView (and root scroller) is special since its overflow clipping
+  // rect may be larger than its box rect (crbug.com/492871).
+  bool use_viewport_for_bounds =
+      layout_object.IsLayoutView() ||
+      layout_object.GetNode() ==
+          page.GlobalRootScrollerController().GlobalRootScroller();
+
   LayoutRect layer_bounds_with_visual_overflow =
-      layout_object.IsLayoutView()
-          ? ToLayoutView(layout_object).ViewRect()
-          : ToLayoutBox(layout_object).VisualOverflowRect();
+      use_viewport_for_bounds ? layout_object.View()->ViewRect()
+                              : ToLayoutBox(layout_object).VisualOverflowRect();
   ToLayoutBox(layout_object)
       .FlipForWritingMode(
           // PaintLayer are in physical coordinates, so the overflow has to be
