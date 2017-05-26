@@ -377,15 +377,23 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
   if (run_loop_client_->IsNested())
     return false;
 
-  if (deferred_non_nestable_work_queue_.empty())
-    return false;
+  while (!deferred_non_nestable_work_queue_.empty()) {
+    PendingTask pending_task =
+        std::move(deferred_non_nestable_work_queue_.front());
+    deferred_non_nestable_work_queue_.pop();
 
-  PendingTask pending_task =
-      std::move(deferred_non_nestable_work_queue_.front());
-  deferred_non_nestable_work_queue_.pop();
+    if (pending_task.task.IsCancelled()) {
+#if defined(OS_WIN)
+      DecrementHighResTaskCountIfNeeded(pending_task);
+#endif
+      continue;
+    }
 
-  RunTask(&pending_task);
-  return true;
+    RunTask(&pending_task);
+    return true;
+  }
+
+  return false;
 }
 
 void MessageLoop::RunTask(PendingTask* pending_task) {
@@ -393,10 +401,7 @@ void MessageLoop::RunTask(PendingTask* pending_task) {
   current_pending_task_ = pending_task;
 
 #if defined(OS_WIN)
-  if (pending_task->is_high_res) {
-    pending_high_res_tasks_--;
-    CHECK_GE(pending_high_res_tasks_, 0);
-  }
+  DecrementHighResTaskCountIfNeeded(*pending_task);
 #endif
 
   // Execute the task and assume the worst: It is probably not reentrant.
@@ -432,6 +437,20 @@ bool MessageLoop::DeferOrRunPendingTask(PendingTask pending_task) {
 void MessageLoop::AddToDelayedWorkQueue(PendingTask pending_task) {
   // Move to the delayed work queue.
   delayed_work_queue_.push(std::move(pending_task));
+}
+
+bool MessageLoop::SweepDelayedWorkQueueAndReturnTrueIfStillHasWork() {
+  while (!delayed_work_queue_.empty()) {
+    const PendingTask& pending_task = delayed_work_queue_.top();
+    if (!pending_task.task.IsCancelled())
+      return true;
+
+#if defined(OS_WIN)
+    DecrementHighResTaskCountIfNeeded(pending_task);
+#endif
+    delayed_work_queue_.pop();
+  }
+  return false;
 }
 
 bool MessageLoop::DeletePendingTasks() {
@@ -497,6 +516,14 @@ bool MessageLoop::DoWork() {
     do {
       PendingTask pending_task = std::move(work_queue_.front());
       work_queue_.pop();
+
+      if (pending_task.task.IsCancelled()) {
+#if defined(OS_WIN)
+        DecrementHighResTaskCountIfNeeded(pending_task);
+#endif
+        continue;
+      }
+
       if (!pending_task.delayed_run_time.is_null()) {
         int sequence_num = pending_task.sequence_num;
         TimeTicks delayed_run_time = pending_task.delayed_run_time;
@@ -516,7 +543,8 @@ bool MessageLoop::DoWork() {
 }
 
 bool MessageLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) {
-  if (!nestable_tasks_allowed_ || delayed_work_queue_.empty()) {
+  if (!nestable_tasks_allowed_ ||
+      !SweepDelayedWorkQueueAndReturnTrueIfStillHasWork()) {
     recent_time_ = *next_delayed_work_time = TimeTicks();
     return false;
   }
@@ -541,7 +569,7 @@ bool MessageLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) {
       std::move(const_cast<PendingTask&>(delayed_work_queue_.top()));
   delayed_work_queue_.pop();
 
-  if (!delayed_work_queue_.empty())
+  if (SweepDelayedWorkQueueAndReturnTrueIfStillHasWork())
     *next_delayed_work_time = delayed_work_queue_.top().delayed_run_time;
 
   return DeferOrRunPendingTask(std::move(pending_task));
@@ -568,6 +596,16 @@ bool MessageLoop::DoIdleWork() {
 #endif
   return false;
 }
+
+#if defined(OS_WIN)
+void MessageLoop::DecrementHighResTaskCountIfNeeded(
+    const PendingTask& pending_task) {
+  if (!pending_task.is_high_res)
+    return;
+  pending_high_res_tasks_--;
+  CHECK_GE(pending_high_res_tasks_, 0);
+}
+#endif
 
 #if !defined(OS_NACL)
 //------------------------------------------------------------------------------
