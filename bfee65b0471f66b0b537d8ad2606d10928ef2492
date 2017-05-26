@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "400603f4_6018b2b5",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6270,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-05-26T17:46:35Z",
+      "side": 1,
+      "message": "Comments higher in the function suggest that same-document navigations (like typing \"javascript:alert()\" into the address bar, clicking an \u003ca href\u003d\"#fragment \"\u003e link, or maybe calls to history.pushState()) might go through this path. If that\u0027s so, then is resetting the dispatcher in this case what you want?\n\nMy guess would be that you\u0027ll broker a second instance of the service using the same PermissionServiceContext \u0026 RFH browser side. Maybe that\u0027s safe, but maybe not. Might be nice to see a browser test where a document gets a permission, does a fragment navigation, then uses the permission?",
+      "revId": "bfee65b0471f66b0b537d8ad2606d10928ef2492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
