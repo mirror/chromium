@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5f2ca6a_d65180e1",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-05-26T21:53:02Z",
+      "side": 1,
+      "message": "Can we assume that parameters.getSupportedPreviewFormats() in l.221 never returns nullptr and ends up setting pixelFormats back to nullptr? The documentation [1] seems to suggest so, but it also suggests that the returned list is never empty, so I can\u0027t tell which checks are needed and which ones are just defensive.\n\n[1] https://developer.android.com/reference/android/hardware/Camera.Parameters.html#getSupportedPreviewFormats()",
+      "parentUuid": "a70c1ea7_997ef29c",
+      "range": {
+        "startLine": 219,
+        "startChar": 22,
+        "endLine": 219,
+        "endChar": 34
+      },
+      "revId": "0432c72332e043123a3948365bbf1b33014c744b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55baec5d_f33cadd6",
         "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera.java",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-05-26T21:35:47Z",
       "side": 1,
       "message": "Same here, merge l.245-247 here:\nList\u003cint[]\u003e listFpsRange \u003d new ArrayList\u003cint[]\u003e();",
+      "revId": "0432c72332e043123a3948365bbf1b33014c744b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef417fe_fd450ecf",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-05-26T21:53:02Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "55baec5d_f33cadd6",
       "revId": "0432c72332e043123a3948365bbf1b33014c744b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
