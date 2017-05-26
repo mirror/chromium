@@ -126,6 +126,7 @@ bool ChromeClient::OpenJavaScriptAlert(LocalFrame* frame,
   if (!CanOpenModalIfDuringPageDismissal(frame->Tree().Top(),
                                          ChromeClient::kAlertDialog, message))
     return false;
+  ExitFullscreen(*frame);
   return OpenJavaScriptDialog(
       frame, message, ChromeClient::kAlertDialog, [this, frame, &message]() {
         return OpenJavaScriptAlertDelegate(frame, message);
