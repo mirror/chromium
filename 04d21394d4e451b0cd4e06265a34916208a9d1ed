@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d75656_d75d6b78",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-26T18:37:39Z",
+      "side": 1,
+      "message": "Add comment at top of file explaining what this is, and when and how to use it",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 4
+      },
+      "revId": "04d21394d4e451b0cd4e06265a34916208a9d1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6de7a3_e866fe08",
+        "filename": "build/fuchsia/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-26T18:37:39Z",
+      "side": 1,
+      "message": "Every owners file should have at least 2 owners. Please find someone to co-own this with you.",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "04d21394d4e451b0cd4e06265a34916208a9d1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1807243_7326257f",
+        "filename": "build/fuchsia/create_test_runner_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-26T18:37:39Z",
+      "side": 1,
+      "message": "\"...in qemu\" (?)",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "04d21394d4e451b0cd4e06265a34916208a9d1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
