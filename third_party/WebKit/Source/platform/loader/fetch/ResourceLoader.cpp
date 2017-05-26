@@ -77,11 +77,8 @@ DEFINE_TRACE(ResourceLoader) {
 void ResourceLoader::Start(const ResourceRequest& request) {
   DCHECK(!loader_);
 
-  if (resource_->Options().synchronous_policy == kRequestSynchronously &&
-      Context().DefersLoading()) {
-    Cancel();
-    return;
-  }
+  CHECK(resource_->Options().synchronous_policy != kRequestSynchronously ||
+        !Context().DefersLoading());
 
   loader_ = fetcher_->Context().CreateURLLoader();
   DCHECK(loader_);
