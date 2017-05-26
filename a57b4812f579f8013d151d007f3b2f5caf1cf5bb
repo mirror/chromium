@@ -80,6 +80,75 @@
       "revId": "a57b4812f579f8013d151d007f3b2f5caf1cf5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b2df86_6a8da1a8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 21299,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-26T18:06:52Z",
+      "side": 1,
+      "message": "Add units\u003d\"events\"",
+      "range": {
+        "startLine": 21299,
+        "startChar": 38,
+        "endLine": 21299,
+        "endChar": 49
+      },
+      "revId": "a57b4812f579f8013d151d007f3b2f5caf1cf5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd168cb_f7817ef1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 21304,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-26T18:06:52Z",
+      "side": 1,
+      "message": "Mention when this is recorded. Once on startup? Periodically every X minutes? On some event?",
+      "range": {
+        "startLine": 21304,
+        "startChar": 0,
+        "endLine": 21304,
+        "endChar": 9
+      },
+      "revId": "a57b4812f579f8013d151d007f3b2f5caf1cf5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb94a2b_b76aa44e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 21308,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-26T18:06:52Z",
+      "side": 1,
+      "message": "How about using InProductHelp as the prefix instead of FeatureEngagement? Since all your descriptions say \"in-producti help\".",
+      "range": {
+        "startLine": 21308,
+        "startChar": 17,
+        "endLine": 21308,
+        "endChar": 34
+      },
+      "revId": "a57b4812f579f8013d151d007f3b2f5caf1cf5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
