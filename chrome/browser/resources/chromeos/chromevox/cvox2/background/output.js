@@ -358,11 +358,9 @@ Output.ROLE_INFO_ = {
 /**
  * Metadata about supported automation states.
  * @const {!Object<string, {on: {msgId: string, earconId: string},
- *                          off: {msgId: string, earconId: string},
- *                          isRoleSpecific: (boolean|undefined)}>}
+ *                          off: {msgId: string, earconId: string}}>}
  *     on: info used to describe a state that is set to true.
  *     off: info used to describe a state that is set to undefined.
- *     isRoleSpecific: info used for specific roles.
  * @private
  */
 Output.STATE_INFO_ = {
@@ -372,11 +370,6 @@ Output.STATE_INFO_ = {
   disabled: {on: {msgId: 'aria_disabled_true'}},
   expanded: {on: {msgId: 'aria_expanded_true'}},
   multiselectable: {on: {msgId: 'aria_multiselectable_true'}},
-  pressed: {
-    isRoleSpecific: true,
-    on: {msgId: 'aria_pressed_true'},
-    off: {msgId: 'aria_pressed_false'}
-  },
   required: {on: {msgId: 'aria_required_true'}},
   selected: {on: {msgId: 'aria_selected_true'}},
   visited: {on: {msgId: 'visited_state'}}
@@ -586,7 +579,7 @@ Output.RULES = {
       speak: '$nameFromNode $descendants $value $state $description'
     },
     toggleButton: {
-      speak: '$if($pressed, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
+      speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
           '$name $role $pressed $description $state'
     },
     toolbar: {
@@ -1190,11 +1183,25 @@ Output.prototype = {
               break;
           }
           this.format_(node, '@' + msg, buff);
+        } else if (token == 'pressed') {
+          var msg;
+          switch (node.checked) {
+            case 'mixed':
+              msg = 'pressed_mixed';
+              break;
+            case 'true':
+              msg = 'pressed_true';
+              break;
+            default:
+              msg = 'pressed_false';
+              break;
+          }
+          this.format_(node, '@' + msg, buff);
         } else if (token == 'state') {
           if (node.state) {
             Object.getOwnPropertyNames(node.state).forEach(function(s) {
               var stateInfo = Output.STATE_INFO_[s];
-              if (stateInfo && !stateInfo.isRoleSpecific && stateInfo.on)
+              if (stateInfo && stateInfo.on)
               this.format_(node, '@' + stateInfo.on.msgId, buff);
             }.bind(this));
           }

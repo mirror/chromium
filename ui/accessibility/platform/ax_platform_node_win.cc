@@ -1125,8 +1125,6 @@ int AXPlatformNodeWin::MSAAState() {
     msaa_state |= STATE_SYSTEM_LINKED;
   if (state & (1 << ui::AX_STATE_OFFSCREEN))
     msaa_state |= STATE_SYSTEM_OFFSCREEN;
-  if (state & (1 << ui::AX_STATE_PRESSED))
-    msaa_state |= STATE_SYSTEM_PRESSED;
   if (state & (1 << ui::AX_STATE_PROTECTED))
     msaa_state |= STATE_SYSTEM_PROTECTED;
   if (state & (1 << ui::AX_STATE_READ_ONLY))
@@ -1143,7 +1141,9 @@ int AXPlatformNodeWin::MSAAState() {
       GetIntAttribute(ui::AX_ATTR_CHECKED_STATE));
   switch (checked_state) {
     case ui::AX_CHECKED_STATE_TRUE:
-      msaa_state |= STATE_SYSTEM_CHECKED;
+      msaa_state |= data.role == ui::AX_ROLE_TOGGLE_BUTTON
+                        ? STATE_SYSTEM_PRESSED
+                        : STATE_SYSTEM_CHECKED;
       break;
     case ui::AX_CHECKED_STATE_MIXED:
       msaa_state |= STATE_SYSTEM_MIXED;
