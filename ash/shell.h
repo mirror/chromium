@@ -268,6 +268,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Registers all ash related prefs to the given |registry|.
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
+  // Registers all ash related prefs to the given |registry| as unowned.
+  static void RegisterUnownedPrefs(PrefRegistrySimple* registry);
+
   // Returns true if simplified display management should be enabled.
   // TODO(sky): remove this; temporary until http://crbug.com/718860 is done.
   static bool ShouldEnableSimplifiedDisplayManagement();

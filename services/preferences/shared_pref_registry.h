@@ -1,0 +1,65 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef SERVICES_PREFERENCES_SHARED_PREF_REGISTRY_H_
+#define SERVICES_PREFERENCES_SHARED_PREF_REGISTRY_H_
+
+#include <set>
+#include <string>
+#include <vector>
+
+#include "base/callback_forward.h"
+#include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "services/preferences/public/interfaces/preferences.mojom.h"
+
+class DefaultPrefStore;
+
+namespace prefs {
+class ScopedPrefConnectionBuilder;
+
+class SharedPrefRegistry {
+ public:
+  SharedPrefRegistry();
+  ~SharedPrefRegistry();
+
+  scoped_refptr<ScopedPrefConnectionBuilder> CreateConnectionBuilder(
+      mojom::PrefRegistryPtr pref_registry,
+      std::set<PrefValueStore::PrefStoreType> required_types,
+      mojom::PrefStoreConnector::ConnectCallback callback);
+
+ private:
+  class PendingConnection;
+
+  std::set<std::string> GetPendingUnownedPrefs(
+      std::vector<std::string> unowned_prefs,
+      std::vector<std::string>* observed_prefs) const;
+
+  void ProcessPublicPrefs(
+      std::vector<mojom::PrefRegistrationPtr> public_pref_registrations,
+      std::vector<std::string>* observed_prefs);
+
+  void ProvideDefaultPrefs(ScopedPrefConnectionBuilder* connection,
+                           std::vector<std::string> unowned_prefs);
+
+  scoped_refptr<DefaultPrefStore> defaults_;
+  std::map<std::string, int> pref_flags_;
+
+  std::set<std::string> public_pref_keys_;
+
+  std::vector<PendingConnection> pending_connections_;
+
+#if DCHECK_IS_ON()
+  // The set of all registered pref keys. This enforces that only one service
+  // claims ownership over any pref. This is relatively expensive so skip
+  // unless dchecks are enabled.
+  std::set<std::string> all_registered_pref_keys_;
+#endif
+
+  DISALLOW_COPY_AND_ASSIGN(SharedPrefRegistry);
+};
+
+}  // namespace prefs
+
+#endif  // SERVICES_PREFERENCES_SHARED_PREF_REGISTRY_H_

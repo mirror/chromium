@@ -58,9 +58,16 @@ NightLightController::~NightLightController() {
 
 // static
 void NightLightController::RegisterPrefs(PrefRegistrySimple* registry) {
-  registry->RegisterBooleanPref(prefs::kNightLightEnabled, false);
+  registry->RegisterBooleanPref(prefs::kNightLightEnabled, false,
+                                PrefRegistry::PUBLIC);
   registry->RegisterDoublePref(prefs::kNightLightTemperature,
-                               kDefaultColorTemperature);
+                               kDefaultColorTemperature, PrefRegistry::PUBLIC);
+}
+
+// static
+void NightLightController::RegisterUnownedPrefs(PrefRegistrySimple* registry) {
+  registry->RegisterUnownedPref(prefs::kNightLightEnabled);
+  registry->RegisterUnownedPref(prefs::kNightLightTemperature);
 }
 
 void NightLightController::AddObserver(Observer* observer) {

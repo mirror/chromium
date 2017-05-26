@@ -36,6 +36,7 @@ class ASH_EXPORT NightLightController : public SessionObserver {
   ~NightLightController() override;
 
   static void RegisterPrefs(PrefRegistrySimple* registry);
+  static void RegisterUnownedPrefs(PrefRegistrySimple* registry);
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
