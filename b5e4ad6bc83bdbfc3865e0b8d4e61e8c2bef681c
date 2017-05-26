@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e73c46ee_a8db2cc1",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-05-26T17:03:52Z",
+      "side": 0,
+      "message": "by removing this from there, you are postponing consistency check until much later (when a page is saved).\nI don\u0027t think that is the right way to go, especially when last N is going to be trying to show stuff from cache that has been blown away.",
+      "range": {
+        "startLine": 328,
+        "startChar": 20,
+        "endLine": 328,
+        "endChar": 44
+      },
+      "revId": "b5e4ad6bc83bdbfc3865e0b8d4e61e8c2bef681c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
