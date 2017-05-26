@@ -30,6 +30,7 @@ class WebContents;
 
 namespace chromeos {
 
+class AuthPolicyLoginHelper;
 class Authenticator;
 class ExtendedAuthenticator;
 class AuthFailure;
@@ -279,6 +280,9 @@ class ScreenLocker : public AuthStatusConsumer,
 
   device::mojom::FingerprintPtr fp_service_;
   mojo::Binding<device::mojom::FingerprintObserver> binding_;
+
+  // Used to exchange typed password for TGT from Active Directory server.
+  std::unique_ptr<AuthPolicyLoginHelper> authpolicy_login_helper_;
 
   base::WeakPtrFactory<ScreenLocker> weak_factory_;
 
