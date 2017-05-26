@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8281a845_33748a53",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-05-26T23:15:12Z",
+      "side": 1,
+      "message": "Maybe make a note to copy the json file to a nother directory so as not to pollute the repo with lots of html files that run-webkit-tests will try to run for tests?",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedb7b3e_9e21a21a",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-05-26T23:15:12Z",
+      "side": 1,
+      "message": "Unix style is options come first.  Maybe also write\n\n\"[-[viR]]\" instead of \"[options]\", which the typical Unix man-page style for a quick summary of options.\n\n(Because our list of options is short.)\n\nAlso, I think typical unix style is that as you go through all the command line args, once a non-option value is found, anything after that is treated as a file, not an option.  So\n\nlayout-test-tidy -vi path1 path2 -R path3 path4\n\nignores the -R option.  Are you allowing this?  Does this mean -R will only apply to path3 and path4?  That seems nice, actually.\n\nShould also note that only html and js files are processed; any other extension is ignored. (Maybe not right here, but somewhere.)",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ba8ce6_9ea4a3ef",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-05-26T23:15:12Z",
+      "side": 1,
+      "message": "Only if the path is a directory, of course.\n\nDoes this mean if I do\n\nlayout-test-tidy -R webaudio\n\nwill beautify all files in webaudio and all subdirectories and the final result will be one huge output of each beautified file written to stdout in some order?",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a5acae_5161853b",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-05-26T23:15:12Z",
+      "side": 1,
+      "message": "Following unix-style, -v should come first.  And below too.",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033c7e51_9f1b71d1",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/layout-test-tidy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-05-26T23:15:12Z",
+      "side": 1,
+      "message": "Just curious: What do you think in the try block will actually cause an error to be thrown?",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
