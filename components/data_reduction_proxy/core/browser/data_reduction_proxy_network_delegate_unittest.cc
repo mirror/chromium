@@ -84,6 +84,9 @@ const std::string kOriginalValidOCLHistogramName =
 const std::string kDifferenceValidOCLHistogramName =
     "Net.HttpContentLengthDifferenceWithValidOCL";
 
+const std::string kOriginalInsecureViaDRPHistogramName =
+    "Net.HttpOriginalContentLength.Http.ViaDRP";
+
 // Lo-Fi histograms.
 const std::string kReceivedValidOCLLoFiOnHistogramName =
     "Net.HttpContentLengthWithValidOCL.LoFiOn";
@@ -1228,6 +1231,8 @@ TEST_F(DataReductionProxyNetworkDelegateTest, NetHistograms) {
   histogram_tester.ExpectUniqueSample(kReceivedValidOCLHistogramName,
                                       kResponseContentLength, 1);
   histogram_tester.ExpectUniqueSample(kOriginalValidOCLHistogramName,
+                                      kOriginalContentLength, 1);
+  histogram_tester.ExpectUniqueSample(kOriginalInsecureViaDRPHistogramName,
                                       kOriginalContentLength, 1);
   histogram_tester.ExpectUniqueSample(
       kDifferenceValidOCLHistogramName,
