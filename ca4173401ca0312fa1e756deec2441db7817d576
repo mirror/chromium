@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "148975c9_99c7532b",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-26T21:46:07Z",
+      "side": 1,
+      "message": "Ok I\u0027ll do the same thing here.",
+      "parentUuid": "ac22cd89_0d72fc1d",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "def138b4_930765c6",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 3
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "5adfcdf0_dd48d9c1",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-26T21:46:07Z",
+      "side": 1,
+      "message": "This was intended for debugging and dumping the table to logs (which could be parsed by a script for building a dashboard). Something like this: https://chromium-review.googlesource.com/c/517562/ is what I had in mind.",
+      "parentUuid": "65814950_39dc05f9",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "416ad1fb_ce0de069",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 3
@@ -81,6 +117,24 @@
       "writtenOn": "2017-05-26T18:25:06Z",
       "side": 1,
       "message": "This might be a little overkill, and especially in Blink we\u0027re not big fans of \u003ciomanip\u003e. Something like this seems sufficient (I\u0027m envisioning a member function, but there are other variations):\n\n// adjust number of spaces / column widths to be appropriate for typical uses\nStringBuilder builder;\nbuilder.Append(\"Runtime Call Stats for Blink\\n\\nName      Count      Time (ms)\\n\");\nfor (CounterId id : counters_) {\n  const RuntimeCallCounter\u0026 counter \u003d this-\u003e*id;\n  builder.Append(String::Format(\"%32s  %6d  %8.2f\\n\", counter.GetName(), counter.GetCount(), counter.GetTime().InMillisecondsF()));\n}\nreturn builder.ToString();",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e6c455_e9fd4098",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-26T21:46:07Z",
+      "side": 1,
+      "message": "Ok I updated it to using StringBuilder, but the problem I\u0027m facing now is WTF::String overloads \u003c\u003c to \"pretty print\" a string which includes the quotes and all the escape characters.",
+      "parentUuid": "416ad1fb_ce0de069",
       "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +192,24 @@
     },
     {
       "key": {
+        "uuid": "594bac3a_49d6934f",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-26T21:46:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8a08a7c0_85a8a280",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "769051c1_cb76305a",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 3
@@ -152,6 +224,24 @@
       "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397cbe03_a29d71a4",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-26T21:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "769051c1_cb76305a",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +262,24 @@
     },
     {
       "key": {
+        "uuid": "287c4dc1_6135a7bb",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-26T21:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd5429b6_84817ff7",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e746b56d_98c49073",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 3
@@ -189,6 +297,24 @@
     },
     {
       "key": {
+        "uuid": "8a07bee9_2da34d49",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-26T21:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e746b56d_98c49073",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78ad455f_212ad1db",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 3
@@ -200,6 +326,24 @@
       "writtenOn": "2017-05-26T18:25:06Z",
       "side": 1,
       "message": "Not necessary to act now, but I do wonder whether we\u0027ll ultimately rather have a plain array of RuntimeCallCounter rather than a bunch of separate members (and then the ID can just be a uint16_t or something rather than a pointer-to-member. It might be simpler in a few places, especially if we end up wanting to extract part of the counter list out of platform/.",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d085dc1e_fa0409f8",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-05-26T21:46:07Z",
+      "side": 1,
+      "message": "I considered doing that, but I wasn\u0027t able to point out a clear advantage (except a size saving for the id). But yeah, I can see that extracting out part of the counter list would be easier with an array of counters. I\u0027ll update the CL to do that.",
+      "parentUuid": "78ad455f_212ad1db",
       "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
