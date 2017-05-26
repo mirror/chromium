@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a05e5f8_16f80a47",
+        "filename": "base/mac/foundation_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-26T23:45:28Z",
+      "side": 1,
+      "message": "This seems more mac_util than foundation_util. foundation_util is for stuff in CF and Foundation that\u0027s useful for iOS too.",
+      "range": {
+        "startLine": 386,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 0
+      },
+      "revId": "878094eeee0a70f21cc33f43ee970236e21e979f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f626a46_7b023ad0",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-26T23:45:28Z",
+      "side": 1,
+      "message": "typo: Overridden",
+      "range": {
+        "startLine": 87,
+        "startChar": 3,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "878094eeee0a70f21cc33f43ee970236e21e979f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7678a525_135192f8",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-26T23:45:28Z",
+      "side": 1,
+      "message": "why not ui/base/cocoa/touch_bar_forward_declarations.h?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "878094eeee0a70f21cc33f43ee970236e21e979f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c46550_dd581f7c",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_editor_base_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-26T23:45:28Z",
+      "side": 1,
+      "message": "why not ui/base/cocoa/touch_bar_forward_declarations.h?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "878094eeee0a70f21cc33f43ee970236e21e979f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4866205e_e303114a",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_editor_base_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-26T23:45:28Z",
+      "side": 1,
+      "message": "Can\u0027t we expand doneTouchBarButtonWithTarget: so that it can create this \"save\" button too? That way we don\u0027t have this color duplicated all over the place.",
+      "range": {
+        "startLine": 401,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 58
+      },
+      "revId": "878094eeee0a70f21cc33f43ee970236e21e979f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b9b811_ac265bbe",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-26T23:45:28Z",
+      "side": 1,
+      "message": "why not ui/base/cocoa/touch_bar_forward_declarations.h?",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "878094eeee0a70f21cc33f43ee970236e21e979f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

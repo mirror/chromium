@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7e735f1_2ceed20b",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-26T23:45:28Z",
+      "side": 0,
+      "message": "Why drop the blank line?",
+      "revId": "f7f0f1c1aae1bfc819afddb0024d14af0d3c8ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
