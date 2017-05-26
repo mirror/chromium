@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c619ba4d_a5321739",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-26T00:33:17Z",
+      "side": 1,
+      "message": "hmm... you are really testing for navigation does *not* happen, it\u0027s not really possible to test for something not happening. the best you can do like, wait for a bit of time, and check the \"thing\" does not happen, which is flaky by design\n\nso I\u0027m not sure this test has much value..",
+      "revId": "131f93cac089c3ecb9b15262a84a485207e8f6bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
