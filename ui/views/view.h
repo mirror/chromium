@@ -275,9 +275,7 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // Get the size the View would like to be, if enough space were available.
   // First checks |preferred_size_|, then |layout_manager_|, then
   // CalculatePreferredSize().
-  // TODO(estade): migrate existing GetPreferredSize() overrides to
-  // CalculatePreferredSize() and make this function non-virtual.
-  virtual gfx::Size GetPreferredSize() const;
+  gfx::Size GetPreferredSize() const;
 
   // Sets the size that this View will request during layout. The actual size
   // may differ. It should rarely be necessary to set this; usually the right
