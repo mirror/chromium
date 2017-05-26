@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f2d5da_a902389c",
+        "filename": "media/mojo/interfaces/android_overlay.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-05-26T04:58:37Z",
+      "side": 1,
+      "message": "This will work. Thanks!\n\nThere\u0027s another possibility. What if I need to call IsEnabled() only in the browser process? I noticed that AOP is only hooked up using mojo, not JNI. Does that mean even I am already in the browser process, I still need to make a mojo call to get the result?\n\nFor the context, please see: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d577777#c35",
+      "revId": "1ed69877b7c135741ec61e2f6c29b5f5637d80e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
