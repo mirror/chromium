@@ -172,6 +172,9 @@ class WindowServer : public ServerWindowDelegate,
       const gfx::Rect& old_bounds,
       const gfx::Rect& new_bounds,
       const base::Optional<cc::LocalSurfaceId>& local_surface_id);
+  void ProcessWindowTransformChanged(const ServerWindow* window,
+                                     const gfx::Transform& old_transform,
+                                     const gfx::Transform& new_transform);
   void ProcessClientAreaChanged(
       const ServerWindow* window,
       const gfx::Insets& new_client_area,
@@ -306,6 +309,9 @@ class WindowServer : public ServerWindowDelegate,
   void OnWindowBoundsChanged(ServerWindow* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
+  void OnWindowTransformChanged(ServerWindow* window,
+                                const gfx::Transform& old_transform,
+                                const gfx::Transform& new_transform) override;
   void OnWindowClientAreaChanged(
       ServerWindow* window,
       const gfx::Insets& new_client_area,
