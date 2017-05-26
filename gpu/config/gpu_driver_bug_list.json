@@ -1,6 +1,6 @@
 {
   "name": "gpu driver bug list",
-  "version": "10.9",
+  "version": "10.10",
   "entries": [
     {
       "id": 1,
@@ -1064,6 +1064,9 @@
       "gl_renderer": "Adreno \\(TM\\) 4.*",
       "disabled_extensions": [
         "GL_EXT_multisampled_render_to_texture"
+      ],
+      "features": [
+        "disable_chromium_framebuffer_multisample"
       ]
     },
     {
@@ -1739,7 +1742,7 @@
       "id": 174,
       "description": "Adreno 4xx support for EXT_multisampled_render_to_texture is buggy on Android 7.0",
       "comment": [
-        "Disabling EXT_multisampled_render_to_texture triggers the explicit multisample resolve path, which is broken on the same configurations. (See also software rendering list entry #147.)"
+        "Disabling EXT_multisampled_render_to_texture triggers the explicit multisample resolve path, which is broken on the same configurations."
       ],
       "cr_bugs": [612474, 696126],
       "os": {
@@ -1773,6 +1776,9 @@
       "gl_renderer": "Adreno \\(TM\\) 5.*",
       "disabled_extensions": [
         "GL_EXT_multisampled_render_to_texture"
+      ],
+      "features": [
+        "disable_chromium_framebuffer_multisample"
       ]
     },
     {
@@ -2171,6 +2177,9 @@
       "gl_renderer": "Adreno \\(TM\\) 5.*",
       "disabled_extensions": [
         "GL_EXT_multisampled_render_to_texture"
+      ],
+      "features": [
+        "disable_chromium_framebuffer_multisample"
       ]
     },
     {
