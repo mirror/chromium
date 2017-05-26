@@ -22,6 +22,30 @@
       "revId": "b5e4ad6bc83bdbfc3865e0b8d4e61e8c2bef681c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c97ab6_945e9db7",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-26T23:01:43Z",
+      "side": 0,
+      "message": "There is still a metadata consistency check at the end of this calling chain. It\u0027s in OnInitialGetOfflinePagesDone.\nBut we\u0027re doing more consistency checks when we fail to create a archive directory.",
+      "parentUuid": "e73c46ee_a8db2cc1",
+      "range": {
+        "startLine": 328,
+        "startChar": 20,
+        "endLine": 328,
+        "endChar": 44
+      },
+      "revId": "b5e4ad6bc83bdbfc3865e0b8d4e61e8c2bef681c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

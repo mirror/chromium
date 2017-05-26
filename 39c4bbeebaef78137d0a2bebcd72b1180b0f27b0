@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37d6f8e9_aadd355f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-26T23:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2a95315_55099233",
+      "revId": "39c4bbeebaef78137d0a2bebcd72b1180b0f27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb9628ad_54790898",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-05-26T17:03:52Z",
       "side": 1,
       "message": "how many directories do we store stuff in now?",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "39c4bbeebaef78137d0a2bebcd72b1180b0f27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04dbeb7_699e76e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-26T23:01:43Z",
+      "side": 1,
+      "message": "as of this patch, 1 - the app folder. After this one lands, I\u0027m going to go back to the previous patch which moves the cache pages to cache folder. The idea behind is to have this patch fix the potential bug which will be introduced by that CL.",
+      "parentUuid": "bb9628ad_54790898",
       "range": {
         "startLine": 10,
         "startChar": 19,
@@ -65,6 +107,47 @@
     },
     {
       "key": {
+        "uuid": "91c6a77e_b7a43f2a",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-26T23:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ec5d809_16f57720",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 34
+      },
+      "revId": "39c4bbeebaef78137d0a2bebcd72b1180b0f27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0eb05dc2_9925c27d",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-26T23:01:43Z",
+      "side": 1,
+      "message": "I feel like this may not be useful, so I\u0027m removing this.",
+      "revId": "39c4bbeebaef78137d0a2bebcd72b1180b0f27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a8f988b_9a420896",
         "filename": "components/offline_pages/core/offline_page_model_impl.cc",
         "patchSetId": 1
@@ -85,6 +168,30 @@
       "revId": "39c4bbeebaef78137d0a2bebcd72b1180b0f27b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6720721c_7eff6de5",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-26T23:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8f988b_9a420896",
+      "range": {
+        "startLine": 387,
+        "startChar": 49,
+        "endLine": 387,
+        "endChar": 72
+      },
+      "revId": "39c4bbeebaef78137d0a2bebcd72b1180b0f27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
