@@ -93,6 +93,30 @@
       "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a315088e_6e382976",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59422,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-05-26T16:12:13Z",
+      "side": 1,
+      "message": "Ok, that seems like a good reason to keep this.",
+      "parentUuid": "2ddcdd0e_fd87108e",
+      "range": {
+        "startLine": 59422,
+        "startChar": 35,
+        "endLine": 59422,
+        "endChar": 60
+      },
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
