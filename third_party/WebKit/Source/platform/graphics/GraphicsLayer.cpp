@@ -510,7 +510,7 @@ void GraphicsLayer::TrackRasterInvalidation(const DisplayItemClient& client,
     RasterInvalidationInfo info;
     info.client = &client;
     info.client_debug_name = client.DebugName();
-    info.rect = rect;
+    info.rect = FloatRect(rect);
     info.reason = reason;
     tracking.invalidations.push_back(info);
   }

@@ -743,8 +743,7 @@ void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
   }
 
   // We reach here because the chunk is new.
-  AddRasterInvalidation(new_display_item_list_[new_chunk.begin_index].Client(),
-                        new_chunk, infinite_float_rect,
+  AddRasterInvalidation(new_chunk.id->client, new_chunk, infinite_float_rect,
                         PaintInvalidationReason::kAppeared);
 }
 
@@ -764,7 +763,7 @@ void PaintController::TrackRasterInvalidation(const DisplayItemClient& client,
   DCHECK(raster_invalidation_tracking_info_);
 
   RasterInvalidationInfo info;
-  info.rect = EnclosingIntRect(rect);
+  info.rect = rect;
   info.client = &client;
   info.reason = reason;
 

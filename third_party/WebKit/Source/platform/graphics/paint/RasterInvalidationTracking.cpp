@@ -48,11 +48,12 @@ void RasterInvalidationTracking::AsJSON(JSONObject* json) {
     for (auto& info : invalidations) {
       std::unique_ptr<JSONObject> info_json = JSONObject::Create();
       info_json->SetString("object", info.client_debug_name);
-      if (!info.rect.IsEmpty()) {
-        if (info.rect == LayoutRect::InfiniteIntRect())
+      IntRect rect = EnclosingIntRect(info.rect);
+      if (!rect.IsEmpty()) {
+        if (rect == LayoutRect::InfiniteIntRect())
           info_json->SetString("rect", "infinite");
         else
-          info_json->SetArray("rect", RectAsJSONArray(info.rect));
+          info_json->SetArray("rect", RectAsJSONArray(rect));
       }
       info_json->SetString("reason",
                            PaintInvalidationReasonToString(info.reason));
