@@ -477,7 +477,12 @@ bool AXObjectImpl::IsCheckable() const {
     case kMenuItemRadioRole:
     case kRadioButtonRole:
     case kSwitchRole:
+    case kToggleButtonRole:
       return true;
+    case kTreeItemRole:
+    case kListBoxOptionRole:
+    case kMenuListOptionRole:
+      return AriaCheckedIsPresent();
     default:
       return false;
   }
@@ -487,40 +492,45 @@ bool AXObjectImpl::IsCheckable() const {
 // Because an AXMenuListOption (<option>) can
 // have an ARIA role of menuitemcheckbox/menuitemradio
 // yet does not inherit from AXNodeObject
-AccessibilityButtonState AXObjectImpl::CheckedState() const {
+AccessibilityCheckedState AXObjectImpl::CheckedState() const {
   if (!IsCheckable())
-    return kButtonStateOff;
+    return kCheckedStateUndefined;
 
-  const AtomicString& checkedAttribute =
-      GetAOMPropertyOrARIAAttribute(AOMStringProperty::kChecked);
+  // Try ARIA checked/pressed state
+  const AccessibilityRole role = RoleValue();
+  const auto prop = role == kToggleButtonRole ? AOMStringProperty::kPressed
+                                              : AOMStringProperty::kChecked;
+  const AtomicString& checkedAttribute = GetAOMPropertyOrARIAAttribute(prop);
   if (checkedAttribute) {
     if (EqualIgnoringASCIICase(checkedAttribute, "true"))
-      return kButtonStateOn;
+      return kCheckedStateTrue;
 
     if (EqualIgnoringASCIICase(checkedAttribute, "mixed")) {
-      // Only checkboxes and radios should support the mixed state.
-      const AccessibilityRole role = RoleValue();
-      if (role == kCheckBoxRole || role == kMenuItemCheckBoxRole ||
-          role == kRadioButtonRole || role == kMenuItemRadioRole)
-        return kButtonStateMixed;
+      // Only checkable role that doesn't support mixed is the switch.
+      if (role != kSwitchRole)
+        return kCheckedStateMixed;
     }
 
-    return kButtonStateOff;
+    if (EqualIgnoringASCIICase(checkedAttribute, "false"))
+      return kCheckedStateFalse;
   }
 
-  const Node* node = this->GetNode();
-  if (!node)
-    return kButtonStateOff;
+  // Native checked state
+  if (role != kToggleButtonRole) {
+    const Node* node = this->GetNode();
+    if (!node)
+      return kCheckedStateUndefined;
 
-  if (IsNativeInputInMixedState(node))
-    return kButtonStateMixed;
+    if (IsNativeInputInMixedState(node))
+      return kCheckedStateMixed;
 
-  if (isHTMLInputElement(*node) &&
-      toHTMLInputElement(*node).ShouldAppearChecked()) {
-    return kButtonStateOn;
+    if (isHTMLInputElement(*node) &&
+        toHTMLInputElement(*node).ShouldAppearChecked()) {
+      return kCheckedStateTrue;
+    }
   }
 
-  return kButtonStateOff;
+  return kCheckedStateFalse;
 }
 
 bool AXObjectImpl::IsNativeInputInMixedState(const Node* node) {
@@ -1142,17 +1152,19 @@ AXDefaultActionVerb AXObjectImpl::Action() const {
       return AXDefaultActionVerb::kPress;
     case kTextFieldRole:
       return AXDefaultActionVerb::kActivate;
+    case kMenuItemRadioRole:
     case kRadioButtonRole:
       return AXDefaultActionVerb::kSelect;
-    case kCheckBoxRole:
-    case kSwitchRole:
-      return CheckedState() == kButtonStateOff ? AXDefaultActionVerb::kCheck
-                                               : AXDefaultActionVerb::kUncheck;
     case kLinkRole:
       return AXDefaultActionVerb::kJump;
     case kPopUpButtonRole:
       return AXDefaultActionVerb::kOpen;
     default:
+      if (IsCheckable()) {
+        return CheckedState() == kCheckedStateFalse
+                   ? AXDefaultActionVerb::kCheck
+                   : AXDefaultActionVerb::kUncheck;
+      }
       return AXDefaultActionVerb::kClick;
   }
 }
@@ -1176,6 +1188,10 @@ bool AXObjectImpl::IsMultiline() const {
 
 bool AXObjectImpl::AriaPressedIsPresent() const {
   return !GetAttribute(aria_pressedAttr).IsEmpty();
+}
+
+bool AXObjectImpl::AriaCheckedIsPresent() const {
+  return !GetAttribute(aria_checkedAttr).IsEmpty();
 }
 
 bool AXObjectImpl::SupportsActiveDescendant() const {

@@ -1426,13 +1426,13 @@
       <message desc="Shown on a braille display for list boxes that allow more than one selected list item. When translating, try to find a contracted form of the translation for 'multiple selections' according to local conventions. If reasonable, use all lowercase and avoid punctuation to keep the number of characters as low as possible." name="IDS_CHROMEVOX_ARIA_MULTISELECTABLE_TRUE_BRL">
         multsel
       </message>
-      <message desc="Describes an element with the ARIA attribute aria-pressed=true." name="IDS_CHROMEVOX_ARIA_PRESSED_TRUE">
+      <message desc="Describes an element with the ARIA attribute aria-pressed=true." name="IDS_CHROMEVOX_PRESSED_TRUE">
         Pressed
       </message>
-      <message desc="Describes an element with the ARIA attribute aria-pressed=false." name="IDS_CHROMEVOX_ARIA_PRESSED_FALSE">
+      <message desc="Describes an element with the ARIA attribute aria-pressed=false." name="IDS_CHROMEVOX_PRESSED_FALSE">
         Not pressed
       </message>
-      <message desc="Describes an element with the ARIA attribute aria-pressed=mixed." name="IDS_CHROMEVOX_ARIA_PRESSED_MIXED">
+      <message desc="Describes an element with the ARIA attribute aria-pressed=mixed." name="IDS_CHROMEVOX_PRESSED_MIXED">
         Partially pressed
       </message>
       <message desc="Describes an element with the ARIA attribute aria-readonly=true." name="IDS_CHROMEVOX_ARIA_READONLY_TRUE">

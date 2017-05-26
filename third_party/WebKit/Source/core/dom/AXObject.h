@@ -140,7 +140,6 @@ enum AccessibilityRole {
 
 enum AccessibilityState {
   kAXBusyState,
-  kAXCheckedState,
   kAXEnabledState,
   kAXExpandedState,
   kAXFocusableState,
@@ -152,7 +151,6 @@ enum AccessibilityState {
   kAXMultilineState,
   kAXMultiselectableState,
   kAXOffscreenState,
-  kAXPressedState,
   kAXProtectedState,
   kAXReadonlyState,
   kAXRequiredState,
