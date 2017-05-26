@@ -16,6 +16,24 @@
       "revId": "131f93cac089c3ecb9b15262a84a485207e8f6bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2c405b_0dc1f4b7",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-05-26T00:39:08Z",
+      "side": 1,
+      "message": "The intended flow for this test is:\n\n 1. Start at some safe page\n 2. Try to go to unsafe page\n 3. See interstitial\n 4. Call dontProceed() (like clicking back-to-safety)\n 5. Verify that we\u0027re on that first safe page, not the network error page\n\nThe network error still happens (which is why I\u0027m keeping the other tests) but it\u0027s in the background. This test enforces that it\u0027s in the background, not visible to users.\n\nThe page title is useful for this test because the interstitial page sets the page title to \"Security error.\" I couldn\u0027t figure out a good way to check for that though, because that change happens asynchronously.",
+      "parentUuid": "c619ba4d_a5321739",
+      "revId": "131f93cac089c3ecb9b15262a84a485207e8f6bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
