@@ -14,8 +14,8 @@
 #include "core/editing/SelectionController.h"
 #include "core/events/DragEvent.h"
 #include "core/events/MouseEvent.h"
-#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/input/EventHandler.h"
@@ -291,7 +291,7 @@ void MouseEventManager::FakeMouseMoveEventTimerFired(TimerBase* timer) {
   if (is_mouse_position_unknown_)
     return;
 
-  FrameView* view = frame_->View();
+  LocalFrameView* view = frame_->View();
   if (!view)
     return;
 
@@ -341,7 +341,7 @@ void MouseEventManager::SetNodeUnderMouse(
        node_under_mouse_->GetDocument() != frame_->GetDocument())) {
     // The mouse has moved between frames.
     if (LocalFrame* frame = last_node_under_mouse->GetDocument().GetFrame()) {
-      if (FrameView* frame_view = frame->View())
+      if (LocalFrameView* frame_view = frame->View())
         frame_view->MouseExitedContentArea();
     }
   } else if (page && (layer_for_last_node &&
@@ -358,7 +358,7 @@ void MouseEventManager::SetNodeUnderMouse(
        last_node_under_mouse->GetDocument() != frame_->GetDocument())) {
     // The mouse has moved between frames.
     if (LocalFrame* frame = node_under_mouse_->GetDocument().GetFrame()) {
-      if (FrameView* frame_view = frame->View())
+      if (LocalFrameView* frame_view = frame->View())
         frame_view->MouseEnteredContentArea();
     }
   } else if (page && (layer_for_node_under_mouse &&
@@ -523,7 +523,7 @@ void MouseEventManager::HandleMousePressEventUpdateStates(
   mouse_down_timestamp_ =
       TimeTicks::FromSeconds(mouse_event.TimeStampSeconds());
 
-  if (FrameView* view = frame_->View()) {
+  if (LocalFrameView* view = frame_->View()) {
     mouse_down_pos_ = view->RootFrameToContents(
         FlooredIntPoint(mouse_event.PositionInRootFrame()));
   } else {
@@ -564,7 +564,7 @@ void MouseEventManager::DispatchFakeMouseMoveEventSoon() {
 
 void MouseEventManager::DispatchFakeMouseMoveEventSoonInQuad(
     const FloatQuad& quad) {
-  FrameView* view = frame_->View();
+  LocalFrameView* view = frame_->View();
   if (!view)
     return;
 
@@ -584,7 +584,7 @@ WebInputEventResult MouseEventManager::HandleMousePressEvent(
 
   frame_->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  if (FrameView* frame_view = frame_->View()) {
+  if (LocalFrameView* frame_view = frame_->View()) {
     if (frame_view->IsPointInScrollbarCorner(
             FlooredIntPoint(event.Event().PositionInRootFrame())))
       return WebInputEventResult::kNotHandled;
@@ -778,8 +778,8 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
 bool MouseEventManager::HandleDrag(const MouseEventWithHitTestResults& event,
                                    DragInitiator initiator) {
   DCHECK(event.Event().GetType() == WebInputEvent::kMouseMove);
-  // Callers must protect the reference to FrameView, since this function may
-  // dispatch DOM events, causing page/FrameView to go away.
+  // Callers must protect the reference to LocalFrameView, since this function
+  // may dispatch DOM events, causing page/LocalFrameView to go away.
   DCHECK(frame_);
   DCHECK(frame_->View());
   if (!frame_->GetPage())
@@ -916,7 +916,7 @@ WebInputEventResult MouseEventManager::DispatchDragEvent(
     Node* related_target,
     const WebMouseEvent& event,
     DataTransfer* data_transfer) {
-  FrameView* view = frame_->View();
+  LocalFrameView* view = frame_->View();
   // FIXME: We might want to dispatch a dragleave even if the view is gone.
   if (!view)
     return WebInputEventResult::kNotHandled;
@@ -984,7 +984,7 @@ void MouseEventManager::ResetDragState() {
 
 bool MouseEventManager::DragThresholdExceeded(
     const IntPoint& drag_location_in_root_frame) const {
-  FrameView* view = frame_->View();
+  LocalFrameView* view = frame_->View();
   if (!view)
     return false;
   IntPoint drag_location =
