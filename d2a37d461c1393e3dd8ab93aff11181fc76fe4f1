@@ -22,6 +22,30 @@
       "revId": "d2a37d461c1393e3dd8ab93aff11181fc76fe4f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd4d921_57c7947f",
+        "filename": "chrome/browser/file_select_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-05-26T17:34:28Z",
+      "side": 1,
+      "message": "Indeed. It is also not possible for the profile_ to go away without the web_contents_ also going away. So I removed that condition as well.",
+      "parentUuid": "6b723a19_4da0f549",
+      "range": {
+        "startLine": 359,
+        "startChar": 21,
+        "endLine": 359,
+        "endChar": 34
+      },
+      "revId": "d2a37d461c1393e3dd8ab93aff11181fc76fe4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
