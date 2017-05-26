@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c6598be_5d7d8c8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-05-26T21:21:56Z",
+      "side": 1,
+      "message": "any thoughts on doing something like:\n\nif (keyboardHeightChanged \u0026\u0026 isSheetOpen()) {\n    ....\n} else if (!isSheetOpen()) {\n    mBottomSheetContentContainer.setPadding(0, 0, 0, mBottomNavHeight);\n}\n\nWe don\u0027t really need to set the padding in the collapsed state to anything but the nav height.  Looking at View#internalSetPadding I don\u0027t think it hurts for us to call this over and over with the same values.",
+      "range": {
+        "startLine": 615,
+        "startChar": 28,
+        "endLine": 615,
+        "endChar": 39
+      },
+      "revId": "cd54aea608812effd3c86cc6c56a13aff2b30c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
