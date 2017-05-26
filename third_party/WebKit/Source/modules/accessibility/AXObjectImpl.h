@@ -97,10 +97,10 @@ enum AXObjectInclusion {
   kDefaultBehavior,
 };
 
-enum AccessibilityButtonState {
-  kButtonStateOff = 0,
-  kButtonStateOn,
-  kButtonStateMixed,
+enum AccessibilityCheckedState {
+  kCheckedStateFalse = 0,
+  kCheckedStateTrue,
+  kCheckedStateMixed,
 };
 
 enum AccessibilityOptionalBool {
@@ -452,7 +452,6 @@ class MODULES_EXPORT AXObjectImpl
   virtual bool IsModal() const { return false; }
   virtual bool IsMultiSelectable() const { return false; }
   virtual bool IsOffScreen() const { return false; }
-  virtual bool IsPressed() const { return false; }
   virtual bool IsReadOnly() const { return false; }
   virtual bool IsRequired() const { return false; }
   virtual bool IsSelected() const { return false; }
@@ -613,7 +612,7 @@ class MODULES_EXPORT AXObjectImpl
 
   // Properties of interactive elements.
   AXDefaultActionVerb Action() const;
-  AccessibilityButtonState CheckedState() const;
+  AccessibilityCheckedState CheckedState() const;
   virtual AriaCurrentState GetAriaCurrentState() const {
     return kAriaCurrentStateUndefined;
   }
@@ -638,6 +637,7 @@ class MODULES_EXPORT AXObjectImpl
   virtual bool IsEditable() const { return false; }
   bool IsMultiline() const;
   virtual bool IsRichlyEditable() const { return false; }
+  bool AriaCheckedIsPresent() const;
   bool AriaPressedIsPresent() const;
   virtual AccessibilityRole AriaRoleAttribute() const { return kUnknownRole; }
   virtual bool AriaRoleHasPresentationalChildren() const { return false; }
