@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10de52a0_8d90cb41",
+        "filename": "third_party/WebKit/Source/core/dom/ResizeObserver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-26T10:10:48Z",
+      "side": 1,
+      "message": "Let\u0027s insert: DCHECK(callback_);",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 13
+      },
+      "revId": "7ee533cd49e3ae1c097da0285ccace621c5c4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab417ea4_1c0a1863",
+        "filename": "third_party/WebKit/Source/core/dom/ResizeObserver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-26T10:10:48Z",
+      "side": 1,
+      "message": "Let\u0027s insert: DCHECK(delegate_);",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "7ee533cd49e3ae1c097da0285ccace621c5c4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c69cf6_8e82ceeb",
+        "filename": "third_party/WebKit/Source/core/dom/ResizeObserver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-26T10:10:48Z",
+      "side": 1,
+      "message": "s/TraceWrapperMember/const Trace WrapperMember/",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "7ee533cd49e3ae1c097da0285ccace621c5c4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29815cc5_9bf2b38a",
+        "filename": "third_party/WebKit/Source/core/dom/ResizeObserver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-26T10:10:48Z",
+      "side": 1,
+      "message": "s/Member/const Member/",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "7ee533cd49e3ae1c097da0285ccace621c5c4ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
