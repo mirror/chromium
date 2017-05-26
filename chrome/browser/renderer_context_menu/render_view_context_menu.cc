@@ -57,6 +57,7 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/chrome_pages.h"
+#include "chrome/browser/ui/pip/pip_window.h"
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_constants.h"
@@ -306,9 +307,10 @@ const struct UmaEnumCommandIdPair {
     {86, -1, IDC_CONTENT_CONTEXT_OPEN_WITH13},
     {87, -1, IDC_CONTENT_CONTEXT_OPEN_WITH14},
     {88, -1, IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN},
+    {89, -1, IDC_PICTURE_IN_PICTURE},
     // Add new items here and use |enum_id| from the next line.
     // Also, add new items to RenderViewContextMenuItem enum in histograms.xml.
-    {89, -1, 0},  // Must be the last. Increment |enum_id| when new IDC
+    {90, -1, 0},  // Must be the last. Increment |enum_id| when new IDC
                   // was added.
 };
 
@@ -1257,6 +1259,8 @@ void RenderViewContextMenu::AppendMediaRouterItem() {
     menu_model_.AddItemWithStringId(IDC_ROUTE_MEDIA,
                                     IDS_MEDIA_ROUTER_MENU_ITEM_TITLE);
   }
+  menu_model_.AddItemWithStringId(IDC_PICTURE_IN_PICTURE,
+                                  IDS_PICTURE_IN_PICTURE_MENU_ITEM_TITLE);
 }
 
 void RenderViewContextMenu::AppendRotationItems() {
@@ -1625,6 +1629,9 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
     case IDC_ROUTE_MEDIA:
       return IsRouteMediaEnabled();
 
+    case IDC_PICTURE_IN_PICTURE:
+      return true;
+
     case IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN:
       return true;
 
@@ -1801,6 +1808,10 @@ void RenderViewContextMenu::ExecuteCommand(int id, int event_flags) {
 
     case IDC_ROUTE_MEDIA:
       ExecRouteMedia();
+      break;
+
+    case IDC_PICTURE_IN_PICTURE:
+      ExecPictureInPicture();
       break;
 
     case IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN:
@@ -2395,6 +2406,17 @@ void RenderViewContextMenu::ExecRouteMedia() {
   dialog_controller->ShowMediaRouterDialog();
   media_router::MediaRouterMetrics::RecordMediaRouterDialogOrigin(
       media_router::MediaRouterDialogOpenOrigin::CONTEXTUAL_MENU);
+}
+
+void RenderViewContextMenu::ExecPictureInPicture() {
+  // Params are based on what the user right clicked on.
+  LOG(ERROR) << "param src: " << params_.src_url;
+  if (!(params_.media_flags & WebContextMenuData::kMediaPaused)) {
+    ExecPlayPause();
+  }
+
+  std::unique_ptr<PipWindow> pip_window(PipWindow::Create());
+  pip_window->Init();
 }
 
 void RenderViewContextMenu::ExecTranslate() {
