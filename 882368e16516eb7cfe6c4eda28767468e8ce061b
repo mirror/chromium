@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "8b576aee_2184874b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-05-26T10:28:33Z",
+      "side": 1,
+      "message": "This is a problem and there are a few ways we could fix this:\n - cache the image in different sizes.\n - have the thumbnail provider return the original image and let the thumbnail request resize it to the wanted dimensions. \n - store the image which is returned from the native call (it will be resized according to that request) and then when the next request comes in, we can check if the cached image is bigger than the required size. If it is, resize it down to the required size and return the resized image, keeping the bigger one in the cache. If it is not, then fetch the the image from the native call with the newly required size (which is bigger than the cached one) and then replace the cached image with the new (bigger) image.\n\nIt seems like the second option is most neat, but will need more space to cache the images. What do you think?",
+      "parentUuid": "2b1a489b_a426aba3",
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "880867be_8919fe27",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 2
