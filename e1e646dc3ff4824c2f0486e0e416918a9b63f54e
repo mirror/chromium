@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "f25b6ab0_411ff351",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-26T18:05:07Z",
+      "side": 1,
+      "message": "How is this being tested? I was hoping you would move the escaping to a static function and test it directly.",
+      "parentUuid": "3de4288b_b2d9a4d7",
+      "range": {
+        "startLine": 416,
+        "startChar": 15,
+        "endLine": 416,
+        "endChar": 35
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "973ef7d8_2715f4b8",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 8
