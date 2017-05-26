@@ -341,7 +341,6 @@ bool HungRendererDialogView::Cancel() {
   content::RenderProcessHost* rph =
       hung_pages_table_model_->GetRenderProcessHost();
   if (rph) {
-#if defined(OS_WIN)
     base::StringPairs crash_keys;
 
     crash_keys.push_back(std::make_pair(
@@ -354,10 +353,11 @@ bool HungRendererDialogView::Cancel() {
         std::make_pair(crash_keys::kHungRendererLastEventType,
                        base::IntToString(unresponsive_state_.last_event_type)));
 
+#if defined(OS_WIN)
     // Try to generate a crash report for the hung process.
     CrashDumpAndTerminateHungChildProcess(rph->GetHandle(), crash_keys);
 #else
-    rph->Shutdown(content::RESULT_CODE_HUNG, false);
+    rph->TerminateHungRenderProcess(crash_keys);
 #endif
   }
   return true;

@@ -36,11 +36,12 @@ const char kNumExtensionsCount[] = "num-extensions";
 const char kShutdownType[] = "shutdown-type";
 const char kBrowserUnpinTrace[] = "browser-unpin-trace";
 
-#if defined(OS_WIN)
 const char kHungRendererOutstandingAckCount[] = "hung-outstanding-acks";
 const char kHungRendererOutstandingEventType[] = "hung-outstanding-event-type";
 const char kHungRendererLastEventType[] = "hung-last-event-type";
 const char kHungRendererReason[] = "hung-reason";
+
+#if defined(OS_WIN)
 
 const char kThirdPartyModulesLoaded[] = "third-party-modules-loaded";
 const char kThirdPartyModulesNotLoaded[] = "third-party-modules-not-loaded";

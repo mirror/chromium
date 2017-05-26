@@ -261,6 +261,8 @@ namespace {
 
 const RenderProcessHostFactory* g_render_process_host_factory_ = nullptr;
 const char kSiteProcessMapKeyName[] = "content_site_process_map";
+constexpr base::TimeDelta kVoluntaryTerminationTimeout =
+    base::TimeDelta::FromSeconds(3);
 
 #if defined(OS_ANDROID)
 // This matches Android's ChildProcessConnection state before OnProcessLaunched.
@@ -1257,6 +1259,7 @@ void RenderProcessHostImpl::InitializeChannelProxy() {
   // surprising behavior.
   channel_->GetRemoteAssociatedInterface(&remote_route_provider_);
   channel_->GetRemoteAssociatedInterface(&renderer_interface_);
+  content::BindInterface(this, MakeRequest(&crasher_interface_));
 
   // We start the Channel in a paused state. It will be briefly unpaused again
   // in Init() if applicable, before process launch is initiated.
@@ -2353,6 +2356,24 @@ bool RenderProcessHostImpl::FastShutdownIfPossible() {
 
   ProcessDied(false /* already_dead */, nullptr);
   return true;
+}
+
+void RenderProcessHostImpl::TerminateHungRenderProcess(
+    const base::StringPairs& additional_crash_keys) {
+  std::vector<mojom::CrashKeyPtr> mojo_crash_keys;
+  mojo_crash_keys.reserve(additional_crash_keys.size());
+
+  for (const auto& crash_key : additional_crash_keys) {
+    mojo_crash_keys.push_back(
+        mojom::CrashKey::New(crash_key.first, crash_key.second));
+  }
+  crasher_interface_->Crash(std::move(mojo_crash_keys));
+
+  BrowserThread::PostDelayedTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(base::IgnoreResult(&RenderProcessHostImpl::Shutdown),
+                     weak_factory_.GetWeakPtr(), RESULT_CODE_HUNG, false),
+      kVoluntaryTerminationTimeout);
 }
 
 bool RenderProcessHostImpl::Send(IPC::Message* msg) {
