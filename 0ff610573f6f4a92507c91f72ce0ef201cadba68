@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fdb4ba95_9302dc5d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildConnectionAllocator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-05-26T21:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6a71134_d173cf32",
+      "revId": "0ff610573f6f4a92507c91f72ce0ef201cadba68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e48deab_fb8f64b0",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e1dbe77a_03b85668",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-05-26T21:34:53Z",
+      "side": 1,
+      "message": "Good point. We\u0027d be leaking that connection if the warm-up process crashed.\nAdded a test to check that case and addressed it by bringing back the connection factory to the SpareChildConnection.\nNow forwarding the deathcallback to the spare connection to make sure it is cleaned-up.",
+      "parentUuid": "9e48deab_fb8f64b0",
+      "revId": "0ff610573f6f4a92507c91f72ce0ef201cadba68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2aee44f_fef4a2f3",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-05-25T23:32:19Z",
       "side": 1,
       "message": "this used to happen when warmup connection is allocated, not when it\u0027s used.",
+      "revId": "0ff610573f6f4a92507c91f72ce0ef201cadba68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f6dea9_24e2e7f1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-05-26T21:34:53Z",
+      "side": 1,
+      "message": "Right. The question is whether that was the right behavior. Should a warm-up connection potentially cause other tabs to be killed when it\u0027s created and may not be used? Or should it be when it\u0027s about to be used?\nAddressing the previous point I reverted to the old behavior, but I am not convinced it\u0027s the correct one.",
+      "parentUuid": "e2aee44f_fef4a2f3",
       "revId": "0ff610573f6f4a92507c91f72ce0ef201cadba68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
