@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58a37761_6dd703f2",
+        "filename": "chrome/app/vector_icons/profile_switcher_outline.icon",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-26T01:53:29Z",
+      "side": 1,
+      "message": "Do we need a 1x version?",
+      "revId": "3f4840653f6bc6bfeb1ac3a43d3cd36e8cc8aaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
