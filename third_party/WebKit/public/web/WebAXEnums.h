@@ -206,7 +206,6 @@ enum WebAXRole {
 // Accessibility states, used as a bitmask.
 enum WebAXState {
   kWebAXStateBusy,
-  kWebAXStateChecked,
   kWebAXStateEnabled,
   kWebAXStateExpanded,
   kWebAXStateFocusable,
@@ -218,7 +217,6 @@ enum WebAXState {
   kWebAXStateMultiline,
   kWebAXStateMultiselectable,
   kWebAXStateOffscreen,
-  kWebAXStatePressed,
   kWebAXStateProtected,
   kWebAXStateReadonly,
   kWebAXStateRequired,

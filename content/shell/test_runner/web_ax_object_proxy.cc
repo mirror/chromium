@@ -605,7 +605,7 @@ gin::ObjectTemplateBuilder WebAXObjectProxy::GetObjectTemplateBuilder(
       .SetProperty("isSelectedOptionActive",
                    &WebAXObjectProxy::IsSelectedOptionActive)
       .SetProperty("isExpanded", &WebAXObjectProxy::IsExpanded)
-      .SetProperty("isChecked", &WebAXObjectProxy::IsChecked)
+      .SetProperty("checkedState", &WebAXObjectProxy::CheckedState)
       .SetProperty("isVisible", &WebAXObjectProxy::IsVisible)
       .SetProperty("isOffScreen", &WebAXObjectProxy::IsOffScreen)
       .SetProperty("isCollapsed", &WebAXObjectProxy::IsCollapsed)
@@ -636,7 +636,6 @@ gin::ObjectTemplateBuilder WebAXObjectProxy::GetObjectTemplateBuilder(
       .SetProperty("columnCount", &WebAXObjectProxy::ColumnCount)
       .SetProperty("columnHeadersCount", &WebAXObjectProxy::ColumnHeadersCount)
       .SetProperty("isClickable", &WebAXObjectProxy::IsClickable)
-      .SetProperty("isButtonStateMixed", &WebAXObjectProxy::IsButtonStateMixed)
       //
       // NEW bounding rect calculation - high-level interface
       //
@@ -1037,9 +1036,16 @@ bool WebAXObjectProxy::IsExpanded() {
   return accessibility_object_.IsExpanded() == blink::kWebAXExpandedExpanded;
 }
 
-bool WebAXObjectProxy::IsChecked() {
+std::string WebAXObjectProxy::CheckedState() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.CheckedState() != blink::WebAXCheckedFalse;
+  switch (accessibility_object_.CheckedState()) {
+    case blink::WebAXCheckedTrue:
+      return "true";
+    case blink::WebAXCheckedMixed:
+      return "mixed";
+    default:
+      return "false";
+  }
 }
 
 bool WebAXObjectProxy::IsCollapsed() {
@@ -1253,11 +1259,6 @@ int32_t WebAXObjectProxy::ColumnHeadersCount() {
 bool WebAXObjectProxy::IsClickable() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
   return accessibility_object_.IsClickable();
-}
-
-bool WebAXObjectProxy::IsButtonStateMixed() {
-  accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.CheckedState() == blink::WebAXCheckedMixed;
 }
 
 v8::Local<v8::Object> WebAXObjectProxy::AriaControlsElementAtIndex(

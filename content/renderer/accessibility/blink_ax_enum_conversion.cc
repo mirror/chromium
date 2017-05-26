@@ -43,9 +43,6 @@ uint32_t AXStateFromBlink(const blink::WebAXObject& o) {
   if (o.IsOffScreen())
     state |= (1 << ui::AX_STATE_OFFSCREEN);
 
-  if (o.IsPressed())
-    state |= (1 << ui::AX_STATE_PRESSED);
-
   if (o.IsPasswordField())
     state |= (1 << ui::AX_STATE_PROTECTED);
 
