@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d185d95_b9a47c0a",
+        "filename": "components/new_or_sad_tab_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-05-26T05:02:44Z",
+      "side": 0,
+      "message": "need this as we plan to use this in a future UI addition.",
+      "revId": "ab2203dcf6d6ac36745824fef3b82d0165986251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
