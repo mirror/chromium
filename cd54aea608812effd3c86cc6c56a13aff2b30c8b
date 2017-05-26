@@ -22,6 +22,30 @@
       "revId": "cd54aea608812effd3c86cc6c56a13aff2b30c8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c46888c_cb94c1d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-05-26T22:40:17Z",
+      "side": 1,
+      "message": "Makes sense, it helps that setPadding is smart. Done.",
+      "parentUuid": "8c6598be_5d7d8c8f",
+      "range": {
+        "startLine": 615,
+        "startChar": 28,
+        "endLine": 615,
+        "endChar": 39
+      },
+      "revId": "cd54aea608812effd3c86cc6c56a13aff2b30c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
