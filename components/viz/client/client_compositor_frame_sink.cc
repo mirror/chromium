@@ -99,6 +99,26 @@ void ClientCompositorFrameSink::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
+void ClientCompositorFrameSink::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  DCHECK(thread_checker_);
+  DCHECK(thread_checker_->CalledOnValidThread());
+  if (!client_)
+    return;
+  client_->DidPresentCompositorFrame(presentation_token, timestamp, refresh);
+}
+
+void ClientCompositorFrameSink::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  DCHECK(thread_checker_);
+  DCHECK(thread_checker_->CalledOnValidThread());
+  if (!client_)
+    return;
+  client_->DidDiscardCompositorFrame(presentation_token);
+}
+
 void ClientCompositorFrameSink::OnBeginFrame(
     const cc::BeginFrameArgs& begin_frame_args) {
   begin_frame_source_->OnBeginFrame(begin_frame_args);
