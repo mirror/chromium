@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "661620a8_cf2ddc8c",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-26T04:34:25Z",
+      "side": 1,
+      "message": "nit: GetOutgoingReferrer (for new methods we seem to use this pattern more commonly)",
+      "revId": "efe6eb8155235e025ccb6a9032c61ecd04dec289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2a0db4_33d6da2a",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-26T04:34:25Z",
+      "side": 1,
+      "message": "nit: GetAddressSpace",
+      "revId": "efe6eb8155235e025ccb6a9032c61ecd04dec289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
