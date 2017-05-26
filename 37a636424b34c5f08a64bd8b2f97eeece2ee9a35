@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1df7923a_8a6743d4",
+        "filename": "tools/perf/benchmarks/system_health.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-05-26T14:24:07Z",
+      "side": 1,
+      "message": "We could have them have different ones. The only reason I didn\u0027t is because we weren\u0027t  differentiating before. If we think its a good idea to do so, I can spilt them.\n\nWe have to split between mobile/desktop for the story name validation. The way its currently implemented wouldn\u0027t work with them being merged since there are stories on mobile that aren\u0027t on desktop and vice versa.",
+      "parentUuid": "9c048638_10370492",
+      "range": {
+        "startLine": 142,
+        "startChar": 21,
+        "endLine": 142,
+        "endChar": 52
+      },
+      "revId": "37a636424b34c5f08a64bd8b2f97eeece2ee9a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f57d07cd_0b064195",
         "filename": "tools/perf/benchmarks/system_health.py",
         "patchSetId": 5
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "157efd05_ca261929",
+        "filename": "tools/perf/benchmarks/v8_browsing.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-05-26T14:24:07Z",
+      "side": 1,
+      "message": "See other comment about why we have to keep mobile/desktop split.",
+      "parentUuid": "c9ef87f6_106b243b",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "37a636424b34c5f08a64bd8b2f97eeece2ee9a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fecd9c10_03942fed",
         "filename": "tools/perf/page_sets/system_health/chrome_stories.py",
         "patchSetId": 5
@@ -106,6 +154,30 @@
       "writtenOn": "2017-05-26T09:09:46Z",
       "side": 1,
       "message": "Is the new disabling mechanism for \"permanent\" disables, for \"temporary\" disables, or both?\n\nHow are we going to be able to distinguish between \"permanent\" and \"temporary\" disables?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "37a636424b34c5f08a64bd8b2f97eeece2ee9a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fb2ae4_8c025563",
+        "filename": "tools/perf/page_sets/system_health/chrome_stories.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-05-26T14:24:07Z",
+      "side": 1,
+      "message": "We expect permanent \u0027this should not run here\u0027 disabling  to be done with CanRunOnBrowser similar to the example below. If people were to want to perm disable using this, I would assume they would make the reason reflect that... but the plan is CanRunOnBrowser\n\nhttps://cs.chromium.org/chromium/src/tools/perf/page_sets/repeatable_synthesize_scroll_gesture_shared_state.py?l\u003d12",
+      "parentUuid": "fecd9c10_03942fed",
       "range": {
         "startLine": 33,
         "startChar": 0,
