@@ -935,6 +935,20 @@ if (enable_vr) {
   }
 }
 
+android_library("vr_nfc_java") {
+  java_files = [ "//chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/nfc_apk/SimNfcActivity.java" ]
+  deps = []
+}
+
+android_apk("vr_nfc_apk") {
+  apk_name = "VrNfcSimulator"
+  android_manifest = "//chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/nfc_apk/AndroidManifest.xml"
+  deps = [
+    ":vr_nfc_java",
+  ]
+  proguard_enabled = false
+}
+
 android_library("chrome_sync_shell_test_apk_java") {
   testonly = true
 
