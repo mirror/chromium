@@ -489,6 +489,8 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
   bool unified_desktop_enabled_ = false;
 
+  base::Closure created_mirror_window_;
+
   base::ObserverList<DisplayObserver> observers_;
 
   base::WeakPtrFactory<DisplayManager> weak_ptr_factory_;
