@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c00eab2_3d73d968",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-26T10:53:17Z",
+      "side": 1,
+      "message": "This comment should be fixed.",
+      "revId": "4af76a1fdafa88c6307e308425dee6d1bf5a7e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926f43e4_7ee5535b",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-26T10:53:17Z",
+      "side": 1,
+      "message": "It would be great if we could remove cors_preflight_flag and simply rely on the mode.",
+      "range": {
+        "startLine": 813,
+        "startChar": 10,
+        "endLine": 813,
+        "endChar": 29
+      },
+      "revId": "4af76a1fdafa88c6307e308425dee6d1bf5a7e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
