@@ -12,6 +12,10 @@ if (is_android) {
   import("//build/config/sanitizers/sanitizers.gni")
 }
 
+if (is_fuchsia) {
+  import("//build/config/fuchsia/rules.gni")
+}
+
 # Define a test as an executable (or apk on Android) with the "testonly" flag
 # set.
 # Variable:
@@ -273,8 +277,25 @@ template("test") {
       bundle_deps += [ ":$_resources_bundle_data" ]
     }
   } else {
+    if (is_fuchsia) {
+      _output_name = invoker.target_name
+      _test_runner_target = "${_output_name}__test_runner_script"
+
+      test_runner_script(_test_runner_target) {
+        forward_variables_from(invoker,
+                               [
+                                 "data",
+                                 "data_deps",
+                                 "deps",
+                                 "public_deps",
+                               ])
+        test_name = _output_name
+      }
+    }
+
     executable(target_name) {
       deps = []
+      data_deps = []
       forward_variables_from(invoker, "*")
 
       testonly = true
@@ -286,6 +307,10 @@ template("test") {
         # Give tests the default manifest on Windows (a no-op elsewhere).
         "//build/win:default_exe_manifest",
       ]
+
+      if (is_fuchsia) {
+        data_deps += [ ":$_test_runner_target" ]
+      }
     }
   }
 }
