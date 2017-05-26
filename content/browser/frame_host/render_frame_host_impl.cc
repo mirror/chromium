@@ -1881,6 +1881,8 @@ void RenderFrameHostImpl::OnRunJavaScriptDialog(
     UMA_HISTOGRAM_COUNTS("JSDialogs.CharacterCount.MainFrame", message_length);
   }
 
+  OnToggleFullscreen(false);
+
   // While a JS message dialog is showing, tabs in the same process shouldn't
   // process input events.
   GetProcess()->SetIgnoreInputEvents(true);
