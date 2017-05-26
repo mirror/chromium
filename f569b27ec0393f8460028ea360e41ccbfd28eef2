@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08af587b_de17fda9",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-05-26T11:35:36Z",
+      "side": 1,
+      "message": "Done, here and there",
+      "parentUuid": "d2940569_77f91b49",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "f569b27ec0393f8460028ea360e41ccbfd28eef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d23a9faa_556b98b7",
         "filename": "media/midi/midi_service.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "17d918bc_9c0a5423",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-05-26T11:35:36Z",
+      "side": 1,
+      "message": "Oh, thanks. My old local branch just didn\u0027t have your  change. I will use it in the next patch with a rebase.",
+      "parentUuid": "d23a9faa_556b98b7",
+      "range": {
+        "startLine": 59,
+        "startChar": 56,
+        "endLine": 59,
+        "endChar": 64
+      },
+      "revId": "f569b27ec0393f8460028ea360e41ccbfd28eef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64768a14_94a7ad24",
         "filename": "media/midi/midi_service.cc",
         "patchSetId": 5
@@ -59,6 +107,47 @@
       "writtenOn": "2017-05-26T09:00:58Z",
       "side": 1,
       "message": "Maybe\n\nif (!manager_)\n\nis better now?",
+      "revId": "f569b27ec0393f8460028ea360e41ccbfd28eef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b1d4f3_eb82da97",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-05-26T11:35:36Z",
+      "side": 1,
+      "message": "Aha, now it\u0027s possible!",
+      "parentUuid": "64768a14_94a7ad24",
+      "revId": "f569b27ec0393f8460028ea360e41ccbfd28eef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b6bcb5d_c9bf5936",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-05-26T11:35:36Z",
+      "side": 1,
+      "message": "removed this check since it\u0027s too trivial in the last patch set",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 7
+      },
       "revId": "f569b27ec0393f8460028ea360e41ccbfd28eef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
