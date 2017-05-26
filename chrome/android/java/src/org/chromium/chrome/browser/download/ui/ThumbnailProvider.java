@@ -15,6 +15,9 @@ public interface ThumbnailProvider {
 
         /** Called when a thumbnail is ready. */
         void onThumbnailRetrieved(String filePath, Bitmap thumbnail);
+
+        /** The size of the thumbnail to be retrieved. */
+        int getIconSize();
     }
 
     /** Destroys the class. */
@@ -25,7 +28,7 @@ public interface ThumbnailProvider {
      * thumbnail via {@link ThumbnailRequest#onThumbnailRetrieved}.
      * @param request Parameters that describe the thumbnail being retrieved.
      */
-    Bitmap getThumbnail(ThumbnailRequest request);
+    void getThumbnail(ThumbnailRequest request);
 
     /** Removes a particular request from the pending queue. */
     void cancelRetrieval(ThumbnailRequest request);

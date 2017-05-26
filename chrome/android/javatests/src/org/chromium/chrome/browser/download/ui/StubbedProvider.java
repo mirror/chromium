@@ -8,7 +8,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 
 import android.content.ComponentName;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -165,8 +164,8 @@ public class StubbedProvider implements BackendProvider {
         public void destroy() {}
 
         @Override
-        public Bitmap getThumbnail(ThumbnailRequest request) {
-            return null;
+        public void getThumbnail(ThumbnailRequest request) {
+            request.onThumbnailRetrieved(null, null);
         }
 
         @Override

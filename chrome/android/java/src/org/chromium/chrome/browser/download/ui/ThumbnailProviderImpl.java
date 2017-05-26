@@ -42,9 +42,6 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     /** Enqueues requests. */
     private final Handler mHandler;
 
-    /** Maximum size in pixels of the smallest side of the thumbnail. */
-    private final int mIconSizePx;
-
     /** Queue of files to retrieve thumbnails for. */
     private final Deque<ThumbnailRequest> mRequestQueue;
 
@@ -54,8 +51,7 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     /** Request that is currently having its thumbnail retrieved. */
     private ThumbnailRequest mCurrentRequest;
 
-    public ThumbnailProviderImpl(int iconSizePx) {
-        mIconSizePx = iconSizePx;
+    public ThumbnailProviderImpl() {
         mHandler = new Handler(Looper.getMainLooper());
         mRequestQueue = new ArrayDeque<>();
         mNativeThumbnailProvider = nativeInit();
@@ -69,16 +65,18 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     }
 
     @Override
-    public Bitmap getThumbnail(ThumbnailRequest request) {
+    public void getThumbnail(ThumbnailRequest request) {
         String filePath = request.getFilePath();
-        if (TextUtils.isEmpty(filePath)) return null;
+        if (TextUtils.isEmpty(filePath)) return;
 
         Bitmap cachedBitmap = getBitmapFromCache(filePath);
-        if (cachedBitmap != null) return cachedBitmap;
+        if (cachedBitmap != null) {
+            request.onThumbnailRetrieved(filePath, cachedBitmap);
+            return;
+        }
 
         mRequestQueue.offer(request);
         processQueue();
-        return null;
     }
 
     /** Removes a particular file from the pending queue. */
@@ -114,7 +112,8 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         Bitmap cachedBitmap = getBitmapFromCache(currentFilePath);
         if (cachedBitmap == null) {
             // Asynchronously process the file to make a thumbnail.
-            nativeRetrieveThumbnail(mNativeThumbnailProvider, currentFilePath, mIconSizePx);
+            nativeRetrieveThumbnail(
+                    mNativeThumbnailProvider, currentFilePath, mCurrentRequest.getIconSize());
         } else {
             // Send back the already-processed file.
             onThumbnailRetrieved(currentFilePath, cachedBitmap);
