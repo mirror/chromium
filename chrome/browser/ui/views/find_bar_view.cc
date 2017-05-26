@@ -69,11 +69,11 @@ class MatchCountLabel : public views::Label {
   // views::Label overrides:
   bool CanProcessEventsWithinSubtree() const override { return true; }
 
-  gfx::Size GetPreferredSize() const override {
+  gfx::Size CalculatePreferredSize() const override {
     // We need to return at least 1dip so that box layout adds padding on either
     // side (otherwise there will be a jump when our size changes between empty
     // and non-empty).
-    gfx::Size size = views::Label::GetPreferredSize();
+    gfx::Size size = views::Label::CalculatePreferredSize();
     size.set_width(std::max(1, size.width()));
     return size;
   }
@@ -171,6 +171,11 @@ FindBarView::FindBarView(FindBarHost* host)
                            kInteriorPadding, kInterChildSpacing);
   SetLayoutManager(manager);
   manager->SetFlexForView(find_text_, 1);
+
+  // This prevents the overall width from changing every time the match count
+  // text changes. The space the match count needs will be taken out of
+  // |find_text_|.
+  SetPreferredSize(manager->GetPreferredSize(this));
 }
 
 FindBarView::~FindBarView() {
@@ -254,15 +259,6 @@ void FindBarView::Layout() {
       find_text_edge, find_previous_button_->y(),
       find_previous_button_->x() - find_text_edge,
       find_previous_button_->height());
-}
-
-gfx::Size FindBarView::GetPreferredSize() const {
-  gfx::Size size = views::View::GetPreferredSize();
-  // Ignore the preferred size for the match count label, and just let it take
-  // up part of the space for the input textfield. This prevents the overall
-  // width from changing every time the match count text changes.
-  size.set_width(size.width() - match_count_text_->GetPreferredSize().width());
-  return size;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
