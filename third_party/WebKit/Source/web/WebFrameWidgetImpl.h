@@ -31,6 +31,7 @@
 #ifndef WebFrameWidgetImpl_h
 #define WebFrameWidgetImpl_h
 
+#include "core/animation/CompositorMutatorImpl.h"
 #include "core/frame/WebFrameWidgetBase.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/heap/SelfKeepAlive.h"
@@ -41,7 +42,6 @@
 #include "public/platform/WebPoint.h"
 #include "public/platform/WebSize.h"
 #include "public/web/WebInputMethodController.h"
-#include "web/CompositorMutatorImpl.h"
 #include "web/PageWidgetDelegate.h"
 #include "web/WebInputMethodControllerImpl.h"
 #include "web/WebLocalFrameImpl.h"
