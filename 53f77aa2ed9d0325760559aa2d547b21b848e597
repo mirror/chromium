@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ea41f2d_afef63cd",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-05-26T06:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7727e388_eeec3181",
+      "revId": "53f77aa2ed9d0325760559aa2d547b21b848e597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1875b544_9d296747",
         "filename": "media/midi/midi_service.h",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-05-25T11:41:48Z",
       "side": 1,
       "message": "Maybe \"the\" right thread? Ditto below.",
+      "range": {
+        "startLine": 60,
+        "startChar": 28,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "53f77aa2ed9d0325760559aa2d547b21b848e597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f50909_80112858",
+        "filename": "media/midi/midi_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-05-26T06:48:09Z",
+      "side": 1,
+      "message": "removed this method, but I adopt s/a/the/g for the comments of manager_destructor_runner_",
+      "parentUuid": "1875b544_9d296747",
       "range": {
         "startLine": 60,
         "startChar": 28,
