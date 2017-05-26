@@ -4,7 +4,7 @@
 
 #include "platform/bindings/RuntimeCallStats.h"
 
-#include <algorithm>
+#include "platform/bindings/V8PerIsolateData.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -40,6 +40,11 @@ RuntimeCallStats::RuntimeCallStats() {
   for (int i = 0; i < number_of_counters_; i++) {
     counters_[i] = RuntimeCallCounter(names[i]);
   }
+}
+
+// static
+RuntimeCallStats* RuntimeCallStats::From(v8::Isolate* isolate) {
+  return V8PerIsolateData::From(isolate)->GetRuntimeCallStats();
 }
 
 void RuntimeCallStats::Reset() {
