@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb252ce7_c73ba091",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-26T11:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c00eab2_3d73d968",
+      "revId": "4af76a1fdafa88c6307e308425dee6d1bf5a7e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "926f43e4_7ee5535b",
         "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-05-26T10:53:17Z",
       "side": 1,
       "message": "It would be great if we could remove cors_preflight_flag and simply rely on the mode.",
+      "range": {
+        "startLine": 813,
+        "startChar": 10,
+        "endLine": 813,
+        "endChar": 29
+      },
+      "revId": "4af76a1fdafa88c6307e308425dee6d1bf5a7e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1c7bf9_1fa874d6",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-26T11:35:48Z",
+      "side": 1,
+      "message": "Thank you for catching this. I just remembered that CORS with forced preflight mode has been abandoned on the spec side.\n\nhttps://github.com/whatwg/fetch/commit/2ca5730755795a4fc5e50c06f8fc477adb931d74\n\nGiven this, I\u0027d like to have more time to think about this point.",
+      "parentUuid": "926f43e4_7ee5535b",
       "range": {
         "startLine": 813,
         "startChar": 10,
