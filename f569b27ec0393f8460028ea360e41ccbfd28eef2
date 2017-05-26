@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2940569_77f91b49",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-26T09:00:58Z",
+      "side": 1,
+      "message": ".get() is not needed.",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "f569b27ec0393f8460028ea360e41ccbfd28eef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23a9faa_556b98b7",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-26T09:00:58Z",
+      "side": 1,
+      "message": "You can use std::move instead of release: https://chromium-review.googlesource.com/c/515264/",
+      "range": {
+        "startLine": 59,
+        "startChar": 56,
+        "endLine": 59,
+        "endChar": 64
+      },
+      "revId": "f569b27ec0393f8460028ea360e41ccbfd28eef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64768a14_94a7ad24",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-26T09:00:58Z",
+      "side": 1,
+      "message": "Maybe\n\nif (!manager_)\n\nis better now?",
+      "revId": "f569b27ec0393f8460028ea360e41ccbfd28eef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
