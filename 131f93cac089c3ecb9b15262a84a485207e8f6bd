@@ -34,6 +34,24 @@
       "revId": "131f93cac089c3ecb9b15262a84a485207e8f6bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2b1378_90b3cd26",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-26T00:51:10Z",
+      "side": 1,
+      "message": "You can poll for title change to interstitial before dismissing it. Then poll for it to be changed back after. Look at CriteriaHelper. Not as great as CallbackHelper, but not as terrible as sleeping.",
+      "parentUuid": "7a2c405b_0dc1f4b7",
+      "revId": "131f93cac089c3ecb9b15262a84a485207e8f6bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
