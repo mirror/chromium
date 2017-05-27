@@ -61,6 +61,8 @@ const char MediaLog::kWatchTimeAudioVideoBackgroundEmbeddedExperience[] =
 const char MediaLog::kWatchTimeFinalize[] = "FinalizeWatchTime";
 const char MediaLog::kWatchTimeFinalizePower[] = "FinalizePowerWatchTime";
 
+const char MediaLog::kUnderflowCount[] = "UnderflowCount";
+
 base::flat_set<base::StringPiece> MediaLog::GetWatchTimeKeys() {
   return base::flat_set<base::StringPiece>(
       {kWatchTimeAudioAll,
