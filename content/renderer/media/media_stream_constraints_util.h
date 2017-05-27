@@ -10,6 +10,7 @@
 #include "base/logging.h"
 #include "content/common/content_export.h"
 #include "content/common/media/media_devices.mojom.h"
+#include "content/renderer/media/media_stream_audio_processor_options.h"
 #include "content/renderer/media/video_track_adapter.h"
 #include "media/capture/video_capture_types.h"
 #include "third_party/WebKit/public/platform/WebMediaConstraints.h"
@@ -56,8 +57,8 @@ class CONTENT_EXPORT VideoCaptureSettings {
 
   // Creates an object without value and with the given
   // |failed_constraint_name|. Does not take ownership of
-  // |failed_constraint_name|, so it must be null or point to a string that
-  // remains accessible.
+  // |failed_constraint_name|, so it must point to a string that remains
+  // accessible. |failed_constraint_name| must be non-null.
   explicit VideoCaptureSettings(const char* failed_constraint_name);
 
   // Creates an object with the given values.
@@ -131,6 +132,70 @@ class CONTENT_EXPORT VideoCaptureSettings {
   base::Optional<bool> noise_reduction_;
   VideoTrackAdapterSettings track_adapter_settings_;
   double min_frame_rate_;
+};
+
+class CONTENT_EXPORT AudioCaptureSettings {
+ public:
+  // Creates an object without value and with an empty failed constraint name.
+  AudioCaptureSettings();
+
+  // Creates an object without value and with the given
+  // |failed_constraint_name|. Does not take ownership of
+  // |failed_constraint_name|, so it must point to a string that remains
+  // accessible. |failed_constraint_name| must be non-null.
+  explicit AudioCaptureSettings(const char* failed_constraint_name);
+
+  // Creates an object with the given values.
+  explicit AudioCaptureSettings(
+      std::string device_id,
+      const media::AudioParameters& audio_parameters,
+      bool enable_hotword,
+      bool disable_local_echo,
+      bool enable_automatic_output_device_selection,
+      const AudioProcessingProperties& audio_processing_properties);
+  AudioCaptureSettings(const AudioCaptureSettings& other);
+  AudioCaptureSettings& operator=(const AudioCaptureSettings& other);
+  AudioCaptureSettings(AudioCaptureSettings&& other);
+  AudioCaptureSettings& operator=(AudioCaptureSettings&& other);
+
+  bool HasValue() const { return failed_constraint_name_ == nullptr; }
+
+  // Accessors.
+  const char* failed_constraint_name() const { return failed_constraint_name_; }
+  const std::string& device_id() const {
+    DCHECK(HasValue());
+    return device_id_;
+  }
+  // This field is meaningless in content capture.
+  const media::AudioParameters& device_parameters() const {
+    DCHECK(HasValue());
+    return audio_parameters_;
+  }
+  bool hotword_enabled() const {
+    DCHECK(HasValue());
+    return hotword_enabled_;
+  }
+  bool disable_local_echo() const {
+    DCHECK(HasValue());
+    return disable_local_echo_;
+  }
+  bool render_to_associated_sink() const {
+    DCHECK(HasValue());
+    return render_to_associated_sink_;
+  }
+  AudioProcessingProperties audio_processing_properties() const {
+    DCHECK(HasValue());
+    return audio_processing_properties_;
+  }
+
+ private:
+  const char* failed_constraint_name_;
+  std::string device_id_;
+  media::AudioParameters audio_parameters_;
+  bool hotword_enabled_;
+  bool disable_local_echo_;
+  bool render_to_associated_sink_;
+  AudioProcessingProperties audio_processing_properties_;
 };
 
 // Method to get boolean value of constraint with |name| from constraints.
@@ -213,6 +278,9 @@ auto ConstraintMin(const ConstraintType& constraint)
   return constraint.HasExact() ? constraint.Exact() : constraint.Min();
 }
 
+std::string GetMediaStreamSource(const blink::WebMediaConstraints& constraints);
+bool IsDeviceCapture(const blink::WebMediaConstraints& constraints);
+
 // This function selects track settings from a set of candidate resolutions and
 // frame rates, given the source video-capture format and ideal values.
 // The output are settings for a VideoTrackAdapter, which can adjust the
@@ -241,6 +309,17 @@ VideoTrackAdapterSettings CONTENT_EXPORT SelectVideoTrackAdapterSettings(
     const NumericRangeSet<double>& frame_rate_set,
     const media::VideoCaptureFormat& source_format,
     bool expect_source_native_size);
+
+// Generic distance function between two values for numeric constraints. Based
+// on the fitness-distance function described in
+// https://w3c.github.io/mediacapture-main/#dfn-fitness-distance
+double NumericConstraintFitnessDistance(double value1, double value2);
+
+// Fitness distance between |value| and |constraint|.
+// Based on https://w3c.github.io/mediacapture-main/#dfn-fitness-distance.
+double StringConstraintFitnessDistance(
+    const blink::WebString& value,
+    const blink::StringConstraint& constraint);
 
 }  // namespace content
 
