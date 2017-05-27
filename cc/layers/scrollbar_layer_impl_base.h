@@ -21,15 +21,15 @@ class CC_EXPORT ScrollbarLayerImplBase : public LayerImpl {
   ElementId scroll_element_id() const { return scroll_element_id_; }
   void SetScrollElementId(ElementId scroll_element_id);
 
-  float current_pos() const { return current_pos_; }
   bool SetCurrentPos(float current_pos);
   bool SetClipLayerLength(float clip_layer_length);
   bool SetScrollLayerLength(float scroll_layer_length);
   bool SetVerticalAdjust(float vertical_adjust);
 
-  float clip_layer_length() const { return clip_layer_length_; }
-  float scroll_layer_length() const { return scroll_layer_length_; }
-  float vertical_adjust() const { return vertical_adjust_; }
+  float current_pos() const;
+  float clip_layer_length() const;
+  float scroll_layer_length() const;
+  float vertical_adjust() const;
 
   bool is_overlay_scrollbar() const { return is_overlay_scrollbar_; }
   void set_is_overlay_scrollbar(bool is_overlay) {

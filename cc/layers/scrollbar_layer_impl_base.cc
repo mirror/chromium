@@ -49,6 +49,10 @@ void ScrollbarLayerImplBase::SetScrollElementId(ElementId scroll_element_id) {
   layer_tree_impl()->UnregisterScrollbar(this);
   scroll_element_id_ = scroll_element_id;
   layer_tree_impl()->RegisterScrollbar(this);
+
+  // The new scrollbar's geometries are not initialized by default and need to
+  // be calculated.
+  layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
 }
 
 bool ScrollbarLayerImplBase::SetCurrentPos(float current_pos) {
@@ -57,6 +61,26 @@ bool ScrollbarLayerImplBase::SetCurrentPos(float current_pos) {
   current_pos_ = current_pos;
   NoteLayerPropertyChanged();
   return true;
+}
+
+float ScrollbarLayerImplBase::current_pos() const {
+  DCHECK(!layer_tree_impl()->ScrollbarGeometriesNeedUpdate());
+  return current_pos_;
+}
+
+float ScrollbarLayerImplBase::clip_layer_length() const {
+  DCHECK(!layer_tree_impl()->ScrollbarGeometriesNeedUpdate());
+  return clip_layer_length_;
+}
+
+float ScrollbarLayerImplBase::scroll_layer_length() const {
+  DCHECK(!layer_tree_impl()->ScrollbarGeometriesNeedUpdate());
+  return scroll_layer_length_;
+}
+
+float ScrollbarLayerImplBase::vertical_adjust() const {
+  DCHECK(!layer_tree_impl()->ScrollbarGeometriesNeedUpdate());
+  return vertical_adjust_;
 }
 
 bool ScrollbarLayerImplBase::CanScrollOrientation() const {
@@ -68,11 +92,11 @@ bool ScrollbarLayerImplBase::CanScrollOrientation() const {
     return false;
 
   return scroll_layer->user_scrollable(orientation()) &&
-         // Ensure clip_layer_length_ smaller than scroll_layer_length_ not
+         // Ensure clip_layer_length smaller than scroll_layer_length not
          // caused by floating error.
-         !MathUtil::IsFloatNearlyTheSame(clip_layer_length_,
-                                         scroll_layer_length_) &&
-         clip_layer_length_ < scroll_layer_length_;
+         !MathUtil::IsFloatNearlyTheSame(clip_layer_length(),
+                                         scroll_layer_length()) &&
+         clip_layer_length() < scroll_layer_length();
 }
 
 bool ScrollbarLayerImplBase::SetVerticalAdjust(float vertical_adjust) {
@@ -173,10 +197,10 @@ gfx::Rect ScrollbarLayerImplBase::ComputeThumbQuadRectWithThumbThicknessScale(
   float track_length = TrackLength();
   int thumb_length = ThumbLength();
   int thumb_thickness = ThumbThickness();
-  float maximum = scroll_layer_length_ - clip_layer_length_;
+  float maximum = scroll_layer_length() - clip_layer_length();
 
   // With the length known, we can compute the thumb's position.
-  float clamped_current_pos = std::min(std::max(current_pos_, 0.f), maximum);
+  float clamped_current_pos = std::min(std::max(current_pos(), 0.f), maximum);
 
   int thumb_offset = TrackStart();
   if (maximum > 0) {

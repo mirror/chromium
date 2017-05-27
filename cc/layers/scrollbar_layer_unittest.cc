@@ -538,6 +538,9 @@ TEST_F(ScrollbarLayerTest, SolidColorDrawQuads) {
   scrollbar_layer_impl->SetClipLayerLength(200 / 3.f);
   scrollbar_layer_impl->SetScrollLayerLength(100 + 200 / 3.f);
 
+  DCHECK(layer_tree_host_->active_tree()->ScrollbarGeometriesNeedUpdate());
+  layer_tree_host_->active_tree()->UpdateScrollbarGeometries();
+
   // Thickness should be overridden to 3.
   {
     std::unique_ptr<RenderPass> render_pass = RenderPass::Create();
@@ -621,6 +624,9 @@ TEST_F(ScrollbarLayerTest, LayerDrivenSolidColorDrawQuads) {
 
   scrollbar_layer_impl->SetBounds(gfx::Size(kTrackLength, kThumbThickness));
   scrollbar_layer_impl->SetCurrentPos(4.f);
+
+  DCHECK(layer_tree_host_->active_tree()->ScrollbarGeometriesNeedUpdate());
+  layer_tree_host_->active_tree()->UpdateScrollbarGeometries();
 
   {
     std::unique_ptr<RenderPass> render_pass = RenderPass::Create();
@@ -782,6 +788,9 @@ TEST_F(ScrollbarLayerTest, SubPixelCanScrollOrientation) {
   clip_layer->SetBounds(gfx::Size(980, 980));
   scroll_layer->SetBounds(gfx::Size(980, 980));
 
+  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
+
   impl.CalcDrawProps(viewport_size);
 
   // Fake clip layer length to scrollbar to mock rounding error.
@@ -793,6 +802,57 @@ TEST_F(ScrollbarLayerTest, SubPixelCanScrollOrientation) {
   scrollbar_layer->SetClipLayerLength(979.0f);
 
   EXPECT_TRUE(scrollbar_layer->CanScrollOrientation());
+}
+
+TEST_F(ScrollbarLayerTest, LayerChangesAffectingScrollbarGeometries) {
+  gfx::Size viewport_size(980, 980);
+
+  LayerTestCommon::LayerImplTest impl;
+
+  LayerImpl* clip_layer = impl.AddChildToRoot<LayerImpl>();
+  LayerImpl* scroll_layer = impl.AddChild<LayerImpl>(clip_layer);
+  scroll_layer->SetElementId(LayerIdToElementIdForTesting(scroll_layer->id()));
+
+  // Make clip_layer the inner viewport container layer. This ensures the later
+  // call to |SetViewportBoundsDelta| will be on a viewport layer.
+  LayerTreeImpl::ViewportLayerIds viewport_ids;
+  viewport_ids.inner_viewport_container = clip_layer->id();
+  impl.host_impl()->active_tree()->SetViewportLayersFromIds(viewport_ids);
+
+  const int kTrackStart = 0;
+  const int kThumbThickness = 10;
+  const bool kIsLeftSideVerticalScrollbar = false;
+  const bool kIsOverlayScrollbar = false;
+  SolidColorScrollbarLayerImpl* scrollbar_layer =
+      impl.AddChild<SolidColorScrollbarLayerImpl>(
+          scroll_layer, HORIZONTAL, kThumbThickness, kTrackStart,
+          kIsLeftSideVerticalScrollbar, kIsOverlayScrollbar);
+  scrollbar_layer->SetScrollElementId(scroll_layer->element_id());
+  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
+
+  scroll_layer->SetScrollClipLayer(clip_layer->id());
+  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
+
+  clip_layer->SetBounds(gfx::Size(900, 900));
+  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
+
+  scroll_layer->SetBounds(gfx::Size(980, 980));
+  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
+
+  clip_layer->SetViewportBoundsDelta(gfx::Vector2dF(1, 2));
+  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
+
+  // Not changing the current value should not require an update.
+  scroll_layer->SetScrollClipLayer(clip_layer->id());
+  clip_layer->SetBounds(gfx::Size(900, 900));
+  scroll_layer->SetBounds(gfx::Size(980, 980));
+  clip_layer->SetViewportBoundsDelta(gfx::Vector2dF(1, 2));
+  DCHECK(!impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
 }
 
 class ScrollbarLayerSolidColorThumbTest : public testing::Test {
@@ -841,6 +901,8 @@ TEST_F(ScrollbarLayerSolidColorThumbTest, SolidColorThumbLength) {
   horizontal_scrollbar_layer_->SetClipLayerLength(5.f);
   horizontal_scrollbar_layer_->SetScrollLayerLength(15.f);
   horizontal_scrollbar_layer_->SetBounds(gfx::Size(100, 3));
+  DCHECK(host_impl_->active_tree()->ScrollbarGeometriesNeedUpdate());
+  host_impl_->active_tree()->UpdateScrollbarGeometries();
   EXPECT_EQ(33, horizontal_scrollbar_layer_->ComputeThumbQuadRect().width());
 
   // The thumb's length should never be less than its thickness.
@@ -852,6 +914,8 @@ TEST_F(ScrollbarLayerSolidColorThumbTest, SolidColorThumbLength) {
 
 TEST_F(ScrollbarLayerSolidColorThumbTest, SolidColorThumbPosition) {
   horizontal_scrollbar_layer_->SetBounds(gfx::Size(100, 3));
+  DCHECK(host_impl_->active_tree()->ScrollbarGeometriesNeedUpdate());
+  host_impl_->active_tree()->UpdateScrollbarGeometries();
 
   horizontal_scrollbar_layer_->SetCurrentPos(0.f);
   horizontal_scrollbar_layer_->SetClipLayerLength(12.f);
@@ -880,6 +944,9 @@ TEST_F(ScrollbarLayerSolidColorThumbTest, SolidColorThumbVerticalAdjust) {
   }
   layers[0]->SetBounds(gfx::Size(100, 3));
   layers[1]->SetBounds(gfx::Size(3, 100));
+
+  DCHECK(host_impl_->active_tree()->ScrollbarGeometriesNeedUpdate());
+  host_impl_->active_tree()->UpdateScrollbarGeometries();
 
   EXPECT_EQ(gfx::Rect(20, 0, 20, 3),
             horizontal_scrollbar_layer_->ComputeThumbQuadRect());

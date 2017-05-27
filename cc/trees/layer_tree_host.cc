@@ -350,6 +350,8 @@ void LayerTreeHost::FinishCommitOnImplThread(
     sync_tree->UpdatePropertyTreeScrollingAndAnimationFromMainThread(
         is_impl_side_update);
 
+    sync_tree->UpdateScrollbarGeometries();
+
     TRACE_EVENT0("cc", "LayerTreeHostInProcess::AnimationHost::PushProperties");
     DCHECK(host_impl->mutator_host());
     mutator_host_->PushPropertiesTo(host_impl->mutator_host());
@@ -364,6 +366,9 @@ void LayerTreeHost::FinishCommitOnImplThread(
 
   micro_benchmark_controller_.ScheduleImplBenchmarks(host_impl);
   property_trees_.ResetAllChangeTracking();
+
+  // We should leave with the scrollbar geometries up-to-date.
+  DCHECK(!sync_tree->ScrollbarGeometriesNeedUpdate());
 }
 
 void LayerTreeHost::PushPropertyTreesTo(LayerTreeImpl* tree_impl) {

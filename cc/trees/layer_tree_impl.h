@@ -453,7 +453,6 @@ class CC_EXPORT LayerTreeImpl {
   ScrollbarSet ScrollbarsFor(ElementId scroll_element_id) const;
 
   void RegisterScrollLayer(LayerImpl* layer);
-  void UnregisterScrollLayer(LayerImpl* layer);
 
   LayerImpl* FindFirstScrollingLayerOrDrawnScrollbarThatIsHitByPoint(
       const gfx::PointF& screen_space_point);
@@ -490,7 +489,25 @@ class CC_EXPORT LayerTreeImpl {
   std::unique_ptr<PendingPageScaleAnimation> TakePendingPageScaleAnimation();
 
   void DidUpdateScrollOffset(int layer_id);
-  void DidUpdateScrollState(int layer_id);
+
+  // Update the geometries of all scrollbars (e.g., thumb size and position). By
+  // default, an update only occurs if a scroll-related layer has changed (see:
+  // SetScrollbarGeometriesNeedUpdate) but an update can be forced by passing
+  // force_update.
+  void UpdateScrollbarGeometries(bool force_update = false);
+
+  // Mark the scrollbars as needing an update due to Layer changes (e.g., if the
+  // bounds of a scrolling layer change, the scrollbar thumbs can change size).
+  // TODO(pdr): This should only be needed for SPV1 when Layers are the API to
+  // the compositor.
+  void SetScrollbarGeometriesNeedUpdate() {
+    if (IsActiveTree())
+      scrollbar_geometries_need_update_ = true;
+  }
+  // True if the scrollbars need an update due to Layer changes.
+  bool ScrollbarGeometriesNeedUpdate() const {
+    return scrollbar_geometries_need_update_;
+  }
 
   bool have_scroll_event_handlers() const {
     return have_scroll_event_handlers_;
@@ -531,7 +548,6 @@ class CC_EXPORT LayerTreeImpl {
   bool SetPageScaleFactorLimits(float min_page_scale_factor,
                                 float max_page_scale_factor);
   bool IsViewportLayerId(int id) const;
-  void UpdateScrollbars(int scroll_layer_id, int clip_layer_id);
   void DidUpdatePageScale();
   void PushBrowserControls(const float* top_controls_shown_ratio);
   bool ClampBrowserControlsShownRatio();
@@ -579,11 +595,6 @@ class CC_EXPORT LayerTreeImpl {
   std::unordered_map<ElementId, FilterOperations, ElementIdHash>
       element_id_to_filter_animations_;
 
-  // Maps from clip layer ids to scroll layer ids.  Note that this only includes
-  // the subset of clip layers that act as scrolling containers.  (This is
-  // derived from LayerImpl::scroll_clip_layer_ and exists to avoid O(n) walks.)
-  std::unordered_map<int, int> clip_scroll_map_;
-
   struct ScrollbarLayerIds {
     int horizontal = Layer::INVALID_ID;
     int vertical = Layer::INVALID_ID;
@@ -605,6 +616,9 @@ class CC_EXPORT LayerTreeImpl {
 
   bool viewport_size_invalid_;
   bool needs_update_draw_properties_;
+
+  // True if a Layer property has changed that requires scrollbar updates.
+  bool scrollbar_geometries_need_update_;
 
   // In impl-side painting mode, this is true when the tree may contain
   // structural differences relative to the active tree.
