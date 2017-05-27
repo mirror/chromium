@@ -2844,6 +2844,7 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
     scrollbar->SetScrollElementId(scroll->element_id());
     root->test_properties()->AddChild(std::move(scrollbar));
     host_impl_->active_tree()->BuildPropertyTreesForTesting();
+    host_impl_->active_tree()->UpdateScrollbarGeometries();
     host_impl_->active_tree()->DidBecomeActive();
     host_impl_->active_tree()->HandleScrollbarShowRequestsFromMain();
     DrawFrame();
@@ -3225,6 +3226,8 @@ TEST_F(LayerTreeHostImplTest, ScrollbarInnerLargerThanOuter) {
 
   horiz_scrollbar->SetScrollElementId(root_scroll->element_id());
 
+  host_impl_->active_tree()->UpdateScrollbarGeometries();
+
   EXPECT_EQ(300, horiz_scrollbar->clip_layer_length());
 }
 
@@ -3330,6 +3333,7 @@ TEST_F(LayerTreeHostImplTest, ScrollbarRegistration) {
   // update.
   animation_task_ = base::Closure();
   child_clip_ptr->SetBounds(gfx::Size(200, 200));
+  host_impl_->active_tree()->UpdateScrollbarGeometries();
   child_ptr->set_needs_show_scrollbars(true);
   host_impl_->active_tree()->HandleScrollbarShowRequestsFromMain();
   EXPECT_FALSE(animation_task_.Equals(base::Closure()));
@@ -3398,6 +3402,7 @@ void LayerTreeHostImplTest::SetupMouseMoveAtWithDeviceScale(
       ->test_properties()
       ->AddChild(std::move(scrollbar));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
+  host_impl_->active_tree()->UpdateScrollbarGeometries();
   host_impl_->active_tree()->DidBecomeActive();
 
   DrawFrame();
@@ -12120,6 +12125,7 @@ void LayerTreeHostImplTest::SetupMouseMoveAtTestScrollbarStates(
       ->AddChild(std::move(scrollbar_1));
 
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
+  host_impl_->active_tree()->UpdateScrollbarGeometries();
   host_impl_->active_tree()->DidBecomeActive();
 
   DrawFrame();
@@ -12228,6 +12234,7 @@ void LayerTreeHostImplTest::SetupMouseMoveAtTestScrollbarStates(
   root_scroll->test_properties()->AddChild(std::move(child_clip));
 
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
+  host_impl_->active_tree()->UpdateScrollbarGeometries();
   host_impl_->active_tree()->DidBecomeActive();
 
   ScrollbarAnimationController* scrollbar_2_animation_controller =

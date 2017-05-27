@@ -1986,6 +1986,9 @@ void LayerTreeHostImpl::UpdateViewportContainerSizes() {
 
     anchor.ResetViewportToAnchoredPosition();
   }
+
+  // If viewport bounds deltas were changed, ensure scrollbars are updated.
+  active_tree_->UpdateScrollbarGeometries();
 }
 
 void LayerTreeHostImpl::SynchronouslyInitializeAllTiles() {
@@ -2113,6 +2116,8 @@ void LayerTreeHostImpl::ActivateSyncTree() {
     active_tree_->lifecycle().AdvanceTo(
         LayerTreeLifecycle::kSyncedLayerProperties);
 
+    active_tree_->UpdateScrollbarGeometries();
+
     pending_tree_->PushPropertiesTo(active_tree_.get());
     if (!pending_tree_->LayerListIsEmpty())
       pending_tree_->property_trees()->ResetAllChangeTracking();
@@ -2162,6 +2167,9 @@ void LayerTreeHostImpl::ActivateSyncTree() {
   // Activation can change the root scroll offset, so inform the synchronous
   // input handler.
   UpdateRootLayerStateForSynchronousInputHandler();
+
+  // We should leave with the scrollbar geometries up-to-date.
+  DCHECK(!active_tree_->ScrollbarGeometriesNeedUpdate());
 }
 
 void LayerTreeHostImpl::SetVisible(bool visible) {
