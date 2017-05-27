@@ -96,6 +96,9 @@ class ArcAppIcon {
 
   content::BrowserContext* context_;
   std::string app_id_;
+  // Contains app id that is actually used to read an icon resource to support
+  // shelf group mapping to shortcut.
+  std::string mapped_app_id_;
   const int resource_size_in_dip_;
   Observer* observer_;
 
