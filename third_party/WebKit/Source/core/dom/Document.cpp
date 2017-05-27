@@ -2282,10 +2282,10 @@ void Document::UpdateStyleAndLayout() {
 
 void Document::LayoutUpdated() {
   // Plugins can run script inside layout which can detach the page.
-  // TODO(esprehn): Can this still happen now that all plugins are out of
+  // TODO(dcheng): Does it make sense to do any of this work if detached?
   // process?
-  if (GetFrame() && GetFrame()->GetPage())
-    GetFrame()->GetPage()->GetChromeClient().LayoutUpdated(GetFrame());
+  if (GetFrame() && GetFrame()->IsMainFrame())
+    GetFrame()->GetPage()->GetChromeClient().LayoutUpdated();
 
   Markers().InvalidateRectsForAllTextMatchMarkers();
 
