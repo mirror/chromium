@@ -20,7 +20,6 @@ function test()
     }
     testSuite.push(testSetUp);
 
-
     function testSetAttribute(callback)
     {
         var node = InspectorTest.expandedNodeWithId("node-to-set-attribute"); 
@@ -32,7 +31,7 @@ function test()
     function testRemoveAttribute(callback)
     {
         var node = InspectorTest.expandedNodeWithId("node-to-remove-attribute"); 
-        node.removeAttribute("foo", callback);
+        node.removeAttribute("foo").then(callback);
     }
     testSuite.push(InspectorTest.generateUndoTest(testRemoveAttribute));
 

@@ -22,7 +22,7 @@ function test()
     InspectorTest.runTestSuite([
         function testDumpInitial(next)
         {
-            function callback(node)
+            async function callback(node)
             {
                 containerNode = InspectorTest.expandedNodeWithId("container");
 

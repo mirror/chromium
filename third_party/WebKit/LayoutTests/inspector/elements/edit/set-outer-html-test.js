@@ -15,10 +15,10 @@ InspectorTest.setUpTestSuite = function(next)
     function step2(node)
     {
         InspectorTest.containerId = node.id;
-        InspectorTest.DOMAgent.getOuterHTML(InspectorTest.containerId, step3);
+        InspectorTest.DOMAgent.getOuterHTML(InspectorTest.containerId).then(step3);
     }
 
-    function step3(error, text)
+    function step3(text)
     {
         InspectorTest.containerText = text;
 
@@ -73,22 +73,25 @@ InspectorTest.setOuterHTMLUseUndo = function(newText, next)
 {
     InspectorTest.innerSetOuterHTML(newText, false, bringBack);
 
-    function bringBack()
+    async function bringBack()
     {
         InspectorTest.addResult("\nBringing things back\n");
-        InspectorTest.domModel.undo(InspectorTest._dumpOuterHTML.bind(InspectorTest, true, next));
+        await InspectorTest.domModel.undo();
+        InspectorTest._dumpOuterHTML(true, next);
     }
 }
 
 InspectorTest.innerSetOuterHTML = function(newText, last, next)
 {
-    InspectorTest.DOMAgent.setOuterHTML(InspectorTest.containerId, newText, InspectorTest._dumpOuterHTML.bind(InspectorTest, last, next));
+    InspectorTest.DOMAgent.invoke_setOuterHTML({nodeId: InspectorTest.containerId, outerHTML: newText}).then(response => {
+        InspectorTest._dumpOuterHTML(last, next);
+    });
 }
 
 InspectorTest._dumpOuterHTML = function(last, next)
 {
-    InspectorTest.RuntimeAgent.evaluate("document.getElementById(\"identity\").wrapperIdentity", dumpIdentity);
-    function dumpIdentity(error, result)
+    InspectorTest.RuntimeAgent.evaluate("document.getElementById(\"identity\").wrapperIdentity").then(dumpIdentity);
+    function dumpIdentity(result)
     {
         InspectorTest.addResult("Wrapper identity: " + result.value);
         InspectorTest.events.sort();
@@ -97,9 +100,9 @@ InspectorTest._dumpOuterHTML = function(last, next)
         InspectorTest.events = [];
     }
 
-    InspectorTest.DOMAgent.getOuterHTML(InspectorTest.containerId, callback);
+    InspectorTest.DOMAgent.getOuterHTML(InspectorTest.containerId).then(callback);
 
-    function callback(error, text)
+    function callback(text)
     {
         InspectorTest.addResult("==========8<==========");
         InspectorTest.addResult(text);
