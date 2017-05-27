@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b1a3161_d952a5ea",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-27T09:04:13Z",
+      "side": 1,
+      "message": "Why not compute it here? We already have the Document \u003d)",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 72
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28f0c5d8_2b0d8e71",
         "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
         "patchSetId": 1
@@ -13,6 +36,29 @@
       "writtenOn": "2017-05-17T15:58:30Z",
       "side": 1,
       "message": "There is a format issue here that is fixed locally. Not uploading again to avoid getting the bots to spin for nothing.",
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65488066_42d7d521",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-27T09:04:13Z",
+      "side": 1,
+      "message": "Should we consider defaulting to false? The document is detached, and while playing the video probably won\u0027t do anything, it doesn\u0027t seem like we should autoplay at all.\n\n(Maybe the check that the document isn\u0027t detached should be higher in the stack, but I\u0027m not really an expert on the autoplay code)",
+      "range": {
+        "startLine": 224,
+        "startChar": 13,
+        "endLine": 224,
+        "endChar": 17
+      },
       "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
