@@ -251,7 +251,7 @@ void CastContentBrowserClient::RenderProcessWillLaunch(
                  base::Unretained(this), host->GetID()));
 
 #if defined(OS_ANDROID)
-  host->AddFilter(new cdm::CdmMessageFilterAndroid());
+  host->AddFilter(new cdm::CdmMessageFilterAndroid(true));
 #endif  // defined(OS_ANDROID)
 }
 
