@@ -364,18 +364,32 @@ void IDNSpoofChecker::SetAllowedUnicodeSet(UErrorCode* status) {
   // but is blacklisted by Mozilla. It is dropped because it can look like a
   // slash when rendered with a broken font.
   allowed_set.remove(0x338u);
+  // NV8; invalid in IDNA 2008.
+  allowed_set.remove(0x58au);  // Armenian Hyphen
   // U+05F4 (Hebrew Punctuation Gershayim) is in the inclusion set, but is
   // blacklisted by Mozilla. We keep it, even though it can look like a double
   // quotation mark. Using it in Hebrew should be safe. When used with a
   // non-Hebrew script, it'd be filtered by other checks in place.
   //
   // U+2010 (Hyphen) is in the inclusion set, but we drop it because it can be
-  // confused with an ASCII U+002D (Hyphen-Minus).
+  // confused with an ASCII U+002D (Hyphen-Minus). NV8; invalid in IDNA 2008.
   allowed_set.remove(0x2010u);
+  // U+2019 is hard to notice when sitting next to a regular character.
+  // NV8; invalid in IDNA 2008.
+  allowed_set.remove(0x2019u);  // Right Single Quotation Mark
   // U+2027 (Hyphenation Point) is in the inclusion set, but is blacklisted by
   // Mozilla. It is dropped, as it can be confused with U+30FB (Katakana Middle
-  // Dot).
+  // Dot). NV8; invalid in IDNA 2008.
   allowed_set.remove(0x2027u);
+  // NV8; invalid in IDNA 2008.
+  allowed_set.remove(0x30a0u);  // Katakana-Hiragana Double Hyphen
+
+  // Block {Single,double}-quotation-mark look-alikes.
+  allowed_set.remove(0x2bbu);  // Modifier Letter Turned Comma
+  allowed_set.remove(0x2bcu);  // Modifier Letter Apostrophe
+  // TODO(jshin): Block unconditionally now. Consider allowing when
+  // surrounded by Canadian Syllabics
+  allowed_set.remove(0x144au);  // Canadian Syllabics West-Cree P
 
 #if defined(OS_MACOSX)
   // The following characters are reported as present in the default macOS

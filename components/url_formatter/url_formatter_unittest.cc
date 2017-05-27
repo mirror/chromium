@@ -446,6 +446,11 @@ const IDNTestCase idn_cases[] = {
   // Small Em Dash
   {"xn--abcdef-5g0c.com", L"abc\xfe58" L"def.com", false},
 
+  // U+30A0 (゠)
+  {"xn--ab-bg4a.com", L"a\x30a0" L"b.com", false},
+  {"xn--9bk3828aea.com", L"\xac00\x30a0\xac01.com", false},
+  {"xn--9bk279fba.com", L"\x4e00\x30a0\x4e00.com", false},
+
   // Custom dangerous patterns
   // Two Katakana-Hiragana combining mark in a row
   {"google.xn--com-oh4ba.evil.jp", L"google.com\x309a\x309a.evil.jp", false},
