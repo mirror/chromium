@@ -30,6 +30,7 @@
 #include "chrome/grit/theme_resources.h"
 #include "components/strings/grit/components_chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/ssl_host_state_delegate.h"
 #include "content/public/browser/web_contents.h"
@@ -1335,4 +1336,15 @@ void PageInfoUIBridge::SetPermissionInfo(
     ChosenObjectInfoList chosen_object_info_list) {
   [bubble_controller_ setPermissionInfo:permission_info_list
                        andChosenObjects:std::move(chosen_object_info_list)];
+}
+
+void PageInfoUIBridge::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() ||
+      !navigation_handle->HasCommitted()) {
+    return;
+  }
+  // Content settings are based on the main frame, so if it switches then
+  // close up shop.
+  [bubble_controller_ close];
 }
