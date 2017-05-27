@@ -13,7 +13,7 @@
 
 namespace blink {
 
-void ResizeViewportAnchor::ResizeFrameView(IntSize size) {
+void ResizeViewportAnchor::ResizeFrameView(const IntSize& size) {
   LocalFrameView* frame_view = RootFrameView();
   // TODO(szager): Remove this CHECK if it doesn't show up in crash reports.
   CHECK(frame_view);
