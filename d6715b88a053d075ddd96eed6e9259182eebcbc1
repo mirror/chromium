@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9eb71bb_038f2d2d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2286,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-27T04:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61edc8a1_1480d673",
+      "range": {
+        "startLine": 2286,
+        "startChar": 5,
+        "endLine": 2286,
+        "endChar": 12
+      },
+      "revId": "d6715b88a053d075ddd96eed6e9259182eebcbc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f73c104e_00457444",
         "filename": "third_party/WebKit/Source/web/WebViewImpl.cpp",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-05-27T00:36:34Z",
       "side": 1,
       "message": "Can you eliminate the call to CanUpdateLayout? AFAICT, every overload of that method is simply \u0027return true\u0027",
+      "revId": "d6715b88a053d075ddd96eed6e9259182eebcbc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c180387_237217f6",
+        "filename": "third_party/WebKit/Source/web/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3641,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-27T04:31:32Z",
+      "side": 1,
+      "message": "Hmm. I\u0027ll try this in a followup if that\u0027s OK: there\u0027s one WebViewClient subclass that doesn\u0027t override this in components/printing.",
+      "parentUuid": "f73c104e_00457444",
       "revId": "d6715b88a053d075ddd96eed6e9259182eebcbc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
