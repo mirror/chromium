@@ -30,6 +30,9 @@ class MockFrameHost : public mojom::FrameHost {
     std::move(callback).Run(std::move(reply));
   }
 
+  void BindInterfaceProviderForNewDocument(
+      service_manager::mojom::InterfaceProviderRequest request) override {}
+
   void Bind(mojo::ScopedInterfaceEndpointHandle handle) {
     binding_.Bind(mojom::FrameHostAssociatedRequest(std::move(handle)));
   }
