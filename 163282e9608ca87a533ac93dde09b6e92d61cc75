@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3dbc588_6fbbeb62",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-27T17:50:05Z",
+      "side": 1,
+      "message": "i don\u0027t think that the wrapper should do this.  it\u0027s an implementation detail of MCVD.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ceb6ff0_64255064",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-27T17:50:05Z",
+      "side": 1,
+      "message": "i\u0027m a little unsure that we can use this.\n\nif the buffer\u0027s not valid, then that\u0027s fine, but all we can really do is drop it.  in that case, why not just ReleaseToSurface() or drop the buffer, since those will do the same thing anyway.  i.e., i don\u0027t see that we\u0027d make a different decision based on it.\n\nif the buffer is valid, then it might not be valid anymore after this function returns due to some other thread doing something.  so, i don\u0027t think that we can make any decision based on that either.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a314325b_55a59bf2",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-27T17:50:05Z",
+      "side": 1,
+      "message": "i dont\u0027 think that this needs to remember this.  the buffer won\u0027t be valid anymore, so one can unconditionally release it if so.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721d1e62_709c57ff",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-27T17:50:05Z",
+      "side": 1,
+      "message": "is the model for releasing the codec something like \"TakeCodec() then post the codec to another thread\"?\n\nother than the buffers, will anything on another thread need to hold CodecWrapper?  i realize that some of our attempts to move SetSurface into the image might do it that way, but could probably do it other ways too.\n\ni\u0027m trying to decide if shared ptrs are needed.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c781ea6_42738699",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-27T17:50:05Z",
+      "side": 1,
+      "message": "please add docs.  not obvious that this releases codec buffers.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e13b47_902584ff",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-27T17:50:05Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 20
+      },
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116bb1a9_acf4272d",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-27T17:50:05Z",
+      "side": 1,
+      "message": "const.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f33907_5bc67189",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-27T17:50:05Z",
+      "side": 1,
+      "message": "CodecOutputBuffer?  i\u0027m not sure that deuqueoutput should return a smart object, while DequeueInput should return a raw int.\n\nnot sure that there\u0027s much to add to the input buffer, except maybe to get mad if one drops it while the codec is valid without queueing it.  we coujld move the Queue routines to the input buffer, i guess, so that one would\n\nunique_ptr\u003cCodecInputBuffer\u003e buffer \u003d codec_wrapper_-\u003eDequeueInput...\nbuffer-\u003eQueue(data, data_size, pts);  // or QueueSecure or QueueEOS\n\nmight help with the \u0027no key\u0027 cases, since the buffer can retain the ptrs and such.  i haven\u0027t thought it through though.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d09853_9cc4953b",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-27T17:50:05Z",
+      "side": 1,
+      "message": "and also next_buffer_id and friends.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
