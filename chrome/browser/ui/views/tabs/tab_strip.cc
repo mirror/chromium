@@ -334,6 +334,7 @@ NewTabButton::~NewTabButton() {
     *destroyed_ = true;
 }
 
+
 #if defined(OS_WIN)
 void NewTabButton::OnMouseReleased(const ui::MouseEvent& event) {
   if (event.IsOnlyRightMouseButton()) {

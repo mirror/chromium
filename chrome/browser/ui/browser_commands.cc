@@ -581,6 +581,11 @@ void CloseWindow(Browser* browser) {
   base::RecordAction(UserMetricsAction("CloseWindow"));
   browser->window()->Close();
 }
+    
+void HistogramOnNewTabClick() {
+    // Add testing histogram that triggers when the new tab button is released
+    UMA_HISTOGRAM_ENUMERATION("Tab.NewTabClicked", TabStripModel::NEW_TAB_COMMAND, TabStripModel::NEW_TAB_ENUM_COUNT);
+}
 
 void NewTab(Browser* browser) {
   base::RecordAction(UserMetricsAction("NewTab"));
@@ -589,6 +594,8 @@ void NewTab(Browser* browser) {
   // user-initiated commands.
   UMA_HISTOGRAM_ENUMERATION("Tab.NewTab", TabStripModel::NEW_TAB_COMMAND,
                             TabStripModel::NEW_TAB_ENUM_COUNT);
+  // Test histogram
+  HistogramOnNewTabClick();
 
   if (browser->is_type_tabbed()) {
     AddTabAt(browser, GURL(), -1, true);

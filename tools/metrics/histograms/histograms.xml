@@ -75523,6 +75523,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Tab.NewTabClicked" enum = "NewTabType">
+  <owner>catherinechung@google.com</owner>
+  <summary>
+    Test histogram that displays when the new tab button is clicked.
+  </summary>
+</histogram>
+
 <histogram name="Tab.NewTabDOMContentLoaded" units="ms">
   <owner>lliabraa@chromium.org</owner>
   <owner>beaudoin@chromium.org</owner>
