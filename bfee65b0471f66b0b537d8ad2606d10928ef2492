@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a85eb803_8aa14101",
+        "filename": "content/renderer/media/media_permission_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-27T08:54:06Z",
+      "side": 1,
+      "message": "The idiomatic way to use std::swap is:\n\nusing std::swap;\nswap(requests, requests_);\n\nThat way ADL will find any custom overloads for the argument types if they exist.\n(As RequestMap is a typedef I have no idea if it\u0027s actually a std container without doing a code search)",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 7
+      },
+      "revId": "bfee65b0471f66b0b537d8ad2606d10928ef2492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "400603f4_6018b2b5",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 2
@@ -31,6 +54,24 @@
       "side": 1,
       "message": "From a security perspective it is safe to close the connection for such non-navigation navigations however it may break sites because it means that requests made before the non-navigation will fail instead of completing afterwards.",
       "parentUuid": "400603f4_6018b2b5",
+      "revId": "bfee65b0471f66b0b537d8ad2606d10928ef2492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce037df_1631817d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6270,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-27T08:54:06Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate we have so many ways of doing things. In Blink, most things are ContextLifecycleObservers and clean up the message pipe on ContextDestroyed().\n\nIn content, we are not nearly fortunate enough to have such a notification: rockot@ is tying InterfaceProvider to DidCommitProvisionalLoad in https://chromium-review.googlesource.com/c/517258/. I suspect we probably want to match whatever the rest of Mojo does.\n\nFWIW, our future vision is to swap frames on every navigation, which will render the need to do this moot.",
+      "parentUuid": "3174e401_96743b3d",
       "revId": "bfee65b0471f66b0b537d8ad2606d10928ef2492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
