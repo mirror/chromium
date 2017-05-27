@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "24a6d087_9a3cb088",
+        "filename": "third_party/WebKit/Source/core/frame/ResizeViewportAnchor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-27T01:34:07Z",
+      "side": 1,
+      "message": "Umm. It is a problem if the crash doesn\u0027t make any sense. I haven\u0027t seen any plausible explanation as to why this condition could be violated.",
+      "parentUuid": "a2526f74_8fd2407c",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "8983db0d988a24492556da5d00b82ab37d27dbee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d766758_a9aa6ef0",
         "filename": "third_party/WebKit/Source/web/WebAXObject.cpp",
         "patchSetId": 1
