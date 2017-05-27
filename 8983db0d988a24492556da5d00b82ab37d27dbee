@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "b3b9709b_315e48c2",
+        "filename": "third_party/WebKit/Source/core/frame/ResizeViewportAnchor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-27T00:18:38Z",
+      "side": 1,
+      "message": "OK, will there be any followup work to figure out what\u0027s going on here? This might fix the null pointer deref, but it\u0027s pretty clear something else is busted I think.",
+      "parentUuid": "6751c136_672c747f",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "8983db0d988a24492556da5d00b82ab37d27dbee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d766758_a9aa6ef0",
         "filename": "third_party/WebKit/Source/web/WebAXObject.cpp",
         "patchSetId": 1
