@@ -202,7 +202,8 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
   SupervisedUserWhitelistInstallerTest()
       : testing_profile_manager_(TestingBrowserProcess::GetGlobal()),
         user_data_dir_override_(chrome::DIR_USER_DATA),
-        component_update_service_(base::ThreadTaskRunnerHandle::Get()) {}
+        component_update_service_(base::ThreadTaskRunnerHandle::Get()),
+        manifest_(new base::DictionaryValue()) {}
 
   ~SupervisedUserWhitelistInstallerTest() override {}
 
@@ -244,9 +245,9 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     std::unique_ptr<base::DictionaryValue> icons_dict(
         new base::DictionaryValue);
     icons_dict->SetString("128", kLargeIconFile);
-    manifest_.Set("icons", std::move(icons_dict));
+    manifest_->Set("icons", std::move(icons_dict));
 
-    manifest_.SetString("version", kVersion);
+    manifest_->SetString("version", kVersion);
 
     std::unique_ptr<base::DictionaryValue> crx_dict(new base::DictionaryValue);
     crx_dict->SetString("name", kName);
@@ -277,7 +278,7 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     PrepareWhitelistFile(whitelist_directory.AppendASCII(kWhitelistFile));
     base::FilePath manifest_file =
         whitelist_directory.AppendASCII("manifest.json");
-    ASSERT_TRUE(JSONFileValueSerializer(manifest_file).Serialize(manifest_));
+    ASSERT_TRUE(JSONFileValueSerializer(manifest_file).Serialize(*manifest_));
   }
 
   void RegisterExistingComponents() {
@@ -308,7 +309,7 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
   base::FilePath installed_whitelist_directory_;
   base::FilePath whitelist_path_;
   base::FilePath large_icon_path_;
-  base::DictionaryValue manifest_;
+  std::unique_ptr<base::DictionaryValue> manifest_;
   base::DictionaryValue pref_;
 };
 
@@ -353,7 +354,7 @@ TEST_F(SupervisedUserWhitelistInstallerTest, InstallNewWhitelist) {
   const CrxComponent* component =
       component_update_service_.registered_component();
   ASSERT_TRUE(component);
-  const auto result = component->installer->Install(manifest_, unpacked_path);
+  const auto result = component->installer->Install(std::move(manifest_), unpacked_path);
   EXPECT_EQ(0, result.error);
   EXPECT_EQ(0, result.extended_error);
 

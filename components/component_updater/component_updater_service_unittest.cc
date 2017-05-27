@@ -5,6 +5,7 @@
 #include "components/component_updater/component_updater_service.h"
 
 #include <limits>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -49,7 +50,7 @@ class MockInstaller : public CrxInstaller {
 
   MOCK_METHOD1(OnUpdateError, void(int error));
   MOCK_METHOD2(Install,
-               Result(const base::DictionaryValue& manifest,
+               Result(std::unique_ptr<base::DictionaryValue> manifest,
                       const base::FilePath& unpack_path));
   MOCK_METHOD2(GetInstalledFile,
                bool(const std::string& file, base::FilePath* installed_file));
