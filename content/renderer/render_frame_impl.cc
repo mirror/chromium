@@ -1045,7 +1045,7 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
   render_frame->InitializeBlameContext(nullptr);
   WebLocalFrame* web_frame = WebLocalFrame::Create(
       blink::WebTreeScopeType::kDocument, render_frame,
-      render_frame->blink_interface_provider_.get(),
+      &render_frame->blink_interface_provider_,
       render_frame->blink_interface_registry_.get(), opener);
   render_frame->BindToWebFrame(web_frame);
   render_view->webview()->SetMainFrame(web_frame);
@@ -1094,7 +1094,7 @@ void RenderFrameImpl::CreateFrame(
     web_frame = parent_web_frame->CreateLocalChild(
         replicated_state.scope, WebString::FromUTF8(replicated_state.name),
         replicated_state.sandbox_flags, render_frame,
-        render_frame->blink_interface_provider_.get(),
+        &render_frame->blink_interface_provider_,
         render_frame->blink_interface_registry_.get(),
         previous_sibling_web_frame,
         FeaturePolicyHeaderToWeb(replicated_state.container_policy),
@@ -1120,7 +1120,7 @@ void RenderFrameImpl::CreateFrame(
     render_frame->proxy_routing_id_ = proxy_routing_id;
     proxy->set_provisional_frame_routing_id(routing_id);
     web_frame = blink::WebLocalFrame::CreateProvisional(
-        render_frame, render_frame->blink_interface_provider_.get(),
+        render_frame, &render_frame->blink_interface_provider_,
         render_frame->blink_interface_registry_.get(), proxy->web_frame(),
         replicated_state.sandbox_flags);
   }
@@ -1233,6 +1233,7 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
       devtools_agent_(nullptr),
       presentation_dispatcher_(NULL),
       push_messaging_client_(NULL),
+      blink_interface_provider_(this),
       screen_orientation_dispatcher_(NULL),
       manifest_manager_(NULL),
       render_accessibility_(NULL),
@@ -1254,12 +1255,6 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
       has_accessed_initial_document_(false),
       weak_factory_(this) {
   interface_registry_ = base::MakeUnique<service_manager::BinderRegistry>();
-  service_manager::mojom::InterfaceProviderPtr remote_interfaces;
-  pending_remote_interface_provider_request_ = MakeRequest(&remote_interfaces);
-  remote_interfaces_.reset(new service_manager::InterfaceProvider);
-  remote_interfaces_->Bind(std::move(remote_interfaces));
-  blink_interface_provider_.reset(new BlinkInterfaceProviderImpl(
-      remote_interfaces_->GetWeakPtr()));
   blink_interface_registry_.reset(
       new BlinkInterfaceRegistryImpl(interface_registry_->GetWeakPtr()));
 
@@ -1283,19 +1278,6 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
 #endif
 
   manifest_manager_ = new ManifestManager(this);
-
-#if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-  // Create the SinkAvailabilityObserver to monitor the remoting sink
-  // availablity.
-  media::mojom::RemotingSourcePtr remoting_source;
-  auto remoting_source_request = mojo::MakeRequest(&remoting_source);
-  media::mojom::RemoterPtr remoter;
-  GetRemoterFactory()->Create(std::move(remoting_source),
-                              mojo::MakeRequest(&remoter));
-  remoting_sink_observer_ =
-      base::MakeUnique<media::remoting::SinkAvailabilityObserver>(
-          std::move(remoting_source_request), std::move(remoter));
-#endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
 }
 
 mojom::FrameHostAssociatedPtr RenderFrameImpl::GetFrameHost() {
@@ -1785,13 +1767,9 @@ void RenderFrameImpl::BindEngagement(
 
 void RenderFrameImpl::BindFrame(
     const service_manager::BindSourceInfo& browser_info,
-    mojom::FrameRequest request,
-    mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
+    mojom::FrameRequest request) {
   browser_info_ = browser_info;
   frame_binding_.Bind(std::move(request));
-  frame_host_interface_broker_ = std::move(frame_host_interface_broker);
-  frame_host_interface_broker_->GetInterfaceProvider(
-      std::move(pending_remote_interface_provider_request_));
 }
 
 void RenderFrameImpl::BindFrameBindingsControl(
@@ -3294,8 +3272,7 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
       params.frame_unique_name);
   child_render_frame->InitializeBlameContext(this);
   blink::WebLocalFrame* web_frame = WebLocalFrame::Create(
-      scope, child_render_frame,
-      child_render_frame->blink_interface_provider_.get(),
+      scope, child_render_frame, &child_render_frame->blink_interface_provider_,
       child_render_frame->blink_interface_registry_.get());
   child_render_frame->BindToWebFrame(web_frame);
 
@@ -5231,6 +5208,15 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // after the FrameHostMsg_DidCommitProvisionalLoad message.
   Send(new FrameHostMsg_DidCommitProvisionalLoad(routing_id_, params));
 
+  if (!params.was_within_same_document) {
+    // If we're navigating to a new document, bind a new InterfaceProvider and
+    // send its request end just after the commit confirmation.
+    service_manager::mojom::InterfaceProviderPtr provider;
+    GetFrameHost()->BindInterfaceProviderForNewDocument(
+        mojo::MakeRequest(&provider));
+    BindRemoteInterfaceProvider(std::move(provider));
+  }
+
   // If we end up reusing this WebRequest (for example, due to a #ref click),
   // we don't want the transition type to persist.  Just clear it.
   navigation_state->set_transition_type(ui::PAGE_TRANSITION_LINK);
@@ -5337,6 +5323,7 @@ void RenderFrameImpl::OnCommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params) {
   CHECK(IsBrowserSideNavigationEnabled());
+
   // This will override the url requested by the WebURLLoader, as well as
   // provide it with the response to the request.
   std::unique_ptr<StreamOverrideParameters> stream_override(
@@ -6870,8 +6857,7 @@ bool RenderFrameImpl::AreSecureCodecsSupported() {
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
 media::mojom::RemoterFactory* RenderFrameImpl::GetRemoterFactory() {
-  if (!remoter_factory_)
-    GetRemoteInterfaces()->GetInterface(&remoter_factory_);
+  DCHECK(remoter_factory_);
   return remoter_factory_.get();
 }
 #endif
@@ -7175,6 +7161,28 @@ void RenderFrameImpl::RenderWidgetWillHandleMouseEvent() {
   // |pepper_last_mouse_event_target_|.
   pepper_last_mouse_event_target_ = nullptr;
 #endif
+}
+
+void RenderFrameImpl::BindRemoteInterfaceProvider(
+    service_manager::mojom::InterfaceProviderPtr provider) {
+  remote_interfaces_ = base::MakeUnique<service_manager::InterfaceProvider>();
+  remote_interfaces_->Bind(std::move(provider));
+
+#if BUILDFLAG(ENABLE_MEDIA_REMOTING)
+  // Create the SinkAvailabilityObserver to monitor the remoting sink
+  // availablity.
+  remoter_factory_.reset();
+  remote_interfaces_->GetInterface(&remoter_factory_);
+
+  media::mojom::RemotingSourcePtr remoting_source;
+  auto remoting_source_request = mojo::MakeRequest(&remoting_source);
+  media::mojom::RemoterPtr remoter;
+  remoter_factory_->Create(std::move(remoting_source),
+                           mojo::MakeRequest(&remoter));
+  remoting_sink_observer_ =
+      base::MakeUnique<media::remoting::SinkAvailabilityObserver>(
+          std::move(remoting_source_request), std::move(remoter));
+#endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
 }
 
 RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
