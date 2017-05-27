@@ -1099,8 +1099,6 @@ class CONTENT_EXPORT RenderFrameImpl
   RendererMediaPlayerManager* GetMediaPlayerManager();
 #endif
 
-  bool AreSecureCodecsSupported();
-
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
   service_manager::mojom::InterfaceProvider* GetMediaInterfaceProvider();
 #endif
