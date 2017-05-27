@@ -136,6 +136,9 @@ class MEDIA_EXPORT MediaLog {
   static const char kWatchTimeFinalize[];
   static const char kWatchTimeFinalizePower[];
 
+  // Count of the number of underflow events during a media session.
+  static const char kUnderflowCount[];
+
   static base::flat_set<base::StringPiece> GetWatchTimeKeys();
   static base::flat_set<base::StringPiece> GetWatchTimePowerKeys();
 
