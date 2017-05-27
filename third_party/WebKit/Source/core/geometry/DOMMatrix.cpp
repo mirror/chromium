@@ -135,6 +135,10 @@ DOMMatrix* DOMMatrix::multiplySelf(DOMMatrixInit& other,
     DCHECK(exception_state.HadException());
     return nullptr;
   }
+  return multiplySelf(other_matrix);
+}
+
+DOMMatrix* DOMMatrix::multiplySelf(DOMMatrix* other_matrix) {
   if (!other_matrix->is2D())
     is2d_ = false;
 
