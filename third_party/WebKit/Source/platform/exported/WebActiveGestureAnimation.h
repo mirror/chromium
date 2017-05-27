@@ -46,9 +46,6 @@ class PLATFORM_EXPORT WebActiveGestureAnimation {
   WTF_MAKE_NONCOPYABLE(WebActiveGestureAnimation);
 
  public:
-  static std::unique_ptr<WebActiveGestureAnimation> CreateAtAnimationStart(
-      std::unique_ptr<WebGestureCurve>,
-      WebGestureCurveTarget*);
   static std::unique_ptr<WebActiveGestureAnimation> CreateWithTimeOffset(
       std::unique_ptr<WebGestureCurve>,
       WebGestureCurveTarget*,

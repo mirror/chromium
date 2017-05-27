@@ -87,7 +87,7 @@ class CORE_EXPORT EventHandler final
   void Clear();
 
   void UpdateSelectionForMouseDrag();
-  void StartMiddleClickAutoscroll(LayoutObject*);
+  void StartMiddleClickAutoscroll(LayoutObject*, MouseEvent*);
 
   // TODO(nzolghadr): Some of the APIs in this class only forward the action
   // to the corresponding Manager class. We need to investigate whether it is

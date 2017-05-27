@@ -46,22 +46,19 @@ namespace blink {
 // scrollable element.
 static const TimeDelta kAutoscrollDelay = TimeDelta::FromSecondsD(0.2);
 
+static const int kNoMiddleClickAutoscrollRadius = 15;
+
 AutoscrollController* AutoscrollController::Create(Page& page) {
   return new AutoscrollController(page);
 }
 
-AutoscrollController::AutoscrollController(Page& page)
-    : page_(&page),
-      autoscroll_layout_object_(nullptr),
-      pressed_layout_object_(nullptr),
-      autoscroll_type_(kNoAutoscroll),
-      did_latch_for_middle_click_autoscroll_(false) {}
+AutoscrollController::AutoscrollController(Page& page) : page_(&page) {}
 
 DEFINE_TRACE(AutoscrollController) {
   visitor->Trace(page_);
 }
 
-bool AutoscrollController::AutoscrollInProgress() const {
+bool AutoscrollController::SelectionAutoscrollInProgress() const {
   return autoscroll_type_ == kAutoscrollForSelection;
 }
 
@@ -88,7 +85,7 @@ void AutoscrollController::StartAutoscrollForSelection(
                                : nullptr;
   autoscroll_type_ = kAutoscrollForSelection;
   autoscroll_layout_object_ = scrollable;
-  StartAutoscroll();
+  ScheduleMainThreadAnimation();
 }
 
 void AutoscrollController::StopAutoscroll() {
@@ -96,18 +93,7 @@ void AutoscrollController::StopAutoscroll() {
     pressed_layout_object_->StopAutoscroll();
     pressed_layout_object_ = nullptr;
   }
-  LayoutBox* scrollable = autoscroll_layout_object_;
   autoscroll_layout_object_ = nullptr;
-
-  if (!scrollable)
-    return;
-
-  if (RuntimeEnabledFeatures::middleClickAutoscrollEnabled() &&
-      MiddleClickAutoscrollInProgress()) {
-    if (LocalFrameView* view = scrollable->GetFrame()->View()) {
-      view->SetCursor(PointerCursor());
-    }
-  }
   autoscroll_type_ = kNoAutoscroll;
 }
 
@@ -127,16 +113,6 @@ void AutoscrollController::UpdateAutoscrollLayoutObject() {
 
   LayoutObject* layout_object = autoscroll_layout_object_;
 
-  if (RuntimeEnabledFeatures::middleClickAutoscrollEnabled()) {
-    HitTestResult hit_test =
-        layout_object->GetFrame()->GetEventHandler().HitTestResultAtPoint(
-            middle_click_autoscroll_start_pos_,
-            HitTestRequest::kReadOnly | HitTestRequest::kActive);
-
-    if (Node* node_at_point = hit_test.InnerNode())
-      layout_object = node_at_point->GetLayoutObject();
-  }
-
   while (layout_object && !(layout_object->IsBox() &&
                             ToLayoutBox(layout_object)->CanAutoscroll()))
     layout_object = layout_object->Parent();
@@ -145,7 +121,7 @@ void AutoscrollController::UpdateAutoscrollLayoutObject() {
                                   ? ToLayoutBox(layout_object)
                                   : nullptr;
 
-  if (autoscroll_type_ != kNoAutoscroll && !autoscroll_layout_object_)
+  if (!autoscroll_layout_object_)
     autoscroll_type_ = kNoAutoscroll;
 }
 
@@ -193,26 +169,63 @@ void AutoscrollController::UpdateDragAndDrop(Node* drop_target_node,
     autoscroll_layout_object_ = scrollable;
     drag_and_drop_autoscroll_start_time_ = event_time;
     UseCounter::Count(page_->MainFrame(), UseCounter::kDragAndDropScrollStart);
-    StartAutoscroll();
+    ScheduleMainThreadAnimation();
   } else if (autoscroll_layout_object_ != scrollable) {
     drag_and_drop_autoscroll_start_time_ = event_time;
     autoscroll_layout_object_ = scrollable;
   }
 }
 
-void AutoscrollController::HandleMouseReleaseForMiddleClickAutoscroll(
+void AutoscrollController::HandleMouseMoveForMiddleClickAutoscroll(
     LocalFrame* frame,
-    const WebMouseEvent& mouse_event) {
+    const FloatPoint& position_global) {
+  if (autoscroll_type_ != kAutoscrollForMiddleClick &&
+      autoscroll_type_ != kAutoscrollForMiddleClickCanStop) {
+    return;
+  }
+
+  LocalFrameView* view = frame->View();
+  if (!view)
+    return;
+
+  UpdateMiddleClickAutoscrollState(view, position_global);
+
+  FloatSize distance =
+      position_global - middle_click_autoscroll_start_pos_global_;
+
+  if (fabs(distance.Width()) <= kNoMiddleClickAutoscrollRadius)
+    distance.SetWidth(0);
+  if (fabs(distance.Height()) <= kNoMiddleClickAutoscrollRadius)
+    distance.SetHeight(0);
+
+  const float kExponent = 1.1f;
+  const float kMultiplier = -0.002f;
+  const float x_signum = (distance.Width() < 0) ? -1 : (distance.Width() > 0);
+  const float y_signum = (distance.Height() < 0) ? -1 : (distance.Height() > 0);
+  FloatSize velocity(
+      pow(fabs(distance.Width()), kExponent) * kMultiplier * x_signum,
+      pow(fabs(distance.Height()), kExponent) * kMultiplier * y_signum);
+
+  //  fprintf(stderr, "Velocity: %f, %f, Distance: %f, %f\n", velocity.Width(),
+  //          velocity.Height(), distance.Width(), distance.Height());
+
+  if (velocity != last_velocity_) {
+    page_->GetChromeClient().AutoscrollFling(velocity, frame);
+    last_velocity_ = velocity;
+  }
+}
+
+void AutoscrollController::HandleMouseReleaseForMiddleClickAutoscroll(
+    LocalFrame* frame) {
   DCHECK(RuntimeEnabledFeatures::middleClickAutoscrollEnabled());
   if (!frame->IsMainFrame())
     return;
   switch (autoscroll_type_) {
     case kAutoscrollForMiddleClick:
-      if (mouse_event.button == WebPointerProperties::Button::kMiddle)
         autoscroll_type_ = kAutoscrollForMiddleClickCanStop;
       break;
     case kAutoscrollForMiddleClickCanStop:
-      StopAutoscroll();
+      StopMiddleClickAutoscroll(frame);
       break;
     case kAutoscrollForDragAndDrop:
     case kAutoscrollForSelection:
@@ -222,14 +235,25 @@ void AutoscrollController::HandleMouseReleaseForMiddleClickAutoscroll(
   }
 }
 
+void AutoscrollController::StopMiddleClickAutoscroll(LocalFrame* frame) {
+  if (!MiddleClickAutoscrollInProgress())
+    return;
+
+  if (LocalFrameView* view = frame->View())
+    view->SetCursor(PointerCursor());
+  page_->GetChromeClient().AutoscrollEnd(frame);
+  autoscroll_type_ = kNoAutoscroll;
+}
+
 bool AutoscrollController::MiddleClickAutoscrollInProgress() const {
   return autoscroll_type_ == kAutoscrollForMiddleClickCanStop ||
          autoscroll_type_ == kAutoscrollForMiddleClick;
 }
 
 void AutoscrollController::StartMiddleClickAutoscroll(
-    LayoutBox* scrollable,
-    const IntPoint& last_known_mouse_position) {
+    LocalFrame* frame,
+    const FloatPoint& position,
+    const FloatPoint& position_global) {
   DCHECK(RuntimeEnabledFeatures::middleClickAutoscrollEnabled());
   // We don't want to trigger the autoscroll or the middleClickAutoscroll if
   // it's already active.
@@ -237,69 +261,20 @@ void AutoscrollController::StartMiddleClickAutoscroll(
     return;
 
   autoscroll_type_ = kAutoscrollForMiddleClick;
-  autoscroll_layout_object_ = scrollable;
-  middle_click_autoscroll_start_pos_ = last_known_mouse_position;
-  did_latch_for_middle_click_autoscroll_ = false;
+  middle_click_autoscroll_start_pos_global_ = position_global;
 
   UseCounter::Count(page_->MainFrame(),
                     UseCounter::kMiddleClickAutoscrollStart);
-  StartAutoscroll();
-}
 
-static inline int AdjustedScrollDelta(int beginning_delta) {
-  // This implemention matches Firefox's.
-  // http://mxr.mozilla.org/firefox/source/toolkit/content/widgets/browser.xml#856.
-  const int kSpeedReducer = 12;
-
-  int adjusted_delta = beginning_delta / kSpeedReducer;
-  if (adjusted_delta > 1) {
-    adjusted_delta =
-        static_cast<int>(adjusted_delta *
-                         sqrt(static_cast<double>(adjusted_delta))) -
-        1;
-  } else if (adjusted_delta < -1) {
-    adjusted_delta =
-        static_cast<int>(adjusted_delta *
-                         sqrt(static_cast<double>(-adjusted_delta))) +
-        1;
-  }
-
-  return adjusted_delta;
-}
-
-static inline IntSize AdjustedScrollDelta(const IntSize& delta) {
-  return IntSize(AdjustedScrollDelta(delta.Width()),
-                 AdjustedScrollDelta(delta.Height()));
-}
-
-FloatSize AutoscrollController::CalculateAutoscrollDelta() {
-  LocalFrame* frame = autoscroll_layout_object_->GetFrame();
-  if (!frame)
-    return FloatSize();
-
-  IntPoint last_known_mouse_position =
-      frame->GetEventHandler().LastKnownMousePosition();
-
-  // We need to check if the last known mouse position is out of the window.
-  // When the mouse is out of the window, the position is incoherent
-  static IntPoint previous_mouse_position;
-  if (last_known_mouse_position.X() < 0 || last_known_mouse_position.Y() < 0)
-    last_known_mouse_position = previous_mouse_position;
-  else
-    previous_mouse_position = last_known_mouse_position;
-
-  IntSize delta =
-      last_known_mouse_position - middle_click_autoscroll_start_pos_;
-
-  // at the center we let the space for the icon.
-  if (abs(delta.Width()) <= kNoMiddleClickAutoscrollRadius)
-    delta.SetWidth(0);
-  if (abs(delta.Height()) <= kNoMiddleClickAutoscrollRadius)
-    delta.SetHeight(0);
-  return FloatSize(AdjustedScrollDelta(delta));
+  page_->GetChromeClient().AutoscrollStart(position, frame);
+  last_velocity_ = FloatSize();
 }
 
 void AutoscrollController::Animate(double) {
+  // Middle-click autoscroll isn't handled on the main thread.
+  if (MiddleClickAutoscrollInProgress())
+    return;
+
   if (!autoscroll_layout_object_ || !autoscroll_layout_object_->GetFrame()) {
     StopAutoscroll();
     return;
@@ -329,65 +304,30 @@ void AutoscrollController::Animate(double) {
       break;
     case kAutoscrollForMiddleClickCanStop:
     case kAutoscrollForMiddleClick:
-      DCHECK(RuntimeEnabledFeatures::middleClickAutoscrollEnabled());
-      if (!MiddleClickAutoscrollInProgress()) {
-        StopAutoscroll();
-        return;
-      }
-      if (LocalFrameView* view = autoscroll_layout_object_->GetFrame()->View())
-        UpdateMiddleClickAutoscrollState(
-            view, event_handler.LastKnownMousePosition());
-      FloatSize delta = CalculateAutoscrollDelta();
-      if (delta.IsZero())
-        break;
-      ScrollResult result =
-          autoscroll_layout_object_->Scroll(kScrollByPixel, delta);
-      LayoutObject* layout_object = autoscroll_layout_object_;
-      while (!did_latch_for_middle_click_autoscroll_ && !result.DidScroll()) {
-        if (layout_object->GetNode() &&
-            layout_object->GetNode()->IsDocumentNode()) {
-          Element* owner = ToDocument(layout_object->GetNode())->LocalOwner();
-          layout_object = owner ? owner->GetLayoutObject() : nullptr;
-        } else {
-          layout_object = layout_object->Parent();
-        }
-        if (!layout_object) {
-          break;
-        }
-        if (layout_object && layout_object->IsBox() &&
-            ToLayoutBox(layout_object)->CanBeScrolledAndHasScrollableArea())
-          result = ToLayoutBox(layout_object)->Scroll(kScrollByPixel, delta);
-      }
-      if (result.DidScroll()) {
-        did_latch_for_middle_click_autoscroll_ = true;
-        autoscroll_layout_object_ = ToLayoutBox(layout_object);
-      }
-      break;
+      return;
   }
-  if (autoscroll_type_ != kNoAutoscroll && autoscroll_layout_object_) {
-    page_->GetChromeClient().ScheduleAnimation(
-        autoscroll_layout_object_->GetFrame()->View());
-  }
+  if (autoscroll_type_ != kNoAutoscroll && autoscroll_layout_object_)
+    ScheduleMainThreadAnimation();
 }
 
-void AutoscrollController::StartAutoscroll() {
+void AutoscrollController::ScheduleMainThreadAnimation() {
   page_->GetChromeClient().ScheduleAnimation(
       autoscroll_layout_object_->GetFrame()->View());
 }
 
 void AutoscrollController::UpdateMiddleClickAutoscrollState(
     LocalFrameView* view,
-    const IntPoint& last_known_mouse_position) {
+    const FloatPoint& last_known_mouse_position) {
   DCHECK(RuntimeEnabledFeatures::middleClickAutoscrollEnabled());
   // At the original click location we draw a 4 arrowed icon. Over this icon
   // there won't be any scroll, So don't change the cursor over this area.
-  bool east = middle_click_autoscroll_start_pos_.X() <
+  bool east = middle_click_autoscroll_start_pos_global_.X() <
               (last_known_mouse_position.X() - kNoMiddleClickAutoscrollRadius);
-  bool west = middle_click_autoscroll_start_pos_.X() >
+  bool west = middle_click_autoscroll_start_pos_global_.X() >
               (last_known_mouse_position.X() + kNoMiddleClickAutoscrollRadius);
-  bool north = middle_click_autoscroll_start_pos_.Y() >
+  bool north = middle_click_autoscroll_start_pos_global_.Y() >
                (last_known_mouse_position.Y() + kNoMiddleClickAutoscrollRadius);
-  bool south = middle_click_autoscroll_start_pos_.Y() <
+  bool south = middle_click_autoscroll_start_pos_global_.Y() <
                (last_known_mouse_position.Y() - kNoMiddleClickAutoscrollRadius);
 
   if (autoscroll_type_ == kAutoscrollForMiddleClick &&

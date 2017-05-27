@@ -127,6 +127,7 @@ class CORE_EXPORT MouseEventManager final
   Node* GetNodeUnderMouse();
   bool IsMousePositionUnknown();
   IntPoint LastKnownMousePosition();
+  FloatPoint LastKnownMousePositionGlobal();
 
   bool MousePressed();
   void SetMousePressed(bool);
@@ -211,8 +212,8 @@ class CORE_EXPORT MouseEventManager final
 
   // The last mouse movement position this frame has seen in root frame
   // coordinates.
-  IntPoint last_known_mouse_position_;
-  IntPoint last_known_mouse_global_position_;
+  FloatPoint last_known_mouse_position_;
+  FloatPoint last_known_mouse_global_position_;
 
   unsigned is_mouse_position_unknown_ : 1;
   // Current button-press state for mouse/mouse-like-stylus.

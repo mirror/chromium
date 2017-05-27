@@ -2352,8 +2352,10 @@ void Node::DefaultEventHandler(Event* event) {
         }
       }
       if (layout_object) {
-        if (LocalFrame* frame = GetDocument().GetFrame())
-          frame->GetEventHandler().StartMiddleClickAutoscroll(layout_object);
+        if (LocalFrame* frame = GetDocument().GetFrame()) {
+          frame->GetEventHandler().StartMiddleClickAutoscroll(layout_object,
+                                                              mouse_event);
+        }
       }
     }
   } else if (event->type() == EventTypeNames::webkitEditableContentChanged) {

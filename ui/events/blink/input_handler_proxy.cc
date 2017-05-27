@@ -962,10 +962,14 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
     case blink::kWebGestureDeviceTouchscreen:
     case blink::kWebGestureDeviceSyntheticAutoscroll:
       if (!gesture_scroll_on_impl_thread_) {
+        //        faprintf(stderr, "CR
+        //        InputHandlerProxy::HandleGestureFlingStart main\n");
         scroll_status.thread = cc::InputHandler::SCROLL_ON_MAIN_THREAD;
         scroll_status.main_thread_scrolling_reasons =
             cc::MainThreadScrollingReason::kContinuingMainThreadScroll;
       } else {
+        //        faprintf(stderr, "CR
+        //        InputHandlerProxy::HandleGestureFlingStart impl\n");
         scroll_status = input_handler_->FlingScrollBegin();
       }
       break;
@@ -1323,7 +1327,9 @@ void InputHandlerProxy::Animate(base::TimeTicks time) {
     TRACE_EVENT_INSTANT0("input",
                          "InputHandlerProxy::animate::flingOver",
                          TRACE_EVENT_SCOPE_THREAD);
-    CancelCurrentFling();
+    if (fling_parameters_.source_device !=
+        blink::kWebGestureDeviceSyntheticAutoscroll)
+      CancelCurrentFling();
   }
 }
 

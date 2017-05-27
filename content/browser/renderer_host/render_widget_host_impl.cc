@@ -91,6 +91,7 @@
 #include "ui/gfx/color_space.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
+#include "ui/gfx/geometry/vector2d_f.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/skbitmap_operations.h"
@@ -561,6 +562,9 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_DidNotProduceFrame, DidNotProduceFrame)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateRect, OnUpdateRect)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetCursor, OnSetCursor)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_AutoscrollStart, OnAutoscrollStart)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_AutoscrollFling, OnAutoscrollFling)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_AutoscrollEnd, OnAutoscrollEnd)
     IPC_MESSAGE_HANDLER(ViewHostMsg_TextInputStateChanged,
                         OnTextInputStateChanged)
     IPC_MESSAGE_HANDLER(ViewHostMsg_LockMouse, OnLockMouse)
@@ -2029,6 +2033,46 @@ void RenderWidgetHostImpl::OnQueueSyntheticGesture(
 
 void RenderWidgetHostImpl::OnSetCursor(const WebCursor& cursor) {
   SetCursor(cursor);
+}
+
+void RenderWidgetHostImpl::OnAutoscrollStart(const gfx::PointF& position) {
+  //  faprintf(stderr, "CR RenderWidgetHostImpl::OnAutoscrollStart\n");
+  WebGestureEvent scroll_begin = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureScrollBegin,
+      blink::kWebGestureDeviceSyntheticAutoscroll);
+  float scale = GetScaleFactorForView(GetView());
+  scroll_begin.x = position.x() / scale;
+  scroll_begin.y = position.y() / scale;
+
+  scroll_begin.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
+
+  input_router_->SendGestureEvent(GestureEventWithLatencyInfo(scroll_begin));
+}
+
+void RenderWidgetHostImpl::OnAutoscrollFling(const gfx::Vector2dF& velocity) {
+  //  faprintf(stderr, "CR RenderWidgetHostImpl::OnAutoscrollFling\n");
+  WebGestureEvent event = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureFlingStart,
+      blink::kWebGestureDeviceSyntheticAutoscroll);
+  event.data.fling_start.velocity_x = velocity.x();
+  event.data.fling_start.velocity_y = velocity.y();
+  event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
+
+  input_router_->SendGestureEvent(GestureEventWithLatencyInfo(event));
+}
+
+void RenderWidgetHostImpl::OnAutoscrollEnd() {
+  //  faprintf(stderr, "CR RenderWidgetHostImpl::OnAutoscrollEnd\n");
+  WebGestureEvent cancel_event = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureFlingCancel,
+      blink::kWebGestureDeviceSyntheticAutoscroll);
+  cancel_event.data.fling_cancel.prevent_boosting = true;
+  input_router_->SendGestureEvent(GestureEventWithLatencyInfo(cancel_event));
+
+  WebGestureEvent end_event = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureScrollEnd,
+      blink::kWebGestureDeviceSyntheticAutoscroll);
+  input_router_->SendGestureEvent(GestureEventWithLatencyInfo(end_event));
 }
 
 void RenderWidgetHostImpl::SetTouchEventEmulationEnabled(

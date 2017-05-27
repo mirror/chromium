@@ -33,14 +33,6 @@
 namespace blink {
 
 std::unique_ptr<WebActiveGestureAnimation>
-WebActiveGestureAnimation::CreateAtAnimationStart(
-    std::unique_ptr<WebGestureCurve> curve,
-    WebGestureCurveTarget* target) {
-  return WTF::WrapUnique(
-      new WebActiveGestureAnimation(std::move(curve), target, 0, true));
-}
-
-std::unique_ptr<WebActiveGestureAnimation>
 WebActiveGestureAnimation::CreateWithTimeOffset(
     std::unique_ptr<WebGestureCurve> curve,
     WebGestureCurveTarget* target,

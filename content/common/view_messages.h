@@ -688,6 +688,10 @@ IPC_MESSAGE_ROUTED0(ViewHostMsg_Focus)
 
 IPC_MESSAGE_ROUTED1(ViewHostMsg_SetCursor, content::WebCursor)
 
+IPC_MESSAGE_ROUTED1(ViewHostMsg_AutoscrollStart, gfx::PointF /* point */)
+IPC_MESSAGE_ROUTED1(ViewHostMsg_AutoscrollFling, gfx::Vector2dF /* velocity */)
+IPC_MESSAGE_ROUTED0(ViewHostMsg_AutoscrollEnd)
+
 // Get the list of proxies to use for |url|, as a semicolon delimited list
 // of "<TYPE> <HOST>:<PORT>" | "DIRECT".
 IPC_SYNC_MESSAGE_CONTROL1_2(ViewHostMsg_ResolveProxy,
