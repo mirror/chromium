@@ -33,7 +33,7 @@ void UpdateInstallShim::OnUpdateError(int error) {
   VLOG(1) << "OnUpdateError (" << extension_id_ << ") " << error;
 }
 
-Result UpdateInstallShim::Install(const base::DictionaryValue& manifest,
+Result UpdateInstallShim::Install(std::unique_ptr<base::DictionaryValue> manifest,
                                   const base::FilePath& unpack_path) {
   base::ScopedTempDir temp_dir;
   if (!temp_dir.CreateUniqueTempDir())

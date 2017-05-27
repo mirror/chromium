@@ -4,7 +4,9 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <vector>
+#include <utility>
 
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
@@ -268,7 +270,7 @@ TEST_F(UpdateServiceTest, BasicUpdateOperations) {
       extension1->manifest()->value()->DeepCopy());
   new_manifest->SetString("version", "2.0");
 
-  installer->Install(*new_manifest, new_version_dir.GetPath());
+  installer->Install(std::move(new_manifest), new_version_dir.GetPath());
 
   scoped_refptr<content::MessageLoopRunner> loop_runner =
       new content::MessageLoopRunner();
