@@ -3869,10 +3869,15 @@ update_client::CrxComponent ComponentUpdaterPolicyTest::MakeCrxComponent(
    public:
     MockInstaller() {}
 
+    Result Install(std::unique_ptr<base::DictionaryValue> manifest,
+                 const base::FilePath& unpack_path) {
+      return Install_(manifest, unpack_path);
+    }
+
     MOCK_METHOD1(OnUpdateError, void(int error));
-    MOCK_METHOD2(Install,
+    MOCK_METHOD2(Install_,
                  update_client::CrxInstaller::Result(
-                     const base::DictionaryValue& manifest,
+                     const std::unique_ptr<base::DictionaryValue>& manifest,
                      const base::FilePath& unpack_path));
     MOCK_METHOD2(GetInstalledFile,
                  bool(const std::string& file, base::FilePath* installed_file));

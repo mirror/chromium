@@ -109,10 +109,10 @@ Result DefaultComponentInstaller::InstallHelper(
   return Result(InstallError::NONE);
 }
 
-Result DefaultComponentInstaller::Install(const base::DictionaryValue& manifest,
+Result DefaultComponentInstaller::Install(std::unique_ptr<base::DictionaryValue> manifest,
                                           const base::FilePath& unpack_path) {
   std::string manifest_version;
-  manifest.GetStringASCII("version", &manifest_version);
+  manifest->GetStringASCII("version", &manifest_version);
   base::Version version(manifest_version);
 
   VLOG(1) << "Install: version=" << version.GetString()
@@ -136,7 +136,7 @@ Result DefaultComponentInstaller::Install(const base::DictionaryValue& manifest,
     if (!base::DeleteFile(install_path, true))
       return Result(InstallError::CLEAN_INSTALL_DIR_FAILED);
   }
-  const auto result = InstallHelper(manifest, unpack_path, install_path);
+  const auto result = InstallHelper(*manifest, unpack_path, install_path);
   if (result.error) {
     base::DeleteFile(install_path, true);
     return result;
@@ -147,9 +147,7 @@ Result DefaultComponentInstaller::Install(const base::DictionaryValue& manifest,
 
   current_version_ = version;
   current_install_dir_ = install_path;
-  // TODO(ddorwin): Change parameter to std::unique_ptr<base::DictionaryValue>
-  // so we can avoid this DeepCopy.
-  current_manifest_.reset(manifest.DeepCopy());
+  current_manifest_ = std::move(manifest);
   std::unique_ptr<base::DictionaryValue> manifest_copy(
       current_manifest_->DeepCopy());
   main_task_runner_->PostTask(
