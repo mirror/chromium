@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -127,6 +128,13 @@ class DiscreteSet {
     return elements_[0];
   }
 
+  // Returns a reference to the list of elements in the set.
+  // Behavior is undefined if the set is universal.
+  const std::vector<T>& elements() const {
+    DCHECK(!is_universal_);
+    return elements_;
+  }
+
   bool is_universal() const { return is_universal_; }
 
  private:
@@ -136,6 +144,11 @@ class DiscreteSet {
   bool is_universal_;
   std::vector<T> elements_;
 };
+
+using StringSet = DiscreteSet<std::string>;
+using BoolSet = DiscreteSet<bool>;
+StringSet StringSetFromConstraint(const blink::StringConstraint& constraint);
+BoolSet BoolSetFromConstraint(const blink::BooleanConstraint& constraint);
 
 // This class represents a set of (height, width) screen resolution candidates
 // determined by width, height and aspect-ratio constraints.
