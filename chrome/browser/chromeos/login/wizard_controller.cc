@@ -52,6 +52,7 @@
 #include "chrome/browser/chromeos/login/screens/terms_of_service_screen.h"
 #include "chrome/browser/chromeos/login/screens/update_screen.h"
 #include "chrome/browser/chromeos/login/screens/user_image_screen.h"
+#include "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.h"
 #include "chrome/browser/chromeos/login/screens/wrong_hwid_screen.h"
 #include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
@@ -424,6 +425,9 @@ BaseScreen* WizardController::CreateScreen(OobeScreen screen) {
   } else if (screen == OobeScreen::SCREEN_ENCRYPTION_MIGRATION) {
     return new EncryptionMigrationScreen(
         this, oobe_ui_->GetEncryptionMigrationScreenView());
+  } else if (screen == OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP) {
+    return new VoiceInteractionValuePropScreen(
+        this, oobe_ui_->GetVoiceInteractionValuePropScreenView());
   }
 
   return nullptr;
@@ -545,27 +549,7 @@ void WizardController::ShowTermsOfServiceScreen() {
 }
 
 void WizardController::ShowArcTermsOfServiceScreen() {
-  bool show_arc_terms = false;
-  const Profile* profile = ProfileManager::GetActiveUserProfile();
-
-  const base::CommandLine* command_line =
-      base::CommandLine::ForCurrentProcess();
-  if (!command_line->HasSwitch(chromeos::switches::kEnableArcOOBEOptIn)) {
-    VLOG(1) << "Skip ARC Terms of Service screen because ARC OOBE OptIn is "
-            << "disabled.";
-  } else if (!user_manager::UserManager::Get()->IsUserLoggedIn()) {
-    VLOG(1) << "Skip ARC Terms of Service screen because user is not "
-            << "logged in.";
-  } else if (!arc::IsArcAllowedForProfile(profile)) {
-    VLOG(1) << "Skip ARC Terms of Service screen because ARC is not allowed.";
-  } else if (profile->GetPrefs()->IsManagedPreference(prefs::kArcEnabled) &&
-             !profile->GetPrefs()->GetBoolean(prefs::kArcEnabled)) {
-    VLOG(1) << "Skip ARC Terms of Service screen because ARC is disabled.";
-  } else {
-    show_arc_terms = true;
-  }
-
-  if (show_arc_terms) {
+  if (ShouldShowArcTerms()) {
     VLOG(1) << "Showing ARC Terms of Service screen.";
     UpdateStatusAreaVisibilityForScreen(
         OobeScreen::SCREEN_ARC_TERMS_OF_SERVICE);
@@ -638,6 +622,18 @@ void WizardController::ShowEncryptionMigrationScreen() {
   VLOG(1) << "Showing encryption migration screen.";
   UpdateStatusAreaVisibilityForScreen(OobeScreen::SCREEN_ENCRYPTION_MIGRATION);
   SetCurrentScreen(GetScreen(OobeScreen::SCREEN_ENCRYPTION_MIGRATION));
+}
+
+void WizardController::ShowVoiceInteractionValuePropScreen() {
+  if (ShouldShowVoiceInteractionValueProp()) {
+    VLOG(1) << "Showing voice interaction value prop screen.";
+    UpdateStatusAreaVisibilityForScreen(
+        OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP);
+    SetCurrentScreen(
+        GetScreen(OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP));
+  } else {
+    OnOobeFlowFinished();
+  }
 }
 
 void WizardController::SkipToLoginForTesting(
@@ -763,24 +759,7 @@ void WizardController::OnUserImageSelected() {
       return;
     }
   }
-  if (!time_oobe_started_.is_null()) {
-    base::TimeDelta delta = base::Time::Now() - time_oobe_started_;
-    UMA_HISTOGRAM_CUSTOM_TIMES(
-        "OOBE.BootToSignInCompleted",
-        delta,
-        base::TimeDelta::FromMilliseconds(10),
-        base::TimeDelta::FromMinutes(30),
-        100);
-    time_oobe_started_ = base::Time();
-  }
-
-  // Launch browser and delete login host controller.
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::Bind(&UserSessionManager::DoBrowserLaunch,
-                 base::Unretained(UserSessionManager::GetInstance()),
-                 ProfileManager::GetActiveUserProfile(), host_));
-  host_ = nullptr;
+  ShowVoiceInteractionValuePropScreen();
 }
 
 void WizardController::OnUserImageSkipped() {
@@ -851,6 +830,16 @@ void WizardController::OnArcTermsOfServiceFinished() {
   ShowUserImageScreen();
 }
 
+void WizardController::OnVoiceInteractionValuePropSkipped() {
+  OnOobeFlowFinished();
+}
+
+void WizardController::OnVoiceInteractionValuePropAccepted() {
+  // Intent to start Voice Interaction OOBE
+  /** PLACE HOLDER FOR FIRING VOICE INTERACTION OOBE INTENT **/
+  OnOobeFlowFinished();
+}
+
 void WizardController::OnControllerPairingFinished() {
   ShowAutoEnrollmentCheckScreen();
 }
@@ -863,6 +852,24 @@ void WizardController::OnAutoEnrollmentCheckCompleted() {
       CheckWhetherDeviceDisabledDuringOOBE(base::Bind(
           &WizardController::OnDeviceDisabledChecked,
           weak_factory_.GetWeakPtr()));
+}
+
+void WizardController::OnOobeFlowFinished() {
+  if (!time_oobe_started_.is_null()) {
+    base::TimeDelta delta = base::Time::Now() - time_oobe_started_;
+    UMA_HISTOGRAM_CUSTOM_TIMES("OOBE.BootToSignInCompleted", delta,
+                               base::TimeDelta::FromMilliseconds(10),
+                               base::TimeDelta::FromMinutes(30), 100);
+    time_oobe_started_ = base::Time();
+  }
+
+  // Launch browser and delete login host controller.
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(&UserSessionManager::DoBrowserLaunch,
+                 base::Unretained(UserSessionManager::GetInstance()),
+                 ProfileManager::GetActiveUserProfile(), host_));
+  host_ = nullptr;
 }
 
 void WizardController::OnDeviceDisabledChecked(bool device_disabled) {
@@ -1089,6 +1096,8 @@ void WizardController::AdvanceToScreen(OobeScreen screen) {
     ShowDeviceDisabledScreen();
   } else if (screen == OobeScreen::SCREEN_ENCRYPTION_MIGRATION) {
     ShowEncryptionMigrationScreen();
+  } else if (screen == OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP) {
+    ShowVoiceInteractionValuePropScreen();
   } else if (screen != OobeScreen::SCREEN_TEST_NO_WINDOW) {
     if (is_out_of_box_) {
       time_oobe_started_ = base::Time::Now();
@@ -1196,6 +1205,12 @@ void WizardController::OnExit(BaseScreen& /* screen */,
       break;
     case ScreenExitCode::CONTROLLER_PAIRING_FINISHED:
       OnControllerPairingFinished();
+      break;
+    case ScreenExitCode::VOICE_INTERACTION_VALUE_PROP_SKIPPED:
+      OnVoiceInteractionValuePropSkipped();
+      break;
+    case ScreenExitCode::VOICE_INTERACTION_VALUE_PROP_ACCEPTED:
+      OnVoiceInteractionValuePropAccepted();
       break;
     default:
       NOTREACHED();
@@ -1488,6 +1503,47 @@ bool WizardController::SetOnTimeZoneResolvedForTesting(
 bool WizardController::IsRemoraPairingOobe() const {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kHostPairingOobe);
+}
+
+bool WizardController::ShouldShowArcTerms() const {
+  const Profile* profile = ProfileManager::GetActiveUserProfile();
+
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+  if (!command_line->HasSwitch(chromeos::switches::kEnableArcOOBEOptIn)) {
+    VLOG(1) << "Skip ARC Terms of Service screen because ARC OOBE OptIn is "
+            << "disabled.";
+    return false;
+  }
+  if (!user_manager::UserManager::Get()->IsUserLoggedIn()) {
+    VLOG(1) << "Skip ARC Terms of Service screen because user is not "
+            << "logged in.";
+    return false;
+  }
+  if (!arc::IsArcAllowedForProfile(profile)) {
+    VLOG(1) << "Skip ARC Terms of Service screen because ARC is not allowed.";
+    return false;
+  }
+  if (profile->GetPrefs()->IsManagedPreference(prefs::kArcEnabled) &&
+      !profile->GetPrefs()->GetBoolean(prefs::kArcEnabled)) {
+    VLOG(1) << "Skip ARC Terms of Service screen because ARC is disabled.";
+    return false;
+  }
+  return true;
+}
+
+bool WizardController::ShouldShowVoiceInteractionValueProp() const {
+  if (!ShouldShowArcTerms()) {
+    VLOG(1) << "Skip Voice Interaction Value Prop screen because Arc Terms is "
+            << "skipped.";
+    return false;
+  }
+  if (!chromeos::switches::IsVoiceInteractionEnabled()) {
+    VLOG(1) << "Skip Voice Interaction Value Prop screen because voice "
+            << "interaction service is disabled.";
+    return false;
+  }
+  return true;
 }
 
 void WizardController::MaybeStartListeningForSharkConnection() {

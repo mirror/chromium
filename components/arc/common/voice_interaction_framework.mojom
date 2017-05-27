@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 4
+// Next MinVersion: 5
 
 module arc.mojom;
 
@@ -28,7 +28,7 @@ interface VoiceInteractionFrameworkHost {
 };
 
 // Connects with Android system server.
-// Next method ID: 4
+// Next method ID: 5
 interface VoiceInteractionFrameworkInstance {
   Init@0(VoiceInteractionFrameworkHost host_ptr);
 
@@ -41,4 +41,7 @@ interface VoiceInteractionFrameworkInstance {
 
   // Shows/hides the metalayer in the container.
   [MinVersion=1] SetMetalayerVisibility@3([MinVersion=2] bool visible);
+
+  // Starts the voice interaction setup wizard in container.
+  [MinVersion=4] StartVoiceInteractionSetupWizard@4();
 };
