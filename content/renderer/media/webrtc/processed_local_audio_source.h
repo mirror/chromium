@@ -41,6 +41,11 @@ class CONTENT_EXPORT ProcessedLocalAudioSource final
                             const blink::WebMediaConstraints& constraints,
                             const ConstraintsCallback& started_callback,
                             PeerConnectionDependencyFactory* factory);
+  ProcessedLocalAudioSource(int consumer_render_frame_id,
+                            const StreamDeviceInfo& device_info,
+                            const AudioProcessingProperties& audio_processing_properties,
+                            const ConstraintsCallback& started_callback,
+                            PeerConnectionDependencyFactory* factory);
 
   ~ProcessedLocalAudioSource() final;
 
@@ -59,6 +64,9 @@ class CONTENT_EXPORT ProcessedLocalAudioSource final
   // before the first call to ConnectToTrack().
   const blink::WebMediaConstraints& source_constraints() const {
     return constraints_;
+  }
+  const AudioProcessingProperties& audio_processing_properties() const {
+    return audio_processing_properties_;
   }
 
   // The following accessors are not valid until after the source is started
@@ -112,7 +120,9 @@ class CONTENT_EXPORT ProcessedLocalAudioSource final
   base::ThreadChecker thread_checker_;
 
   // Cached audio constraints for the capturer.
+  // TODO(guidou): Remove this field. http://crbug.com/706408
   const blink::WebMediaConstraints constraints_;
+  AudioProcessingProperties audio_processing_properties_;
 
   // Callback that's called when the audio source has been initialized.
   ConstraintsCallback started_callback_;

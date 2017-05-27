@@ -22,6 +22,7 @@
 #include "content/renderer/media/mock_media_stream_dispatcher.h"
 #include "content/renderer/media/mock_media_stream_video_source.h"
 #include "content/renderer/media/webrtc/mock_peer_connection_dependency_factory.h"
+#include "media/audio/audio_device_description.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebMediaDeviceInfo.h"
@@ -157,6 +158,27 @@ class MockMediaDevicesDispatcherHost
     result.push_back(std::move(device));
 
     std::move(client_callback).Run(std::move(result));
+  }
+
+  void GetAudioInputCapabilities(
+      const url::Origin& security_origin,
+      const GetAudioInputCapabilitiesCallback& client_callback) override {
+    ::mojom::AudioInputDeviceCapabilitiesPtr device =
+        ::mojom::AudioInputDeviceCapabilities::New();
+    device->device_id = media::AudioDeviceDescription::kDefaultDeviceId;
+
+    std::vector<::mojom::AudioInputDeviceCapabilitiesPtr> result;
+    result.push_back(std::move(device));
+
+    device = ::mojom::AudioInputDeviceCapabilities::New();
+    device->device_id = kFakeAudioInputDeviceId1;
+    result.push_back(std::move(device));
+
+    device = ::mojom::AudioInputDeviceCapabilities::New();
+    device->device_id = kFakeAudioInputDeviceId2;
+    result.push_back(std::move(device));
+
+    client_callback.Run(std::move(result));
   }
 
   void GetAudioInputCapabilities(

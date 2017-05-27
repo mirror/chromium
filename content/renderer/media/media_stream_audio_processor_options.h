@@ -122,6 +122,35 @@ struct CONTENT_EXPORT AudioProcessingProperties {
   std::vector<media::Point> goog_array_geometry;
 };
 
+// XXX Maybe use the real default values for these properties
+struct AudioProcessingProperties {
+  AudioProcessingProperties();
+  AudioProcessingProperties(const AudioProcessingProperties& other);
+  AudioProcessingProperties& operator=(const AudioProcessingProperties& other);
+  AudioProcessingProperties(AudioProcessingProperties&& other);
+  AudioProcessingProperties& operator=(AudioProcessingProperties&& other);
+  ~AudioProcessingProperties();
+
+  // TODO(guidou): Remove this function. http://crbug.com/706408
+  static AudioProcessingProperties FromConstraints(
+      const blink::WebMediaConstraints& constraints,
+      const MediaStreamDevice::AudioDeviceParameters& input_params);
+
+  bool enable_sw_echo_cancellation = false;
+  bool disable_hw_echo_cancellation = false;
+  bool goog_audio_mirroring = false;
+  bool goog_auto_gain_control = false;
+  bool goog_experimental_echo_cancellation = false;
+  bool goog_typing_noise_detection = false;
+  bool goog_noise_suppression = false;
+  bool goog_experimental_noise_suppression = false;
+  bool goog_beamforming = false;
+  bool goog_highpass_filter = false;
+  bool goog_experimental_auto_gain_control = false;
+  std::vector<media::Point> goog_array_geometry;
+};
+
+
 // A helper class to log echo information in general and Echo Cancellation
 // quality in particular.
 class CONTENT_EXPORT EchoInformation {
@@ -188,11 +217,8 @@ void GetAudioProcessingStats(
     AudioProcessing* audio_processing,
     webrtc::AudioProcessorInterface::AudioProcessorStats* stats);
 
-// Returns the array geometry from the media constraints if existing and
-// otherwise that provided by the input device.
-CONTENT_EXPORT std::vector<webrtc::Point> GetArrayGeometryPreferringConstraints(
-    const MediaAudioConstraints& audio_constraints,
-    const MediaStreamDevice::AudioDeviceParameters& input_params);
+// TODO(guidou): Remove this function. http://crbug.com/706408
+CONTENT_EXPORT bool IsOldAudioConstraints();
 
 }  // namespace content
 

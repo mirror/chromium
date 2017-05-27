@@ -37,10 +37,11 @@ class TaskRunner;
 }
 
 namespace content {
-class PeerConnectionDependencyFactory;
+class AudioCaptureSettings;
 class MediaStreamAudioSource;
 class MediaStreamDispatcher;
 class MediaStreamVideoSource;
+class PeerConnectionDependencyFactory;
 class VideoCaptureSettings;
 
 // UserMediaClientImpl is a delegate for the Media Stream GetUserMedia API.
@@ -226,21 +227,27 @@ class CONTENT_EXPORT UserMediaClientImpl
 
   const ::mojom::MediaDevicesDispatcherHostPtr& GetMediaDevicesDispatcher();
 
-  void SelectAudioInputDevice(
+//  void SelectAudioInputDevice(
+//      const blink::WebUserMediaRequest& user_media_request,
+//      std::vector<::mojom::AudioInputDeviceCapabilitiesPtr> audio_input_capabilities);
+//
+  void SetupAudioInput(const blink::WebUserMediaRequest& user_media_request);
+  void SelectAudioDeviceSettings(
       const blink::WebUserMediaRequest& user_media_request,
-      const EnumerationResult& device_enumeration);
+      std::vector<::mojom::AudioInputDeviceCapabilitiesPtr>
+          audio_input_capabilities);
+  void FinalizeSelectAudioSettings(
+      const blink::WebUserMediaRequest& user_media_request,
+      const AudioCaptureSettings& settings);
 
   void SetupVideoInput(const blink::WebUserMediaRequest& user_media_request);
-
   void SelectVideoDeviceSettings(
       const blink::WebUserMediaRequest& user_media_request,
       std::vector<::mojom::VideoInputDeviceCapabilitiesPtr>
           video_input_capabilities);
-
   void FinalizeSelectVideoDeviceSettings(
       const blink::WebUserMediaRequest& user_media_request,
       const VideoCaptureSettings& settings);
-
   void FinalizeSelectVideoContentSettings(
       const blink::WebUserMediaRequest& user_media_request,
       const VideoCaptureSettings& settings);
