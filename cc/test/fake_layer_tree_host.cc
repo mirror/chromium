@@ -69,6 +69,8 @@ FakeLayerTreeHost::~FakeLayerTreeHost() {
 void FakeLayerTreeHost::SetNeedsCommit() { needs_commit_ = true; }
 
 LayerImpl* FakeLayerTreeHost::CommitAndCreateLayerImplTree() {
+  // TODO(pdr): Update the LayerTreeImpl lifecycle states here so lifecycle
+  // violations can be caught.
   TreeSynchronizer::SynchronizeTrees(root_layer(), active_tree());
   active_tree()->SetPropertyTrees(property_trees());
   TreeSynchronizer::PushLayerProperties(root_layer()->layer_tree_host(),
@@ -92,6 +94,8 @@ LayerImpl* FakeLayerTreeHost::CommitAndCreateLayerImplTree() {
       ids.outer_viewport_scroll = outer_viewport_scroll_layer()->id();
     active_tree()->SetViewportLayersFromIds(ids);
   }
+
+  active_tree()->UpdateScrollbarGeometries();
 
   return active_tree()->root_layer_for_testing();
 }

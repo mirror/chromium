@@ -146,6 +146,7 @@ TEST(LayerImplTest, VerifyLayerChangesAreTrackedProperly) {
 
   root->test_properties()->force_render_surface = true;
   root->SetMasksToBounds(true);
+  root->SetScrollClipLayer(root_clip->id());
   root->layer_tree_impl()->ResetAllChangeTracking();
 
   root->test_properties()->AddChild(
@@ -154,7 +155,6 @@ TEST(LayerImplTest, VerifyLayerChangesAreTrackedProperly) {
   child->test_properties()->AddChild(
       LayerImpl::Create(host_impl.active_tree(), 8));
   LayerImpl* grand_child = child->test_properties()->children[0];
-  root->SetScrollClipLayer(root_clip->id());
   host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
 
   // Adding children is an internal operation and should not mark layers as
