@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cebf5e99_c63abdd1",
+        "filename": "media/gpu/surface_texture_gl_owner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-28T06:14:59Z",
+      "side": 1,
+      "message": "doesn\u0027t ScopedTextureBinder do this for you?",
+      "revId": "e7a810fbe7ab63405fa2f2b6ab5584718fd913d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac4b61f1_98ae95c2",
         "filename": "media/gpu/surface_texture_gl_owner_unittest.cc",
         "patchSetId": 3
@@ -25,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "cf70f3ac_f86f34e9",
+        "filename": "media/gpu/surface_texture_gl_owner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-28T06:14:59Z",
+      "side": 1,
+      "message": "yup.",
+      "parentUuid": "ac4b61f1_98ae95c2",
+      "range": {
+        "startLine": 41,
+        "startChar": 40,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "e7a810fbe7ab63405fa2f2b6ab5584718fd913d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10524793_0f818059",
         "filename": "media/gpu/surface_texture_gl_owner_unittest.cc",
         "patchSetId": 3
@@ -36,6 +77,30 @@
       "writtenOn": "2017-05-28T02:30:49Z",
       "side": 1,
       "message": "When this was 2D all tests failed. The DCHECK no glGetError() was firing in ~STGLOwner. Error 1282. I\u0027m not sure why? Something to do with binding to both 2D and OES I guess.",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 41
+      },
+      "revId": "e7a810fbe7ab63405fa2f2b6ab5584718fd913d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f761edb_40d7d306",
+        "filename": "media/gpu/surface_texture_gl_owner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-28T06:14:59Z",
+      "side": 1,
+      "message": "don\u0027t know.",
+      "parentUuid": "10524793_0f818059",
       "range": {
         "startLine": 51,
         "startChar": 18,
