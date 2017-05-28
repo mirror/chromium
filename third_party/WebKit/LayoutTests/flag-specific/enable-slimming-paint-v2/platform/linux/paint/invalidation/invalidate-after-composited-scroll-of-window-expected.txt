@@ -1,0 +1,73 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [785, 4936],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutView #document",
+          "rect": [0, 0, 785, 4936],
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutBlockFlow DIV id='target'",
+          "rect": [8, 2408, 100, 100],
+          "reason": "appeared"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutView #document",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow HTML",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow BODY",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow DIV",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow DIV class='spacer'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow DIV id='target'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow DIV class='spacer'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow (anonymous)",
+      "reason": "subtree"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'Tests that invalidation of a div after scrolling invalidates just the div and no other area.'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "subtree"
+    }
+  ]
+}
+
