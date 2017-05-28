@@ -10,11 +10,16 @@ blink_core_sources("mojo") {
     "Mojo.h",
     "MojoHandle.cpp",
     "MojoHandle.h",
+    "MojoInterfaceInterceptor.cpp",
+    "MojoInterfaceInterceptor.h",
+    "MojoInterfaceRequestEvent.cpp",
+    "MojoInterfaceRequestEvent.h",
     "MojoWatcher.cpp",
     "MojoWatcher.h",
   ]
 
   deps = [
     "//mojo/public/cpp/system",
+    "//services/service_manager/public/cpp",
   ]
 }

@@ -147,6 +147,8 @@ generated_core_dictionary_files = [
   "$blink_core_output_dir/mojo/MojoDuplicateBufferHandleOptions.h",
   "$blink_core_output_dir/mojo/MojoHandleSignals.cpp",
   "$blink_core_output_dir/mojo/MojoHandleSignals.h",
+  "$blink_core_output_dir/mojo/MojoInterfaceRequestEventInit.cpp",
+  "$blink_core_output_dir/mojo/MojoInterfaceRequestEventInit.h",
   "$blink_core_output_dir/mojo/MojoMapBufferResult.cpp",
   "$blink_core_output_dir/mojo/MojoMapBufferResult.h",
   "$blink_core_output_dir/mojo/MojoReadDataOptions.cpp",

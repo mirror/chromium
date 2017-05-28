@@ -1583,6 +1583,13 @@ def _CheckIpcOwners(input_api, output_api):
       '*TypeConverter*.*',
   ]
 
+  # Some exceptions to the above rule to avoid needless security review for
+  # test-only mojoms.
+  exclude_file_patterns = [
+      '*_test.mojom',
+      'test_*.mojom',
+  ]
+
   # These third_party directories do not contain IPCs, but contain files
   # matching the above patterns, which trigger false positives.
   exclude_paths = [
@@ -1625,6 +1632,11 @@ def _CheckIpcOwners(input_api, output_api):
       if input_api.fnmatch.fnmatch(
           input_api.os_path.basename(f.LocalPath()), pattern):
         skip = False
+        for exclude_pattern in exclude_file_patterns:
+          if input_api.fnmatch.fnmatch(
+                  input_api.os_path.basename(f.LocalPath()), exclude_pattern):
+            skip = True
+            break
         for exclude in exclude_paths:
           if input_api.fnmatch.fnmatch(f.LocalPath(), exclude):
             skip = True
