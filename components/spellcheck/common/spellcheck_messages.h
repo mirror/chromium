@@ -37,14 +37,6 @@ IPC_MESSAGE_ROUTED3(SpellCheckMsg_RespondTextCheck,
                     std::vector<SpellCheckResult>)
 #endif
 
-#if BUILDFLAG(HAS_SPELLCHECK_PANEL)
-// This message tells the renderer to advance to the next misspelling. It is
-// sent when the user clicks the "Find Next" button on the spelling panel.
-IPC_MESSAGE_ROUTED0(SpellCheckMsg_AdvanceToNextMisspelling)
-
-IPC_MESSAGE_ROUTED1(SpellCheckMsg_ToggleSpellPanel, bool)
-#endif
-
 // Messages sent from the renderer to the browser.
 
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)

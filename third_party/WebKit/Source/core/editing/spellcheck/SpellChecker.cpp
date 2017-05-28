@@ -56,6 +56,7 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/text/TextBreakIterator.h"
 #include "platform/text/TextCheckerClient.h"
+#include "public/platform/WebSpellCheckPanelClient.h"
 
 namespace blink {
 
@@ -106,6 +107,19 @@ SpellCheckerClient& SpellChecker::GetSpellCheckerClient() const {
   if (Page* page = GetFrame().GetPage())
     return page->GetSpellCheckerClient();
   return GetEmptySpellCheckerClient();
+}
+
+static WebSpellCheckPanelClient& EmptySpellCheckPanelClient() {
+  DEFINE_STATIC_LOCAL(WebSpellCheckPanelClient, client, ());
+  return client;
+}
+
+WebSpellCheckPanelClient& SpellChecker::SpellCheckPanelClient() const {
+  WebSpellCheckPanelClient* spell_check_panel_client =
+      GetFrame().Client()->SpellCheckPanelClient();
+  if (!spell_check_panel_client)
+    return EmptySpellCheckPanelClient();
+  return *spell_check_panel_client;
 }
 
 TextCheckerClient& SpellChecker::TextChecker() const {
@@ -304,20 +318,20 @@ void SpellChecker::AdvanceToNextMisspelling(bool start_before_selection) {
                                             .SetBaseAndExtent(misspelling_range)
                                             .Build());
     GetFrame().Selection().RevealSelection();
-    GetSpellCheckerClient().UpdateSpellingUIWithMisspelledWord(misspelled_word);
+    SpellCheckPanelClient().UpdateSpellingUIWithMisspelledWord(misspelled_word);
     GetFrame().GetDocument()->Markers().AddSpellingMarker(
         misspelling_range.StartPosition(), misspelling_range.EndPosition());
   }
 }
 
 void SpellChecker::ShowSpellingGuessPanel() {
-  if (GetSpellCheckerClient().SpellingUIIsShowing()) {
-    GetSpellCheckerClient().ShowSpellingUI(false);
+  if (SpellCheckPanelClient().IsShowingSpellingUI()) {
+    SpellCheckPanelClient().ShowSpellingUI(false);
     return;
   }
 
   AdvanceToNextMisspelling(true);
-  GetSpellCheckerClient().ShowSpellingUI(true);
+  SpellCheckPanelClient().ShowSpellingUI(true);
 }
 
 void SpellChecker::MarkMisspellingsForMovingParagraphs(

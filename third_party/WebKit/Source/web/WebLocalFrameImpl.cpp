@@ -1580,6 +1580,7 @@ WebLocalFrameImpl::WebLocalFrameImpl(
       web_dev_tools_frontend_(0),
       input_method_controller_(*this),
       text_checker_client_(new TextCheckerClientImpl(this)),
+      spell_check_panel_client_(0),
       self_keep_alive_(this) {
   DCHECK(client_);
   g_frame_count++;
@@ -2586,6 +2587,11 @@ TextCheckerClient& WebLocalFrameImpl::GetTextCheckerClient() const {
 void WebLocalFrameImpl::SetTextCheckClient(
     WebTextCheckClient* text_check_client) {
   text_check_client_ = text_check_client;
+}
+
+void WebLocalFrameImpl::SetSpellCheckPanelClient(
+    WebSpellCheckPanelClient* spell_check_panel_client) {
+  spell_check_panel_client_ = spell_check_panel_client;
 }
 
 }  // namespace blink

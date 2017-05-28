@@ -52,3 +52,18 @@ interface SpellCheckHost {
 
 [Native]
 struct SpellCheckResult;
+
+// Render frame interface exposed to the browser frame host for receiving
+// control messages when the OSX BUILDFLAG(HAS_SPELLCHECK_PANEL) spelling
+// and grammar checking panel is active.
+//
+interface SpellCheckPanel {
+  // Tells the focussed renderer frame to advance to the next misspelling.
+  // Sent when the user clicks the "Find Next" button on the OSX spelling
+  // and grammar checking panel.
+  AdvanceToNextMisspelling();
+
+  // Informs the focussed renderer frame if the OSX spelling and grammar
+  // checking panel is visible or not.
+  ToggleSpellPanel(bool visible);
+};
