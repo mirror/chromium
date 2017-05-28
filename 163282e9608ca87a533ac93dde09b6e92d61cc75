@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee555c71_2315fa96",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T01:17:45Z",
+      "side": 1,
+      "message": "Fair point. It does feel weird to put it here. Removed it and exposed a public DiscardCodecOutputBuffers() so we can call that in MCVD (for surfaceDestroyed()).",
+      "parentUuid": "a3dbc588_6fbbeb62",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ceb6ff0_64255064",
         "filename": "media/gpu/android/codec_wrapper.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-27T17:50:05Z",
       "side": 1,
       "message": "i\u0027m a little unsure that we can use this.\n\nif the buffer\u0027s not valid, then that\u0027s fine, but all we can really do is drop it.  in that case, why not just ReleaseToSurface() or drop the buffer, since those will do the same thing anyway.  i.e., i don\u0027t see that we\u0027d make a different decision based on it.\n\nif the buffer is valid, then it might not be valid anymore after this function returns due to some other thread doing something.  so, i don\u0027t think that we can make any decision based on that either.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90847d55_55b2865e",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T01:17:45Z",
+      "side": 1,
+      "message": "Yeah, sorry, this is a little bit opaque without the rest of the code. I could remove it for now and add it back when I add code to start using it if you\u0027d prefer.\n\nI\u0027m planning to use this for MaybeRenderEarly() so that we know when we don\u0027t have to consider MaybeRenderEarlying a given CodecImage because its CodecBuffer was invalidated. AVDA explicitly clears the list of CodecImages MRE has to consider when it knows the images are invalid. Now that images live on the gpu thread but invalidation happens on the MCVD thread there\u0027s no easy way to do that any more. So I was planning a scheme where on the GPU thread we remember all images ever created. But we remove them from our list when a) they\u0027re destructed (using a destruction observer) or b) when MRE sees that they\u0027re invalidated. \n\nThe only meaningful case is if it returns false (b/c as you note it\u0027s racy if it returns true). Perhaps a better name is HasBeenInvalidated()?\n\nI\u0027ll work on the calling code so maybe you can see that before we land this CL anyway.",
+      "parentUuid": "0ceb6ff0_64255064",
       "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "974d5db6_7531752f",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T01:17:45Z",
+      "side": 1,
+      "message": "True, this is more of a micro optimization to avoid taking the lock. I\u0027ll remove.",
+      "parentUuid": "a314325b_55a59bf2",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "721d1e62_709c57ff",
         "filename": "media/gpu/android/codec_wrapper.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-05-27T17:50:05Z",
       "side": 1,
       "message": "is the model for releasing the codec something like \"TakeCodec() then post the codec to another thread\"?\n\nother than the buffers, will anything on another thread need to hold CodecWrapper?  i realize that some of our attempts to move SetSurface into the image might do it that way, but could probably do it other ways too.\n\ni\u0027m trying to decide if shared ptrs are needed.",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83381010_d63f3d38",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T01:17:45Z",
+      "side": 1,
+      "message": "Yes that was my thinking. MCVD will only TakeCodec() to pass it to CodecAllocator::ReleaseCodec(). Since I want to reuse CodecAllocator for now I didn\u0027t want to change it to take CodecWrappers or anything.\n\nNo I don\u0027t think anything other than CodecBuffers need to have a CodecWrapper ref.\n\nIt\u0027s also a convenient way for CodecBuffers to safely outlive their codecwrapper. It has threadsafe weakptr like semantics. But we could solve that some other way.",
+      "parentUuid": "721d1e62_709c57ff",
       "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4dda16b_ccfb075c",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T01:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c781ea6_42738699",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "f1b76e93_b317f73a",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T01:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e13b47_902584ff",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 20
+      },
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "116bb1a9_acf4272d",
         "filename": "media/gpu/android/codec_wrapper.h",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5045565c_69be2db2",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T01:17:45Z",
+      "side": 1,
+      "message": "Done. Also forgot to mention that this lets us do the thing where we wait during surface transitions for no unrendered buffers.",
+      "parentUuid": "116bb1a9_acf4272d",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "81b89203_a67cf50d",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T01:17:45Z",
+      "side": 1,
+      "message": "Will make the naming change (I just don\u0027t like how long it is, but you\u0027re right that it\u0027s a bit ambiguous).\n\nI agree it\u0027s a bit asymmetric. The only reason I didn\u0027t do it is I didn\u0027t see an immediate benefit. It\u0027s certainly something we could add on later if we find it makes anything simpler. And yes, the one time we keep an input buffer alive for longer than a single function call is when we get NO_KEY. So that\u0027s the thing that we might be able to make simpler.",
+      "parentUuid": "61f33907_5bc67189",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4d09853_9cc4953b",
         "filename": "media/gpu/android/codec_wrapper.h",
         "patchSetId": 2
@@ -158,6 +308,24 @@
       "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020c69ae_04467784",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T01:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4d09853_9cc4953b",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
