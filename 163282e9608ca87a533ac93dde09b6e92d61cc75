@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d726c8cf_53cc1dcf",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T17:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb74b00f_dc2e50d4",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a314325b_55a59bf2",
         "filename": "media/gpu/android/codec_wrapper.h",
         "patchSetId": 2
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "if there\u0027s no obvious case for multiple references from client code to CodecWrapper, then maybe CodecWrapper should be unique_ptr\u0027d instead.  it could create, as an implementation detail, a refcounted object that the codec buffers know about, rather than giving them a ref to the original CW itself.  this is much like how weak_ptr has the refcounted flag.  this inner object would be the \"real\" CW; the user-facing CW itself would also just delegate calls to it like CodecBuffer does to CW in the current PS.\n\nin that case, CodecOutputBuffer would be an abstract interface, and CodecWrapper could provide the impl in the cc file only, along with the refcounted shared object.  gets rid of the friend constructor, too.\n\nyou can still use TakeCodec() if you like, to avoid changing shared code.  you can also overload CodecAllocator::ReleaseCodec with a unique_ptr\u003cCodecWrapper\u003e variant .  it can just TakeCodec() and call the normal one.\n\nthat gives us very clear ownership semantics, and all the refcounted stuff is hidden.  otherwise, we\u0027ll have folks taking shared refs to CodecWrapper all over the place.  :)",
       "parentUuid": "83381010_d63f3d38",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b238c594_9ebb0ac8",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T17:28:24Z",
+      "side": 1,
+      "message": "I agree with you in principle, so I made the change. \n\nBut in practice I feel it\u0027s a lot of ceremony to protect ourselves from a mistake that a) is unlikely to be made, b) could be avoided with a comment.\n\nPS8 \u0026 9 are two different ways to achieve this. 8 is less code, but more subtle. 9 is what you said I think.",
+      "parentUuid": "c81072f5_ecfeddf3",
       "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

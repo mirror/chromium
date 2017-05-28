@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23bdd8c1_e80640d5",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T17:28:24Z",
+      "side": 1,
+      "message": "Changed docs to say this is not threadsafe.\n\nDCHECKs can stay because CodecOutputBuffers cannot change in_error_state_ or codec_.",
+      "parentUuid": "82a4bdbf_dd08a351",
+      "revId": "bbab88c7651bc5f4a53b3847ad2a85e7d514b36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bcc087e_90822696",
         "filename": "media/gpu/android/codec_wrapper.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7d659c31_343efa2f",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T17:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bcc087e_90822696",
+      "revId": "bbab88c7651bc5f4a53b3847ad2a85e7d514b36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "719c0d27_0af80a08",
         "filename": "media/gpu/android/codec_wrapper.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "bbab88c7651bc5f4a53b3847ad2a85e7d514b36f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59523309_27f10a76",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T17:28:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "719c0d27_0af80a08",
+      "revId": "bbab88c7651bc5f4a53b3847ad2a85e7d514b36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
