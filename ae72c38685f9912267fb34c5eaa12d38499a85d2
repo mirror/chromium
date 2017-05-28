@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08dc9129_5d39f26b",
+        "filename": "third_party/WebKit/LayoutTests/usb/resources/webusb-test-impl.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-28T16:25:09Z",
+      "side": 1,
+      "message": "Sorry about the move - gerrit doesn\u0027t seem to be as nice as rietveld in this regard. See patch set 6 for a diff of this against the original webusb-test.js",
+      "revId": "ae72c38685f9912267fb34c5eaa12d38499a85d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624bf050_a24ff8f5",
+        "filename": "third_party/WebKit/LayoutTests/usb/usbDevice-iframe.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-28T16:25:09Z",
+      "side": 1,
+      "message": "Necessary now because navigator.usb.test.initialize() always resolves immediately and so document.body needs to be non-null by the time this script runs.",
+      "revId": "ae72c38685f9912267fb34c5eaa12d38499a85d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b862b0_3fde21b1",
+        "filename": "third_party/WebKit/Source/modules/webusb/USB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-28T16:25:09Z",
+      "side": 1,
+      "message": "Haven\u0027t reviewed dependent patchsets yet so this might change, but whatever we end up using here will still get routed to the same browser-side registry as the old InterfaceProvider",
+      "revId": "ae72c38685f9912267fb34c5eaa12d38499a85d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
