@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b4bf935_aa3f87e5",
+        "filename": "services/preferences/pref_store_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-05-28T23:43:17Z",
+      "side": 1,
+      "message": "|pending_*_connections_| are used for connections that are waiting for this class to provide something. Connections should be added if they\u0027re waiting for |incognito_connector_|. Once the connection has been requested, the callback takes a ref to the connection to keep it alive until it completes.",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 34
+      },
+      "revId": "214ad20830c0a28f7791c0d11c28dcf8c98f1a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
