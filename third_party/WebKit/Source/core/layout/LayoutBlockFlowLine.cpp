@@ -2329,19 +2329,6 @@ bool LayoutBlockFlow::MatchedEndLine(LineLayoutState& layout_state,
   return false;
 }
 
-bool LayoutBlockFlow::GeneratesLineBoxesForInlineChild(LayoutObject* inline_obj)
-
-{
-  DCHECK_EQ(inline_obj->Parent(), this);
-
-  InlineIterator it(LineLayoutBlockFlow(this), LineLayoutItem(inline_obj), 0);
-  // FIXME: We should pass correct value for WhitespacePosition.
-  while (!it.AtEnd() && !RequiresLineBox(it))
-    it.Increment();
-
-  return !it.AtEnd();
-}
-
 void LayoutBlockFlow::AddOverflowFromInlineChildren() {
   LayoutUnit end_padding = HasOverflowClip() ? PaddingEnd() : LayoutUnit();
   // FIXME: Need to find another way to do this, since scrollbars could show

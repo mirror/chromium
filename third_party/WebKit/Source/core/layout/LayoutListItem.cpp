@@ -262,9 +262,7 @@ static LayoutObject* GetParentOfFirstLineBox(LayoutBlockFlow* curr,
     if (curr_child->HasOverflowClip())
       break;
 
-    if (curr_child->IsInline() &&
-        (!curr_child->IsLayoutInline() ||
-         curr->GeneratesLineBoxesForInlineChild(curr_child)))
+    if (curr_child->IsInline())
       return curr;
 
     if (curr_child->IsFloating() || curr_child->IsOutOfFlowPositioned())

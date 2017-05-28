@@ -209,8 +209,6 @@ class CORE_EXPORT LayoutBlockFlow : public LayoutBlock {
   void ChildBecameFloatingOrOutOfFlow(LayoutBox* child);
   void CollapseAnonymousBlockChild(LayoutBlockFlow* child);
 
-  bool GeneratesLineBoxesForInlineChild(LayoutObject*);
-
   LayoutUnit LogicalTopForFloat(const FloatingObject& floating_object) const {
     return IsHorizontalWritingMode() ? floating_object.Y()
                                      : floating_object.X();

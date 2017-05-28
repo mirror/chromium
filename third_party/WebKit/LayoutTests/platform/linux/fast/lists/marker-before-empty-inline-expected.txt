@@ -18,46 +18,46 @@ layer at (0,0) size 800x600
       LayoutBlockFlow {P} at (0,36) size 784x20
         LayoutText {#text} at (0,0) size 487x19
           text run at (0,0) width 487: "In all of the following, the bullets should be lined up with the first line of text."
-      LayoutBlockFlow {UL} at (0,72) size 784x20
-        LayoutListItem {LI} at (40,0) size 744x20
-          LayoutBlockFlow (anonymous) at (0,0) size 744x0
+      LayoutBlockFlow {UL} at (0,72) size 784x40
+        LayoutListItem {LI} at (40,0) size 744x40
+          LayoutBlockFlow (anonymous) at (0,0) size 744x20
+            LayoutListMarker (anonymous) at (-18,0) size 7x19: bullet
             LayoutInline {SPAN} at (0,0) size 0x0
               LayoutText {#text} at (0,0) size 0x0
-          LayoutBlockFlow (anonymous) at (0,0) size 744x20
+          LayoutBlockFlow (anonymous) at (0,20) size 744x20
             LayoutBlockFlow {DIV} at (0,0) size 744x20
-              LayoutListMarker (anonymous) at (-18,0) size 7x19: bullet
               LayoutText {#text} at (0,0) size 27x19
                 text run at (0,0) width 27: "item"
-          LayoutBlockFlow (anonymous) at (0,20) size 744x0
+          LayoutBlockFlow (anonymous) at (0,40) size 744x0
             LayoutInline {SPAN} at (0,0) size 0x0
-      LayoutBlockFlow {UL} at (0,108) size 784x20
-        LayoutListItem {LI} at (40,0) size 744x20
-          LayoutBlockFlow (anonymous) at (0,0) size 744x0
+      LayoutBlockFlow {UL} at (0,128) size 784x40
+        LayoutListItem {LI} at (40,0) size 744x40
+          LayoutBlockFlow (anonymous) at (0,0) size 744x20
+            LayoutListMarker (anonymous) at (-18,0) size 7x19: bullet
             LayoutInline {SPAN} at (0,0) size 0x0
               LayoutText {#text} at (0,0) size 0x0
             LayoutText {#text} at (0,0) size 0x0
-          LayoutBlockFlow {DIV} at (0,0) size 744x20
-            LayoutListMarker (anonymous) at (-18,0) size 7x19: bullet
+          LayoutBlockFlow {DIV} at (0,20) size 744x20
             LayoutText {#text} at (0,0) size 27x19
               text run at (0,0) width 27: "item"
-      LayoutBlockFlow {UL} at (0,144) size 784x20
-        LayoutListItem {LI} at (40,0) size 744x20
-          LayoutBlockFlow (anonymous) at (0,0) size 744x0
+      LayoutBlockFlow {UL} at (0,184) size 784x40
+        LayoutListItem {LI} at (40,0) size 744x40
+          LayoutBlockFlow (anonymous) at (0,0) size 744x20
+            LayoutListMarker (anonymous) at (-18,0) size 7x19: bullet
             LayoutInline {SPAN} at (0,0) size 0x0
               LayoutText {#text} at (0,0) size 0x0
               LayoutInline {I} at (0,0) size 0x0
                 LayoutText {#text} at (0,0) size 0x0
-          LayoutBlockFlow (anonymous) at (0,0) size 744x20
+          LayoutBlockFlow (anonymous) at (0,20) size 744x20
             LayoutBlockFlow {DIV} at (0,0) size 744x20
-              LayoutListMarker (anonymous) at (-18,0) size 7x19: bullet
               LayoutText {#text} at (0,0) size 27x19
                 text run at (0,0) width 27: "item"
-          LayoutBlockFlow (anonymous) at (0,20) size 744x0
+          LayoutBlockFlow (anonymous) at (0,40) size 744x0
             LayoutInline {SPAN} at (0,0) size 0x0
               LayoutInline {I} at (0,0) size 0x0
               LayoutText {#text} at (0,0) size 0x0
             LayoutText {#text} at (0,0) size 0x0
-      LayoutBlockFlow {UL} at (0,180) size 784x40
+      LayoutBlockFlow {UL} at (0,240) size 784x40
         LayoutListItem {LI} at (40,0) size 744x40
           LayoutBlockFlow (anonymous) at (0,0) size 744x20
             LayoutListMarker (anonymous) at (-18,0) size 7x19: bullet
@@ -72,21 +72,21 @@ layer at (0,0) size 800x600
                 text run at (0,0) width 27: "item"
           LayoutBlockFlow (anonymous) at (0,40) size 744x0
             LayoutInline {SPAN} at (0,0) size 0x0
-      LayoutBlockFlow {UL} at (0,236) size 784x40
-        LayoutListItem {LI} at (40,0) size 744x40
-          LayoutBlockFlow (anonymous) at (0,0) size 744x0
-            LayoutInline {SPAN} at (0,0) size 0x0
+      LayoutBlockFlow {UL} at (0,296) size 784x60
+        LayoutListItem {LI} at (40,0) size 744x60
           LayoutBlockFlow (anonymous) at (0,0) size 744x20
+            LayoutListMarker (anonymous) at (-18,0) size 7x19: bullet
+            LayoutInline {SPAN} at (0,0) size 0x19
+          LayoutBlockFlow (anonymous) at (0,20) size 744x20
             LayoutBlockFlow {UL} at (0,0) size 744x20
               LayoutListItem {LI} at (40,0) size 704x20
-                LayoutListMarker (anonymous) at (-58,0) size 7x19: bullet
                 LayoutListMarker (anonymous) at (-18,0) size 7x19: white bullet
                 LayoutText {#text} at (0,0) size 27x19
                   text run at (0,0) width 27: "item"
-          LayoutBlockFlow (anonymous) at (0,20) size 744x20
+          LayoutBlockFlow (anonymous) at (0,40) size 744x20
             LayoutInline {SPAN} at (0,0) size 0x0
             LayoutBR {BR} at (0,0) size 0x19
-      LayoutBlockFlow {UL} at (0,292) size 784x40
+      LayoutBlockFlow {UL} at (0,372) size 784x40
         LayoutListItem {LI} at (40,0) size 744x40
           LayoutBlockFlow {DIV} at (0,0) size 744x20
             LayoutBlockFlow {UL} at (0,0) size 744x20
@@ -97,10 +97,10 @@ layer at (0,0) size 800x600
                   text run at (0,0) width 27: "item"
           LayoutBlockFlow (anonymous) at (0,20) size 744x20
             LayoutBR {BR} at (0,0) size 0x19
-      LayoutBlockFlow {P} at (0,348) size 784x20
+      LayoutBlockFlow {P} at (0,428) size 784x20
         LayoutText {#text} at (0,0) size 522x19
           text run at (0,0) width 522: "In this case, the solid bullet should be one line above the hollow bullet and the text."
-      LayoutBlockFlow {UL} at (0,384) size 784x60
+      LayoutBlockFlow {UL} at (0,464) size 784x60
         LayoutListItem {LI} at (40,0) size 744x60
           LayoutBlockFlow (anonymous) at (0,0) size 744x20
             LayoutListMarker (anonymous) at (-18,0) size 7x19: bullet
