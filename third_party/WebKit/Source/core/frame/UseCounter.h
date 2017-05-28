@@ -1617,6 +1617,10 @@ class CORE_EXPORT UseCounter {
     kCredentialManagerPreventSilentAccess = 2012,
     kNetInfoEffectiveType = 2013,
     kV8SpeechRecognition_Start_Method = 2014,
+    // The above items are available in M60 branch.
+
+    kTableRowDirectionDifferentFromTable = 2015,
+    kTableSectionDirectionDifferentFromTable = 2016,
 
     // Add new features immediately above this line. Don't change assigned
     // numbers of any item, and don't reuse removed slots.
