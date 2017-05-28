@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "791c1fdd_664f94d6",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-05-28T04:15:07Z",
+      "side": 0,
+      "message": "Looks like we are loosing something here. How can I pass ProxyServer to Pickle? Any ideas?",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 23
+      },
+      "revId": "9f39f94b9552de0584d65d78cd633fc470ee6a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
