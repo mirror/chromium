@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82a4bdbf_dd08a351",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-28T06:05:43Z",
+      "side": 1,
+      "message": "i\u0027m unsure if |in_error_state_| can change on other threads.  seems likely.  if so, then the caller has no idea if it\u0027s set or not.\n\nmaybe same with |codec_| if TakeCodec may be called from anywhere.\n\nthe more i think about it, CodecWrapper might not want to guarantee thread safe access to everybody.  it might just want to guarantee that it provides codec output buffers that are thread safe.  i.e., nobody should be calling TakeCodec(), for example, except on the MCVD thread.\n\n|in_error_state_| would still not be a DCHECK, but |codec_| would be.\n\nthis comment applies elsewhere too.",
+      "revId": "bbab88c7651bc5f4a53b3847ad2a85e7d514b36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcc087e_90822696",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-28T06:05:43Z",
+      "side": 1,
+      "message": "why?",
+      "revId": "bbab88c7651bc5f4a53b3847ad2a85e7d514b36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719c0d27_0af80a08",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-28T06:05:43Z",
+      "side": 1,
+      "message": "i like the idea of sending the size in CodecOutputBuffer.  that\u0027s a good idea.",
+      "revId": "bbab88c7651bc5f4a53b3847ad2a85e7d514b36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

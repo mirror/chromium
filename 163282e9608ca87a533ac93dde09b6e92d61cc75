@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fb74b00f_dc2e50d4",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-28T06:05:43Z",
+      "side": 1,
+      "message": "i\u0027m not sure that will avoid the race condition. \n\nthat aside, couldn\u0027t ReleaseToSurface return a bool indicating if it succeeded?  is there ever a case that MRE would notice that a buffer is not valid, without also wanting to render if it were, instead, valid?",
+      "parentUuid": "90847d55_55b2865e",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a314325b_55a59bf2",
         "filename": "media/gpu/android/codec_wrapper.h",
         "patchSetId": 2
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Yes that was my thinking. MCVD will only TakeCodec() to pass it to CodecAllocator::ReleaseCodec(). Since I want to reuse CodecAllocator for now I didn\u0027t want to change it to take CodecWrappers or anything.\n\nNo I don\u0027t think anything other than CodecBuffers need to have a CodecWrapper ref.\n\nIt\u0027s also a convenient way for CodecBuffers to safely outlive their codecwrapper. It has threadsafe weakptr like semantics. But we could solve that some other way.",
       "parentUuid": "721d1e62_709c57ff",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81072f5_ecfeddf3",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-28T06:05:43Z",
+      "side": 1,
+      "message": "if there\u0027s no obvious case for multiple references from client code to CodecWrapper, then maybe CodecWrapper should be unique_ptr\u0027d instead.  it could create, as an implementation detail, a refcounted object that the codec buffers know about, rather than giving them a ref to the original CW itself.  this is much like how weak_ptr has the refcounted flag.  this inner object would be the \"real\" CW; the user-facing CW itself would also just delegate calls to it like CodecBuffer does to CW in the current PS.\n\nin that case, CodecOutputBuffer would be an abstract interface, and CodecWrapper could provide the impl in the cc file only, along with the refcounted shared object.  gets rid of the friend constructor, too.\n\nyou can still use TakeCodec() if you like, to avoid changing shared code.  you can also overload CodecAllocator::ReleaseCodec with a unique_ptr\u003cCodecWrapper\u003e variant .  it can just TakeCodec() and call the normal one.\n\nthat gives us very clear ownership semantics, and all the refcounted stuff is hidden.  otherwise, we\u0027ll have folks taking shared refs to CodecWrapper all over the place.  :)",
+      "parentUuid": "83381010_d63f3d38",
       "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -288,6 +324,24 @@
       "side": 1,
       "message": "Will make the naming change (I just don\u0027t like how long it is, but you\u0027re right that it\u0027s a bit ambiguous).\n\nI agree it\u0027s a bit asymmetric. The only reason I didn\u0027t do it is I didn\u0027t see an immediate benefit. It\u0027s certainly something we could add on later if we find it makes anything simpler. And yes, the one time we keep an input buffer alive for longer than a single function call is when we get NO_KEY. So that\u0027s the thing that we might be able to make simpler.",
       "parentUuid": "61f33907_5bc67189",
+      "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d21437_87cb7acc",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-28T06:05:43Z",
+      "side": 1,
+      "message": "renaming to CodecOutputBuffer seems good enough for now.",
+      "parentUuid": "81b89203_a67cf50d",
       "revId": "163282e9608ca87a533ac93dde09b6e92d61cc75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
