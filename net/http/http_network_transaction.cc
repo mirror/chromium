@@ -463,10 +463,9 @@ void HttpNetworkTransaction::OnStreamReady(const SSLConfig& used_ssl_config,
   response_.alpn_negotiated_protocol =
       NextProtoToString(stream_request_->negotiated_protocol());
   response_.was_fetched_via_spdy = stream_request_->using_spdy();
-  response_.was_fetched_via_proxy = !proxy_info_.is_direct();
-  if (response_.was_fetched_via_proxy && !proxy_info_.is_empty())
+  if (!proxy_info_.is_direct() && !proxy_info_.is_empty())
     response_.proxy_server = proxy_info_.proxy_server();
-  else if (!response_.was_fetched_via_proxy && proxy_info_.is_direct())
+  else if (proxy_info_.is_direct())
     response_.proxy_server = ProxyServer::Direct();
   else
     response_.proxy_server = ProxyServer();
