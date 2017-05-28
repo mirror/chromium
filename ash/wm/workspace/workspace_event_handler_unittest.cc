@@ -467,7 +467,7 @@ TEST_F(WorkspaceEventHandlerTest, DeleteWhileInRunLoop) {
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, window.get());
   aura::client::GetWindowMoveClient(window->GetRootWindow())
       ->RunMoveLoop(window.release(), gfx::Vector2d(),
-                    aura::client::WINDOW_MOVE_SOURCE_MOUSE);
+                    ::wm::WINDOW_MOVE_SOURCE_MOUSE);
 }
 
 // Verifies that double clicking in the header does not maximize if the target
