@@ -263,6 +263,13 @@ gfx::Size V4L2Device::CodedSizeFromV4L2Format(struct v4l2_format format) {
   return coded_size;
 }
 
+scoped_refptr<gl::GLImage> V4L2Device::CreateGLImage(
+    const gfx::Size& size,
+    uint32_t fourcc,
+    const std::vector<base::ScopedFD>& dmabuf_fds) {
+  NOTREACHED();
+}
+
 void V4L2Device::GetSupportedResolution(uint32_t pixelformat,
                                         gfx::Size* min_resolution,
                                         gfx::Size* max_resolution) {
