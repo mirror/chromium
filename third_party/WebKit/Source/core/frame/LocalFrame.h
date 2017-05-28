@@ -220,7 +220,12 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   bool IsNavigationAllowed() const { return navigation_disable_count_ == 0; }
 
+  // This method is deprecated. Please use
+  // LocalFrameClient::GetFrameInterfaceProvider() instead.
+  //
+  // TODO(crbug.com/726943): Remove this method.
   InterfaceProvider* GetInterfaceProvider() { return interface_provider_; }
+
   InterfaceRegistry* GetInterfaceRegistry() { return interface_registry_; }
 
   LocalFrameClient* Client() const;

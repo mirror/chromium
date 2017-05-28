@@ -58,6 +58,20 @@ void InterfaceProvider::GetInterface(
   }
 }
 
+void InterfaceProvider::SetBinderForName(
+    const std::string& name,
+    const base::Callback<void(mojo::ScopedMessagePipeHandle)>& binder) {
+  binders_[name] = binder;
+}
+
+bool InterfaceProvider::HasBinder(const std::string& name) const {
+  return binders_.find(name) != binders_.end();
+}
+
+void InterfaceProvider::ClearBinder(const std::string& name) {
+  binders_.erase(name);
+}
+
 void InterfaceProvider::ClearBinders() {
   binders_.clear();
 }

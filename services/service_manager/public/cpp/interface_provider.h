@@ -34,10 +34,11 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceProvider {
         const base::Callback<void(mojo::ScopedMessagePipeHandle)>& binder) {
       provider_->SetBinderForName(name, binder);
     }
-
-    void ClearBinders() {
-      provider_->ClearBinders();
+    bool HasBinder(const std::string& name) {
+      return provider_->HasBinder(name);
     }
+    void ClearBinder(const std::string& name) { provider_->ClearBinder(name); }
+    void ClearBinders() { provider_->ClearBinders(); }
 
    private:
     InterfaceProvider* provider_;
@@ -103,9 +104,9 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceProvider {
 
   void SetBinderForName(
       const std::string& name,
-      const base::Callback<void(mojo::ScopedMessagePipeHandle)>& binder) {
-    binders_[name] = binder;
-  }
+      const base::Callback<void(mojo::ScopedMessagePipeHandle)>& binder);
+  bool HasBinder(const std::string& name) const;
+  void ClearBinder(const std::string& name);
   void ClearBinders();
 
   using BinderMap = std::map<
