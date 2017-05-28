@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac4b61f1_98ae95c2",
+        "filename": "media/gpu/surface_texture_gl_owner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T02:30:49Z",
+      "side": 1,
+      "message": "assumming the missing parentheses was an accident",
+      "range": {
+        "startLine": 41,
+        "startChar": 40,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "e7a810fbe7ab63405fa2f2b6ab5584718fd913d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10524793_0f818059",
+        "filename": "media/gpu/surface_texture_gl_owner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-28T02:30:49Z",
+      "side": 1,
+      "message": "When this was 2D all tests failed. The DCHECK no glGetError() was firing in ~STGLOwner. Error 1282. I\u0027m not sure why? Something to do with binding to both 2D and OES I guess.",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 41
+      },
+      "revId": "e7a810fbe7ab63405fa2f2b6ab5584718fd913d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
