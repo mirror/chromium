@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "052e29f8_1002f806",
+        "filename": "components/feature_engagement_tracker/internal/stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-29T15:39:29Z",
+      "side": 1,
+      "message": "Nit: const auto\u0026\n\notherwise you\u0027re copying the config every iteration",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4745c5e5_eb27a3a3",
+        "filename": "components/feature_engagement_tracker/internal/stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-29T15:39:29Z",
+      "side": 1,
+      "message": "const auto\u0026 event",
+      "range": {
+        "startLine": 173,
+        "startChar": 19,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f093ff_cd23990c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24645,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-29T15:39:29Z",
+      "side": 1,
+      "message": "BooleanSuccess?",
+      "range": {
+        "startLine": 24645,
+        "startChar": 58,
+        "endLine": 24645,
+        "endChar": 72
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc7e768_8cb9998f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24655,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-29T15:39:29Z",
+      "side": 1,
+      "message": "BooleanSuccess?",
+      "range": {
+        "startLine": 24655,
+        "startChar": 58,
+        "endLine": 24655,
+        "endChar": 72
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56398c0b_41f601ad",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24674,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-29T15:39:29Z",
+      "side": 1,
+      "message": "BooleanSuccess?",
+      "range": {
+        "startLine": 24674,
+        "startChar": 60,
+        "endLine": 24674,
+        "endChar": 74
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fc06ee_61871ce0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24685,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-29T15:39:29Z",
+      "side": 1,
+      "message": "Sounds like this should be a BooleanReady instead. Add it if it doesn\u0027t exist.",
+      "range": {
+        "startLine": 24685,
+        "startChar": 10,
+        "endLine": 24685,
+        "endChar": 24
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
