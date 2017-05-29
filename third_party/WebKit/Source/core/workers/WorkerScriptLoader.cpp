@@ -80,7 +80,8 @@ void WorkerScriptLoader::LoadSynchronously(
       kDoNotEnforceContentSecurityPolicy;
 
   ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.allow_credentials = kAllowStoredCredentials;
+
+  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeInclude);
 
   WorkerThreadableLoader::LoadResourceSynchronously(
       ToWorkerGlobalScope(execution_context), request, *this, options,
@@ -105,7 +106,8 @@ void WorkerScriptLoader::LoadAsynchronously(
   options.cross_origin_request_policy = cross_origin_request_policy;
 
   ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.allow_credentials = kAllowStoredCredentials;
+
+  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeInclude);
 
   // During create, callbacks may happen which could remove the last reference
   // to this object, while some of the callchain assumes that the client and

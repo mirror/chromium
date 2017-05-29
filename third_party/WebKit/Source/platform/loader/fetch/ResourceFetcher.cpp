@@ -566,8 +566,6 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   if (!params.Url().IsValid())
     return kAbort;
 
-  resource_request.SetAllowStoredCredentials(
-      params.Options().allow_credentials == kAllowStoredCredentials);
   return kContinue;
 }
 
@@ -1626,8 +1624,7 @@ void ResourceFetcher::LogPreloadStats(ClearPreloadsPolicy policy) {
 const ResourceLoaderOptions& ResourceFetcher::DefaultResourceOptions() {
   DEFINE_STATIC_LOCAL(
       ResourceLoaderOptions, options,
-      (kBufferData, kAllowStoredCredentials, kClientRequestedCredentials,
-       kCheckContentSecurityPolicy, kDocumentContext));
+      (kBufferData, kCheckContentSecurityPolicy, kDocumentContext));
   return options;
 }
 

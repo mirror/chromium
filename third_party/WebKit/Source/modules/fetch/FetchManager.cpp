@@ -789,12 +789,12 @@ void FetchManager::Loader::PerformHTTPFetch(bool cors_flag,
            WebURLRequest::kFetchCredentialsModeSameOrigin &&
        !cors_flag) ||
       suborigin_forces_credentials) {
-    resource_loader_options.allow_credentials = kAllowStoredCredentials;
+    // Hogeeeee
   }
   if (request_->Credentials() == WebURLRequest::kFetchCredentialsModeInclude ||
       request_->Credentials() == WebURLRequest::kFetchCredentialsModePassword ||
       suborigin_forces_credentials) {
-    resource_loader_options.credentials_requested = kClientRequestedCredentials;
+    // Hogeeeee
   }
   resource_loader_options.security_origin = request_->Origin().Get();
 
