@@ -257,12 +257,12 @@ TEST_F(WindowAnimationsTest, HideAnimationDetachLayersWithTransientChildren) {
 }
 
 // A simple AnimationHost implementation for the NotifyHideCompleted test.
-class NotifyHideCompletedAnimationHost : public aura::client::AnimationHost {
+class NotifyHideCompletedAnimationHost : public AnimationHost {
  public:
   NotifyHideCompletedAnimationHost() : hide_completed_(false) {}
   ~NotifyHideCompletedAnimationHost() override {}
 
-  // Overridden from TestWindowDelegate:
+  // Overridden from AnimationHost:
   void OnWindowHidingAnimationCompleted() override { hide_completed_ = true; }
 
   void SetHostTransitionOffsets(const gfx::Vector2d& top_left,
