@@ -112,7 +112,7 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
   Document* GetLoadingDocument() override { return nullptr; }
 
   RefPtr<WebTaskRunner> GetTaskRunner(TaskType type) override {
-    return fetch_context_->LoadingTaskRunner();
+    return fetch_context_->GetTaskRunner();
   }
 
   void RecordUseCount(UseCounter::Feature feature) override {
