@@ -38,15 +38,15 @@ void TestNativeDisplayDelegate::UngrabServer() {
 }
 
 void TestNativeDisplayDelegate::TakeDisplayControl(
-    const DisplayControlCallback& callback) {
+    DisplayControlCallback callback) {
   log_->AppendAction(kTakeDisplayControl);
-  callback.Run(true);
+  std::move(callback).Run(true);
 }
 
 void TestNativeDisplayDelegate::RelinquishDisplayControl(
-    const DisplayControlCallback& callback) {
+    DisplayControlCallback callback) {
   log_->AppendAction(kRelinquishDisplayControl);
-  callback.Run(true);
+  std::move(callback).Run(true);
 }
 
 void TestNativeDisplayDelegate::SyncWithServer() {
@@ -61,17 +61,16 @@ void TestNativeDisplayDelegate::ForceDPMSOn() {
   log_->AppendAction(kForceDPMS);
 }
 
-void TestNativeDisplayDelegate::GetDisplays(
-    const GetDisplaysCallback& callback) {
+void TestNativeDisplayDelegate::GetDisplays(GetDisplaysCallback callback) {
   // This mimics the behavior of Ozone DRM when new display state arrives.
   for (NativeDisplayObserver& observer : observers_)
     observer.OnDisplaySnapshotsInvalidated();
 
   if (run_async_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, outputs_));
+        FROM_HERE, base::BindOnce(std::move(callback), outputs_));
   } else {
-    callback.Run(outputs_);
+    std::move(callback).Run(outputs_);
   }
 }
 
@@ -97,13 +96,13 @@ bool TestNativeDisplayDelegate::Configure(const DisplaySnapshot& output,
 void TestNativeDisplayDelegate::Configure(const DisplaySnapshot& output,
                                           const DisplayMode* mode,
                                           const gfx::Point& origin,
-                                          const ConfigureCallback& callback) {
+                                          ConfigureCallback callback) {
   bool result = Configure(output, mode, origin);
   if (run_async_) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, result));
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(std::move(callback), result));
   } else {
-    callback.Run(result);
+    std::move(callback).Run(result);
   }
 }
 
@@ -113,18 +112,16 @@ void TestNativeDisplayDelegate::CreateFrameBuffer(const gfx::Size& size) {
                            outputs_.size() >= 2 ? outputs_[1] : nullptr));
 }
 
-void TestNativeDisplayDelegate::GetHDCPState(
-    const DisplaySnapshot& output,
-    const GetHDCPStateCallback& callback) {
-  callback.Run(get_hdcp_expectation_, hdcp_state_);
+void TestNativeDisplayDelegate::GetHDCPState(const DisplaySnapshot& output,
+                                             GetHDCPStateCallback callback) {
+  std::move(callback).Run(get_hdcp_expectation_, hdcp_state_);
 }
 
-void TestNativeDisplayDelegate::SetHDCPState(
-    const DisplaySnapshot& output,
-    HDCPState state,
-    const SetHDCPStateCallback& callback) {
+void TestNativeDisplayDelegate::SetHDCPState(const DisplaySnapshot& output,
+                                             HDCPState state,
+                                             SetHDCPStateCallback callback) {
   log_->AppendAction(GetSetHDCPStateAction(output, state));
-  callback.Run(set_hdcp_expectation_);
+  std::move(callback).Run(set_hdcp_expectation_);
 }
 
 std::vector<ColorCalibrationProfile>

@@ -55,24 +55,23 @@ class TestNativeDisplayDelegate : public NativeDisplayDelegate {
   void Initialize() override;
   void GrabServer() override;
   void UngrabServer() override;
-  void TakeDisplayControl(const DisplayControlCallback& callback) override;
-  void RelinquishDisplayControl(
-      const DisplayControlCallback& callback) override;
+  void TakeDisplayControl(DisplayControlCallback callback) override;
+  void RelinquishDisplayControl(DisplayControlCallback callback) override;
   void SyncWithServer() override;
   void SetBackgroundColor(uint32_t color_argb) override;
   void ForceDPMSOn() override;
-  void GetDisplays(const GetDisplaysCallback& callback) override;
+  void GetDisplays(GetDisplaysCallback callback) override;
   void AddMode(const DisplaySnapshot& output, const DisplayMode* mode) override;
   void Configure(const DisplaySnapshot& output,
                  const DisplayMode* mode,
                  const gfx::Point& origin,
-                 const ConfigureCallback& callback) override;
+                 ConfigureCallback callback) override;
   void CreateFrameBuffer(const gfx::Size& size) override;
   void GetHDCPState(const DisplaySnapshot& output,
-                    const GetHDCPStateCallback& callback) override;
+                    GetHDCPStateCallback callback) override;
   void SetHDCPState(const DisplaySnapshot& output,
                     HDCPState state,
-                    const SetHDCPStateCallback& callback) override;
+                    SetHDCPStateCallback callback) override;
   std::vector<ColorCalibrationProfile> GetAvailableColorCalibrationProfiles(
       const DisplaySnapshot& output) override;
   bool SetColorCalibrationProfile(const DisplaySnapshot& output,

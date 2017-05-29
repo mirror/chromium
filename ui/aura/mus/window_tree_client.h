@@ -78,7 +78,7 @@ class WindowTreeClientObserver;
 class WindowTreeClientTestObserver;
 class WindowTreeHostMus;
 
-using EventResultCallback = base::Callback<void(ui::mojom::EventResult)>;
+using EventResultCallback = base::OnceCallback<void(ui::mojom::EventResult)>;
 
 // Manages the connection with mus.
 //
@@ -149,7 +149,7 @@ class AURA_EXPORT WindowTreeClient
   void Embed(Window* window,
              ui::mojom::WindowTreeClientPtr client,
              uint32_t flags,
-             const ui::mojom::WindowTree::EmbedCallback& callback);
+             ui::mojom::WindowTree::EmbedCallback callback);
 
   void AttachCompositorFrameSink(
       Id window_id,
@@ -280,8 +280,7 @@ class AURA_EXPORT WindowTreeClient
       bool parent_drawn,
       const base::Optional<cc::LocalSurfaceId>& local_surface_id);
 
-  std::unique_ptr<EventResultCallback> CreateEventResultCallback(
-      int32_t event_id);
+  EventResultCallback CreateEventResultCallback(int32_t event_id);
 
   void OnReceivedCursorLocationMemory(mojo::ScopedSharedBufferHandle handle);
 
@@ -392,18 +391,18 @@ class AURA_EXPORT WindowTreeClient
                    uint32_t event_flags,
                    const gfx::Point& position,
                    uint32_t effect_bitmask,
-                   const OnDragEnterCallback& callback) override;
+                   OnDragEnterCallback callback) override;
   void OnDragOver(Id window_id,
                   uint32_t event_flags,
                   const gfx::Point& position,
                   uint32_t effect_bitmask,
-                  const OnDragOverCallback& callback) override;
+                  OnDragOverCallback callback) override;
   void OnDragLeave(Id window_id) override;
   void OnCompleteDrop(Id window_id,
                       uint32_t event_flags,
                       const gfx::Point& position,
                       uint32_t effect_bitmask,
-                      const OnCompleteDropCallback& callback) override;
+                      OnCompleteDropCallback callback) override;
   void OnPerformDragDropCompleted(uint32_t window,
                                   bool success,
                                   uint32_t action_taken) override;
@@ -444,7 +443,7 @@ class AURA_EXPORT WindowTreeClient
                         const gfx::Vector2d& drag_image_offset,
                         ui::mojom::PointerKind source) override;
   void WmMoveDragImage(const gfx::Point& screen_location,
-                       const WmMoveDragImageCallback& callback) override;
+                       WmMoveDragImageCallback callback) override;
   void WmDestroyDragImage() override;
   void WmPerformMoveLoop(uint32_t change_id,
                          Id window_id,

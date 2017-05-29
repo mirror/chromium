@@ -34,13 +34,15 @@ void ForwardingDisplayDelegate::GrabServer() {}
 void ForwardingDisplayDelegate::UngrabServer() {}
 
 void ForwardingDisplayDelegate::TakeDisplayControl(
-    const DisplayControlCallback& callback) {
-  delegate_->TakeDisplayControl(callback);
+    DisplayControlCallback callback) {
+  delegate_->TakeDisplayControl(
+      base::AdaptCallbackForRepeating(std::move(callback)));
 }
 
 void ForwardingDisplayDelegate::RelinquishDisplayControl(
-    const DisplayControlCallback& callback) {
-  delegate_->TakeDisplayControl(callback);
+    DisplayControlCallback callback) {
+  delegate_->TakeDisplayControl(
+      base::AdaptCallbackForRepeating(std::move(callback)));
 }
 
 void ForwardingDisplayDelegate::SyncWithServer() {}
@@ -49,16 +51,15 @@ void ForwardingDisplayDelegate::SetBackgroundColor(uint32_t color_argb) {}
 
 void ForwardingDisplayDelegate::ForceDPMSOn() {}
 
-void ForwardingDisplayDelegate::GetDisplays(
-    const GetDisplaysCallback& callback) {
+void ForwardingDisplayDelegate::GetDisplays(GetDisplaysCallback callback) {
   if (!use_delegate_) {
-    ForwardDisplays(callback);
+    ForwardDisplays(std::move(callback));
     return;
   }
 
   delegate_->GetDisplays(
       base::Bind(&ForwardingDisplayDelegate::StoreAndForwardDisplays,
-                 base::Unretained(this), callback));
+                 base::Unretained(this), base::Passed(&callback)));
 }
 
 void ForwardingDisplayDelegate::AddMode(const DisplaySnapshot& snapshot,
@@ -67,11 +68,11 @@ void ForwardingDisplayDelegate::AddMode(const DisplaySnapshot& snapshot,
 void ForwardingDisplayDelegate::Configure(const DisplaySnapshot& snapshot,
                                           const DisplayMode* mode,
                                           const gfx::Point& origin,
-                                          const ConfigureCallback& callback) {
+                                          ConfigureCallback callback) {
   if (!use_delegate_) {
     // Pretend configuration succeeded. When the first OnConfigurationChanged()
     // is received this will run again and actually happen.
-    callback.Run(true);
+    std::move(callback).Run(true);
     return;
   }
 
@@ -79,22 +80,22 @@ void ForwardingDisplayDelegate::Configure(const DisplaySnapshot& snapshot,
   if (mode)
     transport_mode = mode->Clone();
   delegate_->Configure(snapshot.display_id(), std::move(transport_mode), origin,
-                       callback);
+                       base::AdaptCallbackForRepeating(std::move(callback)));
 }
 
 void ForwardingDisplayDelegate::CreateFrameBuffer(const gfx::Size& size) {}
 
-void ForwardingDisplayDelegate::GetHDCPState(
-    const DisplaySnapshot& snapshot,
-    const GetHDCPStateCallback& callback) {
-  delegate_->GetHDCPState(snapshot.display_id(), callback);
+void ForwardingDisplayDelegate::GetHDCPState(const DisplaySnapshot& snapshot,
+                                             GetHDCPStateCallback callback) {
+  delegate_->GetHDCPState(snapshot.display_id(),
+                          base::AdaptCallbackForRepeating(std::move(callback)));
 }
 
-void ForwardingDisplayDelegate::SetHDCPState(
-    const DisplaySnapshot& snapshot,
-    HDCPState state,
-    const SetHDCPStateCallback& callback) {
-  delegate_->SetHDCPState(snapshot.display_id(), state, callback);
+void ForwardingDisplayDelegate::SetHDCPState(const DisplaySnapshot& snapshot,
+                                             HDCPState state,
+                                             SetHDCPStateCallback callback) {
+  delegate_->SetHDCPState(snapshot.display_id(), state,
+                          base::AdaptCallbackForRepeating(std::move(callback)));
 }
 
 std::vector<ColorCalibrationProfile>
@@ -145,21 +146,20 @@ void ForwardingDisplayDelegate::OnConfigurationChanged() {
 }
 
 void ForwardingDisplayDelegate::StoreAndForwardDisplays(
-    const GetDisplaysCallback& callback,
+    GetDisplaysCallback callback,
     std::vector<std::unique_ptr<DisplaySnapshotMojo>> snapshots) {
   for (auto& observer : observers_)
     observer.OnDisplaySnapshotsInvalidated();
   snapshots_ = std::move(snapshots);
 
-  ForwardDisplays(callback);
+  ForwardDisplays(std::move(callback));
 }
 
-void ForwardingDisplayDelegate::ForwardDisplays(
-    const GetDisplaysCallback& callback) {
+void ForwardingDisplayDelegate::ForwardDisplays(GetDisplaysCallback callback) {
   std::vector<DisplaySnapshot*> snapshot_ptrs;
   for (auto& snapshot : snapshots_)
     snapshot_ptrs.push_back(snapshot.get());
-  callback.Run(snapshot_ptrs);
+  std::move(callback).Run(snapshot_ptrs);
 }
 
 }  // namespace display

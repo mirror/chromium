@@ -33,7 +33,7 @@ void TestWindowManagerClient::SetExtendedHitArea(Id window_id,
 
 void TestWindowManagerClient::AddAccelerators(
     std::vector<ui::mojom::WmAcceleratorPtr> accelerators,
-    const AddAcceleratorsCallback& callback) {}
+    AddAcceleratorsCallback callback) {}
 
 void TestWindowManagerClient::RemoveAccelerator(uint32_t id) {}
 
@@ -42,13 +42,13 @@ void TestWindowManagerClient::SetDisplayRoot(
     ui::mojom::WmViewportMetricsPtr viewport_metrics,
     bool is_primary_display,
     Id window_id,
-    const SetDisplayRootCallback& callback) {}
+    SetDisplayRootCallback callback) {}
 
 void TestWindowManagerClient::SetDisplayConfiguration(
     const std::vector<display::Display>& displays,
     std::vector<::ui::mojom::WmViewportMetricsPtr> viewport_metrics,
     int64_t primary_display_id,
-    const SetDisplayConfigurationCallback& callback) {}
+    SetDisplayConfigurationCallback callback) {}
 
 void TestWindowManagerClient::WmResponse(uint32_t change_id, bool response) {}
 

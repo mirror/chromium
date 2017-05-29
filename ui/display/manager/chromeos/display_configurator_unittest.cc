@@ -147,16 +147,13 @@ class TestMirroringController
 class ConfigurationWaiter {
  public:
   ConfigurationWaiter(DisplayConfigurator::TestApi* test_api)
-      : on_configured_callback_(base::Bind(&ConfigurationWaiter::OnConfigured,
-                                           base::Unretained(this))),
-        test_api_(test_api),
-        callback_result_(CALLBACK_NOT_CALLED) {}
+      : test_api_(test_api), callback_result_(CALLBACK_NOT_CALLED) {}
 
   ~ConfigurationWaiter() = default;
 
-  const DisplayConfigurator::ConfigurationCallback& on_configuration_callback()
-      const {
-    return on_configured_callback_;
+  DisplayConfigurator::ConfigurationCallback GetConfigurationCallback() {
+    return base::BindOnce(&ConfigurationWaiter::OnConfigured,
+                          base::Unretained(this));
   }
 
   CallbackResult callback_result() const { return callback_result_; }
@@ -184,9 +181,6 @@ class ConfigurationWaiter {
     CHECK_EQ(callback_result_, CALLBACK_NOT_CALLED);
     callback_result_ = status ? CALLBACK_SUCCESS : CALLBACK_FAILURE;
   }
-
-  // Passed with configuration requests to run OnConfigured().
-  const DisplayConfigurator::ConfigurationCallback on_configured_callback_;
 
   DisplayConfigurator::TestApi* test_api_;  // Not owned.
 
@@ -562,7 +556,7 @@ TEST_F(DisplayConfiguratorTest, SetDisplayPower) {
   configurator_.SetDisplayPower(
       chromeos::DISPLAY_POWER_INTERNAL_OFF_EXTERNAL_ON,
       DisplayConfigurator::kSetDisplayPowerNoFlags,
-      config_waiter_.on_configuration_callback());
+      config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -583,7 +577,7 @@ TEST_F(DisplayConfiguratorTest, SetDisplayPower) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_OFF,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -604,7 +598,7 @@ TEST_F(DisplayConfiguratorTest, SetDisplayPower) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -660,7 +654,7 @@ TEST_F(DisplayConfiguratorTest, SetDisplayPower) {
   configurator_.SetDisplayPower(
       chromeos::DISPLAY_POWER_INTERNAL_OFF_EXTERNAL_ON,
       DisplayConfigurator::kSetDisplayPowerNoFlags,
-      config_waiter_.on_configuration_callback());
+      config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -682,7 +676,7 @@ TEST_F(DisplayConfiguratorTest, SetDisplayPower) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_OFF,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -708,7 +702,7 @@ TEST_F(DisplayConfiguratorTest, SetDisplayPower) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -739,7 +733,7 @@ TEST_F(DisplayConfiguratorTest, SuspendAndResume) {
   const gfx::Size framebuffer_size = configurator_.framebuffer_size();
   DCHECK(!framebuffer_size.IsEmpty());
   config_waiter_.Reset();
-  configurator_.SuspendDisplays(config_waiter_.on_configuration_callback());
+  configurator_.SuspendDisplays(config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(framebuffer_size.ToString(),
@@ -771,7 +765,7 @@ TEST_F(DisplayConfiguratorTest, SuspendAndResume) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_OFF,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(JoinActions(
@@ -783,7 +777,7 @@ TEST_F(DisplayConfiguratorTest, SuspendAndResume) {
             log_->GetActionsAndClear());
 
   config_waiter_.Reset();
-  configurator_.SuspendDisplays(config_waiter_.on_configuration_callback());
+  configurator_.SuspendDisplays(config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(kSync, log_->GetActionsAndClear());
@@ -797,7 +791,7 @@ TEST_F(DisplayConfiguratorTest, SuspendAndResume) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -824,7 +818,7 @@ TEST_F(DisplayConfiguratorTest, SuspendAndResume) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_OFF,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(MULTIPLE_DISPLAY_STATE_DUAL_MIRROR, configurator_.display_state());
@@ -840,7 +834,7 @@ TEST_F(DisplayConfiguratorTest, SuspendAndResume) {
 
   // No delay in suspend.
   config_waiter_.Reset();
-  configurator_.SuspendDisplays(config_waiter_.on_configuration_callback());
+  configurator_.SuspendDisplays(config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(chromeos::DISPLAY_POWER_ALL_OFF,
@@ -861,7 +855,7 @@ TEST_F(DisplayConfiguratorTest, SuspendAndResume) {
 
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(CALLBACK_NOT_CALLED, config_waiter_.callback_result());
   EXPECT_EQ(kLongDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
@@ -889,14 +883,14 @@ TEST_F(DisplayConfiguratorTest, Headless) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_OFF,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(JoinActions(kGrab, kUngrab, nullptr), log_->GetActionsAndClear());
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(JoinActions(kGrab, kForceDPMS, kUngrab, nullptr),
@@ -1142,7 +1136,7 @@ TEST_F(DisplayConfiguratorTest, DoNotConfigureWithSuspendedDisplays) {
   // the DisplayConfigurator will force a probe and reconfiguration of displays
   // at resume time.
   config_waiter_.Reset();
-  configurator_.SuspendDisplays(config_waiter_.on_configuration_callback());
+  configurator_.SuspendDisplays(config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(JoinActions(
@@ -1164,14 +1158,14 @@ TEST_F(DisplayConfiguratorTest, DoNotConfigureWithSuspendedDisplays) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_OFF,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(kNoActions, log_->GetActionsAndClear());
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -1207,7 +1201,7 @@ TEST_F(DisplayConfiguratorTest, DoNotConfigureWithSuspendedDisplays) {
   // should be turned off by suspend.
   configurator_.OnConfigurationChanged();
   config_waiter_.Reset();
-  configurator_.SuspendDisplays(config_waiter_.on_configuration_callback());
+  configurator_.SuspendDisplays(config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(JoinActions(
@@ -1454,7 +1448,7 @@ TEST_F(DisplayConfiguratorTest, SaveDisplayPowerStateOnConfigFailure) {
   configurator_.SetDisplayPower(
       chromeos::DISPLAY_POWER_INTERNAL_OFF_EXTERNAL_ON,
       DisplayConfigurator::kSetDisplayPowerNoFlags,
-      config_waiter_.on_configuration_callback());
+      config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(1, observer_.num_changes());
@@ -1467,7 +1461,7 @@ TEST_F(DisplayConfiguratorTest, SaveDisplayPowerStateOnConfigFailure) {
   native_display_delegate_->set_max_configurable_pixels(1);
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_FAILURE, config_waiter_.callback_result());
   EXPECT_EQ(1, observer_.num_changes());
@@ -1504,7 +1498,7 @@ TEST_F(DisplayConfiguratorTest, DontRestoreStalePowerStateAfterResume) {
   configurator_.SetDisplayPower(
       chromeos::DISPLAY_POWER_INTERNAL_OFF_EXTERNAL_ON,
       DisplayConfigurator::kSetDisplayPowerNoFlags,
-      config_waiter_.on_configuration_callback());
+      config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(1, observer_.num_changes());
@@ -1523,7 +1517,7 @@ TEST_F(DisplayConfiguratorTest, DontRestoreStalePowerStateAfterResume) {
   // state and force a probe. Suspend should turn off the displays since an
   // external monitor is connected.
   config_waiter_.Reset();
-  configurator_.SuspendDisplays(config_waiter_.on_configuration_callback());
+  configurator_.SuspendDisplays(config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(2, observer_.num_changes());
@@ -1541,7 +1535,7 @@ TEST_F(DisplayConfiguratorTest, DontRestoreStalePowerStateAfterResume) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(3, observer_.num_changes());
@@ -1620,12 +1614,12 @@ TEST_F(DisplayConfiguratorTest,
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_OFF,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(CALLBACK_NOT_CALLED, config_waiter_.callback_result());
 
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
 
   EXPECT_EQ(CALLBACK_NOT_CALLED, config_waiter_.callback_result());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
@@ -1690,7 +1684,7 @@ TEST_F(DisplayConfiguratorTest,
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_OFF,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_FAILURE, config_waiter_.callback_result());
   EXPECT_EQ(0, observer_.num_changes());
@@ -1719,7 +1713,7 @@ TEST_F(DisplayConfiguratorTest,
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
 
   EXPECT_EQ(0, observer_.num_changes());
@@ -1809,7 +1803,7 @@ TEST_F(DisplayConfiguratorTest, TestWithThreeDisplays) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_OFF,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -1835,7 +1829,7 @@ TEST_F(DisplayConfiguratorTest, TestWithThreeDisplays) {
   config_waiter_.Reset();
   configurator_.SetDisplayPower(chromeos::DISPLAY_POWER_ALL_ON,
                                 DisplayConfigurator::kSetDisplayPowerNoFlags,
-                                config_waiter_.on_configuration_callback());
+                                config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(
@@ -1909,7 +1903,7 @@ TEST_F(DisplayConfiguratorTest, SuspendResumeWithMultipleDisplays) {
   // Suspending displays should result in an immediate configuration without
   // delays, even in dual display mode.
   config_waiter_.Reset();
-  configurator_.SuspendDisplays(config_waiter_.on_configuration_callback());
+  configurator_.SuspendDisplays(config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(chromeos::DISPLAY_POWER_ALL_OFF,
@@ -1956,7 +1950,7 @@ TEST_F(DisplayConfiguratorTest, SuspendResumeWithMultipleDisplays) {
 
   // Suspend displays and disconnect one of them while in suspend.
   config_waiter_.Reset();
-  configurator_.SuspendDisplays(config_waiter_.on_configuration_callback());
+  configurator_.SuspendDisplays(config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(MULTIPLE_DISPLAY_STATE_DUAL_EXTENDED,
@@ -2004,7 +1998,7 @@ TEST_F(DisplayConfiguratorTest, SuspendResumeWithMultipleDisplays) {
 
   // Suspend.
   config_waiter_.Reset();
-  configurator_.SuspendDisplays(config_waiter_.on_configuration_callback());
+  configurator_.SuspendDisplays(config_waiter_.GetConfigurationCallback());
   EXPECT_EQ(kNoDelay, config_waiter_.Wait());
   EXPECT_EQ(CALLBACK_SUCCESS, config_waiter_.callback_result());
   EXPECT_EQ(MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED,

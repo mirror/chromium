@@ -57,9 +57,8 @@ InputMethodChromeOS::~InputMethodChromeOS() {
     ui::IMEBridge::Get()->SetInputContextHandler(NULL);
 }
 
-void InputMethodChromeOS::DispatchKeyEvent(
-    ui::KeyEvent* event,
-    std::unique_ptr<AckCallback> ack_callback) {
+void InputMethodChromeOS::DispatchKeyEvent(ui::KeyEvent* event,
+                                           AckCallback ack_callback) {
   DCHECK(event->IsKeyEvent());
   DCHECK(!(event->flags() & ui::EF_IS_SYNTHESIZED));
 
@@ -79,7 +78,7 @@ void InputMethodChromeOS::DispatchKeyEvent(
         // generates some IME event,
         ProcessKeyEventPostIME(event, true);
         if (ack_callback)
-          ack_callback->Run(true);
+          std::move(ack_callback).Run(true);
         return;
       }
       ProcessUnfilteredKeyPressEvent(event);
@@ -87,7 +86,7 @@ void InputMethodChromeOS::DispatchKeyEvent(
       ignore_result(DispatchKeyEventPostIME(event));
     }
     if (ack_callback)
-      ack_callback->Run(false);
+      std::move(ack_callback).Run(false);
     return;
   }
 
@@ -110,10 +109,9 @@ bool InputMethodChromeOS::OnUntranslatedIMEMessage(
   return false;
 }
 
-void InputMethodChromeOS::ProcessKeyEventDone(
-    ui::KeyEvent* event,
-    std::unique_ptr<AckCallback> ack_callback,
-    bool is_handled) {
+void InputMethodChromeOS::ProcessKeyEventDone(ui::KeyEvent* event,
+                                              AckCallback ack_callback,
+                                              bool is_handled) {
   DCHECK(event);
   if (event->type() == ET_KEY_PRESSED) {
     if (is_handled) {
@@ -128,7 +126,7 @@ void InputMethodChromeOS::ProcessKeyEventDone(
   }
 
   if (ack_callback)
-    ack_callback->Run(is_handled);
+    std::move(ack_callback).Run(is_handled);
 
   if (event->type() == ET_KEY_PRESSED || event->type() == ET_KEY_RELEASED)
     ProcessKeyEventPostIME(event, is_handled);
@@ -137,7 +135,7 @@ void InputMethodChromeOS::ProcessKeyEventDone(
 }
 
 void InputMethodChromeOS::DispatchKeyEvent(ui::KeyEvent* event) {
-  DispatchKeyEvent(event, nullptr);
+  DispatchKeyEvent(event, AckCallback());
 }
 
 void InputMethodChromeOS::OnTextInputTypeChanged(
