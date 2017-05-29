@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab92c32c_3f489d12",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-29T11:01:36Z",
+      "side": 1,
+      "message": "Is this file in WPT? I think it\u0027s only in: css-flexbox-1/support/check-layout-th.js\nYou\u0027ll need to add a copy in:  css-grid-1/support/check-layout-th.js\nFor more info: https://github.com/w3c/web-platform-tests/pull/5698#issuecomment-297469960",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355658b3_33f459bc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-29T11:01:36Z",
+      "side": 1,
+      "message": "Nit: For testharness.js tests we usually don\u0027t have this kind of lines as they\u0027re self-explanatory.",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ee6e72_04f01394",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-29T11:01:36Z",
+      "side": 1,
+      "message": "Nit: Some strange extra white spaces here and in the next lines.",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc291c71_721b9ec9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-002.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-29T11:01:36Z",
+      "side": 1,
+      "message": "Why not add \"margin-left\" here? It\u0027s the only one you\u0027re not testing.",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa95a4e2_0b1f6c8f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-005.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-29T11:01:36Z",
+      "side": 1,
+      "message": "You\u0027re not using margins in this test, so probably the assert needs to be updated. It\u0027s just about orthogonal items.",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2cf78a_454b2c92",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-006.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-29T11:01:36Z",
+      "side": 1,
+      "message": "Again I\u0027d ass \"margin-left\" here.",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2bfb70_6e26efbf",
+        "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/grid-item-stretching-must-not-depend-on-previous-layouts-expected.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-29T11:01:36Z",
+      "side": 1,
+      "message": "I\u0027d add a comment here explaining the trick about the double layout thing.",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2813b896_3c613bdb",
+        "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/grid-item-stretching-must-not-depend-on-previous-layouts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-29T11:01:36Z",
+      "side": 1,
+      "message": "I think using the \"\u003clink rel\u003d\"match\" ...\" is now mandatory:\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/testing/writing_layout_tests.md#Reference-Tests-Reftests",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4afb6193_f7905aca",
+        "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/grid-item-stretching-must-not-depend-on-previous-layouts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-05-29T11:01:36Z",
+      "side": 1,
+      "message": "Please add the typical explanation of \"This test passes if...\", so one can check if it\u0027s working just opening it with a browser.",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
