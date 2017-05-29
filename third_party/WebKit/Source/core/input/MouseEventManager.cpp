@@ -484,7 +484,7 @@ WebInputEventResult MouseEventManager::HandleMouseFocus(
     // default behavior).
     if (element) {
       if (SlideFocusOnShadowHostIfNecessary(*element))
-        return WebInputEventResult::kHandledSystem;
+        return WebInputEventResult::kNotHandled;
       if (!page->GetFocusController().SetFocusedElement(
               element, frame_,
               FocusParams(SelectionBehaviorOnFocus::kNone, kWebFocusTypeMouse,
