@@ -566,8 +566,6 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   if (!params.Url().IsValid())
     return kAbort;
 
-  resource_request.SetAllowStoredCredentials(
-      params.Options().allow_credentials == kAllowStoredCredentials);
   return kContinue;
 }
 
@@ -587,6 +585,10 @@ Resource* ResourceFetcher::RequestResource(
   Resource* resource = nullptr;
   ResourceRequestBlockedReason blocked_reason =
       ResourceRequestBlockedReason::kNone;
+
+  // Initialize. Will be updated on redirect if any.
+  params.GetResourceRequest().SetAllowStoredCredentials(
+      params.GetResourceRequest().GetFetchCredentialsMode()...);
 
   PrepareRequestResult result = PrepareRequest(params, factory, substitute_data,
                                                identifier, blocked_reason);
@@ -1626,8 +1628,7 @@ void ResourceFetcher::LogPreloadStats(ClearPreloadsPolicy policy) {
 const ResourceLoaderOptions& ResourceFetcher::DefaultResourceOptions() {
   DEFINE_STATIC_LOCAL(
       ResourceLoaderOptions, options,
-      (kBufferData, kAllowStoredCredentials, kClientRequestedCredentials,
-       kCheckContentSecurityPolicy, kDocumentContext));
+      (kBufferData, kCheckContentSecurityPolicy, kDocumentContext));
   return options;
 }
 

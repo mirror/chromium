@@ -51,19 +51,6 @@ enum RequestInitiatorContext {
   kWorkerContext,
 };
 
-enum StoredCredentials {
-  kAllowStoredCredentials,
-  kDoNotAllowStoredCredentials
-};
-
-// APIs like XMLHttpRequest and EventSource let the user decide whether to send
-// credentials, but they're always sent for same-origin requests. Additional
-// information is needed to handle cross-origin redirects correctly.
-enum CredentialRequest {
-  kClientRequestedCredentials,
-  kClientDidNotRequestCredentials
-};
-
 enum SynchronousPolicy { kRequestSynchronously, kRequestAsynchronously };
 
 // A resource fetch can be marked as being CORS enabled. The loader must perform
@@ -85,8 +72,6 @@ struct ResourceLoaderOptions {
  public:
   ResourceLoaderOptions()
       : data_buffering_policy(kBufferData),
-        allow_credentials(kDoNotAllowStoredCredentials),
-        credentials_requested(kClientDidNotRequestCredentials),
         content_security_policy_option(kCheckContentSecurityPolicy),
         request_initiator_context(kDocumentContext),
         synchronous_policy(kRequestAsynchronously),
@@ -96,13 +81,9 @@ struct ResourceLoaderOptions {
 
   ResourceLoaderOptions(
       DataBufferingPolicy data_buffering_policy,
-      StoredCredentials allow_credentials,
-      CredentialRequest credentials_requested,
       ContentSecurityPolicyDisposition content_security_policy_option,
       RequestInitiatorContext request_initiator_context)
       : data_buffering_policy(data_buffering_policy),
-        allow_credentials(allow_credentials),
-        credentials_requested(credentials_requested),
         content_security_policy_option(content_security_policy_option),
         request_initiator_context(request_initiator_context),
         synchronous_policy(kRequestAsynchronously),
@@ -131,12 +112,6 @@ struct ResourceLoaderOptions {
   // updated.
   DataBufferingPolicy data_buffering_policy;
 
-  // Whether HTTP credentials and cookies are sent with the request.
-  StoredCredentials allow_credentials;
-
-  // Whether the client (e.g. XHR) wanted credentials in the first place.
-  CredentialRequest credentials_requested;
-
   ContentSecurityPolicyDisposition content_security_policy_option;
   FetchInitiatorInfo initiator_info;
   RequestInitiatorContext request_initiator_context;
@@ -158,8 +133,6 @@ struct CrossThreadResourceLoaderOptionsData {
   explicit CrossThreadResourceLoaderOptionsData(
       const ResourceLoaderOptions& options)
       : data_buffering_policy(options.data_buffering_policy),
-        allow_credentials(options.allow_credentials),
-        credentials_requested(options.credentials_requested),
         content_security_policy_option(options.content_security_policy_option),
         initiator_info(options.initiator_info),
         request_initiator_context(options.request_initiator_context),
@@ -176,8 +149,6 @@ struct CrossThreadResourceLoaderOptionsData {
   operator ResourceLoaderOptions() const {
     ResourceLoaderOptions options;
     options.data_buffering_policy = data_buffering_policy;
-    options.allow_credentials = allow_credentials;
-    options.credentials_requested = credentials_requested;
     options.content_security_policy_option = content_security_policy_option;
     options.initiator_info = initiator_info;
     options.request_initiator_context = request_initiator_context;
@@ -192,8 +163,6 @@ struct CrossThreadResourceLoaderOptionsData {
   }
 
   DataBufferingPolicy data_buffering_policy;
-  StoredCredentials allow_credentials;
-  CredentialRequest credentials_requested;
   ContentSecurityPolicyDisposition content_security_policy_option;
   CrossThreadFetchInitiatorInfoData initiator_info;
   RequestInitiatorContext request_initiator_context;
