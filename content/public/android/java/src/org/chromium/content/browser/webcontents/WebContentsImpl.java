@@ -194,6 +194,10 @@ import java.util.UUID;
 
     @Override
     public boolean isDestroyed() {
+        if (mEventForwarder != null) {
+            mEventForwarder.setHoverEventHandler(null);
+            mEventForwarder = null;
+        }
         return mNativeWebContentsAndroid == 0;
     }
 
