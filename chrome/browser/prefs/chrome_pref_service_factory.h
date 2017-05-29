@@ -26,7 +26,7 @@ class Connector;
 }
 
 namespace sync_preferences {
-class PrefServiceSyncable;
+class PrefServiceSyncableFactory;
 }
 
 namespace user_prefs {
@@ -74,7 +74,8 @@ std::unique_ptr<PrefService> CreateLocalState(
     const scoped_refptr<PrefRegistry>& pref_registry,
     bool async);
 
-std::unique_ptr<sync_preferences::PrefServiceSyncable> CreateProfilePrefs(
+std::unique_ptr<sync_preferences::PrefServiceSyncableFactory>
+CreateProfilePrefs(
     const base::FilePath& pref_filename,
     prefs::mojom::TrackedPreferenceValidationDelegatePtr validation_delegate,
     policy::PolicyService* policy_service,

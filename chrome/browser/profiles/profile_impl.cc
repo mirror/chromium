@@ -104,10 +104,12 @@
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/proxy_config/pref_proxy_config_tracker.h"
+#include "components/proxy_config/proxy_config_pref_names.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/common/signin_pref_names.h"
 #include "components/ssl_config/ssl_config_service_manager.h"
 #include "components/sync_preferences/pref_service_syncable.h"
+#include "components/sync_preferences/pref_service_syncable_factory.h"
 #include "components/url_formatter/url_fixer.h"
 #include "components/user_prefs/user_prefs.h"
 #include "content/public/browser/browser_thread.h"
@@ -524,11 +526,12 @@ ProfileImpl::ProfileImpl(
     if (features::PrefServiceEnabled()) {
       connector = content::BrowserContext::GetConnectorFor(this);
     }
-    prefs_ = chrome_prefs::CreateProfilePrefs(
+    prefs_factory_ = chrome_prefs::CreateProfilePrefs(
         path_, std::move(pref_validation_delegate),
         profile_policy_connector_->policy_service(), supervised_user_settings,
         CreateExtensionPrefStore(this, false), pref_registry_, async_prefs,
         connector);
+    prefs_ = prefs_factory_->CreateSyncable(pref_registry_.get(), connector);
     // Register on BrowserContext.
     user_prefs::UserPrefs::Set(this, prefs_.get());
   }
@@ -992,15 +995,38 @@ ChromeZoomLevelPrefs* ProfileImpl::GetZoomLevelPrefs() {
 }
 #endif  // !defined(OS_ANDROID)
 
-PrefService* ProfileImpl::GetOffTheRecordPrefs() {
+PrefService* ProfileImpl::CreateOffTheRecordPrefs(
+    service_manager::Connector* otr_connector) {
   DCHECK(prefs_);
   if (!otr_prefs_) {
+    service_manager::Connector* user_connector = nullptr;
+    if (otr_connector) {
+      user_connector = content::BrowserContext::GetConnectorFor(this);
+    }
+    // List of keys that cannot be changed in the user prefs file by the
+    // incognito
+    // profile.  All preferences that store information about the browsing
+    // history or behavior of the user should have this property.
+    std::vector<const char*> overlay_pref_names;
+    overlay_pref_names.push_back(prefs::kBrowserWindowPlacement);
+    overlay_pref_names.push_back(prefs::kMediaRouterTabMirroringSources);
+    overlay_pref_names.push_back(prefs::kSaveFileDefaultDirectory);
+#if defined(OS_ANDROID)
+    overlay_pref_names.push_back(proxy_config::prefs::kProxy);
+#endif
+
     // The new ExtensionPrefStore is ref_counted and the new PrefService
     // stores a reference so that we do not leak memory here.
-    otr_prefs_.reset(CreateIncognitoPrefServiceSyncable(
-        prefs_.get(), CreateExtensionPrefStore(this, true)));
+    otr_prefs_ = prefs_factory_->CreateIncognitoSyncable(
+        pref_registry_.get(), CreateExtensionPrefStore(this, true),
+        overlay_pref_names, chrome::InProcessPrefStores(), otr_connector,
+        user_connector);
   }
   return otr_prefs_.get();
+}
+
+PrefService* ProfileImpl::GetOffTheRecordPrefs() {
+  return GetOffTheRecordProfile()->GetPrefs();
 }
 
 content::ResourceContext* ProfileImpl::GetResourceContext() {

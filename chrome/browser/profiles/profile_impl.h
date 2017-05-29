@@ -40,6 +40,10 @@ class SupervisedUserTestBase;
 }
 #endif
 
+namespace sync_preferences {
+class PrefServiceSyncableFactory;
+}
+
 namespace base {
 class SequencedTaskRunner;
 }
@@ -128,6 +132,8 @@ class ProfileImpl : public Profile {
   ChromeZoomLevelPrefs* GetZoomLevelPrefs() override;
 #endif
   PrefService* GetOffTheRecordPrefs() override;
+  PrefService* CreateOffTheRecordPrefs(
+      service_manager::Connector* otr_connector) override;
   net::URLRequestContextGetter* GetRequestContext() override;
   net::URLRequestContextGetter* GetRequestContextForExtensions() override;
   net::SSLConfigService* GetSSLConfigService() override;
@@ -284,6 +290,8 @@ class ProfileImpl : public Profile {
   Profile::Delegate* delegate_;
 
   chrome_browser_net::Predictor* predictor_;
+
+  std::unique_ptr<sync_preferences::PrefServiceSyncableFactory> prefs_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileImpl);
 };

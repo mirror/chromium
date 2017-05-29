@@ -6,9 +6,11 @@
 #define COMPONENTS_SYNC_PREFERENCES_PREF_SERVICE_SYNCABLE_FACTORY_H_
 
 #include <memory>
+#include <set>
 
 #include "base/macros.h"
 #include "components/prefs/pref_service_factory.h"
+#include "components/prefs/pref_value_store.h"
 
 namespace policy {
 class BrowserPolicyConnector;
@@ -52,7 +54,23 @@ class PrefServiceSyncableFactory : public PrefServiceFactory {
       user_prefs::PrefRegistrySyncable* registry,
       service_manager::Connector* connector = nullptr);
 
+  std::unique_ptr<PrefServiceSyncable> CreateIncognitoSyncable(
+      user_prefs::PrefRegistrySyncable* pref_registry,
+      PrefStore* incognito_extension_pref_store,
+      const std::vector<const char*>& overlay_pref_names,
+      std::set<PrefValueStore::PrefStoreType> already_connected_types,
+      service_manager::Connector* incognito_connector,
+      service_manager::Connector* user_connector);
+
  private:
+  scoped_refptr<PersistentPrefStore> CreateUserPrefsUsingPrefService(
+      user_prefs::PrefRegistrySyncable* pref_registry,
+      PrefStore* incognito_extension_pref_store,
+      const std::vector<const char*>& overlay_pref_names,
+      std::set<PrefValueStore::PrefStoreType> already_connected_types,
+      service_manager::Connector* incognito_connector,
+      service_manager::Connector* user_connector);
+
   PrefModelAssociatorClient* pref_model_associator_client_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefServiceSyncableFactory);

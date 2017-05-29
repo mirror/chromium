@@ -44,6 +44,10 @@ namespace net {
 class SSLConfigService;
 }
 
+namespace sync_preferences {
+class PrefServiceSyncable;
+}
+
 namespace user_prefs {
 class PrefRegistrySyncable;
 }
@@ -190,6 +194,9 @@ class Profile : public content::BrowserContext {
   // for OffTheRecord Profiles.  This PrefService is lazily created the first
   // time that this method is called.
   virtual PrefService* GetOffTheRecordPrefs() = 0;
+
+  virtual PrefService* CreateOffTheRecordPrefs(
+      service_manager::Connector* otr_connector);
 
   // Returns the main request context.
   virtual net::URLRequestContextGetter* GetRequestContext() = 0;
