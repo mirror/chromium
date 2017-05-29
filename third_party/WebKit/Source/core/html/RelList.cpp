@@ -4,16 +4,17 @@
 
 #include "core/html/RelList.h"
 
+#include "core/HTMLNames.h"
 #include "core/dom/Document.h"
+#include "core/dom/Element.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/HashMap.h"
 
 namespace blink {
 
-using namespace HTMLNames;
-
-RelList::RelList(Element* element) : DOMTokenList(nullptr), element_(element) {}
+RelList::RelList(Element* element)
+    : DOMTokenList(*element, HTMLNames::relAttr) {}
 
 static HashSet<AtomicString>& SupportedTokens() {
   DEFINE_STATIC_LOCAL(HashSet<AtomicString>, tokens, ());
@@ -46,11 +47,6 @@ bool RelList::ValidateTokenValue(const AtomicString& token_value,
   return OriginTrials::linkServiceWorkerEnabled(
              element_->GetExecutionContext()) &&
          token_value == "serviceworker";
-}
-
-DEFINE_TRACE(RelList) {
-  visitor->Trace(element_);
-  DOMTokenList::Trace(visitor);
 }
 
 }  // namespace blink
