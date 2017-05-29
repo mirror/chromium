@@ -60,6 +60,10 @@ void Modulator::ClearModulator(ScriptState* script_state) {
   DCHECK(script_state);
   V8PerContextData* per_context_data = script_state->PerContextData();
   DCHECK(per_context_data);
+  Modulator* modulator =
+      static_cast<Modulator*>(per_context_data->GetData(kPerContextDataKey));
+  if (modulator)
+    modulator->Dispose();
   per_context_data->ClearData(kPerContextDataKey);
 }
 

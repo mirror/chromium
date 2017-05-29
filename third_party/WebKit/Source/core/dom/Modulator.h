@@ -61,6 +61,8 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   static Modulator* From(ScriptState*);
   virtual ~Modulator();
 
+  virtual void Dispose() = 0;
+
   static void SetModulator(ScriptState*, Modulator*);
   static void ClearModulator(ScriptState*);
 

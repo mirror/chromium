@@ -31,6 +31,8 @@ class DummyModulator : public Modulator {
   virtual ~DummyModulator();
   DECLARE_TRACE();
 
+  void Dispose() override;
+
   ScriptModuleResolver* GetScriptModuleResolver() override;
   WebTaskRunner* TaskRunner() override;
   ReferrerPolicy GetReferrerPolicy() override;

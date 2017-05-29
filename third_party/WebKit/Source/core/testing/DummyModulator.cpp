@@ -38,6 +38,8 @@ DEFINE_TRACE(DummyModulator) {
   Modulator::Trace(visitor);
 }
 
+void DummyModulator::Dispose() {}
+
 ReferrerPolicy DummyModulator::GetReferrerPolicy() {
   NOTREACHED();
   return kReferrerPolicyDefault;
