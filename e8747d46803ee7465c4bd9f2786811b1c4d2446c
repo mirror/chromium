@@ -22,6 +22,30 @@
       "revId": "e8747d46803ee7465c4bd9f2786811b1c4d2446c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b58cf8_4d1c397f",
+        "filename": "components/browsing_data/core/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-05-29T08:22:32Z",
+      "side": 1,
+      "message": "I removed \u0027:browser\u0027 and all other redundant \u0027:xxx\u0027 parts.",
+      "parentUuid": "f44e16f7_9a723ab0",
+      "range": {
+        "startLine": 35,
+        "startChar": 28,
+        "endLine": 35,
+        "endChar": 43
+      },
+      "revId": "e8747d46803ee7465c4bd9f2786811b1c4d2446c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
