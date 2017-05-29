@@ -1679,6 +1679,7 @@ split_static_library("ui") {
           "views/extensions/extension_popup_aura.cc",
           "views/extensions/extension_popup_aura.h",
         ]
+        deps += [ "//ui/wm/public:api" ]
       }
       if (is_chromeos) {
         sources += [
