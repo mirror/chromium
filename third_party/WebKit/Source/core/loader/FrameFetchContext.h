@@ -152,6 +152,12 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   std::unique_ptr<WebURLLoader> CreateURLLoader() override;
 
+  void Detach() override {
+    // This is needed to break a reference cycle which off-heap
+    // ComputedStyle is involved. See https://crbug.com/383860 for details.
+    document_ = nullptr;
+  }
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
@@ -193,10 +199,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   void AddConsoleMessage(ConsoleMessage*) const override;
 
   Member<DocumentLoader> document_loader_;
-  // FIXME: Oilpan: Ideally this should just be a traced Member but that will
-  // currently leak because ComputedStyle and its data are not on the heap.
-  // See crbug.com/383860 for details.
-  WeakMember<Document> document_;
+  Member<Document> document_;
 };
 
 }  // namespace blink
