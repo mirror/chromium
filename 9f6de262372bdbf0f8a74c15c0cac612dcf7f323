@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34e322a0_9e81b1c0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-05-29T13:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab92c32c_3f489d12",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "355658b3_33f459bc",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-001.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a375607b_ac5f04c9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-05-29T13:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "355658b3_33f459bc",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "14a215db_10103547",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-05-29T13:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ee6e72_04f01394",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc291c71_721b9ec9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-002.html",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-05-29T11:01:36Z",
       "side": 1,
       "message": "Why not add \"margin-left\" here? It\u0027s the only one you\u0027re not testing.",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d063e5_673a1c6b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-002.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-05-29T13:01:15Z",
+      "side": 1,
+      "message": "I\u0027m not testing margin-top either. Only the \"margin-end\"  is needed to verify the issue. It helps to evaluate the test visually, specially when dealing with borders, which can be confused with ahem characters if I set top/left borders,",
+      "parentUuid": "dc291c71_721b9ec9",
       "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "607d8c7f_c6d92ccf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-005.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-05-29T13:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa95a4e2_0b1f6c8f",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e2cf78a_454b2c92",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-006.html",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-05-29T11:01:36Z",
       "side": 1,
       "message": "Again I\u0027d ass \"margin-left\" here.",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7cb4fa0_fab652cc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-stretch-006.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-05-29T13:01:15Z",
+      "side": 1,
+      "message": "Already replied in the previous comment.",
+      "parentUuid": "6e2cf78a_454b2c92",
       "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "99e93fc4_0523b750",
+        "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/grid-item-stretching-must-not-depend-on-previous-layouts-expected.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-05-29T13:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f2bfb70_6e26efbf",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2813b896_3c613bdb",
         "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/grid-item-stretching-must-not-depend-on-previous-layouts.html",
         "patchSetId": 2
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "859110c1_54d6fed4",
+        "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/grid-item-stretching-must-not-depend-on-previous-layouts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-05-29T13:01:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2813b896_3c613bdb",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4afb6193_f7905aca",
         "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/grid-item-stretching-must-not-depend-on-previous-layouts.html",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7674be0d_85c9a828",
+        "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/grid-item-stretching-must-not-depend-on-previous-layouts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-05-29T13:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4afb6193_f7905aca",
+      "revId": "9f6de262372bdbf0f8a74c15c0cac612dcf7f323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
