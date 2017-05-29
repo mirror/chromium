@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ff11ac_45fe0001",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-05-29T02:38:13Z",
+      "side": 1,
+      "message": "Could you write the description emphasizing positive portion / what is addressed first?\nIMHO it makes much easier for readers to understand the point of this CL.\n\ne.g.\nSimplify ClassList class so that it doesn\u0027t need to refer Element::ClassNames() but\n...\n\n* Remove duplicate SpaceSplitString storage, used for quirks mode...\n* Remove another SpaceSplitString for mutation ...\n\nThis change must not make ... slower ...",
+      "revId": "86cb2a482d3bcde9f47d89ea82f74cc1b1731208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
