@@ -1,0 +1,5 @@
+[
+  NoInterfaceObject
+] interface Policy {
+  boolean getFeaturePolicy(DOMString feature);
+};
