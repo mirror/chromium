@@ -185,12 +185,11 @@ AtomicString DOMTokenList::AddToken(const AtomicString& token) {
 // This returns an AtomicString because it is always passed as argument to
 // setValue() and setValue() takes an AtomicString in argument.
 AtomicString DOMTokenList::AddTokens(const Vector<String>& tokens) {
-  SpaceSplitString& token_set = MutableSet();
   // 2. For each token in tokens, append token to context object’s token set.
   for (const auto& token : tokens)
-    token_set.Add(AtomicString(token));
+    tokens_.Add(AtomicString(token));
   // 3. Run the update steps.
-  return SerializeSet(token_set);
+  return SerializeSet(tokens_);
 }
 
 AtomicString DOMTokenList::RemoveToken(const AtomicString& token) {
@@ -203,12 +202,11 @@ AtomicString DOMTokenList::RemoveToken(const AtomicString& token) {
 // This returns an AtomicString because it is always passed as argument to
 // setValue() and setValue() takes an AtomicString in argument.
 AtomicString DOMTokenList::RemoveTokens(const Vector<String>& tokens) {
-  SpaceSplitString& token_set = MutableSet();
   // 2. For each token in tokens, remove token from context object’s token set.
   for (const auto& token : tokens)
-    token_set.Remove(AtomicString(token));
+    tokens_.Remove(AtomicString(token));
   // 3. Run the update steps.
-  return SerializeSet(token_set);
+  return SerializeSet(tokens_);
 }
 
 // https://dom.spec.whatwg.org/#concept-ordered-set-serializer
