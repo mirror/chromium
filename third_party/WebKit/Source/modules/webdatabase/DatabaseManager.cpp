@@ -27,13 +27,13 @@
 
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/modules/v8/DatabaseCallback.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/probe/CoreProbes.h"
 #include "modules/webdatabase/Database.h"
-#include "modules/webdatabase/DatabaseCallback.h"
 #include "modules/webdatabase/DatabaseClient.h"
 #include "modules/webdatabase/DatabaseContext.h"
 #include "modules/webdatabase/DatabaseTask.h"
@@ -64,7 +64,8 @@ DatabaseManager::~DatabaseManager() {}
 static void DatabaseCallbackHandleEvent(DatabaseCallback* callback,
                                         Database* database) {
   probe::AsyncTask async_task(database->GetExecutionContext(), callback);
-  callback->handleEvent(database);
+  bool return_value;
+  callback->call(nullptr, database, return_value);
 }
 
 DatabaseContext* DatabaseManager::ExistingDatabaseContextFor(
