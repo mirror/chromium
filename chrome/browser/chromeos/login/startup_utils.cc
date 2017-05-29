@@ -151,10 +151,8 @@ bool StartupUtils::IsDeviceRegistered() {
       g_browser_process->local_state()->GetInteger(prefs::kDeviceRegistered);
   if (value > 0) {
     // Recreate flag file in case it was lost.
-    BrowserThread::PostTask(
-        BrowserThread::FILE,
-        FROM_HERE,
-        base::Bind(&CreateOobeCompleteFlagFile));
+    BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
+                            base::BindOnce(&CreateOobeCompleteFlagFile));
     return true;
   } else if (value == 0) {
     return false;
@@ -173,16 +171,12 @@ bool StartupUtils::IsDeviceRegistered() {
 void StartupUtils::MarkDeviceRegistered(const base::Closure& done_callback) {
   SaveIntegerPreferenceForced(prefs::kDeviceRegistered, 1);
   if (done_callback.is_null()) {
-    BrowserThread::PostTask(
-        BrowserThread::FILE,
-        FROM_HERE,
-        base::Bind(&CreateOobeCompleteFlagFile));
+    BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
+                            base::BindOnce(&CreateOobeCompleteFlagFile));
   } else {
-    BrowserThread::PostTaskAndReply(
-        BrowserThread::FILE,
-        FROM_HERE,
-        base::Bind(&CreateOobeCompleteFlagFile),
-        done_callback);
+    BrowserThread::PostTaskAndReply(BrowserThread::FILE, FROM_HERE,
+                                    base::BindOnce(&CreateOobeCompleteFlagFile),
+                                    done_callback);
   }
 }
 

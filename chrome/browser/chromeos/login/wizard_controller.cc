@@ -777,9 +777,9 @@ void WizardController::OnUserImageSelected() {
   // Launch browser and delete login host controller.
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&UserSessionManager::DoBrowserLaunch,
-                 base::Unretained(UserSessionManager::GetInstance()),
-                 ProfileManager::GetActiveUserProfile(), host_));
+      base::BindOnce(&UserSessionManager::DoBrowserLaunch,
+                     base::Unretained(UserSessionManager::GetInstance()),
+                     ProfileManager::GetActiveUserProfile(), host_));
   host_ = nullptr;
 }
 

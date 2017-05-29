@@ -798,7 +798,7 @@ class KioskTest : public OobeBaseTest {
     std::unique_ptr<base::AutoLock> auto_lock(new base::AutoLock(*lock));
     content::BrowserThread::PostTask(
         content::BrowserThread::FILE, FROM_HERE,
-        base::Bind(&LockAndUnlock, base::Passed(&lock)));
+        base::BindOnce(&LockAndUnlock, base::Passed(&lock)));
     return auto_lock;
   }
 
