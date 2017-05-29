@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d29c2f1d_61921153",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-29T07:45:52Z",
+      "side": 1,
+      "message": "It would be nice to document in the CL description why:\n- we needed associated before\n- now we don\u0027t\n\nIs it just because it\u0027s unnecessary?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "a405054f84052680dc617f538255728d6f0f8601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
