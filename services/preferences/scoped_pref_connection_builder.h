@@ -40,6 +40,8 @@ class ScopedPrefConnectionBuilder
   void ProvidePersistentPrefStore(
       PersistentPrefStoreImpl* persistent_pref_store);
 
+  void ProvideDefaults(std::vector<mojom::PrefRegistrationPtr> defaults);
+
  private:
   friend class base::RefCounted<ScopedPrefConnectionBuilder>;
   ~ScopedPrefConnectionBuilder();
@@ -55,6 +57,8 @@ class ScopedPrefConnectionBuilder
   std::unordered_map<PrefValueStore::PrefStoreType,
                      mojom::PrefStoreConnectionPtr>
       connections_;
+
+  std::vector<mojom::PrefRegistrationPtr> defaults_;
 
   mojom::PersistentPrefStoreConnectionPtr persistent_pref_store_connection_;
 

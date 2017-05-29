@@ -33,6 +33,8 @@ source_set("preferences") {
     "pref_store_manager_impl.h",
     "scoped_pref_connection_builder.cc",
     "scoped_pref_connection_builder.h",
+    "shared_pref_registry.cc",
+    "shared_pref_registry.h",
   ]
 }
 

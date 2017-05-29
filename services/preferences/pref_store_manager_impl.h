@@ -19,15 +19,13 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 
-class DefaultPrefStore;
-
 namespace base {
 class SequencedWorkerPool;
 }
 
 namespace prefs {
+class SharedPrefRegistry;
 class PersistentPrefStoreImpl;
-class PrefStoreImpl;
 class ScopedPrefConnectionBuilder;
 
 // This class mediates the connection of clients who wants to read preferences
@@ -99,8 +97,7 @@ class PrefStoreManagerImpl : public mojom::PrefStoreRegistry,
   std::unique_ptr<PersistentPrefStoreImpl> persistent_pref_store_;
   mojo::Binding<mojom::PrefServiceControl> init_binding_;
 
-  const scoped_refptr<DefaultPrefStore> defaults_;
-  const std::unique_ptr<PrefStoreImpl> defaults_wrapper_;
+  const std::unique_ptr<SharedPrefRegistry> shared_pref_registry_;
 
   // The same |ScopedPrefConnectionBuilder| instance may appear multiple times
   // in |pending_connections_|, once per type of pref store it's waiting for,
