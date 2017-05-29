@@ -32,7 +32,7 @@ ClassicPendingScript::ClassicPendingScript(
     ScriptResource* resource,
     const TextPosition& starting_position)
     : PendingScript(element, starting_position),
-      ready_state_(resource ? kWaitingForResource : kReady),
+      ready_state_(resource ? kWaitingForResourceAndStreaming : kReady),
       integrity_failure_(false) {
   CheckState();
   SetResource(resource);
@@ -69,7 +69,22 @@ void ClassicPendingScript::DisposeInternal() {
 void ClassicPendingScript::StreamingFinished() {
   CheckState();
   DCHECK(GetResource());
-  DCHECK_EQ(ready_state_, kWaitingForStreaming);
+  DCHECK(streamer_);
+  DCHECK(ready_state_ == kWaitingForStreaming ||
+         ready_state_ == kWaitingForResourceAndStreaming);
+
+  if (ready_state_ == kWaitingForResourceAndStreaming)
+    AdvanceReadyState(kWaitingForResource);
+  else if (ready_state_ == kWaitingForStreaming)
+    Finish();
+  else
+    UNREACHABLE();
+}
+
+void ClassicPendingScript::Finish() {
+  CheckState();
+  DCHECK_LT(ready_state_, kReady);
+  DCHECK(GetResource());
 
   bool error_occurred = GetResource()->ErrorOccurred() || integrity_failure_;
   AdvanceReadyState(error_occurred ? kErrorOccurred : kReady);
@@ -148,18 +163,21 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
     integrity_failure_ = !CheckScriptResourceIntegrity(resource, GetElement());
   }
 
-  // We are now waiting for script streaming to finish.
-  // If there is no script streamer, this step completes immediately.
-  AdvanceReadyState(kWaitingForStreaming);
-  if (streamer_)
-    streamer_->NotifyFinished(resource);
+//  if (streamer_)
+//    streamer_->NotifyFinished(resource);
+
+  DCHECK(ready_state_ == kWaitingForResourceAndStreaming ||
+         ready_state_ == kWaitingForResource);
+
+  if ((ready_state_ == kWaitingForResourceAndStreaming) && streamer_ && !streamer_->IsFinished())
+    AdvanceReadyState(kWaitingForStreaming);
   else
-    StreamingFinished();
+    Finish();
 }
 
 void ClassicPendingScript::NotifyAppendData(ScriptResource* resource) {
-  if (streamer_)
-    streamer_->NotifyAppendData(resource);
+//  if (streamer_)
+//    streamer_->NotifyAppendData(resource);
 }
 
 DEFINE_TRACE(ClassicPendingScript) {
@@ -181,7 +199,6 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
       return ClassicScript::Create(ScriptSourceCode(streamer_, GetResource()));
     return ClassicScript::Create(ScriptSourceCode(GetResource()));
   }
-
   return ClassicScript::Create(ScriptSourceCode(
       GetElement()->TextContent(), document_url, StartingPosition()));
 }
@@ -214,6 +231,25 @@ void ClassicPendingScript::AdvanceReadyState(ReadyState new_ready_state) {
         << "The state should not advance from one completed state to another.";
   }
 
+  switch (ready_state_) {
+    case kWaitingForResourceAndStreaming:
+      // From here, we can transition to anywhere (except the current state).
+      DCHECK_GT(new_ready_state, ready_state_);
+      break;
+    case kWaitingForResource:
+    case kWaitingForStreaming:
+      // From here, we can only go to either 'ready' state.
+      DCHECK_GE(new_ready_state, kReady)
+          << "The WaitingForX states should progress to a 'ready' state.";
+      break;
+    case kReady:
+    case kErrorOccurred:
+      // The 'ready' states should not advance anywhere.
+      DCHECK(false) << "The state should not advance from one completed state "
+                       "to another.";
+      break;
+  }
+
   ready_state_ = new_ready_state;
 
   if (ready_state_ >= kReady && IsWatchingForLoad())
@@ -238,9 +274,13 @@ void ClassicPendingScript::StartStreamingIfPossible(
   if (!script_state)
     return;
 
-  ScriptStreamer::StartStreaming(
-      this, streamer_type, document->GetFrame()->GetSettings(), script_state,
+  ScriptStreamer* streamer = ScriptStreamer::StartStreaming(
+      GetResource(), streamer_type,
+      WTF::Bind(&ClassicPendingScript::StreamingFinished, WrapPersistent(this)),
+      document->GetFrame()->GetSettings(), script_state,
       TaskRunnerHelper::Get(TaskType::kNetworking, document));
+  if (streamer)
+    SetStreamer(streamer);
 }
 
 bool ClassicPendingScript::WasCanceled() const {

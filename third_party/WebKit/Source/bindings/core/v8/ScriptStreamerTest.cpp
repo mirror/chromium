@@ -57,6 +57,14 @@ class ScriptStreamingTest : public ::testing::Test {
     return pending_script_.Get();
   }
 
+  void StartStreaming(ScriptState* script_state) {
+    GetPendingScript()->SetStreamer(ScriptStreamer::StartStreaming(
+        GetPendingScript()->GetResource(), ScriptStreamer::kParsingBlocking,
+        WTF::Bind(&ClassicPendingScript::StreamingFinished,
+                  WrapPersistent(GetPendingScript())),
+        settings_.get(), script_state, loading_task_runner_));
+  }
+
  protected:
   void AppendData(const char* data) {
     resource_->AppendData(data, strlen(data));
@@ -118,9 +126,7 @@ class TestPendingScriptClient
 TEST_F(ScriptStreamingTest, CompilingStreamedScript) {
   // Test that we can successfully compile a streamed script.
   V8TestingScope scope;
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+  StartStreaming(scope.GetScriptState());
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
 
@@ -156,9 +162,7 @@ TEST_F(ScriptStreamingTest, CompilingStreamedScriptWithParseError) {
   // the V8 side typically finished before loading finishes: make sure we
   // handle it gracefully.
   V8TestingScope scope;
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+  StartStreaming(scope.GetScriptState());
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
   AppendData("function foo() {");
@@ -195,9 +199,7 @@ TEST_F(ScriptStreamingTest, CancellingStreaming) {
   // Test that the upper layers (PendingScript and up) can be ramped down
   // while streaming is ongoing, and ScriptStreamer handles it gracefully.
   V8TestingScope scope;
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+  StartStreaming(scope.GetScriptState());
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
   AppendData("function foo() {");
@@ -225,9 +227,7 @@ TEST_F(ScriptStreamingTest, SuppressingStreaming) {
   // upper layer (ScriptResourceClient) should get a notification when the
   // script is loaded.
   V8TestingScope scope;
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+  StartStreaming(scope.GetScriptState());
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
   AppendData("function foo() {");
@@ -260,9 +260,8 @@ TEST_F(ScriptStreamingTest, EmptyScripts) {
   // (ScriptResourceClient) should be notified when an empty script has been
   // loaded.
   V8TestingScope scope;
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+
+  StartStreaming(scope.GetScriptState());
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
 
@@ -285,9 +284,7 @@ TEST_F(ScriptStreamingTest, SmallScripts) {
   V8TestingScope scope;
   ScriptStreamer::SetSmallScriptThresholdForTesting(100);
 
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+  StartStreaming(scope.GetScriptState());
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
 
@@ -313,9 +310,7 @@ TEST_F(ScriptStreamingTest, ScriptsWithSmallFirstChunk) {
   V8TestingScope scope;
   ScriptStreamer::SetSmallScriptThresholdForTesting(100);
 
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+  StartStreaming(scope.GetScriptState());
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
 
@@ -350,9 +345,7 @@ TEST_F(ScriptStreamingTest, EncodingChanges) {
   V8TestingScope scope;
   resource_->SetEncoding("windows-1252");
 
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+  StartStreaming(scope.GetScriptState());
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
 
@@ -387,9 +380,7 @@ TEST_F(ScriptStreamingTest, EncodingFromBOM) {
   V8TestingScope scope;
   resource_->SetEncoding("windows-1252");  // This encoding is wrong on purpose.
 
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+  StartStreaming(scope.GetScriptState());
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
 
@@ -420,14 +411,13 @@ TEST_F(ScriptStreamingTest, EncodingFromBOM) {
 // A test for crbug.com/711703. Should not crash.
 TEST_F(ScriptStreamingTest, GarbageCollectDuringStreaming) {
   V8TestingScope scope;
-  ScriptStreamer::StartStreaming(
-      GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
-      scope.GetScriptState(), loading_task_runner_);
+  StartStreaming(scope.GetScriptState());
 
   TestPendingScriptClient* client = new TestPendingScriptClient;
   GetPendingScript()->WatchForLoad(client);
   EXPECT_FALSE(client->Finished());
 
+  pending_script_->Dispose();
   pending_script_ = nullptr;
   ThreadState::Current()->CollectGarbage(BlinkGC::kNoHeapPointersOnStack,
                                          BlinkGC::kGCWithSweep,

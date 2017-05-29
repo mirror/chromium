@@ -62,6 +62,7 @@ class CORE_EXPORT ClassicPendingScript final
  private:
   enum ReadyState {
     // These states are considered "not ready".
+    kWaitingForResourceAndStreaming,
     kWaitingForResource,
     kWaitingForStreaming,
     // These states are considered "ready".
@@ -79,6 +80,7 @@ class CORE_EXPORT ClassicPendingScript final
   void AdvanceReadyState(ReadyState);
 
   void CheckState() const override;
+  void Finish();
 
   // ScriptResourceClient
   void NotifyFinished(Resource*) override;
