@@ -39,6 +39,21 @@ ModulatorImpl::ModulatorImpl(RefPtr<ScriptState> script_state,
 
 ModulatorImpl::~ModulatorImpl() {}
 
+void ModulatorImpl::Dispose() {
+  if (map_) {
+    map_->Dispose();
+    map_ = nullptr;
+  }
+  if (script_module_resolver_) {
+    script_module_resolver_->Dispose();
+    script_module_resolver_ = nullptr;
+  }
+}
+
+ScriptModuleResolver* ModulatorImpl::GetScriptModuleResolver() {
+  return script_module_resolver_.Get();
+}
+
 ReferrerPolicy ModulatorImpl::GetReferrerPolicy() {
   return GetExecutionContext()->GetReferrerPolicy();
 }

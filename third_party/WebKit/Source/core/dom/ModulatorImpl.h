@@ -19,6 +19,7 @@ class ModuleMap;
 class ModuleScriptLoaderRegistry;
 class ModuleTreeLinkerRegistry;
 class ResourceFetcher;
+class ScriptModuleResolverImpl;
 class ScriptState;
 class WebTaskRunner;
 
@@ -36,10 +37,9 @@ class ModulatorImpl final : public Modulator {
 
  private:
   // Implements Modulator
+  void Dispose() override;
 
-  ScriptModuleResolver* GetScriptModuleResolver() override {
-    return script_module_resolver_.Get();
-  }
+  ScriptModuleResolver* GetScriptModuleResolver() override;
   WebTaskRunner* TaskRunner() override { return task_runner_.Get(); }
   ReferrerPolicy GetReferrerPolicy() override;
   SecurityOrigin* GetSecurityOrigin() override;
@@ -79,7 +79,7 @@ class ModulatorImpl final : public Modulator {
   TraceWrapperMember<ModuleMap> map_;
   Member<ModuleScriptLoaderRegistry> loader_registry_;
   Member<ModuleTreeLinkerRegistry> tree_linker_registry_;
-  Member<ScriptModuleResolver> script_module_resolver_;
+  Member<ScriptModuleResolverImpl> script_module_resolver_;
 };
 
 }  // namespace blink

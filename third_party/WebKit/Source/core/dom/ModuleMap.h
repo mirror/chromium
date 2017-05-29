@@ -35,14 +35,16 @@ class CORE_EXPORT ModuleMap final : public GarbageCollected<ModuleMap>,
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
+  void Dispose();
+
   // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-single-module-script
   void FetchSingleModuleScript(const ModuleScriptFetchRequest&,
                                ModuleGraphLevel,
                                SingleModuleClient*);
 
   // Synchronously get the ModuleScript for a given URL.
-  // Note: fetchSingleModuleScript of the ModuleScript must be complete before
-  // calling this.
+  // If the URL wasn't fetched, or is currently being fetched, this returns a
+  // nullptr.
   ModuleScript* GetFetchedModuleScript(const KURL&) const;
 
   Modulator* GetModulator() { return modulator_; }

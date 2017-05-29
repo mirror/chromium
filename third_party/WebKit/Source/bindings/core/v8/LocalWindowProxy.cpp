@@ -98,6 +98,7 @@ void LocalWindowProxy::DisposeContext(Lifecycle next_status) {
 #endif
   }
 
+  Modulator::ClearModulator(script_state_.Get());
   script_state_->DisposePerContextData();
 
   // It's likely that disposing the context has created a lot of

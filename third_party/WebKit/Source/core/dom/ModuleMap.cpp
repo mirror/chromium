@@ -26,6 +26,8 @@ class ModuleMap::Entry final : public GarbageCollectedFinalized<Entry>,
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
+  void Dispose();
+
   // Notify fetched |m_moduleScript| to the client asynchronously.
   void AddClient(SingleModuleClient*);
 
@@ -64,6 +66,12 @@ DEFINE_TRACE_WRAPPERS(ModuleMap::Entry) {
   visitor->TraceWrappers(module_script_);
 }
 
+void ModuleMap::Entry::Dispose() {
+  module_script_ = nullptr;
+  map_ = nullptr;
+  clients_.clear();
+}
+
 void ModuleMap::Entry::DispatchFinishedNotificationAsync(
     SingleModuleClient* client) {
   map_->GetModulator()->TaskRunner()->PostTask(
@@ -96,7 +104,6 @@ void ModuleMap::Entry::NotifyNewSingleModuleFinished(
 }
 
 ModuleScript* ModuleMap::Entry::GetModuleScript() const {
-  DCHECK(!is_fetching_);
   return module_script_.Get();
 }
 
@@ -112,6 +119,12 @@ DEFINE_TRACE(ModuleMap) {
 DEFINE_TRACE_WRAPPERS(ModuleMap) {
   for (const auto& it : map_)
     visitor->TraceWrappers(it.value);
+}
+
+void ModuleMap::Dispose() {
+  for (const auto& it : map_)
+    it.value->Dispose();
+  map_.clear();
 }
 
 void ModuleMap::FetchSingleModuleScript(const ModuleScriptFetchRequest& request,
@@ -146,7 +159,8 @@ void ModuleMap::FetchSingleModuleScript(const ModuleScriptFetchRequest& request,
 
 ModuleScript* ModuleMap::GetFetchedModuleScript(const KURL& url) const {
   MapImpl::const_iterator it = map_.find(url);
-  CHECK_NE(it, map_.end());
+  if (it == map_.end())
+    return nullptr;
   return it->value->GetModuleScript();
 }
 

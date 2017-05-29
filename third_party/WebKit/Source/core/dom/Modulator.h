@@ -61,6 +61,8 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   static Modulator* From(ScriptState*);
   virtual ~Modulator();
 
+  virtual void Dispose() = 0;
+
   static void SetModulator(ScriptState*, Modulator*);
   static void ClearModulator(ScriptState*);
 
@@ -94,7 +96,8 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
 
   // Synchronously retrieves a single module script from existing module map
   // entry.
-  // Note: returns nullptr if the module map entry is still "fetching".
+  // Note: returns nullptr if the module map entry doesn't exist, or
+  // is still "fetching".
   virtual ModuleScript* GetFetchedModuleScript(const KURL&) = 0;
 
   // https://html.spec.whatwg.org/#resolve-a-module-specifier

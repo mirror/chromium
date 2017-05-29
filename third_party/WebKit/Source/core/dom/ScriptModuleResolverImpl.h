@@ -29,6 +29,8 @@ class CORE_EXPORT ScriptModuleResolverImpl final : public ScriptModuleResolver {
 
   DECLARE_VIRTUAL_TRACE();
 
+  void Dispose();
+
   // Implements ScriptModuleResolver:
 
   void RegisterModuleScript(ModuleScript*) override;
