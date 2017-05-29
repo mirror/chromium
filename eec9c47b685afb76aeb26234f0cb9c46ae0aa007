@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3175026c_9349ead3",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 0,
+      "message": "Mee too!",
+      "parentUuid": "a35686a6_338820f8",
+      "range": {
+        "startLine": 1153,
+        "startChar": 21,
+        "endLine": 1153,
+        "endChar": 22
+      },
+      "revId": "eec9c47b685afb76aeb26234f0cb9c46ae0aa007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c27b98bc_be36261a",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-23T16:27:08Z",
       "side": 0,
       "message": "Is there a reason not to use typedefs in the new version?",
+      "range": {
+        "startLine": 318,
+        "startChar": 59,
+        "endLine": 318,
+        "endChar": 74
+      },
+      "revId": "eec9c47b685afb76aeb26234f0cb9c46ae0aa007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760e7b73_e1edfe54",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 0,
+      "message": "I don\u0027t really like these names but you\u0027re right, with typedefs it\u0027s much clearer.\nTypedefs are back.",
+      "parentUuid": "c27b98bc_be36261a",
       "range": {
         "startLine": 318,
         "startChar": 59,

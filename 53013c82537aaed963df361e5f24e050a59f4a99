@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f4bf4c4_204336bb",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b4e745c_f854248b",
+      "range": {
+        "startLine": 23,
+        "startChar": 24,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14ab0ae9_e2b41421",
         "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "984901d2_dd5cf1c8",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14ab0ae9_e2b41421",
+      "range": {
+        "startLine": 41,
+        "startChar": 58,
+        "endLine": 41,
+        "endChar": 63
+      },
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "359d06e3_80f3eb8d",
         "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28702f3_fa0aaef0",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359d06e3_80f3eb8d",
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "846c78ef_7ae7da29",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Oops! Thanks!\nDone",
+      "parentUuid": "edaa8bc3_4540fa07",
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8500cb40_e1573f02",
         "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f69af83_e365378f",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8500cb40_e1573f02",
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "acef7728_b98f9b90",
+        "filename": "chrome/browser/predictors/glowplug_key_value_table.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feeb3031_c54d3caf",
+      "range": {
+        "startLine": 39,
+        "startChar": 45,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78ee8995_ded3d54b",
         "filename": "chrome/browser/predictors/glowplug_key_value_table.h",
         "patchSetId": 4
@@ -133,6 +259,30 @@
       "writtenOn": "2017-05-23T16:27:08Z",
       "side": 1,
       "message": "nit: Can statement be used directly?",
+      "range": {
+        "startLine": 104,
+        "startChar": 19,
+        "endLine": 104,
+        "endChar": 26
+      },
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39fbbe2_623ca47f",
+        "filename": "chrome/browser/predictors/glowplug_key_value_table.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Yes, we need to call Reset() before reusing it then.\nFixed.",
+      "parentUuid": "78ee8995_ded3d54b",
       "range": {
         "startLine": 104,
         "startChar": 19,
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "30eb3bf7_e3f83a4d",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cbf9584_50ecee90",
+      "range": {
+        "startLine": 1176,
+        "startChar": 14,
+        "endLine": 1176,
+        "endChar": 40
+      },
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80787b75_45b6edd2",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
         "patchSetId": 4
@@ -182,6 +356,24 @@
       "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dce64f_79f42946",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80787b75_45b6edd2",
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "2bce90a5_946c2c29",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a6608be_d61e60bf",
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3534262c_841664a1",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
         "patchSetId": 4
@@ -219,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "0e2c5b55_f62281c9",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3534262c_841664a1",
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83a1498f_f6885950",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
         "patchSetId": 4
@@ -230,6 +458,30 @@
       "writtenOn": "2017-05-23T16:27:08Z",
       "side": 1,
       "message": "nit: update the doc.",
+      "range": {
+        "startLine": 419,
+        "startChar": 26,
+        "endLine": 419,
+        "endChar": 39
+      },
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f187d1_0e7f85d1",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done.\nAlso changed that LearnNavigation() doesn\u0027t call LearnRedirect() inside. A caller needs to call LearnRedirect() explicitly.",
+      "parentUuid": "83a1498f_f6885950",
       "range": {
         "startLine": 419,
         "startChar": 26,
@@ -259,6 +511,24 @@
     },
     {
       "key": {
+        "uuid": "bd37ee51_1c39ea43",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "823eb12f_0c18f18d",
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65fe33a9_ff5f3a6d",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
         "patchSetId": 4
@@ -273,6 +543,24 @@
       "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b310c95_463e3acb",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-29T14:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65fe33a9_ff5f3a6d",
+      "revId": "53013c82537aaed963df361e5f24e050a59f4a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
