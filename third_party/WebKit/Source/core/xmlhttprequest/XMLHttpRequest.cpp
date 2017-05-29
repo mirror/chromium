@@ -1026,13 +1026,6 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
   options.timeout_milliseconds = timeout_milliseconds_;
 
   ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.allow_credentials =
-      (same_origin_request_ || include_credentials)
-          ? kAllowStoredCredentials
-          : kDoNotAllowStoredCredentials;
-  resource_loader_options.credentials_requested =
-      include_credentials ? kClientRequestedCredentials
-                          : kClientDidNotRequestCredentials;
   resource_loader_options.security_origin = GetSecurityOrigin();
 
   // When responseType is set to "blob", we redirect the downloaded data to a
