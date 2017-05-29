@@ -56,10 +56,12 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
  public:
   static ResourceFetcher* CreateFetcherFromDocumentLoader(
       DocumentLoader* loader) {
-    return ResourceFetcher::Create(new FrameFetchContext(loader, nullptr));
+    auto* context = new FrameFetchContext(loader, nullptr);
+    return ResourceFetcher::Create(context, context->LoadingTaskRunner());
   }
   static ResourceFetcher* CreateFetcherFromDocument(Document* document) {
-    return ResourceFetcher::Create(new FrameFetchContext(nullptr, document));
+    auto* context = new FrameFetchContext(nullptr, document);
+    return ResourceFetcher::Create(context, context->LoadingTaskRunner());
   }
 
   static void ProvideDocumentToContext(FetchContext&, Document*);
@@ -148,9 +150,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   MHTMLArchive* Archive() const override;
 
-  RefPtr<WebTaskRunner> LoadingTaskRunner() const override;
-
-  std::unique_ptr<WebURLLoader> CreateURLLoader() override;
+  std::unique_ptr<WebURLLoader> CreateURLLoader(
+      const ResourceRequest&) override;
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -167,6 +168,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   LocalFrame* GetFrame() const;
   LocalFrameClient* GetLocalFrameClient() const;
   LocalFrame* FrameOfImportsController() const;
+  RefPtr<WebTaskRunner> LoadingTaskRunner() const;
 
   // BaseFetchContext overrides:
   ContentSettingsClient* GetContentSettingsClient() const override;

@@ -62,10 +62,10 @@ class WorkerFetchContext final : public BaseFetchContext {
   // FetchContext implementation:
   // TODO(horo): Implement more methods.
   SecurityOrigin* GetSecurityOrigin() const override;
-  std::unique_ptr<WebURLLoader> CreateURLLoader() override;
+  std::unique_ptr<WebURLLoader> CreateURLLoader(
+      const ResourceRequest&) override;
   void PrepareRequest(ResourceRequest&, RedirectType) override;
   bool IsControlledByServiceWorker() const override;
-  RefPtr<WebTaskRunner> LoadingTaskRunner() const override;
 
   void AddAdditionalRequestHeaders(ResourceRequest&,
                                    FetchResourceType) override;

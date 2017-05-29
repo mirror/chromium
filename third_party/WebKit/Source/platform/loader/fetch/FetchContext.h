@@ -210,7 +210,8 @@ class PLATFORM_EXPORT FetchContext
     return platform_probe_sink_;
   }
 
-  virtual std::unique_ptr<WebURLLoader> CreateURLLoader() {
+  virtual std::unique_ptr<WebURLLoader> CreateURLLoader(
+      const ResourceRequest&) {
     NOTREACHED();
     return nullptr;
   }
