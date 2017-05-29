@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb03e041_f6482197",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-29T06:47:56Z",
+      "side": 1,
+      "message": "Why do we need to clear creation_callback_ here?",
+      "revId": "ad8eff712431ab7dde364004de9fbb495a5ae38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

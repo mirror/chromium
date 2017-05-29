@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04df279e_ebcd96d0",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-29T06:47:56Z",
+      "side": 1,
+      "message": "The GC plugin should be able to catch this programming error.\n\n+keishi +sigbjornf",
+      "parentUuid": "8fbf8691_e4e8f337",
+      "range": {
+        "startLine": 282,
+        "startChar": 13,
+        "endLine": 282,
+        "endChar": 21
+      },
+      "revId": "3a88d96b98aad916b9acb1d40049d68d8d4fd0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7528edd3_5e7e7d50",
         "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-29T05:13:46Z",
       "side": 1,
       "message": "I\u0027m not sure passing nullptr as the receiver object is right. It seems that we currently pass undefined as the receiver. Maybe passing nullptr is fine.",
+      "range": {
+        "startLine": 321,
+        "startChar": 27,
+        "endLine": 321,
+        "endChar": 34
+      },
+      "revId": "3a88d96b98aad916b9acb1d40049d68d8d4fd0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dff0391_1e7e8a49",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-29T06:47:56Z",
+      "side": 1,
+      "message": "How is the receiver object used in the callback function?",
+      "parentUuid": "7528edd3_5e7e7d50",
       "range": {
         "startLine": 321,
         "startChar": 27,
