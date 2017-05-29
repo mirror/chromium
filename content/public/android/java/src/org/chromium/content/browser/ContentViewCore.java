@@ -83,9 +83,10 @@ import java.util.Map;
  * See https://crbug.com/598880.
  */
 @JNINamespace("content")
-public class ContentViewCore implements AccessibilityStateChangeListener, DisplayAndroidObserver,
-                                        SystemCaptioningBridge.SystemCaptioningBridgeListener,
-                                        WindowAndroidProvider, ImeEventObserver {
+public class ContentViewCore
+        implements AccessibilityStateChangeListener, DisplayAndroidObserver,
+                   SystemCaptioningBridge.SystemCaptioningBridgeListener, WindowAndroidProvider,
+                   ImeEventObserver, EventForwarder.HoverEventHandler {
     private static final String TAG = "cr_ContentViewCore";
 
     // Used to avoid enabling zooming in / out if resulting zooming will
@@ -472,6 +473,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mSelectionPopupController.setCallback(ActionModeCallbackHelper.EMPTY_CALLBACK);
         mSelectionPopupController.setContainerView(mContainerView);
 
+        getEventForwarder().setHoverEventHandler(this);
         mWebContentsObserver = new ContentViewWebContentsObserver(this);
 
         mShouldRequestUnbufferedDispatch = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
@@ -1247,25 +1249,10 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         return true;
     }
 
-    /**
-     * @see View#onHoverEvent(MotionEvent)
-     * Mouse move events are sent on hover move.
-     */
+    @Override
     public boolean onHoverEvent(MotionEvent event) {
-        TraceEvent.begin("onHoverEvent");
-
-        MotionEvent offset = createOffsetMotionEvent(event);
-        try {
-            if (mBrowserAccessibilityManager != null && !mIsObscuredByAnotherView
-                    && mBrowserAccessibilityManager.onHoverEvent(offset)) {
-                return true;
-            }
-
-            return getEventForwarder().onMouseEvent(event);
-        } finally {
-            offset.recycle();
-            TraceEvent.end("onHoverEvent");
-        }
+        return mBrowserAccessibilityManager != null && !mIsObscuredByAnotherView
+                && mBrowserAccessibilityManager.onHoverEvent(event);
     }
 
     /**

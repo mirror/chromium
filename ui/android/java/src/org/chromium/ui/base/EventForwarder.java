@@ -24,6 +24,20 @@ public class EventForwarder {
     private float mCurrentTouchOffsetY;
 
     private int mLastMouseButtonState;
+    private HoverEventHandler mHoverEventHandler;
+
+    /**
+     * Interface to allow for intercepting hover events rather passing them
+     * to native as a mouse hover event. Mainly used for accessibility manager.
+     */
+    public interface HoverEventHandler {
+        /**
+         * See if the passed event needs to be intercepted by other entity.
+         * @param event {@link MotionEvent} instance.
+         */
+        boolean onHoverEvent(MotionEvent event);
+    }
+    ;
 
     @CalledByNative
     private static EventForwarder create(long nativeEventForwarder) {
@@ -37,6 +51,10 @@ public class EventForwarder {
     @CalledByNative
     private void destroy() {
         mNativeEventForwarder = 0;
+    }
+
+    public void setHoverEventHandler(HoverEventHandler handler) {
+        mHoverEventHandler = handler;
     }
 
     /**
@@ -116,6 +134,23 @@ public class EventForwarder {
             return consumed;
         } finally {
             TraceEvent.end("sendTouchEvent");
+        }
+    }
+
+    /**
+     * @see View#onHoverEvent(MotionEvent)
+     * Mouse move events are sent on hover move.
+     */
+    public boolean onHoverEvent(MotionEvent event) {
+        TraceEvent.begin("onHoverEvent");
+
+        MotionEvent offset = createOffsetMotionEvent(event);
+        try {
+            if (mHoverEventHandler != null && mHoverEventHandler.onHoverEvent(event)) return true;
+            return onMouseEvent(event);
+        } finally {
+            offset.recycle();
+            TraceEvent.end("onHoverEvent");
         }
     }
 
