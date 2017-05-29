@@ -26,6 +26,8 @@ class ModuleMap::Entry final : public GarbageCollectedFinalized<Entry>,
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
+  void Dispose();
+
   // Notify fetched |m_moduleScript| to the client asynchronously.
   void AddClient(SingleModuleClient*);
 
@@ -62,6 +64,12 @@ DEFINE_TRACE(ModuleMap::Entry) {
 
 DEFINE_TRACE_WRAPPERS(ModuleMap::Entry) {
   visitor->TraceWrappers(module_script_);
+}
+
+void ModuleMap::Entry::Dispose() {
+  module_script_ = nullptr;
+  map_ = nullptr;
+  clients_.clear();
 }
 
 void ModuleMap::Entry::DispatchFinishedNotificationAsync(
@@ -112,6 +120,12 @@ DEFINE_TRACE(ModuleMap) {
 DEFINE_TRACE_WRAPPERS(ModuleMap) {
   for (const auto& it : map_)
     visitor->TraceWrappers(it.value);
+}
+
+void ModuleMap::Dispose() {
+  for (const auto& it : map_)
+    it.value->Dispose();
+  map_.clear();
 }
 
 void ModuleMap::FetchSingleModuleScript(const ModuleScriptFetchRequest& request,

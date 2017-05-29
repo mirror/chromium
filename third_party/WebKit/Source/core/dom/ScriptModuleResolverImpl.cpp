@@ -10,6 +10,11 @@
 
 namespace blink {
 
+void ScriptModuleResolverImpl::Dispose() {
+  record_to_module_script_map_.clear();
+  modulator_ = nullptr;
+}
+
 void ScriptModuleResolverImpl::RegisterModuleScript(
     ModuleScript* module_script) {
   DVLOG(1) << "ScriptModuleResolverImpl::registerModuleScript(url=\""

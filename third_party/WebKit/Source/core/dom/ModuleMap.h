@@ -35,6 +35,8 @@ class CORE_EXPORT ModuleMap final : public GarbageCollected<ModuleMap>,
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
+  void Dispose();
+
   // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-single-module-script
   void FetchSingleModuleScript(const ModuleScriptFetchRequest&,
                                ModuleGraphLevel,
