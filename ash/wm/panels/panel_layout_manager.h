@@ -53,7 +53,7 @@ class RootWindowController;
 class ASH_EXPORT PanelLayoutManager
     : public aura::LayoutManager,
       public wm::WindowStateObserver,
-      public aura::client::ActivationChangeObserver,
+      public ::wm::ActivationChangeObserver,
       public WmDisplayObserver,
       public ShellObserver,
       public aura::WindowObserver,
@@ -109,7 +109,7 @@ class ASH_EXPORT PanelLayoutManager
   void OnPostWindowStateTypeChange(wm::WindowState* window_state,
                                    wm::WindowStateType old_type) override;
 
-  // aura::client::ActivationChangeObserver:
+  // ::wm::ActivationChangeObserver:
   void OnWindowActivated(ActivationReason reason,
                          aura::Window* gained_active,
                          aura::Window* lost_active) override;

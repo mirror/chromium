@@ -249,7 +249,7 @@ void WorkspaceLayoutManager::OnWindowBoundsChanged(
 
 //////////////////////////////////////////////////////////////////////////////
 // WorkspaceLayoutManager,
-// aura::client::ActivationChangeObserver implementation:
+// ::wm::ActivationChangeObserver implementation:
 
 void WorkspaceLayoutManager::OnWindowActivated(ActivationReason reason,
                                                aura::Window* gained_active,
