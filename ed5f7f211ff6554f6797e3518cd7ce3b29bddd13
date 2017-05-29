@@ -16,6 +16,24 @@
       "revId": "ed5f7f211ff6554f6797e3518cd7ce3b29bddd13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da35c1a9_6939f39a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4251,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-05-29T19:24:07Z",
+      "side": 1,
+      "message": "Distinguish, so that callers can tell why we need a formatting context? Really hope not. But ordering and commenting the code a bit for the cases that establish formatting context without being backed by some spec - probably a good idea.\n\nNote that we won\u0027t even be here if we\u0027re inline-table (since this code is now in LayoutBlockFlow), so the IsInlineBlockOrInlineTable() may be a bit confusing. I\u0027ll use IsInline() instead.\n\nPlease take a look.",
+      "parentUuid": "e1ab6654_bd3f8350",
+      "revId": "ed5f7f211ff6554f6797e3518cd7ce3b29bddd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
