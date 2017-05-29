@@ -151,6 +151,8 @@ static void LogRendererCrash(JNIEnv*, const JavaParamRef<jclass>&) {
   DCHECK(pref);
   int value = pref->GetInteger(metrics::prefs::kStabilityRendererCrashCount);
   pref->SetInteger(metrics::prefs::kStabilityRendererCrashCount, value + 1);
+  // Increment histogram to determine reliability of histograms vs stability.
+  UMA_HISTOGRAM_ENUMERATION("Tab.RendererCrash", 1, 2);
 }
 
 static void RegisterExternalExperiment(

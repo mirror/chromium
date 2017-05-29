@@ -35098,6 +35098,11 @@ from previous Chrome versions.
       label="Discarded a tab playing audio (included in the previous one)"/>
 </enum>
 
+<enum name="TabRendererCrash" type="int">
+  <int value="0" label="Did not crash"/>
+  <int value="1" label="Crashed"/>
+</enum>
+
 <enum name="TabRendererCrashStatus" type="int">
   <int value="0" label="Shown in foreground app"/>
   <int value="1" label="Hidden in foreground app"/>

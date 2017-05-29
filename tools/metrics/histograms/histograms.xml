@@ -75603,6 +75603,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Tab.RendererCrash" enum="TabRendererCrash">
+  <owner>wnwen@chromium.org</owner>
+  <summary>
+    Android only. Mirrors stability renderer crash count to determine how close
+    histograms come to stability proto stats.
+  </summary>
+</histogram>
+
 <histogram name="Tab.RendererCrashStatus" enum="TabRendererCrashStatus">
   <owner>jaekyun@chromium.org</owner>
   <summary>
