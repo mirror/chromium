@@ -70,6 +70,30 @@
       "revId": "431c03ead7c1e9b50b203bd9b2ac95546bb34ba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfaaf95_26066728",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/DatabaseManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-29T04:37:40Z",
+      "side": 1,
+      "message": "ok, now a Database instance owns a DatabaseCallback.",
+      "parentUuid": "4bc1cd8f_6f62976b",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "431c03ead7c1e9b50b203bd9b2ac95546bb34ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
