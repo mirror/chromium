@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecb8aee6_9b692b8a",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-29T08:05:57Z",
+      "side": 1,
+      "message": "Because I\u0027d like to avoid to change creation_callback_ lifetime.\n\nHowever, I realized we didn\u0027t need to clear it because we don\u0027t expose this Database instance in a case that this function returns false.",
+      "parentUuid": "fb03e041_f6482197",
+      "revId": "ad8eff712431ab7dde364004de9fbb495a5ae38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c07d1a6_2d415072",
         "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "ad8eff712431ab7dde364004de9fbb495a5ae38d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bccaf51_a8339d08",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-29T08:05:57Z",
+      "side": 1,
+      "message": "It\u0027s guaranteed.",
+      "parentUuid": "4c07d1a6_2d415072",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 327,
+        "endChar": 20
+      },
+      "revId": "ad8eff712431ab7dde364004de9fbb495a5ae38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

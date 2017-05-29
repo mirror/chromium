@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ded1891d_e6083a91",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-29T08:05:57Z",
+      "side": 1,
+      "message": "Added missing Trace().",
+      "parentUuid": "04df279e_ebcd96d0",
+      "range": {
+        "startLine": 282,
+        "startChar": 13,
+        "endLine": 282,
+        "endChar": 21
+      },
+      "revId": "3a88d96b98aad916b9acb1d40049d68d8d4fd0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7528edd3_5e7e7d50",
         "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "d55fefdc_af6a3a7d",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-29T08:05:57Z",
+      "side": 1,
+      "message": "The first argument of call() of a generated callback function is |ScriptWrappable*|.  So we have no ways to specify Undefined as a receiver here.\nI couldn\u0027t find how Null/Undefined receiver is handled in V8.\n\nBTW, why the generated call() has the ScriptWrappeble argument?",
+      "parentUuid": "6dff0391_1e7e8a49",
+      "range": {
+        "startLine": 321,
+        "startChar": 27,
+        "endLine": 321,
+        "endChar": 34
+      },
+      "revId": "3a88d96b98aad916b9acb1d40049d68d8d4fd0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "463dd728_103f20b6",
         "filename": "third_party/WebKit/Source/modules/webdatabase/DatabaseManager.cpp",
         "patchSetId": 5
@@ -116,6 +164,30 @@
       "revId": "3a88d96b98aad916b9acb1d40049d68d8d4fd0db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9324f48_8f2dae86",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/DatabaseManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-29T08:05:57Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "463dd728_103f20b6",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "3a88d96b98aad916b9acb1d40049d68d8d4fd0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
