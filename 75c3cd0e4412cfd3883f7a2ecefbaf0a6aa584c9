@@ -22,6 +22,30 @@
       "revId": "75c3cd0e4412cfd3883f7a2ecefbaf0a6aa584c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2253298_c59a57bf",
+        "filename": "ios/web/web_state/navigation_context_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-05-29T15:26:25Z",
+      "side": 1,
+      "message": "Yes, scoped_nsobject\u003c\u003e works with ARC.",
+      "parentUuid": "1ebc75b0_3f8d50b6",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 38
+      },
+      "revId": "75c3cd0e4412cfd3883f7a2ecefbaf0a6aa584c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
