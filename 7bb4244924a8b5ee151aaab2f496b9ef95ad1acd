@@ -16,6 +16,24 @@
       "revId": "7bb4244924a8b5ee151aaab2f496b9ef95ad1acd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28c47c2_cf82ba74",
+        "filename": "third_party/WebKit/Source/web/TextFinder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-05-29T01:38:21Z",
+      "side": 1,
+      "message": "Not sure, but I don\u0027t see an urgent need to change it.\n\nThere are some cases where we can have non-null SelectionInDOMTree and null VisibleSelection. Changing it into SelectionInDOMTree can cause behavior changes, which I don\u0027t want to investigate for now.",
+      "parentUuid": "de0713f6_f9f9a345",
+      "revId": "7bb4244924a8b5ee151aaab2f496b9ef95ad1acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
