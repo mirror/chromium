@@ -88,9 +88,11 @@ ReflectInvalid=*
 ReflectMissing=*
 ReflectOnly=*
 Replaceable
-# Valid values for [RuntimeEnabled] are the Runtime Enabled Features, listed in
+# Valid values for [RuntimeEnabled] and [RuntimeEnabledConstructor] are the
+# Runtime Enabled Features, listed in
 # Source/platform/RuntimeEnabledFeatures.json5
 RuntimeEnabled=*
+RuntimeEnabledConstructor=*
 SameObject
 SaveSameObject
 SecureContext
