@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "564b687d_2ffd5933",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-05-29T06:29:14Z",
+      "side": 1,
+      "message": "IS this a bug number? Maybe spell the intent out as far as the code describes it too if this is something internal?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "35bde76afb2b52c758aea4c61510ecb76dfd7629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44e2685_7415f015",
+        "filename": "chrome/browser/extensions/extension_management_internal.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-05-29T06:29:14Z",
+      "side": 1,
+      "message": "nit: It feels to me that:\n\nif (unparsed_str !\u003d \"\u003call_urls\u003e\")\n  unparsed_str.Append(\"/*\");\npattern_result \u003d pattern.Parse(\n    unparsed_str, URLPattern::ALLOW_WILDCARD_FOR_EFFECTIVE_TLD);\n\nwould be cleaner.\n\nAlso isn\u0027t there a constant sowewhere around for \"\u003call_urls\u003e\" you can reference instead of the hard coded string here?",
+      "range": {
+        "startLine": 137,
+        "startChar": 24,
+        "endLine": 137,
+        "endChar": 25
+      },
+      "revId": "35bde76afb2b52c758aea4c61510ecb76dfd7629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5bd758_0bd9f4d0",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2524,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-05-29T06:29:14Z",
+      "side": 1,
+      "message": "Where are those Match Patterns defined/described?",
+      "range": {
+        "startLine": 2524,
+        "startChar": 256,
+        "endLine": 2524,
+        "endChar": 271
+      },
+      "revId": "35bde76afb2b52c758aea4c61510ecb76dfd7629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c04e935_cccc0d43",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2524,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-05-29T06:29:14Z",
+      "side": 1,
+      "message": "Sorry that I only notice this now but I think it is a good idea to put the labels like \"runtime_blocked_hosts\" in \u003cph\u003e tags to prevent the localization team from translating them by mistake e.g.",
+      "range": {
+        "startLine": 2524,
+        "startChar": 10,
+        "endLine": 2524,
+        "endChar": 33
+      },
+      "revId": "35bde76afb2b52c758aea4c61510ecb76dfd7629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
