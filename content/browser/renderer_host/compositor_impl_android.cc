@@ -453,7 +453,8 @@ CompositorImpl::~CompositorImpl() {
   root_window_->SetLayer(nullptr);
   // Clean-up any surface references.
   SetSurface(NULL);
-  GetSurfaceManager()->InvalidateFrameSinkId(frame_sink_id_);
+  if (display_ && display_->initialized())
+    GetSurfaceManager()->InvalidateFrameSinkId(frame_sink_id_);
 }
 
 bool CompositorImpl::IsForSubframe() {
@@ -563,6 +564,11 @@ void CompositorImpl::SetVisible(bool visible) {
     host_->ReleaseCompositorFrameSink();
     has_compositor_frame_sink_ = false;
     pending_frames_ = 0;
+    if (display_ && display_->initialized() &&
+        root_window_->GetBeginFrameSource()) {
+      GetSurfaceManager()->UnregisterBeginFrameSource(
+          root_window_->GetBeginFrameSource());
+    }
     display_.reset();
   } else {
     host_->SetVisible(true);
@@ -775,24 +781,25 @@ void CompositorImpl::InitializeDisplay(
   cc::SurfaceManager* manager = GetSurfaceManager();
   auto* task_runner = base::ThreadTaskRunnerHandle::Get().get();
   std::unique_ptr<cc::DisplayScheduler> scheduler(new cc::DisplayScheduler(
-      task_runner, display_output_surface->capabilities().max_frames_pending));
+      root_window_->GetBeginFrameSource(), task_runner,
+      display_output_surface->capabilities().max_frames_pending));
 
   display_.reset(new cc::Display(
       viz::HostSharedBitmapManager::current(),
       BrowserGpuMemoryBufferManager::current(),
       host_->GetSettings().renderer_settings, frame_sink_id_,
-      root_window_->GetBeginFrameSource(), std::move(display_output_surface),
-      std::move(scheduler),
+      std::move(display_output_surface), std::move(scheduler),
       base::MakeUnique<cc::TextureMailboxDeleter>(task_runner)));
 
   auto compositor_frame_sink =
       vulkan_context_provider
           ? base::MakeUnique<cc::DirectCompositorFrameSink>(
-                frame_sink_id_, manager, display_.get(),
-                vulkan_context_provider)
+                frame_sink_id_, manager, root_window_->GetBeginFrameSource(),
+                display_.get(), vulkan_context_provider)
           : base::MakeUnique<cc::DirectCompositorFrameSink>(
-                frame_sink_id_, manager, display_.get(), context_provider,
-                nullptr, BrowserGpuMemoryBufferManager::current(),
+                frame_sink_id_, manager, root_window_->GetBeginFrameSource(),
+                display_.get(), context_provider, nullptr,
+                BrowserGpuMemoryBufferManager::current(),
                 viz::HostSharedBitmapManager::current());
 
   display_->SetVisible(true);
