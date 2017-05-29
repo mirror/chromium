@@ -70,7 +70,7 @@ def main(args):
     test_runner_args.extend(
         ['--runtime-deps-path', ResolvePath(args.runtime_deps_path)])
   if args.test_name:
-    test_runner_args.extend(['--test-name', args.test_name])
+    test_runner_args.extend(['--test-name', ResolvePath(args.test_name)])
 
   with open(args.script_output_path, 'w') as script:
     script.write(SCRIPT_TEMPLATE.format(
