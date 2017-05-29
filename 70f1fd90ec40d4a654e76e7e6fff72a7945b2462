@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "497ab63e_e973055f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b55655c9_73fd3e26",
+      "revId": "70f1fd90ec40d4a654e76e7e6fff72a7945b2462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37b4eca3_d5909763",
         "filename": "chrome/browser/resources/settings/route.js",
         "patchSetId": 1

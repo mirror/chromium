@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1c05a3e_d7f3e89e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Oops, thanks - I didn\u0027t use your suggestion exactly, but I changed it so that it makes sense now (unlike before).",
+      "parentUuid": "41371b98_5739992c",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 28
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3de4288b_b2d9a4d7",
         "filename": "chrome/browser/ui/page_info/page_info.cc",
         "patchSetId": 8
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5da1bdda_deb3b121",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Are the tests in page_info_bubble_view_interactive_uitest.cc OK? There are tests that verify the link destination with and without the flag, plus some different variations of the origin passed as a query parameter. Not sure if you saw them already though, so please let me know if you had a specific test case in mind that I missed.\n\n(Sorry, it looks like Gerrit sent emails before I sent my drafts, probably from me clicking the CQ Dry Run button via the Web UI instead of via command line.)",
+      "parentUuid": "f25b6ab0_411ff351",
+      "range": {
+        "startLine": 416,
+        "startChar": 15,
+        "endLine": 416,
+        "endChar": 35
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "973ef7d8_2715f4b8",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 8
@@ -92,6 +140,30 @@
       "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b7d3c0_9a97b56e",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "973ef7d8_2715f4b8",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 17
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3817d1ac_4ce592eb",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Fixed (the comments)! (I didn\u0027t update them after changing the tests around, thank you! It used to close the bubble but I realised it wasn\u0027t necessary for the test to pass.)",
+      "parentUuid": "b28f143e_724e6790",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02ff096d_a7f0cd7b",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
         "patchSetId": 8
@@ -129,6 +225,30 @@
       "writtenOn": "2017-05-24T10:27:15Z",
       "side": 1,
       "message": "I don\u0027t think this works on Windows 10. The trick is that Win7 trybots use a virtual framebuffer, which disables the compositing window manager. But Win10 always has a compositing window manager, so \"toplevel\" widgets are created, which don\u0027t own bubbles the same way.\n\nI fired off a win10 job, but it looks like there are win_chromium_rel_ng failures as well.\n\nAnyway, TestBrowserDialog::RunDialog() has a working implementation of this [1] https://cs.chromium.org/chromium/src/chrome/browser/ui/test/test_browser_dialog.cc?q\u003dTestBrowserDialog::RunDialog+package:%5Echromium$\u0026l\u003d97\n\nBut it has a very general task.\n\nIs it possible just to get the page info bubble directly? Perhaps via a test api and a new global. Most other bubbles just have a global - PageInfo already has a global (just not for the View*), so it\u0027s already opting in to global badness (e.g., impossible to have bubbles on 2 different browser windows).\n\nIf this technique is really needed, we should move the stuff in TestBrowserDialog to a shared file",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb1a091_072a6181",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Thanks for flagging this, I went for your suggested global variable solution and copied the PageInfoBubbleView::GetShownBubbleType() method instead of the test api, let me know if you think that\u0027s OK.",
+      "parentUuid": "02ff096d_a7f0cd7b",
       "range": {
         "startLine": 52,
         "startChar": 17,
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "9a67f43f_f43a18ed",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "N/A since this code is gone now :)",
+      "parentUuid": "eceaf8a5_c798b660",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2e9c6b5_94899455",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
         "patchSetId": 8
@@ -184,6 +328,30 @@
       "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c78b962_052323c3",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Fixed, thank you! I didn\u0027t think about that (and it broke when I tried setting SiteDetails to enabled by default).",
+      "parentUuid": "c2e9c6b5_94899455",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 16
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "2d420a10_04aa0ae4",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6aa1a50_a7432b1c",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "010e9a05_81546907",
         "filename": "chrome/common/url_constants.h",
         "patchSetId": 8
@@ -230,6 +422,30 @@
       "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b567bf_1b39173f",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "010e9a05_81546907",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 47
+      },
+      "revId": "e1e646dc3ff4824c2f0486e0e416918a9b63f54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

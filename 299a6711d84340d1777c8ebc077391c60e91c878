@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3098f00b_d8b5afc3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4879fd1_ec13649e",
+      "revId": "299a6711d84340d1777c8ebc077391c60e91c878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce7c6019_b266f96f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "557d02f7_44184640",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce7c6019_b266f96f",
+      "revId": "299a6711d84340d1777c8ebc077391c60e91c878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d55e0ee7_39483ede",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 10
@@ -47,6 +83,30 @@
       "writtenOn": "2017-05-26T18:05:07Z",
       "side": 1,
       "message": "How do you guarantee this?",
+      "range": {
+        "startLine": 68,
+        "startChar": 22,
+        "endLine": 68,
+        "endChar": 26
+      },
+      "revId": "299a6711d84340d1777c8ebc077391c60e91c878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b499c00_1994201a",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-05-29T05:33:36Z",
+      "side": 1,
+      "message": "I think this is assumed because the page info bubble will always close itself on deactivation (see BubbleDialogDelegateView::OnWidgetActivationChanged() / BubbleDialogDelegateView::close_on_deactivate())?\n\nI realise having these globals isn\u0027t ideal, but since |g_shown_bubble_type| already existed and both globals are only being used in tests, I think adding |g_page_info_bubble| is OK.",
+      "parentUuid": "d55e0ee7_39483ede",
       "range": {
         "startLine": 68,
         "startChar": 22,
