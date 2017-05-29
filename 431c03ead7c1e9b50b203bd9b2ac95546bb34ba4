@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b28b00_af9235e3",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/DatabaseManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-05-29T03:37:48Z",
+      "side": 1,
+      "message": "I think we need to keep |callback| as TraceWrapperMember\u003c\u003e in DatabaseManager to make sure the |callback| can be reachable from v8. Please refer my CL for ResizeCallback.\n\nhttps://chromium-review.googlesource.com/c/515183/",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "431c03ead7c1e9b50b203bd9b2ac95546bb34ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
