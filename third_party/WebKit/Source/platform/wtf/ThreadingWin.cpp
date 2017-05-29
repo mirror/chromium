@@ -411,12 +411,18 @@ DWORD AbsoluteTimeToWaitTimeoutInterval(double absolute_time) {
 
 #if DCHECK_IS_ON()
 static bool g_thread_created = false;
+Mutex& get_thread_created_mutex() {
+  static Mutex g_thread_created_mutex;
+  return g_thread_created_mutex;
+}
 
 bool IsBeforeThreadCreated() {
+  MutexLocker locker(get_thread_created_mutex());
   return !g_thread_created;
 }
 
 void WillCreateThread() {
+  MutexLocker locker(get_thread_created_mutex());
   g_thread_created = true;
 }
 #endif
