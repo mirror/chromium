@@ -22,6 +22,30 @@
       "revId": "431c03ead7c1e9b50b203bd9b2ac95546bb34ba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5df4204_fca318b1",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/DatabaseManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-29T03:50:09Z",
+      "side": 1,
+      "message": "No one except WTF::Bind wrapping this function has members of DatabaseCallback.  Do we need TraceWrapperMember\u003c\u003e in this case?\n\n\n\n    TaskRunnerHelper::Get(TaskType::kDatabaseAccess,\n                          database-\u003eGetExecutionContext())\n        -\u003ePostTask(BLINK_FROM_HERE, WTF::Bind(\u0026DatabaseCallbackHandleEvent,\n                                              WrapPersistent(creation_callback),\n                                              WrapPersistent(database)));",
+      "parentUuid": "a8b28b00_af9235e3",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "431c03ead7c1e9b50b203bd9b2ac95546bb34ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
