@@ -1858,7 +1858,7 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
 
   // TODO(flackr): Allow integer transforms as long as all of the ancestor
   // transforms are also integer.
-  bool background_supports_lcd_text =
+  /*bool background_supports_lcd_text =
       RuntimeEnabledFeatures::compositeOpaqueScrollersEnabled() &&
       layer->GetLayoutObject().Style()->IsStackingContext() &&
       layer->GetBackgroundPaintLocation(
@@ -1890,7 +1890,7 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
     }
 
     needs_composited_scrolling = false;
-  }
+  }*/
 
   // TODO(schenney) Tests fail if we do not also exclude
   // layer->layoutObject().style()->hasBorderDecoration() (missing background

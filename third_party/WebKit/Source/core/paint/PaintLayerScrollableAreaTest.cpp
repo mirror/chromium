@@ -258,9 +258,9 @@ TEST_F(PaintLayerScrollableAreaTest, NonContainedLayersNotPromoted) {
   PaintLayer* paint_layer =
       ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
   ASSERT_TRUE(paint_layer);
-  EXPECT_FALSE(paint_layer->NeedsCompositedScrolling());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
+  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
+  // EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
 }
 
 TEST_F(PaintLayerScrollableAreaTest, TransparentLayersNotPromoted) {
@@ -281,9 +281,9 @@ TEST_F(PaintLayerScrollableAreaTest, TransparentLayersNotPromoted) {
   PaintLayer* paint_layer =
       ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
   ASSERT_TRUE(paint_layer);
-  EXPECT_FALSE(paint_layer->NeedsCompositedScrolling());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
+  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
 }
 
 TEST_F(PaintLayerScrollableAreaTest, OpaqueLayersDepromotedOnStyleChange) {
@@ -312,9 +312,9 @@ TEST_F(PaintLayerScrollableAreaTest, OpaqueLayersDepromotedOnStyleChange) {
   GetDocument().View()->UpdateAllLifecyclePhases();
   paint_layer = ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
   ASSERT_TRUE(paint_layer);
-  EXPECT_FALSE(paint_layer->NeedsCompositedScrolling());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
+  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
 }
 
 TEST_F(PaintLayerScrollableAreaTest, OpaqueLayersPromotedOnStyleChange) {
@@ -334,7 +334,7 @@ TEST_F(PaintLayerScrollableAreaTest, OpaqueLayersPromotedOnStyleChange) {
   PaintLayer* paint_layer =
       ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
   ASSERT_TRUE(paint_layer);
-  EXPECT_FALSE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
 
   // Change the background to transparent
   scroller->setAttribute(HTMLNames::styleAttr,
@@ -381,8 +381,8 @@ TEST_F(PaintLayerScrollableAreaTest, OnlyNonTransformedOpaqueLayersPromoted) {
   GetDocument().View()->UpdateAllLifecyclePhases();
   paint_layer = ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
   ASSERT_TRUE(paint_layer);
-  EXPECT_FALSE(paint_layer->NeedsCompositedScrolling());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
+  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
 
   // Change the parent to have no transform again.
   parent->removeAttribute(HTMLNames::styleAttr);
@@ -399,8 +399,8 @@ TEST_F(PaintLayerScrollableAreaTest, OnlyNonTransformedOpaqueLayersPromoted) {
   GetDocument().View()->UpdateAllLifecyclePhases();
   paint_layer = ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
   ASSERT_TRUE(paint_layer);
-  EXPECT_FALSE(paint_layer->NeedsCompositedScrolling());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
+  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
 }
 
 // Test that opacity applied to the scroller or an ancestor will cause the
@@ -435,8 +435,8 @@ TEST_F(PaintLayerScrollableAreaTest, OnlyOpaqueLayersPromoted) {
   GetDocument().View()->UpdateAllLifecyclePhases();
   paint_layer = ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
   ASSERT_TRUE(paint_layer);
-  EXPECT_FALSE(paint_layer->NeedsCompositedScrolling());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
+  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
 
   // Change the parent to be opaque again.
   parent->setAttribute(HTMLNames::styleAttr, "opacity: 1;");
@@ -453,8 +453,8 @@ TEST_F(PaintLayerScrollableAreaTest, OnlyOpaqueLayersPromoted) {
   GetDocument().View()->UpdateAllLifecyclePhases();
   paint_layer = ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
   ASSERT_TRUE(paint_layer);
-  EXPECT_FALSE(paint_layer->NeedsCompositedScrolling());
-  EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
+  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking());
 }
 
 // Ensure OverlayScrollbarColorTheme get updated when page load
