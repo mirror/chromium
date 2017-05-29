@@ -16,6 +16,29 @@
       "revId": "ad8eff712431ab7dde364004de9fbb495a5ae38d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c07d1a6_2d415072",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-29T07:42:49Z",
+      "side": 1,
+      "message": "Is it guaranteed that |creation_callback_| never be nullptr at this point?\nNever be racy?\n\nOtherwise, I\u0027d like to have some guard here.",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 327,
+        "endChar": 20
+      },
+      "revId": "ad8eff712431ab7dde364004de9fbb495a5ae38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
