@@ -806,6 +806,12 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader() {
   return GetFrame()->CreateURLLoader();
 }
 
+void FrameFetchContext::Detach() {
+  // This is needed to break a reference cycle which off-heap
+  // ComputedStyle is involved. See https://crbug.com/383860 for details.
+  document_ = nullptr;
+}
+
 DEFINE_TRACE(FrameFetchContext) {
   visitor->Trace(document_loader_);
   visitor->Trace(document_);
