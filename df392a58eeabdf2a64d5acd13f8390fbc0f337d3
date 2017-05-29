@@ -16,6 +16,24 @@
       "revId": "df392a58eeabdf2a64d5acd13f8390fbc0f337d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02aee49_15907967",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-29T05:41:18Z",
+      "side": 1,
+      "message": "Having |task_runner| parameter in the WebURLLoaderImpl constructor is cleaner, I think. I didn\u0027t do that from the following reasons.\n\n - Doing that makes this CL much bigger.\n - After mojofication, we will create a URLLoader from URLLoaderFactory and set the task runner here.\n\nWDYT?",
+      "parentUuid": "486253bb_437ee3b4",
+      "revId": "df392a58eeabdf2a64d5acd13f8390fbc0f337d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
