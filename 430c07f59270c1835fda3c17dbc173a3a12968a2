@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84277ace_8ccd283e",
+        "filename": "third_party/WebKit/Source/core/dom/ClassList.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-05-29T02:16:03Z",
+      "side": 0,
+      "message": "Looks like this is the last one to override DOMTokenList::item().\nYou can remove \u0027virtual\u0027 in DOMTokenList.",
+      "range": {
+        "startLine": 44,
+        "startChar": 48,
+        "endLine": 44,
+        "endChar": 56
+      },
+      "revId": "430c07f59270c1835fda3c17dbc173a3a12968a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
