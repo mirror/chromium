@@ -69,7 +69,7 @@ class CORE_EXPORT SVGImageElement final : public SVGGraphicsElement,
 
   void SvgAttributeChanged(const QualifiedName&) override;
 
-  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  void AttachLayoutTree(AttachContext&) override;
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;
 
   LayoutObject* CreateLayoutObject(const ComputedStyle&) override;

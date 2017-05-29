@@ -427,13 +427,13 @@ class CORE_EXPORT Element : public ContainerNode {
 
   virtual void CopyNonAttributePropertiesFromElement(const Element&) {}
 
-  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  void AttachLayoutTree(AttachContext&) override;
   void DetachLayoutTree(const AttachContext& = AttachContext()) override;
 
   virtual LayoutObject* CreateLayoutObject(const ComputedStyle&);
   virtual bool LayoutObjectIsNeeded(const ComputedStyle&);
   void RecalcStyle(StyleRecalcChange);
-  void RebuildLayoutTree(Text* next_text_sibling = nullptr);
+  void RebuildLayoutTree(WhitespaceAttacher&);
   void PseudoStateChanged(CSSSelector::PseudoType);
   void SetAnimationStyleChange(bool);
   void ClearAnimationStyleChange();
@@ -888,9 +888,8 @@ class CORE_EXPORT Element : public ContainerNode {
   PassRefPtr<ComputedStyle> PropagateInheritedProperties(StyleRecalcChange);
 
   StyleRecalcChange RecalcOwnStyle(StyleRecalcChange);
-  void RebuildPseudoElementLayoutTree(PseudoId,
-                                      Text* next_text_sibling = nullptr);
-  void RebuildShadowRootLayoutTree(Text*& next_text_sibling);
+  void RebuildPseudoElementLayoutTree(PseudoId, WhitespaceAttacher&);
+  void RebuildShadowRootLayoutTree(WhitespaceAttacher&);
   inline void CheckForEmptyStyleChange();
 
   void UpdatePseudoElement(PseudoId, StyleRecalcChange);
