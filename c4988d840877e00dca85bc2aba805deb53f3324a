@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6545ad0a_ab56781b",
+        "filename": "ios/chrome/browser/net/crl_set_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-05-29T09:44:14Z",
+      "side": 1,
+      "message": "nit: base::DeleteFile(unpack_path, true /* recursive */);",
+      "range": {
+        "startLine": 169,
+        "startChar": 32,
+        "endLine": 169,
+        "endChar": 36
+      },
+      "revId": "c4988d840877e00dca85bc2aba805deb53f3324a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
