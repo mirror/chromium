@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25251235_31a27369",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-29T23:28:35Z",
+      "side": 0,
+      "message": "Agreed that this is odd.  If layer_id is a viewport layer id, it seems wrong to not have an inner viewport container layer, tbh.",
+      "revId": "d6ea165b0d47b5442e7b87cbb0b0fd1006f2a115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
