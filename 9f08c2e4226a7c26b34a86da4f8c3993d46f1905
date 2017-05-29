@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "318d6b96_8c0b121e",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-29T04:21:38Z",
+      "side": 1,
+      "message": "nit: build -\u003e built ?",
+      "revId": "9f08c2e4226a7c26b34a86da4f8c3993d46f1905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707aa689_96097061",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-29T04:21:38Z",
+      "side": 1,
+      "message": "nit: no braces for one-line body for consistency",
+      "revId": "9f08c2e4226a7c26b34a86da4f8c3993d46f1905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
