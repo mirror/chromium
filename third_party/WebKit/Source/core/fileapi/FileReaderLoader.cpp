@@ -95,6 +95,8 @@ void FileReaderLoader::Start(ExecutionContext* execution_context,
         HTTPNames::Range,
         AtomicString(String::Format("bytes=%d-%d", range_start_, range_end_)));
 
+  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeInclude);
+
   ThreadableLoaderOptions options;
   options.preflight_policy = kConsiderPreflight;
   options.cross_origin_request_policy = kDenyCrossOriginRequests;
@@ -105,7 +107,6 @@ void FileReaderLoader::Start(ExecutionContext* execution_context,
   options.initiator = FetchInitiatorTypeNames::internal;
 
   ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.allow_credentials = kAllowStoredCredentials;
 
   if (client_) {
     DCHECK(!loader_);

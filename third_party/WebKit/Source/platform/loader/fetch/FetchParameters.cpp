@@ -98,22 +98,13 @@ void FetchParameters::SetCrossOriginAccessControl(
   // Currently FetchParametersMode and FetchCredentialsMode are only used when
   // the request goes to Service Worker.
   resource_request_.SetFetchRequestMode(WebURLRequest::kFetchRequestModeCORS);
+  // Check that this is set in all callers. (though default is fine?)
   resource_request_.SetFetchCredentialsMode(
       use_credentials ? WebURLRequest::kFetchCredentialsModeInclude
                       : WebURLRequest::kFetchCredentialsModeSameOrigin);
 
-  if (is_same_origin_request || use_credentials) {
-    options_.allow_credentials = kAllowStoredCredentials;
-    resource_request_.SetAllowStoredCredentials(true);
-  } else {
-    options_.allow_credentials = kDoNotAllowStoredCredentials;
-    resource_request_.SetAllowStoredCredentials(false);
-  }
   options_.cors_enabled = kIsCORSEnabled;
   options_.security_origin = origin;
-  options_.credentials_requested = use_credentials
-                                       ? kClientRequestedCredentials
-                                       : kClientDidNotRequestCredentials;
 
   // TODO: Credentials should be removed only when the request is cross origin.
   resource_request_.RemoveUserAndPassFromURL();
