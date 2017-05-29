@@ -15,6 +15,30 @@
 
 namespace blink {
 
+// This creates 2 macros for TSAN: TSAN_TEST and TSAN_TEST_F.
+// Those tests are automatically disabled on non-tsan builds and should be used
+// instead of the normal gtest macros for MultiThreadedTests.
+// Notice that TSAN_TEST subclasses MultiThreadTest instead of testing::Test.
+#if defined(THREAD_SANITIZER)
+
+#define TSAN_TEST(test_case_name, test_name)                         \
+  GTEST_TEST_(test_case_name, test_name, ::blink::MultiThreadedTest, \
+              ::testing::internal::GetTypeId<::blink::MultiThreadedTest>())
+
+#define TSAN_TEST_F(test_fixture, test_name) TEST_F(test_fixture, test_name)
+
+#else
+
+#define TSAN_TEST(test_case_name, test_name)        \
+  GTEST_TEST_(test_case_name, DISABLED_##test_name, \
+              ::blink::MultiThreadedTest,           \
+              ::testing::internal::GetTypeId<::blink::MultiThreadedTest>())
+
+#define TSAN_TEST_F(test_fixture, test_name) \
+  TEST_F(test_fixture, DISABLED_##test_name)
+
+#endif
+
 class MultiThreadedTest : public testing::Test {
  public:
   // RunOnThreads run a closure num_threads * callbacks_per_thread times.
