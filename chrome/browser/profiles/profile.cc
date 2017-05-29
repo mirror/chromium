@@ -253,6 +253,12 @@ bool ProfileCompare::operator()(Profile* a, Profile* b) const {
   return a->GetOriginalProfile() < b->GetOriginalProfile();
 }
 
+sync_preferences::PrefServiceSyncable* Profile::CreateOffTheRecordPrefs(
+    service_manager::Connector* otr_connector) {
+  // TODO(tibell): How do we square this circle?
+  return nullptr;
+};
+
 #if !defined(OS_ANDROID)
 double Profile::GetDefaultZoomLevelForProfile() {
   return GetDefaultStoragePartition(this)

@@ -21,26 +21,3 @@ sync_preferences::PrefServiceSyncable* PrefServiceSyncableFromProfile(
   return static_cast<sync_preferences::PrefServiceSyncable*>(
       profile->GetPrefs());
 }
-
-sync_preferences::PrefServiceSyncable* PrefServiceSyncableIncognitoFromProfile(
-    Profile* profile) {
-  return static_cast<sync_preferences::PrefServiceSyncable*>(
-      profile->GetOffTheRecordPrefs());
-}
-
-sync_preferences::PrefServiceSyncable* CreateIncognitoPrefServiceSyncable(
-    sync_preferences::PrefServiceSyncable* pref_service,
-    PrefStore* incognito_extension_pref_store) {
-  // List of keys that cannot be changed in the user prefs file by the incognito
-  // profile.  All preferences that store information about the browsing history
-  // or behavior of the user should have this property.
-  std::vector<const char*> overlay_pref_names;
-  overlay_pref_names.push_back(prefs::kBrowserWindowPlacement);
-  overlay_pref_names.push_back(prefs::kMediaRouterTabMirroringSources);
-  overlay_pref_names.push_back(prefs::kSaveFileDefaultDirectory);
-#if defined(OS_ANDROID)
-  overlay_pref_names.push_back(proxy_config::prefs::kProxy);
-#endif
-  return pref_service->CreateIncognitoPrefService(
-      incognito_extension_pref_store, overlay_pref_names);
-}
