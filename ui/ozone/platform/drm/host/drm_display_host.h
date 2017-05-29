@@ -33,10 +33,10 @@ class DrmDisplayHost : public GpuThreadObserver {
   void UpdateDisplaySnapshot(const DisplaySnapshot_Params& params);
   void Configure(const display::DisplayMode* mode,
                  const gfx::Point& origin,
-                 const display::ConfigureCallback& callback);
-  void GetHDCPState(const display::GetHDCPStateCallback& callback);
+                 display::ConfigureCallback callback);
+  void GetHDCPState(display::GetHDCPStateCallback callback);
   void SetHDCPState(display::HDCPState state,
-                    const display::SetHDCPStateCallback& callback);
+                    display::SetHDCPStateCallback callback);
   void SetColorCorrection(
       const std::vector<display::GammaRampRGBEntry>& degamma_lut,
       const std::vector<display::GammaRampRGBEntry>& gamma_lut,
