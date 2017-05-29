@@ -34,6 +34,24 @@
       "revId": "7bb4244924a8b5ee151aaab2f496b9ef95ad1acd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89ff895_950a1c1a",
+        "filename": "third_party/WebKit/Source/web/TextFinder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-29T01:58:03Z",
+      "side": 1,
+      "message": "If we land this CL as is, we loose information whether this VisibleSelection usage is necessary or not.\nI recommend to add a TODO comment that VisibleSelection usage is not triaged.\nI told this to yosin@ and yoichio@ some weeks ago.\n\nAs for other CLs you sent today, they have TODO comments for http://crbug.com/590369 in modified functions.  So we have chance to triage VisibleSelection usage later.",
+      "parentUuid": "a28c47c2_cf82ba74",
+      "revId": "7bb4244924a8b5ee151aaab2f496b9ef95ad1acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
