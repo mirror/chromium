@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a69d1ca2_9d4bd253",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-29T09:46:27Z",
+      "side": 1,
+      "message": "Regarding cross-origin.html, clearing ModulatorImpl::script_module_resolver_ seems enough. My understanding is having ScriptModule (i.e., SharedPersistent) in ScriptModuleResolverImpl is the cause, is that right? Does making ScriptModuleResolverImpl a ContextLifecycleObserver subclass resolve the leak?",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "27913a6cdd31bbcf32ed0ee568b3d931d78ab8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
