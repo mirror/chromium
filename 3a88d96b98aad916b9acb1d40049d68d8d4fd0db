@@ -240,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "779c41ae_058cde07",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-29T09:21:27Z",
+      "side": 1,
+      "message": "(I thought that I wrote multiple paragraphs of comment, but it seems all concatenated...  Gerrit is mysterious...)\n\n\n\nWell, you\u0027re right.  However, in this case, the difference between undefined and null does not make much sense, I think.\nhttps://tc39.github.io/ecma262/#sec-ordinarycallbindthis\n|null| is converted to the global this value just as same as |undefined| is.\n\n\n\nV8 implementation actually converts |null| into the global proxy, as we expect.\n\n\n\nI personally don\u0027t feel that we really need to convert nullptr into undefined, but I\u0027m fine either way (just as is or convert nullptr to v8::Undefined).",
+      "parentUuid": "471c6f01_dd581b59",
+      "range": {
+        "startLine": 321,
+        "startChar": 27,
+        "endLine": 321,
+        "endChar": 34
+      },
+      "revId": "3a88d96b98aad916b9acb1d40049d68d8d4fd0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "463dd728_103f20b6",
         "filename": "third_party/WebKit/Source/modules/webdatabase/DatabaseManager.cpp",
         "patchSetId": 5
