@@ -5,7 +5,7 @@
 #ifndef SERVICES_IDENTITY_IDENTITY_MANAGER_H_
 #define SERVICES_IDENTITY_IDENTITY_MANAGER_H_
 
-#include "components/signin/core/account_id/account_id.h"
+#include "components/signin/core/browser/account_info.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "services/identity/public/cpp/scope_set.h"
 #include "services/identity/public/interfaces/identity_manager.mojom.h"
@@ -42,8 +42,8 @@ class IdentityManager : public mojom::IdentityManager,
       std::map<const OAuth2TokenService::Request*, AccessTokenRequest>;
 
   // mojom::IdentityManager:
-  void GetPrimaryAccountId(
-      const GetPrimaryAccountIdCallback& callback) override;
+  void GetPrimaryAccountInfo(
+      const GetPrimaryAccountInfoCallback& callback) override;
   void GetAccessToken(const std::string& account_id,
                       const ScopeSet& scopes,
                       const GetAccessTokenCallback& callback) override;
