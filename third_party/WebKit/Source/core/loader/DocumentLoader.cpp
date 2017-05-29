@@ -861,8 +861,7 @@ void DocumentLoader::StartLoadingMainResource() {
 
   DEFINE_STATIC_LOCAL(
       ResourceLoaderOptions, main_resource_load_options,
-      (kDoNotBufferData, kAllowStoredCredentials, kClientRequestedCredentials,
-       kCheckContentSecurityPolicy, kDocumentContext));
+      (kDoNotBufferData, kCheckContentSecurityPolicy, kDocumentContext));
   FetchParameters fetch_params(request_, FetchInitiatorTypeNames::document,
                                main_resource_load_options);
   main_resource_ =
