@@ -49,6 +49,47 @@
     },
     {
       "key": {
+        "uuid": "1578c3e8_89c30575",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-29T00:24:09Z",
+      "side": 1,
+      "message": "When does GetMainThreadOnly().renderer_backgrounded return true?\n\nIf all the tabs in the main thread are backgrounded? Or if any of the tabs in the main thread is backgrounded?",
+      "parentUuid": "a0d4d272_79ce93a3",
+      "range": {
+        "startLine": 1873,
+        "startChar": 26,
+        "endLine": 1873,
+        "endChar": 47
+      },
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f628343c_9c66c1c5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-05-29T00:24:09Z",
+      "side": 1,
+      "message": "can be reconstructed",
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b644dc7e_ed1d901c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
