@@ -16,6 +16,24 @@
       "revId": "ab2203dcf6d6ac36745824fef3b82d0165986251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d67eb1_2d06207b",
+        "filename": "components/new_or_sad_tab_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-05-29T13:38:33Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4d185d95_b9a47c0a",
+      "revId": "ab2203dcf6d6ac36745824fef3b82d0165986251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
