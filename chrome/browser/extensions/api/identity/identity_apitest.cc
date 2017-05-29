@@ -749,7 +749,7 @@ class GetAuthTokenFunctionTest
     id_api()->mint_queue()->RequestComplete(type, key, request);
   }
 
-  base::OnceClosure on_access_token_requested_;
+  base::Closure on_access_token_requested_;
 
  private:
   // OAuth2TokenService::DiagnosticsObserver:
@@ -913,17 +913,6 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest,
   EXPECT_FALSE(func->scope_ui_shown());
   EXPECT_EQ(IdentityTokenCacheValue::CACHE_STATUS_TOKEN,
             GetCachedToken(std::string()).status());
-}
-
-IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, InteractiveLoginCanceled) {
-  scoped_refptr<FakeGetAuthTokenFunction> func(new FakeGetAuthTokenFunction());
-  func->set_extension(CreateExtension(CLIENT_ID | SCOPES));
-  func->set_login_ui_result(false);
-  std::string error = utils::RunFunctionAndReturnError(
-      func.get(), "[{\"interactive\": true}]", browser());
-  EXPECT_EQ(std::string(errors::kUserNotSignedIn), error);
-  EXPECT_TRUE(func->login_ui_shown());
-  EXPECT_FALSE(func->scope_ui_shown());
 }
 
 IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest,
@@ -1450,6 +1439,8 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, ManuallyIssueTokenFailure) {
       "primary@example.com",
       GoogleServiceAuthError(GoogleServiceAuthError::SERVICE_UNAVAILABLE));
 
+  // TODO(blundell): I think that the expected value needs the actual service
+  // error appended.
   EXPECT_EQ(
       std::string(errors::kAuthFailure) +
           GoogleServiceAuthError(GoogleServiceAuthError::SERVICE_UNAVAILABLE)
