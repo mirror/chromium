@@ -273,7 +273,7 @@ PingLoaderImpl::PingLoaderImpl(LocalFrame* frame,
   if (frame->FrameScheduler())
     frame->FrameScheduler()->DidStopLoading(identifier_);
 
-  loader_ = fetch_context.CreateURLLoader();
+  loader_ = fetch_context.CreateURLLoader(request);
   DCHECK(loader_);
   WrappedResourceRequest wrapped_request(request);
   wrapped_request.SetAllowStoredCredentials(credentials_allowed ==
