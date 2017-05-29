@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "471c6f01_dd581b59",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-05-29T08:59:45Z",
+      "side": 1,
+      "message": "Shiino-san, thank you for the explanation.  So, the behavior point of view, passing nullptr works as expected.\n\nHowever WebIDL says we should pass undefined.\nhttps://heycam.github.io/webidl/#es-invoking-callback-functions\n\u003e 2. If thisArg was not given, let thisArg be undefined.\n\nSo I think we may land this CL as is, and another CL should add nullptr-\u003eundefined conversion to generated function callbacks.",
+      "parentUuid": "dbacb107_413d2f73",
+      "range": {
+        "startLine": 321,
+        "startChar": 27,
+        "endLine": 321,
+        "endChar": 34
+      },
+      "revId": "3a88d96b98aad916b9acb1d40049d68d8d4fd0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "463dd728_103f20b6",
         "filename": "third_party/WebKit/Source/modules/webdatabase/DatabaseManager.cpp",
         "patchSetId": 5
