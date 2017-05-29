@@ -10,6 +10,7 @@ blink_core_sources("imagebitmap") {
     "ImageBitmapFactories.h",
     "ImageBitmapSource.cpp",
     "ImageBitmapSource.h",
+    "SVGRenderer_impl.h",
   ]
 
   configs += [
