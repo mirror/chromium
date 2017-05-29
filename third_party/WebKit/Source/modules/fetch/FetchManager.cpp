@@ -789,12 +789,12 @@ void FetchManager::Loader::PerformHTTPFetch(bool cors_flag,
            WebURLRequest::kFetchCredentialsModeSameOrigin &&
        !cors_flag) ||
       suborigin_forces_credentials) {
-    resource_loader_options.allow_credentials = kAllowStoredCredentials;
+    // Hogeeeee
   }
   if (request_->Credentials() == WebURLRequest::kFetchCredentialsModeInclude ||
       request_->Credentials() == WebURLRequest::kFetchCredentialsModePassword ||
       suborigin_forces_credentials) {
-    resource_loader_options.credentials_requested = kClientRequestedCredentials;
+    // Hogeeeee
   }
   resource_loader_options.security_origin = request_->Origin().Get();
 
@@ -832,7 +832,7 @@ void FetchManager::Loader::PerformHTTPFetch(bool cors_flag,
   loader_->Start(request);
 }
 
-// performDataFetch() is almost the same as performHTTPFetch(), except for:
+// PerformDataFetch() is almost the same as performHTTPFetch(), except for:
 // - We set AllowCrossOriginRequests to allow requests to data: URLs in
 //   'same-origin' mode.
 // - We reject non-GET method.
@@ -843,6 +843,8 @@ void FetchManager::Loader::PerformDataFetch() {
   request.SetRequestContext(request_->Context());
   request.SetUseStreamOnResponse(true);
   request.SetHTTPMethod(request_->Method());
+  request.SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeSameOrigin);
   request.SetFetchRedirectMode(WebURLRequest::kFetchRedirectModeError);
   // We intentionally skip 'setExternalRequestStateFromRequestorAddressSpace',
   // as 'data:' can never be external.
