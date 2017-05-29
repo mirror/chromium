@@ -102,6 +102,9 @@ class DummyWebMediaPlayerClient : public blink::WebMediaPlayerClient {
   blink::WebMediaPlayer::TrackId GetSelectedVideoTrackId() override {
     return blink::WebMediaPlayer::TrackId();
   }
+  blink::WebMediaPlayer::ControlsType GetControlsType() override {
+    return blink::WebMediaPlayer::ControlsType::kCustom;
+  }
 
   void set_is_autoplaying_muted(bool value) { is_autoplaying_muted_ = value; }
 

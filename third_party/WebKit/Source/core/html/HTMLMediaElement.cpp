@@ -3689,10 +3689,21 @@ void HTMLMediaElement::UpdateControlsVisibility() {
   // fullscreen/compositor-touch-hit-rects-fullscreen-video-controls.html
   GetMediaControls()->Reset();
 
-  if (ShouldShowControls(RecordMetricsBehavior::kDoRecord))
-    GetMediaControls()->MaybeShow();
-  else
-    GetMediaControls()->Hide();
+  WebMediaPlayer::ControlsType type =
+      ShouldShowControls(RecordMetricsBehavior::kDoRecord)
+          ? WebMediaPlayer::ControlsType::kNative
+          : WebMediaPlayer::ControlsType::kCustom;
+  switch (type) {
+    case WebMediaPlayer::ControlsType::kNative:
+      GetMediaControls()->MaybeShow();
+      break;
+    case WebMediaPlayer::ControlsType::kCustom:
+      GetMediaControls()->Hide();
+      break;
+  }
+
+  if (web_media_player_)
+    web_media_player_->OnControlsTypeChanged(type);
 }
 
 CueTimeline& HTMLMediaElement::GetCueTimeline() {
@@ -4052,6 +4063,11 @@ void HTMLMediaElement::ActivateViewportIntersectionMonitoring(bool activate) {
   } else if (!activate) {
     check_viewport_intersection_timer_.Stop();
   }
+}
+
+WebMediaPlayer::ControlsType HTMLMediaElement::GetControlsType() {
+  return ShouldShowControls() ? WebMediaPlayer::ControlsType::kNative
+                              : WebMediaPlayer::ControlsType::kCustom;
 }
 
 void HTMLMediaElement::CheckViewportIntersectionTimerFired(TimerBase*) {

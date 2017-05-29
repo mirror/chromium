@@ -22,14 +22,16 @@ static bool IsOnBatteryPower() {
   return false;
 }
 
-WatchTimeReporter::WatchTimeReporter(bool has_audio,
-                                     bool has_video,
-                                     bool is_mse,
-                                     bool is_encrypted,
-                                     bool is_embedded_media_experience_enabled,
-                                     MediaLog* media_log,
-                                     const gfx::Size& initial_video_size,
-                                     const GetMediaTimeCB& get_media_time_cb)
+WatchTimeReporter::WatchTimeReporter(
+    bool has_audio,
+    bool has_video,
+    bool is_mse,
+    bool is_encrypted,
+    bool is_embedded_media_experience_enabled,
+    MediaLog* media_log,
+    const gfx::Size& initial_video_size,
+    const GetMediaTimeCB& get_media_time_cb,
+    const HasNativeControlsCB& has_native_controls_cb)
     : WatchTimeReporter(has_audio,
                         has_video,
                         is_mse,
@@ -38,17 +40,20 @@ WatchTimeReporter::WatchTimeReporter(bool has_audio,
                         media_log,
                         initial_video_size,
                         get_media_time_cb,
+                        has_native_controls_cb,
                         false) {}
 
-WatchTimeReporter::WatchTimeReporter(bool has_audio,
-                                     bool has_video,
-                                     bool is_mse,
-                                     bool is_encrypted,
-                                     bool is_embedded_media_experience_enabled,
-                                     MediaLog* media_log,
-                                     const gfx::Size& initial_video_size,
-                                     const GetMediaTimeCB& get_media_time_cb,
-                                     bool is_background)
+WatchTimeReporter::WatchTimeReporter(
+    bool has_audio,
+    bool has_video,
+    bool is_mse,
+    bool is_encrypted,
+    bool is_embedded_media_experience_enabled,
+    MediaLog* media_log,
+    const gfx::Size& initial_video_size,
+    const GetMediaTimeCB& get_media_time_cb,
+    const HasNativeControlsCB& has_native_controls_cb,
+    bool is_background)
     : has_audio_(has_audio),
       has_video_(has_video),
       is_mse_(is_mse),
@@ -58,8 +63,10 @@ WatchTimeReporter::WatchTimeReporter(bool has_audio,
       media_log_(media_log),
       initial_video_size_(initial_video_size),
       get_media_time_cb_(get_media_time_cb),
+      has_native_controls_cb_(has_native_controls_cb),
       is_background_(is_background) {
   DCHECK(!get_media_time_cb_.is_null());
+  DCHECK(!has_native_controls_cb_.is_null());
   DCHECK(has_audio_ || has_video_);
 
   if (base::PowerMonitor* pm = base::PowerMonitor::Get())
@@ -75,10 +82,10 @@ WatchTimeReporter::WatchTimeReporter(bool has_audio,
   // reporter which receives play when hidden and pause when shown. This avoids
   // unnecessary complexity inside the UpdateWatchTime() for handling this case.
   if (has_video_ && has_audio_ && ShouldReportWatchTime()) {
-    background_reporter_.reset(
-        new WatchTimeReporter(has_audio_, false, is_mse_, is_encrypted_,
-                              is_embedded_media_experience_enabled_, media_log_,
-                              initial_video_size_, get_media_time_cb_, true));
+    background_reporter_.reset(new WatchTimeReporter(
+        has_audio_, false, is_mse_, is_encrypted_,
+        is_embedded_media_experience_enabled_, media_log_, initial_video_size_,
+        get_media_time_cb_, has_native_controls_cb_, true));
   }
 }
 
@@ -167,6 +174,23 @@ bool WatchTimeReporter::IsSizeLargeEnoughToReportWatchTime() const {
          initial_video_size_.width() >= kMinimumVideoSize.width();
 }
 
+void WatchTimeReporter::OnNativeControlsEnabled(bool enabled) {
+  if (background_reporter_)
+    background_reporter_->OnNativeControlsEnabled(enabled);
+
+  if (!reporting_timer_.IsRunning())
+    return;
+
+  if (has_native_controls_ == enabled) {
+    end_timestamp_for_controls_ = kNoTimestamp;
+    return;
+  }
+
+  end_timestamp_for_controls_ = get_media_time_cb_.Run();
+  reporting_timer_.Start(FROM_HERE, reporting_interval_, this,
+                         &WatchTimeReporter::UpdateWatchTime);
+}
+
 void WatchTimeReporter::OnPowerStateChange(bool on_battery_power) {
   if (!reporting_timer_.IsRunning())
     return;
@@ -217,9 +241,11 @@ void WatchTimeReporter::MaybeStartReportingTimer(
     return;
 
   last_media_timestamp_ = last_media_power_timestamp_ =
-      end_timestamp_for_power_ = kNoTimestamp;
+      last_media_controls_timestamp_ = end_timestamp_for_power_ = kNoTimestamp;
   is_on_battery_power_ = IsOnBatteryPower();
-  start_timestamp_ = start_timestamp_for_power_ = start_timestamp;
+  has_native_controls_ = has_native_controls_cb_.Run();
+  start_timestamp_ = start_timestamp_for_power_ =
+      start_timestamp_for_controls_ = start_timestamp;
   reporting_timer_.Start(FROM_HERE, reporting_interval_, this,
                          &WatchTimeReporter::UpdateWatchTime);
 }
@@ -250,6 +276,8 @@ void WatchTimeReporter::UpdateWatchTime() {
 
   const bool is_finalizing = end_timestamp_ != kNoTimestamp;
   const bool is_power_change_pending = end_timestamp_for_power_ != kNoTimestamp;
+  const bool is_controls_change_pending =
+      end_timestamp_for_controls_ != kNoTimestamp;
 
   // If we're finalizing the log, use the media time value at the time of
   // finalization.
@@ -313,6 +341,23 @@ void WatchTimeReporter::UpdateWatchTime() {
         RECORD_WATCH_TIME(Ac, elapsed_power);
     }
   }
+
+  // Similar to the block above for controls.
+  if (last_media_controls_timestamp_ != current_timestamp) {
+    last_media_controls_timestamp_ = is_controls_change_pending
+                                         ? end_timestamp_for_controls_
+                                         : current_timestamp;
+
+    const base::TimeDelta elapsed_controls =
+        last_media_controls_timestamp_ - start_timestamp_for_controls_;
+
+    if (elapsed_controls >= kMinimumElapsedWatchTime) {
+      if (has_native_controls_)
+        RECORD_WATCH_TIME(NativeControls, elapsed_controls);
+      else
+        RECORD_WATCH_TIME(CustomControls, elapsed_controls);
+    }
+  }
 #undef RECORD_WATCH_TIME
 
   // Always send finalize, even if we don't currently have any data, it's
@@ -321,6 +366,8 @@ void WatchTimeReporter::UpdateWatchTime() {
     log_event->params.SetBoolean(MediaLog::kWatchTimeFinalize, true);
   else if (is_power_change_pending)
     log_event->params.SetBoolean(MediaLog::kWatchTimeFinalizePower, true);
+  else if (is_controls_change_pending)
+    log_event->params.SetBoolean(MediaLog::kWatchTimeFinalizeControls, true);
 
   if (!log_event->params.empty())
     media_log_->AddEvent(std::move(log_event));
@@ -332,6 +379,13 @@ void WatchTimeReporter::UpdateWatchTime() {
 
     start_timestamp_for_power_ = end_timestamp_for_power_;
     end_timestamp_for_power_ = kNoTimestamp;
+  }
+
+  if (is_controls_change_pending) {
+    has_native_controls_ = !has_native_controls_;
+
+    start_timestamp_for_controls_ = end_timestamp_for_controls_;
+    end_timestamp_for_controls_ = kNoTimestamp;
   }
 
   // Stop the timer if this is supposed to be our last tick.

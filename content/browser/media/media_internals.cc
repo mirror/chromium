@@ -357,7 +357,7 @@ class MediaInternals::MediaInternalsUMAHandler {
         ->AddTime(value);
   }
 
-  enum class FinalizeType { EVERYTHING, POWER_ONLY };
+  enum class FinalizeType { EVERYTHING, POWER_ONLY, CONTROLS_ONLY };
   void FinalizeWatchTime(bool has_video,
                          const GURL& url,
                          WatchTimeInfo* watch_time_info,
@@ -367,46 +367,76 @@ class MediaInternals::MediaInternalsUMAHandler {
     if (!url.is_valid())
       return;
 
-    if (finalize_type == FinalizeType::EVERYTHING) {
-      std::unique_ptr<ukm::UkmEntryBuilder> builder;
-      for (auto& kv : *watch_time_info) {
-        RecordWatchTime(kv.first, kv.second);
+    switch (finalize_type) {
+      case FinalizeType::EVERYTHING: {
+        std::unique_ptr<ukm::UkmEntryBuilder> builder;
+        for (auto& kv : *watch_time_info) {
+          RecordWatchTime(kv.first, kv.second);
 
-        if (!ShouldReportUkmWatchTime(kv.first))
-          continue;
+          if (!ShouldReportUkmWatchTime(kv.first))
+            continue;
 
-        if (!builder)
-          builder = media_internals_->CreateUkmBuilder(url, kWatchTimeEvent);
+          if (!builder)
+            builder = media_internals_->CreateUkmBuilder(url, kWatchTimeEvent);
 
-        // Strip Media.WatchTime. prefix for UKM since they're already grouped;
-        // arraysize() includes \0, so no +1 necessary for trailing period.
-        builder->AddMetric(kv.first.substr(arraysize(kWatchTimeEvent)).data(),
-                           kv.second.InMilliseconds());
+          // Strip Media.WatchTime. prefix for UKM since they're already
+          // grouped; arraysize() includes \0, so no +1 necessary for trailing
+          // period.
+          builder->AddMetric(kv.first.substr(arraysize(kWatchTimeEvent)).data(),
+                             kv.second.InMilliseconds());
+        }
+        watch_time_info->clear();
+        break;
       }
+      case FinalizeType::POWER_ONLY: {
+        std::unique_ptr<ukm::UkmEntryBuilder> builder;
+        for (auto power_key : watch_time_power_keys_) {
+          auto it = watch_time_info->find(power_key);
+          if (it == watch_time_info->end())
+            continue;
+          RecordWatchTime(it->first, it->second);
 
-      watch_time_info->clear();
-      return;
-    }
+          if (ShouldReportUkmWatchTime(it->first)) {
+            if (!builder)
+              builder =
+                  media_internals_->CreateUkmBuilder(url, kWatchTimeEvent);
 
-    std::unique_ptr<ukm::UkmEntryBuilder> builder;
-    DCHECK_EQ(finalize_type, FinalizeType::POWER_ONLY);
-    for (auto power_key : watch_time_power_keys_) {
-      auto it = watch_time_info->find(power_key);
-      if (it == watch_time_info->end())
-        continue;
-      RecordWatchTime(it->first, it->second);
+            // Strip Media.WatchTime. prefix for UKM since they're already
+            // grouped; arraysize() includes \0, so no +1 necessary for trailing
+            // period.
+            builder->AddMetric(
+                it->first.substr(arraysize(kWatchTimeEvent)).data(),
+                it->second.InMilliseconds());
+          }
 
-      if (ShouldReportUkmWatchTime(it->first)) {
-        if (!builder)
-          builder = media_internals_->CreateUkmBuilder(url, kWatchTimeEvent);
-
-        // Strip Media.WatchTime. prefix for UKM since they're already grouped;
-        // arraysize() includes \0, so no +1 necessary for trailing period.
-        builder->AddMetric(it->first.substr(arraysize(kWatchTimeEvent)).data(),
-                           it->second.InMilliseconds());
+          watch_time_info->erase(it);
+        }
+        break;
       }
+      case FinalizeType::CONTROLS_ONLY:
+        std::unique_ptr<ukm::UkmEntryBuilder> builder;
+        for (auto control_key : watch_time_controls_keys_) {
+          auto it = watch_time_info->find(control_key);
+          if (it == watch_time_info->end())
+            continue;
+          RecordWatchTime(it->first, it->second);
 
-      watch_time_info->erase(it);
+          if (ShouldReportUkmWatchTime(it->first)) {
+            if (!builder)
+              builder =
+                  media_internals_->CreateUkmBuilder(url, kWatchTimeEvent);
+
+            // Strip Media.WatchTime. prefix for UKM since they're already
+            // grouped; arraysize() includes \0, so no +1 necessary for trailing
+            // period.
+            builder->AddMetric(
+                it->first.substr(arraysize(kWatchTimeEvent)).data(),
+                it->second.InMilliseconds());
+          }
+
+          watch_time_info->erase(it);
+        }
+        break;
     }
   }
 
@@ -421,6 +451,7 @@ class MediaInternals::MediaInternalsUMAHandler {
 
   const base::flat_set<base::StringPiece> watch_time_keys_;
   const base::flat_set<base::StringPiece> watch_time_power_keys_;
+  const base::flat_set<base::StringPiece> watch_time_controls_keys_;
   content::MediaInternals* const media_internals_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaInternalsUMAHandler);
@@ -430,6 +461,7 @@ MediaInternals::MediaInternalsUMAHandler::MediaInternalsUMAHandler(
     content::MediaInternals* media_internals)
     : watch_time_keys_(media::MediaLog::GetWatchTimeKeys()),
       watch_time_power_keys_(media::MediaLog::GetWatchTimePowerKeys()),
+      watch_time_controls_keys_(media::MediaLog::GetWatchTimeControlsKeys()),
       media_internals_(media_internals) {}
 
 void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
@@ -543,6 +575,16 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
         FinalizeWatchTime(player_info.has_video, player_info.origin_url,
                           &player_info.watch_time_info,
                           FinalizeType::POWER_ONLY);
+      } else if (event.params.HasKey(
+                     media::MediaLog::kWatchTimeFinalizeControls)) {
+        bool should_finalize;
+        DCHECK(
+            event.params.GetBoolean(media::MediaLog::kWatchTimeFinalizeControls,
+                                    &should_finalize) &&
+            should_finalize);
+        FinalizeWatchTime(player_info.has_video, player_info.origin_url,
+                          &player_info.watch_time_info,
+                          FinalizeType::CONTROLS_ONLY);
       }
       break;
     }

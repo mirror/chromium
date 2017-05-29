@@ -156,6 +156,10 @@ base::TimeDelta GetCurrentTimeInternal(WebMediaPlayerImpl* p_this) {
   return base::TimeDelta::FromSecondsD(p_this->CurrentTime());
 }
 
+bool HasNativeControls(blink::WebMediaPlayerClient* client) {
+  return client->GetControlsType() == WebMediaPlayer::ControlsType::kNative;
+}
+
 // How much time must have elapsed since loading last progressed before we
 // assume that the decoder will have had time to complete preroll.
 constexpr base::TimeDelta kPrerollAttemptTimeout =
@@ -423,6 +427,12 @@ void WebMediaPlayerImpl::BecameDominantVisibleContent(bool isDominant) {
 void WebMediaPlayerImpl::SetIsEffectivelyFullscreen(
     bool isEffectivelyFullscreen) {
   delegate_->SetIsEffectivelyFullscreen(delegate_id_, isEffectivelyFullscreen);
+}
+
+void WebMediaPlayerImpl::OnControlsTypeChanged(
+    WebMediaPlayer::ControlsType type) {
+  watch_time_reporter_->OnNativeControlsEnabled(
+      type == WebMediaPlayer::ControlsType::kNative);
 }
 
 void WebMediaPlayerImpl::DoLoad(LoadType load_type,
@@ -2277,7 +2287,8 @@ void WebMediaPlayerImpl::CreateWatchTimeReporter() {
       new WatchTimeReporter(HasAudio(), HasVideo(), !!chunk_demuxer_,
                             is_encrypted_, embedded_media_experience_enabled_,
                             media_log_.get(), pipeline_metadata_.natural_size,
-                            base::Bind(&GetCurrentTimeInternal, this)));
+                            base::Bind(&GetCurrentTimeInternal, this),
+                            base::Bind(&HasNativeControls, client_)));
   watch_time_reporter_->OnVolumeChange(volume_);
   if (delegate_->IsFrameHidden())
     watch_time_reporter_->OnHidden();

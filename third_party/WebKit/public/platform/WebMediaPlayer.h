@@ -282,6 +282,19 @@ class WebMediaPlayer {
                                         double* timestamp) {
     return false;
   }
+
+  // Type of media controls used by the media element.
+  enum class ControlsType {
+    // Using built-in browsner controls.
+    kNative,
+    // Potentially using custom controls or no controls at all.
+    kCustom
+  };
+
+  // Callback called whenever the media element may have different type of
+  // controls. It might be called twice with the same value: the caller has to
+  // check if the value have changed if it only wants to handle this case.
+  virtual void OnControlsTypeChanged(ControlsType) {}
 };
 
 }  // namespace blink

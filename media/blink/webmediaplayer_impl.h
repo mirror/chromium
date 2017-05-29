@@ -193,6 +193,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void ExitedFullscreen() override;
   void BecameDominantVisibleContent(bool isDominant) override;
   void SetIsEffectivelyFullscreen(bool isEffectivelyFullscreen) override;
+  void OnControlsTypeChanged(WebMediaPlayer::ControlsType type) override;
 
   // WebMediaPlayerDelegate::Observer implementation.
   void OnFrameHidden() override;
