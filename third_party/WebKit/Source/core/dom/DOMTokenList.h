@@ -58,7 +58,7 @@ class CORE_EXPORT DOMTokenList : public GarbageCollectedFinalized<DOMTokenList>,
   virtual ~DOMTokenList() {}
 
   virtual unsigned length() const { return tokens_.size(); }
-  virtual const AtomicString item(unsigned index) const;
+  const AtomicString item(unsigned index) const;
 
   bool contains(const AtomicString&) const;
   virtual void add(const Vector<String>&, ExceptionState&);
@@ -100,7 +100,6 @@ class CORE_EXPORT DOMTokenList : public GarbageCollectedFinalized<DOMTokenList>,
   AtomicString AddTokens(const Vector<String>&);
   AtomicString RemoveToken(const AtomicString&);
   AtomicString RemoveTokens(const Vector<String>&);
-  virtual SpaceSplitString& MutableSet() { return tokens_; }
   static AtomicString SerializeSet(const SpaceSplitString&);
 
  private:
