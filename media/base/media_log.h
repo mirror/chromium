@@ -109,13 +109,15 @@ class MEDIA_EXPORT MediaLog {
 
   // Histogram names used for reporting; also double as MediaLog key names.
   // NOTE: If you add to this list you must update GetWatchTimeKeys() and if
-  // necessary, GetWatchTimePowerKeys().
+  // necessary, GetWatchTimePowerKeys() and GetWatchTimeControlsKey().
   static const char kWatchTimeAudioAll[];
   static const char kWatchTimeAudioMse[];
   static const char kWatchTimeAudioEme[];
   static const char kWatchTimeAudioSrc[];
   static const char kWatchTimeAudioBattery[];
   static const char kWatchTimeAudioAc[];
+  static const char kWatchTimeAudioNativeControls[];
+  static const char kWatchTimeAudioCustomControls[];
   static const char kWatchTimeAudioEmbeddedExperience[];
   static const char kWatchTimeAudioVideoAll[];
   static const char kWatchTimeAudioVideoMse[];
@@ -124,6 +126,8 @@ class MEDIA_EXPORT MediaLog {
   static const char kWatchTimeAudioVideoBattery[];
   static const char kWatchTimeAudioVideoAc[];
   static const char kWatchTimeAudioVideoEmbeddedExperience[];
+  static const char kWatchTimeAudioVideoNativeControls[];
+  static const char kWatchTimeAudioVideoCustomControls[];
   static const char kWatchTimeAudioVideoBackgroundAll[];
   static const char kWatchTimeAudioVideoBackgroundMse[];
   static const char kWatchTimeAudioVideoBackgroundEme[];
@@ -131,13 +135,17 @@ class MEDIA_EXPORT MediaLog {
   static const char kWatchTimeAudioVideoBackgroundBattery[];
   static const char kWatchTimeAudioVideoBackgroundAc[];
   static const char kWatchTimeAudioVideoBackgroundEmbeddedExperience[];
+  static const char kWatchTimeAudioVideoBackgroundNativeControls[];
+  static const char kWatchTimeAudioVideoBackgroundCustomControls[];
 
   // Markers which signify the watch time should be finalized immediately.
   static const char kWatchTimeFinalize[];
   static const char kWatchTimeFinalizePower[];
+  static const char kWatchTimeFinalizeControls[];
 
   static base::flat_set<base::StringPiece> GetWatchTimeKeys();
   static base::flat_set<base::StringPiece> GetWatchTimePowerKeys();
+  static base::flat_set<base::StringPiece> GetWatchTimeControlsKeys();
 
  private:
   // A unique (to this process) id for this MediaLog.

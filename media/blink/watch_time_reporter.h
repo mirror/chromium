@@ -44,6 +44,7 @@ namespace media {
 class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
  public:
   using GetMediaTimeCB = base::Callback<base::TimeDelta(void)>;
+  using HasNativeControlsCB = base::Callback<bool(void)>;
 
   // Constructor for the reporter; all requested metadata should be fully known
   // before attempting construction as incorrect values will result in the wrong
@@ -68,7 +69,8 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
                     bool is_embedded_media_experience_enabled,
                     MediaLog* media_log,
                     const gfx::Size& initial_video_size,
-                    const GetMediaTimeCB& get_media_time_cb);
+                    const GetMediaTimeCB& get_media_time_cb,
+                    const HasNativeControlsCB& has_native_controls_cb);
   ~WatchTimeReporter() override;
 
   // These methods are used to ensure that watch time is only reported for
@@ -107,6 +109,10 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   // recorded for playback.
   bool IsSizeLargeEnoughToReportWatchTime() const;
 
+  // This method is used to ensure that the watch time is reported relative to
+  // whether the media is using native or custom controls.
+  void OnNativeControlsEnabled(bool enabled);
+
   // Setup the reporting interval to be immediate to avoid spinning real time
   // within the unit test.
   void set_reporting_interval_for_testing() {
@@ -133,6 +139,7 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
                     MediaLog* media_log,
                     const gfx::Size& initial_video_size,
                     const GetMediaTimeCB& get_media_time_cb,
+                    const HasNativeControlsCB& has_native_controls_cb,
                     bool is_background);
 
   // base::PowerObserver implementation.
@@ -157,6 +164,7 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   MediaLog* media_log_;
   const gfx::Size initial_video_size_;
   const GetMediaTimeCB get_media_time_cb_;
+  const HasNativeControlsCB has_native_controls_cb_;
   const bool is_background_;
 
   // The amount of time between each UpdateWatchTime(); this is the frequency by
@@ -170,11 +178,13 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   bool is_on_battery_power_ = false;
   bool is_playing_ = false;
   bool is_visible_ = true;
+  bool has_native_controls_ = false;
   double volume_ = 1.0;
 
   // The last media timestamp seen by UpdateWatchTime().
   base::TimeDelta last_media_timestamp_ = kNoTimestamp;
   base::TimeDelta last_media_power_timestamp_ = kNoTimestamp;
+  base::TimeDelta last_media_controls_timestamp_ = kNoTimestamp;
 
   // The starting and ending timestamps used for reporting watch time.
   base::TimeDelta start_timestamp_;
@@ -184,6 +194,11 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   // battery or AC power is being used.
   base::TimeDelta start_timestamp_for_power_;
   base::TimeDelta end_timestamp_for_power_ = kNoTimestamp;
+
+  // Similar to the above but tracks watch time relative to whether or not
+  // native or custom controls are being used.
+  base::TimeDelta start_timestamp_for_controls_;
+  base::TimeDelta end_timestamp_for_controls_ = kNoTimestamp;
 
   // Special case reporter for handling background video watch time. Configured
   // as an audio only WatchTimeReporter with |is_background_| set to true.

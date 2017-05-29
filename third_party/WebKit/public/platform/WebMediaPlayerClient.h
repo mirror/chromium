@@ -117,6 +117,9 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
   virtual void MediaRemotingStarted() {}
   virtual void MediaRemotingStopped() {}
 
+  // Returns the type of controls used by the media element.
+  virtual WebMediaPlayer::ControlsType GetControlsType() = 0;
+
  protected:
   ~WebMediaPlayerClient() {}
 };

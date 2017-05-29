@@ -42,6 +42,9 @@ constexpr gfx::Size kSizeJustRight = gfx::Size(201, 201);
 #define EXPECT_POWER_WATCH_TIME_FINALIZED() \
   EXPECT_CALL(media_log_, OnPowerWatchTimeFinalized()).RetiresOnSaturation();
 
+#define EXPECT_CONTROLS_WATCH_TIME_FINALIZED() \
+  EXPECT_CALL(media_log_, OnControlsWatchTimeFinalized()).RetiresOnSaturation();
+
 class WatchTimeReporterTest : public testing::TestWithParam<bool> {
  public:
   WatchTimeReporterTest() : has_video_(GetParam()) {}
@@ -50,7 +53,7 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
  protected:
   class WatchTimeLogMonitor : public MediaLog {
    public:
-    WatchTimeLogMonitor() {}
+    WatchTimeLogMonitor() = default;
 
     void AddEvent(std::unique_ptr<MediaLogEvent> event) override {
       ASSERT_EQ(event->type, MediaLogEvent::Type::WATCH_TIME_UPDATE);
@@ -61,8 +64,12 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
         if (it.value().GetAsBoolean(&finalize)) {
           if (it.key() == MediaLog::kWatchTimeFinalize)
             OnWatchTimeFinalized();
-          else
+          else if (it.key() == MediaLog::kWatchTimeFinalizePower)
             OnPowerWatchTimeFinalized();
+          else if (it.key() == MediaLog::kWatchTimeFinalizeControls)
+            OnControlsWatchTimeFinalized();
+          else
+            NOTREACHED();
           continue;
         }
 
@@ -74,10 +81,11 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
 
     MOCK_METHOD0(OnWatchTimeFinalized, void(void));
     MOCK_METHOD0(OnPowerWatchTimeFinalized, void(void));
+    MOCK_METHOD0(OnControlsWatchTimeFinalized, void(void));
     MOCK_METHOD2(OnWatchTimeUpdate, void(const std::string&, base::TimeDelta));
 
    protected:
-    ~WatchTimeLogMonitor() override {}
+    ~WatchTimeLogMonitor() override = default;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(WatchTimeLogMonitor);
@@ -94,6 +102,8 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
         has_audio, has_video_, is_mse, is_encrypted, false, &media_log_,
         initial_video_size,
         base::Bind(&WatchTimeReporterTest::GetCurrentMediaTime,
+                   base::Unretained(this)),
+        base::Bind(&WatchTimeReporterTest::HasNativeControls,
                    base::Unretained(this))));
 
     // Setup the reporting interval to be immediate to avoid spinning real time
@@ -128,6 +138,10 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
       wtr_->background_reporter_->OnPowerStateChange(on_battery_power);
   }
 
+  void OnNativeControlsEnabled(bool enabled) {
+    wtr_->OnNativeControlsEnabled(enabled);
+  }
+
   enum {
     // After |test_callback_func| is executed, should watch time continue to
     // accumulate?
@@ -142,9 +156,9 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
     // used with |kStartOnBattery| it will be the battery metric.
     kFinalizePowerWatchTime = 4,
 
-    // During finalize the watch time should continue on the metric opposite the
-    // starting metric (by default it's AC, it's battery if |kStartOnBattery| is
-    // specified.
+    // During finalize the power watch time should continue on the metric
+    // opposite the starting metric (by default it's AC, it's battery if
+    // |kStartOnBattery| is specified.
     kTransitionPowerWatchTime = 8,
 
     // Indicates that power watch time should be reported to the battery metric.
@@ -152,10 +166,31 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
 
     // Indicates an extra start event may be generated during test execution.
     kFinalizeInterleavedStartEvent = 32,
+
+    // During finalize the watch time should not continue on the starting
+    // controls metric. By default this means the custom controls metric will be
+    // finalized, but if used with |kStartWithNativeControls| it will be the
+    // native controls metric.
+    kFinalizeControlsWatchTime = 64,
+
+    // During finalize the controls watch time should continue on the metric
+    // opposite the starting metric (by default it's custom controls, it's
+    // native controls if |kStartWithNativeControls| is specified.
+    kTransitionControlsWatchTime = 128,
+
+    // Indicates that controls watch time should be reported to the native
+    // controls metric.
+    kStartWithNativeControls = 256,
   };
 
   template <int TestFlags = 0, typename HysteresisTestCallback>
   void RunHysteresisTest(HysteresisTestCallback test_callback_func) {
+    if (TestFlags & kStartWithNativeControls) {
+      EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(true));
+    } else {
+      EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
+    }
+
     Initialize(true, false, false, kSizeJustRight);
 
     // Disable background reporting for the hysteresis tests.
@@ -171,6 +206,7 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
     constexpr base::TimeDelta kWatchTime4 = base::TimeDelta::FromSeconds(30);
     {
       testing::InSequence s;
+
       EXPECT_CALL(*this, GetCurrentMediaTime())
           .WillOnce(testing::Return(base::TimeDelta()))
           .WillOnce(testing::Return(kWatchTime1));
@@ -181,7 +217,8 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
       if (TestFlags & kAccumulationContinuesAfterTest) {
         EXPECT_CALL(*this, GetCurrentMediaTime())
             .Times(TestFlags & (kFinalizeExitDoesNotRequireCurrentTime |
-                                kFinalizePowerWatchTime)
+                                kFinalizePowerWatchTime |
+                                kFinalizeControlsWatchTime)
                        ? 1
                        : 2)
             .WillRepeatedly(testing::Return(kWatchTime2));
@@ -195,6 +232,11 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
       }
 
       if (TestFlags & kTransitionPowerWatchTime) {
+        EXPECT_CALL(*this, GetCurrentMediaTime())
+            .WillOnce(testing::Return(kWatchTime4));
+      }
+
+      if (TestFlags & kTransitionControlsWatchTime) {
         EXPECT_CALL(*this, GetCurrentMediaTime())
             .WillOnce(testing::Return(kWatchTime4));
       }
@@ -213,6 +255,10 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
       EXPECT_WATCH_TIME(Battery, kWatchTime1);
     else
       EXPECT_WATCH_TIME(Ac, kWatchTime1);
+    if (TestFlags & kStartWithNativeControls)
+      EXPECT_WATCH_TIME(NativeControls, kWatchTime1);
+    else
+      EXPECT_WATCH_TIME(CustomControls, kWatchTime1);
 
     CycleReportingTimer();
 
@@ -226,39 +272,63 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
     EXPECT_WATCH_TIME(Src, kExpectedWatchTime);
     const base::TimeDelta kExpectedPowerWatchTime =
         TestFlags & kFinalizePowerWatchTime ? kWatchTime2 : kExpectedWatchTime;
+    const base::TimeDelta kExpectedContolsWatchTime =
+        TestFlags & kFinalizeControlsWatchTime ? kWatchTime2
+                                               : kExpectedWatchTime;
     if (TestFlags & kStartOnBattery)
       EXPECT_WATCH_TIME(Battery, kExpectedPowerWatchTime);
     else
       EXPECT_WATCH_TIME(Ac, kExpectedPowerWatchTime);
+    if (TestFlags & kStartWithNativeControls)
+      EXPECT_WATCH_TIME(NativeControls, kExpectedContolsWatchTime);
+    else
+      EXPECT_WATCH_TIME(CustomControls, kExpectedContolsWatchTime);
 
-    // If we're not testing battery watch time, this is the end of the test.
-    if (!(TestFlags & kTransitionPowerWatchTime)) {
-      EXPECT_WATCH_TIME_FINALIZED();
-      wtr_.reset();
-      return;
+    // Special case when testing battery watch time.
+    if (TestFlags & kTransitionPowerWatchTime) {
+      ASSERT_TRUE(TestFlags & kAccumulationContinuesAfterTest)
+          << "kTransitionPowerWatchTime tests must be done with "
+             "kAccumulationContinuesAfterTest";
+
+      EXPECT_POWER_WATCH_TIME_FINALIZED();
+      CycleReportingTimer();
+
+      // Run one last cycle that is long enough to trigger a new watch time
+      // entry on the opposite of the current power watch time graph; i.e. if we
+      // started on battery we'll now record one for ac and vice versa.
+      EXPECT_WATCH_TIME(All, kWatchTime4);
+      EXPECT_WATCH_TIME(Src, kWatchTime4);
+      EXPECT_WATCH_TIME(CustomControls, kWatchTime4);
+      if (TestFlags & kStartOnBattery)
+        EXPECT_WATCH_TIME(Ac, kWatchTime4 - kWatchTime2);
+      else
+        EXPECT_WATCH_TIME(Battery, kWatchTime4 - kWatchTime2);
+    } else if (TestFlags & kTransitionControlsWatchTime) {
+      ASSERT_TRUE(TestFlags & kAccumulationContinuesAfterTest)
+          << "kTransitionControlsWatchTime tests must be done with "
+             "kAccumulationContinuesAfterTest";
+
+      EXPECT_CONTROLS_WATCH_TIME_FINALIZED();
+      CycleReportingTimer();
+
+      // Run one last cycle that is long enough to trigger a new watch time
+      // entry on the opposite of the current power watch time graph; i.e. if we
+      // started on battery we'll now record one for ac and vice versa.
+      EXPECT_WATCH_TIME(All, kWatchTime4);
+      EXPECT_WATCH_TIME(Src, kWatchTime4);
+      EXPECT_WATCH_TIME(Ac, kWatchTime4);
+      if (TestFlags & kStartWithNativeControls)
+        EXPECT_WATCH_TIME(CustomControls, kWatchTime4 - kWatchTime2);
+      else
+        EXPECT_WATCH_TIME(NativeControls, kWatchTime4 - kWatchTime2);
     }
 
-    ASSERT_TRUE(TestFlags & kAccumulationContinuesAfterTest)
-        << "kTransitionPowerWatchTime tests must be done with "
-           "kAccumulationContinuesAfterTest";
-
-    EXPECT_POWER_WATCH_TIME_FINALIZED();
-    CycleReportingTimer();
-
-    // Run one last cycle that is long enough to trigger a new watch time entry
-    // on the opposite of the current power watch time graph; i.e. if we started
-    // on battery we'll now record one for ac and vice versa.
-    EXPECT_WATCH_TIME(All, kWatchTime4);
-    EXPECT_WATCH_TIME(Src, kWatchTime4);
-    if (TestFlags & kStartOnBattery)
-      EXPECT_WATCH_TIME(Ac, kWatchTime4 - kWatchTime2);
-    else
-      EXPECT_WATCH_TIME(Battery, kWatchTime4 - kWatchTime2);
     EXPECT_WATCH_TIME_FINALIZED();
     wtr_.reset();
   }
 
   MOCK_METHOD0(GetCurrentMediaTime, base::TimeDelta());
+  MOCK_METHOD0(HasNativeControls, bool());
 
   const bool has_video_;
   testing::StrictMock<WatchTimeLogMonitor> media_log_;
@@ -273,6 +343,8 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
 TEST_P(WatchTimeReporterTest, WatchTimeReporter) {
   EXPECT_CALL(*this, GetCurrentMediaTime())
       .WillRepeatedly(testing::Return(base::TimeDelta()));
+  EXPECT_CALL(*this, HasNativeControls())
+      .WillRepeatedly(testing::Return(false));
 
   Initialize(!has_video_, true, true, gfx::Size());
   wtr_->OnPlaying();
@@ -332,6 +404,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterBasic) {
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillRepeatedly(testing::Return(kWatchTimeLate));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
@@ -344,6 +417,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterBasic) {
   EXPECT_WATCH_TIME(All, kWatchTimeLate);
   EXPECT_WATCH_TIME(Eme, kWatchTimeLate);
   EXPECT_WATCH_TIME(Mse, kWatchTimeLate);
+  EXPECT_WATCH_TIME(CustomControls, kWatchTimeLate);
   CycleReportingTimer();
 
   EXPECT_WATCH_TIME_FINALIZED();
@@ -358,6 +432,9 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterShownHidden) {
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillRepeatedly(testing::Return(kWatchTimeLate));
+  EXPECT_CALL(*this, HasNativeControls())
+      .WillOnce(testing::Return(false))
+      .WillOnce(testing::Return(false));
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
@@ -368,12 +445,14 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterShownHidden) {
   if (!has_video_) {
     GetCurrentMediaTime();
     GetCurrentMediaTime();
+    HasNativeControls();
   } else {
     const base::TimeDelta kExpectedWatchTime = kWatchTimeLate - kWatchTimeEarly;
     EXPECT_BACKGROUND_WATCH_TIME(Ac, kExpectedWatchTime);
     EXPECT_BACKGROUND_WATCH_TIME(All, kExpectedWatchTime);
     EXPECT_BACKGROUND_WATCH_TIME(Eme, kExpectedWatchTime);
     EXPECT_BACKGROUND_WATCH_TIME(Mse, kExpectedWatchTime);
+    EXPECT_BACKGROUND_WATCH_TIME(CustomControls, kExpectedWatchTime);
     EXPECT_WATCH_TIME_FINALIZED();
   }
 
@@ -383,6 +462,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterShownHidden) {
   EXPECT_WATCH_TIME(All, kExpectedWatchTime);
   EXPECT_WATCH_TIME(Eme, kExpectedWatchTime);
   EXPECT_WATCH_TIME(Mse, kExpectedWatchTime);
+  EXPECT_WATCH_TIME(CustomControls, kExpectedWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 }
@@ -403,6 +483,9 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterBackgroundHysteresis) {
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillOnce(testing::Return(kWatchTimeEarly))  // 1x for timer cycle.
       .WillRepeatedly(testing::Return(kWatchTimeLate));
+  EXPECT_CALL(*this, HasNativeControls())
+      .WillOnce(testing::Return(false))
+      .WillOnce(testing::Return(false));
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnHidden();
   wtr_->OnPlaying();
@@ -415,6 +498,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterBackgroundHysteresis) {
   EXPECT_BACKGROUND_WATCH_TIME(All, kWatchTimeEarly);
   EXPECT_BACKGROUND_WATCH_TIME(Eme, kWatchTimeEarly);
   EXPECT_BACKGROUND_WATCH_TIME(Mse, kWatchTimeEarly);
+  EXPECT_BACKGROUND_WATCH_TIME(CustomControls, kWatchTimeEarly);
   EXPECT_TRUE(IsBackgroundMonitoring());
   EXPECT_TRUE(IsMonitoring());
   EXPECT_WATCH_TIME_FINALIZED();
@@ -427,6 +511,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterBackgroundHysteresis) {
   EXPECT_BACKGROUND_WATCH_TIME(All, kWatchTimeLate);
   EXPECT_BACKGROUND_WATCH_TIME(Eme, kWatchTimeLate);
   EXPECT_BACKGROUND_WATCH_TIME(Mse, kWatchTimeLate);
+  EXPECT_BACKGROUND_WATCH_TIME(CustomControls, kWatchTimeLate);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 }
@@ -444,6 +529,11 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterShownHiddenBackground) {
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillRepeatedly(testing::Return(kWatchTimeLate));
+
+  EXPECT_CALL(*this, HasNativeControls())
+      .WillOnce(testing::Return(false))
+      .WillOnce(testing::Return(false));
+
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnHidden();
   wtr_->OnPlaying();
@@ -455,6 +545,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterShownHiddenBackground) {
   EXPECT_BACKGROUND_WATCH_TIME(All, kWatchTimeEarly);
   EXPECT_BACKGROUND_WATCH_TIME(Eme, kWatchTimeEarly);
   EXPECT_BACKGROUND_WATCH_TIME(Mse, kWatchTimeEarly);
+  EXPECT_BACKGROUND_WATCH_TIME(CustomControls, kWatchTimeEarly);
   EXPECT_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
 
@@ -475,6 +566,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterHiddenPausedBackground) {
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillRepeatedly(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnHidden();
   wtr_->OnPlaying();
@@ -486,6 +578,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterHiddenPausedBackground) {
   EXPECT_BACKGROUND_WATCH_TIME(All, kWatchTime);
   EXPECT_BACKGROUND_WATCH_TIME(Eme, kWatchTime);
   EXPECT_BACKGROUND_WATCH_TIME(Mse, kWatchTime);
+  EXPECT_BACKGROUND_WATCH_TIME(CustomControls, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
 
@@ -504,6 +597,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterHiddenSeekedBackground) {
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillRepeatedly(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, false, true, kSizeJustRight);
   wtr_->OnHidden();
   wtr_->OnPlaying();
@@ -514,6 +608,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterHiddenSeekedBackground) {
   EXPECT_BACKGROUND_WATCH_TIME(All, kWatchTime);
   EXPECT_BACKGROUND_WATCH_TIME(Eme, kWatchTime);
   EXPECT_BACKGROUND_WATCH_TIME(Src, kWatchTime);
+  EXPECT_BACKGROUND_WATCH_TIME(CustomControls, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_->OnSeeking();
 
@@ -535,6 +630,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterHiddenPowerBackground) {
       .WillOnce(testing::Return(kWatchTime1))
       .WillOnce(testing::Return(kWatchTime1))
       .WillRepeatedly(testing::Return(kWatchTime2));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnHidden();
   wtr_->OnPlaying();
@@ -546,6 +642,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterHiddenPowerBackground) {
   EXPECT_BACKGROUND_WATCH_TIME(All, kWatchTime1);
   EXPECT_BACKGROUND_WATCH_TIME(Eme, kWatchTime1);
   EXPECT_BACKGROUND_WATCH_TIME(Mse, kWatchTime1);
+  EXPECT_BACKGROUND_WATCH_TIME(CustomControls, kWatchTime1);
   EXPECT_POWER_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
 
@@ -554,6 +651,50 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterHiddenPowerBackground) {
   EXPECT_BACKGROUND_WATCH_TIME(All, kWatchTime2);
   EXPECT_BACKGROUND_WATCH_TIME(Eme, kWatchTime2);
   EXPECT_BACKGROUND_WATCH_TIME(Mse, kWatchTime2);
+  EXPECT_BACKGROUND_WATCH_TIME(CustomControls, kWatchTime2);
+  EXPECT_WATCH_TIME_FINALIZED();
+  CycleReportingTimer();
+
+  EXPECT_FALSE(IsBackgroundMonitoring());
+  EXPECT_FALSE(IsMonitoring());
+  wtr_.reset();
+}
+
+TEST_P(WatchTimeReporterTest, WatchTimeReporterHiddenControlsBackground) {
+  // Only run these background tests when video is present.
+  if (!has_video_)
+    return;
+
+  constexpr base::TimeDelta kWatchTime1 = base::TimeDelta::FromSeconds(8);
+  constexpr base::TimeDelta kWatchTime2 = base::TimeDelta::FromSeconds(16);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTime1))
+      .WillOnce(testing::Return(kWatchTime1))
+      .WillRepeatedly(testing::Return(kWatchTime2));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
+  Initialize(true, true, true, kSizeJustRight);
+  wtr_->OnHidden();
+  wtr_->OnPlaying();
+  EXPECT_TRUE(IsBackgroundMonitoring());
+  EXPECT_FALSE(IsMonitoring());
+
+  OnNativeControlsEnabled(true);
+  EXPECT_BACKGROUND_WATCH_TIME(Ac, kWatchTime1);
+  EXPECT_BACKGROUND_WATCH_TIME(All, kWatchTime1);
+  EXPECT_BACKGROUND_WATCH_TIME(Eme, kWatchTime1);
+  EXPECT_BACKGROUND_WATCH_TIME(Mse, kWatchTime1);
+  EXPECT_BACKGROUND_WATCH_TIME(CustomControls, kWatchTime1);
+  EXPECT_CONTROLS_WATCH_TIME_FINALIZED();
+  CycleReportingTimer();
+
+  wtr_->OnPaused();
+  EXPECT_BACKGROUND_WATCH_TIME(NativeControls, kWatchTime2 - kWatchTime1);
+  EXPECT_BACKGROUND_WATCH_TIME(All, kWatchTime2);
+  EXPECT_BACKGROUND_WATCH_TIME(Eme, kWatchTime2);
+  EXPECT_BACKGROUND_WATCH_TIME(Mse, kWatchTime2);
+  EXPECT_BACKGROUND_WATCH_TIME(Ac, kWatchTime2);
   EXPECT_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
 
@@ -569,6 +710,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterNonZeroStart) {
   EXPECT_CALL(*this, GetCurrentMediaTime())
       .WillOnce(testing::Return(kWatchTime1))
       .WillRepeatedly(testing::Return(kWatchTime2));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
@@ -578,6 +720,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterNonZeroStart) {
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
+  EXPECT_WATCH_TIME(CustomControls, kWatchTime);
   CycleReportingTimer();
 
   EXPECT_WATCH_TIME_FINALIZED();
@@ -590,6 +733,7 @@ TEST_P(WatchTimeReporterTest, SeekFinalizes) {
   EXPECT_CALL(*this, GetCurrentMediaTime())
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
@@ -598,6 +742,7 @@ TEST_P(WatchTimeReporterTest, SeekFinalizes) {
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
+  EXPECT_WATCH_TIME(CustomControls, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_->OnSeeking();
 }
@@ -609,6 +754,7 @@ TEST_P(WatchTimeReporterTest, SeekFinalizeDoesNotTramplePreviousFinalize) {
   EXPECT_CALL(*this, GetCurrentMediaTime())
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
@@ -617,6 +763,7 @@ TEST_P(WatchTimeReporterTest, SeekFinalizeDoesNotTramplePreviousFinalize) {
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
+  EXPECT_WATCH_TIME(CustomControls, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_->OnPaused();
   wtr_->OnSeeking();
@@ -628,6 +775,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterFinalizeOnDestruction) {
   EXPECT_CALL(*this, GetCurrentMediaTime())
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, true, kSizeJustRight);
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
@@ -637,6 +785,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterFinalizeOnDestruction) {
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
+  EXPECT_WATCH_TIME(CustomControls, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 }
@@ -645,36 +794,41 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterFinalizeOnDestruction) {
 TEST_P(WatchTimeReporterTest, WatchTimeCategoryMapping) {
   constexpr base::TimeDelta kWatchTime = base::TimeDelta::FromSeconds(10);
 
-  // Verify ac, all, src
+  // Verify ac, all, src, custom controls
   EXPECT_CALL(*this, GetCurrentMediaTime())
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, false, false, kSizeJustRight);
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
   EXPECT_WATCH_TIME(Ac, kWatchTime);
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Src, kWatchTime);
+  EXPECT_WATCH_TIME(CustomControls, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 
-  // Verify ac, all, mse
+  // Verify ac, all, mse, custom controls
   EXPECT_CALL(*this, GetCurrentMediaTime())
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, false, kSizeJustRight);
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
   EXPECT_WATCH_TIME(Ac, kWatchTime);
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
+  EXPECT_WATCH_TIME(CustomControls, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 
-  // Verify ac, all, eme, src
+  // Verify ac, all, eme, src, custom controls
   EXPECT_CALL(*this, GetCurrentMediaTime())
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, false, true, kSizeJustRight);
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
@@ -682,13 +836,15 @@ TEST_P(WatchTimeReporterTest, WatchTimeCategoryMapping) {
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Src, kWatchTime);
+  EXPECT_WATCH_TIME(CustomControls, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 
-  // Verify all, battery, src
+  // Verify all, battery, src, custom controls
   EXPECT_CALL(*this, GetCurrentMediaTime())
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, false, false, kSizeJustRight);
   wtr_->OnPlaying();
   SetOnBatteryPower(true);
@@ -696,6 +852,22 @@ TEST_P(WatchTimeReporterTest, WatchTimeCategoryMapping) {
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Battery, kWatchTime);
   EXPECT_WATCH_TIME(Src, kWatchTime);
+  EXPECT_WATCH_TIME(CustomControls, kWatchTime);
+  EXPECT_WATCH_TIME_FINALIZED();
+  wtr_.reset();
+
+  // Verify ac, all, src, native controls
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTime));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(true));
+  Initialize(true, false, false, kSizeJustRight);
+  wtr_->OnPlaying();
+  EXPECT_TRUE(IsMonitoring());
+  EXPECT_WATCH_TIME(Ac, kWatchTime);
+  EXPECT_WATCH_TIME(All, kWatchTime);
+  EXPECT_WATCH_TIME(Src, kWatchTime);
+  EXPECT_WATCH_TIME(NativeControls, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 }
@@ -774,6 +946,48 @@ TEST_P(WatchTimeReporterTest, OnPowerStateChangeAcTransitions) {
   RunHysteresisTest<kAccumulationContinuesAfterTest | kFinalizePowerWatchTime |
                     kTransitionPowerWatchTime>(
       [this]() { OnPowerStateChange(true); });
+}
+
+TEST_P(WatchTimeReporterTest, OnControlsChangeHysteresisNativeContinuation) {
+  RunHysteresisTest<kAccumulationContinuesAfterTest |
+                    kFinalizeExitDoesNotRequireCurrentTime |
+                    kStartWithNativeControls>([this]() {
+    OnNativeControlsEnabled(false);
+    OnNativeControlsEnabled(true);
+  });
+}
+
+TEST_P(WatchTimeReporterTest, OnControlsChangeHysteresisNativeFinalized) {
+  RunHysteresisTest<kAccumulationContinuesAfterTest |
+                    kFinalizeControlsWatchTime | kStartWithNativeControls>(
+      [this]() { OnNativeControlsEnabled(false); });
+}
+
+TEST_P(WatchTimeReporterTest, OnControlsChangeHysteresisCustomContinuation) {
+  RunHysteresisTest<kAccumulationContinuesAfterTest |
+                    kFinalizeExitDoesNotRequireCurrentTime>([this]() {
+    OnNativeControlsEnabled(true);
+    OnNativeControlsEnabled(false);
+  });
+}
+
+TEST_P(WatchTimeReporterTest, OnControlsChangeHysteresisCustomFinalized) {
+  RunHysteresisTest<kAccumulationContinuesAfterTest |
+                    kFinalizeControlsWatchTime>(
+      [this]() { OnNativeControlsEnabled(true); });
+}
+
+TEST_P(WatchTimeReporterTest, OnControlsChangeToCustom) {
+  RunHysteresisTest<kAccumulationContinuesAfterTest |
+                    kFinalizeControlsWatchTime | kStartWithNativeControls |
+                    kTransitionControlsWatchTime>(
+      [this]() { OnNativeControlsEnabled(false); });
+}
+
+TEST_P(WatchTimeReporterTest, OnControlsChangeToNative) {
+  RunHysteresisTest<kAccumulationContinuesAfterTest |
+                    kFinalizeControlsWatchTime | kTransitionControlsWatchTime>(
+      [this]() { OnNativeControlsEnabled(true); });
 }
 
 // Tests that the first finalize is the only one that matters.
