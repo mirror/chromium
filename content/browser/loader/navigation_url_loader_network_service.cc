@@ -63,7 +63,7 @@ void PrepareNavigationStartOnIO(
     mojom::URLLoaderFactoryPtrInfo factory_from_ui,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
     const base::Callback<WebContents*(void)>& web_contents_getter,
-    mojom::URLLoaderAssociatedRequest url_loader_request,
+    mojom::URLLoaderRequest url_loader_request,
     mojom::URLLoaderClientPtr url_loader_client_to_pass,
     std::unique_ptr<service_manager::Connector> connector) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -169,8 +169,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
 
   new_request->request_body = request_info_->common_params.post_data.get();
 
-  mojom::URLLoaderAssociatedRequest loader_associated_request =
-      mojo::MakeRequest(&url_loader_associated_ptr_);
+  mojom::URLLoaderRequest loader_request = mojo::MakeRequest(&url_loader_ptr_);
   mojom::URLLoaderClientPtr url_loader_client_ptr_to_pass;
   binding_.Bind(mojo::MakeRequest(&url_loader_client_ptr_to_pass));
 
@@ -200,7 +199,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
                      ->url_loader_factory_getter(),
                  base::Bind(&GetWebContentsFromFrameTreeNodeID,
                             request_info_->frame_tree_node_id),
-                 base::Passed(std::move(loader_associated_request)),
+                 base::Passed(std::move(loader_request)),
                  base::Passed(std::move(url_loader_client_ptr_to_pass)),
                  base::Passed(ServiceManagerConnection::GetForProcess()
                                   ->GetConnector()
@@ -210,7 +209,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
 NavigationURLLoaderNetworkService::~NavigationURLLoaderNetworkService() {}
 
 void NavigationURLLoaderNetworkService::FollowRedirect() {
-  url_loader_associated_ptr_->FollowRedirect();
+  url_loader_ptr_->FollowRedirect();
 }
 
 void NavigationURLLoaderNetworkService::ProceedWithResponse() {}
