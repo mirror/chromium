@@ -32,7 +32,7 @@ CardUnmaskPromptControllerImpl::CardUnmaskPromptControllerImpl(
       new_card_link_clicked_(false),
       is_off_the_record_(is_off_the_record),
       card_unmask_view_(nullptr),
-      unmasking_result_(AutofillClient::NONE),
+      unmasking_result_(payments::PaymentsRpcResult::NONE),
       unmasking_initial_should_store_pan_(false),
       unmasking_number_of_attempts_(0),
       weak_pointer_factory_(this) {}
@@ -45,63 +45,63 @@ CardUnmaskPromptControllerImpl::~CardUnmaskPromptControllerImpl() {
 void CardUnmaskPromptControllerImpl::ShowPrompt(
     CardUnmaskPromptView* card_unmask_view,
     const CreditCard& card,
-    AutofillClient::UnmaskCardReason reason,
-    base::WeakPtr<CardUnmaskDelegate> delegate) {
+    payments::UnmaskCardReason reason,
+    base::WeakPtr<payments::CardUnmaskDelegate> delegate) {
   if (card_unmask_view_)
     card_unmask_view_->ControllerGone();
 
   new_card_link_clicked_ = false;
   shown_timestamp_ = AutofillClock::Now();
-  pending_response_ = CardUnmaskDelegate::UnmaskResponse();
+  pending_response_ = payments::CardUnmaskDelegate::UnmaskResponse();
   card_unmask_view_ = card_unmask_view;
   card_ = card;
   reason_ = reason;
   delegate_ = delegate;
   card_unmask_view_->Show();
-  unmasking_result_ = AutofillClient::NONE;
+  unmasking_result_ = payments::PaymentsRpcResult::NONE;
   unmasking_number_of_attempts_ = 0;
   unmasking_initial_should_store_pan_ = GetStoreLocallyStartState();
   AutofillMetrics::LogUnmaskPromptEvent(AutofillMetrics::UNMASK_PROMPT_SHOWN);
 }
 
 bool CardUnmaskPromptControllerImpl::AllowsRetry(
-    AutofillClient::PaymentsRpcResult result) {
-  if (result == AutofillClient::NETWORK_ERROR ||
-      result == AutofillClient::PERMANENT_FAILURE) {
+    payments::PaymentsRpcResult result) {
+  if (result == payments::PaymentsRpcResult::NETWORK_ERROR ||
+      result == payments::PaymentsRpcResult::PERMANENT_FAILURE) {
     return false;
   }
   return true;
 }
 
 void CardUnmaskPromptControllerImpl::OnVerificationResult(
-    AutofillClient::PaymentsRpcResult result) {
+    payments::PaymentsRpcResult result) {
   if (!card_unmask_view_)
     return;
 
   base::string16 error_message;
   switch (result) {
-    case AutofillClient::SUCCESS:
+    case payments::PaymentsRpcResult::SUCCESS:
       break;
 
-    case AutofillClient::TRY_AGAIN_FAILURE: {
+    case payments::PaymentsRpcResult::TRY_AGAIN_FAILURE: {
       error_message = l10n_util::GetStringUTF16(
           IDS_AUTOFILL_CARD_UNMASK_PROMPT_ERROR_TRY_AGAIN_CVC);
       break;
     }
 
-    case AutofillClient::PERMANENT_FAILURE: {
+    case payments::PaymentsRpcResult::PERMANENT_FAILURE: {
       error_message = l10n_util::GetStringUTF16(
           IDS_AUTOFILL_CARD_UNMASK_PROMPT_ERROR_PERMANENT);
       break;
     }
 
-    case AutofillClient::NETWORK_ERROR: {
+    case payments::PaymentsRpcResult::NETWORK_ERROR: {
       error_message = l10n_util::GetStringUTF16(
           IDS_AUTOFILL_CARD_UNMASK_PROMPT_ERROR_NETWORK);
       break;
     }
 
-    case AutofillClient::NONE:
+    case payments::PaymentsRpcResult::NONE:
       NOTREACHED();
       return;
   }
@@ -137,7 +137,8 @@ void CardUnmaskPromptControllerImpl::LogOnCloseEvents() {
   }
 
   bool final_should_store_pan = pending_response_.should_store_pan;
-  if (unmasking_result_ == AutofillClient::SUCCESS && final_should_store_pan) {
+  if (unmasking_result_ == payments::PaymentsRpcResult::SUCCESS &&
+      final_should_store_pan) {
     AutofillMetrics::LogUnmaskPromptEvent(
         AutofillMetrics::UNMASK_PROMPT_SAVED_CARD_LOCALLY);
   }
@@ -166,10 +167,10 @@ CardUnmaskPromptControllerImpl::GetCloseReasonEvent() {
 
   // If NONE and we have a pending request, we have a pending GetRealPan
   // request.
-  if (unmasking_result_ == AutofillClient::NONE)
+  if (unmasking_result_ == payments::PaymentsRpcResult::NONE)
     return AutofillMetrics::UNMASK_PROMPT_CLOSED_ABANDON_UNMASKING;
 
-  if (unmasking_result_ == AutofillClient::SUCCESS) {
+  if (unmasking_result_ == payments::PaymentsRpcResult::SUCCESS) {
     return unmasking_number_of_attempts_ == 1
         ? AutofillMetrics::UNMASK_PROMPT_UNMASKED_CARD_FIRST_ATTEMPT
         : AutofillMetrics::UNMASK_PROMPT_UNMASKED_CARD_AFTER_FAILED_ATTEMPTS;
@@ -189,7 +190,7 @@ void CardUnmaskPromptControllerImpl::OnUnmaskResponse(
     bool should_store_pan) {
   verify_timestamp_ = AutofillClock::Now();
   unmasking_number_of_attempts_++;
-  unmasking_result_ = AutofillClient::NONE;
+  unmasking_result_ = payments::PaymentsRpcResult::NONE;
   card_unmask_view_->DisableAndWaitForVerification();
 
   DCHECK(InputCvcIsValid(cvc));
@@ -232,7 +233,7 @@ base::string16 CardUnmaskPromptControllerImpl::GetWindowTitle() const {
 base::string16 CardUnmaskPromptControllerImpl::GetInstructionsMessage() const {
 #if defined(OS_IOS)
   int ids;
-  if (reason_ == AutofillClient::UNMASK_FOR_AUTOFILL &&
+  if (reason_ == payments::PaymentsRpcResult::UNMASK_FOR_AUTOFILL &&
       ShouldRequestExpirationDate()) {
     ids = IDS_AUTOFILL_CARD_UNMASK_PROMPT_INSTRUCTIONS_EXPIRED;
   } else {
@@ -265,7 +266,7 @@ bool CardUnmaskPromptControllerImpl::CanStoreLocally() const {
   // Never offer to save for incognito.
   if (is_off_the_record_)
     return false;
-  if (reason_ == AutofillClient::UNMASK_FOR_PAYMENT_REQUEST)
+  if (reason_ == payments::UnmaskCardReason::UNMASK_FOR_PAYMENT_REQUEST)
     return false;
   if (card_.record_type() == CreditCard::LOCAL_CARD)
     return false;
@@ -317,8 +318,9 @@ base::TimeDelta CardUnmaskPromptControllerImpl::GetSuccessMessageDuration()
     const {
   return base::TimeDelta::FromMilliseconds(
       card_.record_type() == CreditCard::LOCAL_CARD ||
-              reason_ == AutofillClient::UNMASK_FOR_PAYMENT_REQUEST
-          ? 0 : 500);
+              reason_ == payments::UnmaskCardReason::UNMASK_FOR_PAYMENT_REQUEST
+          ? 0
+          : 500);
 }
 
 }  // namespace autofill

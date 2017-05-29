@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "components/payments/core/payments_service_url.h"
+
 #include "base/command_line.h"
-#include "components/autofill/core/browser/payments/payments_service_url.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
-namespace autofill {
 namespace payments {
 
 TEST(PaymentsServiceSandboxUrl, CheckSandboxUrls) {
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kWalletServiceUseSandbox, "1");
+      autofill::switches::kWalletServiceUseSandbox, "1");
 
   const char kExpectedSandboxURL[] =
       "https://payments.sandbox.google.com/u/1#paymentMethods";
@@ -24,7 +24,7 @@ TEST(PaymentsServiceSandboxUrl, CheckSandboxUrls) {
 
 TEST(PaymentsServiceSandboxUrl, CheckProdUrls) {
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kWalletServiceUseSandbox, "0");
+      autofill::switches::kWalletServiceUseSandbox, "0");
 
   const char kExpectedURL[] = "https://payments.google.com/u/1#paymentMethods";
 
@@ -33,4 +33,3 @@ TEST(PaymentsServiceSandboxUrl, CheckProdUrls) {
 }
 
 }  // namespace payments
-}  // namespace autofill

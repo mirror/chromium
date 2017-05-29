@@ -58,8 +58,8 @@ void FullCardRequester::GetFullCard(
   DCHECK(card);
   DCHECK(autofill_manager);
   autofill_manager->GetOrCreateFullCardRequest()->GetFullCard(
-      *card, autofill::AutofillClient::UNMASK_FOR_PAYMENT_REQUEST, AsWeakPtr(),
-      AsWeakPtr());
+      *card, payments::UnmaskCardReason::UNMASK_FOR_PAYMENT_REQUEST,
+      AsWeakPtr(), AsWeakPtr());
 }
 
 void FullCardRequester::OnFullCardRequestSucceeded(
@@ -78,8 +78,8 @@ void FullCardRequester::OnFullCardRequestFailed() {
 
 void FullCardRequester::ShowUnmaskPrompt(
     const autofill::CreditCard& card,
-    autofill::AutofillClient::UnmaskCardReason reason,
-    base::WeakPtr<autofill::CardUnmaskDelegate> delegate) {
+    payments::UnmaskCardReason reason,
+    base::WeakPtr<payments::CardUnmaskDelegate> delegate) {
   unmask_controller_.ShowPrompt(
       // PRCardUnmaskPromptViewBridge manages its own lifetime.
       new PRCardUnmaskPromptViewBridge(&unmask_controller_,
@@ -88,6 +88,6 @@ void FullCardRequester::ShowUnmaskPrompt(
 }
 
 void FullCardRequester::OnUnmaskVerificationResult(
-    autofill::AutofillClient::PaymentsRpcResult result) {
+    payments::PaymentsRpcResult result) {
   unmask_controller_.OnVerificationResult(result);
 }

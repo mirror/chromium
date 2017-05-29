@@ -417,20 +417,19 @@ void AutofillMetrics::LogTimeBeforeAbandonUnmasking(
 }
 
 // static
-void AutofillMetrics::LogRealPanResult(
-    AutofillClient::PaymentsRpcResult result) {
+void AutofillMetrics::LogRealPanResult(payments::PaymentsRpcResult result) {
   PaymentsRpcResult metric_result;
   switch (result) {
-    case AutofillClient::SUCCESS:
+    case payments::PaymentsRpcResult::SUCCESS:
       metric_result = PAYMENTS_RESULT_SUCCESS;
       break;
-    case AutofillClient::TRY_AGAIN_FAILURE:
+    case payments::PaymentsRpcResult::TRY_AGAIN_FAILURE:
       metric_result = PAYMENTS_RESULT_TRY_AGAIN_FAILURE;
       break;
-    case AutofillClient::PERMANENT_FAILURE:
+    case payments::PaymentsRpcResult::PERMANENT_FAILURE:
       metric_result = PAYMENTS_RESULT_PERMANENT_FAILURE;
       break;
-    case AutofillClient::NETWORK_ERROR:
+    case payments::PaymentsRpcResult::NETWORK_ERROR:
       metric_result = PAYMENTS_RESULT_NETWORK_ERROR;
       break;
     default:
@@ -442,19 +441,18 @@ void AutofillMetrics::LogRealPanResult(
 }
 
 // static
-void AutofillMetrics::LogRealPanDuration(
-    const base::TimeDelta& duration,
-    AutofillClient::PaymentsRpcResult result) {
+void AutofillMetrics::LogRealPanDuration(const base::TimeDelta& duration,
+                                         payments::PaymentsRpcResult result) {
   std::string suffix;
   switch (result) {
-    case AutofillClient::SUCCESS:
+    case payments::PaymentsRpcResult::SUCCESS:
       suffix = "Success";
       break;
-    case AutofillClient::TRY_AGAIN_FAILURE:
-    case AutofillClient::PERMANENT_FAILURE:
+    case payments::PaymentsRpcResult::TRY_AGAIN_FAILURE:
+    case payments::PaymentsRpcResult::PERMANENT_FAILURE:
       suffix = "Failure";
       break;
-    case AutofillClient::NETWORK_ERROR:
+    case payments::PaymentsRpcResult::NETWORK_ERROR:
       suffix = "NetworkError";
       break;
     default:
@@ -468,19 +466,18 @@ void AutofillMetrics::LogRealPanDuration(
 }
 
 // static
-void AutofillMetrics::LogUnmaskingDuration(
-    const base::TimeDelta& duration,
-    AutofillClient::PaymentsRpcResult result) {
+void AutofillMetrics::LogUnmaskingDuration(const base::TimeDelta& duration,
+                                           payments::PaymentsRpcResult result) {
   std::string suffix;
   switch (result) {
-    case AutofillClient::SUCCESS:
+    case payments::PaymentsRpcResult::SUCCESS:
       suffix = "Success";
       break;
-    case AutofillClient::TRY_AGAIN_FAILURE:
-    case AutofillClient::PERMANENT_FAILURE:
+    case payments::PaymentsRpcResult::TRY_AGAIN_FAILURE:
+    case payments::PaymentsRpcResult::PERMANENT_FAILURE:
       suffix = "Failure";
       break;
-    case AutofillClient::NETWORK_ERROR:
+    case payments::PaymentsRpcResult::NETWORK_ERROR:
       suffix = "NetworkError";
       break;
     default:

@@ -33,11 +33,11 @@
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/country_combobox_model.h"
 #include "components/autofill/core/browser/credit_card.h"
-#include "components/autofill/core/browser/payments/payments_service_url.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/phone_number_i18n.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/autofill/core/common/autofill_switches.h"
+#include "components/payments/core/payments_service_url.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_ui.h"
 #include "third_party/libaddressinput/messages.h"
@@ -112,12 +112,10 @@ void AutofillOptionsHandler::GetLocalizedValues(
   SetAddressOverlayStrings(localized_strings);
   SetCreditCardOverlayStrings(localized_strings);
 
-  localized_strings->SetString(
-      "paymentsManageAddressesUrl",
-      autofill::payments::GetManageAddressesUrl(0).spec());
-  localized_strings->SetString(
-      "paymentsManageInstrumentsUrl",
-      autofill::payments::GetManageInstrumentsUrl(0).spec());
+  localized_strings->SetString("paymentsManageAddressesUrl",
+                               payments::GetManageAddressesUrl(0).spec());
+  localized_strings->SetString("paymentsManageInstrumentsUrl",
+                               payments::GetManageInstrumentsUrl(0).spec());
 }
 
 void AutofillOptionsHandler::InitializeHandler() {

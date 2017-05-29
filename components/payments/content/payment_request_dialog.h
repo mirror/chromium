@@ -6,7 +6,7 @@
 #define COMPONENTS_PAYMENTS_CONTENT_PAYMENT_REQUEST_DIALOG_H_
 
 #include "base/memory/weak_ptr.h"
-#include "components/autofill/core/browser/payments/full_card_request.h"
+#include "components/payments/core/full_card_request.h"
 
 namespace content {
 class WebContents;
@@ -29,8 +29,7 @@ class PaymentRequestDialog {
   // entered by the user.
   virtual void ShowCvcUnmaskPrompt(
       const autofill::CreditCard& credit_card,
-      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-          result_delegate,
+      base::WeakPtr<FullCardRequest::ResultDelegate> result_delegate,
       content::WebContents* web_contents) = 0;
 };
 

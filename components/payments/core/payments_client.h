@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_AUTOFILL_CORE_BROWSER_PAYMENTS_PAYMENTS_CLIENT_H_
-#define COMPONENTS_AUTOFILL_CORE_BROWSER_PAYMENTS_PAYMENTS_CLIENT_H_
+#ifndef COMPONENTS_PAYMENTS_CORE_PAYMENTS_CLIENT_H_
+#define COMPONENTS_PAYMENTS_CORE_PAYMENTS_CLIENT_H_
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/autofill_profile.h"
-#include "components/autofill/core/browser/card_unmask_delegate.h"
 #include "components/autofill/core/browser/credit_card.h"
+#include "components/payments/core/card_unmask_delegate.h"
+#include "components/payments/core/payments_request.h"
 #include "google_apis/gaia/oauth2_token_service.h"
 #include "net/url_request/url_fetcher_delegate.h"
 
@@ -22,11 +22,7 @@ class URLFetcher;
 class URLRequestContextGetter;
 }
 
-namespace autofill {
-
 namespace payments {
-
-class PaymentsRequest;
 
 class PaymentsClientDelegate {
  public:
@@ -35,21 +31,21 @@ class PaymentsClientDelegate {
 
   // Returns the real PAN retrieved from Payments. |real_pan| will be empty
   // on failure.
-  virtual void OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
+  virtual void OnDidGetRealPan(PaymentsRpcResult result,
                                const std::string& real_pan) = 0;
 
   // Returns the legal message retrieved from Payments. On failure or not
   // meeting Payments's conditions for upload, |legal_message| will contain
   // nullptr.
   virtual void OnDidGetUploadDetails(
-      AutofillClient::PaymentsRpcResult result,
+      PaymentsRpcResult result,
       const base::string16& context_token,
       std::unique_ptr<base::DictionaryValue> legal_message) = 0;
 
   // Returns the result of an upload request.
-  // If |result| == |AutofillClient::SUCCESS|, |server_id| may, optionally,
+  // If |result| == |SUCCESS|, |server_id| may, optionally,
   // contain the opaque identifier for the card on the server.
-  virtual void OnDidUploadCard(AutofillClient::PaymentsRpcResult result,
+  virtual void OnDidUploadCard(PaymentsRpcResult result,
                                const std::string& server_id) = 0;
 };
 
@@ -73,7 +69,7 @@ class PaymentsClient : public net::URLFetcherDelegate,
     UnmaskRequestDetails();
     ~UnmaskRequestDetails();
 
-    CreditCard card;
+    autofill::CreditCard card;
     std::string risk_data;
     CardUnmaskDelegate::UnmaskResponse user_response;
   };
@@ -85,9 +81,9 @@ class PaymentsClient : public net::URLFetcherDelegate,
     UploadRequestDetails(const UploadRequestDetails& other);
     ~UploadRequestDetails();
 
-    CreditCard card;
+    autofill::CreditCard card;
     base::string16 cvc;
-    std::vector<AutofillProfile> profiles;
+    std::vector<autofill::AutofillProfile> profiles;
     base::string16 context_token;
     std::string risk_data;
     std::string app_locale;
@@ -119,7 +115,7 @@ class PaymentsClient : public net::URLFetcherDelegate,
   // OnDidGetUploadDetails. |active_experiments| is used by payments server to
   // track requests that were triggered by enabled features.
   virtual void GetUploadDetails(
-      const std::vector<AutofillProfile>& addresses,
+      const std::vector<autofill::AutofillProfile>& addresses,
       const std::vector<const char*>& active_experiments,
       const std::string& app_locale);
 
@@ -186,6 +182,5 @@ class PaymentsClient : public net::URLFetcherDelegate,
 };
 
 }  // namespace payments
-}  // namespace autofill
 
-#endif  // COMPONENTS_AUTOFILL_CORE_BROWSER_PAYMENTS_PAYMENTS_CLIENT_H_
+#endif  // COMPONENTS_PAYMENTS_CORE_PAYMENTS_CLIENT_H_

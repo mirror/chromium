@@ -13,15 +13,11 @@
 #include "base/strings/string16.h"
 #include "chrome/browser/ui/autofill/autofill_dialog_models.h"
 #include "chrome/browser/ui/views/payments/payment_request_sheet_controller.h"
-#include "components/autofill/core/browser/payments/full_card_request.h"
-#include "components/autofill/core/browser/payments/payments_client.h"
 #include "components/autofill/core/browser/risk_data_loader.h"
+#include "components/payments/core/full_card_request.h"
+#include "components/payments/core/payments_client.h"
 #include "ui/views/controls/combobox/combobox_listener.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
-
-namespace autofill {
-class AutofillClient;
-}
 
 namespace content {
 class WebContents;
@@ -37,46 +33,42 @@ class PaymentRequestSpec;
 class PaymentRequestState;
 class PaymentRequestDialogView;
 
-class CvcUnmaskViewController
-    : public PaymentRequestSheetController,
-      public autofill::RiskDataLoader,
-      public autofill::payments::PaymentsClientDelegate,
-      public autofill::payments::FullCardRequest::UIDelegate,
-      public views::ComboboxListener,
-      public views::TextfieldController {
+class CvcUnmaskViewController : public PaymentRequestSheetController,
+                                public autofill::RiskDataLoader,
+                                public PaymentsClientDelegate,
+                                public FullCardRequest::UIDelegate,
+                                public views::ComboboxListener,
+                                public views::TextfieldController {
  public:
   CvcUnmaskViewController(
       PaymentRequestSpec* spec,
       PaymentRequestState* state,
       PaymentRequestDialogView* dialog,
       const autofill::CreditCard& credit_card,
-      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-          result_delegate,
+      base::WeakPtr<FullCardRequest::ResultDelegate> result_delegate,
       content::WebContents* web_contents);
   ~CvcUnmaskViewController() override;
 
-  // autofill::payments::PaymentsClientDelegate:
+  // PaymentsClientDelegate:
   IdentityProvider* GetIdentityProvider() override;
-  void OnDidGetRealPan(autofill::AutofillClient::PaymentsRpcResult result,
+  void OnDidGetRealPan(PaymentsRpcResult result,
                        const std::string& real_pan) override;
   void OnDidGetUploadDetails(
-      autofill::AutofillClient::PaymentsRpcResult result,
+      PaymentsRpcResult result,
       const base::string16& context_token,
       std::unique_ptr<base::DictionaryValue> legal_message) override;
-  void OnDidUploadCard(autofill::AutofillClient::PaymentsRpcResult result,
+  void OnDidUploadCard(PaymentsRpcResult result,
                        const std::string& server_id) override;
 
   // autofill::RiskDataLoader:
   void LoadRiskData(
       const base::Callback<void(const std::string&)>& callback) override;
 
-  // autofill::payments::FullCardRequest::UIDelegate:
-  void ShowUnmaskPrompt(
-      const autofill::CreditCard& card,
-      autofill::AutofillClient::UnmaskCardReason reason,
-      base::WeakPtr<autofill::CardUnmaskDelegate> delegate) override;
-  void OnUnmaskVerificationResult(
-      autofill::AutofillClient::PaymentsRpcResult result) override;
+  // FullCardRequest::UIDelegate:
+  void ShowUnmaskPrompt(const autofill::CreditCard& card,
+                        UnmaskCardReason reason,
+                        base::WeakPtr<CardUnmaskDelegate> delegate) override;
+  void OnUnmaskVerificationResult(PaymentsRpcResult result) override;
 
  protected:
   // PaymentRequestSheetController:
@@ -113,9 +105,9 @@ class CvcUnmaskViewController
   content::WebContents* web_contents_;
   // The identity provider, used for Payments integration.
   std::unique_ptr<IdentityProvider> identity_provider_;
-  autofill::payments::PaymentsClient payments_client_;
-  autofill::payments::FullCardRequest full_card_request_;
-  base::WeakPtr<autofill::CardUnmaskDelegate> unmask_delegate_;
+  PaymentsClient payments_client_;
+  FullCardRequest full_card_request_;
+  base::WeakPtr<CardUnmaskDelegate> unmask_delegate_;
 
   base::WeakPtrFactory<CvcUnmaskViewController> weak_ptr_factory_;
 

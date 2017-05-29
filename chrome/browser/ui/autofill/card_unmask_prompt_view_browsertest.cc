@@ -17,8 +17,8 @@
 #include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
-#include "components/autofill/core/browser/card_unmask_delegate.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller_impl.h"
+#include "components/payments/core/card_unmask_delegate.h"
 #include "components/user_prefs/user_prefs.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
@@ -32,14 +32,15 @@ namespace {
 constexpr const char kExpiryExpired[] = "expired";
 constexpr const char kExpiryValid[] = "valid";
 
-class TestCardUnmaskDelegate : public CardUnmaskDelegate {
+class TestCardUnmaskDelegate : public payments::CardUnmaskDelegate {
  public:
   TestCardUnmaskDelegate() : weak_factory_(this) {}
 
   virtual ~TestCardUnmaskDelegate() {}
 
   // CardUnmaskDelegate implementation.
-  void OnUnmaskResponse(const UnmaskResponse& response) override {
+  void OnUnmaskResponse(
+      const CardUnmaskDelegate::UnmaskResponse& response) override {
     response_ = response;
   }
   void OnUnmaskPromptClosed() override {}
@@ -48,10 +49,10 @@ class TestCardUnmaskDelegate : public CardUnmaskDelegate {
     return weak_factory_.GetWeakPtr();
   }
 
-  UnmaskResponse response() { return response_; }
+  CardUnmaskDelegate::UnmaskResponse response() { return response_; }
 
  private:
-  UnmaskResponse response_;
+  CardUnmaskDelegate::UnmaskResponse response_;
 
   base::WeakPtrFactory<TestCardUnmaskDelegate> weak_factory_;
 
@@ -108,7 +109,8 @@ class CardUnmaskPromptViewBrowserTest : public DialogBrowserTest {
     CreditCard card = (name == kExpiryExpired)
                           ? test::GetMaskedServerCard()
                           : test::GetMaskedServerCardAmex();
-    controller()->ShowPrompt(dialog, card, AutofillClient::UNMASK_FOR_AUTOFILL,
+    controller()->ShowPrompt(dialog, card,
+                             payments::UnmaskCardReason::UNMASK_FOR_AUTOFILL,
                              delegate()->GetWeakPtr());
   }
 
@@ -153,7 +155,7 @@ IN_PROC_BROWSER_TEST_F(CardUnmaskPromptViewBrowserTest,
                                  base::ASCIIToUTF16("10"),
                                  base::ASCIIToUTF16("19"), false);
   EXPECT_EQ(base::ASCIIToUTF16("123"), delegate()->response().cvc);
-  controller()->OnVerificationResult(AutofillClient::SUCCESS);
+  controller()->OnVerificationResult(payments::PaymentsRpcResult::SUCCESS);
 
   // Simulate the user clicking [x] before the "Success!" message disappears.
   CardUnmaskPromptViewTester::For(controller()->view())->Close();

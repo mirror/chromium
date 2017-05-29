@@ -2,18 +2,44 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_AUTOFILL_CORE_BROWSER_PAYMENTS_PAYMENTS_REQUEST_H_
-#define COMPONENTS_AUTOFILL_CORE_BROWSER_PAYMENTS_PAYMENTS_REQUEST_H_
+#ifndef COMPONENTS_PAYMENTS_CORE_PAYMENTS_REQUEST_H_
+#define COMPONENTS_PAYMENTS_CORE_PAYMENTS_REQUEST_H_
 
 #include <memory>
 
-namespace autofill {
-
-class AutofillClient;
+#include "base/values.h"
 
 namespace payments {
 
 class PaymentsClientDelegate;
+
+enum PaymentsRpcResult {
+  // Empty result. Used for initializing variables and should generally
+  // not be returned nor passed as arguments unless explicitly allowed by
+  // the API.
+  NONE,
+
+  // Request succeeded.
+  SUCCESS,
+
+  // Request failed; try again.
+  TRY_AGAIN_FAILURE,
+
+  // Request failed; don't try again.
+  PERMANENT_FAILURE,
+
+  // Unable to connect to Payments servers. Prompt user to check internet
+  // connection.
+  NETWORK_ERROR,
+};
+
+enum UnmaskCardReason {
+  // The card is being unmasked for PaymentRequest.
+  UNMASK_FOR_PAYMENT_REQUEST,
+
+  // The card is being unmasked for Autofill.
+  UNMASK_FOR_AUTOFILL,
+};
 
 // Interface for the various Payments request types.
 class PaymentsRequest {
@@ -40,10 +66,9 @@ class PaymentsRequest {
   // Invokes the appropriate callback in the delegate based on what type of
   // request this is.
   virtual void RespondToDelegate(PaymentsClientDelegate* delegate,
-                                 AutofillClient::PaymentsRpcResult result) = 0;
+                                 PaymentsRpcResult result) = 0;
 };
 
 }  // namespace payments
-}  // namespace autofill
 
-#endif  // COMPONENTS_AUTOFILL_CORE_BROWSER_PAYMENTS_PAYMENTS_REQUEST_H_
+#endif  // COMPONENTS_PAYMENTS_CORE_PAYMENTS_REQUEST_H_

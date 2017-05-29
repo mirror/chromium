@@ -98,7 +98,7 @@ class PaymentRequestDialogView : public views::DialogDelegateView,
   bool ShouldShowCloseButton() const override;
   int GetDialogButtons() const override;
 
-  // payments::PaymentRequestDialog:
+  // PaymentRequestDialog:
   void ShowDialog() override;
   void CloseDialog() override;
   void ShowErrorMessage() override;
@@ -154,8 +154,7 @@ class PaymentRequestDialogView : public views::DialogDelegateView,
 
   void ShowCvcUnmaskPrompt(
       const autofill::CreditCard& credit_card,
-      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-          result_delegate,
+      base::WeakPtr<FullCardRequest::ResultDelegate> result_delegate,
       content::WebContents* web_contents) override;
 
   // Shows/Hides a full dialog spinner with the "processing" label that doesn't

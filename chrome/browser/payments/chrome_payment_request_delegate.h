@@ -36,8 +36,7 @@ class ChromePaymentRequestDelegate : public PaymentRequestDelegate {
   const GURL& GetLastCommittedURL() const override;
   void DoFullCardRequest(
       const autofill::CreditCard& credit_card,
-      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-          result_delegate) override;
+      base::WeakPtr<FullCardRequest::ResultDelegate> result_delegate) override;
   AddressNormalizer* GetAddressNormalizer() override;
   autofill::RegionDataLoader* GetRegionDataLoader() override;
   ukm::UkmRecorder* GetUkmRecorder() override;

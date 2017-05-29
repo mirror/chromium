@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/autofill/core/browser/payments/full_card_request.h"
+#include "components/payments/core/full_card_request.h"
 
 #include "base/bind.h"
 #include "base/logging.h"
@@ -13,12 +13,12 @@
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/common/autofill_clock.h"
 
-namespace autofill {
 namespace payments {
 
-FullCardRequest::FullCardRequest(RiskDataLoader* risk_data_loader,
-                                 payments::PaymentsClient* payments_client,
-                                 PersonalDataManager* personal_data_manager)
+FullCardRequest::FullCardRequest(
+    autofill::RiskDataLoader* risk_data_loader,
+    PaymentsClient* payments_client,
+    autofill::PersonalDataManager* personal_data_manager)
     : risk_data_loader_(risk_data_loader),
       payments_client_(payments_client),
       personal_data_manager_(personal_data_manager),
@@ -33,8 +33,8 @@ FullCardRequest::FullCardRequest(RiskDataLoader* risk_data_loader,
 
 FullCardRequest::~FullCardRequest() {}
 
-void FullCardRequest::GetFullCard(const CreditCard& card,
-                                  AutofillClient::UnmaskCardReason reason,
+void FullCardRequest::GetFullCard(const autofill::CreditCard& card,
+                                  UnmaskCardReason reason,
                                   base::WeakPtr<ResultDelegate> result_delegate,
                                   base::WeakPtr<UIDelegate> ui_delegate) {
   DCHECK(result_delegate);
@@ -52,9 +52,10 @@ void FullCardRequest::GetFullCard(const CreditCard& card,
   ui_delegate_ = ui_delegate;
   request_.reset(new payments::PaymentsClient::UnmaskRequestDetails);
   request_->card = card;
-  should_unmask_card_ = card.record_type() == CreditCard::MASKED_SERVER_CARD ||
-                        (card.record_type() == CreditCard::FULL_SERVER_CARD &&
-                         card.ShouldUpdateExpiration(AutofillClock::Now()));
+  should_unmask_card_ =
+      card.record_type() == autofill::CreditCard::MASKED_SERVER_CARD ||
+      (card.record_type() == autofill::CreditCard::FULL_SERVER_CARD &&
+       card.ShouldUpdateExpiration(autofill::AutofillClock::Now()));
   if (should_unmask_card_)
     payments_client_->Prepare();
 
@@ -74,12 +75,14 @@ bool FullCardRequest::IsGettingFullCard() const {
 
 void FullCardRequest::OnUnmaskResponse(const UnmaskResponse& response) {
   if (!response.exp_month.empty())
-    request_->card.SetRawInfo(CREDIT_CARD_EXP_MONTH, response.exp_month);
+    request_->card.SetRawInfo(autofill::CREDIT_CARD_EXP_MONTH,
+                              response.exp_month);
 
   if (!response.exp_year.empty())
-    request_->card.SetRawInfo(CREDIT_CARD_EXP_4_DIGIT_YEAR, response.exp_year);
+    request_->card.SetRawInfo(autofill::CREDIT_CARD_EXP_4_DIGIT_YEAR,
+                              response.exp_year);
 
-  if (request_->card.record_type() == CreditCard::LOCAL_CARD &&
+  if (request_->card.record_type() == autofill::CreditCard::LOCAL_CARD &&
       !request_->card.guid().empty() &&
       (!response.exp_month.empty() || !response.exp_year.empty())) {
     personal_data_manager_->UpdateCreditCard(request_->card);
@@ -90,7 +93,7 @@ void FullCardRequest::OnUnmaskResponse(const UnmaskResponse& response) {
       result_delegate_->OnFullCardRequestSucceeded(request_->card,
                                                    response.cvc);
     if (ui_delegate_)
-      ui_delegate_->OnUnmaskVerificationResult(AutofillClient::SUCCESS);
+      ui_delegate_->OnUnmaskVerificationResult(SUCCESS);
     Reset();
 
     return;
@@ -98,7 +101,7 @@ void FullCardRequest::OnUnmaskResponse(const UnmaskResponse& response) {
 
   request_->user_response = response;
   if (!request_->risk_data.empty()) {
-    real_pan_request_timestamp_ = AutofillClock::Now();
+    real_pan_request_timestamp_ = autofill::AutofillClock::Now();
     payments_client_->UnmaskCard(*request_);
   }
 }
@@ -113,39 +116,39 @@ void FullCardRequest::OnUnmaskPromptClosed() {
 void FullCardRequest::OnDidGetUnmaskRiskData(const std::string& risk_data) {
   request_->risk_data = risk_data;
   if (!request_->user_response.cvc.empty()) {
-    real_pan_request_timestamp_ = AutofillClock::Now();
+    real_pan_request_timestamp_ = autofill::AutofillClock::Now();
     payments_client_->UnmaskCard(*request_);
   }
 }
 
-void FullCardRequest::OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
+void FullCardRequest::OnDidGetRealPan(PaymentsRpcResult result,
                                       const std::string& real_pan) {
-  AutofillMetrics::LogRealPanDuration(
-      AutofillClock::Now() - real_pan_request_timestamp_, result);
+  autofill::AutofillMetrics::LogRealPanDuration(
+      autofill::AutofillClock::Now() - real_pan_request_timestamp_, result);
 
   if (ui_delegate_)
     ui_delegate_->OnUnmaskVerificationResult(result);
 
   switch (result) {
     // Wait for user retry.
-    case AutofillClient::TRY_AGAIN_FAILURE:
+    case TRY_AGAIN_FAILURE:
       break;
 
     // Neither PERMANENT_FAILURE nor NETWORK_ERROR allow retry.
-    case AutofillClient::PERMANENT_FAILURE:
+    case PERMANENT_FAILURE:
     // Intentional fall through.
-    case AutofillClient::NETWORK_ERROR: {
+    case NETWORK_ERROR: {
       if (result_delegate_)
         result_delegate_->OnFullCardRequestFailed();
       Reset();
       break;
     }
 
-    case AutofillClient::SUCCESS: {
+    case SUCCESS: {
       DCHECK(!real_pan.empty());
-      request_->card.set_record_type(CreditCard::FULL_SERVER_CARD);
+      request_->card.set_record_type(autofill::CreditCard::FULL_SERVER_CARD);
       request_->card.SetNumber(base::UTF8ToUTF16(real_pan));
-      request_->card.SetServerStatus(CreditCard::OK);
+      request_->card.SetServerStatus(autofill::CreditCard::OK);
 
       if (request_->user_response.should_store_pan)
         personal_data_manager_->UpdateServerCreditCard(request_->card);
@@ -157,7 +160,7 @@ void FullCardRequest::OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
       break;
     }
 
-    case AutofillClient::NONE:
+    case NONE:
       NOTREACHED();
       break;
   }
@@ -173,4 +176,3 @@ void FullCardRequest::Reset() {
 }
 
 }  // namespace payments
-}  // namespace autofill

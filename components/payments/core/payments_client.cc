@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/autofill/core/browser/payments/payments_client.h"
+#include "components/payments/core/payments_client.h"
 
 #include <memory>
 #include <utility>
@@ -21,9 +21,9 @@
 #include "components/autofill/core/browser/autofill_data_model.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/credit_card.h"
-#include "components/autofill/core/browser/payments/payments_request.h"
-#include "components/autofill/core/browser/payments/payments_service_url.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
+#include "components/payments/core/payments_request.h"
+#include "components/payments/core/payments_service_url.h"
 #include "google_apis/gaia/identity_provider.h"
 #include "net/base/escape.h"
 #include "net/base/load_flags.h"
@@ -32,7 +32,6 @@
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context_getter.h"
 
-namespace autofill {
 namespace payments {
 
 namespace {
@@ -93,21 +92,23 @@ std::unique_ptr<base::DictionaryValue> BuildRiskDictionary(
   return risk_data;
 }
 
-void SetStringIfNotEmpty(const AutofillDataModel& profile,
-                         const ServerFieldType& type,
+void SetStringIfNotEmpty(const autofill::AutofillDataModel& profile,
+                         const autofill::ServerFieldType& type,
                          const std::string& app_locale,
                          const std::string& path,
                          base::DictionaryValue* dictionary) {
-  const base::string16 value = profile.GetInfo(AutofillType(type), app_locale);
+  const base::string16 value =
+      profile.GetInfo(autofill::AutofillType(type), app_locale);
   if (!value.empty())
     dictionary->SetString(path, value);
 }
 
-void AppendStringIfNotEmpty(const AutofillProfile& profile,
-                            const ServerFieldType& type,
+void AppendStringIfNotEmpty(const autofill::AutofillProfile& profile,
+                            const autofill::ServerFieldType& type,
                             const std::string& app_locale,
                             base::ListValue* list) {
-  const base::string16 value = profile.GetInfo(AutofillType(type), app_locale);
+  const base::string16 value =
+      profile.GetInfo(autofill::AutofillType(type), app_locale);
   if (!value.empty())
     list->AppendString(value);
 }
@@ -117,36 +118,37 @@ void AppendStringIfNotEmpty(const AutofillProfile& profile,
 // |include_non_location_data| is false, the name and phone number in |profile|
 // are not included.
 std::unique_ptr<base::DictionaryValue> BuildAddressDictionary(
-    const AutofillProfile& profile,
+    const autofill::AutofillProfile& profile,
     const std::string& app_locale,
     bool include_non_location_data) {
   std::unique_ptr<base::DictionaryValue> postal_address(
       new base::DictionaryValue());
 
   if (include_non_location_data) {
-    SetStringIfNotEmpty(profile, NAME_FULL, app_locale,
+    SetStringIfNotEmpty(profile, autofill::NAME_FULL, app_locale,
                         PaymentsClient::kRecipientName, postal_address.get());
   }
 
   std::unique_ptr<base::ListValue> address_lines(new base::ListValue());
-  AppendStringIfNotEmpty(profile, ADDRESS_HOME_LINE1, app_locale,
+  AppendStringIfNotEmpty(profile, autofill::ADDRESS_HOME_LINE1, app_locale,
                          address_lines.get());
-  AppendStringIfNotEmpty(profile, ADDRESS_HOME_LINE2, app_locale,
+  AppendStringIfNotEmpty(profile, autofill::ADDRESS_HOME_LINE2, app_locale,
                          address_lines.get());
-  AppendStringIfNotEmpty(profile, ADDRESS_HOME_LINE3, app_locale,
+  AppendStringIfNotEmpty(profile, autofill::ADDRESS_HOME_LINE3, app_locale,
                          address_lines.get());
   if (!address_lines->empty())
     postal_address->Set("address_line", std::move(address_lines));
 
-  SetStringIfNotEmpty(profile, ADDRESS_HOME_CITY, app_locale, "locality_name",
-                      postal_address.get());
-  SetStringIfNotEmpty(profile, ADDRESS_HOME_STATE, app_locale,
+  SetStringIfNotEmpty(profile, autofill::ADDRESS_HOME_CITY, app_locale,
+                      "locality_name", postal_address.get());
+  SetStringIfNotEmpty(profile, autofill::ADDRESS_HOME_STATE, app_locale,
                       "administrative_area_name", postal_address.get());
-  SetStringIfNotEmpty(profile, ADDRESS_HOME_ZIP, app_locale,
+  SetStringIfNotEmpty(profile, autofill::ADDRESS_HOME_ZIP, app_locale,
                       "postal_code_number", postal_address.get());
 
   // Use GetRawInfo to get a country code instead of the country name:
-  const base::string16 country_code = profile.GetRawInfo(ADDRESS_HOME_COUNTRY);
+  const base::string16 country_code =
+      profile.GetRawInfo(autofill::ADDRESS_HOME_COUNTRY);
   if (!country_code.empty())
     postal_address->SetString("country_name_code", country_code);
 
@@ -154,7 +156,7 @@ std::unique_ptr<base::DictionaryValue> BuildAddressDictionary(
   address->Set("postal_address", std::move(postal_address));
 
   if (include_non_location_data) {
-    SetStringIfNotEmpty(profile, PHONE_HOME_WHOLE_NUMBER, app_locale,
+    SetStringIfNotEmpty(profile, autofill::PHONE_HOME_WHOLE_NUMBER, app_locale,
                         PaymentsClient::kPhoneNumber, address.get());
   }
 
@@ -181,9 +183,10 @@ class UnmaskCardRequest : public PaymentsRequest {
  public:
   UnmaskCardRequest(const PaymentsClient::UnmaskRequestDetails& request_details)
       : request_details_(request_details) {
-    DCHECK(
-        CreditCard::MASKED_SERVER_CARD == request_details.card.record_type() ||
-        CreditCard::FULL_SERVER_CARD == request_details.card.record_type());
+    DCHECK(autofill::CreditCard::MASKED_SERVER_CARD ==
+               request_details.card.record_type() ||
+           autofill::CreditCard::FULL_SERVER_CARD ==
+               request_details.card.record_type());
   }
   ~UnmaskCardRequest() override {}
 
@@ -226,7 +229,7 @@ class UnmaskCardRequest : public PaymentsRequest {
   bool IsResponseComplete() override { return !real_pan_.empty(); }
 
   void RespondToDelegate(PaymentsClientDelegate* delegate,
-                         AutofillClient::PaymentsRpcResult result) override {
+                         PaymentsRpcResult result) override {
     delegate->OnDidGetRealPan(result, real_pan_);
   }
 
@@ -237,9 +240,10 @@ class UnmaskCardRequest : public PaymentsRequest {
 
 class GetUploadDetailsRequest : public PaymentsRequest {
  public:
-  GetUploadDetailsRequest(const std::vector<AutofillProfile>& addresses,
-                          const std::vector<const char*>& active_experiments,
-                          const std::string& app_locale)
+  GetUploadDetailsRequest(
+      const std::vector<autofill::AutofillProfile>& addresses,
+      const std::vector<const char*>& active_experiments,
+      const std::string& app_locale)
       : addresses_(addresses),
         active_experiments_(active_experiments),
         app_locale_(app_locale) {}
@@ -258,7 +262,7 @@ class GetUploadDetailsRequest : public PaymentsRequest {
     request_dict.Set("context", std::move(context));
 
     std::unique_ptr<base::ListValue> addresses(new base::ListValue());
-    for (const AutofillProfile& profile : addresses_) {
+    for (const autofill::AutofillProfile& profile : addresses_) {
       // These addresses are used by Payments to (1) accurately determine the
       // user's country in order to show the correct legal documents and (2) to
       // verify that the addresses are valid for their purposes so that we don't
@@ -289,13 +293,13 @@ class GetUploadDetailsRequest : public PaymentsRequest {
   }
 
   void RespondToDelegate(PaymentsClientDelegate* delegate,
-                         AutofillClient::PaymentsRpcResult result) override {
+                         PaymentsRpcResult result) override {
     delegate->OnDidGetUploadDetails(result, context_token_,
                                     std::move(legal_message_));
   }
 
  private:
-  const std::vector<AutofillProfile> addresses_;
+  const std::vector<autofill::AutofillProfile> addresses_;
   const std::vector<const char*> active_experiments_;
   std::string app_locale_;
   base::string16 context_token_;
@@ -326,11 +330,11 @@ class UploadCardRequest : public PaymentsRequest {
     context->SetString("language_code", app_locale);
     request_dict.Set("context", std::move(context));
 
-    SetStringIfNotEmpty(request_details_.card, CREDIT_CARD_NAME_FULL,
+    SetStringIfNotEmpty(request_details_.card, autofill::CREDIT_CARD_NAME_FULL,
                         app_locale, "cardholder_name", &request_dict);
 
     std::unique_ptr<base::ListValue> addresses(new base::ListValue());
-    for (const AutofillProfile& profile : request_details_.profiles) {
+    for (const autofill::AutofillProfile& profile : request_details_.profiles) {
       addresses->Append(BuildAddressDictionary(profile, app_locale, true));
     }
     request_dict.Set("address", std::move(addresses));
@@ -339,9 +343,10 @@ class UploadCardRequest : public PaymentsRequest {
 
     int value = 0;
     const base::string16 exp_month = request_details_.card.GetInfo(
-        AutofillType(CREDIT_CARD_EXP_MONTH), app_locale);
+        autofill::AutofillType(autofill::CREDIT_CARD_EXP_MONTH), app_locale);
     const base::string16 exp_year = request_details_.card.GetInfo(
-        AutofillType(CREDIT_CARD_EXP_4_DIGIT_YEAR), app_locale);
+        autofill::AutofillType(autofill::CREDIT_CARD_EXP_4_DIGIT_YEAR),
+        app_locale);
     if (base::StringToInt(exp_month, &value))
       request_dict.SetInteger("expiration_month", value);
     if (base::StringToInt(exp_year, &value))
@@ -350,7 +355,7 @@ class UploadCardRequest : public PaymentsRequest {
     SetActiveExperiments(request_details_.active_experiments, &request_dict);
 
     const base::string16 pan = request_details_.card.GetInfo(
-        AutofillType(CREDIT_CARD_NUMBER), app_locale);
+        autofill::AutofillType(autofill::CREDIT_CARD_NUMBER), app_locale);
     std::string json_request;
     base::JSONWriter::Write(request_dict, &json_request);
     std::string request_content = base::StringPrintf(
@@ -371,7 +376,7 @@ class UploadCardRequest : public PaymentsRequest {
   bool IsResponseComplete() override { return true; }
 
   void RespondToDelegate(PaymentsClientDelegate* delegate,
-                         AutofillClient::PaymentsRpcResult result) override {
+                         PaymentsRpcResult result) override {
     delegate->OnDidUploadCard(result, server_id_);
   }
 
@@ -416,7 +421,7 @@ void PaymentsClient::UnmaskCard(
 }
 
 void PaymentsClient::GetUploadDetails(
-    const std::vector<AutofillProfile>& addresses,
+    const std::vector<autofill::AutofillProfile>& addresses,
     const std::vector<const char*>& active_experiments,
     const std::string& app_locale) {
   IssueRequest(base::MakeUnique<GetUploadDetailsRequest>(
@@ -514,7 +519,7 @@ void PaymentsClient::OnURLFetchComplete(const net::URLFetcher* source) {
   source->GetResponseAsString(&data);
   VLOG(2) << "Got data: " << data;
 
-  AutofillClient::PaymentsRpcResult result = AutofillClient::SUCCESS;
+  PaymentsRpcResult result = PaymentsRpcResult::SUCCESS;
 
   switch (response_code) {
     // Valid response.
@@ -530,16 +535,16 @@ void PaymentsClient::OnURLFetchComplete(const net::URLFetcher* source) {
       }
 
       if (base::LowerCaseEqualsASCII(error_code, "internal"))
-        result = AutofillClient::TRY_AGAIN_FAILURE;
+        result = PaymentsRpcResult::TRY_AGAIN_FAILURE;
       else if (!error_code.empty() || !request_->IsResponseComplete())
-        result = AutofillClient::PERMANENT_FAILURE;
+        result = PaymentsRpcResult::PERMANENT_FAILURE;
 
       break;
     }
 
     case net::HTTP_UNAUTHORIZED: {
       if (has_retried_authorization_) {
-        result = AutofillClient::PERMANENT_FAILURE;
+        result = PaymentsRpcResult::PERMANENT_FAILURE;
         break;
       }
       has_retried_authorization_ = true;
@@ -552,18 +557,18 @@ void PaymentsClient::OnURLFetchComplete(const net::URLFetcher* source) {
     // TODO(estade): is this actually how network connectivity issues are
     // reported?
     case net::HTTP_REQUEST_TIMEOUT: {
-      result = AutofillClient::NETWORK_ERROR;
+      result = PaymentsRpcResult::NETWORK_ERROR;
       break;
     }
 
     // Handle anything else as a generic (permanent) failure.
     default: {
-      result = AutofillClient::PERMANENT_FAILURE;
+      result = PaymentsRpcResult::PERMANENT_FAILURE;
       break;
     }
   }
 
-  if (result != AutofillClient::SUCCESS) {
+  if (result != PaymentsRpcResult::SUCCESS) {
     VLOG(1) << "Payments returned error: " << response_code
             << " with data: " << data;
   }
@@ -590,7 +595,8 @@ void PaymentsClient::OnGetTokenFailure(
   VLOG(1) << "Unhandled OAuth2 error: " << error.ToString();
   if (url_fetcher_) {
     url_fetcher_.reset();
-    request_->RespondToDelegate(delegate_, AutofillClient::PERMANENT_FAILURE);
+    request_->RespondToDelegate(delegate_,
+                                PaymentsRpcResult::PERMANENT_FAILURE);
   }
   access_token_request_.reset();
 }
@@ -621,4 +627,3 @@ void PaymentsClient::SetOAuth2TokenAndStartRequest() {
 }
 
 }  // namespace payments
-}  // namespace autofill

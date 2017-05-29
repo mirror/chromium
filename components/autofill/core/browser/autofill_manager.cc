@@ -755,7 +755,7 @@ void AutofillManager::FillOrPreviewCreditCardForm(
       unmasking_field_ = field;
       masked_card_ = credit_card;
       GetOrCreateFullCardRequest()->GetFullCard(
-          masked_card_, AutofillClient::UNMASK_FOR_AUTOFILL,
+          masked_card_, payments::UnmaskCardReason::UNMASK_FOR_AUTOFILL,
           weak_ptr_factory_.GetWeakPtr(), weak_ptr_factory_.GetWeakPtr());
       credit_card_form_event_logger_->OnDidSelectMaskedServerCardSuggestion();
       return;
@@ -1038,18 +1038,18 @@ IdentityProvider* AutofillManager::GetIdentityProvider() {
   return client_->GetIdentityProvider();
 }
 
-void AutofillManager::OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
+void AutofillManager::OnDidGetRealPan(payments::PaymentsRpcResult result,
                                       const std::string& real_pan) {
   DCHECK(full_card_request_);
   full_card_request_->OnDidGetRealPan(result, real_pan);
 }
 
 void AutofillManager::OnDidGetUploadDetails(
-    AutofillClient::PaymentsRpcResult result,
+    payments::PaymentsRpcResult result,
     const base::string16& context_token,
     std::unique_ptr<base::DictionaryValue> legal_message) {
   int upload_decision_metrics;
-  if (result == AutofillClient::SUCCESS) {
+  if (result == payments::PaymentsRpcResult::SUCCESS) {
     // Do *not* call payments_client_->Prepare() here. We shouldn't send
     // credentials until the user has explicitly accepted a prompt to upload.
     upload_request_.context_token = context_token;
@@ -1095,12 +1095,12 @@ void AutofillManager::OnDidGetUploadDetails(
   pending_upload_request_url_ = GURL();
 }
 
-void AutofillManager::OnDidUploadCard(AutofillClient::PaymentsRpcResult result,
+void AutofillManager::OnDidUploadCard(payments::PaymentsRpcResult result,
                                       const std::string& server_id) {
   // We don't do anything user-visible if the upload attempt fails. If the
   // upload succeeds and we can store unmasked cards on this OS, we will keep a
   // copy of the card as a full server card on the device.
-  if (result == AutofillClient::SUCCESS && !server_id.empty() &&
+  if (result == payments::PaymentsRpcResult::SUCCESS && !server_id.empty() &&
       OfferStoreUnmaskedCards()) {
     upload_request_.card.set_record_type(CreditCard::FULL_SERVER_CARD);
     upload_request_.card.SetServerStatus(CreditCard::OK);
@@ -1125,13 +1125,13 @@ void AutofillManager::OnFullCardRequestFailed() {
 
 void AutofillManager::ShowUnmaskPrompt(
     const CreditCard& card,
-    AutofillClient::UnmaskCardReason reason,
-    base::WeakPtr<CardUnmaskDelegate> delegate) {
+    payments::UnmaskCardReason reason,
+    base::WeakPtr<payments::CardUnmaskDelegate> delegate) {
   client_->ShowUnmaskPrompt(card, reason, delegate);
 }
 
 void AutofillManager::OnUnmaskVerificationResult(
-    AutofillClient::PaymentsRpcResult result) {
+    payments::PaymentsRpcResult result) {
   client_->OnUnmaskVerificationResult(result);
 }
 

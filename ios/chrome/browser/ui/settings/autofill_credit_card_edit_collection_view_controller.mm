@@ -12,9 +12,9 @@
 #include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/field_types.h"
-#include "components/autofill/core/browser/payments/payments_service_url.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #import "components/autofill/ios/browser/credit_card_util.h"
+#include "components/payments/core/payments_service_url.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/application_context.h"
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type.h"
@@ -89,7 +89,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   // In the case of server cards, open the Payments editing page instead.
   if (_creditCard.record_type() == autofill::CreditCard::FULL_SERVER_CARD ||
       _creditCard.record_type() == autofill::CreditCard::MASKED_SERVER_CARD) {
-    GURL paymentsURL = autofill::payments::GetManageInstrumentsUrl(0);
+    GURL paymentsURL = payments::GetManageInstrumentsUrl(0);
     OpenUrlCommand* command =
         [[OpenUrlCommand alloc] initWithURLFromChrome:paymentsURL];
     [command setTag:IDC_CLOSE_SETTINGS_AND_OPEN_URL];

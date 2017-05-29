@@ -12,9 +12,9 @@
 #include "base/memory/weak_ptr.h"
 #include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/autofill_metrics.h"
-#include "components/autofill/core/browser/card_unmask_delegate.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller.h"
+#include "components/payments/core/card_unmask_delegate.h"
 
 namespace autofill {
 
@@ -30,10 +30,10 @@ class CardUnmaskPromptControllerImpl : public CardUnmaskPromptController {
   // Functions called by ChromeAutofillClient.
   void ShowPrompt(CardUnmaskPromptView* view,
                   const CreditCard& card,
-                  AutofillClient::UnmaskCardReason reason,
-                  base::WeakPtr<CardUnmaskDelegate> delegate);
+                  payments::UnmaskCardReason reason,
+                  base::WeakPtr<payments::CardUnmaskDelegate> delegate);
   // The CVC the user entered went through validation.
-  void OnVerificationResult(AutofillClient::PaymentsRpcResult result);
+  void OnVerificationResult(payments::PaymentsRpcResult result);
 
   // CardUnmaskPromptController implementation.
   void OnUnmaskDialogClosed() override;
@@ -61,7 +61,7 @@ class CardUnmaskPromptControllerImpl : public CardUnmaskPromptController {
   void SetCreditCardForTesting(CreditCard test_card) { card_ = test_card; }
 
  private:
-  bool AllowsRetry(AutofillClient::PaymentsRpcResult result);
+  bool AllowsRetry(payments::PaymentsRpcResult result);
   void LogOnCloseEvents();
   AutofillMetrics::UnmaskPromptEvent GetCloseReasonEvent();
 
@@ -69,18 +69,18 @@ class CardUnmaskPromptControllerImpl : public CardUnmaskPromptController {
   bool new_card_link_clicked_;
   bool is_off_the_record_;
   CreditCard card_;
-  AutofillClient::UnmaskCardReason reason_;
-  base::WeakPtr<CardUnmaskDelegate> delegate_;
+  payments::UnmaskCardReason reason_;
+  base::WeakPtr<payments::CardUnmaskDelegate> delegate_;
   CardUnmaskPromptView* card_unmask_view_;
 
-  AutofillClient::PaymentsRpcResult unmasking_result_;
+  payments::PaymentsRpcResult unmasking_result_;
   bool unmasking_initial_should_store_pan_;
   int unmasking_number_of_attempts_;
   base::Time shown_timestamp_;
   // Timestamp of the last time the user clicked the Verify button.
   base::Time verify_timestamp_;
 
-  CardUnmaskDelegate::UnmaskResponse pending_response_;
+  payments::CardUnmaskDelegate::UnmaskResponse pending_response_;
 
   base::WeakPtrFactory<CardUnmaskPromptControllerImpl> weak_pointer_factory_;
 

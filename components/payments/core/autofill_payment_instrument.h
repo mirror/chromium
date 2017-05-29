@@ -12,8 +12,8 @@
 #include "base/macros.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
-#include "components/autofill/core/browser/payments/full_card_request.h"
 #include "components/payments/core/address_normalizer.h"
+#include "components/payments/core/full_card_request.h"
 #include "components/payments/core/payment_instrument.h"
 
 namespace payments {
@@ -22,10 +22,9 @@ class PaymentRequestDelegate;
 
 // Represents an Autofill/Payments credit card form of payment in Payment
 // Request.
-class AutofillPaymentInstrument
-    : public PaymentInstrument,
-      public autofill::payments::FullCardRequest::ResultDelegate,
-      public AddressNormalizer::Delegate {
+class AutofillPaymentInstrument : public PaymentInstrument,
+                                  public FullCardRequest::ResultDelegate,
+                                  public AddressNormalizer::Delegate {
  public:
   // |billing_profiles| is owned by the caller and should outlive this object.
   // |payment_request_delegate| must outlive this object.
@@ -44,7 +43,7 @@ class AutofillPaymentInstrument
   bool IsValidForCanMakePayment() override;
   void RecordUse() override;
 
-  // autofill::payments::FullCardRequest::ResultDelegate:
+  // FullCardRequest::ResultDelegate:
   void OnFullCardRequestSucceeded(const autofill::CreditCard& card,
                                   const base::string16& cvc) override;
   void OnFullCardRequestFailed() override;

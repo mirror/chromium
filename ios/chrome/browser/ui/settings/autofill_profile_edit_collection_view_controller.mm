@@ -8,8 +8,8 @@
 #include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/field_types.h"
-#include "components/autofill/core/browser/payments/payments_service_url.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
+#include "components/payments/core/payments_service_url.h"
 #include "ios/chrome/browser/application_context.h"
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type.h"
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type_util.h"
@@ -120,7 +120,7 @@ static const AutofillFieldDisplayInfo kFieldsToDisplay[] = {
   // In the case of server profiles, open the Payments editing page instead.
   if (_autofillProfile.record_type() ==
       autofill::AutofillProfile::SERVER_PROFILE) {
-    GURL paymentsURL = autofill::payments::GetManageAddressesUrl(0);
+    GURL paymentsURL = payments::GetManageAddressesUrl(0);
     OpenUrlCommand* command =
         [[OpenUrlCommand alloc] initWithURLFromChrome:paymentsURL];
     [command setTag:IDC_CLOSE_SETTINGS_AND_OPEN_URL];

@@ -19,7 +19,6 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/credit_card.h"
-#include "components/autofill/core/browser/payments/full_card_request.h"
 #include "components/autofill/core/browser/validation.h"
 #include "components/autofill/core/common/autofill_clock.h"
 #include "components/grit/components_scaled_resources.h"
@@ -49,8 +48,7 @@ CvcUnmaskViewController::CvcUnmaskViewController(
     PaymentRequestState* state,
     PaymentRequestDialogView* dialog,
     const autofill::CreditCard& credit_card,
-    base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-        result_delegate,
+    base::WeakPtr<FullCardRequest::ResultDelegate> result_delegate,
     content::WebContents* web_contents)
     : PaymentRequestSheetController(spec, state, dialog),
       credit_card_(credit_card),
@@ -64,8 +62,7 @@ CvcUnmaskViewController::CvcUnmaskViewController(
                          state->GetPersonalDataManager()),
       weak_ptr_factory_(this) {
   full_card_request_.GetFullCard(
-      credit_card,
-      autofill::AutofillClient::UnmaskCardReason::UNMASK_FOR_PAYMENT_REQUEST,
+      credit_card, UnmaskCardReason::UNMASK_FOR_PAYMENT_REQUEST,
       result_delegate, weak_ptr_factory_.GetWeakPtr());
 }
 
@@ -85,22 +82,20 @@ IdentityProvider* CvcUnmaskViewController::GetIdentityProvider() {
   return identity_provider_.get();
 }
 
-void CvcUnmaskViewController::OnDidGetRealPan(
-    autofill::AutofillClient::PaymentsRpcResult result,
-    const std::string& real_pan) {
+void CvcUnmaskViewController::OnDidGetRealPan(PaymentsRpcResult result,
+                                              const std::string& real_pan) {
   full_card_request_.OnDidGetRealPan(result, real_pan);
 }
 
 void CvcUnmaskViewController::OnDidGetUploadDetails(
-    autofill::AutofillClient::PaymentsRpcResult result,
+    PaymentsRpcResult result,
     const base::string16& context_token,
     std::unique_ptr<base::DictionaryValue> legal_message) {
   NOTIMPLEMENTED();
 }
 
-void CvcUnmaskViewController::OnDidUploadCard(
-    autofill::AutofillClient::PaymentsRpcResult result,
-    const std::string& server_id) {
+void CvcUnmaskViewController::OnDidUploadCard(PaymentsRpcResult result,
+                                              const std::string& server_id) {
   NOTIMPLEMENTED();
 }
 
@@ -111,33 +106,33 @@ void CvcUnmaskViewController::LoadRiskData(
 
 void CvcUnmaskViewController::ShowUnmaskPrompt(
     const autofill::CreditCard& card,
-    autofill::AutofillClient::UnmaskCardReason reason,
-    base::WeakPtr<autofill::CardUnmaskDelegate> delegate) {
+    UnmaskCardReason reason,
+    base::WeakPtr<CardUnmaskDelegate> delegate) {
   unmask_delegate_ = delegate;
 }
 
 void CvcUnmaskViewController::OnUnmaskVerificationResult(
-    autofill::AutofillClient::PaymentsRpcResult result) {
+    PaymentsRpcResult result) {
   switch (result) {
-    case autofill::AutofillClient::NONE:
+    case NONE:
       NOTREACHED();
-    case autofill::AutofillClient::SUCCESS:
+    case SUCCESS:
       // In the success case, don't show any error and don't hide the spinner
       // because the dialog is about to close when the merchant completes the
       // transaction.
       return;
 
-    case autofill::AutofillClient::TRY_AGAIN_FAILURE:
+    case TRY_AGAIN_FAILURE:
       DisplayError(l10n_util::GetStringUTF16(
           IDS_AUTOFILL_CARD_UNMASK_PROMPT_ERROR_TRY_AGAIN_CVC));
       break;
 
-    case autofill::AutofillClient::PERMANENT_FAILURE:
+    case PERMANENT_FAILURE:
       DisplayError(l10n_util::GetStringUTF16(
           IDS_AUTOFILL_CARD_UNMASK_PROMPT_ERROR_PERMANENT));
       break;
 
-    case autofill::AutofillClient::NETWORK_ERROR:
+    case NETWORK_ERROR:
       DisplayError(l10n_util::GetStringUTF16(
           IDS_AUTOFILL_CARD_UNMASK_PROMPT_ERROR_NETWORK));
       break;
@@ -276,7 +271,7 @@ void CvcUnmaskViewController::ButtonPressed(views::Button* sender,
 void CvcUnmaskViewController::CvcConfirmed() {
   const base::string16& cvc = cvc_field_->text();
   if (unmask_delegate_) {
-    autofill::CardUnmaskDelegate::UnmaskResponse response;
+    CardUnmaskDelegate::UnmaskResponse response;
     response.cvc = cvc;
     if (credit_card_.ShouldUpdateExpiration(autofill::AutofillClock::Now())) {
       views::Combobox* month = static_cast<views::Combobox*>(

@@ -15,6 +15,7 @@
 #include "base/strings/string16.h"
 #include "base/values.h"
 #include "components/autofill/core/browser/risk_data_loader.h"
+#include "components/payments/core/payments_request.h"
 #include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
 
@@ -27,6 +28,10 @@ class RenderFrameHost;
 
 namespace gfx {
 class RectF;
+}
+
+namespace payments {
+class CardUnmaskDelegate;
 }
 
 namespace rappor {
@@ -61,34 +66,6 @@ struct Suggestion;
 // for the tab the AutofillManager is attached to).
 class AutofillClient : public RiskDataLoader {
  public:
-  enum PaymentsRpcResult {
-    // Empty result. Used for initializing variables and should generally
-    // not be returned nor passed as arguments unless explicitly allowed by
-    // the API.
-    NONE,
-
-    // Request succeeded.
-    SUCCESS,
-
-    // Request failed; try again.
-    TRY_AGAIN_FAILURE,
-
-    // Request failed; don't try again.
-    PERMANENT_FAILURE,
-
-    // Unable to connect to Payments servers. Prompt user to check internet
-    // connection.
-    NETWORK_ERROR,
-  };
-
-  enum UnmaskCardReason {
-    // The card is being unmasked for PaymentRequest.
-    UNMASK_FOR_PAYMENT_REQUEST,
-
-    // The card is being unmasked for Autofill.
-    UNMASK_FOR_AUTOFILL,
-  };
-
   typedef base::Callback<void(const CreditCard&)> CreditCardScanCallback;
 
   ~AutofillClient() override {}
@@ -123,10 +100,12 @@ class AutofillClient : public RiskDataLoader {
 
   // A user has attempted to use a masked card. Prompt them for further
   // information to proceed.
-  virtual void ShowUnmaskPrompt(const CreditCard& card,
-                                UnmaskCardReason reason,
-                                base::WeakPtr<CardUnmaskDelegate> delegate) = 0;
-  virtual void OnUnmaskVerificationResult(PaymentsRpcResult result) = 0;
+  virtual void ShowUnmaskPrompt(
+      const CreditCard& card,
+      payments::UnmaskCardReason reason,
+      base::WeakPtr<payments::CardUnmaskDelegate> delegate) = 0;
+  virtual void OnUnmaskVerificationResult(
+      payments::PaymentsRpcResult result) = 0;
 
   // Runs |callback| if the |card| should be imported as personal data.
   // |metric_logger| can be used to log user actions.

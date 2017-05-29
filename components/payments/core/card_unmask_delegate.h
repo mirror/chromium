@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_AUTOFILL_CORE_BROWSER_CARD_UNMASK_DELEGATE_H_
-#define COMPONENTS_AUTOFILL_CORE_BROWSER_CARD_UNMASK_DELEGATE_H_
+#ifndef COMPONENTS_PAYMENTS_CORE_CARD_UNMASK_DELEGATE_H_
+#define COMPONENTS_PAYMENTS_CORE_CARD_UNMASK_DELEGATE_H_
 
 #include <string>
 
 #include "base/strings/string16.h"
 
-namespace autofill {
+namespace payments {
 
 class CardUnmaskDelegate {
  public:
@@ -39,6 +39,6 @@ class CardUnmaskDelegate {
   virtual void OnUnmaskPromptClosed() = 0;
 };
 
-}  // namespace autofill
+}  // namespace payments
 
-#endif  // COMPONENTS_AUTOFILL_CORE_BROWSER_CARD_UNMASK_DELEGATE_H_
+#endif  // COMPONENTS_PAYMENTS_CORE_CARD_UNMASK_DELEGATE_H_

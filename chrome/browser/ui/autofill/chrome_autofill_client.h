@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller_impl.h"
+#include "components/payments/core/card_unmask_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
@@ -54,10 +55,11 @@ class ChromeAutofillClient
   ukm::UkmRecorder* GetUkmRecorder() override;
   SaveCardBubbleController* GetSaveCardBubbleController() override;
   void ShowAutofillSettings() override;
-  void ShowUnmaskPrompt(const CreditCard& card,
-                        UnmaskCardReason reason,
-                        base::WeakPtr<CardUnmaskDelegate> delegate) override;
-  void OnUnmaskVerificationResult(PaymentsRpcResult result) override;
+  void ShowUnmaskPrompt(
+      const CreditCard& card,
+      payments::UnmaskCardReason reason,
+      base::WeakPtr<payments::CardUnmaskDelegate> delegate) override;
+  void OnUnmaskVerificationResult(payments::PaymentsRpcResult result) override;
   void ConfirmSaveCreditCardLocally(const CreditCard& card,
                                     const base::Closure& callback) override;
   void ConfirmSaveCreditCardToCloud(

@@ -241,8 +241,7 @@ void PaymentRequestDialogView::ShowShippingOptionSheet() {
 
 void PaymentRequestDialogView::ShowCvcUnmaskPrompt(
     const autofill::CreditCard& credit_card,
-    base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-        result_delegate,
+    base::WeakPtr<FullCardRequest::ResultDelegate> result_delegate,
     content::WebContents* web_contents) {
   view_stack_->Push(CreateViewAndInstallController(
                         base::MakeUnique<CvcUnmaskViewController>(

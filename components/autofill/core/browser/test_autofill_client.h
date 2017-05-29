@@ -38,10 +38,11 @@ class TestAutofillClient : public AutofillClient {
   ukm::UkmRecorder* GetUkmRecorder() override;
   SaveCardBubbleController* GetSaveCardBubbleController() override;
   void ShowAutofillSettings() override;
-  void ShowUnmaskPrompt(const CreditCard& card,
-                        UnmaskCardReason reason,
-                        base::WeakPtr<CardUnmaskDelegate> delegate) override;
-  void OnUnmaskVerificationResult(PaymentsRpcResult result) override;
+  void ShowUnmaskPrompt(
+      const CreditCard& card,
+      payments::UnmaskCardReason reason,
+      base::WeakPtr<payments::CardUnmaskDelegate> delegate) override;
+  void OnUnmaskVerificationResult(payments::PaymentsRpcResult result) override;
   void ConfirmSaveCreditCardLocally(const CreditCard& card,
                                     const base::Closure& callback) override;
   void ConfirmSaveCreditCardToCloud(

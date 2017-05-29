@@ -11,8 +11,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "components/autofill/core/browser/autofill_client.h"
-#include "components/autofill/core/browser/payments/full_card_request.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller_impl.h"
+#include "components/payments/core/full_card_request.h"
 
 namespace autofill {
 class AutofillManager;
@@ -26,10 +26,9 @@ class ChromeBrowserState;
 @class PaymentRequestCoordinator;
 
 // Receives the full credit card details. Also displays the unmask prompt UI.
-class FullCardRequester
-    : public autofill::payments::FullCardRequest::ResultDelegate,
-      public autofill::payments::FullCardRequest::UIDelegate,
-      public base::SupportsWeakPtr<FullCardRequester> {
+class FullCardRequester : public payments::FullCardRequest::ResultDelegate,
+                          public payments::FullCardRequest::UIDelegate,
+                          public base::SupportsWeakPtr<FullCardRequester> {
  public:
   FullCardRequester(PaymentRequestCoordinator* owner,
                     UIViewController* base_view_controller,
@@ -47,10 +46,9 @@ class FullCardRequester
   // payments::FullCardRequest::UIDelegate:
   void ShowUnmaskPrompt(
       const autofill::CreditCard& card,
-      autofill::AutofillClient::UnmaskCardReason reason,
-      base::WeakPtr<autofill::CardUnmaskDelegate> delegate) override;
-  void OnUnmaskVerificationResult(
-      autofill::AutofillClient::PaymentsRpcResult result) override;
+      payments::UnmaskCardReason reason,
+      base::WeakPtr<payments::CardUnmaskDelegate> delegate) override;
+  void OnUnmaskVerificationResult(payments::PaymentsRpcResult result) override;
 
  private:
   __weak PaymentRequestCoordinator* owner_;

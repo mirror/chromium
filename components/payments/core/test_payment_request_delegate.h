@@ -29,8 +29,7 @@ class TestPaymentRequestDelegate : public PaymentRequestDelegate {
   const GURL& GetLastCommittedURL() const override;
   void DoFullCardRequest(
       const autofill::CreditCard& credit_card,
-      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-          result_delegate) override;
+      base::WeakPtr<FullCardRequest::ResultDelegate> result_delegate) override;
   AddressNormalizer* GetAddressNormalizer() override;
   autofill::RegionDataLoader* GetRegionDataLoader() override;
   ukm::UkmRecorder* GetUkmRecorder() override;
@@ -49,8 +48,7 @@ class TestPaymentRequestDelegate : public PaymentRequestDelegate {
 
   bool instantaneous_full_card_request_result_ = true;
   autofill::CreditCard full_card_request_card_;
-  base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-      full_card_result_delegate_;
+  base::WeakPtr<FullCardRequest::ResultDelegate> full_card_result_delegate_;
   DISALLOW_COPY_AND_ASSIGN(TestPaymentRequestDelegate);
 };
 

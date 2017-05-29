@@ -3,11 +3,12 @@
 // found in the LICENSE file.
 
 #include "components/autofill/core/browser/test_autofill_client.h"
+
 #if !defined(OS_ANDROID)
 #include "components/autofill/core/browser/ui/mock_save_card_bubble_controller.h"
 #endif
-
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
+#include "components/payments/core/payments_request.h"
 
 namespace autofill {
 
@@ -64,12 +65,11 @@ void TestAutofillClient::ShowAutofillSettings() {
 
 void TestAutofillClient::ShowUnmaskPrompt(
     const CreditCard& card,
-    UnmaskCardReason reason,
-    base::WeakPtr<CardUnmaskDelegate> delegate) {
-}
+    payments::UnmaskCardReason reason,
+    base::WeakPtr<payments::CardUnmaskDelegate> delegate) {}
 
-void TestAutofillClient::OnUnmaskVerificationResult(PaymentsRpcResult result) {
-}
+void TestAutofillClient::OnUnmaskVerificationResult(
+    payments::PaymentsRpcResult result) {}
 
 void TestAutofillClient::ConfirmSaveCreditCardLocally(
     const CreditCard& card,

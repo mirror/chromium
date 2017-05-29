@@ -24,12 +24,12 @@
 #include "components/autofill/core/browser/autofill_download_manager.h"
 #include "components/autofill/core/browser/autofill_driver.h"
 #include "components/autofill/core/browser/autofill_metrics.h"
-#include "components/autofill/core/browser/card_unmask_delegate.h"
 #include "components/autofill/core/browser/form_structure.h"
-#include "components/autofill/core/browser/payments/full_card_request.h"
-#include "components/autofill/core/browser/payments/payments_client.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/common/form_data.h"
+#include "components/payments/core/card_unmask_delegate.h"
+#include "components/payments/core/full_card_request.h"
+#include "components/payments/core/payments_client.h"
 
 #if defined(OS_ANDROID) || defined(OS_IOS)
 #include "components/autofill/core/browser/autofill_assistant.h"
@@ -274,7 +274,7 @@ class AutofillManager : public AutofillDownloadManager::Observer,
 
   // payments::PaymentsClientDelegate:
   // Exposed for testing.
-  void OnDidUploadCard(AutofillClient::PaymentsRpcResult result,
+  void OnDidUploadCard(payments::PaymentsRpcResult result,
                        const std::string& server_id) override;
 
   // Exposed for testing.
@@ -300,10 +300,10 @@ class AutofillManager : public AutofillDownloadManager::Observer,
 
   // payments::PaymentsClientDelegate:
   IdentityProvider* GetIdentityProvider() override;
-  void OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
+  void OnDidGetRealPan(payments::PaymentsRpcResult result,
                        const std::string& real_pan) override;
   void OnDidGetUploadDetails(
-      AutofillClient::PaymentsRpcResult result,
+      payments::PaymentsRpcResult result,
       const base::string16& context_token,
       std::unique_ptr<base::DictionaryValue> legal_message) override;
 
@@ -313,11 +313,11 @@ class AutofillManager : public AutofillDownloadManager::Observer,
   void OnFullCardRequestFailed() override;
 
   // payments::FullCardRequest::UIDelegate:
-  void ShowUnmaskPrompt(const CreditCard& card,
-                        AutofillClient::UnmaskCardReason reason,
-                        base::WeakPtr<CardUnmaskDelegate> delegate) override;
-  void OnUnmaskVerificationResult(
-      AutofillClient::PaymentsRpcResult result) override;
+  void ShowUnmaskPrompt(
+      const CreditCard& card,
+      payments::UnmaskCardReason reason,
+      base::WeakPtr<payments::CardUnmaskDelegate> delegate) override;
+  void OnUnmaskVerificationResult(payments::PaymentsRpcResult result) override;
 
   // Sets |user_did_accept_upload_prompt_| and calls UploadCard if the risk data
   // is available.

@@ -39,8 +39,7 @@ const GURL& TestPaymentRequestDelegate::GetLastCommittedURL() const {
 
 void TestPaymentRequestDelegate::DoFullCardRequest(
     const autofill::CreditCard& credit_card,
-    base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-        result_delegate) {
+    base::WeakPtr<FullCardRequest::ResultDelegate> result_delegate) {
   if (instantaneous_full_card_request_result_) {
     result_delegate->OnFullCardRequestSucceeded(credit_card,
                                                 base::ASCIIToUTF16("123"));

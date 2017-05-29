@@ -2,14 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_AUTOFILL_CORE_BROWSER_PAYMENTS_PAYMENTS_SERVICE_URL_H_
-#define COMPONENTS_AUTOFILL_CORE_BROWSER_PAYMENTS_PAYMENTS_SERVICE_URL_H_
+#ifndef COMPONENTS_PAYMENTS_CORE_PAYMENTS_SERVICE_URL_H_
+#define COMPONENTS_PAYMENTS_CORE_PAYMENTS_SERVICE_URL_H_
 
 #include <stddef.h>
 
 class GURL;
 
-namespace autofill {
 namespace payments {
 
 // Returns true if production Payments URLs should be used or false if sandbox
@@ -28,6 +27,5 @@ GURL GetManageInstrumentsUrl(size_t user_index);
 GURL GetManageAddressesUrl(size_t user_index);
 
 }  // namespace payments
-}  // namespace autofill
 
-#endif  // COMPONENTS_AUTOFILL_CORE_BROWSER_PAYMENTS_PAYMENTS_SERVICE_URL_H_
+#endif  // COMPONENTS_PAYMENTS_CORE_PAYMENTS_SERVICE_URL_H_

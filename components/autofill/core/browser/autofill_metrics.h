@@ -18,6 +18,7 @@
 #include "components/autofill/core/browser/field_types.h"
 #include "components/autofill/core/common/autofill_pref_names.h"
 #include "components/autofill/core/common/form_field_data.h"
+#include "components/payments/core/payments_request.h"
 #include "components/ukm/public/ukm_recorder.h"
 
 namespace internal {
@@ -703,15 +704,15 @@ class AutofillMetrics {
   static void LogTimeBeforeAbandonUnmasking(const base::TimeDelta& duration);
 
   // Logs |result| to the get real pan result histogram.
-  static void LogRealPanResult(AutofillClient::PaymentsRpcResult result);
+  static void LogRealPanResult(payments::PaymentsRpcResult result);
 
   // Logs |result| to duration of the GetRealPan RPC.
   static void LogRealPanDuration(const base::TimeDelta& duration,
-                                 AutofillClient::PaymentsRpcResult result);
+                                 payments::PaymentsRpcResult result);
 
   // Logs |result| to the get real pan result histogram.
   static void LogUnmaskingDuration(const base::TimeDelta& duration,
-                                   AutofillClient::PaymentsRpcResult result);
+                                   payments::PaymentsRpcResult result);
 
   // This should be called when a form that has been Autofilled is submitted.
   // |duration| should be the time elapsed between form load and submission.

@@ -9,7 +9,7 @@
 #include <string>
 
 #include "base/memory/weak_ptr.h"
-#include "components/autofill/core/browser/payments/full_card_request.h"
+#include "components/payments/core/full_card_request.h"
 
 class GURL;
 
@@ -64,8 +64,7 @@ class PaymentRequestDelegate {
   // Starts a FullCardRequest to unmask |credit_card|.
   virtual void DoFullCardRequest(
       const autofill::CreditCard& credit_card,
-      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-          result_delegate) = 0;
+      base::WeakPtr<FullCardRequest::ResultDelegate> result_delegate) = 0;
 
   // Returns a pointer to the address normalizer to use for the duration of this
   // Payment Request.
