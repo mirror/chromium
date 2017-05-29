@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "132c4242_330c51aa",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-29T15:23:07Z",
+      "side": 1,
+      "message": "nit: so far we prefer \"enum class\" to \"enum struct\" (only one use of the latter)",
+      "revId": "f5d908a794a72c4921dcf0b76d1f2a3576e94f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746a76bb_c4c98e0f",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-29T15:23:07Z",
+      "side": 1,
+      "message": "nit: kSize -\u003e kNumberOfCounters or similar?",
+      "revId": "f5d908a794a72c4921dcf0b76d1f2a3576e94f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c005d808_878b3dbb",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-29T15:23:07Z",
+      "side": 1,
+      "message": "nit: since you have the helper function:\n\ntimer-\u003eStart(GetCounter(id), current_timer_);",
+      "revId": "f5d908a794a72c4921dcf0b76d1f2a3576e94f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

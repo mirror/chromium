@@ -141,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "9adf672d_946a6d69",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-29T15:23:07Z",
+      "side": 1,
+      "message": "The mildly hacky workaround is \"os \u003c\u003c wtfString.ascii().data()\".",
+      "parentUuid": "18e6c455_e9fd4098",
+      "revId": "ca4173401ca0312fa1e756deec2441db7817d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ada9930_ae3454cd",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 3
