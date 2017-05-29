@@ -4,6 +4,8 @@
 
 #include "chrome/browser/chromeos/platform_keys/platform_keys_service.h"
 
+#include <pk11pub.h>
+#include <sechash.h>
 #include <stddef.h>
 
 #include <utility>
@@ -15,9 +17,12 @@
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "base/values.h"
+#include "chrome/browser/chromeos/certificate_provider/certificate_provider_service.h"
+#include "chrome/browser/chromeos/certificate_provider/certificate_provider_service_factory.h"
 #include "chrome/browser/chromeos/platform_keys/platform_keys.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/state_store.h"
+#include "net/base/net_errors.h"
 #include "net/cert/x509_certificate.h"
 
 using content::BrowserThread;
@@ -260,7 +265,71 @@ class PlatformKeysService::SignTask : public Task {
   }
 
   void DidSign(const std::string& signature, const std::string& error_message) {
+    if (error_message == chromeos::platform_keys::kErrorKeyNotFound &&
+        hash_algorithm_ != chromeos::platform_keys::HASH_ALGORITHM_NONE) {
+      // try to sign using cert provider.
+      chromeos::CertificateProviderService* service =
+          chromeos::CertificateProviderServiceFactory::GetForBrowserContext(
+              service_->browser_context_);
+      DCHECK(service);
+
+      net::SSLPrivateKey::Hash hash = net::SSLPrivateKey::Hash::SHA1;
+      SECOidTag alg = SEC_OID_SHA1;
+      switch (hash_algorithm_) {
+        case chromeos::platform_keys::HASH_ALGORITHM_NONE:
+          break;
+        case chromeos::platform_keys::HASH_ALGORITHM_SHA1:
+          hash = net::SSLPrivateKey::Hash::SHA1;
+          alg = SEC_OID_SHA1;
+          break;
+        case chromeos::platform_keys::HASH_ALGORITHM_SHA256:
+          hash = net::SSLPrivateKey::Hash::SHA256;
+          alg = SEC_OID_SHA256;
+          break;
+        case chromeos::platform_keys::HASH_ALGORITHM_SHA384:
+          hash = net::SSLPrivateKey::Hash::SHA384;
+          alg = SEC_OID_SHA384;
+          break;
+        case chromeos::platform_keys::HASH_ALGORITHM_SHA512:
+          hash = net::SSLPrivateKey::Hash::SHA512;
+          alg = SEC_OID_SHA512;
+          break;
+      }
+
+      PRInt32 len = HASH_ResultLenByOidTag(alg);
+      unsigned char out[len];
+      PK11_HashBuf(alg, out,
+                   reinterpret_cast<const unsigned char*>(data_.c_str()),
+                   data_.size());
+
+      std::string digest =
+          std::string(reinterpret_cast<const char*>(out),
+                      reinterpret_cast<const char*>(out + len));
+
+      service->RequestSignatureByPublicKey(
+          public_key_, digest, hash,
+          base::Bind(&SignTask::DidCertificateProviderSign,
+                     weak_factory_.GetWeakPtr()));
+      return;
+    }
+
     callback_.Run(signature, error_message);
+    DoStep();
+  }
+
+  void DidCertificateProviderSign(net::Error error,
+                                  const std::vector<uint8_t>& signature) {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+    std::string signature_data =
+        std::string(signature.begin(), signature.end());
+
+    if (error == net::Error::OK) {
+      callback_.Run(signature_data, "");
+    } else {
+      callback_.Run(signature_data, net::ErrorToString(error));
+    }
+
     DoStep();
   }
 

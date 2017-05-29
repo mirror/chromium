@@ -390,6 +390,26 @@ void CertificateProviderService::OnExtensionUnloaded(
   pin_dialog_manager_.ExtensionUnloaded(extension_id);
 }
 
+void CertificateProviderService::RequestSignatureByPublicKey(
+    const std::string& public_key,
+    const std::string& digest,
+    net::SSLPrivateKey::Hash hash,
+    const net::SSLPrivateKey::SignCallback& callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  CertificateInfo info;
+  std::string extension_id;
+  bool found = certificate_map_.LookUpCertificateByPublicKey(public_key, &info,
+                                                             &extension_id);
+  if (!found) {
+    LOG(ERROR) << "no certificate with the specified public key was found";
+    callback.Run(net::ERR_FAILED, std::vector<uint8_t>());
+    return;
+  }
+
+  RequestSignatureFromExtension(extension_id, info.certificate, hash, digest,
+                                callback);
+}
+
 void CertificateProviderService::GetCertificatesFromExtensions(
     const base::Callback<void(const net::CertificateList&)>& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());

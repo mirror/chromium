@@ -35,6 +35,8 @@ class ThreadSafeCertificateMap {
       std::map<net::SHA256HashValue,
                std::unique_ptr<MapValue>,
                net::SHA256HashValueLessThan>;
+  using PublicKeyToCertAndExtensionMap =
+      std::map<std::string, std::unique_ptr<MapValue>>;
 
   ThreadSafeCertificateMap();
   ~ThreadSafeCertificateMap();
@@ -57,6 +59,15 @@ class ThreadSafeCertificateMap {
                          CertificateInfo* info,
                          std::string* extension_id);
 
+  // Looks up for certificate and extension_id based on |public_key|, if it was
+  // added by previous Update() call. When found, the |info| and |extension_id|
+  // are populated according to the data that have been mapped to this
+  // |public_key| and the function returns true. Otherwise false is returned
+  // while |info| and |extension_id| remain unchanged.
+  bool LookUpCertificateByPublicKey(const std::string& public_key,
+                                    CertificateInfo* info,
+                                    std::string* extension_id);
+
   // Remove every association of stored certificates to the given extension.
   // The certificates themselves will be remembered.
   void RemoveExtension(const std::string& extension_id);
@@ -64,6 +75,7 @@ class ThreadSafeCertificateMap {
  private:
   base::Lock lock_;
   FingerprintToCertAndExtensionMap fingerprint_to_cert_and_extension_;
+  PublicKeyToCertAndExtensionMap public_key_to_cert_and_extension_;
 
   DISALLOW_COPY_AND_ASSIGN(ThreadSafeCertificateMap);
 };
