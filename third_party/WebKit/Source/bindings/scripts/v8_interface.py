@@ -303,6 +303,14 @@ def interface_context(interface, interfaces):
     if len(constructors) > 1:
         context['constructor_overloads'] = overloads_context(interface, constructors)
 
+    # [RuntimeEnabledConstructor]
+    if 'RuntimeEnabledConstructor' in extended_attributes:
+        runtime_enabled_constructor = extended_attributes['RuntimeEnabledConstructor']
+        includes.add('platform/RuntimeEnabledFeatures.h')
+        context.update({
+            'runtime_enabled_constructor': runtime_enabled_constructor,
+        })
+
     # [CustomConstructor]
     custom_constructors = [{  # Only needed for computing interface length
         'number_of_required_arguments':
