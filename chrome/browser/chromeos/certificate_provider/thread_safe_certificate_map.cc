@@ -5,6 +5,7 @@
 #include "chrome/browser/chromeos/certificate_provider/thread_safe_certificate_map.h"
 
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/chromeos/platform_keys/platform_keys.h"
 #include "net/base/hash_value.h"
 #include "net/cert/x509_certificate.h"
 
@@ -30,6 +31,25 @@ void BuildFingerprintsMap(
   }
 }
 
+void BuildPublicKeyMap(
+    const std::map<std::string, certificate_provider::CertificateInfoList>&
+        extension_to_certificates,
+    ThreadSafeCertificateMap::PublicKeyToCertAndExtensionMap*
+        public_key_to_cert) {
+  for (const auto& entry : extension_to_certificates) {
+    const std::string& extension_id = entry.first;
+    for (const CertificateInfo& cert_info : entry.second) {
+      const std::string public_key =
+          platform_keys::GetSubjectPublicKeyInfo(cert_info.certificate);
+      DCHECK(public_key_to_cert->find(public_key) == public_key_to_cert->end());
+      public_key_to_cert->insert(std::make_pair(
+          public_key, std::unique_ptr<ThreadSafeCertificateMap::MapValue>(
+                          new ThreadSafeCertificateMap::MapValue(
+                              cert_info, extension_id))));
+    }
+  }
+}
+
 }  // namespace
 
 ThreadSafeCertificateMap::MapValue::MapValue(const CertificateInfo& cert_info,
@@ -46,7 +66,9 @@ void ThreadSafeCertificateMap::Update(
     const std::map<std::string, certificate_provider::CertificateInfoList>&
         extension_to_certificates) {
   FingerprintToCertAndExtensionMap new_fingerprint_map;
+  PublicKeyToCertAndExtensionMap new_public_key_map;
   BuildFingerprintsMap(extension_to_certificates, &new_fingerprint_map);
+  BuildPublicKeyMap(extension_to_certificates, &new_public_key_map);
 
   base::AutoLock auto_lock(lock_);
   // Keep all old fingerprints from |fingerprint_to_cert_and_extension_| but
@@ -57,6 +79,12 @@ void ThreadSafeCertificateMap::Update(
     new_fingerprint_map.insert(std::make_pair(fingerprint, nullptr));
   }
   fingerprint_to_cert_and_extension_.swap(new_fingerprint_map);
+
+  for (const auto& entry : public_key_to_cert_and_extension_) {
+    const std::string& public_key = entry.first;
+    new_public_key_map.insert(std::make_pair(public_key, nullptr));
+  }
+  public_key_to_cert_and_extension_.swap(new_public_key_map);
 }
 
 bool ThreadSafeCertificateMap::LookUpCertificate(
@@ -82,6 +110,23 @@ bool ThreadSafeCertificateMap::LookUpCertificate(
   return true;
 }
 
+bool ThreadSafeCertificateMap::LookUpCertificateByPublicKey(
+    const std::string& public_key,
+    CertificateInfo* info,
+    std::string* extension_id) {
+  base::AutoLock auto_lock(lock_);
+  const auto it = public_key_to_cert_and_extension_.find(public_key);
+  if (it == public_key_to_cert_and_extension_.end())
+    return false;
+
+  MapValue* const value = it->second.get();
+  if (value) {
+    *info = value->cert_info;
+    *extension_id = value->extension_id;
+  }
+  return true;
+}
+
 void ThreadSafeCertificateMap::RemoveExtension(
     const std::string& extension_id) {
   base::AutoLock auto_lock(lock_);
@@ -91,6 +136,12 @@ void ThreadSafeCertificateMap::RemoveExtension(
     // the fingerprint.
     if (value && value->extension_id == extension_id)
       fingerprint_to_cert_and_extension_[entry.first] = nullptr;
+  }
+
+  for (auto& entry : public_key_to_cert_and_extension_) {
+    MapValue* const value = entry.second.get();
+    if (value && value->extension_id == extension_id)
+      public_key_to_cert_and_extension_[entry.first] = nullptr;
   }
 }
 

@@ -33,6 +33,11 @@ namespace platform_keys {
 extern const char kTokenIdUser[];
 extern const char kTokenIdSystem[];
 
+extern const char kErrorInternal[];
+extern const char kErrorKeyNotFound[];
+extern const char kErrorCertificateNotFound[];
+extern const char kErrorAlgorithmNotSupported[];
+
 // Supported hash algorithms.
 enum HashAlgorithm {
   HASH_ALGORITHM_NONE,  // The value if no hash function is selected.

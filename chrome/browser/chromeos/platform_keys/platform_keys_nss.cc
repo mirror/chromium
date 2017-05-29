@@ -25,6 +25,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_platform_part_chromeos.h"
 #include "chrome/browser/chromeos/certificate_provider/certificate_provider.h"
+#include "chrome/browser/chromeos/certificate_provider/certificate_provider_service.h"
+#include "chrome/browser/chromeos/certificate_provider/certificate_provider_service_factory.h"
 #include "chrome/browser/chromeos/net/client_cert_filter_chromeos.h"
 #include "chrome/browser/chromeos/net/client_cert_store_chromeos.h"
 #include "chrome/browser/chromeos/platform_keys/platform_keys.h"
@@ -48,11 +50,6 @@ using content::BrowserContext;
 using content::BrowserThread;
 
 namespace {
-const char kErrorInternal[] = "Internal Error.";
-const char kErrorKeyNotFound[] = "Key not found.";
-const char kErrorCertificateNotFound[] = "Certificate could not be found.";
-const char kErrorAlgorithmNotSupported[] = "Algorithm not supported.";
-
 // The current maximal RSA modulus length that ChromeOS's TPM supports for key
 // generation.
 const unsigned int kMaxRSAModulusLengthBits = 2048;
@@ -556,10 +553,11 @@ void DidSelectCertificatesOnIOThread(
 // Continues selecting certificates on the IO thread. Used by
 // SelectClientCertificates().
 void SelectCertificatesOnIOThread(
-    std::unique_ptr<SelectCertificatesState> state) {
+    std::unique_ptr<SelectCertificatesState> state,
+    std::unique_ptr<CertificateProvider> cert_provider) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   state->cert_store_.reset(new ClientCertStoreChromeOS(
-      nullptr,  // no additional provider
+      std::move(cert_provider),
       base::MakeUnique<ClientCertFilterChromeOS>(state->use_system_key_slot_,
                                                  state->username_hash_),
       ClientCertStoreChromeOS::PasswordDelegateFactory()));
@@ -792,9 +790,16 @@ void SelectClientCertificates(
   std::unique_ptr<SelectCertificatesState> state(new SelectCertificatesState(
       user->username_hash(), use_system_key_slot, cert_request_info, callback));
 
+  chromeos::CertificateProviderService* const service =
+      chromeos::CertificateProviderServiceFactory::GetForBrowserContext(
+          browser_context);
+  std::unique_ptr<CertificateProvider> cert_provider =
+      service->CreateCertificateProvider();
+
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&SelectCertificatesOnIOThread, base::Passed(&state)));
+      base::Bind(&SelectCertificatesOnIOThread, base::Passed(&state),
+                 base::Passed(&cert_provider)));
 }
 
 }  // namespace subtle

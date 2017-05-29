@@ -151,6 +151,12 @@ class CertificateProviderService : public KeyedService {
   // corresponding notification of the ExtensionRegistry is triggered.
   void OnExtensionUnloaded(const std::string& extension_id);
 
+  void RequestSignatureByPublicKey(
+      const std::string& public_key,
+      const std::string& digest,
+      net::SSLPrivateKey::Hash hash,
+      const net::SSLPrivateKey::SignCallback& callback);
+
   PinDialogManager* pin_dialog_manager() { return &pin_dialog_manager_; }
 
  private:
