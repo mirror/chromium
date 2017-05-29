@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1621dbd4_4c209e96",
+        "filename": "content/renderer/media/media_stream_audio_processor_options.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "(Is this a style guide thing having to explicitly define them all as default?)",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea1e5c2_55c602c0",
+        "filename": "content/renderer/media/media_stream_constraints_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/WebMediaConstraints.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d242 says \"Constraints not exposed in Blink at the moment, only through the legacy name interface\". Is there a non-legacy constraint that shoud be checked first? If this is legacy-only, should IsDeviceCapture be renamed to imply it is legacy?",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab97044b_f0dacc6d",
+        "filename": "content/renderer/media/media_stream_constraints_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "Is there overlap between AudioParameters and AudioCaptureSettings? There\u0027s AudioParameters::PlatformEffectsMask::HOTWORD, ECHO_CANCELLER... is this duplicate information or does it refer to different things, like goog and non-goog? Can one be true and the other false?",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e482c730_011d6393",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "Why are we using this class based on media::AudioParameters which turns these constraints into a special case. Would it be possible to have a more generic set of properties to pass to the algorithm, could the algorithm not have to know about these details and iterate properties/constraints in a general fashion? Such as dealing with a set of names and some sort of lookup function when we need to look up something constraint-specific.",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4b7570_b3148c8e",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "Can you add a comment explaining this class, what it\u0027s used for and why it bases its set on exact values rather than ideal values.",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f090fac_5918e5d5",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "There\u0027s a lot of repeated code here and in other places. Can we define a list once and iterate it everywhere else?\n\nI think not only would this code be a lot shorter and easier to understand, so would testing, since which constraint names are fed to the algorithm wouldn\u0027t matter.\n\nPerhaps with array with indices, members with function returning each member address or even a good old fashioned std::map.\nOr perhaps the algorithm should be agnostic about which constraints exist, the input being a set of strings. You can filter out invalid constraint names before passing them to the algorithm so that they are ignored according to spec (as opposed to being able to contradict yourself with invalid constraint names, for subtle bugs).",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a306123_a2ce1f82",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "AudioDeviceInfo\u0027s media::AudioParameters contains a lot of things we\u0027re ignoring. Why? Can you add a comment here and/or at AudioDeviceInfo?",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66cf14d5_62b714c2",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "If it\u0027s not universal and it\u0027s not empty it should only contain a single element, right? Worth DCHECKing to document this and/or add a comment saying this is the only allowed value based on intersection with exact values?",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b9d768_7c2cb528",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f3768b_d7fcf843",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "I\u0027m hoping the Select stuff can all be generalized (\"for each constraint ...\") and stuff like this be moved to a step before feeding the algorithm input.",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600b8ef9_234c69d6",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "Ditto: is \"for each...\" possible?",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e90d86a_853b6b35",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "Commented out code here.",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe76d90a_1896ec30",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "And here.",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768faf10_4ffa2b5e",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "Can you outline the algorithm in a comment here, explaining basic and advanced sets, ideal and exact values, candidates, fitness distance (infinite and finite), and how it picks the best one?",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd89d8ee_325a580f",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "nit: BoolSetFunction",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ecd0e2_b9ad77cf",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-05-29T17:33:38Z",
+      "side": 1,
+      "message": "Commented out code.",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
