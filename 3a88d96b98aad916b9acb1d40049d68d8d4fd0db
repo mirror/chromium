@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "dbacb107_413d2f73",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/Database.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-05-29T08:51:56Z",
+      "side": 1,
+      "message": "If the current implementation is passing |undefined| in as the receiver object, then passing |nullptr| as the receiver object is just fine and it should behave the same.\n\nEvery function takes the receiver object when it\u0027s called.  So, whenever you invoke a function (including callback functions), you need to pass the receiver object.  The receiver object is referenced as |this| in the function.  It totally depends on the function for what |this| will be used.\n\nThe receiver object can be any ES Object, so not necessarily need to be a ScriptWrappable.  However, do we want to pass any other object so far?\n\nIf you passed |nullptr| as the receiver object, ToV8(nullptr) is used as the receiver object.  ToV8(nullptr) returns v8::Null(isolate) i.e. |null| in ECMAScript.  ECMAScript has a rule to convert |null| or |undefined| into the \"global this value\" in case of the receiver object of a function call.  So |this| will be the global proxy (i.e. |window|).  This is a reasonable choice when you don\u0027t have any other appropriate object for |this|.",
+      "parentUuid": "d55fefdc_af6a3a7d",
+      "range": {
+        "startLine": 321,
+        "startChar": 27,
+        "endLine": 321,
+        "endChar": 34
+      },
+      "revId": "3a88d96b98aad916b9acb1d40049d68d8d4fd0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "463dd728_103f20b6",
         "filename": "third_party/WebKit/Source/modules/webdatabase/DatabaseManager.cpp",
         "patchSetId": 5
