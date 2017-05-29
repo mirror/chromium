@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "441e2bde_f670d3f6",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-05-29T23:43:46Z",
+      "side": 1,
+      "message": "Can I challenge that this needs to be immediately updated here? Scrollbar geometries are really only used for generating scrollbar quads that accurately reflect the current scroll state (I think), which to me says that they\u0027re not a state that needs to be updated until AppendQuads happens.\n\nCould scrolling and page scale also merely set scrollbar geometries need update, and then UpdateScrollbarGeometries(void) could be called prior to append quads?",
+      "revId": "9028116ddf0080609a28089a0ca28277bfb9f718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
