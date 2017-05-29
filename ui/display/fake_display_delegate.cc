@@ -112,14 +112,13 @@ void FakeDisplayDelegate::GrabServer() {}
 
 void FakeDisplayDelegate::UngrabServer() {}
 
-void FakeDisplayDelegate::TakeDisplayControl(
-    const DisplayControlCallback& callback) {
-  callback.Run(false);
+void FakeDisplayDelegate::TakeDisplayControl(DisplayControlCallback callback) {
+  std::move(callback).Run(false);
 }
 
 void FakeDisplayDelegate::RelinquishDisplayControl(
-    const DisplayControlCallback& callback) {
-  callback.Run(false);
+    DisplayControlCallback callback) {
+  std::move(callback).Run(false);
 }
 
 void FakeDisplayDelegate::SyncWithServer() {}
@@ -128,11 +127,11 @@ void FakeDisplayDelegate::SetBackgroundColor(uint32_t color_argb) {}
 
 void FakeDisplayDelegate::ForceDPMSOn() {}
 
-void FakeDisplayDelegate::GetDisplays(const GetDisplaysCallback& callback) {
+void FakeDisplayDelegate::GetDisplays(GetDisplaysCallback callback) {
   std::vector<DisplaySnapshot*> displays;
   for (auto& display : displays_)
     displays.push_back(display.get());
-  callback.Run(displays);
+  std::move(callback).Run(displays);
 }
 
 void FakeDisplayDelegate::AddMode(const DisplaySnapshot& output,
@@ -141,7 +140,7 @@ void FakeDisplayDelegate::AddMode(const DisplaySnapshot& output,
 void FakeDisplayDelegate::Configure(const DisplaySnapshot& output,
                                     const DisplayMode* mode,
                                     const gfx::Point& origin,
-                                    const ConfigureCallback& callback) {
+                                    ConfigureCallback callback) {
   bool configure_success = false;
 
   if (!mode) {
@@ -157,7 +156,8 @@ void FakeDisplayDelegate::Configure(const DisplaySnapshot& output,
     }
   }
 
-  configure_callbacks_.push(base::Bind(callback, configure_success));
+  configure_callbacks_.push(
+      base::BindOnce(std::move(callback), configure_success));
 
   // Start the timer if it's not already running. If there are multiple queued
   // configuration requests then ConfigureDone() will handle starting the
@@ -172,14 +172,14 @@ void FakeDisplayDelegate::Configure(const DisplaySnapshot& output,
 void FakeDisplayDelegate::CreateFrameBuffer(const gfx::Size& size) {}
 
 void FakeDisplayDelegate::GetHDCPState(const DisplaySnapshot& output,
-                                       const GetHDCPStateCallback& callback) {
-  callback.Run(false, HDCP_STATE_UNDESIRED);
+                                       GetHDCPStateCallback callback) {
+  std::move(callback).Run(false, HDCP_STATE_UNDESIRED);
 }
 
 void FakeDisplayDelegate::SetHDCPState(const DisplaySnapshot& output,
                                        HDCPState state,
-                                       const SetHDCPStateCallback& callback) {
-  callback.Run(false);
+                                       SetHDCPStateCallback callback) {
+  std::move(callback).Run(false);
 }
 
 std::vector<ColorCalibrationProfile>
@@ -248,7 +248,7 @@ void FakeDisplayDelegate::OnConfigurationChanged() {
 
 void FakeDisplayDelegate::ConfigureDone() {
   DCHECK(!configure_callbacks_.empty());
-  configure_callbacks_.front().Run();
+  std::move(configure_callbacks_.front()).Run();
   configure_callbacks_.pop();
 
   // If there are more configuration requests waiting then restart the timer.

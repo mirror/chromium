@@ -148,12 +148,12 @@ void NativeDisplayDelegateX11::UngrabServer() {
 }
 
 void NativeDisplayDelegateX11::TakeDisplayControl(
-    const DisplayControlCallback& callback) {
+    DisplayControlCallback callback) {
   NOTIMPLEMENTED();
 }
 
 void NativeDisplayDelegateX11::RelinquishDisplayControl(
-    const DisplayControlCallback& callback) {
+    DisplayControlCallback callback) {
   NOTIMPLEMENTED();
 }
 
@@ -170,8 +170,7 @@ void NativeDisplayDelegateX11::ForceDPMSOn() {
   CHECK(DPMSForceLevel(display_, DPMSModeOn));
 }
 
-void NativeDisplayDelegateX11::GetDisplays(
-    const GetDisplaysCallback& callback) {
+void NativeDisplayDelegateX11::GetDisplays(GetDisplaysCallback callback) {
   CHECK(screen_) << "Server not grabbed";
 
   cached_outputs_.clear();
@@ -189,7 +188,7 @@ void NativeDisplayDelegateX11::GetDisplays(
     XRRFreeOutputInfo(output_info);
   }
 
-  callback.Run(GetCachedDisplays());
+  std::move(callback).Run(GetCachedDisplays());
 }
 
 void NativeDisplayDelegateX11::AddMode(const DisplaySnapshot& output,
@@ -209,15 +208,15 @@ void NativeDisplayDelegateX11::AddMode(const DisplaySnapshot& output,
 void NativeDisplayDelegateX11::Configure(const DisplaySnapshot& output,
                                          const DisplayMode* mode,
                                          const gfx::Point& origin,
-                                         const ConfigureCallback& callback) {
+                                         ConfigureCallback callback) {
   const DisplaySnapshotX11& x11_output =
       static_cast<const DisplaySnapshotX11&>(output);
   RRMode mode_id = None;
   if (mode)
     mode_id = static_cast<const DisplayModeX11*>(mode)->mode_id();
 
-  callback.Run(ConfigureCrtc(x11_output.crtc(), mode_id, x11_output.output(),
-                             origin.x(), origin.y()));
+  std::move(callback).Run(ConfigureCrtc(
+      x11_output.crtc(), mode_id, x11_output.output(), origin.x(), origin.y()));
 }
 
 bool NativeDisplayDelegateX11::ConfigureCrtc(RRCrtc crtc,
@@ -385,12 +384,11 @@ NativeDisplayDelegateX11::InitDisplaySnapshot(RROutput output,
   return display_snapshot;
 }
 
-void NativeDisplayDelegateX11::GetHDCPState(
-    const DisplaySnapshot& output,
-    const GetHDCPStateCallback& callback) {
+void NativeDisplayDelegateX11::GetHDCPState(const DisplaySnapshot& output,
+                                            GetHDCPStateCallback callback) {
   HDCPState state = HDCP_STATE_UNDESIRED;
   bool success = GetHDCPState(output, &state);
-  callback.Run(success, state);
+  std::move(callback).Run(success, state);
 }
 
 bool NativeDisplayDelegateX11::GetHDCPState(const DisplaySnapshot& output,
@@ -452,11 +450,10 @@ bool NativeDisplayDelegateX11::GetHDCPState(const DisplaySnapshot& output,
   return true;
 }
 
-void NativeDisplayDelegateX11::SetHDCPState(
-    const DisplaySnapshot& output,
-    HDCPState state,
-    const SetHDCPStateCallback& callback) {
-  callback.Run(SetHDCPState(output, state));
+void NativeDisplayDelegateX11::SetHDCPState(const DisplaySnapshot& output,
+                                            HDCPState state,
+                                            SetHDCPStateCallback callback) {
+  std::move(callback).Run(SetHDCPState(output, state));
 }
 
 bool NativeDisplayDelegateX11::SetHDCPState(const DisplaySnapshot& output,

@@ -23,21 +23,20 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
 
  private:
   // TraitsTestService:
-  void EchoLatencyComponent(
-      const LatencyInfo::LatencyComponent& l,
-      const EchoLatencyComponentCallback& callback) override {
-    callback.Run(l);
+  void EchoLatencyComponent(const LatencyInfo::LatencyComponent& l,
+                            EchoLatencyComponentCallback callback) override {
+    std::move(callback).Run(l);
   }
 
   void EchoLatencyComponentId(
       const std::pair<LatencyComponentType, int64_t>& id,
-      const EchoLatencyComponentIdCallback& callback) override {
-    callback.Run(id);
+      EchoLatencyComponentIdCallback callback) override {
+    std::move(callback).Run(id);
   }
 
   void EchoLatencyInfo(const LatencyInfo& info,
-                       const EchoLatencyInfoCallback& callback) override {
-    callback.Run(info);
+                       EchoLatencyInfoCallback callback) override {
+    std::move(callback).Run(info);
   }
 
   base::MessageLoop loop_;

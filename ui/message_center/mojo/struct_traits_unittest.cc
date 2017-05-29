@@ -36,8 +36,8 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
  private:
   // TraitsTestService:
   void EchoNotification(const Notification& n,
-                        const EchoNotificationCallback& callback) override {
-    callback.Run(n);
+                        EchoNotificationCallback callback) override {
+    std::move(callback).Run(n);
   }
 
   base::MessageLoop loop_;
