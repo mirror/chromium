@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b86ce205_d7336b88",
+        "filename": "components/feature_engagement_tracker/internal/editable_configuration.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-05-30T19:38:39Z",
+      "side": 1,
+      "message": "Done, my bad..",
+      "parentUuid": "fd8e257b_ddc2ff4a",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "052e29f8_1002f806",
         "filename": "components/feature_engagement_tracker/internal/stats.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02aa55a_8366610b",
+        "filename": "components/feature_engagement_tracker/internal/stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-05-30T19:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "052e29f8_1002f806",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d982d2f2_88ceedb0",
+        "filename": "components/feature_engagement_tracker/internal/stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-05-30T19:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4745c5e5_eb27a3a3",
+      "range": {
+        "startLine": 173,
+        "startChar": 19,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab6192d9_e738d3a1",
         "filename": "components/feature_engagement_tracker/internal/stats.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01bde0d_a41ce623",
+        "filename": "components/feature_engagement_tracker/internal/stats.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-05-30T19:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab6192d9_e738d3a1",
+      "range": {
+        "startLine": 132,
+        "startChar": 25,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ec4a46c8_5f759d71",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24645,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-05-30T19:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f093ff_cd23990c",
+      "range": {
+        "startLine": 24645,
+        "startChar": 58,
+        "endLine": 24645,
+        "endChar": 72
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bc7e768_8cb9998f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09157a77_d2a1bbb0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24655,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-05-30T19:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bc7e768_8cb9998f",
+      "range": {
+        "startLine": 24655,
+        "startChar": 58,
+        "endLine": 24655,
+        "endChar": 72
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "9379aba8_a50f4434",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24674,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-05-30T19:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56398c0b_41f601ad",
+      "range": {
+        "startLine": 24674,
+        "startChar": 60,
+        "endLine": 24674,
+        "endChar": 74
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4fc06ee_61871ce0",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -174,6 +342,30 @@
       "writtenOn": "2017-05-29T15:39:29Z",
       "side": 1,
       "message": "Sounds like this should be a BooleanReady instead. Add it if it doesn\u0027t exist.",
+      "range": {
+        "startLine": 24685,
+        "startChar": 10,
+        "endLine": 24685,
+        "endChar": 24
+      },
+      "revId": "27fa8e82552e06dd41fdbdcf18c91d3a370f36b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff39b27_aad536a2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24685,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-05-30T19:38:39Z",
+      "side": 1,
+      "message": "Done, changed to BooleanSuccess.",
+      "parentUuid": "e4fc06ee_61871ce0",
       "range": {
         "startLine": 24685,
         "startChar": 10,
