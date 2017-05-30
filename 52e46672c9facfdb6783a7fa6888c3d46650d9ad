@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b6aea88_acd7c816",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-05-30T22:57:58Z",
+      "side": 1,
+      "message": "Can we instead use setSheetState(SHEET_STATE_FULL, false)? Are we trying to avoid the event?",
+      "range": {
+        "startLine": 969,
+        "startChar": 66,
+        "endLine": 969,
+        "endChar": 79
+      },
+      "revId": "52e46672c9facfdb6783a7fa6888c3d46650d9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d39120a_da6c2d09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-05-30T22:57:58Z",
+      "side": 1,
+      "message": "You can probably just inline this below.",
+      "range": {
+        "startLine": 1247,
+        "startChar": 16,
+        "endLine": 1247,
+        "endChar": 29
+      },
+      "revId": "52e46672c9facfdb6783a7fa6888c3d46650d9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
