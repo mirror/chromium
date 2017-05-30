@@ -184,43 +184,27 @@ SDK.CSSMatchedStyles = class {
     var node = this.nodeForStyle(rule.style);
     if (!node)
       return Promise.resolve();
-    var promises = [];
-    for (var selector of rule.selectors)
-      promises.push(querySelector.call(this, node, selector.text));
+    var promises =
+        rule.selectors.map(selector => querySelector.call(this, /** @type {!SDK.DOMNode} */ (node), selector.text));
     return Promise.all(promises);
 
     /**
      * @param {!SDK.DOMNode} node
      * @param {string} selectorText
-     * @return {!Promise}
      * @this {SDK.CSSMatchedStyles}
      */
-    function querySelector(node, selectorText) {
+    async function querySelector(node, selectorText) {
       var ownerDocument = node.ownerDocument || null;
       // We assume that "matching" property does not ever change during the
       // MatchedStyleResult's lifetime.
       var map = this._matchingSelectors.get(node.id);
       if ((map && map.has(selectorText)) || !ownerDocument)
-        return Promise.resolve();
+        return;
 
-      var resolve;
-      var promise = new Promise(fulfill => resolve = fulfill);
-      this._node.domModel().querySelectorAll(
-          ownerDocument.id, selectorText, onQueryComplete.bind(this, node, selectorText, resolve));
-      return promise;
-    }
+      var matchingNodeIds = await this._node.domModel().querySelectorAll(ownerDocument.id, selectorText);
 
-    /**
-     * @param {!SDK.DOMNode} node
-     * @param {string} selectorText
-     * @param {function()} callback
-     * @param {?Array<!Protocol.DOM.NodeId>} matchingNodeIds
-     * @this {SDK.CSSMatchedStyles}
-     */
-    function onQueryComplete(node, selectorText, callback, matchingNodeIds) {
       if (matchingNodeIds)
         this._setSelectorMatches(node, selectorText, matchingNodeIds.indexOf(node.id) !== -1);
-      callback();
     }
   }
 
