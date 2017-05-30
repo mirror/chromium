@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "316bf307_dd9c1b9e",
+        "filename": "components/feature_engagement_tracker/internal/system_time_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1212220
+      },
+      "writtenOn": "2017-05-30T14:10:35Z",
+      "side": 1,
+      "message": "This is failing if time zone on the device(Nexus7 with Android 6.0.1) is set to anything else but GMT+00:00.\nSame applies to TestManualDatesAroundGoogleIO2017.",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 11
+      },
+      "revId": "8afbdf7d2bfa9779d548d9d131ae0415813453fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
