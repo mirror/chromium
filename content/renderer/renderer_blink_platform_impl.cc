@@ -715,12 +715,11 @@ std::unique_ptr<WebAudioDevice> RendererBlinkPlatformImpl::CreateAudioDevice(
       static_cast<url::Origin>(security_origin));
 }
 
-bool RendererBlinkPlatformImpl::LoadAudioResource(
+bool RendererBlinkPlatformImpl::GetAudioResource(
     blink::WebAudioBus* destination_bus,
     const char* audio_file_data,
     size_t data_size) {
-  return DecodeAudioFileData(
-      destination_bus, audio_file_data, data_size);
+  return DecodeAudioFileData(destination_bus, audio_file_data, data_size);
 }
 
 //------------------------------------------------------------------------------
