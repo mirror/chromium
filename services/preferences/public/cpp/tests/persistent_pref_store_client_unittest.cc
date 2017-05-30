@@ -90,7 +90,7 @@ class PersistentPrefStoreClientTest : public testing::Test,
       std::move(on_update_).Run();
   }
 
-  void CommitPendingWrite() override {}
+  void CommitPendingWrite(CommitPendingWriteCallback callback) override {}
   void SchedulePendingLossyWrites() override {}
   void ClearMutableValues() override {}
 

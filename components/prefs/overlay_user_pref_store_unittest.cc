@@ -4,7 +4,11 @@
 
 #include "components/prefs/overlay_user_pref_store.h"
 
+#include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
+#include "base/sequence_checker.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "components/prefs/pref_store_observer_mock.h"
 #include "components/prefs/testing_pref_store.h"
@@ -38,6 +42,7 @@ class OverlayUserPrefStoreTest : public testing::Test {
 
   ~OverlayUserPrefStoreTest() override {}
 
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   scoped_refptr<TestingPrefStore> underlay_;
   scoped_refptr<OverlayUserPrefStore> overlay_;
 };
@@ -269,6 +274,24 @@ TEST_F(OverlayUserPrefStoreTest, GetValues) {
   // Check that the overlay is preferred.
   ASSERT_TRUE(values->Get(shared_key, &value));
   EXPECT_TRUE(base::Value(43).Equals(value));
+}
+
+// Verify that the callback passed to CommitPendingWrite() runs asynchronously.
+TEST_F(OverlayUserPrefStoreTest, CommitPendingWriteCallback) {
+  base::RunLoop run_loop;
+  base::SequenceCheckerImpl sequence_checker;
+  bool can_run_callback = false;
+  overlay_->CommitPendingWrite(base::BindOnce(
+      [](bool* can_run_callback, base::SequenceCheckerImpl* sequence_checker,
+         base::RunLoop* run_loop) {
+        EXPECT_TRUE(*can_run_callback);
+        EXPECT_TRUE(sequence_checker->CalledOnValidSequence());
+        run_loop->Quit();
+      },
+      base::Unretained(&can_run_callback), base::Unretained(&sequence_checker),
+      base::Unretained(&run_loop)));
+  can_run_callback = true;
+  run_loop.Run();
 }
 
 }  // namespace base

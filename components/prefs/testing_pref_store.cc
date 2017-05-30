@@ -9,6 +9,7 @@
 
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -98,7 +99,13 @@ void TestingPrefStore::ReadPrefsAsync(ReadErrorDelegate* error_delegate) {
     NotifyInitializationCompleted();
 }
 
-void TestingPrefStore::CommitPendingWrite() { committed_ = true; }
+void TestingPrefStore::CommitPendingWrite(base::OnceClosure done_callback) {
+  committed_ = true;
+  if (done_callback) {
+    base::SequencedTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                     std::move(done_callback));
+  }
+}
 
 void TestingPrefStore::SchedulePendingLossyWrites() {}
 
