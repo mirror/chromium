@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1fc42244_002a5350",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002248
+      },
+      "writtenOn": "2017-05-30T23:14:35Z",
+      "side": 1,
+      "message": "OH I took it for \u0027onDestroyed\u0027. This was to deal with WebView gc tests but needs more thinking. Adding it in destroy() doesn\u0027t work.",
+      "parentUuid": "cc1b6d94_6157fa81",
+      "revId": "8ab5e5a638db3482d2558eedf0577bfa56705722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5c889e6_f1fd3b11",
         "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-30T16:21:30Z",
       "side": 1,
       "message": "sort out the accessibility stuff before making this change, so that this interface is not needed",
+      "revId": "8ab5e5a638db3482d2558eedf0577bfa56705722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d22600a_c98e9145",
+        "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002248
+      },
+      "writtenOn": "2017-05-30T23:14:35Z",
+      "side": 1,
+      "message": "At this moment I don\u0027t have a good idea how to do without this interface with the refactoring I have in mind. BrowserAccessibilityManager is in content/, and embedders forwarding the hover events to EventForward in ui/  still needs some kind of hook to allow BAM to consume them.",
+      "parentUuid": "f5c889e6_f1fd3b11",
       "revId": "8ab5e5a638db3482d2558eedf0577bfa56705722",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
