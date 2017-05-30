@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcba57b2_1b62969d",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-30T17:09:23Z",
+      "side": 1,
+      "message": "nit: maybe NOTREACHED(); return; here? the one in L43 is just there to appease the older compilers :(",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "3c140a7ada0d15c86950151ac0a7661e6fbe0569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
