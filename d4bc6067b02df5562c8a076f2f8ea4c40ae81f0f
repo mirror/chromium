@@ -2,6 +2,142 @@
   "comments": [
     {
       "key": {
+        "uuid": "07be2bac_52f60b07",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-30T18:48:43Z",
+      "side": 1,
+      "message": "There are enough of these now that this should be factored out into a single function, something like:\n\nvoid RecordWatchTimeWithFilter(\u003cwatch_time_info\u003e, \u003cfilter_set\u003e)\n\nWhere if filter_set is empty, all keys in watch_time_info are recorded.",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d6073b_c10c83b8",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-30T18:48:43Z",
+      "side": 1,
+      "message": "Line between } and case.",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fdbc23c_edc871de",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-30T18:48:43Z",
+      "side": 1,
+      "message": "As mentioned in the reporter, this isn\u0027t quite right now. You need to check both power and controls here.",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8ec860_33ed04bf",
+        "filename": "media/base/media_log.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-30T18:48:43Z",
+      "side": 1,
+      "message": "Do we care about this? If not, easy to skip keys based on is_background status.",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efab5a4_4262e1dc",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-30T18:48:43Z",
+      "side": 1,
+      "message": "As mentioned in the header, don\u0027t do this. Instead rely on has_native_controls_ always being accurate. I.e. the proper state will be set upon construction in WMPI; see how this is done with OnHidden/OnShown().",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2eb4bc2_c3b0201e",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-30T18:48:43Z",
+      "side": 1,
+      "message": "This doesn\u0027t quite work now. Since both a power and a controls change could happen at once. The previous was (everything || power only), now if !everything, both power and controls need checking. Please add a test for this too.",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d4df3a8_99c69f0a",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-30T18:48:43Z",
+      "side": 1,
+      "message": "You don\u0027t need both this and the callback. Choose push vs pull. I\u0027d prefer if you kept push-only for similarity with other keys. Also for similarity, this should be OnNativeControlsEnabled() and OnNativeControlsDisabled().",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234e6501_79a1168a",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2297,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-30T18:48:43Z",
+      "side": 1,
+      "message": "Instead of the callback just push the current controls status here.",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c9a1a14_848bdc63",
         "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
         "patchSetId": 2
