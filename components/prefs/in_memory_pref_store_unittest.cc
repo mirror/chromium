@@ -4,7 +4,9 @@
 
 #include "components/prefs/in_memory_pref_store.h"
 
+#include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
 #include "base/values.h"
 #include "components/prefs/pref_store_observer_mock.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -99,6 +101,20 @@ TEST_F(InMemoryPrefStoreTest, GetReadError) {
 
 TEST_F(InMemoryPrefStoreTest, ReadPrefs) {
   EXPECT_EQ(PersistentPrefStore::PREF_READ_ERROR_NONE, store_->ReadPrefs());
+}
+
+// Verify that the callback passed to CommitPendingWrite() runs asynchronously.
+TEST_F(InMemoryPrefStoreTest, CommitPendingWriteCallback) {
+  base::RunLoop run_loop;
+  bool can_run_callback = false;
+  store_->CommitPendingWrite(base::BindOnce(
+      [](base::RunLoop* run_loop, bool* can_run_callback) {
+        EXPECT_TRUE(*can_run_callback);
+        run_loop->Quit();
+      },
+      base::Unretained(&run_loop), base::Unretained(&can_run_callback)));
+  can_run_callback = true;
+  run_loop.Run();
 }
 
 }  // namespace

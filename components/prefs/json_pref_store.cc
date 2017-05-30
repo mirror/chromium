@@ -284,7 +284,7 @@ void JsonPrefStore::ReadPrefsAsync(ReadErrorDelegate* error_delegate) {
       base::Bind(&JsonPrefStore::OnFileRead, AsWeakPtr()));
 }
 
-void JsonPrefStore::CommitPendingWrite() {
+void JsonPrefStore::CommitPendingWrite(base::OnceClosure done_callback) {
   DCHECK(CalledOnValidThread());
 
   // Schedule a write for any lossy writes that are outstanding to ensure that
@@ -293,6 +293,9 @@ void JsonPrefStore::CommitPendingWrite() {
 
   if (writer_.HasPendingWrite() && !read_only_)
     writer_.DoScheduledWrite();
+
+  if (done_callback)
+    sequenced_task_runner_->PostTask(FROM_HERE, std::move(done_callback));
 }
 
 void JsonPrefStore::SchedulePendingLossyWrites() {

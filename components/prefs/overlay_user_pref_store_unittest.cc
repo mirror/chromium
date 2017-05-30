@@ -4,7 +4,9 @@
 
 #include "components/prefs/overlay_user_pref_store.h"
 
+#include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
 #include "base/values.h"
 #include "components/prefs/pref_store_observer_mock.h"
 #include "components/prefs/testing_pref_store.h"
@@ -269,6 +271,20 @@ TEST_F(OverlayUserPrefStoreTest, GetValues) {
   // Check that the overlay is preferred.
   ASSERT_TRUE(values->Get(shared_key, &value));
   EXPECT_TRUE(base::Value(43).Equals(value));
+}
+
+// Verify that the callback passed to CommitPendingWrite() runs asynchronously.
+TEST_F(OverlayUserPrefStoreTest, CommitPendingWriteCallback) {
+  base::RunLoop run_loop;
+  bool can_run_callback = false;
+  overlay_->CommitPendingWrite(base::BindOnce(
+      [](base::RunLoop* run_loop, bool* can_run_callback) {
+        EXPECT_TRUE(*can_run_callback);
+        run_loop->Quit();
+      },
+      base::Unretained(&run_loop), base::Unretained(&can_run_callback)));
+  can_run_callback = true;
+  run_loop.Run();
 }
 
 }  // namespace base

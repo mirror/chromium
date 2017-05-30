@@ -129,9 +129,13 @@ class MockReadErrorDelegate : public PersistentPrefStore::ReadErrorDelegate {
   MOCK_METHOD1(OnError, void(PersistentPrefStore::PrefReadError));
 };
 
-}  // namespace
+enum class CommitPendingWriteMode {
+  WITHOUT_CALLBACK,
+  WITH_CALLBACK,
+};
 
-class JsonPrefStoreTest : public testing::Test {
+class JsonPrefStoreTest
+    : public testing::TestWithParam<CommitPendingWriteMode> {
  public:
   JsonPrefStoreTest() = default;
 
@@ -146,6 +150,91 @@ class JsonPrefStoreTest : public testing::Test {
     RunLoop().RunUntilIdle();
   }
 
+  void CommitPendingWrite(JsonPrefStore* pref_store) {
+    if (GetParam() == CommitPendingWriteMode::WITHOUT_CALLBACK) {
+      pref_store->CommitPendingWrite();
+      base::RunLoop().RunUntilIdle();
+    } else {
+      base::RunLoop run_loop;
+      pref_store->CommitPendingWrite(run_loop.QuitClosure());
+      run_loop.Run();
+    }
+  }
+
+  // This method is used to avoid code duplication while testing synchronous and
+  // asynchronous version of the JsonPrefStore loading. It validates that the
+  // given output file's contents matches kWriteGolden.
+  void RunBasicJsonPrefStoreTest(JsonPrefStore* pref_store,
+                                 const base::FilePath& output_file) {
+    const char kNewWindowsInTabs[] = "tabs.new_windows_in_tabs";
+    const char kMaxTabs[] = "tabs.max_tabs";
+    const char kLongIntPref[] = "long_int.pref";
+
+    std::string cnn("http://www.cnn.com");
+
+    const Value* actual;
+    EXPECT_TRUE(pref_store->GetValue(kHomePage, &actual));
+    std::string string_value;
+    EXPECT_TRUE(actual->GetAsString(&string_value));
+    EXPECT_EQ(cnn, string_value);
+
+    const char kSomeDirectory[] = "some_directory";
+
+    EXPECT_TRUE(pref_store->GetValue(kSomeDirectory, &actual));
+    base::FilePath::StringType path;
+    EXPECT_TRUE(actual->GetAsString(&path));
+    EXPECT_EQ(base::FilePath::StringType(FILE_PATH_LITERAL("/usr/local/")),
+              path);
+    base::FilePath some_path(FILE_PATH_LITERAL("/usr/sbin/"));
+
+    pref_store->SetValue(kSomeDirectory,
+                         base::MakeUnique<Value>(some_path.value()),
+                         WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
+    EXPECT_TRUE(pref_store->GetValue(kSomeDirectory, &actual));
+    EXPECT_TRUE(actual->GetAsString(&path));
+    EXPECT_EQ(some_path.value(), path);
+
+    // Test reading some other data types from sub-dictionaries.
+    EXPECT_TRUE(pref_store->GetValue(kNewWindowsInTabs, &actual));
+    bool boolean = false;
+    EXPECT_TRUE(actual->GetAsBoolean(&boolean));
+    EXPECT_TRUE(boolean);
+
+    pref_store->SetValue(kNewWindowsInTabs, base::MakeUnique<Value>(false),
+                         WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
+    EXPECT_TRUE(pref_store->GetValue(kNewWindowsInTabs, &actual));
+    EXPECT_TRUE(actual->GetAsBoolean(&boolean));
+    EXPECT_FALSE(boolean);
+
+    EXPECT_TRUE(pref_store->GetValue(kMaxTabs, &actual));
+    int integer = 0;
+    EXPECT_TRUE(actual->GetAsInteger(&integer));
+    EXPECT_EQ(20, integer);
+    pref_store->SetValue(kMaxTabs, base::MakeUnique<Value>(10),
+                         WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
+    EXPECT_TRUE(pref_store->GetValue(kMaxTabs, &actual));
+    EXPECT_TRUE(actual->GetAsInteger(&integer));
+    EXPECT_EQ(10, integer);
+
+    pref_store->SetValue(
+        kLongIntPref,
+        base::MakeUnique<Value>(base::Int64ToString(214748364842LL)),
+        WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
+    EXPECT_TRUE(pref_store->GetValue(kLongIntPref, &actual));
+    EXPECT_TRUE(actual->GetAsString(&string_value));
+    int64_t value;
+    base::StringToInt64(string_value, &value);
+    EXPECT_EQ(214748364842LL, value);
+
+    // Serialize and compare to expected output.
+    CommitPendingWrite(pref_store);
+
+    std::string output_contents;
+    ASSERT_TRUE(base::ReadFileToString(output_file, &output_contents));
+    EXPECT_EQ(kWriteGolden, output_contents);
+    ASSERT_TRUE(base::DeleteFile(output_file, false));
+  }
+
   // The path to temporary directory used to contain the test operations.
   base::ScopedTempDir temp_dir_;
   // A message loop that we can use as the file thread message loop.
@@ -153,6 +242,8 @@ class JsonPrefStoreTest : public testing::Test {
 
   DISALLOW_COPY_AND_ASSIGN(JsonPrefStoreTest);
 };
+
+}  // namespace
 
 // Test fallback behavior for a nonexistent file.
 TEST_F(JsonPrefStoreTest, NonExistentFile) {
@@ -188,81 +279,7 @@ TEST_F(JsonPrefStoreTest, InvalidFile) {
   EXPECT_EQ(kInvalidJson, moved_aside_contents);
 }
 
-// This function is used to avoid code duplication while testing synchronous
-// and asynchronous version of the JsonPrefStore loading. It validates that the
-// given output file's contents matches kWriteGolden.
-void RunBasicJsonPrefStoreTest(JsonPrefStore* pref_store,
-                               const base::FilePath& output_file) {
-  const char kNewWindowsInTabs[] = "tabs.new_windows_in_tabs";
-  const char kMaxTabs[] = "tabs.max_tabs";
-  const char kLongIntPref[] = "long_int.pref";
-
-  std::string cnn("http://www.cnn.com");
-
-  const Value* actual;
-  EXPECT_TRUE(pref_store->GetValue(kHomePage, &actual));
-  std::string string_value;
-  EXPECT_TRUE(actual->GetAsString(&string_value));
-  EXPECT_EQ(cnn, string_value);
-
-  const char kSomeDirectory[] = "some_directory";
-
-  EXPECT_TRUE(pref_store->GetValue(kSomeDirectory, &actual));
-  base::FilePath::StringType path;
-  EXPECT_TRUE(actual->GetAsString(&path));
-  EXPECT_EQ(base::FilePath::StringType(FILE_PATH_LITERAL("/usr/local/")), path);
-  base::FilePath some_path(FILE_PATH_LITERAL("/usr/sbin/"));
-
-  pref_store->SetValue(kSomeDirectory,
-                       base::MakeUnique<Value>(some_path.value()),
-                       WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  EXPECT_TRUE(pref_store->GetValue(kSomeDirectory, &actual));
-  EXPECT_TRUE(actual->GetAsString(&path));
-  EXPECT_EQ(some_path.value(), path);
-
-  // Test reading some other data types from sub-dictionaries.
-  EXPECT_TRUE(pref_store->GetValue(kNewWindowsInTabs, &actual));
-  bool boolean = false;
-  EXPECT_TRUE(actual->GetAsBoolean(&boolean));
-  EXPECT_TRUE(boolean);
-
-  pref_store->SetValue(kNewWindowsInTabs, base::MakeUnique<Value>(false),
-                       WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  EXPECT_TRUE(pref_store->GetValue(kNewWindowsInTabs, &actual));
-  EXPECT_TRUE(actual->GetAsBoolean(&boolean));
-  EXPECT_FALSE(boolean);
-
-  EXPECT_TRUE(pref_store->GetValue(kMaxTabs, &actual));
-  int integer = 0;
-  EXPECT_TRUE(actual->GetAsInteger(&integer));
-  EXPECT_EQ(20, integer);
-  pref_store->SetValue(kMaxTabs, base::MakeUnique<Value>(10),
-                       WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  EXPECT_TRUE(pref_store->GetValue(kMaxTabs, &actual));
-  EXPECT_TRUE(actual->GetAsInteger(&integer));
-  EXPECT_EQ(10, integer);
-
-  pref_store->SetValue(
-      kLongIntPref,
-      base::MakeUnique<Value>(base::Int64ToString(214748364842LL)),
-      WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
-  EXPECT_TRUE(pref_store->GetValue(kLongIntPref, &actual));
-  EXPECT_TRUE(actual->GetAsString(&string_value));
-  int64_t value;
-  base::StringToInt64(string_value, &value);
-  EXPECT_EQ(214748364842LL, value);
-
-  // Serialize and compare to expected output.
-  pref_store->CommitPendingWrite();
-  RunLoop().RunUntilIdle();
-
-  std::string output_contents;
-  ASSERT_TRUE(base::ReadFileToString(output_file, &output_contents));
-  EXPECT_EQ(kWriteGolden, output_contents);
-  ASSERT_TRUE(base::DeleteFile(output_file, false));
-}
-
-TEST_F(JsonPrefStoreTest, Basic) {
+TEST_P(JsonPrefStoreTest, Basic) {
   base::FilePath input_file = temp_dir_.GetPath().AppendASCII("write.json");
   ASSERT_LT(0, base::WriteFile(input_file,
                                kReadJson, arraysize(kReadJson) - 1));
@@ -288,7 +305,7 @@ TEST_F(JsonPrefStoreTest, Basic) {
   RunBasicJsonPrefStoreTest(pref_store.get(), input_file);
 }
 
-TEST_F(JsonPrefStoreTest, BasicAsync) {
+TEST_P(JsonPrefStoreTest, BasicAsync) {
   base::FilePath input_file = temp_dir_.GetPath().AppendASCII("write.json");
   ASSERT_LT(0, base::WriteFile(input_file,
                                kReadJson, arraysize(kReadJson) - 1));
@@ -327,7 +344,7 @@ TEST_F(JsonPrefStoreTest, BasicAsync) {
   RunBasicJsonPrefStoreTest(pref_store.get(), input_file);
 }
 
-TEST_F(JsonPrefStoreTest, PreserveEmptyValues) {
+TEST_P(JsonPrefStoreTest, PreserveEmptyValues) {
   FilePath pref_file = temp_dir_.GetPath().AppendASCII("empty_values.json");
 
   scoped_refptr<JsonPrefStore> pref_store = new JsonPrefStore(
@@ -340,8 +357,7 @@ TEST_F(JsonPrefStoreTest, PreserveEmptyValues) {
                        WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
 
   // Write to file.
-  pref_store->CommitPendingWrite();
-  RunLoop().RunUntilIdle();
+  CommitPendingWrite(pref_store.get());
 
   // Reload.
   pref_store = new JsonPrefStore(pref_file, message_loop_.task_runner(),
@@ -400,7 +416,7 @@ TEST_F(JsonPrefStoreTest, AsyncNonExistingFile) {
   EXPECT_FALSE(pref_store->ReadOnly());
 }
 
-TEST_F(JsonPrefStoreTest, ReadWithInterceptor) {
+TEST_P(JsonPrefStoreTest, ReadWithInterceptor) {
   base::FilePath input_file = temp_dir_.GetPath().AppendASCII("write.json");
   ASSERT_LT(0, base::WriteFile(input_file,
                                kReadJson, arraysize(kReadJson) - 1));
@@ -442,7 +458,7 @@ TEST_F(JsonPrefStoreTest, ReadWithInterceptor) {
   RunBasicJsonPrefStoreTest(pref_store.get(), input_file);
 }
 
-TEST_F(JsonPrefStoreTest, ReadAsyncWithInterceptor) {
+TEST_P(JsonPrefStoreTest, ReadAsyncWithInterceptor) {
   base::FilePath input_file = temp_dir_.GetPath().AppendASCII("write.json");
   ASSERT_LT(0, base::WriteFile(input_file,
                                kReadJson, arraysize(kReadJson) - 1));
@@ -651,6 +667,15 @@ TEST_F(JsonPrefStoreTest, WriteCountHistogramTestPeriodWithGaps) {
   histogram_tester.ExpectBucketCount(histogram_name, 3, 1);
   histogram_tester.ExpectTotalCount(histogram_name, 6);
 }
+
+INSTANTIATE_TEST_CASE_P(
+    WithoutCallback,
+    JsonPrefStoreTest,
+    ::testing::Values(CommitPendingWriteMode::WITHOUT_CALLBACK));
+INSTANTIATE_TEST_CASE_P(
+    WithCallback,
+    JsonPrefStoreTest,
+    ::testing::Values(CommitPendingWriteMode::WITH_CALLBACK));
 
 class JsonPrefStoreLossyWriteTest : public JsonPrefStoreTest {
  public:
