@@ -22,9 +22,10 @@ gl::GLContextAttribs GenerateGLContextAttribs(
     attribs.webgl_compatibility_context =
         IsWebGLContextType(attribs_helper.context_type);
 
-    // Always use the global texture share group for the passthrough command
-    // decoder
+    // Always use the global texture share group and robust resource
+    // initialization for the passthrough command decoder
     attribs.global_texture_share_group = true;
+    attribs.robust_resource_initialization = true;
 
     // Request a specific context version instead of always 3.0
     if (IsWebGL2OrES3ContextType(attribs_helper.context_type)) {
