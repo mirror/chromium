@@ -46,6 +46,30 @@
       "revId": "3c140a7ada0d15c86950151ac0a7661e6fbe0569",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1543a93e_7eca39ad",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-05-30T20:03:49Z",
+      "side": 1,
+      "message": "Ah right, in that case I think I\u0027d prefer to have an explicit\n\nif (!mojom::BootType::IsKnownValue(boot_type)) {\n  LOG(WARNING) \u003c\u003c \"...\";\n  return \"\";\n}\n\nat the very top. dcheng@ made a proposal to systematically address this issue: https://groups.google.com/a/chromium.org/d/msg/chromium-mojo/_B8nP1g-S2c/OjXcb0BrAAAJ\n\nI\u0027d prefer to have this addressed explicitly here rather than relying on a default-ish catch-all, but I am also fine with this code because the L43-44 code is not going away soon :(",
+      "parentUuid": "cffd5f25_8690a1e2",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "3c140a7ada0d15c86950151ac0a7661e6fbe0569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
