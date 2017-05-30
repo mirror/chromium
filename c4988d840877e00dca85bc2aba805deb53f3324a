@@ -22,6 +22,30 @@
       "revId": "c4988d840877e00dca85bc2aba805deb53f3324a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad6bc87_3566d3d7",
+        "filename": "ios/chrome/browser/net/crl_set_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-05-30T16:04:34Z",
+      "side": 1,
+      "message": "done, thank you!",
+      "parentUuid": "6545ad0a_ab56781b",
+      "range": {
+        "startLine": 169,
+        "startChar": 32,
+        "endLine": 169,
+        "endChar": 36
+      },
+      "revId": "c4988d840877e00dca85bc2aba805deb53f3324a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
