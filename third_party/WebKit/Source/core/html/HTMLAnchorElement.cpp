@@ -358,7 +358,7 @@ void HTMLAnchorElement::HandleClick(Event* event) {
         policy, completed_url, GetDocument().OutgoingReferrer()));
   }
 
-  if (hasAttribute(downloadAttr)) {
+  if (hasAttribute(downloadAttr) && !completed_url.ProtocolIsInHTTPFamily()) {
     request.SetRequestContext(WebURLRequest::kRequestContextDownload);
     request.SetRequestorOrigin(SecurityOrigin::Create(GetDocument().Url()));
 
