@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c78f9ca2_04d216a4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits/AuditRules.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "Annotate the result value please.",
+      "range": {
+        "startLine": 1077,
+        "startChar": 19,
+        "endLine": 1077,
+        "endChar": 38
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3465fb_a04df99b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSMatchedStyles.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "For-loop was more readable.",
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd13c852_b66cdbce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSMatchedStyles.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "Why rename?",
+      "range": {
+        "startLine": 195,
+        "startChar": 19,
+        "endLine": 195,
+        "endChar": 39
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6135933d_48e956b9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "Looks like we don\u0027t need |_markRevision| anymore:\n\nif (!response[Protocol.Error])\n  this._domModel.markUndoableState();\ncallback();\n\nLet\u0027s inline it everywhere.",
+      "range": {
+        "startLine": 388,
+        "startChar": 21,
+        "endLine": 388,
+        "endChar": 34
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf937c9e_f3637b98",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "Nice one! Would you like to migrate more methods from callbacks to promises here?",
+      "range": {
+        "startLine": 443,
+        "startChar": 8,
+        "endLine": 443,
+        "endChar": 23
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ef2125_3ff1ecbf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "Let\u0027s eliminate non-promise version, and remove Promise suffix from the next method.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 2,
+        "endLine": 1066,
+        "endChar": 17
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18cb09d9_6f5252eb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "Does this help? If so, let\u0027s error in requestDocumentPromise instead.",
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1c75da_e75451b2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "return this.requestDocumentPromise().then(() \u003d\u003e this._agent.pushNodeByPathToFrontend(path));",
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7aca58_a2d04a8e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "Why as string? It\u0027s a set of numbers.",
+      "range": {
+        "startLine": 1206,
+        "startChar": 13,
+        "endLine": 1206,
+        "endChar": 27
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376a2614_42685190",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "nodeId will be equal to the last value of the for-loop.",
+      "range": {
+        "startLine": 1213,
+        "startChar": 37,
+        "endLine": 1213,
+        "endChar": 43
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327b739e_c381b179",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/LayerTreeBase.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T21:06:29Z",
+      "side": 1,
+      "message": "This is checked 2 lines above.",
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
