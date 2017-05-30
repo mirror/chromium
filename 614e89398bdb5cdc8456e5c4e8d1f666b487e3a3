@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d253098_2455da94",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-30T06:40:45Z",
+      "side": 1,
+      "message": "nit: KeepAlive(), SetKeepAlive() (and keep_alive)... feel more natural",
+      "revId": "614e89398bdb5cdc8456e5c4e8d1f666b487e3a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
