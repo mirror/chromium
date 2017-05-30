@@ -16,6 +16,24 @@
       "revId": "614e89398bdb5cdc8456e5c4e8d1f666b487e3a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b60705_689fecf5",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-30T06:44:22Z",
+      "side": 1,
+      "message": "The name is from https://fetch.spec.whatwg.org/#request-keepalive-flag.",
+      "parentUuid": "1d253098_2455da94",
+      "revId": "614e89398bdb5cdc8456e5c4e8d1f666b487e3a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
