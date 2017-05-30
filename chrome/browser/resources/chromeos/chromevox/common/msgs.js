@@ -166,12 +166,12 @@ Msgs.Untranslated = {
   ARIA_EXPANDED_FALSE_BRL: '+',
   /** Braille of element with the ARIA attribute aria-invalid=true. */
   ARIA_INVALID_TRUE_BRL: '!',
-  /** Braille of element with the ARIA attribute aria-pressed=true. */
-  ARIA_PRESSED_TRUE_BRL: '=',
-  /** Braille of element with the ARIA attribute aria-pressed=false. */
-  ARIA_PRESSED_FALSE_BRL: ' ',
-  /** Braille of element with the ARIA attribute aria-pressed=mixed. */
-  ARIA_PRESSED_MIXED_BRL: '-',
+  /** Braille of toggle button that is pressed. */
+  PRESSED_TRUE_BRL: '=',
+  /** Braille of toggle button that is not pressed. */
+  PRESSED_FALSE_BRL: ' ',
+  /** Braille of toggle button that is partially pressed. */
+  PRESSED_MIXED_BRL: '-',
   /** Braille of element with the ARIA attribute aria-selected=true. */
   ARIA_SELECTED_TRUE_BRL: '(x)',
   /** Braille of element with the ARIA attribute aria-selected=false. */

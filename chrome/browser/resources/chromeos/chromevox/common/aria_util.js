@@ -128,9 +128,9 @@ cvox.AriaUtil.ATTRIBUTE_VALUE_TO_STATUS = [
   { name: 'aria-multiselectable', values:
       {'true' : 'aria_multiselectable_true'} },
   { name: 'aria-pressed', values:
-      {'true' : 'aria_pressed_true',
-       'false' : 'aria_pressed_false',
-       'mixed' : 'aria_pressed_mixed'} },
+      {'true' : 'pressed_true',
+       'false' : 'pressed_false',
+       'mixed' : 'pressed_mixed'} },
   { name: 'aria-readonly', values:
       {'true' : 'aria_readonly_true'} },
   { name: 'aria-required', values:
