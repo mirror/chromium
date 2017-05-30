@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63aac928_4f5e36f8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-30T23:30:44Z",
+      "side": 1,
+      "message": "No. _save_baseline_data() doesn\u0027t just handle missing baselines, it also handles new baselines. See the next reply for the difference between them. For missing baselines, we need to create new baselines at the default place, while for new baselines, we need to create new baselines at the *most-specific-platform* directory. (See help messages about --add-platform-exceptions, --new-baselines, --reset-results, --new-test-results in \u0027run-webkit-tests --help\u0027)",
+      "parentUuid": "3d98500c_21bd9d0e",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af250420_111349ab",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f67c8f7a_168c92a5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-30T23:30:44Z",
+      "side": 1,
+      "message": "Missing baseline means there is no any expectations. New baseline means we need to create a new baseline for a platform. The previous name used \"new baseline\" for \"missing baseline\".",
+      "parentUuid": "af250420_111349ab",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5ba3790_045695b2",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-05-30T23:21:32Z",
       "side": 1,
       "message": "The reason why there are two different ways of getting the sha1 hash here (fs.sha1(path) and hashlib.sha1(data).hexdigtest()) is because for `data` we have the full value in memory already, and if we wanted to use fs.sha1 we\u0027d have to write it to disk, right?",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a1c937_7d8a8361",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-30T23:30:44Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "f5ba3790_045695b2",
       "revId": "11d45414cf1983707e84017e87ece537eef182ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
