@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e27599_337bbcdf",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-05-30T23:09:51Z",
+      "side": 1,
+      "message": "nit: return target !\u003d root ? target : nullptr;",
+      "revId": "bd5d0ec80a188414c2396ec7f57ee82a2999ca36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5774bbed_ef371db3",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-05-30T23:09:51Z",
+      "side": 1,
+      "message": "Can l.154-162 be guarded by one surface-\u003eIsStylusOnly() if-case? Looks like none of it is needed when that is false.",
+      "revId": "bd5d0ec80a188414c2396ec7f57ee82a2999ca36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
