@@ -50,6 +50,8 @@ class DOMPlugin final : public GarbageCollectedFinalized<DOMPlugin>,
   DOMMimeType* item(unsigned index);
   DOMMimeType* namedItem(const AtomicString& property_name);
 
+  const PluginInfo* plugin_info() { return plugin_info_; }
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
