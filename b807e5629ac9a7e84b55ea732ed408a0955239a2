@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb2404dc_19e5b121",
+        "filename": "ui/wm/public/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-05-30T17:39:07Z",
+      "side": 1,
+      "message": "I picked \"api\" name from https://bugs.chromium.org/p/chromium/issues/detail?id\u003d308710#c6.\n\nI don\u0027t mind if you prefer to go with \"public\".\n\nDo you want me to change to \"public\"?",
+      "parentUuid": "2d8a42cf_a296785e",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 11
+      },
+      "revId": "b807e5629ac9a7e84b55ea732ed408a0955239a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6b3e40d_b18cd82c",
         "filename": "ui/wm/public/BUILD.gn",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-30T17:32:58Z",
       "side": 1,
       "message": "You shouldn\u0027t reuse this between two components.",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "b807e5629ac9a7e84b55ea732ed408a0955239a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48929e5c_608e1b4b",
+        "filename": "ui/wm/public/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-05-30T17:39:07Z",
+      "side": 1,
+      "message": "Do you want me to move it to a source_set instead? Like we do with gfx_export and snapshot_export?",
+      "parentUuid": "e6b3e40d_b18cd82c",
       "range": {
         "startLine": 20,
         "startChar": 8,
