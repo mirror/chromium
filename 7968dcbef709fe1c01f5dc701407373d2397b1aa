@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afdd2912_1512e541",
+        "filename": "third_party/WebKit/Source/core/css/threaded/MultiThreadedTestUtil.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-05-30T18:09:46Z",
+      "side": 1,
+      "message": "This initialization is specific to tests that involve style.  It does not belong in this general class.  Perhaps this:\nclass MultiThreadedStyleTest : public  MultiThreadedTest {\npublic:\n  static void SetUpTestCase() { ComputedStyle::InitialStyle(); }\n};",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 59
+      },
+      "revId": "7968dcbef709fe1c01f5dc701407373d2397b1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
