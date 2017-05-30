@@ -46,6 +46,144 @@
       "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdeaad25_5d15ae64",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-05-30T23:04:48Z",
+      "side": 1,
+      "message": "nit: const char*, same for other string constants including |prefix|.",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 13
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028975f9_fe88de99",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-05-30T23:04:48Z",
+      "side": 1,
+      "message": "nit: use base::StringPrintf(\"%s.%s.%s\", prefix, connection_type, suffix);\n\nIt\u0027s just as readable, plus it avoids a bunch of string allocations.",
+      "range": {
+        "startLine": 87,
+        "startChar": 34,
+        "endLine": 87,
+        "endChar": 67
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722e703a_fd48c665",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-05-30T23:04:48Z",
+      "side": 1,
+      "message": "nit: could you either inline these or make them const char[]? If you\u0027re worried about consistency with the other constants, then just make all of the existing std::string constants into const char[].",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 17
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bf35b2_4d9040b0",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-05-30T23:04:48Z",
+      "side": 1,
+      "message": "nit: Could this just be:\n\nconst char* const kAllNewNetHistograms[] \u003d { ... };",
+      "range": {
+        "startLine": 1435,
+        "startChar": 30,
+        "endLine": 1435,
+        "endChar": 52
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c434260_21823130",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-05-30T23:04:48Z",
+      "side": 1,
+      "message": "nit: use const auto\u0026 to avoid copying every time",
+      "range": {
+        "startLine": 1597,
+        "startChar": 9,
+        "endLine": 1597,
+        "endChar": 13
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77288718_e2bc3368",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-05-30T23:04:48Z",
+      "side": 1,
+      "message": "nit: use auto instead of the whole iterator type expansion.",
+      "range": {
+        "startLine": 1598,
+        "startChar": 35,
+        "endLine": 1598,
+        "endChar": 43
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
