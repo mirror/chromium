@@ -360,6 +360,7 @@ def _ParseOptions(argv):
       help='Use the Errorprone compiler at this path.')
   parser.add_option('--jar-path', help='Jar output path.')
   parser.add_option('--stamp', help='Path to touch on success.')
+  parser.add_option('--gomacc-path', help='Path to gomacc.')
 
   options, args = parser.parse_args(argv)
   build_utils.CheckOptions(options, parser, required=('jar_path',))
@@ -421,12 +422,17 @@ def main(argv):
 
   java_files = _FilterJavaFiles(java_files, options.javac_includes)
 
+  javac_cmd = []
+
+  if options.gomacc_path:
+    javac_cmd = [options.gomacc_path]
+
   if options.use_errorprone_path:
     javac_path = options.use_errorprone_path
-    javac_cmd = [javac_path] + ERRORPRONE_OPTIONS
+    javac_cmd += [javac_path] + ERRORPRONE_OPTIONS
   else:
     javac_path = distutils.spawn.find_executable('javac')
-    javac_cmd = [javac_path]
+    javac_cmd += [javac_path]
 
   javac_cmd.extend((
       '-g',

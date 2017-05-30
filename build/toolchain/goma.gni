@@ -8,6 +8,9 @@ declare_args() {
   # Set to true to enable distributed compilation using Goma.
   use_goma = false
 
+  # Set to true to enable Goma for android javac build.
+  use_goma_for_javac = false
+
   # Set the default value based on the platform.
   if (is_win) {
     # Absolute directory containing the gomacc.exe binary.
