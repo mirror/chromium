@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b472d863_57a7fcd4",
+        "filename": "chrome/browser/plugins/plugin_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-05-30T20:44:46Z",
+      "side": 1,
+      "message": "nit: Is this indented funny, or is that how clang-format likes it?",
+      "revId": "a102c2d006128d4b1d0ff9b7eced19c60df63262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
