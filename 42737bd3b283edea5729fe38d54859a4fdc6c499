@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c93c379_4b179467",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-05-30T02:56:27Z",
+      "side": 1,
+      "message": "Bug: 716957",
+      "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091d2ec1_dcea05fb",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-05-30T02:56:27Z",
+      "side": 1,
+      "message": "const std::string\u0026, const GURL\u0026.\n\n(Hmm actually I\u0027m not 100% sure you\u0027re supposed to take a const \u0026 on a constructor if you\u0027re just shoving it into a field, because maybe it\u0027s just as efficient to take by value. But certainly the string should be since it\u0027s being converted.)",
+      "range": {
+        "startLine": 160,
+        "startChar": 17,
+        "endLine": 160,
+        "endChar": 28
+      },
+      "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4294749_ceafe966",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-05-30T02:56:27Z",
+      "side": 1,
+      "message": "What do you think about adding another constructor that takes a const base::string16\u0026? Even though it wouldn\u0027t be used, it\u0027s kind of the \"natural\" constructor since the name field is a string16. I wouldn\u0027t want someone to later write some code that takes a string16 and calls WebShareTarget(base::UTF16ToUTF8(name), ...) just because the only constructor takes a std::string.",
+      "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31619305_5929771f",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-05-30T02:56:27Z",
+      "side": 1,
+      "message": "Alternatively, we could just make this a std::string. It\u0027s only read in a single place (TargetPickerTableModel::GetText) so you could just call UTF8ToUTF16 there and save the hassle of having a struct that is a bit confused about whether it wants to be dealing with string or string16.",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 16
+      },
+      "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
