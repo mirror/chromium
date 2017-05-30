@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "4cf94ed8_25b89763",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-30T21:53:04Z",
+      "side": 1,
+      "message": "nit: May read more naturally to have:\n\nif (!IsCancelled()) {\n  RunTask()\n  return true;\n}\n\nDecrementHighResTaskCount()\n\nwhich avoids the need for continue, and matches Sweep...() below :)",
+      "range": {
+        "startLine": 385,
+        "startChar": 21,
+        "endLine": 385,
+        "endChar": 25
+      },
+      "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3002d438_c0725ecb",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-30T21:53:04Z",
+      "side": 1,
+      "message": "nit: Can/should this be folding into the if...else below, i.e:\n\nif (IsCancelled()) {\n  ...\n} else if (!is_null()) {\n  ...\n} else {\n  ...\n}\n\nfor consistency, since the existing !is_null() case is already a continue case, in effect?",
+      "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b00d51e4_57a1ccad",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 7
@@ -36,6 +76,30 @@
       "writtenOn": "2017-05-26T08:59:15Z",
       "side": 1,
       "message": "As an aside in the blink scheduler we had to go further than this, periodically removing all cancelled delayed tasks.  See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d680815 for details.  Hopefully that\u0027s not needed here but I thought I\u0027d mention it.",
+      "range": {
+        "startLine": 368,
+        "startChar": 41,
+        "endLine": 368,
+        "endChar": 46
+      },
+      "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3591cac7_aa48c932",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-30T21:53:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t removing all delayed tasks from the queue risk pathological behaviour in the case in which there are very few/infrequent cancelled delayed tasks; you\u0027ll do an O(n) queue scan for them and achieve nothing? I notice that the fix in that bug employs an idle task to do the sweep, where this CL sweeps the front every time a delayed tasks is processed, which presumably mitigates that.",
+      "parentUuid": "4128c87f_260400b1",
       "range": {
         "startLine": 368,
         "startChar": 41,
