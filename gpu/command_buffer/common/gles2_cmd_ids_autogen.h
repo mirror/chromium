@@ -337,7 +337,10 @@
   OP(SetEnableDCLayersCHROMIUM)                            /* 578 */ \
   OP(InitializeDiscardableTextureCHROMIUM)                 /* 579 */ \
   OP(UnlockDiscardableTextureCHROMIUM)                     /* 580 */ \
-  OP(LockDiscardableTextureCHROMIUM)                       /* 581 */
+  OP(LockDiscardableTextureCHROMIUM)                       /* 581 */ \
+  OP(BeginRasterCHROMIUM)                                  /* 582 */ \
+  OP(RasterCHROMIUM)                                       /* 583 */ \
+  OP(EndRasterCHROMIUM)                                    /* 584 */
 
 enum CommandId {
   kOneBeforeStartPoint =

@@ -68,7 +68,14 @@
 #include "gpu/command_buffer/service/transform_feedback_manager.h"
 #include "gpu/command_buffer/service/vertex_array_manager.h"
 #include "gpu/command_buffer/service/vertex_attrib_manager.h"
+#include "skia/ext/texture_handle.h"
 #include "third_party/angle/src/image_util/loadimage.h"
+#include "third_party/skia/include/core/SkCanvas.h"
+#include "third_party/skia/include/core/SkSurface.h"
+#include "third_party/skia/include/core/SkSurfaceProps.h"
+#include "third_party/skia/include/core/SkTypeface.h"
+#include "third_party/skia/include/gpu/GrContext.h"
+#include "third_party/skia/include/gpu/gl/GrGLInterface.h"
 #include "third_party/smhasher/src/City.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/point.h"
@@ -2501,6 +2508,11 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   std::unique_ptr<DCLayerSharedState> dc_layer_shared_state_;
 
+  // Raster helpers.
+  sk_sp<GrContext> gr_context_;
+  sk_sp<SkSurface> sk_surface_;
+  SkCanvas* canvas_ = nullptr;
+
   base::WeakPtrFactory<GLES2DecoderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GLES2DecoderImpl);
@@ -3651,6 +3663,23 @@ bool GLES2DecoderImpl::Initialize(
   if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
       feature_info_->feature_flags().khr_debug) {
     InitializeGLDebugLogging();
+  }
+
+  // GrContext takes ownership of |interface|.
+  sk_sp<const GrGLInterface> interface(GrGLCreateNativeInterface());
+  gr_context_ = sk_sp<GrContext>(GrContext::Create(
+      kOpenGL_GrBackend, reinterpret_cast<GrBackendContext>(interface.get())));
+  // TODO(enne): what to do if this fails to be created?
+  DCHECK(gr_context_);
+  if (gr_context_) {
+    // The limit of the number of GPU resources we hold in the GrContext's
+    // GPU cache.
+    static const int kMaxGaneshResourceCacheCount = 8196;
+    // The limit of the bytes allocated toward GPU resources in the GrContext's
+    // GPU cache.
+    static const size_t kMaxGaneshResourceCacheBytes = 96 * 1024 * 1024;
+    gr_context_->setResourceCacheLimits(kMaxGaneshResourceCacheCount,
+                                        kMaxGaneshResourceCacheBytes);
   }
 
   return true;
@@ -19739,6 +19768,78 @@ error::Error GLES2DecoderImpl::HandleLockDiscardableTextureCHROMIUM(
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glLockDiscardableTextureCHROMIUM",
                        "Texture ID not initialized");
   }
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleBeginRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  auto& c =
+      *static_cast<const volatile gles2::cmds::BeginRasterCHROMIUM*>(cmd_data);
+
+  // TODO(enne): should behave like ScopedGpuRaster
+  gr_context_->resetContext();
+
+  // This should look identical to ResourceProvider::ScopedSkSurfaceProvider.
+  GrGLTextureInfo texture_info;
+  texture_info.fID = GetTexture(c.texture_id)->service_id();
+  texture_info.fTarget = c.target;
+
+  GrBackendTextureDesc desc;
+  desc.fFlags = kRenderTarget_GrBackendTextureFlag;
+  desc.fWidth = c.width;
+  desc.fHeight = c.height;
+  desc.fConfig = static_cast<GrPixelConfig>(c.pixel_config);
+  desc.fOrigin = kTopLeft_GrSurfaceOrigin;
+  desc.fTextureHandle = skia::GrGLTextureInfoToGrBackendObject(texture_info);
+  desc.fSampleCnt = c.msaa_sample_count;
+
+  uint32_t flags = c.use_distance_field_text
+                       ? SkSurfaceProps::kUseDistanceFieldFonts_Flag
+                       : 0;
+  // Use unknown pixel geometry to disable LCD text.
+  SkSurfaceProps surface_props(flags, kUnknown_SkPixelGeometry);
+  if (c.can_use_lcd_text) {
+    // LegacyFontHost will get LCD text and skia figures out what type to use.
+    surface_props =
+        SkSurfaceProps(flags, SkSurfaceProps::kLegacyFontHost_InitType);
+  }
+  sk_surface_ = SkSurface::MakeFromBackendTextureAsRenderTarget(
+      gr_context_.get(), desc, nullptr, &surface_props);
+  canvas_ = sk_surface_->getCanvas();
+
+  // TODO(enne): deserialize the buffer and do real raster
+  SkColor color = random();
+  canvas_->drawColor(color);
+
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  auto& c = *static_cast<const volatile gles2::cmds::RasterCHROMIUM*>(cmd_data);
+  size_t size = c.data_size;
+  char* buffer =
+      GetSharedMemoryAs<char*>(c.list_shm_id, c.list_shm_id, sizeof(char));
+  fprintf(stderr, "enne: buffer: %p, size: %ld\n", buffer, size);
+  if (!buffer)
+    return error::kOutOfBounds;
+
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleEndRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  // TODO(enne) Maybe this should be an error?
+  if (!sk_surface_)
+    return error::kNoError;
+
+  sk_surface_->prepareForExternalIO();
+  sk_surface_.reset();
+  RestoreState(nullptr);
+
   return error::kNoError;
 }
 

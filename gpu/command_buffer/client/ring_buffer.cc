@@ -179,4 +179,23 @@ unsigned int RingBuffer::GetTotalFreeSizeNoWaiting() {
   }
 }
 
+void RingBuffer::ResizeBuffer(void* pointer, unsigned int new_size) {
+  if (blocks_.empty())
+    return;
+  // Only bother resizing the last block.
+  Offset offset = GetOffset(pointer);
+  offset -= base_offset_;
+  auto& block = blocks_.back();
+  if (block.offset != offset)
+    return;
+
+  if (free_offset_) {
+    DCHECK_EQ(block.offset + block.size, free_offset_);
+    free_offset_ += new_size - block.size;
+  } else {
+    free_offset_ = block.offset + new_size;
+  }
+  block.size = new_size;
+}
+
 }  // namespace gpu

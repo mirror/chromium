@@ -171,7 +171,8 @@ class CC_PAINT_EXPORT DisplayItemList
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithItems);
 
   ~DisplayItemList();
-
+  // TODO(enne): expose rtree etc
+ public:
   std::unique_ptr<base::trace_event::TracedValue> CreateTracedValue(
       bool include_items) const;
 
