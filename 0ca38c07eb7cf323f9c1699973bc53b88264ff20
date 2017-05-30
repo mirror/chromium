@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b42fbe4_a9fcd39d",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-05-30T03:47:39Z",
+      "side": 1,
+      "message": "Even though spec() is cheap, it\u0027s non-trivial, so maybe assign it to a const std::string\u0026 variable before calling .data() and .size() on it.",
+      "range": {
+        "startLine": 224,
+        "startChar": 20,
+        "endLine": 224,
+        "endChar": 26
+      },
+      "revId": "0ca38c07eb7cf323f9c1699973bc53b88264ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cab6287_6e97937c",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-05-30T03:47:39Z",
+      "side": 1,
+      "message": "Ah good! The current code calls spec() in WebShareTargetPickerView::Accept(), then GURL() here; this CL now avoids that roundtrip.\n\nspec() is cheap compared to GURL() so it\u0027s preferable this way.",
+      "range": {
+        "startLine": 225,
+        "startChar": 36,
+        "endLine": 225,
+        "endChar": 49
+      },
+      "revId": "0ca38c07eb7cf323f9c1699973bc53b88264ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
