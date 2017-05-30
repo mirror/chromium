@@ -4,11 +4,16 @@
 
 #include "components/prefs/in_memory_pref_store.h"
 
+#include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
+#include "base/sequence_checker_impl.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "components/prefs/pref_store_observer_mock.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
 namespace {
 const char kTestPref[] = "test.pref";
 
@@ -17,7 +22,9 @@ class InMemoryPrefStoreTest : public testing::Test {
   InMemoryPrefStoreTest() { }
 
   void SetUp() override { store_ = new InMemoryPrefStore(); }
+
  protected:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   scoped_refptr<InMemoryPrefStore> store_;
   PrefStoreObserverMock observer_;
 };
@@ -99,6 +106,25 @@ TEST_F(InMemoryPrefStoreTest, GetReadError) {
 
 TEST_F(InMemoryPrefStoreTest, ReadPrefs) {
   EXPECT_EQ(PersistentPrefStore::PREF_READ_ERROR_NONE, store_->ReadPrefs());
+}
+
+// Verify that the callback passed to CommitPendingWrite() runs asynchronously
+// on the correct sequence.
+TEST_F(InMemoryPrefStoreTest, CommitPendingWriteCallback) {
+  base::RunLoop run_loop;
+  base::SequenceCheckerImpl sequence_checker;
+  bool can_run_callback = false;
+  store_->CommitPendingWrite(base::BindOnce(
+      [](bool* can_run_callback, base::SequenceCheckerImpl* sequence_checker,
+         base::RunLoop* run_loop) {
+        EXPECT_TRUE(*can_run_callback);
+        EXPECT_TRUE(sequence_checker->CalledOnValidSequence());
+        run_loop->Quit();
+      },
+      base::Unretained(&can_run_callback), base::Unretained(&sequence_checker),
+      base::Unretained(&run_loop)));
+  can_run_callback = true;
+  run_loop.Run();
 }
 
 }  // namespace

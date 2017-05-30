@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -284,7 +285,7 @@ void JsonPrefStore::ReadPrefsAsync(ReadErrorDelegate* error_delegate) {
       base::Bind(&JsonPrefStore::OnFileRead, AsWeakPtr()));
 }
 
-void JsonPrefStore::CommitPendingWrite() {
+void JsonPrefStore::CommitPendingWrite(base::OnceClosure done_callback) {
   DCHECK(CalledOnValidThread());
 
   // Schedule a write for any lossy writes that are outstanding to ensure that
@@ -293,6 +294,11 @@ void JsonPrefStore::CommitPendingWrite() {
 
   if (writer_.HasPendingWrite() && !read_only_)
     writer_.DoScheduledWrite();
+
+  if (done_callback) {
+    sequenced_task_runner_->PostTaskAndReply(
+        FROM_HERE, base::BindOnce(&base::DoNothing), std::move(done_callback));
+  }
 }
 
 void JsonPrefStore::SchedulePendingLossyWrites() {

@@ -102,7 +102,8 @@ class COMPONENTS_PREFS_EXPORT JsonPrefStore
   // See details in pref_filter.h.
   PrefReadError ReadPrefs() override;
   void ReadPrefsAsync(ReadErrorDelegate* error_delegate) override;
-  void CommitPendingWrite() override;
+  void CommitPendingWrite(
+      base::OnceClosure done_callback = base::OnceClosure()) override;
   void SchedulePendingLossyWrites() override;
   void ReportValueChanged(const std::string& key, uint32_t flags) override;
 
