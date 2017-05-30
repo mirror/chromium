@@ -8,10 +8,12 @@
 #include "core/CoreExport.h"
 #include "core/workers/ThreadedMessagingProxyBase.h"
 #include "core/workers/WorkletGlobalScopeProxy.h"
+#include "core/workers/WorkletPendingTasks.h"
 #include "platform/wtf/WeakPtr.h"
 
 namespace blink {
 
+class ScriptSourceCode;
 class ThreadedWorkletObjectProxy;
 
 class CORE_EXPORT ThreadedWorkletMessagingProxy
@@ -19,10 +21,14 @@ class CORE_EXPORT ThreadedWorkletMessagingProxy
       public WorkletGlobalScopeProxy {
  public:
   // WorkletGlobalScopeProxy implementation.
-  void EvaluateScript(const ScriptSourceCode&) final;
+  void FetchAndInvokeScript(const KURL& module_url_record,
+                            WebURLRequest::FetchCredentialsMode,
+                            RefPtr<WebTaskRunner> outside_settings_task_runner,
+                            WorkletPendingTasks*) final;
   void TerminateWorkletGlobalScope() final;
 
   void Initialize();
+  void EvaluateScript(const ScriptSourceCode&);
 
  protected:
   explicit ThreadedWorkletMessagingProxy(ExecutionContext*);
