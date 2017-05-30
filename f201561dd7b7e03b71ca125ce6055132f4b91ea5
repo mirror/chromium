@@ -16,6 +16,24 @@
       "revId": "f201561dd7b7e03b71ca125ce6055132f4b91ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e8937a_2254a085",
+        "filename": "net/dns/dns_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-05-30T22:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba678c5_674e673d",
+      "revId": "f201561dd7b7e03b71ca125ce6055132f4b91ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
