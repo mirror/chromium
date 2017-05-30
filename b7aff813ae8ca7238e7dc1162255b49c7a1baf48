@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24b648f1_c2f87039",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "nit: \"If a benchmark only has a few stories failing and not everything failing...\" is redundant\n\nYou can just say \"If only a few stories in a benchmark are failing...\"",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768a1398_efe16a96",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "Maybe \"disable those stories rather than the entire benchmark\" instead of \"the stories should be disabled, not the entire benchmark\"\n\nI think this improves the flow of the sentence, which is important because it increases the likelihood that someone will continue reading the sentence and not miss critical information that comes later in the sentence.",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558dfcf0_204b9430",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "Maybe specify that you\u0027re talking about standard output? Otherwise, it\u0027s unclear whether you\u0027re talking about when or where to find these lines\n\n\"names at the end of a telemetry run\" \u003d\u003e \"names at the end of the standard output of a telemetry run\"",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f9111f_3bef208a",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "Isn\u0027t it a `StoryExpectations` object, not a `StoryExpectation` object?",
+      "range": {
+        "startLine": 410,
+        "startChar": 55,
+        "endLine": 410,
+        "endChar": 71
+      },
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be35d70_9ce1ecc1",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "`StoryExpectations` object, usually found \u003d\u003e `StoryExpectations` object that is usually found...\n\n(improves flow)",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65e130a_a41f1b90",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "nit: add period before \"To\"",
+      "range": {
+        "startLine": 412,
+        "startChar": 70,
+        "endLine": 412,
+        "endChar": 72
+      },
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726cef11_7f6c8e72",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "search the story name \u003d\u003e search for the story name",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70c2ef9_30d42f77",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "Maybe \"Disabling a story requires specifying the story name, [the test conditions under which to disable the story](https://cs.chromium.org/chromium/src/third_party/catapult/telemetry/telemetry/story/expectations.py?dr\u003dCSs\u0026q\u003d\"ALL+%3D+_AllTestCondition()\"), and the reason for disabling the story:\"\n\nI think that this would allow you to combine this paragraph with the below \"(Story name is the name...\" paragraph and, by linking to the test conditions rather than listing them explicitly, cut out that part altogether. This also has the added benefit that it won\u0027t inevitably get out of date like listing them will.",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b550632_fd44baff",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "I think it might be more useful to provide an actual example, like:\n\nclass StorySetFoo():\n  def SetExpectations(self):\n    self.DisableStory(\u0027browse_facebook\u0027, \n                      [expectations.ALL_MAC, expectations.ALL_WIN], \n                      \u0027crbug.com/12345\u0027)\n\nso that people have a better idea of what sort of data should actually go in there",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512e5835_44eeaa54",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "I think if you gave a better example above, this paragraph wouldn\u0027t be necessary",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cc5628_4302545b",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "(I know you didn\u0027t write this, but it seems like it\u0027s within the scope of this CL to create a clear story for when to disable one or a few stories versus an entire benchmark)\n\nThis seems like a really strange first paragraph for this: if I\u0027m someone that\u0027s sheriffing, I see \"Disabling Telemetry benchmarks\", and I assume that I\u0027m going to learn about when to disable a Telemetry benchmark. Instead, it dives right in and tells me that a Telemetry benchmark will have a \".\" in it.\n\nThis is also weird because the part that you wrote assumes a (what I believe seems appropriate) base level of knowledge that someone that\u0027s on the perfbot health rotation will be able to identify what a benchmark is. \n\nTo me, it seems appropriate to just delete this paragraph altogether.",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 451,
+        "endChar": 142
+      },
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75721dfd_6201c2dc",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-05-30T18:47:41Z",
+      "side": 1,
+      "message": "I think that this paragraph should be updated to reflect the fact that we\u0027re now more careful about when we disable an entire benchmark vs just a few stories\n\n\"If a benchmark\u0027s failure isn\u0027t isolated to just a few stories, you should consider disabling the entire benchmark. You can do this by adding the `@benchmark.Disabled` decorator above the benchmark class...\"",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
