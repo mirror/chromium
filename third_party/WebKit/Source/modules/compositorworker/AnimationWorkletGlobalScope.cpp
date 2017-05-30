@@ -8,7 +8,9 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
+#include "core/dom/AnimationWorkletProxyClient.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/workers/WorkerClients.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 
@@ -21,9 +23,11 @@ AnimationWorkletGlobalScope* AnimationWorkletGlobalScope::Create(
     const String& user_agent,
     PassRefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
-    WorkerThread* thread) {
-  return new AnimationWorkletGlobalScope(
-      url, user_agent, std::move(security_origin), isolate, thread);
+    WorkerThread* thread,
+    WorkerClients* worker_clients) {
+  return new AnimationWorkletGlobalScope(url, user_agent,
+                                         std::move(security_origin), isolate,
+                                         thread, worker_clients);
 }
 
 AnimationWorkletGlobalScope::AnimationWorkletGlobalScope(
@@ -31,27 +35,49 @@ AnimationWorkletGlobalScope::AnimationWorkletGlobalScope(
     const String& user_agent,
     PassRefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
-    WorkerThread* thread)
+    WorkerThread* thread,
+    WorkerClients* worker_clients)
     : ThreadedWorkletGlobalScope(url,
                                  user_agent,
                                  std::move(security_origin),
                                  isolate,
-                                 thread) {}
+                                 thread),
+      worker_clients_(worker_clients) {
+  worker_clients_->ReattachThread();
+
+  if (AnimationWorkletProxyClient* proxyClient =
+          AnimationWorkletProxyClient::From(worker_clients_))
+    AnimationWorkletProxyClient::From(worker_clients_)->SetGlobalScope(this);
+}
 
 AnimationWorkletGlobalScope::~AnimationWorkletGlobalScope() {}
 
 DEFINE_TRACE(AnimationWorkletGlobalScope) {
-  visitor->Trace(m_animatorDefinitions);
-  visitor->Trace(m_animators);
+  visitor->Trace(animator_definitions_);
+  visitor->Trace(animators_);
   ThreadedWorkletGlobalScope::Trace(visitor);
 }
 
 void AnimationWorkletGlobalScope::Dispose() {
   DCHECK(IsContextThread());
   // Clear animators and definitions to avoid reference cycle.
-  m_animatorDefinitions.clear();
-  m_animators.clear();
+  animator_definitions_.clear();
+  animators_.clear();
   ThreadedWorkletGlobalScope::Dispose();
+}
+
+void AnimationWorkletGlobalScope::Mutate() {
+  if (!GetThread())
+    return;
+
+  DCHECK(IsContextThread());
+
+  ScriptState* script_state = ScriptController()->GetScriptState();
+  ScriptState::Scope scope(script_state);
+
+  for (Animator* animator : animators_) {
+    animator->Animate(script_state);
+  }
 }
 
 void AnimationWorkletGlobalScope::registerAnimator(
@@ -59,7 +85,7 @@ void AnimationWorkletGlobalScope::registerAnimator(
     const ScriptValue& ctorValue,
     ExceptionState& exceptionState) {
   DCHECK(IsContextThread());
-  if (m_animatorDefinitions.Contains(name)) {
+  if (animator_definitions_.Contains(name)) {
     exceptionState.ThrowDOMException(
         kNotSupportedError,
         "A class with name:'" + name + "' is already registered.");
@@ -118,16 +144,17 @@ void AnimationWorkletGlobalScope::registerAnimator(
 
   AnimatorDefinition* definition =
       new AnimatorDefinition(isolate, constructor, animate);
-  m_animatorDefinitions.Set(name, definition);
+  animator_definitions_.Set(name, definition);
 
   // Immediately instantiate an animator for the registered definition.
   // TODO(majidvp): Remove this once you add alternative way to instantiate
-  m_animators.push_back(CreateInstance(name));
+  if (Animator* animator = CreateInstance(name))
+    animators_.push_back(animator);
 }
 
 Animator* AnimationWorkletGlobalScope::CreateInstance(const String& name) {
   DCHECK(IsContextThread());
-  AnimatorDefinition* definition = m_animatorDefinitions.at(name);
+  AnimatorDefinition* definition = animator_definitions_.at(name);
   if (!definition)
     return nullptr;
 
@@ -141,6 +168,11 @@ Animator* AnimationWorkletGlobalScope::CreateInstance(const String& name) {
     return nullptr;
 
   return new Animator(isolate, definition, instance);
+}
+
+AnimatorDefinition* AnimationWorkletGlobalScope::FindDefinitionForTest(
+    const String& name) {
+  return animator_definitions_.at(name);
 }
 
 }  // namespace blink

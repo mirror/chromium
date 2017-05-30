@@ -6,6 +6,7 @@
 #define AnimationWorkletProxyClientImpl_h
 
 #include "core/dom/AnimationWorkletProxyClient.h"
+#include "modules/compositorworker/AnimationWorkletGlobalScope.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
 #include "web/CompositorAnimator.h"
@@ -14,7 +15,7 @@
 namespace blink {
 
 class CompositorMutatorImpl;
-
+class WorkletGlobalScope;
 // Mediates between one Animator and the associated CompositorMutatorImpl. There
 // is one AnimationWorkletProxyClientImpl per Animator but there may be multiple
 // for a given mutator and animatorWorklet.
@@ -32,15 +33,25 @@ class AnimationWorkletProxyClientImpl final
   explicit AnimationWorkletProxyClientImpl(CompositorMutatorImpl*);
   DECLARE_VIRTUAL_TRACE();
 
+  // AnimationWorkletProxyClient:
+  void SetGlobalScope(WorkletGlobalScope*) override;
+  void Dispose() override;
+
   // CompositorAnimator:
   // This method is invoked in compositor thread
   bool Mutate(double monotonic_time_now,
               CompositorMutableStateProvider*) override;
 
+  CompositorProxyClient* GetCompositorProxyClient() override {
+    return compositor_proxy_client_.Get();
+  };
+
  private:
   CrossThreadPersistent<CompositorMutatorImpl> mutator_;
 
   CrossThreadPersistent<CompositorProxyClientImpl> compositor_proxy_client_;
+
+  CrossThreadPersistent<AnimationWorkletGlobalScope> global_scope_;
 };
 
 }  // namespace blink

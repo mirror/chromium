@@ -11,6 +11,7 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/ThreadedWorkletObjectProxy.h"
+#include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerThreadStartupData.h"
 #include "core/workers/WorkletGlobalScope.h"
@@ -20,8 +21,11 @@
 namespace blink {
 
 ThreadedWorkletMessagingProxy::ThreadedWorkletMessagingProxy(
-    ExecutionContext* execution_context)
-    : ThreadedMessagingProxyBase(execution_context), weak_ptr_factory_(this) {
+    ExecutionContext* execution_context,
+    WorkerClients* worker_clients)
+    : ThreadedMessagingProxyBase(execution_context),
+      worker_clients_(worker_clients),
+      weak_ptr_factory_(this) {
   worklet_object_proxy_ = ThreadedWorkletObjectProxy::Create(
       weak_ptr_factory_.CreateWeakPtr(), GetParentFrameTaskRunners());
 }
@@ -48,7 +52,7 @@ void ThreadedWorkletMessagingProxy::Initialize() {
       WorkerThreadStartupData::Create(
           script_url, document->UserAgent(), String(), nullptr, start_mode,
           csp->Headers().get(), /* referrerPolicy */ String(), starter_origin,
-          nullptr, document->AddressSpace(),
+          worker_clients_.Release(), document->AddressSpace(),
           OriginTrialContext::GetTokens(document).get(),
           std::move(worker_settings), WorkerV8Settings::Default());
 

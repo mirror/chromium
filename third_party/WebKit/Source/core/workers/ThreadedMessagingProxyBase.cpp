@@ -10,6 +10,7 @@
 #include "core/frame/Deprecation.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/ThreadableLoadingContext.h"
+#include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerThreadStartupData.h"
 #include "platform/wtf/CurrentTime.h"
