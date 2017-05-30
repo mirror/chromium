@@ -22,6 +22,30 @@
       "revId": "c7d78c44ee72a9c69766ea2f185efd45d31e5d11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1608eb1a_97f6264c",
+        "filename": "services/identity/public/cpp/account_info_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-30T08:15:13Z",
+      "side": 1,
+      "message": "I think an account info should always have an account id, a gaia id and an email.",
+      "parentUuid": "d9c1e935_fbe99aba",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "c7d78c44ee72a9c69766ea2f185efd45d31e5d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
