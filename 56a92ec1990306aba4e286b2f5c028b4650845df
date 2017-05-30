@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51222e7b_9b251eb5",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-05-30T19:30:46Z",
+      "side": 1,
+      "message": "Is this only needed for nacl?",
+      "range": {
+        "startLine": 387,
+        "startChar": 2,
+        "endLine": 387,
+        "endChar": 14
+      },
+      "revId": "56a92ec1990306aba4e286b2f5c028b4650845df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
