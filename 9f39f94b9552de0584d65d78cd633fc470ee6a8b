@@ -22,6 +22,30 @@
       "revId": "9f39f94b9552de0584d65d78cd633fc470ee6a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597ceedb_8d41c5ce",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-05-30T16:29:20Z",
+      "side": 0,
+      "message": "Well, that\u0027s almost where we got stuck in the previous CL: https://codereview.chromium.org/2447133002/. ProxyServer can be serialized by converting it to a string (see that previous CL). However, it\u0027s not clear what would be the impact on cache if we change the pickling logic.\n\nmmenke@: suggestions on who should review this to understand the impact on cache? Assuming that your comment from  https://codereview.chromium.org/2447133002/#msg14 about the unfamiliarity still holds.",
+      "parentUuid": "791c1fdd_664f94d6",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 23
+      },
+      "revId": "9f39f94b9552de0584d65d78cd633fc470ee6a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
