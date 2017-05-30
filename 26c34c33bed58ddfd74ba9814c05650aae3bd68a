@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad77c907_869b8497",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "Always add enough information for someone not familiar with the project to understand what\u0027s going on, e.g.\nRefreshes the Kerberos ticket-granting-ticket for Active Directory enrolled devices.",
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769e7367_7c7660b1",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "Add {}. Also add a comment why we restart here. I assume it\u0027s to prevent that user-specific info (e.g. TGTs) leak into another user session.\n\nSince you\u0027re doing this several times, maybe it should be encapsulated in a function ClearActiveDirectoryInfo() or something similar.",
+      "range": {
+        "startLine": 407,
+        "startChar": 4,
+        "endLine": 407,
+        "endChar": 25
+      },
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c4d53b_80bda1a9",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "Never write \"in a follow-up CL\", this is going to be obsolete very quickly. I\u0027d suggest to rephrase that as if it\u0027s already done if it\u0027s going to happen very soon (or is it done already?).",
+      "range": {
+        "startLine": 495,
+        "startChar": 62,
+        "endLine": 497,
+        "endChar": 73
+      },
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21a7fbc_83de5d54",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "Add {}. Also add a comment why we restart here like above.",
+      "range": {
+        "startLine": 761,
+        "startChar": 4,
+        "endLine": 761,
+        "endChar": 25
+      },
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a22288_fae5f072",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "{}\u0026comment||function",
+      "range": {
+        "startLine": 932,
+        "startChar": 4,
+        "endLine": 932,
+        "endChar": 25
+      },
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1563a43_e520fda5",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "{}\u0026comment",
+      "range": {
+        "startLine": 942,
+        "startChar": 4,
+        "endLine": 942,
+        "endChar": 25
+      },
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c339110_6860fb39",
+        "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "Add comment like in other place that we regularly check status of TGT and server.",
+      "range": {
+        "startLine": 429,
+        "startChar": 41,
+        "endLine": 429,
+        "endChar": 0
+      },
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1ffd98_22569d5f",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "Trying -\u003e Tries\nkerberos -\u003e Kerberos\nresult -\u003e error code\none should use last_auth_error returned from the",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087ff3de_56741b8c",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "GetUserStatus() call",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f444ed_499cd5ef",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-05-30T08:02:47Z",
+      "side": 1,
+      "message": "Add space",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 4
+      },
+      "revId": "26c34c33bed58ddfd74ba9814c05650aae3bd68a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
