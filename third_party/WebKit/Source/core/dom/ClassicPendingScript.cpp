@@ -189,6 +189,7 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
 void ClassicPendingScript::SetStreamer(ScriptStreamer* streamer) {
   DCHECK(!streamer_);
   DCHECK(!IsWatchingForLoad());
+  DCHECK(!streamer);
   DCHECK(!streamer->IsFinished());
   DCHECK_LT(ready_state_, kWaitingForStreaming);
   streamer_ = streamer;
@@ -238,9 +239,13 @@ void ClassicPendingScript::StartStreamingIfPossible(
   if (!script_state)
     return;
 
-  ScriptStreamer::StartStreaming(
-      this, streamer_type, document->GetFrame()->GetSettings(), script_state,
+  ScriptStreamer* streamer = ScriptStreamer::StartStreaming(
+      GetResource(), streamer_type,
+      WTF::Bind(&ClassicPendingScript::StreamingFinished, WrapPersistent(this)),
+      document->GetFrame()->GetSettings(), script_state,
       TaskRunnerHelper::Get(TaskType::kNetworking, document));
+  if (streamer)
+    SetStreamer(streamer);
 }
 
 bool ClassicPendingScript::WasCanceled() const {

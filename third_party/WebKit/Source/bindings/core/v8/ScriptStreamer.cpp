@@ -7,7 +7,6 @@
 #include <memory>
 #include "bindings/core/v8/ScriptStreamerThread.h"
 #include "bindings/core/v8/V8ScriptRunner.h"
-#include "core/dom/ClassicPendingScript.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/frame/Settings.h"
@@ -324,19 +323,15 @@ class SourceStream : public v8::ScriptCompiler::ExternalSourceStream {
 
 size_t ScriptStreamer::small_script_threshold_ = 30 * 1024;
 
-void ScriptStreamer::StartStreaming(ClassicPendingScript* script,
-                                    Type script_type,
-                                    Settings* settings,
-                                    ScriptState* script_state,
-                                    RefPtr<WebTaskRunner> loading_task_runner) {
-  // We don't yet know whether the script will really be streamed. E.g.,
-  // suppressing streaming for short scripts is done later. Record only the
-  // sure negative cases here.
-  bool started_streaming =
-      StartStreamingInternal(script, script_type, settings, script_state,
-                             std::move(loading_task_runner));
-  if (!started_streaming)
-    RecordStartedStreamingHistogram(script_type, 0);
+ScriptStreamer* ScriptStreamer::StartStreaming(
+    ScriptResource* resource,
+    Type script_type,
+    std::unique_ptr<WTF::Closure> done,
+    Settings* settings,
+    ScriptState* script_state,
+    RefPtr<WebTaskRunner> task_runner) {
+  return StartStreamingInternal(resource, script_type, std::move(done),
+                                settings, script_state, std::move(task_runner));
 }
 
 bool ScriptStreamer::ConvertEncoding(
@@ -403,9 +398,14 @@ void ScriptStreamer::SuppressStreaming() {
 
 void ScriptStreamer::NotifyAppendData(ScriptResource* resource) {
   DCHECK(IsMainThread());
+
+  if (detached_)
+    return;
+
   CHECK_EQ(resource_, resource);
   if (streaming_suppressed_)
     return;
+
   if (!have_enough_data_for_streaming_) {
     // Even if the first data chunk is small, the script can still be big
     // enough - wait until the next data chunk comes before deciding whether
@@ -496,7 +496,12 @@ void ScriptStreamer::NotifyAppendData(ScriptResource* resource) {
 
 void ScriptStreamer::NotifyFinished(Resource* resource) {
   DCHECK(IsMainThread());
+
+  if (detached_)
+    return;
+
   CHECK_EQ(resource_, resource);
+
   // A special case: empty and small scripts. We didn't receive enough data to
   // start the streaming before this notification. In that case, there won't
   // be a "parsing complete" notification either, and we should not wait for
@@ -514,13 +519,14 @@ void ScriptStreamer::NotifyFinished(Resource* resource) {
 }
 
 ScriptStreamer::ScriptStreamer(
-    ClassicPendingScript* script,
+    ScriptResource* resource,
     Type script_type,
     ScriptState* script_state,
     v8::ScriptCompiler::CompileOptions compile_options,
-    RefPtr<WebTaskRunner> loading_task_runner)
-    : pending_script_(script),
-      resource_(script->GetResource()),
+    RefPtr<WebTaskRunner> loading_task_runner,
+    std::unique_ptr<WTF::Closure> done)
+    : done_(std::move(done)),
+      resource_(resource),
       detached_(false),
       stream_(0),
       loading_finished_(false),
@@ -540,8 +546,8 @@ ScriptStreamer::ScriptStreamer(
 ScriptStreamer::~ScriptStreamer() {}
 
 DEFINE_TRACE(ScriptStreamer) {
-  visitor->Trace(pending_script_);
   visitor->Trace(resource_);
+  ScriptResourceClient::Trace(visitor);
 }
 
 void ScriptStreamer::StreamingComplete() {
@@ -574,36 +580,36 @@ void ScriptStreamer::NotifyFinishedToClient() {
   if (!IsFinished())
     return;
 
-  pending_script_->StreamingFinished();
+  (*done_)();
 }
 
-bool ScriptStreamer::StartStreamingInternal(
-    ClassicPendingScript* script,
+ScriptStreamer* ScriptStreamer::StartStreamingInternal(
+    ScriptResource* resource,
     Type script_type,
+    std::unique_ptr<WTF::Closure> done,
     Settings* settings,
     ScriptState* script_state,
     RefPtr<WebTaskRunner> loading_task_runner) {
   DCHECK(IsMainThread());
   DCHECK(script_state->ContextIsValid());
-  ScriptResource* resource = script->GetResource();
+  DCHECK(resource);
+
   if (resource->IsLoaded()) {
     RecordNotStreamingReasonHistogram(script_type, kAlreadyLoaded);
-    return false;
+    return nullptr;
   }
+
   if (!resource->Url().ProtocolIsInHTTPFamily()) {
     RecordNotStreamingReasonHistogram(script_type, kNotHTTP);
-    return false;
+    return nullptr;
   }
   if (resource->IsCacheValidator()) {
     RecordNotStreamingReasonHistogram(script_type, kReload);
     // This happens e.g., during reloads. We're actually not going to load
     // the current Resource of the ClassicPendingScript but switch to another
     // Resource -> don't stream.
-    return false;
+    return nullptr;
   }
-  // We cannot filter out short scripts, even if we wait for the HTTP headers
-  // to arrive: the Content-Length HTTP header is not sent for chunked
-  // downloads.
 
   // Decide what kind of cached data we should produce while streaming. Only
   // produce parser cache if the non-streaming compile takes advantage of it.
@@ -615,11 +621,8 @@ bool ScriptStreamer::StartStreamingInternal(
   // The Resource might go out of scope if the script is no longer needed.
   // This makes ClassicPendingScript notify the ScriptStreamer when it is
   // destroyed.
-  script->SetStreamer(ScriptStreamer::Create(script, script_type, script_state,
-                                             compile_option,
-                                             std::move(loading_task_runner)));
-
-  return true;
+  return new ScriptStreamer(resource, script_type, script_state, compile_option,
+                            std::move(loading_task_runner), std::move(done));
 }
 
 }  // namespace blink
