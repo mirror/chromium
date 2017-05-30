@@ -16,6 +16,24 @@
       "revId": "572fc4b4e04728774f9971c96b6dec79dc041530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce583ef_504211f5",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_icon.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-05-30T17:09:13Z",
+      "side": 1,
+      "message": "Done + |observer_| below :)",
+      "parentUuid": "ca3da97c_0d2b4c4a",
+      "revId": "572fc4b4e04728774f9971c96b6dec79dc041530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
