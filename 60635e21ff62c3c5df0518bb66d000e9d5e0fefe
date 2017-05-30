@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4351939_312291d5",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-05-30T19:30:40Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 388,
+        "startChar": 4,
+        "endLine": 388,
+        "endChar": 28
+      },
+      "revId": "60635e21ff62c3c5df0518bb66d000e9d5e0fefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12520b9c_5a01920e",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-05-30T19:30:40Z",
+      "side": 1,
+      "message": "if (result !\u003d ArchiveManager::ArchivesDirCreationResult::ALREADY_EXISTS) {\n  CheckMetadataConsistency();\n}",
+      "range": {
+        "startLine": 389,
+        "startChar": 3,
+        "endLine": 389,
+        "endChar": 0
+      },
+      "revId": "60635e21ff62c3c5df0518bb66d000e9d5e0fefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbff4883_6acfcffe",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-05-30T19:30:40Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 393,
+        "startChar": 4,
+        "endLine": 393,
+        "endChar": 28
+      },
+      "revId": "60635e21ff62c3c5df0518bb66d000e9d5e0fefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
