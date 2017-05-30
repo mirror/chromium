@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6e1203a8_dab5c883",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-05-30T19:34:54Z",
+      "side": 1,
+      "message": "Why not here, this flag is not related to nacl.",
+      "revId": "56a92ec1990306aba4e286b2f5c028b4650845df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51222e7b_9b251eb5",
         "filename": "build/install-build-deps.sh",
         "patchSetId": 2
