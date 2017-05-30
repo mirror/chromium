@@ -9,6 +9,7 @@
 #include "core/dom/SecurityContext.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/loader/WorkletScriptLoader.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/ThreadedWorkletObjectProxy.h"
 #include "core/workers/WorkerInspectorProxy.h"
@@ -19,6 +20,61 @@
 
 namespace blink {
 
+namespace {
+
+// TODO(nhiroki): This should be in sync with WorkletModuleTreeClient as much as
+// possible because this will be replaced with that when module loading is ready
+// for threaded worklets (https://crbug.com/727194).
+class LoaderClient final : public GarbageCollectedFinalized<LoaderClient>,
+                           public WorkletScriptLoader::Client {
+  USING_GARBAGE_COLLECTED_MIXIN(LoaderClient);
+
+ public:
+  LoaderClient(RefPtr<WebTaskRunner> outside_settings_task_runner,
+               WorkletPendingTasks* pending_tasks,
+               ThreadedWorkletMessagingProxy* proxy)
+      : outside_settings_task_runner_(std::move(outside_settings_task_runner)),
+        pending_tasks_(pending_tasks),
+        proxy_(proxy) {}
+
+  // Implementation of the second half of the "fetch and invoke a worklet
+  // script" algorithm:
+  // https://drafts.css-houdini.org/worklets/#fetch-and-invoke-a-worklet-script
+  void NotifyWorkletScriptLoadingFinished(
+      WorkletScriptLoader* script_loader,
+      const ScriptSourceCode& source_code) final {
+    DCHECK(IsMainThread());
+    if (!script_loader->WasScriptLoadSuccessful()) {
+      // Step 3: "If script is null, then queue a task on outsideSettings's
+      // responsible event loop to run these steps:"
+      // The steps are implemented in WorkletPendingTasks::Abort().
+      outside_settings_task_runner_->PostTask(
+          BLINK_FROM_HERE, WTF::Bind(&WorkletPendingTasks::Abort,
+                                     WrapPersistent(pending_tasks_.Get())));
+      return;
+    }
+
+    // Step 4: "Run a module script given script."
+    proxy_->EvaluateScript(source_code);
+
+    // Step 5: "Queue a task on outsideSettings's responsible event loop to run
+    // these steps:"
+    // The steps are implemented in WorkletPendingTasks::DecrementCounter().
+    outside_settings_task_runner_->PostTask(
+        BLINK_FROM_HERE, WTF::Bind(&WorkletPendingTasks::DecrementCounter,
+                                   WrapPersistent(pending_tasks_.Get())));
+  }
+
+  DEFINE_INLINE_TRACE() { visitor->Trace(pending_tasks_); }
+
+ private:
+  RefPtr<WebTaskRunner> outside_settings_task_runner_;
+  Member<WorkletPendingTasks> pending_tasks_;
+  ThreadedWorkletMessagingProxy* proxy_;
+};
+
+}  // namespace
+
 ThreadedWorkletMessagingProxy::ThreadedWorkletMessagingProxy(
     ExecutionContext* execution_context)
     : ThreadedMessagingProxyBase(execution_context), weak_ptr_factory_(this) {
@@ -27,7 +83,7 @@ ThreadedWorkletMessagingProxy::ThreadedWorkletMessagingProxy(
 }
 
 void ThreadedWorkletMessagingProxy::Initialize() {
-  DCHECK(IsParentContextThread());
+  DCHECK(IsMainThread());
   if (AskedToTerminate())
     return;
 
@@ -57,8 +113,22 @@ void ThreadedWorkletMessagingProxy::Initialize() {
                                                  script_url);
 }
 
+void ThreadedWorkletMessagingProxy::FetchAndInvokeScript(
+    const KURL& module_url_record,
+    WebURLRequest::FetchCredentialsMode credentials_mode,
+    RefPtr<WebTaskRunner> outside_settings_task_runner,
+    WorkletPendingTasks* pending_tasks) {
+  DCHECK(IsMainThread());
+  LoaderClient* client = new LoaderClient(
+      std::move(outside_settings_task_runner), pending_tasks, this);
+  WorkletScriptLoader* script_loader = WorkletScriptLoader::Create(
+      ToDocument(GetExecutionContext())->Fetcher(), client);
+  script_loader->FetchScript(module_url_record);
+}
+
 void ThreadedWorkletMessagingProxy::EvaluateScript(
     const ScriptSourceCode& script_source_code) {
+  DCHECK(IsMainThread());
   TaskRunnerHelper::Get(TaskType::kMiscPlatformAPI, GetWorkerThread())
       ->PostTask(
           BLINK_FROM_HERE,
@@ -69,6 +139,7 @@ void ThreadedWorkletMessagingProxy::EvaluateScript(
 }
 
 void ThreadedWorkletMessagingProxy::TerminateWorkletGlobalScope() {
+  DCHECK(IsMainThread());
   TerminateGlobalScope();
 }
 
