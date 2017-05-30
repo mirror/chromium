@@ -166,8 +166,6 @@ class CORE_EXPORT HTMLPlugInElement : public HTMLFrameOwnerElement {
   bool AllowedToLoadObject(const KURL&, const String& mime_type);
   bool WouldLoadAsNetscapePlugin(const String& url, const String& service_type);
 
-  void SetPersistedPlugin(PluginView*);
-
   bool RequestObjectInternal(const String& url,
                              const String& mime_type,
                              const Vector<String>& param_names,
@@ -180,13 +178,6 @@ class CORE_EXPORT HTMLPlugInElement : public HTMLFrameOwnerElement {
   // !layoutEmbeddedItem().showsUnavailablePluginIndicator()|.  We want to
   // avoid accessing |layoutObject()| in layoutObjectIsFocusable().
   bool plugin_is_available_ = false;
-
-  // Normally the plugin is stored in HTMLFrameOwnerElement::widget_.
-  // However, plugins can persist even when not rendered. In order to
-  // prevent confusing code which may assume that OwnedWidget() != null
-  // means the frame is active, we save off widget_ here while
-  // the plugin is persisting but not being displayed.
-  Member<PluginView> persisted_plugin_;
 };
 
 inline bool IsHTMLPlugInElement(const HTMLElement& element) {

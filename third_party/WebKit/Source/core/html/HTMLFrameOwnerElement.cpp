@@ -314,19 +314,6 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
     cache->ChildrenChanged(layout_part);
 }
 
-FrameOrPlugin* HTMLFrameOwnerElement::ReleaseWidget() {
-  if (!widget_)
-    return nullptr;
-  if (widget_->IsAttached())
-    TemporarilyRemoveFrameOrPluginFromParentSoon(widget_);
-  LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
-  if (layout_part) {
-    if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
-      cache->ChildrenChanged(layout_part);
-  }
-  return widget_.Release();
-}
-
 bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     const KURL& url,
     const AtomicString& frame_name,
