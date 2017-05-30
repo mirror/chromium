@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac97406b_d6bb5d7c",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-30T08:39:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7170103c_692f4060",
+      "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "487e4c4f_8dd3f7ce",
         "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9fca2e18_20fb5e26",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-30T08:39:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "487e4c4f_8dd3f7ce",
+      "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69bbdac3_acd4a96f",
         "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-05-29T17:20:30Z",
       "side": 1,
       "message": "just curious: why not\n\ndata_cache_ \u003d std::move(data_map);",
+      "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a689b1f1_6d207aef",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-30T08:39:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69bbdac3_acd4a96f",
       "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "244612c0_95702df1",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-30T08:39:53Z",
+      "side": 1,
+      "message": "If there is no bugs it should work!\nDone",
+      "parentUuid": "30941188_af6bf593",
+      "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "caf5125c_c604b58c",
         "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-05-29T17:20:30Z",
       "side": 1,
       "message": "tiny tiny nit: if you erase after posting the task, you don\u0027t need the copy and can use const std::string\u0026 above.\nUp to you.",
+      "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacbf97f_3c0b91ca",
+        "filename": "chrome/browser/predictors/glowplug_key_value_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-30T08:39:53Z",
+      "side": 1,
+      "message": "Good catch! base::Bind makes it\u0027s own copy anyway.",
+      "parentUuid": "caf5125c_c604b58c",
       "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "af24c31a_3cd82d08",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-30T08:39:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab33e5d_e461f73f",
+      "range": {
+        "startLine": 1152,
+        "startChar": 0,
+        "endLine": 1152,
+        "endChar": 63
+      },
+      "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39707d00_02b8c574",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
         "patchSetId": 6
@@ -130,6 +244,30 @@
       "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd2721f_ac4f4068",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-05-30T08:39:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39707d00_02b8c574",
+      "range": {
+        "startLine": 377,
+        "startChar": 70,
+        "endLine": 377,
+        "endChar": 77
+      },
+      "revId": "cf573687d74de685a9be12cec0fac0f2cb266cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
