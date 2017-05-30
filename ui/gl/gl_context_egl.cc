@@ -42,6 +42,11 @@ extern "C" {
 #define EGL_CONTEXT_CLIENT_ARRAYS_ENABLED_ANGLE 0x3452
 #endif /* EGL_ANGLE_create_context_client_arrays */
 
+#ifndef EGL_ANGLE_create_context_robust_resource_initialization
+#define EGL_ANGLE_create_context_robust_resource_initialization 1
+#define EGL_CONTEXT_ROBUST_RESOURCE_INITIALIZATION_ANGLE 0x320F
+#endif /* EGL_ANGLE_create_context_robust_resource_initialization */
+
 #ifndef EGL_CONTEXT_PRIORITY_LEVEL_IMG
 #define EGL_CONTEXT_PRIORITY_LEVEL_IMG 0x3100
 #define EGL_CONTEXT_PRIORITY_HIGH_IMG 0x3101
@@ -166,6 +171,18 @@ bool GLContextEGL::Initialize(GLSurface* compatible_surface,
     // Disable client arrays if the context supports it
     context_attributes.push_back(EGL_CONTEXT_CLIENT_ARRAYS_ENABLED_ANGLE);
     context_attributes.push_back(EGL_FALSE);
+  }
+
+  if (GLSurfaceEGL::HasEGLExtension(
+          "EGL_ANGLE_create_context_robust_resource_initialization")) {
+    // Request robust resource initialization if available
+    context_attributes.push_back(
+        EGL_CONTEXT_ROBUST_RESOURCE_INITIALIZATION_ANGLE);
+    context_attributes.push_back(
+        attribs.robust_resource_initialization ? EGL_TRUE : EGL_FALSE);
+  } else {
+    // TODO(geofflang): Throw an error here when all ANGLE backends support
+    // robust resource initialization
   }
 
   // Append final EGL_NONE to signal the context attributes are finished
