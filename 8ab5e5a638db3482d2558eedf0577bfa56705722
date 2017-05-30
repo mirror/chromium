@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc1b6d94_6157fa81",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-30T16:21:30Z",
+      "side": 1,
+      "message": "did you mean to put this in destroy? isDestroyed should be const",
+      "revId": "8ab5e5a638db3482d2558eedf0577bfa56705722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c889e6_f1fd3b11",
+        "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-30T16:21:30Z",
+      "side": 1,
+      "message": "sort out the accessibility stuff before making this change, so that this interface is not needed",
+      "revId": "8ab5e5a638db3482d2558eedf0577bfa56705722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
