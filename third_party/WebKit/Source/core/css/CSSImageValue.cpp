@@ -64,10 +64,9 @@ StyleImage* CSSImageValue::CacheImage(const Document& document,
                                                  ? FetchInitiatorTypeNames::css
                                                  : initiator_name_);
 
-    if (cross_origin != kCrossOriginAttributeNotSet) {
-      params.SetCrossOriginAccessControl(document.GetSecurityOrigin(),
-                                         cross_origin);
-    }
+    params.SetCrossOriginAccessControlFromAttribute(
+        document.GetSecurityOrigin(), cross_origin);
+
     if (document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 

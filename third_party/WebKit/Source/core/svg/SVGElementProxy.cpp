@@ -136,6 +136,8 @@ void SVGElementProxy::Resolve(Document& document) {
   if (is_local_ || id_.IsEmpty() || url_.IsEmpty())
     return;
   FetchParameters params(ResourceRequest(url_), FetchInitiatorTypeNames::css);
+  params.MutableResourceRequest().SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeInclude);
   document_ = DocumentResource::FetchSVGDocument(params, document.Fetcher());
   url_ = String();
 }

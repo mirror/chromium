@@ -203,12 +203,16 @@ Resource* DocumentLoader::StartPreload(Resource::Type type,
       resource = FontResource::Fetch(params, Fetcher());
       break;
     case Resource::kMedia:
+      params.MutableResourceRequest().SetFetchCredentialsMode(
+          WebURLRequest::kFetchCredentialsModeInclude);
       resource = RawResource::FetchMedia(params, Fetcher());
       break;
     case Resource::kTextTrack:
       resource = RawResource::FetchTextTrack(params, Fetcher());
       break;
     case Resource::kImportResource:
+      params.MutableResourceRequest().SetFetchCredentialsMode(
+          WebURLRequest::kFetchCredentialsModeInclude);
       resource = RawResource::FetchImport(params, Fetcher());
       break;
     case Resource::kRaw:
@@ -861,10 +865,11 @@ void DocumentLoader::StartLoadingMainResource() {
 
   DEFINE_STATIC_LOCAL(
       ResourceLoaderOptions, main_resource_load_options,
-      (kDoNotBufferData, kAllowStoredCredentials, kClientRequestedCredentials,
-       kCheckContentSecurityPolicy, kDocumentContext));
+      (kDoNotBufferData, kCheckContentSecurityPolicy, kDocumentContext));
   FetchParameters fetch_params(request_, FetchInitiatorTypeNames::document,
                                main_resource_load_options);
+  fetch_params.MutableResourceRequest().SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeInclude);
   main_resource_ =
       RawResource::FetchMainResource(fetch_params, Fetcher(), substitute_data_);
 

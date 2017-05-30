@@ -115,10 +115,9 @@ StyleImage* CSSImageSetValue::CacheImage(
     resource_request.SetHTTPReferrer(image.referrer);
     FetchParameters params(resource_request, FetchInitiatorTypeNames::css);
 
-    if (cross_origin != kCrossOriginAttributeNotSet) {
-      params.SetCrossOriginAccessControl(document.GetSecurityOrigin(),
-                                         cross_origin);
-    }
+    params.SetCrossOriginAccessControlFromAttribute(
+        document.GetSecurityOrigin(), cross_origin);
+
     if (document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 

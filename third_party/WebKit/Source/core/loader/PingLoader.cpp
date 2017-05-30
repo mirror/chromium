@@ -195,10 +195,7 @@ class PingLoaderImpl : public GarbageCollectedFinalized<PingLoaderImpl>,
   WTF_MAKE_NONCOPYABLE(PingLoaderImpl);
 
  public:
-  PingLoaderImpl(LocalFrame*,
-                 ResourceRequest&,
-                 const AtomicString&,
-                 StoredCredentials);
+  PingLoaderImpl(LocalFrame*, ResourceRequest&, const AtomicString&, bool);
   ~PingLoaderImpl() override;
 
   DECLARE_VIRTUAL_TRACE();
@@ -237,7 +234,7 @@ class PingLoaderImpl : public GarbageCollectedFinalized<PingLoaderImpl>,
 PingLoaderImpl::PingLoaderImpl(LocalFrame* frame,
                                ResourceRequest& request,
                                const AtomicString& initiator,
-                               StoredCredentials credentials_allowed)
+                               bool credentials_allowed)
     : ContextClient(frame),
       timeout_(this, &PingLoaderImpl::Timeout),
       url_(request.Url()),
@@ -274,8 +271,7 @@ PingLoaderImpl::PingLoaderImpl(LocalFrame* frame,
       Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner());
   DCHECK(loader_);
   WrappedResourceRequest wrapped_request(request);
-  wrapped_request.SetAllowStoredCredentials(credentials_allowed ==
-                                            kAllowStoredCredentials);
+  wrapped_request.SetAllowStoredCredentials(credentials_allowed);
   loader_->LoadAsynchronously(wrapped_request, this);
 
   // If the server never responds, FrameLoader won't be able to cancel this load
@@ -316,8 +312,9 @@ bool PingLoaderImpl::WillFollowRedirect(
     // TODO(tyoshino): Save updated data in options.securityOrigin and pass it
     // on the next time.
     if (!CrossOriginAccessControl::HandleRedirect(
-            origin_, new_request, redirect_response, kAllowStoredCredentials,
-            options, error_description)) {
+            origin_, new_request, redirect_response,
+            WebURLRequest::kFetchCredentialsModeInclude, options,
+            error_description)) {
       if (GetFrame()) {
         if (GetFrame()->GetDocument()) {
           GetFrame()->GetDocument()->AddConsoleMessage(ConsoleMessage::Create(
@@ -413,7 +410,7 @@ void FinishPingRequestInitialization(
 bool SendPingCommon(LocalFrame* frame,
                     ResourceRequest& request,
                     const AtomicString& initiator,
-                    StoredCredentials credentials_allowed) {
+                    bool credentials_allowed) {
   if (MixedContentChecker::ShouldBlockFetch(frame, request, request.Url()))
     return false;
 
@@ -469,8 +466,7 @@ bool SendBeaconCommon(LocalFrame* frame,
 
   beacon.Serialize(request);
 
-  return SendPingCommon(frame, request, FetchInitiatorTypeNames::beacon,
-                        kAllowStoredCredentials);
+  return SendPingCommon(frame, request, FetchInitiatorTypeNames::beacon, true);
 }
 
 }  // namespace
@@ -481,8 +477,7 @@ void PingLoader::LoadImage(LocalFrame* frame, const KURL& url) {
   FinishPingRequestInitialization(request, frame,
                                   WebURLRequest::kRequestContextPing);
 
-  SendPingCommon(frame, request, FetchInitiatorTypeNames::ping,
-                 kAllowStoredCredentials);
+  SendPingCommon(frame, request, FetchInitiatorTypeNames::ping, true);
 }
 
 // http://www.whatwg.org/specs/web-apps/current-work/multipage/links.html#hyperlink-auditing
@@ -521,8 +516,7 @@ void PingLoader::SendLinkAuditPing(LocalFrame* frame,
         AtomicString(frame->GetDocument()->Url().GetString()));
   }
 
-  SendPingCommon(frame, request, FetchInitiatorTypeNames::ping,
-                 kAllowStoredCredentials);
+  SendPingCommon(frame, request, FetchInitiatorTypeNames::ping, true);
 }
 
 void PingLoader::SendViolationReport(LocalFrame* frame,
@@ -543,11 +537,9 @@ void PingLoader::SendViolationReport(LocalFrame* frame,
   FinishPingRequestInitialization(request, frame,
                                   WebURLRequest::kRequestContextCSPReport);
 
-  StoredCredentials credentials_allowed =
+  bool credentials_allowed =
       SecurityOrigin::Create(report_url)
-              ->IsSameSchemeHostPort(frame->GetDocument()->GetSecurityOrigin())
-          ? kAllowStoredCredentials
-          : kDoNotAllowStoredCredentials;
+          ->IsSameSchemeHostPort(frame->GetDocument()->GetSecurityOrigin());
   SendPingCommon(frame, request, FetchInitiatorTypeNames::violationreport,
                  credentials_allowed);
 }

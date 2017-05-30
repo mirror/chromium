@@ -323,9 +323,9 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
   FetchParameters params = builder.Build(low_priority);
   CrossOriginAttributeValue cross_origin = GetCrossOriginAttributeValue(
       owner_->FastGetAttribute(HTMLNames::crossoriginAttr));
+  params.SetCrossOriginAccessControlFromAttribute(
+      GetDocument().GetSecurityOrigin(), cross_origin);
   if (cross_origin != kCrossOriginAttributeNotSet) {
-    params.SetCrossOriginAccessControl(GetDocument().GetSecurityOrigin(),
-                                       cross_origin);
     SetFetchFollowingCORS();
   }
 

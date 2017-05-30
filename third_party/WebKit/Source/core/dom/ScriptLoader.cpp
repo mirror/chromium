@@ -732,9 +732,8 @@ bool ScriptLoader::FetchClassicScript(
   params.SetParserDisposition(parser_state);
 
   // "... CORS setting, ..."
-  if (cross_origin != kCrossOriginAttributeNotSet) {
-    params.SetCrossOriginAccessControl(security_origin, cross_origin);
-  }
+  params.SetCrossOriginAccessControlFromAttribute(security_origin,
+                                                  cross_origin);
 
   // "... and encoding."
   params.SetCharset(encoding);
