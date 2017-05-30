@@ -19,3 +19,4 @@ def PostUploadHook(cl, change, output_api):
       'master.tryserver.chromium.linux:linux_site_isolation'
     ],
     'Automatically added site isolation trybots to run tests on CQ.')
+
