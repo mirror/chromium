@@ -33,6 +33,7 @@ class WebFrameWidget;
 class WebInputMethodController;
 class WebRange;
 class WebScriptExecutionCallback;
+class WebSpellCheckPanelHost;
 class WebTextCheckClient;
 class WebURLLoader;
 enum class WebCachePolicy;
@@ -403,6 +404,8 @@ class WebLocalFrame : public WebFrame {
 
   // Spell-checking support -------------------------------------------------
   virtual void SetTextCheckClient(WebTextCheckClient*) = 0;
+  virtual void SetSpellCheckPanelHost(WebSpellCheckPanelHost*) = 0;
+  virtual WebSpellCheckPanelHost* SpellCheckPanelHost() const = 0;
   virtual void ReplaceMisspelledRange(const WebString&) = 0;
   virtual void EnableSpellChecking(bool) = 0;
   virtual bool IsSpellCheckingEnabled() const = 0;
