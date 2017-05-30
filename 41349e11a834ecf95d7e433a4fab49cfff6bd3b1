@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6505c68c_24f850dc",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-30T05:10:24Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "41349e11a834ecf95d7e433a4fab49cfff6bd3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e46e20e_edc52ac6",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-05-30T05:10:24Z",
+      "side": 1,
+      "message": "how about \"after the fetch group is terminated\"?",
+      "revId": "41349e11a834ecf95d7e433a4fab49cfff6bd3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
