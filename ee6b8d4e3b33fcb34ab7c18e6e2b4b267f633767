@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e10551a1_24fa3f90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-05-30T22:19:55Z",
+      "side": 1,
+      "message": "nit: s/extreme/extremely",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "ee6b8d4e3b33fcb34ab7c18e6e2b4b267f633767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ecde791_f1d1203c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-05-30T22:19:55Z",
+      "side": 1,
+      "message": "nit: s/new/a new",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "ee6b8d4e3b33fcb34ab7c18e6e2b4b267f633767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
