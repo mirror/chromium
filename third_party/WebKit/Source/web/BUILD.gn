@@ -60,8 +60,6 @@ component("web") {
     "DateTimeChooserImpl.h",
     "DedicatedWorkerMessagingProxyProviderImpl.cpp",
     "DedicatedWorkerMessagingProxyProviderImpl.h",
-    "DevToolsEmulator.cpp",
-    "DevToolsEmulator.h",
     "EditorClientImpl.cpp",
     "EditorClientImpl.h",
     "ExternalDateTimeChooser.cpp",
