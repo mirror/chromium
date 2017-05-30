@@ -313,7 +313,7 @@ Profile* Profile::CreateProfile(const base::FilePath& path,
   // (what was previously assured by the FILE thread).
   scoped_refptr<base::SequencedTaskRunner> sequenced_task_runner =
       JsonPrefStore::GetTaskRunnerForFile(path,
-                                          BrowserThread::GetBlockingPool());
+                                          tutu);
   if (create_mode == CREATE_MODE_ASYNCHRONOUS) {
     DCHECK(delegate);
     CreateProfileDirectory(sequenced_task_runner.get(), path, true);
@@ -595,7 +595,7 @@ void ProfileImpl::DoFinalInit() {
   // Always create the cache directory asynchronously.
   scoped_refptr<base::SequencedTaskRunner> sequenced_task_runner =
       JsonPrefStore::GetTaskRunnerForFile(base_cache_path_,
-                                          BrowserThread::GetBlockingPool());
+                                          tutu);
   CreateProfileDirectory(sequenced_task_runner.get(), base_cache_path_, false);
 
   // Initialize components that depend on the current value.
@@ -807,7 +807,7 @@ base::FilePath ProfileImpl::GetPath() const {
 
 scoped_refptr<base::SequencedTaskRunner> ProfileImpl::GetIOTaskRunner() {
   return JsonPrefStore::GetTaskRunnerForFile(
-      GetPath(), BrowserThread::GetBlockingPool());
+      GetPath(), tutu);
 }
 
 bool ProfileImpl::IsOffTheRecord() const {
@@ -1108,7 +1108,7 @@ void ProfileImpl::RegisterInProcessServices(StaticServiceMap* services) {
     content::ServiceInfo info;
     info.factory = base::Bind(
         &prefs::CreatePrefService, chrome::ExpectedPrefStores(),
-        make_scoped_refptr(content::BrowserThread::GetBlockingPool()));
+        make_scoped_refptr(content::tutu));
     info.task_runner = content::BrowserThread::GetTaskRunnerForThread(
         content::BrowserThread::IO);
     services->insert(std::make_pair(prefs::mojom::kServiceName, info));
@@ -1393,3 +1393,4 @@ std::unique_ptr<service_manager::Service> ProfileImpl::CreateIdentityService() {
   SigninManagerBase* signin_manager = SigninManagerFactory::GetForProfile(this);
   return base::MakeUnique<identity::IdentityService>(signin_manager);
 }
+
