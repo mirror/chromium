@@ -69,6 +69,24 @@
       "revId": "8ab5e5a638db3482d2558eedf0577bfa56705722",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e502c8_5ee45b27",
+        "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-30T23:24:58Z",
+      "side": 1,
+      "message": "So depends on whether accessibility should be entirely internal to content, or it can be exposed to content embedders. I don\u0027t really know which way to go, probably can ask owners or look at what other platforms do.\n\nIf it\u0027s internal, can just have the web contents view intercept the event, and bubble it up to java before sending it further down native? It\u0027s one more jni hope than necessary, but not a big deal.\n\nIf it\u0027s public, then embedder should do the check before forwarding to view tree?",
+      "parentUuid": "7d22600a_c98e9145",
+      "revId": "8ab5e5a638db3482d2558eedf0577bfa56705722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
