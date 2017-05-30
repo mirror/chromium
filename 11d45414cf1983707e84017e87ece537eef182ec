@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8cdf9e4c_2c52d956",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:43:18Z",
+      "side": 1,
+      "message": "Unrelated to this CL, could be changed in another CL: this naming style isn\u0027t consistent the other names, could be changed to missing_image.",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d98500c_21bd9d0e",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
         "patchSetId": 2
@@ -34,6 +51,24 @@
       "revId": "11d45414cf1983707e84017e87ece537eef182ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4b81fe_952bde50",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:43:18Z",
+      "side": 1,
+      "message": "Alright :-)",
+      "parentUuid": "63aac928_4f5e36f8",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -72,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d2e61b8d_23de3e19",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:43:18Z",
+      "side": 1,
+      "message": "So _location_for_missing_baseline is only responsible for deciding location when there are no baselines at all yet, right?",
+      "parentUuid": "f67c8f7a_168c92a5",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5ba3790_045695b2",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
         "patchSetId": 2
@@ -104,6 +157,24 @@
       "revId": "11d45414cf1983707e84017e87ece537eef182ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c5350a_c85b754e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:43:18Z",
+      "side": 1,
+      "message": "Makes sense, thanks",
+      "parentUuid": "04a1c937_7d8a8361",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +245,24 @@
       "revId": "11d45414cf1983707e84017e87ece537eef182ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a795b3e_584c8e22",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:43:18Z",
+      "side": 1,
+      "message": "Ah, I see -- so we\u0027re adding the text baseline here which would otherwise have been added by run-webkit-tests --new-baseline; and then below in the call to assert_baselines we assert that only an image baseline was added; the platform-specific text baseline was not written since there\u0027s already a cross-platform baseline present?",
+      "parentUuid": "9436d092_fcceb328",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
