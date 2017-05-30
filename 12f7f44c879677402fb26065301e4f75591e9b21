@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "209de8c4_2151750f",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/table/cached-change-colgroup-border-color-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-30T17:01:36Z",
+      "side": 1,
+      "message": "This is changed because previously Table\u0027s visual rect didn\u0027t cover collapsed borders from colgroups.",
+      "revId": "12f7f44c879677402fb26065301e4f75591e9b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c13e3ba_b5f16cfa",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/fast/table/border-collapsing/002-vertical-expected.png",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-30T17:01:36Z",
+      "side": 1,
+      "message": "This is changed because previously pixel the distribution of inner and outer border widths were inconsistent for mixed directions. The previous png has 1 more pixel on the left of the table and 1 less pixel on the right, causing 1px misalignment of the two tables.",
+      "revId": "12f7f44c879677402fb26065301e4f75591e9b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
