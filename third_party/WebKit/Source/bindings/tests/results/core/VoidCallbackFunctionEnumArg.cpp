@@ -10,7 +10,7 @@
 
 // clang-format off
 
-#include "VoidCallbackFunctionTypedef.h"
+#include "VoidCallbackFunctionEnumArg.h"
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/IDLTypes.h"
@@ -24,23 +24,23 @@
 namespace blink {
 
 // static
-VoidCallbackFunctionTypedef* VoidCallbackFunctionTypedef::Create(ScriptState* scriptState, v8::Local<v8::Value> callback) {
+VoidCallbackFunctionEnumArg* VoidCallbackFunctionEnumArg::Create(ScriptState* scriptState, v8::Local<v8::Value> callback) {
   if (IsUndefinedOrNull(callback))
     return nullptr;
-  return new VoidCallbackFunctionTypedef(scriptState, v8::Local<v8::Function>::Cast(callback));
+  return new VoidCallbackFunctionEnumArg(scriptState, v8::Local<v8::Function>::Cast(callback));
 }
 
-VoidCallbackFunctionTypedef::VoidCallbackFunctionTypedef(ScriptState* scriptState, v8::Local<v8::Function> callback)
+VoidCallbackFunctionEnumArg::VoidCallbackFunctionEnumArg(ScriptState* scriptState, v8::Local<v8::Function> callback)
     : script_state_(scriptState),
     callback_(scriptState->GetIsolate(), this, callback) {
   DCHECK(!callback_.IsEmpty());
 }
 
-DEFINE_TRACE_WRAPPERS(VoidCallbackFunctionTypedef) {
+DEFINE_TRACE_WRAPPERS(VoidCallbackFunctionEnumArg) {
   visitor->TraceWrappers(callback_.Cast<v8::Value>());
 }
 
-bool VoidCallbackFunctionTypedef::call(ScriptWrappable* scriptWrappable, const String& arg) {
+bool VoidCallbackFunctionEnumArg::call(ScriptWrappable* scriptWrappable, const String& arg) {
   if (callback_.IsEmpty())
     return false;
 
@@ -50,6 +50,17 @@ bool VoidCallbackFunctionTypedef::call(ScriptWrappable* scriptWrappable, const S
   // TODO(bashi): Make sure that using DummyExceptionStateForTesting is OK.
   // crbug.com/653769
   DummyExceptionStateForTesting exceptionState;
+
+  const char* valid_arg_values[] = {
+      "",
+      "EnumValue1",
+      "EnumValue2",
+      "EnumValue3",
+  };
+  if (!IsValidEnum(arg, valid_arg_values, WTF_ARRAY_LENGTH(valid_arg_values), "TestEnum", exceptionState)) {
+    NOTREACHED();
+    return false;
+  }
 
   ExecutionContext* context = ExecutionContext::From(script_state_.Get());
   DCHECK(context);
@@ -82,11 +93,11 @@ bool VoidCallbackFunctionTypedef::call(ScriptWrappable* scriptWrappable, const S
   return true;
 }
 
-VoidCallbackFunctionTypedef* NativeValueTraits<VoidCallbackFunctionTypedef>::NativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
-  VoidCallbackFunctionTypedef* nativeValue = VoidCallbackFunctionTypedef::Create(ScriptState::Current(isolate), value);
+VoidCallbackFunctionEnumArg* NativeValueTraits<VoidCallbackFunctionEnumArg>::NativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
+  VoidCallbackFunctionEnumArg* nativeValue = VoidCallbackFunctionEnumArg::Create(ScriptState::Current(isolate), value);
   if (!nativeValue) {
     exceptionState.ThrowTypeError(ExceptionMessages::FailedToConvertJSValue(
-        "VoidCallbackFunctionTypedef"));
+        "VoidCallbackFunctionEnumArg"));
   }
   return nativeValue;
 }
