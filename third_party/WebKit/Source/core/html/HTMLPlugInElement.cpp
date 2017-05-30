@@ -545,6 +545,7 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
   loaded_url_ = url;
 
   if (persisted_plugin_) {
+    NOTREACHED();
     SetWidget(persisted_plugin_.Release());
   } else {
     bool load_manually =
