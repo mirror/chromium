@@ -181,6 +181,7 @@ UI.Icon.Descriptors = {
   'largeicon-hide-left-sidebar': {position: 'e8', spritesheet: 'largeicons', isMask: true},
   'largeicon-hide-right-sidebar': {position: 'e7', spritesheet: 'largeicons', isMask: true},
   'largeicon-hide-top-sidebar': {position: 'e6', spritesheet: 'largeicons', isMask: true},
+  'largeicon-history': {position: 'h6', spritesheet: 'largeicons', isMask: true},
   'largeicon-large-list': {position: 'e5', spritesheet: 'largeicons', isMask: true},
   'largeicon-layout-editor': {position: 'a4', spritesheet: 'largeicons', isMask: true},
   'largeicon-longclick-triangle': {position: 'b4', spritesheet: 'largeicons', isMask: true},
