@@ -32,7 +32,7 @@ FakeContextFactory::FakeContextFactory() {
          format_idx <= static_cast<int>(gfx::BufferFormat::LAST);
          ++format_idx) {
       gfx::BufferFormat format = static_cast<gfx::BufferFormat>(format_idx);
-      renderer_settings_
+      renderer_settings_.resource_settings
           .buffer_to_texture_target_map[std::make_pair(usage, format)] =
           GL_TEXTURE_2D;
     }
