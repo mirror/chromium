@@ -901,6 +901,7 @@ component("ash") {
     "//ui/vector_icons",
     "//ui/views",
     "//ui/wm",
+    "//ui/wm/public",
     "//url",
   ]
 
@@ -1138,6 +1139,7 @@ test("ash_content_unittests") {
     "//ui/views:test_support",
     "//ui/views/controls/webview:test_support",
     "//ui/web_dialogs:test_support",
+    "//ui/wm/public",
   ]
 
   data_deps = [
@@ -1317,6 +1319,7 @@ source_set("common_unittests") {
     "//ui/views:test_support",
     "//ui/wm",
     "//ui/wm:test_support",
+    "//ui/wm/public",
   ]
   public_deps = [
     "//ash/test:test_support_without_content",
@@ -1487,6 +1490,7 @@ test("ash_unittests") {
     "//ui/views",
     "//ui/views:test_support",
     "//ui/wm",
+    "//ui/wm/public",
     "//url",
   ]
 
