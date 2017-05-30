@@ -19,6 +19,49 @@
 
 namespace content {
 
+using FactoryToken = RendererAudioOutputStreamFactoryContextImpl::FactoryToken;
+
+FactoryToken::~FactoryToken() {
+  FreeFactory();
+}
+
+FactoryToken::FactoryToken(RendererAudioOutputStreamFactoryContextImpl* context,
+                           int frame_id)
+    : context_(context), frame_id_(frame_id) {}
+
+FactoryToken::FactoryToken(FactoryToken&& other)
+    : context_(other.context_), frame_id_(other.frame_id_) {
+  other.context_ = nullptr;
+}
+
+FactoryToken& FactoryToken::operator=(FactoryToken&& other) {
+  FreeFactory();
+  context_ = other.context_;
+  frame_id_ = other.frame_id_;
+  other.context_ = nullptr;
+  return *this;
+}
+
+void FactoryToken::FreeFactory() {
+  if (context_) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            &RendererAudioOutputStreamFactoryContextImpl::RemoveMapEntry,
+            base::Unretained(context_), frame_id_));
+  }
+}
+
+struct RendererAudioOutputStreamFactoryContextImpl::ImplWithBinding {
+  ImplWithBinding(int frame_id,
+                  RendererAudioOutputStreamFactoryContextImpl* context,
+                  mojom::RendererAudioOutputStreamFactoryRequest request)
+      : impl_(frame_id, context), binding_(&impl_, std::move(request)) {}
+
+  RenderFrameAudioOutputStreamFactory impl_;
+  mojo::Binding<mojom::RendererAudioOutputStreamFactory> binding_;
+};
+
 RendererAudioOutputStreamFactoryContextImpl::
     RendererAudioOutputStreamFactoryContextImpl(
         int render_process_id,
@@ -39,16 +82,49 @@ RendererAudioOutputStreamFactoryContextImpl::
 RendererAudioOutputStreamFactoryContextImpl::
     ~RendererAudioOutputStreamFactoryContextImpl() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(factories_.empty());
 }
 
-void RendererAudioOutputStreamFactoryContextImpl::CreateFactory(
-    int frame_host_id,
+FactoryToken RendererAudioOutputStreamFactoryContextImpl::CreateFactory(
+    int frame_id,
+    mojo::InterfaceRequest<mojom::RendererAudioOutputStreamFactory> request) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  // Unretained is safe since this object should be posted to the IO thread
+  // before destruction, and since we're accessing it from the UI thread, this
+  // hasn't been done yet.
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          &RendererAudioOutputStreamFactoryContextImpl::CreateFactoryOnIO,
+          base::Unretained(this), frame_id, std::move(request)));
+
+  return FactoryToken(this, frame_id);
+}
+
+void RendererAudioOutputStreamFactoryContextImpl::CreateFactoryOnIO(
+    int frame_id,
     mojo::InterfaceRequest<mojom::RendererAudioOutputStreamFactory> request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!request.is_pending()) {
+    // Request was canceled before getting here.
+    RemoveMapEntry(frame_id);
+    return;
+  }
 
-  factories_.AddBinding(base::MakeUnique<RenderFrameAudioOutputStreamFactory>(
-                            frame_host_id, this),
-                        std::move(request));
+  std::pair<FactoryBindingMap::iterator, bool> emplace_result =
+      factories_.emplace(frame_id, base::MakeUnique<ImplWithBinding>(
+                                       frame_id, this, std::move(request)));
+
+  DCHECK(emplace_result.second);
+
+  mojo::Binding<mojom::RendererAudioOutputStreamFactory>& binding =
+      emplace_result.first->second->binding_;
+
+  // Unretained is safe because |this| owns |binding|.
+  binding.set_connection_error_handler(base::BindRepeating(
+      &RendererAudioOutputStreamFactoryContextImpl::RemoveMapEntry,
+      base::Unretained(this), frame_id));
 }
 
 int RendererAudioOutputStreamFactoryContextImpl::GetRenderProcessId() const {
@@ -96,6 +172,16 @@ RendererAudioOutputStreamFactoryContextImpl::CreateDelegate(
       handler, audio_manager_, std::move(audio_log),
       AudioMirroringManager::GetInstance(), media_observer, stream_id,
       render_frame_id, render_process_id_, params, unique_device_id);
+}
+
+// static
+bool RendererAudioOutputStreamFactoryContextImpl::UseMojoFactories() {
+  // TODO(maxmorin): Introduce a feature for this.
+  return false;
+}
+
+void RendererAudioOutputStreamFactoryContextImpl::RemoveMapEntry(int frame_id) {
+  factories_.erase(frame_id);
 }
 
 }  // namespace content
