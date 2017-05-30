@@ -416,6 +416,8 @@ const IDNTestCase idn_cases[] = {
 #if defined(OS_MACOSX)
   // Tibetan transliteration characters are disallowed on Mac.
   {"xn--com-luma.test.pl", L"\u0f8c.test.pl", false},
+  // U+0620 is blocked due to a font issue on Mac.
+  {"xn--fgb.com", L"\u0620.com", false},
 #endif
 
   // Hyphens (http://unicode.org/cldr/utility/confusables.jsp?a=-)
