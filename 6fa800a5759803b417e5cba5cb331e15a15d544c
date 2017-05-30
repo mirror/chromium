@@ -69,6 +69,24 @@
       "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99804c83_3bba0f1d",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-30T22:14:56Z",
+      "side": 1,
+      "message": "Then UnregisterBeginFrameSource should happen somewhere in DirectCompositorFrameSink as well. DetachFromClient, or destructor?",
+      "parentUuid": "00d28614_e95bad28",
+      "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
