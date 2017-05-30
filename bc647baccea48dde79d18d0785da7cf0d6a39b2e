@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78bf3ed5_05853e21",
+        "filename": "third_party/WebKit/LayoutTests/fast/html/imports/import-and-script-module-inline.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-05-30T08:23:34Z",
+      "side": 1,
+      "message": "Would you use testRunner.dumpAsText(); or testharness.js?",
+      "revId": "bc647baccea48dde79d18d0785da7cf0d6a39b2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1bf799f_56af4537",
+        "filename": "third_party/WebKit/LayoutTests/fast/html/imports/import-and-script-module-outofline.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-05-30T08:23:34Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "bc647baccea48dde79d18d0785da7cf0d6a39b2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
