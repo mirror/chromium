@@ -58,8 +58,9 @@ TEST(WebInputEventUtilTest, MotionEventConversion) {
     WebTouchPoint expected_pointer;
     expected_pointer.id = pointer.id;
     expected_pointer.state = WebTouchPoint::kStatePressed;
-    expected_pointer.position = blink::WebFloatPoint(pointer.x, pointer.y);
-    expected_pointer.screen_position =
+    expected_pointer.PositionInWidget() =
+        blink::WebFloatPoint(pointer.x, pointer.y);
+    expected_pointer.PositionInScreen() =
         blink::WebFloatPoint(pointer.raw_x, pointer.raw_y);
     expected_pointer.radius_x = pointer.touch_major / 2.f;
     expected_pointer.radius_y = pointer.touch_minor / 2.f;
