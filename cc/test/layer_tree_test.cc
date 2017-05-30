@@ -829,7 +829,7 @@ void LayerTreeTest::RunTest(CompositorMode mode) {
   // Disable latency recovery to make the scheduler more predictable in its
   // actions and less dependent on timings to make decisions.
   settings_.enable_latency_recovery = false;
-  settings_.buffer_to_texture_target_map =
+  settings_.resource_settings.buffer_to_texture_target_map =
       DefaultBufferToTextureTargetMapForTesting();
   InitializeSettings(&settings_);
 
@@ -858,8 +858,10 @@ void LayerTreeTest::RequestNewCompositorFrameSink() {
       TestContextProvider::CreateWorker();
 
   RendererSettings renderer_settings;
+  // Spend less time waiting for BeginFrame because the output is
+  // mocked out.
   renderer_settings.refresh_rate = 200.0;
-  renderer_settings.buffer_to_texture_target_map =
+  renderer_settings.resource_settings.buffer_to_texture_target_map =
       DefaultBufferToTextureTargetMapForTesting();
   auto compositor_frame_sink = CreateCompositorFrameSink(
       renderer_settings, std::move(shared_context_provider),
@@ -877,6 +879,7 @@ LayerTreeTest::CreateCompositorFrameSink(
   bool synchronous_composite =
       !HasImplThread() &&
       !layer_tree_host()->GetSettings().single_thread_proxy_scheduler;
+
   return base::MakeUnique<TestCompositorFrameSink>(
       compositor_context_provider, std::move(worker_context_provider),
       shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
