@@ -37,9 +37,6 @@ class CORE_EXPORT ClassicPendingScript final
 
   ~ClassicPendingScript() override;
 
-  void SetStreamer(ScriptStreamer*);
-  void StreamingFinished();
-
   DECLARE_TRACE();
 
   blink::ScriptType GetScriptType() const override {
@@ -53,7 +50,6 @@ class CORE_EXPORT ClassicPendingScript final
   bool IsExternal() const override { return GetResource(); }
   bool ErrorOccurred() const override;
   bool WasCanceled() const override;
-  void StartStreamingIfPossible(Document*, ScriptStreamer::Type) override;
   KURL UrlForClassicScript() const override;
   void RemoveFromMemoryCache() override;
   void DisposeInternal() override;
@@ -64,7 +60,6 @@ class CORE_EXPORT ClassicPendingScript final
   enum ReadyState {
     // These states are considered "not ready".
     kWaitingForResource,
-    kWaitingForStreaming,
     // These states are considered "ready".
     kReady,
     kErrorOccurred,
@@ -91,7 +86,6 @@ class CORE_EXPORT ClassicPendingScript final
 
   ReadyState ready_state_;
   bool integrity_failure_;
-  Member<ScriptStreamer> streamer_;
 
   // This is a temporary flag to confirm that ClassicPendingScript is not
   // touched after its refinalizer call and thus https://crbug.com/715309

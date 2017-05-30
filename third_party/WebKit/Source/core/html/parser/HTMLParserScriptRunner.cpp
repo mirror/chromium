@@ -558,8 +558,6 @@ void HTMLParserScriptRunner::RequestParsingBlockingScript(Element* element) {
   // Callers will attempt to run the m_parserBlockingScript if possible before
   // returning control to the parser.
   if (!ParserBlockingScript()->IsReady()) {
-    parser_blocking_script_->StartStreamingIfPossible(
-        document_, ScriptStreamer::kParsingBlocking);
     parser_blocking_script_->WatchForLoad(this);
   }
 }
@@ -569,11 +567,6 @@ void HTMLParserScriptRunner::RequestDeferredScript(Element* element) {
   PendingScript* pending_script = RequestPendingScript(element);
   if (!pending_script)
     return;
-
-  if (!pending_script->IsReady()) {
-    pending_script->StartStreamingIfPossible(document_,
-                                             ScriptStreamer::kDeferred);
-  }
 
   DCHECK(pending_script->IsExternal());
 

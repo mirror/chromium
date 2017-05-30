@@ -92,7 +92,6 @@ class CORE_EXPORT PendingScript
   virtual bool IsExternal() const = 0;
   virtual bool ErrorOccurred() const = 0;
   virtual bool WasCanceled() const = 0;
-  virtual void StartStreamingIfPossible(Document*, ScriptStreamer::Type) = 0;
 
   // The following two methods are used for document.write() intervention and
   // have effects only for classic scripts.
