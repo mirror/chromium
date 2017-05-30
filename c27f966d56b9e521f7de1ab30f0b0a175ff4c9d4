@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a77540f_50214047",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-30T17:59:29Z",
+      "side": 1,
+      "message": "Can\u0027t we just check for HasState(ui::AX_STATE_EDITABLE) ?",
+      "revId": "c27f966d56b9e521f7de1ab30f0b0a175ff4c9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecd24d7_e3096bcf",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-30T17:59:29Z",
+      "side": 1,
+      "message": "Only remaining use of GetHtmlAttribute in browser_accessibility layer",
+      "revId": "c27f966d56b9e521f7de1ab30f0b0a175ff4c9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66d8080_1e9f3500",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-30T17:59:29Z",
+      "side": 1,
+      "message": "Remember to look at TODOs",
+      "revId": "c27f966d56b9e521f7de1ab30f0b0a175ff4c9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046a370c_10195c46",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5058,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-30T17:59:29Z",
+      "side": 1,
+      "message": "Diff is annoying here",
+      "range": {
+        "startLine": 5058,
+        "startChar": 1,
+        "endLine": 5058,
+        "endChar": 2
+      },
+      "revId": "c27f966d56b9e521f7de1ab30f0b0a175ff4c9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6ecbca_9806ac06",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/option-aria-checked.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-30T17:59:29Z",
+      "side": 1,
+      "message": "We need to test that aria-checked works on treeitems etc.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "c27f966d56b9e521f7de1ab30f0b0a175ff4c9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca4bd93_a62e10e4",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-30T17:59:29Z",
+      "side": 1,
+      "message": "Filed issue on this being a boolean in the spec:\nhttps://github.com/WICG/aom/issues/76",
+      "revId": "c27f966d56b9e521f7de1ab30f0b0a175ff4c9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3cd32a_626a07d7",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-30T17:59:29Z",
+      "side": 1,
+      "message": "Changed to true/false for consistency across a11y layers",
+      "revId": "c27f966d56b9e521f7de1ab30f0b0a175ff4c9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -16,6 +16,24 @@
       "revId": "a05726ef77312a57e1c392b8dac943abb0d97dc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd245a74_95682808",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output_test.extjs",
+        "patchSetId": 13
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-30T17:59:29Z",
+      "side": 0,
+      "message": "I\u0027ll doublecheck with @dtseng on how this should be done.",
+      "parentUuid": "66794cfe_4a639326",
+      "revId": "a05726ef77312a57e1c392b8dac943abb0d97dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
