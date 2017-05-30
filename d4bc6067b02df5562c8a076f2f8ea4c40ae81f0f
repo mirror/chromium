@@ -152,6 +152,29 @@
       "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fb93cc_6876ada8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 88506,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-05-30T19:54:15Z",
+      "side": 1,
+      "message": "nit: Could you use a second layer of histogram_suffixes, rather than flattening it here?",
+      "range": {
+        "startLine": 88506,
+        "startChar": 44,
+        "endLine": 88506,
+        "endChar": 0
+      },
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
