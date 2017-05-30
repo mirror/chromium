@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "227eaa18_0fe2206a",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-05-30T17:18:36Z",
+      "side": 1,
+      "message": "nit: alpha sorting.",
+      "range": {
+        "startLine": 45,
+        "startChar": 69,
+        "endLine": 45,
+        "endChar": 79
+      },
+      "revId": "6278bae5f2f72ad7a903728012aaf7ca4c93fd52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
