@@ -257,6 +257,7 @@ IntRect PaintArtifactCompositor::MapRasterInvalidationRectFromChunkToLayer(
   // Now rect is in the space of the containing transform node of pending_layer,
   // so need to subtract off the layer offset.
   rect.Rect().Move(-layer_offset.x(), -layer_offset.y());
+  rect.Rect().Inflate(paint_chunk.outset_for_raster_effects);
   return EnclosingIntRect(rect.Rect());
 }
 
@@ -283,7 +284,9 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
   std::unique_ptr<ContentLayerClientImpl> content_layer_client =
       ClientForPaintChunk(first_paint_chunk, paint_artifact);
 
-  gfx::Rect cc_combined_bounds(EnclosingIntRect(pending_layer.bounds));
+  FloatRect bounds = pending_layer.bounds;
+  bounds.Inflate(pending_layer.outset_for_raster_effects);
+  gfx::Rect cc_combined_bounds(EnclosingIntRect(bounds));
 
   layer_offset = cc_combined_bounds.OffsetFromOrigin();
   scoped_refptr<cc::DisplayItemList> display_list =
@@ -330,9 +333,6 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
       auto info = raster_tracking->invalidations[i];
       info.rect = rect;
       cc_tracking.invalidations.push_back(info);
-      // TODO(crbug.com/496260): Some antialiasing effects overflow the paint
-      // invalidation rect.
-      rect.Inflate(1);
       cc_tracking.invalidation_region_since_last_paint.Unite(rect);
     }
   }
@@ -345,6 +345,7 @@ PaintArtifactCompositor::PendingLayer::PendingLayer(
     const PaintChunk& first_paint_chunk,
     bool chunk_is_foreign)
     : bounds(first_paint_chunk.bounds),
+      outset_for_raster_effects(first_paint_chunk.outset_for_raster_effects),
       known_to_be_opaque(first_paint_chunk.known_to_be_opaque),
       backface_hidden(first_paint_chunk.properties.backface_hidden),
       property_tree_state(first_paint_chunk.properties.property_tree_state),
@@ -362,6 +363,8 @@ void PaintArtifactCompositor::PendingLayer::Merge(const PendingLayer& guest) {
       guest.property_tree_state, property_tree_state, guest_bounds_in_home);
   FloatRect old_bounds = bounds;
   bounds.Unite(guest_bounds_in_home.Rect());
+  outset_for_raster_effects =
+      std::max(outset_for_raster_effects, guest.outset_for_raster_effects);
   if (bounds != old_bounds)
     known_to_be_opaque = false;
   // TODO(crbug.com/701991): Upgrade GeometryMapper.
