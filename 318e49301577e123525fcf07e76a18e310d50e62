@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23204f23_8495328d",
+        "filename": "ui/views/controls/button/custom_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-30T20:40:57Z",
+      "side": 1,
+      "message": "Please friend a test only class that has access to this.",
+      "range": {
+        "startLine": 110,
+        "startChar": 17,
+        "endLine": 110,
+        "endChar": 42
+      },
+      "revId": "318e49301577e123525fcf07e76a18e310d50e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
