@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a15bfa5f_3d823d7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-05-30T23:05:56Z",
+      "side": 1,
+      "message": "the onLayoutChange() listener calls setSheetState() so it\u0027s a bit redundant, but probably more robust. Changed.",
+      "parentUuid": "0b6aea88_acd7c816",
+      "range": {
+        "startLine": 969,
+        "startChar": 66,
+        "endLine": 969,
+        "endChar": 79
+      },
+      "revId": "52e46672c9facfdb6783a7fa6888c3d46650d9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d39120a_da6c2d09",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "52e46672c9facfdb6783a7fa6888c3d46650d9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88f1069_11ba53aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-05-30T23:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d39120a_da6c2d09",
+      "range": {
+        "startLine": 1247,
+        "startChar": 16,
+        "endLine": 1247,
+        "endChar": 29
+      },
+      "revId": "52e46672c9facfdb6783a7fa6888c3d46650d9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
