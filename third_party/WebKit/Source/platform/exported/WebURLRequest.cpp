@@ -302,6 +302,14 @@ void WebURLRequest::SetUseStreamOnResponse(bool use_stream_on_response) {
   resource_request_->SetUseStreamOnResponse(use_stream_on_response);
 }
 
+bool WebURLRequest::Keepalive() const {
+  return resource_request_->Keepalive();
+}
+
+void WebURLRequest::SetKeepalive(bool keepalive) {
+  resource_request_->SetKeepalive(keepalive);
+}
+
 WebURLRequest::ServiceWorkerMode WebURLRequest::GetServiceWorkerMode() const {
   return resource_request_->GetServiceWorkerMode();
 }
