@@ -33,6 +33,46 @@
       "revId": "12f7f44c879677402fb26065301e4f75591e9b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c3b25c_f3762273",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-30T21:39:52Z",
+      "side": 1,
+      "message": "Add comment re: why we truncate with ToInt() for Start and End (below), but don\u0027t do so for before/after.",
+      "range": {
+        "startLine": 1180,
+        "startChar": 47,
+        "endLine": 1180,
+        "endChar": 52
+      },
+      "revId": "12f7f44c879677402fb26065301e4f75591e9b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8a06ba_6f2cbd25",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-30T21:39:52Z",
+      "side": 1,
+      "message": "Here (and for similar comments below), does this change fix/alter any existing test cases? If so worth adding to CL description which currently reads as if it is purely a performance/optimization change.",
+      "revId": "12f7f44c879677402fb26065301e4f75591e9b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
