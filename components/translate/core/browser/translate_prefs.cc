@@ -123,13 +123,13 @@ base::ListValue* DenialTimeUpdate::GetDenialTimes() {
   bool has_list = has_value && denial_value->GetAsList(&time_list_);
 
   if (!has_list) {
-    time_list_ = new base::ListValue();
+    auto time_list = base::MakeUnique<base::ListValue>();
     double oldest_denial_time = 0;
     bool has_old_style =
         has_value && denial_value->GetAsDouble(&oldest_denial_time);
     if (has_old_style)
-      time_list_->AppendDouble(oldest_denial_time);
-    denial_time_dict->Set(language_, base::WrapUnique(time_list_));
+      time_list->AppendDouble(oldest_denial_time);
+    time_list_ = denial_time_dict->SetList(language_, std::move(time_list));
   }
   return time_list_;
 }
