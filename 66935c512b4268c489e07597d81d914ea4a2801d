@@ -46,6 +46,30 @@
       "revId": "66935c512b4268c489e07597d81d914ea4a2801d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0559417_069cad71",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-05-30T09:25:33Z",
+      "side": 1,
+      "message": "Thanks. I just wanted to check whether we have to merge the IsMainThread() check back to M-60 or so.",
+      "parentUuid": "0095917c_0f5611ce",
+      "range": {
+        "startLine": 463,
+        "startChar": 6,
+        "endLine": 463,
+        "endChar": 61
+      },
+      "revId": "66935c512b4268c489e07597d81d914ea4a2801d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
