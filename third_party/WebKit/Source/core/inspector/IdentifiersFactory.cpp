@@ -90,8 +90,7 @@ DocumentLoader* IdentifiersFactory::LoaderById(
 // static
 String IdentifiersFactory::AddProcessIdPrefixTo(int id) {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      uint32_t, process_id,
-      new uint32_t(Platform::Current()->GetUniqueIdForProcess()));
+      uint32_t, process_id, (Platform::Current()->GetUniqueIdForProcess()));
 
   StringBuilder builder;
 
