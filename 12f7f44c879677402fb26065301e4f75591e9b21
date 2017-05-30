@@ -59,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "7b5dd0b1_4f2f7fef",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-30T22:17:47Z",
+      "side": 1,
+      "message": "+karlo@opera.com who added the ToInt() in https://codereview.chromium.org/2640143005.",
+      "parentUuid": "61c3b25c_f3762273",
+      "range": {
+        "startLine": 1180,
+        "startChar": 47,
+        "endLine": 1180,
+        "endChar": 52
+      },
+      "revId": "12f7f44c879677402fb26065301e4f75591e9b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f8a06ba_6f2cbd25",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 5
@@ -70,6 +94,24 @@
       "writtenOn": "2017-05-30T21:39:52Z",
       "side": 1,
       "message": "Here (and for similar comments below), does this change fix/alter any existing test cases? If so worth adding to CL description which currently reads as if it is purely a performance/optimization change.",
+      "revId": "12f7f44c879677402fb26065301e4f75591e9b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db4198d_98892443",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-30T22:17:47Z",
+      "side": 1,
+      "message": "Updated description.",
+      "parentUuid": "2f8a06ba_6f2cbd25",
       "revId": "12f7f44c879677402fb26065301e4f75591e9b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
