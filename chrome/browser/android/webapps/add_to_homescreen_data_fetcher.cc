@@ -78,7 +78,7 @@ AddToHomescreenDataFetcher::AddToHomescreenDataFetcher(
     Observer* observer)
     : WebContentsObserver(web_contents),
       background_task_runner_(
-          content::BrowserThread::GetBlockingPool()
+          content::tutu
               ->GetTaskRunnerWithShutdownBehavior(
                   base::SequencedWorkerPool::SKIP_ON_SHUTDOWN)),
       weak_observer_(observer),
@@ -346,3 +346,4 @@ void AddToHomescreenDataFetcher::NotifyObserver(const SkBitmap& primary_icon) {
   is_ready_ = true;
   weak_observer_->OnDataAvailable(shortcut_info_, primary_icon_, badge_icon_);
 }
+
