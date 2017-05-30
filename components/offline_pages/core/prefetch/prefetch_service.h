@@ -9,6 +9,7 @@
 
 namespace offline_pages {
 
+class OfflineMetricsCollector;
 class PrefetchDispatcher;
 
 // Main class and entry point for the Offline Pages Prefetching feature, that
@@ -17,7 +18,13 @@ class PrefetchService : public KeyedService {
  public:
   ~PrefetchService() override = default;
 
+  // Subobjects that are created and owned by this service. Creation should be
+  // lightweight, all heavy work must be done on-demand only.
+  // The service manages lifetime, hookup and initialization of Prefetch
+  // system that consists of multiple specialized objects, all vended by this
+  // service. All pointers are raw and are always valid.
   virtual PrefetchDispatcher* GetDispatcher() = 0;
+  virtual OfflineMetricsCollector* GetOfflineMetricsCollector() = 0;
 };
 
 }  // namespace offline_pages
