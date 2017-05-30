@@ -143,8 +143,7 @@ bool WebShareTargetPickerView::Cancel() {
 bool WebShareTargetPickerView::Accept() {
   if (!close_callback_.is_null()) {
     DCHECK(!table_->selection_model().empty());
-    std::move(close_callback_)
-        .Run(targets_[table_->FirstSelectedRow()].second.spec());
+    std::move(close_callback_).Run(targets_[table_->FirstSelectedRow()].second);
   }
 
   return true;

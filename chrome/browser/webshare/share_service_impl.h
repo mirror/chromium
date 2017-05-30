@@ -43,7 +43,7 @@ class ShareServiceImpl : public blink::mojom::ShareService {
   Browser* GetBrowser();
 
   // Returns the URL template of the target identified by |target_url|
-  std::string GetTargetTemplate(const std::string& target_url,
+  std::string GetTargetTemplate(const GURL& target_url,
                                 const base::DictionaryValue& share_targets);
 
   // Virtual for testing purposes.
@@ -90,7 +90,7 @@ class ShareServiceImpl : public blink::mojom::ShareService {
                       const std::string& text,
                       const GURL& share_url,
                       const ShareCallback& callback,
-                      const base::Optional<std::string>& result);
+                      const base::Optional<GURL>& result);
 
   base::WeakPtrFactory<ShareServiceImpl> weak_factory_;
 

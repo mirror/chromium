@@ -123,10 +123,10 @@ void ShareServiceImpl::OpenTargetURL(const GURL& target_url) {
 }
 
 std::string ShareServiceImpl::GetTargetTemplate(
-    const std::string& target_url,
+    const GURL& target_url,
     const base::DictionaryValue& share_targets) {
   const base::DictionaryValue* share_target_info_dict = nullptr;
-  share_targets.GetDictionaryWithoutPathExpansion(target_url,
+  share_targets.GetDictionaryWithoutPathExpansion(target_url.spec(),
                                                   &share_target_info_dict);
 
   std::string url_template;
@@ -199,13 +199,13 @@ void ShareServiceImpl::OnPickerClosed(
     const std::string& text,
     const GURL& share_url,
     const ShareCallback& callback,
-    const base::Optional<std::string>& result) {
+    const base::Optional<GURL>& result) {
   if (!result.has_value()) {
     callback.Run(blink::mojom::ShareError::CANCELED);
     return;
   }
 
-  std::string chosen_target = result.value();
+  const GURL& chosen_target = result.value();
 
   std::string url_template = GetTargetTemplate(chosen_target, *share_targets);
   std::string url_template_filled;
@@ -221,8 +221,8 @@ void ShareServiceImpl::OnPickerClosed(
   // The template is relative to the manifest URL (minus the filename).
   // Concatenate to make an absolute URL.
   base::StringPiece url_base(
-      chosen_target.data(),
-      chosen_target.size() - GURL(chosen_target).ExtractFileName().size());
+      chosen_target.spec().data(),
+      chosen_target.spec().size() - chosen_target.ExtractFileName().size());
   const GURL target(url_base.as_string() + url_template_filled);
   // User should not be able to cause an invalid target URL. Possibilities are:
   // - The base URL: can't be invalid since it's derived from the manifest URL.
