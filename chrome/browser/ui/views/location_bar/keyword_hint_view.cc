@@ -22,22 +22,6 @@
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/fill_layout.h"
 
-#if defined(USE_AURA)
-#include "ui/keyboard/keyboard_util.h"
-#endif
-
-namespace {
-
-bool IsVirtualKeyboardVisible() {
-#if defined(USE_AURA)
-  return keyboard::IsKeyboardVisible();
-#else
-  return false;
-#endif
-}
-
-}  // namespace
-
 KeywordHintView::KeywordHintView(views::ButtonListener* listener,
                                  Profile* profile,
                                  const gfx::FontList& font_list,
@@ -92,7 +76,7 @@ void KeywordHintView::SetKeyword(const base::string16& keyword) {
   base::string16 short_name(
       url_service->GetKeywordShortName(keyword, &is_extension_keyword));
 
-  if (IsVirtualKeyboardVisible()) {
+  if (LocationBarView::IsVirtualKeyboardVisible()) {
     int message_id = is_extension_keyword
                          ? IDS_OMNIBOX_EXTENSION_KEYWORD_HINT_TOUCH
                          : IDS_OMNIBOX_KEYWORD_HINT_TOUCH;
