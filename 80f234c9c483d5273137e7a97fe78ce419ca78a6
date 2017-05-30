@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e675fbc3_93ee4a0d",
+        "filename": "docs/testing/layout_test_expectations.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-05-30T03:58:19Z",
+      "side": 1,
+      "message": "trigger",
+      "range": {
+        "startLine": 100,
+        "startChar": 3,
+        "endLine": 100,
+        "endChar": 9
+      },
+      "revId": "80f234c9c483d5273137e7a97fe78ce419ca78a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
