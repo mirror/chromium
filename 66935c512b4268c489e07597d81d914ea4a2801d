@@ -22,6 +22,30 @@
       "revId": "66935c512b4268c489e07597d81d914ea4a2801d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0095917c_0f5611ce",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-30T09:22:41Z",
+      "side": 1,
+      "message": "It\u0027s never been safe, and we\u0027re starting to have more !IsMainThread() checks for off-main-thread fetch (as it uses ResourceFetcher from Worker thread).\n\n(We have DCHECK(IsMainThread()) in GetMemoryCache() btw)",
+      "parentUuid": "fa643094_56dbfa74",
+      "range": {
+        "startLine": 463,
+        "startChar": 6,
+        "endLine": 463,
+        "endChar": 61
+      },
+      "revId": "66935c512b4268c489e07597d81d914ea4a2801d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
