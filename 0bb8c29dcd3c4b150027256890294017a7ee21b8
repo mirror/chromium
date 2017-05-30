@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5d530c3_fc974403",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-05-30T20:13:48Z",
+      "side": 1,
+      "message": "you don\u0027t need this line (all tools ignore it - i\u0027m not sure why we ever had it in place in our manifests)",
+      "revId": "0bb8c29dcd3c4b150027256890294017a7ee21b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
