@@ -78,7 +78,7 @@ HTMLPlugInElement::HTMLPlugInElement(
     : HTMLFrameOwnerElement(tag_name, doc),
       is_delaying_load_event_(false),
       // m_needsPluginUpdate(!createdByParser) allows HTMLObjectElement to delay
-      // FrameViewBase updates until after all children are parsed. For
+      // EmbeddedContentView updates until after all children are parsed. For
       // HTMLEmbedElement this delay is unnecessary, but it is simpler to make
       // both classes share the same codepath in this class.
       needs_plugin_update_(!created_by_parser),
@@ -101,7 +101,7 @@ void HTMLPlugInElement::SetPersistedPlugin(PluginView* plugin) {
     return;
   if (persisted_plugin_) {
     persisted_plugin_->Hide();
-    DisposeFrameOrPluginSoon(persisted_plugin_.Release());
+    DisposeEmbeddedContentViewSoon(persisted_plugin_.Release());
   }
   persisted_plugin_ = plugin;
 }
@@ -133,8 +133,8 @@ bool HTMLPlugInElement::RequestObjectInternal(
                        use_fallback)) {
     // If the plugin element already contains a subframe,
     // loadOrRedirectSubframe will re-use it. Otherwise, it will create a
-    // new frame and set it as the LayoutPart's FrameViewBase, causing what was
-    // previously in the FrameViewBase to be torn down.
+    // new frame and set it as the LayoutPart's EmbeddedContentView,
+    // causing what was previously in the EmbeddedContentView to be torn down.
     return LoadOrRedirectSubframe(completed_url, GetNameAttribute(), true);
   }
 
@@ -143,7 +143,8 @@ bool HTMLPlugInElement::RequestObjectInternal(
 }
 
 bool HTMLPlugInElement::CanProcessDrag() const {
-  return PluginWidget() && PluginWidget()->CanProcessDrag();
+  return PluginEmbeddedContentView() &&
+         PluginEmbeddedContentView()->CanProcessDrag();
 }
 
 bool HTMLPlugInElement::CanStartSelection() const {
@@ -264,8 +265,8 @@ bool HTMLPlugInElement::ShouldAccelerate() const {
 }
 
 void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
-  // Update the FrameViewBase the next time we attach (detaching destroys the
-  // plugin).
+  // Update the EmbeddedContentView the next time we attach (detaching destroys
+  // the plugin).
   // FIXME: None of this "needsPluginUpdate" related code looks right.
   if (GetLayoutObject() && !UseFallbackContent())
     SetNeedsPluginUpdate(true);
@@ -278,10 +279,10 @@ void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
   // Only try to persist a plugin we actually own.
   PluginView* plugin = OwnedPlugin();
   if (plugin && context.performing_reattach) {
-    SetPersistedPlugin(ToPluginView(ReleaseWidget()));
+    SetPersistedPlugin(ToPluginView(ReleaseEmbeddedContentView()));
   } else {
     // Clear the plugin; will trigger disposal of it with Oilpan.
-    SetWidget(nullptr);
+    SetEmbeddedContentView(nullptr);
   }
 
   ResetInstance();
@@ -336,7 +337,7 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
     if (persisted_plugin_)
       plugin = persisted_plugin_;
     else
-      plugin = PluginWidget();
+      plugin = PluginEmbeddedContentView();
 
     if (plugin)
       plugin_wrapper_.Reset(isolate, plugin->ScriptableObject(isolate));
@@ -344,16 +345,16 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   return plugin_wrapper_.Get(isolate);
 }
 
-PluginView* HTMLPlugInElement::PluginWidget() const {
+PluginView* HTMLPlugInElement::PluginEmbeddedContentView() const {
   if (LayoutPart* layout_part = LayoutPartForJSBindings())
     return layout_part->Plugin();
   return nullptr;
 }
 
 PluginView* HTMLPlugInElement::OwnedPlugin() const {
-  FrameOrPlugin* frame_or_plugin = OwnedWidget();
-  if (frame_or_plugin && frame_or_plugin->IsPluginView())
-    return ToPluginView(frame_or_plugin);
+  EmbeddedContentView* view = OwnedEmbeddedContentView();
+  if (view && view->IsPluginView())
+    return ToPluginView(view);
   return nullptr;
 }
 
@@ -427,8 +428,8 @@ LayoutPart* HTMLPlugInElement::LayoutPartForJSBindings() const {
 bool HTMLPlugInElement::IsKeyboardFocusable() const {
   if (HTMLFrameOwnerElement::IsKeyboardFocusable())
     return true;
-  return GetDocument().IsActive() && PluginWidget() &&
-         PluginWidget()->SupportsKeyboardFocus();
+  return GetDocument().IsActive() && PluginEmbeddedContentView() &&
+         PluginEmbeddedContentView()->SupportsKeyboardFocus();
 }
 
 bool HTMLPlugInElement::HasCustomFocusLogic() const {
@@ -440,8 +441,9 @@ bool HTMLPlugInElement::IsPluginElement() const {
 }
 
 bool HTMLPlugInElement::IsErrorplaceholder() {
-  if (PluginWidget() && PluginWidget()->IsPluginContainer() &&
-      PluginWidget()->IsErrorplaceholder())
+  if (PluginEmbeddedContentView() &&
+      PluginEmbeddedContentView()->IsPluginContainer() &&
+      PluginEmbeddedContentView()->IsErrorplaceholder())
     return true;
   return false;
 }
@@ -544,7 +546,7 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
   loaded_url_ = url;
 
   if (persisted_plugin_) {
-    SetWidget(persisted_plugin_.Release());
+    SetEmbeddedContentView(persisted_plugin_.Release());
   } else {
     bool load_manually =
         GetDocument().IsPluginDocument() && !GetDocument().ContainsPlugins();
@@ -563,7 +565,7 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
     }
 
     if (!layout_item.IsNull()) {
-      SetWidget(plugin);
+      SetEmbeddedContentView(plugin);
       layout_item.GetFrameView()->AddPlugin(plugin);
     } else {
       SetPersistedPlugin(plugin);
