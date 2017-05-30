@@ -196,6 +196,28 @@ TEST(RuleSetTest, findBestRuleSetAndAdd_HostContextAndClass) {
   ASSERT_EQ(0u, rules->size());
 }
 
+TEST(RuleSetTest, findBestRuleSetAndAdd_Focus) {
+  CSSTestHelper helper;
+
+  helper.AddCSSRules(":focus { }");
+  helper.AddCSSRules("[attr]:focus { }");
+  RuleSet& rule_set = helper.GetRuleSet();
+  const HeapVector<RuleData>* rules = rule_set.FocusPseudoClassRules();
+  ASSERT_EQ(2u, rules->size());
+}
+
+TEST(RuleSetTest, findBestRuleSetAndAdd_LinkVisited) {
+  CSSTestHelper helper;
+
+  helper.AddCSSRules(":link { }");
+  helper.AddCSSRules("[attr]:link { }");
+  helper.AddCSSRules(":visited { }");
+  helper.AddCSSRules("[attr]:visited { }");
+  RuleSet& rule_set = helper.GetRuleSet();
+  const HeapVector<RuleData>* rules = rule_set.LinkPseudoClassRules();
+  ASSERT_EQ(4u, rules->size());
+}
+
 TEST(RuleSetTest, SelectorIndexLimit) {
   StringBuilder builder;
 
