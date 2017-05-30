@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d98500c_21bd9d0e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:21:32Z",
+      "side": 1,
+      "message": "Somewhat unrelated:\nI notice that there\u0027s some repetition in here, and _save_baseline_data seems to have all the information it needs to call _location_for_missing_baseline itself; would it be OK to remove the location argument of _save_baseline_data and call _location_for_missing_baseline inside of _save_baseline_data? What do you think?",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af250420_111349ab",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:21:32Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure whether this name is clearer (but maybe that\u0027s because I\u0027m a little confused about the differences between --new-baseline, --new-test-results and --reset-results...)",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ba3790_045695b2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:21:32Z",
+      "side": 1,
+      "message": "The reason why there are two different ways of getting the sha1 hash here (fs.sha1(path) and hashlib.sha1(data).hexdigtest()) is because for `data` we have the full value in memory already, and if we wanted to use fs.sha1 we\u0027d have to write it to disk, right?",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42e9f7a_9a0bff41",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:21:32Z",
+      "side": 1,
+      "message": "This comment is the same as for the test above, should it be updated?",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa584a5_d66e94ce",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-30T23:21:32Z",
+      "side": 1,
+      "message": "Why is this particular string used as the contents of the file here?",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
