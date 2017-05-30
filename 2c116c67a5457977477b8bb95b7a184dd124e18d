@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a533add5_281b16da",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMMimeTypeArray.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-30T15:12:48Z",
+      "side": 1,
+      "message": "std::move(dom_mime_types_)",
+      "revId": "2c116c67a5457977477b8bb95b7a184dd124e18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3ffdd1_e6456ba4",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMPluginArray.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-30T15:12:48Z",
+      "side": 1,
+      "message": "nit: std::move(dom_plugins_), to avoid a copy?",
+      "revId": "2c116c67a5457977477b8bb95b7a184dd124e18d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
