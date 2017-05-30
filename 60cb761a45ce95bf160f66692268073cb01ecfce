@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a1658d0e_8f79f56d",
+        "filename": "base/trace_event/trace_event_argument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-05-30T14:48:57Z",
+      "side": 1,
+      "message": "can you revert this comment? The issue here is that we do an append to cur_list (adding new_list to it) so now the cur_list is not \"cur\" anymore. Which is what the old comment was saying (maybe add a \"by the Append\" if you found this line confusing)",
+      "range": {
+        "startLine": 399,
+        "startChar": 10,
+        "endLine": 400,
+        "endChar": 19
+      },
+      "revId": "60cb761a45ce95bf160f66692268073cb01ecfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a7bc35_2074e44f",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 3
