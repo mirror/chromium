@@ -99,6 +99,8 @@ TEST_P(ScrollAnchorTest, UMAMetricUpdated) {
             GetScrollAnchor(viewport).AnchorObject());
 }
 
+// TODO(skobes): Convert this to web-platform-tests when visual viewport API is
+// launched (http://crbug.com/635031).
 TEST_P(ScrollAnchorTest, VisualViewportAnchors) {
   SetBodyInnerHTML(
       "<style>"
@@ -134,35 +136,6 @@ TEST_P(ScrollAnchorTest, VisualViewportAnchors) {
   // Scrolling the visual viewport should clear the anchor.
   v_viewport.SetLocation(FloatPoint(0, 0));
   EXPECT_EQ(nullptr, GetScrollAnchor(l_viewport).AnchorObject());
-}
-
-// Test that scroll anchoring causes no visible jump when a layout change
-// (such as removal of a DOM element) changes the scroll bounds of a scrolling
-// div.
-TEST_P(ScrollAnchorTest, AnchoringWhenContentRemovedFromScrollingDiv) {
-  SetBodyInnerHTML(
-      "<style>"
-      "    #scroller { height: 500px; width: 200px; overflow: scroll; }"
-      "    #changer { height: 1500px; }"
-      "    #anchor {"
-      "        width: 150px; height: 1000px; overflow: scroll;"
-      "    }"
-      "</style>"
-      "<div id='scroller'>"
-      "    <div id='changer'></div>"
-      "    <div id='anchor'></div>"
-      "</div>");
-
-  ScrollableArea* scroller =
-      ScrollerForElement(GetDocument().getElementById("scroller"));
-
-  GetDocument().getElementById("scroller")->setScrollTop(1600);
-
-  SetHeight(GetDocument().getElementById("changer"), 0);
-
-  EXPECT_EQ(100, scroller->ScrollOffsetInt().Height());
-  EXPECT_EQ(GetDocument().getElementById("anchor")->GetLayoutObject(),
-            GetScrollAnchor(scroller).AnchorObject());
 }
 
 // Test that a non-anchoring scroll on scroller clears scroll anchors for all
