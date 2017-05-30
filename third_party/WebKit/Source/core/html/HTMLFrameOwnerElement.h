@@ -66,7 +66,6 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   virtual void DidLoadNonEmptyDocument() {}
 
   void SetWidget(FrameOrPlugin*);
-  FrameOrPlugin* ReleaseWidget();
   FrameOrPlugin* OwnedWidget() const { return widget_; }
 
   class UpdateSuspendScope {

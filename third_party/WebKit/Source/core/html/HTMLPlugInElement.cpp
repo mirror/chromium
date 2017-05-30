@@ -92,18 +92,7 @@ HTMLPlugInElement::~HTMLPlugInElement() {
 
 DEFINE_TRACE(HTMLPlugInElement) {
   visitor->Trace(image_loader_);
-  visitor->Trace(persisted_plugin_);
   HTMLFrameOwnerElement::Trace(visitor);
-}
-
-void HTMLPlugInElement::SetPersistedPlugin(PluginView* plugin) {
-  if (persisted_plugin_ == plugin)
-    return;
-  if (persisted_plugin_) {
-    persisted_plugin_->Hide();
-    DisposeFrameOrPluginSoon(persisted_plugin_.Release());
-  }
-  persisted_plugin_ = plugin;
 }
 
 void HTMLPlugInElement::SetFocused(bool focused, WebFocusType focus_type) {
@@ -176,10 +165,10 @@ void HTMLPlugInElement::AttachLayoutTree(const AttachContext& context) {
   if (!GetLayoutObject() || UseFallbackContent()) {
     // If we don't have a layoutObject we have to dispose of any plugins
     // which we persisted over a reattach.
-    if (persisted_plugin_) {
+    if (OwnedPlugin()) {
       HTMLFrameOwnerElement::UpdateSuspendScope
           suspend_widget_hierarchy_updates;
-      SetPersistedPlugin(nullptr);
+      SetWidget(nullptr);
     }
     return;
   }
@@ -209,11 +198,11 @@ void HTMLPlugInElement::UpdatePlugin() {
 void HTMLPlugInElement::RemovedFrom(ContainerNode* insertion_point) {
   // If we've persisted the plugin and we're removed from the tree then
   // make sure we cleanup the persistance pointer.
-  if (persisted_plugin_) {
+  if (OwnedPlugin()) {
     // TODO(dcheng): This UpdateSuspendScope doesn't seem to provide much;
     // investigate removing it.
     HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
-    SetPersistedPlugin(nullptr);
+    SetWidget(nullptr);
   }
   HTMLFrameOwnerElement::RemovedFrom(insertion_point);
 }
@@ -276,12 +265,8 @@ void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
     GetDocument().DecrementLoadEventDelayCount();
   }
 
-  // Only try to persist a plugin we actually own.
-  PluginView* plugin = OwnedPlugin();
-  if (plugin && context.performing_reattach) {
-    SetPersistedPlugin(ToPluginView(ReleaseWidget()));
-  } else {
-    // Clear the plugin; will trigger disposal of it with Oilpan.
+  // Do not clear plugin if we are doing reattach.
+  if (!context.performing_reattach) {
     SetWidget(nullptr);
   }
 
@@ -332,11 +317,8 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
   if (plugin_wrapper_.IsEmpty()) {
-    PluginView* plugin;
-
-    if (persisted_plugin_)
-      plugin = persisted_plugin_;
-    else
+    PluginView* plugin = OwnedPlugin();
+    if (!plugin)
       plugin = PluginWidget();
 
     if (plugin)
@@ -449,7 +431,7 @@ bool HTMLPlugInElement::IsErrorplaceholder() {
 
 void HTMLPlugInElement::DisconnectContentFrame() {
   HTMLFrameOwnerElement::DisconnectContentFrame();
-  SetPersistedPlugin(nullptr);
+  SetWidget(nullptr);
 }
 
 bool HTMLPlugInElement::LayoutObjectIsFocusable() const {
@@ -544,9 +526,7 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
   VLOG(1) << "Loaded URL: " << url.GetString();
   loaded_url_ = url;
 
-  if (persisted_plugin_) {
-    SetWidget(persisted_plugin_.Release());
-  } else {
+  if (!OwnedPlugin()) {
     bool load_manually =
         GetDocument().IsPluginDocument() && !GetDocument().ContainsPlugins();
     LocalFrameClient::DetachedPluginPolicy policy =
@@ -563,11 +543,9 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
       return false;
     }
 
+    SetWidget(plugin);
     if (!layout_item.IsNull()) {
-      SetWidget(plugin);
       layout_item.GetFrameView()->AddPlugin(plugin);
-    } else {
-      SetPersistedPlugin(plugin);
     }
   }
 
@@ -670,7 +648,7 @@ void HTMLPlugInElement::LazyReattachIfNeeded() {
   if (!UseFallbackContent() && NeedsPluginUpdate() && GetLayoutObject() &&
       !IsImageType()) {
     LazyReattachIfAttached();
-    SetPersistedPlugin(nullptr);
+    SetWidget(nullptr);
   }
 }
 
