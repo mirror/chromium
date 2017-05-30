@@ -49,6 +49,8 @@ class CC_EXPORT GLRenderer : public DirectRenderer {
  public:
   class ScopedUseGrContext;
 
+  // TODO(staraz): Remove |highp_threshold_min|. It's already in
+  // RendererSettings.
   GLRenderer(const RendererSettings* settings,
              OutputSurface* output_surface,
              ResourceProvider* resource_provider,
