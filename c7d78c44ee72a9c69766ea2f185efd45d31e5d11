@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9c1e935_fbe99aba",
+        "filename": "services/identity/public/cpp/account_info_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-30T07:21:37Z",
+      "side": 1,
+      "message": "Mihai, what would be the best way to define an AccountInfo as being null (e.g., the user is not signed in)? At first I used !input.IsValid() but that\u0027s too strong a condition -- IsValid() fails if *any* of the strings are empty (e.g., hosted_domain), which seems wrong for this use case.",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "c7d78c44ee72a9c69766ea2f185efd45d31e5d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
