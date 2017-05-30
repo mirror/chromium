@@ -22,6 +22,30 @@
       "revId": "8afbdf7d2bfa9779d548d9d131ae0415813453fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b7e156_5e067cc8",
+        "filename": "components/feature_engagement_tracker/internal/system_time_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-30T22:10:42Z",
+      "side": 1,
+      "message": "Doh!\nGetTime(...) uses base::Time::FromLocalExploded. It should use base::Time::FromUTCExploded.\n\nFiled https://crbug.com/727916",
+      "parentUuid": "316bf307_dd9c1b9e",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 11
+      },
+      "revId": "8afbdf7d2bfa9779d548d9d131ae0415813453fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
