@@ -8,8 +8,6 @@ if (is_android) {
 
 static_library("content") {
   sources = [
-    "prefetch_service_factory.cc",
-    "prefetch_service_factory.h",
     "suggested_articles_observer.cc",
     "suggested_articles_observer.h",
   ]
