@@ -84,7 +84,7 @@ bool InitializeStaticOSMesaInternal() {
   return true;
 }
 
-bool InitializeStaticEGLInternal() {
+bool InitializeStaticEGLInternal(GLImplementation implementation) {
   base::FilePath module_path;
   if (!PathService::Get(base::DIR_MODULE, &module_path))
     return false;
@@ -101,6 +101,7 @@ bool InitializeStaticEGLInternal() {
   const std::string use_gl =
       command_line->GetSwitchValueASCII(switches::kUseGL);
   bool using_swift_shader =
+      (implementation == kGLImplementationSwiftShaderGL) ||
       (use_gl == kGLImplementationSwiftShaderName) ||
       (use_gl == kGLImplementationSwiftShaderForWebGLName);
   if (using_swift_shader) {
@@ -268,7 +269,7 @@ bool InitializeStaticGLBindings(GLImplementation implementation) {
       return InitializeStaticOSMesaInternal();
     case kGLImplementationSwiftShaderGL:
     case kGLImplementationEGLGLES2:
-      return InitializeStaticEGLInternal();
+      return InitializeStaticEGLInternal(implementation);
     case kGLImplementationDesktopGL:
       return InitializeStaticWGLInternal();
     case kGLImplementationMockGL:
