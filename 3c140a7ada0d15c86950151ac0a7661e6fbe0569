@@ -22,6 +22,30 @@
       "revId": "3c140a7ada0d15c86950151ac0a7661e6fbe0569",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffd5f25_8690a1e2",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-05-30T18:07:49Z",
+      "side": 1,
+      "message": "I\u0027m aware that the latest clang somehow doesn\u0027t require L43-44 but do we really want to remove code like L43-44 once older compilers are gone? If we omit L43-44, as far as I know, calling BootTypeToString() with e.g. mojom::BootType(-1) will immediately cause a crash or return an arbitrary string, which may make debugging more difficult.\n\nTo me, L43-44 are like DCHECK()s for pointers which I\u0027d keep if the coding guide allows. Even recent clang doesn\u0027t seem to ignore L43-44 when the function is called with mojom::BootType(-1).",
+      "parentUuid": "bcba57b2_1b62969d",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "3c140a7ada0d15c86950151ac0a7661e6fbe0569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
