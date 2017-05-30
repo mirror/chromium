@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3bb95cbb_c600fc95",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Why, the very purpose of experiment is to gather feedback on the UX.",
+      "parentUuid": "1eca8986_61a347da",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be42500d_2e464f19",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5d79be3d_cb16bcf4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be42500d_2e464f19",
+      "range": {
+        "startLine": 73,
+        "startChar": 21,
+        "endLine": 73,
+        "endChar": 27
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84e9f450_157d7afc",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72109ba_949ba6aa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e9f450_157d7afc",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1ab6a45c_bdf9e4bf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8860a700_028b5170",
+      "range": {
+        "startLine": 128,
+        "startChar": 65,
+        "endLine": 128,
+        "endChar": 66
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18616a41_98142162",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
         "patchSetId": 1
@@ -102,6 +186,30 @@
       "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae3371c_80ca8052",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Extracted a constant.",
+      "parentUuid": "18616a41_98142162",
+      "range": {
+        "startLine": 167,
+        "startChar": 48,
+        "endLine": 167,
+        "endChar": 53
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "98b37716_045c6b0c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Renamed to DropDown.",
+      "parentUuid": "0272402a_1d5caf87",
+      "range": {
+        "startLine": 226,
+        "startChar": 32,
+        "endLine": 226,
+        "endChar": 38
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ade4accd_b23b7e25",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
         "patchSetId": 1
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "41d62894_0a2d587e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ade4accd_b23b7e25",
+      "range": {
+        "startLine": 237,
+        "startChar": 26,
+        "endLine": 237,
+        "endChar": 32
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "935ffea2_cb6eb1e4",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
         "patchSetId": 1
@@ -168,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "90077a9b_aa05c06e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "935ffea2_cb6eb1e4",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8034842a_469a79a2",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
         "patchSetId": 1
@@ -179,6 +353,24 @@
       "writtenOn": "2017-05-30T18:44:48Z",
       "side": 1,
       "message": "Why singleton, and not an instance in the history manager itself?",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf23b95_c67e10a3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "So that it does not depend on the history manager. Imagine this control is eventually extracted. Also, it\u0027s a singleton by design.",
+      "parentUuid": "8034842a_469a79a2",
       "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "d739755c_bdb7d969",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "We do this in all drop-downs.",
+      "parentUuid": "dfa035db_d9418b6e",
+      "range": {
+        "startLine": 292,
+        "startChar": 22,
+        "endLine": 292,
+        "endChar": 32
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a7dcee9_d40e2bd3",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
         "patchSetId": 1
@@ -222,6 +438,24 @@
       "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a14f44c_c04261f4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Done, though this one actually makes sense considering the assert :-)",
+      "parentUuid": "9a7dcee9_d40e2bd3",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -242,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "9230c357_44649425",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TimelineModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "492421c5_f0701d1f",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c45f0d68_2ea61198",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/Icon.js",
         "patchSetId": 1
@@ -256,6 +508,24 @@
       "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93edc5ea_2c40c3d6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Icon.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-30T21:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c45f0d68_2ea61198",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
