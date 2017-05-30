@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be42500d_2e464f19",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T18:44:48Z",
+      "side": 1,
+      "message": "Let\u0027s not reorder them in UI.",
+      "range": {
+        "startLine": 73,
+        "startChar": 21,
+        "endLine": 73,
+        "endChar": 27
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e9f450_157d7afc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T18:44:48Z",
+      "side": 1,
+      "message": "\u0027moments\u0027 so that it does not have to tick?",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8860a700_028b5170",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T18:44:48Z",
+      "side": 1,
+      "message": "We should start with 1, since everyone records the same page anyway. That\u0027s how profiles do it as well.",
+      "range": {
+        "startLine": 128,
+        "startChar": 65,
+        "endLine": 128,
+        "endChar": 66
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18616a41_98142162",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T18:44:48Z",
+      "side": 1,
+      "message": "What a magic number!",
+      "range": {
+        "startLine": 167,
+        "startChar": 48,
+        "endLine": 167,
+        "endChar": 53
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0272402a_1d5caf87",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T18:44:48Z",
+      "side": 1,
+      "message": "More like Dropdown or Popup?",
+      "range": {
+        "startLine": 226,
+        "startChar": 32,
+        "endLine": 226,
+        "endChar": 38
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade4accd_b23b7e25",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T18:44:48Z",
+      "side": 1,
+      "message": "You don\u0027t need a widget here, just UI.createShadowRootWithCoreStyles.",
+      "range": {
+        "startLine": 237,
+        "startChar": 26,
+        "endLine": 237,
+        "endChar": 32
+      },
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8034842a_469a79a2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T18:44:48Z",
+      "side": 1,
+      "message": "Why singleton, and not an instance in the history manager itself?",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7dcee9_d40e2bd3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineHistoryManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-30T18:44:48Z",
+      "side": 1,
+      "message": "Remove the comment? :-)",
+      "revId": "d7d8ba24238f63858349c1930e0417330c46b73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
