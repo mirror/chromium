@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "577563c7_22223e89",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-30T21:44:05Z",
+      "side": 1,
+      "message": "should probably return null if !codec_.  i think it works now, because DiscardCodecOutputBuffers_Locked will presumably find an empty |buffer_ids_|,but that seems a little fragile.",
+      "revId": "b897e681b0b4cacba6208b2fab83951b16a5cf0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9baceae_ca99a871",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-05-30T21:44:05Z",
+      "side": 1,
+      "message": "since CW is unique_ptr\u0027d, it could probably just TakeCodec() here.  alternatively, it should dcheck here if there\u0027s still a codec, rather than waiting for CWI::~CWI.  once we delete CW, there\u0027s no way to TakeCodec anyway.",
+      "revId": "b897e681b0b4cacba6208b2fab83951b16a5cf0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
