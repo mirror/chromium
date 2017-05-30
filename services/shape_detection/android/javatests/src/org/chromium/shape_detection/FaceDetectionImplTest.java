@@ -6,6 +6,7 @@ package org.chromium.shape_detection;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.support.test.filters.SmallTest;
 import android.test.InstrumentationTestCase;
 
@@ -77,6 +78,25 @@ public class FaceDetectionImplTest extends InstrumentationTestCase {
     @Feature({"ShapeDetection"})
     public void testDetectSucceedsOnValidImage() {
         FaceDetectionResult[] results = detect(MONA_LISA_BITMAP);
+        assertEquals(1, results.length);
+        assertEquals(40.0, results[0].boundingBox.width, BOX_ERR_THRESHOLD);
+        assertEquals(40.0, results[0].boundingBox.height, BOX_ERR_THRESHOLD);
+        assertEquals(24.0, results[0].boundingBox.x, POS_ERR_THRESHOLD);
+        assertEquals(20.0, results[0].boundingBox.y, POS_ERR_THRESHOLD);
+    }
+
+    @SmallTest
+    @Feature({"ShapeDetection"})
+    public void testDetectHandlesOddWidths() throws Exception {
+        // Pad the image so that the width is odd.
+        Bitmap paddedBitmap = Bitmap.createBitmap(MONA_LISA_BITMAP.width + 1,
+                MONA_LISA_BITMAP.height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(paddedBitmap);
+        canvas.drawBitmap(BitmapUtils.convertToBitmap(MONA_LISA_BITMAP), 0, 0, null);
+        org.chromium.skia.mojom.Bitmap mojoBitmap = mojoBitmapFromBitmap(paddedBitmap);
+        assertEquals(1, mojoBitmap.width % 2);
+
+        FaceDetectionResult[] results = detect(mojoBitmap);
         assertEquals(1, results.length);
         assertEquals(40.0, results[0].boundingBox.width, BOX_ERR_THRESHOLD);
         assertEquals(40.0, results[0].boundingBox.height, BOX_ERR_THRESHOLD);
