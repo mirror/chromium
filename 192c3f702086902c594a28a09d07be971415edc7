@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7fc9946_cc649e88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-05-30T21:25:24Z",
+      "side": 1,
+      "message": "nit: \"cros_system_api\" is sufficient",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "192c3f702086902c594a28a09d07be971415edc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110bbe81_9a8b68fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-05-30T21:25:24Z",
+      "side": 1,
+      "message": "This is not needed, since \"Reviewed-by:\" will be added after landing. However, \"TEST\u003d\" should be added here.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 5
+      },
+      "revId": "192c3f702086902c594a28a09d07be971415edc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
