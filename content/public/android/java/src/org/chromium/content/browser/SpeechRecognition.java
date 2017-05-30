@@ -239,7 +239,12 @@ public class SpeechRecognition {
             nativeOnRecognitionError(mNativeSpeechRecognizerImplAndroid, error);
         }
 
-        mRecognizer.destroy();
+        try {
+            mRecognizer.destroy();
+        } catch (IllegalArgumentException e) {
+            // Intentionally swallow exception. This incorrectly throws exception on some samsung
+            // devices, causing crashes.
+        }
         mRecognizer = null;
         nativeOnRecognitionEnd(mNativeSpeechRecognizerImplAndroid);
         mNativeSpeechRecognizerImplAndroid = 0;
