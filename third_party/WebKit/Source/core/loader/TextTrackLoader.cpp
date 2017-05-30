@@ -128,10 +128,10 @@ bool TextTrackLoader::Load(const KURL& url,
   FetchParameters cue_fetch_params(ResourceRequest(url),
                                    FetchInitiatorTypeNames::texttrack);
 
-  if (cross_origin != kCrossOriginAttributeNotSet) {
-    cue_fetch_params.SetCrossOriginAccessControl(
-        GetDocument().GetSecurityOrigin(), cross_origin);
-  } else if (!GetDocument().GetSecurityOrigin()->CanRequestNoSuborigin(url)) {
+  cue_fetch_params.SetCrossOriginAccessControlFromAttribute(
+      GetDocument().GetSecurityOrigin(), cross_origin);
+  if (cross_origin == kCrossOriginAttributeNotSet &&
+      !GetDocument().GetSecurityOrigin()->CanRequestNoSuborigin(url)) {
     // Text track elements without 'crossorigin' set on the parent are "No
     // CORS"; report error if not same-origin.
     CorsPolicyPreventedLoad(GetDocument().GetSecurityOrigin(), url);

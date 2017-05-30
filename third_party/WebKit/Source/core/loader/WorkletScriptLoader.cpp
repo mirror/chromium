@@ -23,6 +23,8 @@ void WorkletScriptLoader::FetchScript(const KURL& module_url_record) {
   ResourceRequest resource_request(module_url_record);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
   FetchParameters params(resource_request, FetchInitiatorTypeNames::internal);
+  params.MutableResourceRequest().SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeInclude);
   ScriptResource* resource = ScriptResource::Fetch(params, fetcher_);
   if (!resource) {
     NotifyFinished(nullptr);

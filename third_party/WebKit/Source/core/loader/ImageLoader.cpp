@@ -261,10 +261,8 @@ static void ConfigureRequest(
 
   CrossOriginAttributeValue cross_origin = GetCrossOriginAttributeValue(
       element.FastGetAttribute(HTMLNames::crossoriginAttr));
-  if (cross_origin != kCrossOriginAttributeNotSet) {
-    params.SetCrossOriginAccessControl(
-        element.GetDocument().GetSecurityOrigin(), cross_origin);
-  }
+  params.SetCrossOriginAccessControlFromAttribute(
+      element.GetDocument().GetSecurityOrigin(), cross_origin);
 
   if (client_hints_preferences.ShouldSendResourceWidth() &&
       isHTMLImageElement(element))

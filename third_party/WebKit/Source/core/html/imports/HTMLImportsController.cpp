@@ -102,8 +102,8 @@ HTMLImportChild* HTMLImportsController::Load(HTMLImport* parent,
     return child;
   }
 
-  params.SetCrossOriginAccessControl(Master()->GetSecurityOrigin(),
-                                     kCrossOriginAttributeAnonymous);
+  params.SetCrossOriginAccessControlFromAttribute(
+      Master()->GetSecurityOrigin(), kCrossOriginAttributeAnonymous);
   RawResource* resource =
       RawResource::FetchImport(params, parent->GetDocument()->Fetcher());
   if (!resource)

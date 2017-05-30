@@ -405,9 +405,6 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
         options_.cross_origin_request_policy);
 
     ResourceLoaderOptions resource_loader_options;
-    resource_loader_options.allow_credentials =
-        options_.allow_credentials ? kAllowStoredCredentials
-                                   : kDoNotAllowStoredCredentials;
     resource_loader_options.data_buffering_policy = kDoNotBufferData;
 
     const ResourceRequest& webcore_request = new_request.ToResourceRequest();
@@ -419,6 +416,11 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
       // Remove this once those places are patched up.
       new_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
     }
+
+    new_request.SetFetchCredentialsMode(
+        options_.allow_credentials
+            ? WebURLRequest::kFetchCredentialsModeInclude
+            : WebURLRequest::kFetchCredentialsModeSameOrigin);
 
     Document* document = ToDocument(observer_->LifecycleContext());
     DCHECK(document);

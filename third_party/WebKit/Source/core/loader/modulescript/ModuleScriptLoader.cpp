@@ -116,13 +116,8 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // ... credentials mode is credentials mode, ...
   // TODO(tyoshino): FetchCredentialsMode should be used to communicate CORS
   // mode.
-  CrossOriginAttributeValue cross_origin =
-      module_request.CredentialsMode() ==
-              WebURLRequest::kFetchCredentialsModeInclude
-          ? kCrossOriginAttributeUseCredentials
-          : kCrossOriginAttributeAnonymous;
   fetch_params.SetCrossOriginAccessControl(modulator_->GetSecurityOrigin(),
-                                           cross_origin);
+                                           module_request.CredentialsMode());
 
   // Module scripts are always async.
   fetch_params.SetDefer(FetchParameters::kLazyLoad);

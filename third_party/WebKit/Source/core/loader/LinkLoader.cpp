@@ -361,10 +361,8 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
   FetchParameters link_fetch_params(
       resource_request, FetchInitiatorTypeNames::link, document.EncodingName());
 
-  if (cross_origin != kCrossOriginAttributeNotSet) {
-    link_fetch_params.SetCrossOriginAccessControl(document.GetSecurityOrigin(),
-                                                  cross_origin);
-  }
+  link_fetch_params.SetCrossOriginAccessControlFromAttribute(
+      document.GetSecurityOrigin(), cross_origin);
   Settings* settings = document.GetSettings();
   if (settings && settings->GetLogPreload()) {
     document.AddConsoleMessage(ConsoleMessage::Create(
@@ -392,10 +390,8 @@ static Resource* PrefetchIfNeeded(Document& document,
 
     FetchParameters link_fetch_params(resource_request,
                                       FetchInitiatorTypeNames::link);
-    if (cross_origin != kCrossOriginAttributeNotSet) {
-      link_fetch_params.SetCrossOriginAccessControl(
-          document.GetSecurityOrigin(), cross_origin);
-    }
+    link_fetch_params.SetCrossOriginAccessControlFromAttribute(
+        document.GetSecurityOrigin(), cross_origin);
     return LinkFetchResource::Fetch(Resource::kLinkPrefetch, link_fetch_params,
                                     document.Fetcher());
   }

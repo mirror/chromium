@@ -564,8 +564,6 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   if (!params.Url().IsValid())
     return kAbort;
 
-  resource_request.SetAllowStoredCredentials(
-      params.Options().allow_credentials == kAllowStoredCredentials);
   return kContinue;
 }
 
@@ -585,6 +583,39 @@ Resource* ResourceFetcher::RequestResource(
   Resource* resource = nullptr;
   ResourceRequestBlockedReason blocked_reason =
       ResourceRequestBlockedReason::kNone;
+
+  // Per https://w3c.github.io/webappsec-suborigins/#security-model-opt-outs,
+  // credentials are forced when credentials mode is "same-origin", the
+  // 'unsafe-credentials' option is set, and the request's physical origin is
+  // the same as the URL's.
+  bool credentials_flag = false;
+  switch (resource_request.GetFetchCredentialsMode()) {
+    case WebURLRequest::kFetchCredentialsModeInclude:
+    case WebURLRequest::kFetchCredentialsModePassword:
+      credentials_flag = true;
+      break;
+    case WebURLRequest::kFetchCredentialsModeSameOrigin: {
+      RefPtr<SecurityOrigin> origin = params.Options().security_origin;
+      if (!params.Options().cors_flag && origin) {
+        if (SecurityOrigin::Create(params.Url())
+                ->IsSameSchemeHostPortAndSuborigin(origin.Get())) {
+          credentials_flag = true;
+        } else if (SecurityOrigin::Create(params.Url())
+                       ->IsSameSchemeHostPort(origin.Get()) &&
+                   origin->HasSuborigin() &&
+                   origin->GetSuborigin()->PolicyContains(
+                       Suborigin::SuboriginPolicyOptions::kUnsafeCredentials)) {
+          credentials_flag = true;
+        }
+      }
+      break;
+    }
+    case WebURLRequest::kFetchCredentialsModeOmit:
+      break;
+  }
+
+  // Initialize. Will be updated on redirect if any.
+  params.MutableResourceRequest().SetAllowStoredCredentials(credentials_flag);
 
   PrepareRequestResult result = PrepareRequest(params, factory, substitute_data,
                                                identifier, blocked_reason);
@@ -1624,8 +1655,7 @@ void ResourceFetcher::LogPreloadStats(ClearPreloadsPolicy policy) {
 const ResourceLoaderOptions& ResourceFetcher::DefaultResourceOptions() {
   DEFINE_STATIC_LOCAL(
       ResourceLoaderOptions, options,
-      (kBufferData, kAllowStoredCredentials, kClientRequestedCredentials,
-       kCheckContentSecurityPolicy, kDocumentContext));
+      (kBufferData, kCheckContentSecurityPolicy, kDocumentContext));
   return options;
 }
 

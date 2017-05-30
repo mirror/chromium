@@ -56,13 +56,11 @@ Resource* PreloadRequest::Start(Document* document) {
   if (resource_type_ == Resource::kImportResource) {
     SecurityOrigin* security_origin =
         document->ContextDocument()->GetSecurityOrigin();
-    params.SetCrossOriginAccessControl(security_origin,
-                                       kCrossOriginAttributeAnonymous);
-  }
-
-  if (cross_origin_ != kCrossOriginAttributeNotSet) {
-    params.SetCrossOriginAccessControl(document->GetSecurityOrigin(),
-                                       cross_origin_);
+    params.SetCrossOriginAccessControlFromAttribute(
+        security_origin, kCrossOriginAttributeAnonymous);
+  } else {
+    params.SetCrossOriginAccessControlFromAttribute(
+        document->GetSecurityOrigin(), cross_origin_);
   }
 
   params.SetDefer(defer_);

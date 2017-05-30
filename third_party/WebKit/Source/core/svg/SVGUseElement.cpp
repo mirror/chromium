@@ -211,6 +211,8 @@ void SVGUseElement::UpdateTargetReference() {
        EqualIgnoringFragmentIdentifier(resolved_url, resource_->Url())))
     return;
   FetchParameters params(ResourceRequest(resolved_url), localName());
+  params.MutableResourceRequest().SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeInclude);
   SetDocumentResource(
       DocumentResource::FetchSVGDocument(params, GetDocument().Fetcher()));
 }

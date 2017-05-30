@@ -650,6 +650,8 @@ static void* OpenFunc(const char* uri) {
     // FIXME: We should restore the original global error handler as well.
     FetchParameters params(ResourceRequest(url), FetchInitiatorTypeNames::xml,
                            ResourceFetcher::DefaultResourceOptions());
+    params.MutableResourceRequest().SetFetchCredentialsMode(
+        WebURLRequest::kFetchCredentialsModeInclude);
     Resource* resource =
         RawResource::FetchSynchronously(params, document->Fetcher());
     if (resource && !resource->ErrorOccurred()) {

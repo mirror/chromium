@@ -126,6 +126,8 @@ void InspectorResourceContentLoader::Start() {
       urls_to_fetch.insert(resource_request.Url().GetString());
       FetchParameters params(resource_request,
                              FetchInitiatorTypeNames::internal);
+      params.MutableResourceRequest().SetFetchCredentialsMode(
+          WebURLRequest::kFetchCredentialsModeInclude);
       Resource* resource = RawResource::Fetch(params, document->Fetcher());
       if (resource) {
         // Prevent garbage collection by holding a reference to this resource.
@@ -150,6 +152,8 @@ void InspectorResourceContentLoader::Start() {
           WebURLRequest::kRequestContextInternal);
       FetchParameters params(resource_request,
                              FetchInitiatorTypeNames::internal);
+      params.MutableResourceRequest().SetFetchCredentialsMode(
+          WebURLRequest::kFetchCredentialsModeInclude);
       Resource* resource =
           CSSStyleSheetResource::Fetch(params, document->Fetcher());
       if (!resource)

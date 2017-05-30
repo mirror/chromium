@@ -92,6 +92,8 @@ void XSLImportRule::LoadSheet() {
   FetchParameters params(ResourceRequest(owner_document->CompleteURL(abs_href)),
                          FetchInitiatorTypeNames::xml, fetch_options);
   params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
+  params.MutableResourceRequest().SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeInclude);
   XSLStyleSheetResource* resource = XSLStyleSheetResource::FetchSynchronously(
       params, owner_document->Fetcher());
   if (!resource || !resource->Sheet())

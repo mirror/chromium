@@ -109,6 +109,8 @@ static xmlDocPtr DocLoaderFunc(const xmlChar* uri,
       FetchParameters params(ResourceRequest(url), FetchInitiatorTypeNames::xml,
                              fetch_options);
       params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
+      params.MutableResourceRequest().SetFetchCredentialsMode(
+          WebURLRequest::kFetchCredentialsModeInclude);
       Resource* resource =
           RawResource::FetchSynchronously(params, g_global_resource_fetcher);
       if (!resource || !g_global_processor)
