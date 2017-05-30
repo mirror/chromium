@@ -16,6 +16,24 @@
       "revId": "f8272a2043eeddf86177a2c643215d5060066122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e789ade2_234a2674",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/layout-test-tidy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-05-30T22:43:45Z",
+      "side": 0,
+      "message": "Yeap - because now the tool is accepting multiple paths.",
+      "parentUuid": "1231f4ec_148e4710",
+      "revId": "f8272a2043eeddf86177a2c643215d5060066122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

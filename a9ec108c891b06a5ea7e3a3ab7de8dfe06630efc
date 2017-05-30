@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22bd1334_6c8400a6",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-05-30T22:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8281a845_33748a53",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eedb7b3e_9e21a21a",
         "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-26T23:15:12Z",
       "side": 1,
       "message": "Unix style is options come first.  Maybe also write\n\n\"[-[viR]]\" instead of \"[options]\", which the typical Unix man-page style for a quick summary of options.\n\n(Because our list of options is short.)\n\nAlso, I think typical unix style is that as you go through all the command line args, once a non-option value is found, anything after that is treated as a file, not an option.  So\n\nlayout-test-tidy -vi path1 path2 -R path3 path4\n\nignores the -R option.  Are you allowing this?  Does this mean -R will only apply to path3 and path4?  That seems nice, actually.\n\nShould also note that only html and js files are processed; any other extension is ignored. (Maybe not right here, but somewhere.)",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09490575_de32a5d0",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-05-30T22:43:45Z",
+      "side": 1,
+      "message": "The location of options in the arguments is not relevant.\n\n\u003e ignores the -R option.  Are you allowing this?  Does this mean -R will only apply to path3 and path4?  That seems nice, actually.\n\nIf the argument is parsed in this complicated way, I rather see this as UX failure. :)\n\n\u003e Should also note that only html and js files are processed; any other extension is ignored. (Maybe not right here, but somewhere.)\n\nDone. I think this is the right place.",
+      "parentUuid": "eedb7b3e_9e21a21a",
       "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "efeca127_61ead6d0",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-05-30T22:43:45Z",
+      "side": 1,
+      "message": "Yes, in the order of populated target directories or files. I don\u0027t think it\u0027s a bad thing.",
+      "parentUuid": "53ba8ce6_9ea4a3ef",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04a5acae_5161853b",
         "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "30596bec_17b0d99a",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-05-30T22:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04a5acae_5161853b",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "033c7e51_9f1b71d1",
         "filename": "third_party/WebKit/LayoutTests/webaudio/tools/layout-test-tidy.js",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-05-26T23:15:12Z",
       "side": 1,
       "message": "Just curious: What do you think in the try block will actually cause an error to be thrown?",
+      "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ced9bd_32c93ee6",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/tools/layout-test-tidy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-05-30T22:43:45Z",
+      "side": 1,
+      "message": "1. fs.lstatSync() might fail.\n2. path.extname() might fail.\n\nI wanted to catch cases like them.",
+      "parentUuid": "033c7e51_9f1b71d1",
       "revId": "a9ec108c891b06a5ea7e3a3ab7de8dfe06630efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
