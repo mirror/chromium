@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f33cd42e_2bcba2ee",
+        "filename": "components/cdm/browser/cdm_message_filter_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-05-30T17:52:27Z",
+      "side": 1,
+      "message": "On Android, we only have the concept of \"secure\" decoders, which implicitly guarantees that:\n1. keys and decrypted/decoded media data are protected by hardware, and\n2. the decoder is a hardware decoder.\n\nWithout further explanation, it\u0027s hard to grasp the exact meaning of \"secure decoders\" only by the term \"hw_secure\". When people look at this, they can easily confuse it with something like secure_hw_decoder or something else.\n\nThen for Widevine, \"secure\" decoders satisfy HW_SECURE_ALL, which again relies on the full understanding (1) and (2).\n\nI think we should document this somewhere. Then, I wonder whether it\u0027s necessary to keep the \"hw_\" part. Maybe we should just use the Android term \"secure decoder\" everywhere, with proper documentation, instead of creating a new term, which still requires documentation?",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "490161f41b60a91ce02fbc27616ac28d7f16caf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
