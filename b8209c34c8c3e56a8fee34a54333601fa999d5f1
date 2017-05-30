@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "157bf6fb_c2b37bab",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-30T15:16:10Z",
+      "side": 1,
+      "message": "This is used to know if the HTMLMediaElement instance should have boolean requiring user gesture to play. Returning `true` here would have side effects. I\u0027ve renamed the method to make it clearer.",
+      "parentUuid": "1b1a3161_d952a5ea",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 72
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28f0c5d8_2b0d8e71",
         "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
         "patchSetId": 1
@@ -53,6 +77,30 @@
       "writtenOn": "2017-05-27T09:04:13Z",
       "side": 1,
       "message": "Should we consider defaulting to false? The document is detached, and while playing the video probably won\u0027t do anything, it doesn\u0027t seem like we should autoplay at all.\n\n(Maybe the check that the document isn\u0027t detached should be higher in the stack, but I\u0027m not really an expert on the autoplay code)",
+      "range": {
+        "startLine": 224,
+        "startChar": 13,
+        "endLine": 224,
+        "endChar": 17
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec5fa5c_941d29e3",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-30T15:16:10Z",
+      "side": 1,
+      "message": "If `IsLockedPendingUserGesture` returns true, it means that the element is locked and a user gesture is required. `false` would mean that autoplay is allowed.",
+      "parentUuid": "65488066_42d7d521",
       "range": {
         "startLine": 224,
         "startChar": 13,
@@ -148,6 +196,30 @@
       "side": 1,
       "message": "Thanks for explaining the diffs here and in our 1:1. I am taking back my comment about things possibly getting involved.\n\nThe main source of my confusion was our existing user gesture code: we have some historical crafts (like DocumentUserGestureToken class which adds nothing to the base class) that I am currently cleaning up.  From that perspective, I wrongly assumed that your new enum here implies a document-vs-non-document distinction!\n\nTo avoid future confusions, can we please clarify the enum and associated policy string here?  E.g. something like\ns/kDocumentUserGestureRequired/kStickyUserActivationRequired/ ?\n\nAny chance we can align the previous enums/strings too with our new plan? I am not sure how much of those are exposed, so can\u0027t judge the compat risk at all.  Correct me if this is impossible.",
       "parentUuid": "30bc41c7_e441ac65",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "b8209c34c8c3e56a8fee34a54333601fa999d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb565aa_f43f8e4e",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-30T15:16:10Z",
+      "side": 1,
+      "message": "Those enums are meant to describe the autoplay policy. They need to be understood by people who work on autoplay and the main difference with the new policy is that the user gesture is per-document. The implementation details are not really important. Happy to rename \"kDocumentActivationRequired\" and add a comment.\n\nThe kUserGestureRequired is the current policy on Android and I don\u0027t think we can easily change the behaviour. Our goal is to move everything to kDocumentUserActivationRequired in which case we will be able to simply stop supporting the other ones instead of changing the behaviour. WDYT?",
+      "parentUuid": "bc0cca26_60549fe3",
       "range": {
         "startLine": 28,
         "startChar": 4,
