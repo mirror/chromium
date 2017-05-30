@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86874e3a_ecefebf6",
+        "filename": "mojo/edk/system/node_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-30T21:38:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0986d5_3a928664",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 8
+      },
+      "revId": "5e5906828554b72c1e4df8ebf3e12ff8851dcc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed0700ea_d7c2c143",
         "filename": "mojo/edk/system/ports/event.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "5e5906828554b72c1e4df8ebf3e12ff8851dcc7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68765c5b_f7de2c3d",
+        "filename": "mojo/edk/system/ports/event.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-30T21:38:01Z",
+      "side": 1,
+      "message": "this is a private constructor",
+      "parentUuid": "ed0700ea_d7c2c143",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 22
+      },
+      "revId": "5e5906828554b72c1e4df8ebf3e12ff8851dcc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
