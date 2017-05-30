@@ -179,6 +179,7 @@ static_library("test_support_common") {
     "//ui/views",
     "//ui/views:test_support",
     "//ui/wm",
+    "//ui/wm/public",
   ]
 
   if (use_x11) {
