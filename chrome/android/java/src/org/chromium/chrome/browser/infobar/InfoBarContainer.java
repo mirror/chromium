@@ -20,6 +20,9 @@ import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabObserver;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetObserver;
+import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.UiUtils;
@@ -160,6 +163,9 @@ public class InfoBarContainer extends SwipableOverlayView {
     /** Whether or not another View is occupying the same space as this one. */
     private boolean mIsObscured;
 
+    /** A {@link BottomSheetObserver} so this view knows when to show/hide. */
+    private BottomSheetObserver mBottomSheetObserver;
+
     private final ObserverList<InfoBarContainerObserver> mObservers =
             new ObserverList<InfoBarContainerObserver>();
 
@@ -183,6 +189,16 @@ public class InfoBarContainer extends SwipableOverlayView {
         setLayoutParams(lp);
 
         mParentView = parentView;
+        final BottomSheet bottomSheet = mTab.getActivity().getBottomSheet();
+        if (bottomSheet != null) {
+            mBottomSheetObserver = new EmptyBottomSheetObserver() {
+                @Override
+                public void onSheetStateChanged(int sheetState) {
+                    setVisibility(sheetState == BottomSheet.SHEET_STATE_FULL ? INVISIBLE : VISIBLE);
+                }
+            };
+            bottomSheet.addObserver(mBottomSheetObserver);
+        }
 
         mLayout = new InfoBarContainerLayout(context);
         addView(mLayout, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
@@ -325,6 +341,9 @@ public class InfoBarContainer extends SwipableOverlayView {
     }
 
     public void destroy() {
+        if (mBottomSheetObserver != null) {
+            mTab.getActivity().getBottomSheet().removeObserver(mBottomSheetObserver);
+        }
         mLayout.removeAnimationListener(mIPHSupport);
         removeObserver(mIPHSupport);
         mDestroyed = true;
