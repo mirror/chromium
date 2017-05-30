@@ -30,8 +30,7 @@ base::ListValue* GetOrCreateList(base::DictionaryValue* dictionary,
                                  const std::string& key) {
   base::ListValue* list = nullptr;
   if (!dictionary->GetList(key, &list)) {
-    list = new base::ListValue();
-    dictionary->SetWithoutPathExpansion(key, base::WrapUnique(list));
+    list = dictionary->SetList(key, base::MakeUnique<base::ListValue>());
   }
   return list;
 }
