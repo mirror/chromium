@@ -13,6 +13,9 @@
 // The accessibility identifier for the favicon image view.
 extern NSString* const kPageInfoFaviconImageViewID;
 
+// The accessibility identifier for the lock indicator.
+extern NSString* const kPageInfoLockIndicatorImageViewID;
+
 // PageInfoItem is the model class corresponding to PageInfoCell.
 @interface PageInfoItem : CollectionViewItem
 
@@ -41,6 +44,9 @@ extern NSString* const kPageInfoFaviconImageViewID;
 
 // UIImageView containing the page's favicon.
 @property(nonatomic, readonly, strong) UIImageView* pageFaviconView;
+
+// UIImageView containing a lock indicator if connection is secure.
+@property(nonatomic, readonly, strong) UIImageView* pageLockIndicatorView;
 
 @end
 
