@@ -1,0 +1,50 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "position": [-8, 0],
+      "bounds": [808, 600],
+      "contentsOpaque": false,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "InlineTextBox 'xx'",
+          "rect": [0, 8, 48, 33],
+          "reason": "geometry"
+        },
+        {
+          "object": "InlineTextBox 'y'",
+          "rect": [0, 8, 48, 33],
+          "reason": "geometry"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutBlockFlow HTML",
+      "reason": "selection"
+    },
+    {
+      "object": "LayoutBlockFlow BODY",
+      "reason": "selection"
+    },
+    {
+      "object": "LayoutBlockFlow DIV id='container'",
+      "reason": "selection"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox 'xx'",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox 'y'",
+      "reason": "geometry"
+    }
+  ]
+}
+
