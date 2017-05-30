@@ -146,9 +146,16 @@ bool CSSParserContext::operator==(const CSSParserContext& other) const {
 }
 
 const CSSParserContext* StrictCSSParserContext() {
-  DEFINE_STATIC_LOCAL(CSSParserContext, strict_context,
-                      (CSSParserContext::Create(kHTMLStandardMode)));
-  return &strict_context;
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      ThreadSpecific<Persistent<CSSParserContext>>, strict_context_pool,
+      new ThreadSpecific<Persistent<CSSParserContext>>());
+  Persistent<CSSParserContext>& context = *strict_context_pool;
+  if (!context) {
+    context = CSSParserContext::Create(kHTMLStandardMode);
+    context.RegisterAsStaticReference();
+  }
+
+  return context;
 }
 
 KURL CSSParserContext::CompleteURL(const String& url) const {

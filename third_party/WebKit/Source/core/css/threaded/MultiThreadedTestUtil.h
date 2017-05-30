@@ -4,6 +4,7 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
+#include "core/style/ComputedStyle.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
@@ -44,9 +45,11 @@ namespace blink {
 
 class MultiThreadedTest : public testing::Test {
  public:
+  // Some things are required to be initialized on the main thread.
+  static void SetUpTestCase() { ComputedStyle::InitialStyle(); }
+
   // RunOnThreads run a closure num_threads * callbacks_per_thread times.
   // The default for this is 10*100 = 1000 times.
-
   template <typename FunctionType, typename... Ps>
   void RunOnThreads(FunctionType function, Ps&&... parameters) {
     Vector<std::unique_ptr<WebThreadSupportingGC>> threads;
