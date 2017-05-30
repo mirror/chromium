@@ -22,6 +22,8 @@ WebMouseEvent::WebMouseEvent(WebInputEvent::Type type,
       click_count(click_count_param),
       position_in_widget_(gesture_event.x, gesture_event.y),
       position_in_screen_(gesture_event.global_x, gesture_event.global_y) {
+  DCHECK_GE(type, kMouseTypeFirst);
+  DCHECK_LE(type, kMouseTypeLast);
   SetFrameScale(gesture_event.FrameScale());
   SetFrameTranslate(gesture_event.FrameTranslate());
 }

@@ -39,7 +39,10 @@ class WebMouseEvent : public WebInputEvent, public WebPointerProperties {
                       time_stamp_seconds_param),
         WebPointerProperties(id_param),
         position_in_widget_(x_param, y_param),
-        position_in_screen_(global_x_param, global_y_param) {}
+        position_in_screen_(global_x_param, global_y_param) {
+    DCHECK_GE(type_param, kMouseTypeFirst);
+    DCHECK_LE(type_param, kMouseTypeLast);
+  }
 
   WebMouseEvent(Type type_param,
                 WebFloatPoint position,
@@ -57,7 +60,10 @@ class WebMouseEvent : public WebInputEvent, public WebPointerProperties {
         click_count(click_count_param),
         position_in_widget_(floor(position.x), floor(position.y)),
         position_in_screen_(floor(global_position.x),
-                            floor(global_position.y)) {}
+                            floor(global_position.y)) {
+    DCHECK_GE(type_param, kMouseTypeFirst);
+    DCHECK_LE(type_param, kMouseTypeLast);
+  }
 
   WebMouseEvent(Type type_param,
                 int modifiers_param,
