@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a36316a_d027fa83",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_condition_attribute_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-05-30T18:12:24Z",
+      "side": 1,
+      "message": "In these cases I kind of liked the \"GetAsList\" calls which keep our kind-of-sketchy casting internal to the Value object.",
+      "range": {
+        "startLine": 402,
+        "startChar": 10,
+        "endLine": 402,
+        "endChar": 21
+      },
+      "revId": "d05dcb5b951b335be7f4d08b86baca4d216932ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba02633b_1fde7073",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_condition_attribute_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-05-30T18:12:24Z",
+      "side": 1,
+      "message": "In these cases I kind of liked the \"GetAsList\" calls which keep our kind-of-sketchy casting internal to the Value object.",
+      "range": {
+        "startLine": 402,
+        "startChar": 10,
+        "endLine": 402,
+        "endChar": 21
+      },
+      "revId": "d05dcb5b951b335be7f4d08b86baca4d216932ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
