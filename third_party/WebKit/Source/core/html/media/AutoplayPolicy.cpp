@@ -39,8 +39,8 @@ bool IsDocumentWhitelisted(const Document& document) {
 }
 
 // Return true if and only if the document settings specifies media playback
-// requires user gesture.
-bool ComputeLockedPendingUserGesture(const Document& document) {
+// requires user gesture on the element.
+bool IsLocalLockPendingUserGestureRequired(const Document& document) {
   switch (AutoplayPolicy::GetAutoplayPolicyForDocument(document)) {
     case AutoplayPolicy::Type::kNoUserGestureRequired:
       return false;
@@ -48,6 +48,10 @@ bool ComputeLockedPendingUserGesture(const Document& document) {
       return IsDocumentCrossOrigin(document);
     case AutoplayPolicy::Type::kUserGestureRequired:
       return true;
+    // kDocumentUserRequired might be locked pending user gesture but it
+    // will be checked directly on the document instead of computing it.
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      return false;
   }
 
   NOTREACHED();
@@ -75,7 +79,7 @@ AutoplayPolicy::AutoplayPolicy(HTMLMediaElement* element)
       autoplay_visibility_observer_(nullptr),
       autoplay_uma_helper_(AutoplayUmaHelper::Create(element)) {
   locked_pending_user_gesture_ =
-      ComputeLockedPendingUserGesture(element->GetDocument());
+      IsLocalLockPendingUserGestureRequired(element->GetDocument());
   locked_pending_user_gesture_if_cross_origin_experiment_enabled_ =
       IsDocumentCrossOrigin(element->GetDocument());
 }
@@ -88,9 +92,9 @@ void AutoplayPolicy::DidMoveToNewDocument(Document& old_document) {
   // If any experiment is enabled, then we want to enable a user gesture by
   // default, otherwise the experiment does nothing.
   bool old_document_requires_user_gesture =
-      ComputeLockedPendingUserGesture(old_document);
+      IsLocalLockPendingUserGestureRequired(old_document);
   bool new_document_requires_user_gesture =
-      ComputeLockedPendingUserGesture(element_->GetDocument());
+      IsLocalLockPendingUserGestureRequired(element_->GetDocument());
   if (new_document_requires_user_gesture && !old_document_requires_user_gesture)
     locked_pending_user_gesture_ = true;
 
@@ -215,6 +219,13 @@ bool AutoplayPolicy::IsAutoplayingMutedInternal(bool muted) const {
 }
 
 bool AutoplayPolicy::IsLockedPendingUserGesture() const {
+  if (GetAutoplayPolicyForDocument(element_->GetDocument()) ==
+      AutoplayPolicy::Type::kDocumentUserActivationRequired) {
+    if (!element_->GetDocument().GetFrame())
+      return true;
+    return !element_->GetDocument().GetFrame()->HasReceivedUserGesture();
+  }
+
   return locked_pending_user_gesture_;
 }
 
@@ -231,7 +242,7 @@ void AutoplayPolicy::UnlockUserGesture() {
 }
 
 bool AutoplayPolicy::IsGestureNeededForPlayback() const {
-  if (!locked_pending_user_gesture_)
+  if (!IsLockedPendingUserGesture())
     return false;
 
   return IsGestureNeededForPlaybackIfPendingUserGestureIsLocked();
