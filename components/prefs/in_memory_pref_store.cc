@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 
 InMemoryPrefStore::InMemoryPrefStore() {}
@@ -72,6 +73,15 @@ PersistentPrefStore::PrefReadError InMemoryPrefStore::GetReadError() const {
 
 PersistentPrefStore::PrefReadError InMemoryPrefStore::ReadPrefs() {
   return PersistentPrefStore::PREF_READ_ERROR_NONE;
+}
+
+void InMemoryPrefStore::CommitPendingWrite(base::OnceClosure done_callback) {
+  if (done_callback) {
+    // Schedule the callback immediately since InMemoryPrefStore doesn't issue
+    // disk operations.
+    base::SequencedTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                     std::move(done_callback));
+  }
 }
 
 void InMemoryPrefStore::ReportValueChanged(const std::string& key,
