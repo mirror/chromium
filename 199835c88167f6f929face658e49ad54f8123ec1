@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e5c6ac2_436e19d4",
+        "filename": "ui/gl/init/gl_initializer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-05-30T23:32:45Z",
+      "side": 1,
+      "message": "This code and the calling code is getting a little too complicated. Could you please think about how to simplify it?\n\nPassing the GLImplementation down here looks good. It would be great to get rid of the redundant parsing of the kUseGL flag here and in gl_initializer_x11.cc. If the GLImplementation enum were more descriptive (distinguishing between kGLImplementationSwiftShaderForWebGLName and kGLImplementationANGLEName in InitializeGLOneOff() in src/ui/gl/init/gl_factory.cc) that could work. Otherwise, perhaps pass in the requested GL name to InitializeGLOneOffImplementation() and down from there as a const string\u0026?",
+      "revId": "199835c88167f6f929face658e49ad54f8123ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
