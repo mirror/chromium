@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "923752a2_2fedaeda",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits/AuditRules.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c78f9ca2_04d216a4",
+      "range": {
+        "startLine": 1077,
+        "startChar": 19,
+        "endLine": 1077,
+        "endChar": 38
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd3465fb_a04df99b",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSMatchedStyles.js",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-05-30T21:06:29Z",
       "side": 1,
       "message": "For-loop was more readable.",
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1435cbc0_024dadbd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSMatchedStyles.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "This operation performed is a map. Extracted an intermediate variable to make it more readable.",
+      "parentUuid": "cd3465fb_a04df99b",
       "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a7944621_7e6c9c12",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSMatchedStyles.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "Reverted",
+      "parentUuid": "dd13c852_b66cdbce",
+      "range": {
+        "startLine": 195,
+        "startChar": 19,
+        "endLine": 195,
+        "endChar": 39
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6135933d_48e956b9",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2017-05-30T21:06:29Z",
       "side": 1,
       "message": "Looks like we don\u0027t need |_markRevision| anymore:\n\nif (!response[Protocol.Error])\n  this._domModel.markUndoableState();\ncallback();\n\nLet\u0027s inline it everywhere.",
+      "range": {
+        "startLine": 388,
+        "startChar": 21,
+        "endLine": 388,
+        "endChar": 34
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1cf8df_1c87b042",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "I wanted to address it in a separate patch to keep the changes as small as possible... Done.\n\nAnyway I will come back here later to eliminate \u0027callbacks\u0027 and \u0027errors\u0027.",
+      "parentUuid": "6135933d_48e956b9",
       "range": {
         "startLine": 388,
         "startChar": 21,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "04c81444_c4628519",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "That\u0027s the plan. I\u0027ll do it on a separate run.",
+      "parentUuid": "cf937c9e_f3637b98",
+      "range": {
+        "startLine": 443,
+        "startChar": 8,
+        "endLine": 443,
+        "endChar": 23
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19ef2125_3ff1ecbf",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
         "patchSetId": 3
@@ -122,6 +236,30 @@
       "writtenOn": "2017-05-30T21:06:29Z",
       "side": 1,
       "message": "Let\u0027s eliminate non-promise version, and remove Promise suffix from the next method.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 2,
+        "endLine": 1066,
+        "endChar": 17
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2fbdad_00a4b6b0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "I considered that, but postponed to a separate patch as it\u0027s going to be a massive work, as lots of clients rely on requestDocument being synchronous when the document already exists.",
+      "parentUuid": "19ef2125_3ff1ecbf",
       "range": {
         "startLine": 1066,
         "startChar": 2,
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "6c380889_a18e605c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18cb09d9_6f5252eb",
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef1c75da_e75451b2",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
         "patchSetId": 3
@@ -165,6 +321,24 @@
       "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d74c44b_7c8dec77",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef1c75da_e75451b2",
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "0fd24afe_1d85b53c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c7aca58_a2d04a8e",
+      "range": {
+        "startLine": 1206,
+        "startChar": 13,
+        "endLine": 1206,
+        "endChar": 27
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376a2614_42685190",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
         "patchSetId": 3
@@ -202,6 +400,30 @@
       "writtenOn": "2017-05-30T21:06:29Z",
       "side": 1,
       "message": "nodeId will be equal to the last value of the for-loop.",
+      "range": {
+        "startLine": 1213,
+        "startChar": 37,
+        "endLine": 1213,
+        "endChar": 43
+      },
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370afa80_ceda90dc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "You\u0027re too cool!",
+      "parentUuid": "376a2614_42685190",
       "range": {
         "startLine": 1213,
         "startChar": 37,
@@ -228,6 +450,24 @@
       "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5530d7af_bb66bb9f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/LayerTreeBase.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-30T22:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "327b739e_c381b179",
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
