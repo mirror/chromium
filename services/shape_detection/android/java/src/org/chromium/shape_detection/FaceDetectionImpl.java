@@ -48,8 +48,9 @@ public class FaceDetectionImpl implements FaceDetection {
             return;
         }
 
-        ByteBuffer imageBuffer = frameData.map(0, numPixels * 4, MapFlags.none());
-        if (imageBuffer.capacity() <= 0) {
+        long numBytes = numPixels * 4;
+        ByteBuffer imageBuffer = frameData.map(0L, numBytes, MapFlags.none());
+        if (imageBuffer.remaining() < numBytes) {
             Log.d(TAG, "Failed to map from SharedBufferHandle.");
             callback.call(new FaceDetectionResult[0]);
             return;
