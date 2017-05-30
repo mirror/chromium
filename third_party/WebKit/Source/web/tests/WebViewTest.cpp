@@ -41,6 +41,7 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/markers/DocumentMarkerController.h"
+#include "core/exported/DevToolsEmulator.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/LocalFrame.h"
@@ -106,7 +107,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkCanvas.h"
-#include "web/DevToolsEmulator.h"
 #include "web/WebSettingsImpl.h"
 #include "web/tests/FrameTestHelpers.h"
 

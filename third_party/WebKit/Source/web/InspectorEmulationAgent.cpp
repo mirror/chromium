@@ -4,6 +4,7 @@
 
 #include "web/InspectorEmulationAgent.h"
 
+#include "core/exported/DevToolsEmulator.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
@@ -16,7 +17,6 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebFloatPoint.h"
 #include "public/platform/WebThread.h"
-#include "web/DevToolsEmulator.h"
 
 namespace blink {
 
