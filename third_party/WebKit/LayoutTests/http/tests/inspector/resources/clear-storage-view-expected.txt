@@ -1,0 +1,12 @@
+CONSOLE MESSAGE: line 112: InspectorTest.IndexedDB_callback1
+CONSOLE MESSAGE: line 112: InspectorTest.IndexedDB_callback2
+CONSOLE MESSAGE: line 112: InspectorTest.IndexedDB_callback3
+Tests Clear Storage view functions.
+
+0 B used out of - temporary storage quota
+0 B used out of - persistent storage quota
+
+Running: Now with data
+9.5 MB used out of - temporary storage quota
+0 B used out of - persistent storage quota
+

@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 /**
  * @implements {SDK.TargetManager.Observer}
- * @unrestricted
  */
 Resources.ClearStorageView = class extends UI.VBox {
   constructor() {
@@ -13,6 +12,12 @@ Resources.ClearStorageView = class extends UI.VBox {
     this._reportView.registerRequiredCSS('resources/clearStorageView.css');
     this._reportView.element.classList.add('clear-storage-header');
     this._reportView.show(this.contentElement);
+    /** @type {number} */
+    this._refreshInterval;
+    /** @type {?SDK.Target} */
+    this._target = null;
+    /** @type {?string} */
+    this._securityOrigin = null;
 
     this._settings = new Map();
     for (var type
@@ -22,6 +27,9 @@ Resources.ClearStorageView = class extends UI.VBox {
                  Protocol.Storage.StorageType.Websql])
       this._settings.set(type, Common.settings.createSetting('clear-storage-' + type, true));
 
+    var quota = this._reportView.appendSection(Common.UIString('Usage'));
+    this._temporaryQuotaRow = quota.appendRow();
+    this._persistentQuotaRow = quota.appendRow();
 
     var application = this._reportView.appendSection(Common.UIString('Application'));
     this._appendItem(application, Common.UIString('Unregister service workers'), 'service_workers');
@@ -41,6 +49,8 @@ Resources.ClearStorageView = class extends UI.VBox {
     this._clearButton = UI.createTextButton(
         Common.UIString('Clear site data'), this._clear.bind(this), Common.UIString('Clear site data'));
     footer.appendChild(this._clearButton);
+
+    this._refreshQuota();
   }
 
   /**
@@ -96,6 +106,8 @@ Resources.ClearStorageView = class extends UI.VBox {
   }
 
   _clear() {
+    if (!this._securityOrigin)
+      return;
     var storageTypes = [];
     for (var type of this._settings.keys()) {
       if (this._settings.get(type).get())
@@ -154,5 +166,53 @@ Resources.ClearStorageView = class extends UI.VBox {
       this._clearButton.disabled = false;
       this._clearButton.textContent = label;
     }, 500);
+  }
+
+  /**
+   * @param {boolean} isTemporary
+   * @param {number} usage
+   * @param {number} quota
+   */
+  _updateQuotaDisplay(isTemporary, usage, quota) {
+    var usageString = Number.bytesToString(usage);
+    var quotaString = Number.bytesToString(quota);
+    var element;
+    var message;
+    if (isTemporary) {
+      element = this._temporaryQuotaRow;
+      message = Common.UIString('%s used out of %s temporary storage quota', usageString, quotaString);
+    } else {
+      element = this._persistentQuotaRow;
+      message = Common.UIString('%s used out of %s persistent storage quota', usageString, quotaString);
+    }
+    element.innerHTML = message;
+  }
+
+  _refreshQuota() {
+    if (!this._securityOrigin)
+      return;
+
+    this._target.storageAgent()
+        .invoke_getUsageAndQuota(
+            {origin: this._securityOrigin, storageType: Protocol.Storage.QuotaStorageType.Temporary})
+        .then(result => this._updateQuotaDisplay(true, result.usage, result.quota));
+    this._target.storageAgent()
+        .invoke_getUsageAndQuota(
+            {origin: this._securityOrigin, storageType: Protocol.Storage.QuotaStorageType.Persistent})
+        .then(result => this._updateQuotaDisplay(false, result.usage, result.quota));
+  }
+
+  /**
+   * @override
+   */
+  wasShown() {
+    this._refreshInterval = setInterval(() => this._refreshQuota(), 1000);
+  }
+
+  /**
+   * @override
+   */
+  willHide() {
+    clearInterval(this._refreshInterval);
   }
 };

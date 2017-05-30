@@ -4484,6 +4484,14 @@
                     "all"
                 ],
                 "description": "Enum of possible storage types."
+            },
+            {
+                "id": "QuotaStorageType",
+                "type": "string",
+                "enum": [
+                    "Temporary",
+                    "Persistent"
+                ]
             }
         ],
         "commands": [
@@ -4494,6 +4502,20 @@
                     { "name": "storageTypes", "type": "string", "description": "Comma separated origin names." }
                 ],
                 "description": "Clears storage for origin."
+            },
+            {
+                "name": "getUsageAndQuota",
+                "parameters": [
+                    { "name": "origin", "type": "string", "description": "Security origin." },
+                    { "name": "storageType", "$ref": "QuotaStorageType", "description": "Storage type."}
+
+                ],
+                "returns": [
+                    { "name": "usage", "type": "number", "description": "Usage (bytes)." },
+                    { "name": "quota", "type": "number", "description": "Quota (bytes)." }
+
+                ],
+                "description": "Returns usage and quota in bytes."
             }
         ]
     },

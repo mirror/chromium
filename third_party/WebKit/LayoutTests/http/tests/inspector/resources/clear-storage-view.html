@@ -1,0 +1,96 @@
+<html>
+<head>
+<script src="../inspector-test.js"></script>
+<script src="../resources-test.js"></script>
+<script src="../console-test.js"></script>
+<script src="../indexeddb/indexeddb-test.js"></script>
+<script>
+
+async function test()
+{
+    var updateListener = null;
+
+    async function writeArray() {
+        var array = [];
+        for (var i = 0; i < 5000000; i++)
+            array.push(i % 10);
+        var mainFrameId = InspectorTest.resourceTreeModel.mainFrame.id;
+        await new Promise(resolve => InspectorTest.createDatabase(mainFrameId, 'Database1', resolve));
+        await new Promise(resolve => InspectorTest.createObjectStore(mainFrameId, 'Database1', 'Store1', 'id', true, resolve));
+        await new Promise(resolve => InspectorTest.addIDBValue(mainFrameId, 'Database1', 'Store1', {key: 1, value: array}, '', resolve));
+    }
+
+    function findTreeNodeByName(parent, name) {
+        for (var child of parent.children()) {
+            if (child.title == name)
+                return child;
+        }
+    }
+
+    function waitForRefreshMatching(predicate) {
+        return new Promise(resolve => {
+            updateListener = function(isTemp, usage, quota) {
+                if (predicate(isTemp, usage, quota)) {
+                    updateListener = null;
+                    resolve();
+                }
+            }
+        });
+    }
+
+    function dumpWithoutQuota(element) {
+        // Quota will vary between setups, rather strip it altogether
+        var clean = element.innerHTML.replace(/\&nbsp;/g, ' ');
+        var quotaStripped = clean.replace(/(.*) \d+ .?B([^\d]*)/, '$1 -$2');
+        InspectorTest.addResult(quotaStripped);
+    }
+
+    UI.viewManager.showView('resources');
+    try {
+
+    var clearStorageElement = findTreeNodeByName(UI.panels.resources._sidebar._applicationTreeElement, 'Clear storage');
+
+    console.assert(clearStorageElement);
+    clearStorageElement.select();
+
+    var clearStorageView = UI.panels.resources.visibleView;
+    InspectorTest.addSniffer(clearStorageView, '_updateQuotaDisplay', function() {
+        if (updateListener)
+            updateListener.apply(null, arguments);
+    }, true);
+    console.assert(clearStorageView instanceof Resources.ClearStorageView);
+
+    var tempRefreshed = false;
+    var persistentRefreshed = false;
+
+    await waitForRefreshMatching(isTemp => {
+        if (isTemp)
+            tempRefreshed = true;
+        else
+            persistentRefreshed = true;
+        return tempRefreshed && persistentRefreshed;
+    });
+
+    dumpWithoutQuota(clearStorageView._temporaryQuotaRow);
+    dumpWithoutQuota(clearStorageView._persistentQuotaRow);
+
+    InspectorTest.markStep('Now with data');
+
+    await writeArray();
+    await waitForRefreshMatching((isTemp, usage) => isTemp && usage > 5000000);
+
+    dumpWithoutQuota(clearStorageView._temporaryQuotaRow);
+    dumpWithoutQuota(clearStorageView._persistentQuotaRow);
+
+
+    } catch (e) {
+        console.log(e);
+    }
+    InspectorTest.completeTest();
+}
+</script>
+</head>
+<body onload="runTest()">
+<p>Tests Clear Storage view functions.</p>
+</body>
+</html>
