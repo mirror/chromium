@@ -34,6 +34,24 @@
       "revId": "614e89398bdb5cdc8456e5c4e8d1f666b487e3a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80538602_1b23c878",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-30T06:51:17Z",
+      "side": 1,
+      "message": "Ok, spec-term..  Do we want to make these \u0027GetKeepaliveFlag\u0027 \u0027SetKeepaliveFlag\u0027 for better clarification?  (Newer fetch flags seem to be following that pattern)",
+      "parentUuid": "67b60705_689fecf5",
+      "revId": "614e89398bdb5cdc8456e5c4e8d1f666b487e3a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
