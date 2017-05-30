@@ -567,6 +567,7 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
       SetWidget(plugin);
       layout_item.GetFrameView()->AddPlugin(plugin);
     } else {
+      NOTREACHED();
       SetPersistedPlugin(plugin);
     }
   }
