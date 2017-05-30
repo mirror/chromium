@@ -22,6 +22,63 @@
       "revId": "52a00fc1ace7a340b0b2dd01c22e8a5c1b48ca5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efae4415_6e8597a3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/htmlimports/import-and-script-module-external.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-05-30T13:52:03Z",
+      "side": 1,
+      "message": "Have this check\ntest(() \u003d\u003e { assert_true(window.runExternalModuleScript); }, \"HTML Im..\");",
+      "revId": "52a00fc1ace7a340b0b2dd01c22e8a5c1b48ca5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee21981e_1afd31fc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/htmlimports/import-and-script-module-inline.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-05-30T13:52:03Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 4,
+        "startChar": 10,
+        "endLine": 4,
+        "endChar": 11
+      },
+      "revId": "52a00fc1ace7a340b0b2dd01c22e8a5c1b48ca5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0679f5_c889efe3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/htmlimports/resources/module.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-05-30T13:52:03Z",
+      "side": 1,
+      "message": "Can we have this set something on window?\nwindow.runExternalModuleScript \u003d true;",
+      "revId": "52a00fc1ace7a340b0b2dd01c22e8a5c1b48ca5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
