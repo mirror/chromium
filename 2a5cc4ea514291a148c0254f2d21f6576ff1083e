@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc044ca1_5e4b4501",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-05-30T03:27:27Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "4b19862d_a17776cd",
+      "range": {
+        "startLine": 126,
+        "startChar": 10,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "2a5cc4ea514291a148c0254f2d21f6576ff1083e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51ea94f8_5103f685",
         "filename": "chrome/browser/webshare/share_service_impl.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2a5cc4ea514291a148c0254f2d21f6576ff1083e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8baee0a_6fe74571",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-05-30T03:27:27Z",
+      "side": 1,
+      "message": "\u003e Per the above suggestion, this would become a GURL and still use result.value().\n\u003e \n\nDone.\n\n\u003e Actually, this should be a const GURL\u0026 to avoid a copy (I mean... it always should\u0027ve been a const std::string\u0026).\n\nDone.",
+      "parentUuid": "51ea94f8_5103f685",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 13
+      },
+      "revId": "2a5cc4ea514291a148c0254f2d21f6576ff1083e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
