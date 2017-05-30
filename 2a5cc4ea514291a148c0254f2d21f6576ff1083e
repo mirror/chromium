@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b19862d_a17776cd",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-05-30T02:41:21Z",
+      "side": 1,
+      "message": "Can you make this a const GURL\u0026 as well. Then call .spec() in the argument to GetDictionaryWithoutPathExpansion.\n\nA minor thing but just trying to keep it as a GURL as much as possible, to preserve more type information.",
+      "range": {
+        "startLine": 126,
+        "startChar": 10,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "2a5cc4ea514291a148c0254f2d21f6576ff1083e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ea94f8_5103f685",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-05-30T02:41:21Z",
+      "side": 1,
+      "message": "Per the above suggestion, this would become a GURL and still use result.value().\n\nActually, this should be a const GURL\u0026 to avoid a copy (I mean... it always should\u0027ve been a const std::string\u0026).",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 13
+      },
+      "revId": "2a5cc4ea514291a148c0254f2d21f6576ff1083e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
