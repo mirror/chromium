@@ -169,16 +169,25 @@ DEFINE_TRACE(ClassicPendingScript) {
   PendingScript::Trace(visitor);
 }
 
-ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
-                                               bool& error_occurred) const {
+ClassicScript* ClassicPendingScript::GetSource(
+    const KURL& document_url,
+    bool& error_occurred,
+    ScriptStreamer* script_streamer) const {
   CheckState();
   DCHECK(IsReady());
+
+  // ClassicPendingScript might have a streamer that it started (and owns)
+  // itself, or one might get passed in (owned by ScriptRunner). Make sure
+  // these don't contradict each other (meaning: two different, non-nullptr
+  // values), so that we can pick any to work with.
+  DCHECK(!streamer_ || !script_streamer || streamer_ == script_streamer);
+  ScriptStreamer* streamer = streamer_ ? streamer_.Get() : script_streamer;
 
   error_occurred = ErrorOccurred();
   if (GetResource()) {
     DCHECK(GetResource()->IsLoaded());
-    if (streamer_ && !streamer_->StreamingSuppressed())
-      return ClassicScript::Create(ScriptSourceCode(streamer_, GetResource()));
+    if (streamer && !streamer->StreamingSuppressed())
+      return ClassicScript::Create(ScriptSourceCode(streamer, GetResource()));
     return ClassicScript::Create(ScriptSourceCode(GetResource()));
   }
 
