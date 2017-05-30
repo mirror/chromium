@@ -904,6 +904,9 @@ void LocalFrameView::CountObjectsNeedingLayout(unsigned& needs_layout_objects,
 }
 
 inline void LocalFrameView::ForceLayoutParentViewIfNeeded() {
+  // TODO(szager): ForceLayoutParentViewIfNeeded can cause this document's
+  // lifecycle to change, which should not happen.  crbug.com/727940
+  DocumentLifecycle::DisallowTransitionScope disallow_transition(Lifecycle());
   LayoutPartItem owner_layout_item = frame_->OwnerLayoutItem();
   if (owner_layout_item.IsNull() || !owner_layout_item.GetFrame())
     return;
@@ -1060,9 +1063,9 @@ void LocalFrameView::PerformLayout(bool in_subtree_layout) {
   // functions so that a single human could understand what layout() is actually
   // doing.
 
-  // FIXME: ForceLayoutParentViewIfNeeded can cause this document's lifecycle
-  // to change, which should not happen.
   ForceLayoutParentViewIfNeeded();
+  // TODO(szager): Remove this CHECK once the lifecycle transition is
+  // understood.  crbug.com/727940
   CHECK(IsInPerformLayout() ||
         Lifecycle().GetState() >= DocumentLifecycle::kLayoutClean);
 
