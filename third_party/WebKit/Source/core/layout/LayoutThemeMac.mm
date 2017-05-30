@@ -1083,8 +1083,8 @@ String LayoutThemeMac::ExtraFullscreenStyleSheet() {
 
 String LayoutThemeMac::ExtraDefaultStyleSheet() {
   return LayoutTheme::ExtraDefaultStyleSheet() +
-         LoadResourceAsASCIIString("themeInputMultipleFields.css") +
-         LoadResourceAsASCIIString("themeMac.css");
+         GetDataResourceAsASCIIString("themeInputMultipleFields.css") +
+         GetDataResourceAsASCIIString("themeMac.css");
 }
 
 bool LayoutThemeMac::ThemeDrawsFocusRing(const ComputedStyle& style) const {

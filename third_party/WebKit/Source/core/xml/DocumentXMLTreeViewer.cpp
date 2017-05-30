@@ -16,8 +16,9 @@
 namespace blink {
 
 void TransformDocumentToXMLTreeView(Document& document) {
-  String script_string = LoadResourceAsASCIIString("DocumentXMLTreeViewer.js");
-  String css_string = LoadResourceAsASCIIString("DocumentXMLTreeViewer.css");
+  String script_string =
+      GetDataResourceAsASCIIString("DocumentXMLTreeViewer.js");
+  String css_string = GetDataResourceAsASCIIString("DocumentXMLTreeViewer.css");
 
   HeapVector<ScriptSourceCode> sources;
   sources.push_back(ScriptSourceCode(script_string));

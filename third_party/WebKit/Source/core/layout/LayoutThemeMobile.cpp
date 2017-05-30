@@ -41,16 +41,16 @@ LayoutThemeMobile::~LayoutThemeMobile() {}
 
 String LayoutThemeMobile::ExtraDefaultStyleSheet() {
   return LayoutThemeDefault::ExtraDefaultStyleSheet() +
-         LoadResourceAsASCIIString("themeChromiumLinux.css") +
-         LoadResourceAsASCIIString("themeChromiumAndroid.css");
+         GetDataResourceAsASCIIString("themeChromiumLinux.css") +
+         GetDataResourceAsASCIIString("themeChromiumAndroid.css");
 }
 
 String LayoutThemeMobile::ExtraMediaControlsStyleSheet() {
-  return LoadResourceAsASCIIString("mediaControlsAndroid.css");
+  return GetDataResourceAsASCIIString("mediaControlsAndroid.css");
 }
 
 String LayoutThemeMobile::ExtraFullscreenStyleSheet() {
-  return LoadResourceAsASCIIString("fullscreenAndroid.css");
+  return GetDataResourceAsASCIIString("fullscreenAndroid.css");
 }
 
 void LayoutThemeMobile::AdjustInnerSpinButtonStyle(ComputedStyle& style) const {

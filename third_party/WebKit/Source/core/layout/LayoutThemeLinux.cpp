@@ -19,7 +19,7 @@ LayoutTheme& LayoutTheme::NativeTheme() {
 
 String LayoutThemeLinux::ExtraDefaultStyleSheet() {
   return LayoutThemeDefault::ExtraDefaultStyleSheet() +
-         LoadResourceAsASCIIString("themeChromiumLinux.css");
+         GetDataResourceAsASCIIString("themeChromiumLinux.css");
 }
 
 }  // namespace blink

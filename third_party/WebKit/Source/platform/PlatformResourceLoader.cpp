@@ -9,8 +9,8 @@
 
 namespace blink {
 
-String LoadResourceAsASCIIString(const char* resource) {
-  const WebData& resource_data = Platform::Current()->LoadResource(resource);
+String GetDataResourceAsASCIIString(const char* resource) {
+  const WebData& resource_data = Platform::Current()->GetDataResource(resource);
   String data_string(resource_data.Data(), resource_data.size());
   DCHECK(!data_string.IsEmpty());
   DCHECK(data_string.ContainsOnlyASCII());
