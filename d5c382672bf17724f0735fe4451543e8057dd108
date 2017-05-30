@@ -22,6 +22,30 @@
       "revId": "d5c382672bf17724f0735fe4451543e8057dd108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66b0f0e_91cfe580",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-05-30T19:34:03Z",
+      "side": 1,
+      "message": "My question was whether or not you wanted to initialize to new ArrayList\u003cInteger\u003e() here and remove the null check in line 225. \nSince I am now initializing to null and the compiler seems to be okay with it, my question still applies. I am interpreting your code review +1 as you being okay with this. Please let me know if I misinterpreted this.",
+      "parentUuid": "402c5e8b_d180a995",
+      "range": {
+        "startLine": 219,
+        "startChar": 37,
+        "endLine": 219,
+        "endChar": 41
+      },
+      "revId": "d5c382672bf17724f0735fe4451543e8057dd108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
