@@ -78,7 +78,7 @@ HTMLFrameOwnerElement::HTMLFrameOwnerElement(const QualifiedName& tag_name,
                                              Document& document)
     : HTMLElement(tag_name, document),
       content_frame_(nullptr),
-      widget_(nullptr),
+      embedded_content_view_(nullptr),
       sandbox_flags_(kSandboxNone) {}
 
 LayoutPart* HTMLFrameOwnerElement::GetLayoutPart() const {
@@ -158,12 +158,12 @@ bool HTMLFrameOwnerElement::IsKeyboardFocusable() const {
   return content_frame_ && HTMLElement::IsKeyboardFocusable();
 }
 
-void HTMLFrameOwnerElement::DisposeFrameOrPluginSoon(
-    FrameOrPlugin* frame_or_plugin) {
-  if (g_plugin_dispose_suspend_count && frame_or_plugin->IsPluginView())
-    PluginsPendingDispose().insert(ToPluginView(frame_or_plugin));
+void HTMLFrameOwnerElement::DisposeEmbeddedContentViewSoon(
+    EmbeddedContentView* embedded_content_view) {
+  if (g_plugin_dispose_suspend_count && embedded_content_view->IsPluginView())
+    PluginsPendingDispose().insert(ToPluginView(embedded_content_view));
   else
-    frame_or_plugin->Dispose();
+    embedded_content_view->Dispose();
 }
 
 void HTMLFrameOwnerElement::UpdateContainerPolicy() {
@@ -209,27 +209,28 @@ Document* HTMLFrameOwnerElement::getSVGDocument(
   return nullptr;
 }
 
-void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
-  if (frame_or_plugin == widget_)
+void HTMLFrameOwnerElement::SetEmbeddedContentView(
+    EmbeddedContentView* embedded_content_view) {
+  if (embedded_content_view == embedded_content_view_)
     return;
 
   Document* doc = contentDocument();
   if (doc && doc->GetFrame()) {
-    bool will_be_display_none = !frame_or_plugin;
+    bool will_be_display_none = !embedded_content_view;
     if (IsDisplayNone() != will_be_display_none) {
       doc->WillChangeFrameOwnerProperties(
           MarginWidth(), MarginHeight(), ScrollingMode(), will_be_display_none);
     }
   }
 
-  if (widget_) {
-    if (widget_->IsAttached()) {
-      widget_->Detach();
-      DisposeFrameOrPluginSoon(widget_);
+  if (embedded_content_view_) {
+    if (embedded_content_view_->IsAttached()) {
+      embedded_content_view_->Detach();
+      DisposeEmbeddedContentViewSoon(embedded_content_view_);
     }
   }
 
-  widget_ = frame_or_plugin;
+  embedded_content_view_ = embedded_content_view;
   FrameOwnerPropertiesChanged();
 
   LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
@@ -237,29 +238,29 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
   if (layout_part_item.IsNull())
     return;
 
-  if (widget_) {
-    layout_part_item.UpdateOnWidgetChange();
+  if (embedded_content_view_) {
+    layout_part_item.UpdateOnEmbeddedContentViewChange();
 
     DCHECK_EQ(GetDocument().View(), layout_part_item.GetFrameView());
     DCHECK(layout_part_item.GetFrameView());
-    widget_->Attach();
+    embedded_content_view_->Attach();
   }
 
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
     cache->ChildrenChanged(layout_part);
 }
 
-FrameOrPlugin* HTMLFrameOwnerElement::ReleaseWidget() {
-  if (!widget_)
+EmbeddedContentView* HTMLFrameOwnerElement::ReleaseEmbeddedContentView() {
+  if (!embedded_content_view_)
     return nullptr;
-  if (widget_->IsAttached())
-    widget_->Detach();
+  if (embedded_content_view_->IsAttached())
+    embedded_content_view_->Detach();
   LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
   if (layout_part) {
     if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
       cache->ChildrenChanged(layout_part);
   }
-  return widget_.Release();
+  return embedded_content_view_.Release();
 }
 
 bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
@@ -297,7 +298,7 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
 
 DEFINE_TRACE(HTMLFrameOwnerElement) {
   visitor->Trace(content_frame_);
-  visitor->Trace(widget_);
+  visitor->Trace(embedded_content_view_);
   HTMLElement::Trace(visitor);
   FrameOwner::Trace(visitor);
 }
