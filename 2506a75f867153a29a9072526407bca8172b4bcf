@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20ca2ab2_504bf36a",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScopeTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-05-30T20:54:50Z",
+      "side": 1,
+      "message": "nit: Seems like a local helper for Evaluate and return a boolean would be helpful.",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "2506a75f867153a29a9072526407bca8172b4bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
