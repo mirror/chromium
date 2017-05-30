@@ -46,6 +46,30 @@
       "revId": "9f39f94b9552de0584d65d78cd633fc470ee6a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3cf99f_c2593336",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-05-30T17:45:06Z",
+      "side": 0,
+      "message": "Right, if you change the pickle by adding a new string you have to bump the version. Which means cache entries with the old version will be invalid (and deleted when used). I\u0027m OK with the version bump. That\u0027s the cost of using pickles.",
+      "parentUuid": "597ceedb_8d41c5ce",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 23
+      },
+      "revId": "9f39f94b9552de0584d65d78cd633fc470ee6a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
