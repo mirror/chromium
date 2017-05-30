@@ -52,6 +52,24 @@
       "revId": "614e89398bdb5cdc8456e5c4e8d1f666b487e3a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbab82eb_f2219a02",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-30T07:21:30Z",
+      "side": 1,
+      "message": "As discussed offline, I changed the name to GetKeepalive.",
+      "parentUuid": "80538602_1b23c878",
+      "revId": "614e89398bdb5cdc8456e5c4e8d1f666b487e3a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
