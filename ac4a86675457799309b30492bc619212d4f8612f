@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e4028a9_d56b1adb",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-30T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b04e1cdb_0a0a957d",
+      "range": {
+        "startLine": 28,
+        "startChar": 24,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "ac4a86675457799309b30492bc619212d4f8612f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b28c7aeb_c87ba50f",
         "filename": "components/offline_pages/core/archive_manager.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ac4a86675457799309b30492bc619212d4f8612f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5cf5f8_7d6a2d89",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-30T18:35:09Z",
+      "side": 1,
+      "message": "this is not used but since the creation result cannot be simply represented by a boolean (success/failure), so i\u0027m having a enum here...",
+      "parentUuid": "b28c7aeb_c87ba50f",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "ac4a86675457799309b30492bc619212d4f8612f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f87716a4_ae517aef",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-30T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93638dde_f12e5d93",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "ac4a86675457799309b30492bc619212d4f8612f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a90d73e_89a7d2f9",
         "filename": "components/offline_pages/core/offline_page_model_impl.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e95049f1_cd5910db",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-30T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a90d73e_89a7d2f9",
+      "range": {
+        "startLine": 385,
+        "startChar": 4,
+        "endLine": 385,
+        "endChar": 28
+      },
+      "revId": "ac4a86675457799309b30492bc619212d4f8612f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38ebed30_59ae6219",
         "filename": "components/offline_pages/core/offline_page_model_impl.h",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "ac4a86675457799309b30492bc619212d4f8612f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faed7866_9fb34e22",
+        "filename": "components/offline_pages/core/offline_page_model_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-05-30T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38ebed30_59ae6219",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 37
+      },
+      "revId": "ac4a86675457799309b30492bc619212d4f8612f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
