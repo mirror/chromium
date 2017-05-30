@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d70e94c7_08d4bb19",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-05-30T20:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f628343c_9c66c1c5",
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91483536_a6a7856a",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_duration_metric_reporter.cc",
         "patchSetId": 1
@@ -110,6 +128,30 @@
       "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db26012_c43675d8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_duration_metric_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-05-30T20:11:26Z",
+      "side": 1,
+      "message": "The intention here was to cache a call to FactoryGet for the performance. If I understand correctly, UmaHistogramEnumeration calls FactoryGet for every call.",
+      "parentUuid": "91483536_a6a7856a",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +240,24 @@
       "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea88a72f_4854d849",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59422,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-05-30T20:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c60beb28_5f2f834e",
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
