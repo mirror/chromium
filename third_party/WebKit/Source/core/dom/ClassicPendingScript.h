@@ -47,7 +47,8 @@ class CORE_EXPORT ClassicPendingScript final
   }
 
   ClassicScript* GetSource(const KURL& document_url,
-                           bool& error_occurred) const override;
+                           bool& error_occurred,
+                           ScriptStreamer* = nullptr) const override;
   bool IsReady() const override;
   bool IsExternal() const override { return GetResource(); }
   bool ErrorOccurred() const override;
