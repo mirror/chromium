@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76181b42_8bfaee97",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-30T22:21:11Z",
+      "side": 1,
+      "message": "I didn\u0027t see a reason to special case it when I wrote it. It\u0027s currently unit tested implicitly. Added an explicit test.\n\nI guess if it\u0027s not obvious what it does, it\u0027s worth adding the redundant special case.",
+      "parentUuid": "577563c7_22223e89",
+      "revId": "b897e681b0b4cacba6208b2fab83951b16a5cf0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9baceae_ca99a871",
         "filename": "media/gpu/android/codec_wrapper.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "b897e681b0b4cacba6208b2fab83951b16a5cf0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78401850_5017f41a",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-05-30T22:21:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9baceae_ca99a871",
+      "revId": "b897e681b0b4cacba6208b2fab83951b16a5cf0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
