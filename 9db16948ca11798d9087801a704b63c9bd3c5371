@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1eb32f_60fc792c",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-05-30T15:44:25Z",
+      "side": 1,
+      "message": "nit: maybe we could just collapse service-related deps entries to foo/public from now on rather than calling out each individual subdir",
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
