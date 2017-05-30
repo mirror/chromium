@@ -279,6 +279,7 @@ void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
   // Only try to persist a plugin we actually own.
   PluginView* plugin = OwnedPlugin();
   if (plugin && context.performing_reattach) {
+    NOTREACHED();
     SetPersistedPlugin(ToPluginView(ReleaseWidget()));
   } else {
     // Clear the plugin; will trigger disposal of it with Oilpan.
