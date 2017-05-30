@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deba3fb9_e99d1142",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-30T02:03:07Z",
+      "side": 1,
+      "message": "This part (having both flag and mode) feels confusing, could you add a comment to clarify the relationship between them?",
+      "revId": "830c916460ded5bc778a7010bb49f53e68b544f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
