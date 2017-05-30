@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f3097ab_760ccb8e",
+        "filename": "third_party/WebKit/Source/core/css/threaded/CSSToLengthConversionDataThreadedTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-30T19:24:36Z",
+      "side": 1,
+      "message": "Nit: here and in the other test: follow the include order (https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes): the first include should be CSSToLengthConversionData.h (since that\u0027s the corresponding header to this test), and the rest should be in the second group, lexically ordered",
+      "revId": "7968dcbef709fe1c01f5dc701407373d2397b1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afdd2912_1512e541",
         "filename": "third_party/WebKit/Source/core/css/threaded/MultiThreadedTestUtil.h",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-05-30T18:09:46Z",
       "side": 1,
       "message": "This initialization is specific to tests that involve style.  It does not belong in this general class.  Perhaps this:\nclass MultiThreadedStyleTest : public  MultiThreadedTest {\npublic:\n  static void SetUpTestCase() { ComputedStyle::InitialStyle(); }\n};",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 59
+      },
+      "revId": "7968dcbef709fe1c01f5dc701407373d2397b1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7dc09f_4f55238f",
+        "filename": "third_party/WebKit/Source/core/css/threaded/MultiThreadedTestUtil.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-30T19:24:36Z",
+      "side": 1,
+      "message": "This is concerning. There\u0027s no apparent guarantee that in practice this is called on the main thread before any other thread. In addition, though it returns a reference, it seems likely that callers will take a reference, and ComputedStyle is RefCounted, not ThreadSafeRefCounted, and so it is not thread-safe to have ref count changes on multiple threads.",
+      "parentUuid": "afdd2912_1512e541",
       "range": {
         "startLine": 49,
         "startChar": 47,
