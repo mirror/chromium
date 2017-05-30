@@ -29,6 +29,7 @@ namespace blink {
 // https://dom.spec.whatwg.org/#concept-ordered-set-parser
 template <typename CharacterType>
 inline void SpaceSplitString::Data::CreateVector(
+    const AtomicString& source,
     const CharacterType* characters,
     unsigned length) {
   HashSet<AtomicString> token_set;
@@ -42,25 +43,28 @@ inline void SpaceSplitString::Data::CreateVector(
     while (end < length && IsNotHTMLSpace<CharacterType>(characters[end]))
       ++end;
 
-    AtomicString token(characters + start, end - start);
-    if (!token_set.Contains(token)) {
-      token_set.insert(token);
-      vector_.push_back(token);
+    if (start == 0 && end == length) {
+      vector_.push_back(source);
+      return;
     }
+
+    AtomicString token(characters + start, end - start);
+    if (token_set.insert(token).is_new_entry)
+      vector_.push_back(token);
 
     start = end + 1;
   }
 }
 
-void SpaceSplitString::Data::CreateVector(const String& string) {
+void SpaceSplitString::Data::CreateVector(const AtomicString& string) {
   unsigned length = string.length();
 
   if (string.Is8Bit()) {
-    CreateVector(string.Characters8(), length);
+    CreateVector(string, string.Characters8(), length);
     return;
   }
 
-  CreateVector(string.Characters16(), length);
+  CreateVector(string, string.Characters16(), length);
 }
 
 bool SpaceSplitString::Data::ContainsAll(Data& other) {

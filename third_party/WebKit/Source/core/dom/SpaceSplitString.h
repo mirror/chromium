@@ -84,9 +84,11 @@ class SpaceSplitString {
     explicit Data(const AtomicString&);
     explicit Data(const Data&);
 
-    void CreateVector(const String&);
+    void CreateVector(const AtomicString&);
     template <typename CharacterType>
-    inline void CreateVector(const CharacterType*, unsigned);
+    inline void CreateVector(const AtomicString&,
+                             const CharacterType*,
+                             unsigned);
 
     AtomicString key_string_;
     Vector<AtomicString, 4> vector_;
