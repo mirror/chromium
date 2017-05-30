@@ -719,6 +719,10 @@ const char kPpapiPluginProcess[]            = "ppapi";
 // --no-sandbox as well or the sandbox won't allow the dialog to display.
 const char kPpapiStartupDialog[]            = "ppapi-startup-dialog";
 
+// Logs Runtime Call Stats for Blink. --single-process also needs to be
+// used along with this for the stats to be logged.
+const char kLogCallStats[] = "log-call-stats";
+
 // Enable the "Process Per Site" process model for all domains. This mode
 // consolidates same-site pages so that they share a single process.
 //

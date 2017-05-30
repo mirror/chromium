@@ -9,6 +9,7 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Time.h"
 #include "platform/wtf/text/WTFString.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -90,6 +91,10 @@ class PLATFORM_EXPORT RuntimeCallTimer {
 class PLATFORM_EXPORT RuntimeCallStats {
  public:
   RuntimeCallStats();
+  // Get RuntimeCallStats object associated with the given isolate.
+  static RuntimeCallStats* From(v8::Isolate*);
+  // Get RuntimeCallStats object for the main thread.
+  static RuntimeCallStats* MainThreadInstance();
 
 // Counters
 #define FOR_EACH_COUNTER(V) \
