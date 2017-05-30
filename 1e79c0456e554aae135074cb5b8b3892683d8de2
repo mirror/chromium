@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cff7ba3_1258699c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-30T18:32:38Z",
+      "side": 1,
+      "message": "MediaStreamTrack.idl currently says applyConstraints() returns a Promise\u003cvoid\u003e. This patch should probably update that.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "1e79c0456e554aae135074cb5b8b3892683d8de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be847c6_3df73fe3",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/MediaStreamTrack-applyConstraints-getSettings.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-30T18:32:38Z",
+      "side": 1,
+      "message": ".then(() \u003d\u003e videoTrack.applyConstraints(constraints))",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 6
+      },
+      "revId": "1e79c0456e554aae135074cb5b8b3892683d8de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cd8ddb_c3c67aa3",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/MediaStreamTrack-applyConstraints-getSettings.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-30T18:32:38Z",
+      "side": 1,
+      "message": "nit: Arrow func",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 40
+      },
+      "revId": "1e79c0456e554aae135074cb5b8b3892683d8de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c77336_166b3c9e",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-30T18:32:38Z",
+      "side": 1,
+      "message": "nit: Use an arrow function here.",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 65,
+        "endChar": 40
+      },
+      "revId": "1e79c0456e554aae135074cb5b8b3892683d8de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6e6e5b_177f5cee",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-30T18:32:38Z",
+      "side": 1,
+      "message": "nit: Arrow function.",
+      "range": {
+        "startLine": 72,
+        "startChar": 50,
+        "endLine": 72,
+        "endChar": 72
+      },
+      "revId": "1e79c0456e554aae135074cb5b8b3892683d8de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339d555a_092326ef",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-30T18:32:38Z",
+      "side": 1,
+      "message": "HeapVector\u003cMediaTrackConstraintSet\u003e originalConstraints \u003d service_requests_.at(resolver);\nif (originalConstraints.IsEmpty()) {\n  resolver-\u003eResolve(photo_capabilities_);\n} else {\n  MediaTrackConstraints constraints;\n  constraints.setAdvanced(originalConstraints);\n  resolver-\u003eResolve(constraints);\n}",
+      "range": {
+        "startLine": 643,
+        "startChar": 2,
+        "endLine": 649,
+        "endChar": 3
+      },
+      "revId": "1e79c0456e554aae135074cb5b8b3892683d8de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
