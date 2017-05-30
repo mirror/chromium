@@ -59,27 +59,25 @@ PermissionType PermissionDescriptorToPermissionType(
 // This function allows the usage of the the multiple request map
 // with single requests.
 void PermissionRequestResponseCallbackWrapper(
-    const base::Callback<void(PermissionStatus)>& callback,
+    base::OnceCallback<void(PermissionStatus)> callback,
     const std::vector<PermissionStatus>& vector) {
   DCHECK_EQ(vector.size(), 1ul);
-  callback.Run(vector[0]);
+  std::move(callback).Run(vector[0]);
 }
 
 } // anonymous namespace
 
 PermissionServiceImpl::PendingRequest::PendingRequest(
-    const RequestPermissionsCallback& callback,
+    RequestPermissionsCallback callback,
     int request_count)
-    : callback(callback),
-      request_count(request_count) {
-}
+    : callback(std::move(callback)), request_count(request_count) {}
 
 PermissionServiceImpl::PendingRequest::~PendingRequest() {
   if (callback.is_null())
     return;
 
   std::vector<PermissionStatus> result(request_count, PermissionStatus::DENIED);
-  callback.Run(result);
+  std::move(callback).Run(result);
 }
 
 PermissionServiceImpl::PermissionServiceImpl(PermissionServiceContext* context)
@@ -105,19 +103,19 @@ void PermissionServiceImpl::RequestPermission(
     PermissionDescriptorPtr permission,
     const url::Origin& origin,
     bool user_gesture,
-    const PermissionStatusCallback& callback) {
+    PermissionStatusCallback callback) {
   std::vector<PermissionDescriptorPtr> permissions;
   permissions.push_back(std::move(permission));
-  RequestPermissions(
-      std::move(permissions), origin, user_gesture,
-      base::Bind(&PermissionRequestResponseCallbackWrapper, callback));
+  RequestPermissions(std::move(permissions), origin, user_gesture,
+                     base::Bind(&PermissionRequestResponseCallbackWrapper,
+                                base::Passed(&callback)));
 }
 
 void PermissionServiceImpl::RequestPermissions(
     std::vector<PermissionDescriptorPtr> permissions,
     const url::Origin& origin,
     bool user_gesture,
-    const RequestPermissionsCallback& callback) {
+    RequestPermissionsCallback callback) {
   // This condition is valid if the call is coming from a ChildThread instead of
   // a RenderFrame. Some consumers of the service run in Workers and some in
   // Frames. In the context of a Worker, it is not possible to show a
@@ -132,7 +130,7 @@ void PermissionServiceImpl::RequestPermissions(
     std::vector<PermissionStatus> result(permissions.size());
     for (size_t i = 0; i < permissions.size(); ++i)
       result[i] = GetPermissionStatus(permissions[i], origin);
-    callback.Run(result);
+    std::move(callback).Run(result);
     return;
   }
 
@@ -140,8 +138,9 @@ void PermissionServiceImpl::RequestPermissions(
   for (size_t i = 0; i < types.size(); ++i)
     types[i] = PermissionDescriptorToPermissionType(permissions[i]);
 
-  int pending_request_id = pending_requests_.Add(
-      base::MakeUnique<PendingRequest>(callback, permissions.size()));
+  int pending_request_id =
+      pending_requests_.Add(base::MakeUnique<PendingRequest>(
+          std::move(callback), permissions.size()));
   int id = browser_context->GetPermissionManager()->RequestPermissions(
       types, context_->render_frame_host(), origin.GetURL(), user_gesture,
       base::Bind(&PermissionServiceImpl::OnRequestPermissionsResponse,
@@ -160,23 +159,21 @@ void PermissionServiceImpl::OnRequestPermissionsResponse(
     int pending_request_id,
     const std::vector<PermissionStatus>& result) {
   PendingRequest* request = pending_requests_.Lookup(pending_request_id);
-  RequestPermissionsCallback callback(request->callback);
-  request->callback.Reset();
+  RequestPermissionsCallback callback = std::move(request->callback);
   pending_requests_.Remove(pending_request_id);
-  callback.Run(result);
+  std::move(callback).Run(result);
 }
 
-void PermissionServiceImpl::HasPermission(
-    PermissionDescriptorPtr permission,
-    const url::Origin& origin,
-    const PermissionStatusCallback& callback) {
-  callback.Run(GetPermissionStatus(permission, origin));
+void PermissionServiceImpl::HasPermission(PermissionDescriptorPtr permission,
+                                          const url::Origin& origin,
+                                          PermissionStatusCallback callback) {
+  std::move(callback).Run(GetPermissionStatus(permission, origin));
 }
 
 void PermissionServiceImpl::RevokePermission(
     PermissionDescriptorPtr permission,
     const url::Origin& origin,
-    const PermissionStatusCallback& callback) {
+    PermissionStatusCallback callback) {
   PermissionType permission_type =
       PermissionDescriptorToPermissionType(permission);
   PermissionStatus status =
@@ -185,13 +182,13 @@ void PermissionServiceImpl::RevokePermission(
   // Resetting the permission should only be possible if the permission is
   // already granted.
   if (status != PermissionStatus::GRANTED) {
-    callback.Run(status);
+    std::move(callback).Run(status);
     return;
   }
 
   ResetPermissionStatus(permission_type, origin);
 
-  callback.Run(GetPermissionStatusFromType(permission_type, origin));
+  std::move(callback).Run(GetPermissionStatusFromType(permission_type, origin));
 }
 
 void PermissionServiceImpl::AddPermissionObserver(

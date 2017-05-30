@@ -109,8 +109,8 @@ class CallbackListBase {
   }
 
   // Sets a callback which will be run when a subscription list is changed.
-  void set_removal_callback(const Closure& callback) {
-    removal_callback_ = callback;
+  void set_removal_callback(RepeatingClosure callback) {
+    removal_callback_ = std::move(callback);
   }
 
   // Returns true if there are no subscriptions. This is only valid to call when
