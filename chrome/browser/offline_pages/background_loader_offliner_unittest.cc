@@ -536,8 +536,8 @@ TEST_F(BackgroundLoaderOfflinerTest, MAYBE_FailsOnErrorPage) {
   // NavigationHandle destruction will trigger DidFinishNavigation code.
   handle.reset();
   histograms().ExpectBucketCount(
-      "OfflinePages.Background.BackgroundLoadingFailedCode.async_loading",
-      105,  // ERR_NAME_NOT_RESOLVED
+      "OfflinePages.Background.LoadingFailureStatusCode.async_loading",
+      -105,  // ERR_NAME_NOT_RESOLVED
       1);
   CompleteLoading();
   PumpLoop();
