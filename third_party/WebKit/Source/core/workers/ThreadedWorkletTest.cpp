@@ -116,7 +116,7 @@ class ThreadedWorkletMessagingProxyForTest
     : public ThreadedWorkletMessagingProxy {
  public:
   ThreadedWorkletMessagingProxyForTest(ExecutionContext* execution_context)
-      : ThreadedWorkletMessagingProxy(execution_context) {
+      : ThreadedWorkletMessagingProxy(execution_context, nullptr) {
     worklet_object_proxy_ = WTF::MakeUnique<ThreadedWorkletObjectProxyForTest>(
         weak_ptr_factory_.CreateWeakPtr(), GetParentFrameTaskRunners());
     worker_thread_ =

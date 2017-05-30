@@ -86,6 +86,7 @@ class CORE_EXPORT ThreadedMessagingProxyBase {
 
   Persistent<ExecutionContext> execution_context_;
   Persistent<WorkerInspectorProxy> worker_inspector_proxy_;
+
   // Accessed cross-thread when worker thread posts tasks to the parent.
   CrossThreadPersistent<ParentFrameTaskRunners> parent_frame_task_runners_;
 
