@@ -333,6 +333,7 @@ class MediaInternals::MediaInternalsUMAHandler {
     std::string video_decoder;
     GURL origin_url;
     WatchTimeInfo watch_time_info;
+    int underflow_count = 0;
   };
 
   // Helper function to report PipelineStatus associated with a player to UMA.
@@ -346,17 +347,27 @@ class MediaInternals::MediaInternalsUMAHandler {
     return !key.ends_with("EmbeddedExperience");
   }
 
-  void RecordWatchTime(base::StringPiece key, base::TimeDelta value) {
+  void RecordWatchTime(base::StringPiece key,
+                       base::TimeDelta value,
+                       bool is_mtbr = false) {
     base::Histogram::FactoryTimeGet(
-        key.as_string(), base::TimeDelta::FromSeconds(7),
+        key.as_string(),
+        is_mtbr ? base::TimeDelta::FromMilliseconds(1)
+                : base::TimeDelta::FromSeconds(7),
         base::TimeDelta::FromHours(10), 50,
         base::HistogramBase::kUmaTargetedHistogramFlag)
         ->AddTime(value);
   }
 
+  void RecordMeanTimeBetweenRebuffers(base::StringPiece key,
+                                      base::TimeDelta value) {
+    RecordWatchTime(key, value, true);
+  }
+
   enum class FinalizeType { EVERYTHING, POWER_ONLY };
   void FinalizeWatchTime(bool has_video,
                          const GURL& url,
+                         int* underflow_count,
                          WatchTimeInfo* watch_time_info,
                          FinalizeType finalize_type) {
     // |url| may come from an untrusted source, so ensure it's valid before
@@ -369,6 +380,20 @@ class MediaInternals::MediaInternalsUMAHandler {
     const bool has_ukm = !!ukm::UkmRecorder::Get();
 
     if (finalize_type == FinalizeType::EVERYTHING) {
+      if (*underflow_count) {
+        // Check for watch times entries that have corresponding MTBR entries
+        // and report the MTBR value using watch_time / |underflow_count|
+        for (auto& kv : mtbr_keys_) {
+          auto it = watch_time_info->find(kv.first);
+          if (it == watch_time_info->end())
+            continue;
+          RecordMeanTimeBetweenRebuffers(kv.second,
+                                         it->second / *underflow_count);
+        }
+
+        *underflow_count = 0;
+      }
+
       std::unique_ptr<ukm::UkmEntryBuilder> builder;
       for (auto& kv : *watch_time_info) {
         RecordWatchTime(kv.first, kv.second);
@@ -422,6 +447,7 @@ class MediaInternals::MediaInternalsUMAHandler {
 
   const base::flat_set<base::StringPiece> watch_time_keys_;
   const base::flat_set<base::StringPiece> watch_time_power_keys_;
+  const base::flat_map<base::StringPiece, base::StringPiece> mtbr_keys_;
   content::MediaInternals* const media_internals_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaInternalsUMAHandler);
@@ -431,6 +457,19 @@ MediaInternals::MediaInternalsUMAHandler::MediaInternalsUMAHandler(
     content::MediaInternals* media_internals)
     : watch_time_keys_(media::MediaLog::GetWatchTimeKeys()),
       watch_time_power_keys_(media::MediaLog::GetWatchTimePowerKeys()),
+      mtbr_keys_({{media::MediaLog::kWatchTimeAudioSrc,
+                   media::MediaLog::kMeanTimeBetweenRebuffersAudioSrc},
+                  {media::MediaLog::kWatchTimeAudioMse,
+                   media::MediaLog::kMeanTimeBetweenRebuffersAudioMse},
+                  {media::MediaLog::kWatchTimeAudioEme,
+                   media::MediaLog::kMeanTimeBetweenRebuffersAudioEme},
+                  {media::MediaLog::kWatchTimeAudioVideoSrc,
+                   media::MediaLog::kMeanTimeBetweenRebuffersAudioVideoSrc},
+                  {media::MediaLog::kWatchTimeAudioVideoMse,
+                   media::MediaLog::kMeanTimeBetweenRebuffersAudioVideoMse},
+                  {media::MediaLog::kWatchTimeAudioVideoEme,
+                   media::MediaLog::kMeanTimeBetweenRebuffersAudioVideoEme}},
+                 base::KEEP_FIRST_OF_DUPES),
       media_internals_(media_internals) {}
 
 void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
@@ -527,12 +566,18 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
             base::TimeDelta::FromSecondsD(it.value().GetDouble());
       }
 
+      if (event.params.HasKey(media::MediaLog::kUnderflowCount)) {
+        event.params.GetInteger(media::MediaLog::kUnderflowCount,
+                                &player_info.underflow_count);
+      }
+
       if (event.params.HasKey(media::MediaLog::kWatchTimeFinalize)) {
         bool should_finalize;
         DCHECK(event.params.GetBoolean(media::MediaLog::kWatchTimeFinalize,
                                        &should_finalize) &&
                should_finalize);
         FinalizeWatchTime(player_info.has_video, player_info.origin_url,
+                          &player_info.underflow_count,
                           &player_info.watch_time_info,
                           FinalizeType::EVERYTHING);
       } else if (event.params.HasKey(
@@ -542,6 +587,7 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
                                        &should_finalize) &&
                should_finalize);
         FinalizeWatchTime(player_info.has_video, player_info.origin_url,
+                          &player_info.underflow_count,
                           &player_info.watch_time_info,
                           FinalizeType::POWER_ONLY);
       }
@@ -556,6 +602,7 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
 
       ReportUMAForPipelineStatus(it->second);
       FinalizeWatchTime(it->second.has_video, it->second.origin_url,
+                        &it->second.underflow_count,
                         &(it->second.watch_time_info),
                         FinalizeType::EVERYTHING);
       player_info_map.erase(it);
@@ -662,6 +709,7 @@ void MediaInternals::MediaInternalsUMAHandler::OnProcessTerminated(
   while (it != players_it->second.end()) {
     ReportUMAForPipelineStatus(it->second);
     FinalizeWatchTime(it->second.has_video, it->second.origin_url,
+                      &it->second.underflow_count,
                       &(it->second.watch_time_info), FinalizeType::EVERYTHING);
     players_it->second.erase(it++);
   }
