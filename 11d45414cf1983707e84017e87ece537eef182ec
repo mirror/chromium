@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "02668f3b_851db6d2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-30T23:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d42e9f7a_9a0bff41",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa584a5_d66e94ce",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
         "patchSetId": 2
@@ -135,6 +153,24 @@
       "writtenOn": "2017-05-30T23:21:32Z",
       "side": 1,
       "message": "Why is this particular string used as the contents of the file here?",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9436d092_fcceb328",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-30T23:34:49Z",
+      "side": 1,
+      "message": "Added comment describing the source of the text:\n           # Make the fallback baseline the same as the actual result of the test.\n           # The value is the same as actual_result of the test defined in test.py.\n            \u0027text-image-checksum_fail-txt\u0027)",
+      "parentUuid": "caa584a5_d66e94ce",
       "revId": "11d45414cf1983707e84017e87ece537eef182ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
