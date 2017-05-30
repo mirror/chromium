@@ -75,4 +75,22 @@ public class FaceDetectionImplTest extends InstrumentationTestCase {
         assertEquals(24.0, results[0].boundingBox.x, 0.1);
         assertEquals(20.0, results[0].boundingBox.y, 0.1);
     }
+
+    @SmallTest
+    @Feature({"ShapeDetection"})
+    public void testDetectHandlesOddWidths() throws Exception {
+        // Pad the image so that the width is odd.
+        Bitmap paddedBitmap = Bitmap.createBitmap(MONA_LISA_BITMAP.getWidth() + 1,
+                MONA_LISA_BITMAP.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(paddedBitmap);
+        canvas.drawBitmap(MONA_LISA_BITMAP, 0, 0, null);
+        assertEquals(1, paddedBitmap.getWidth() % 2);
+        FaceDetectionResult[] results = detect(paddedBitmap);
+
+        assertEquals(1, results.length);
+        assertEquals(40.0, results[0].boundingBox.width, 0.1);
+        assertEquals(40.0, results[0].boundingBox.height, 0.1);
+        assertEquals(24.0, results[0].boundingBox.x, 0.1);
+        assertEquals(20.0, results[0].boundingBox.y, 0.1);
+    }
 }
