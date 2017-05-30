@@ -16,6 +16,24 @@
       "revId": "21dd9176bc03176a9d99ce7a37cecf524b5ed166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c766d658_8c5fa18f",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-05-30T17:21:08Z",
+      "side": 1,
+      "message": "There\u0027s a paragraph in the commit message about HR that I\u0027ve just updated - hopefully enough now to explain why. Basically, we used to get a total margin box height of 0.5em in HR elements inside SELECT elements, because the top and bottom margins (both specified as 0.5em with a \"hr\" selector further up in this file) used to collapse. That will no longer happen, since HR now establishes a new block formatting context, so we have to compensate somehow.",
+      "parentUuid": "2a122e35_e406b4e4",
+      "revId": "21dd9176bc03176a9d99ce7a37cecf524b5ed166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
