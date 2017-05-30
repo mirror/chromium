@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "1f7df923_77e7dc17",
+        "filename": "tools/perf/docs/perf_bot_sheriffing.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-05-30T19:04:16Z",
+      "side": 1,
+      "message": "Another (probably more convenient) way of finding which story is failing is through looking at the buildbot page.  For example, search for \"Unexpected failures\" in https://build.chromium.org/p/chromium.perf/builders/Win%208%20Perf/builds/812",
+      "revId": "b7aff813ae8ca7238e7dc1162255b49c7a1baf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3f9111f_3bef208a",
         "filename": "tools/perf/docs/perf_bot_sheriffing.md",
         "patchSetId": 2
