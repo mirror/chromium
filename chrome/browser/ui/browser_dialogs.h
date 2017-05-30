@@ -12,6 +12,7 @@
 #include "base/callback.h"
 #include "base/optional.h"
 #include "base/strings/string16.h"
+#include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/bookmarks/bookmark_editor.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -154,14 +155,27 @@ payments::PaymentRequestDialog* CreatePaymentRequestDialog(
 using WebShareTargetPickerCallback =
     base::OnceCallback<void(const base::Optional<std::string>&)>;
 
+// App's title and manifest URL.
+struct WebShareTarget {
+  WebShareTarget(std::string name, GURL manifest_url)
+      : name(base::UTF8ToUTF16(name)), manifest_url(manifest_url) {}
+
+  bool operator==(const WebShareTarget& other) const {
+    return std::tie(name, manifest_url) ==
+           std::tie(other.name, other.manifest_url);
+  }
+
+  base::string16 name;
+  GURL manifest_url;
+};
+
 // Shows the dialog to choose a share target app. |targets| is a list of app
 // title and manifest URL pairs that will be shown in a list. If the user picks
 // a target, this calls |callback| with the manifest URL of the chosen target,
 // or supplies null if the user cancelled the share.
-void ShowWebShareTargetPickerDialog(
-    gfx::NativeWindow parent_window,
-    const std::vector<std::pair<base::string16, GURL>>& targets,
-    WebShareTargetPickerCallback callback);
+void ShowWebShareTargetPickerDialog(gfx::NativeWindow parent_window,
+                                    const std::vector<WebShareTarget>& targets,
+                                    WebShareTargetPickerCallback callback);
 
 #endif  // TOOLKIT_VIEWS
 

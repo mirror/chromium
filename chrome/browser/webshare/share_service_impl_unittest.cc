@@ -81,7 +81,7 @@ class ShareServiceTestImpl : public ShareServiceImpl {
 
   const std::string& GetLastUsedTargetURL() { return last_used_target_url_; }
 
-  const std::vector<std::pair<base::string16, GURL>>& GetTargetsInPicker() {
+  const std::vector<chrome::WebShareTarget>& GetTargetsInPicker() {
     return targets_in_picker_;
   }
 
@@ -91,7 +91,7 @@ class ShareServiceTestImpl : public ShareServiceImpl {
 
  private:
   void ShowPickerDialog(
-      const std::vector<std::pair<base::string16, GURL>>& targets,
+      const std::vector<chrome::WebShareTarget>& targets,
       chrome::WebShareTargetPickerCallback callback) override {
     // Store the arguments passed to the picker dialog.
     targets_in_picker_ = targets;
@@ -122,7 +122,7 @@ class ShareServiceTestImpl : public ShareServiceImpl {
   // The last URL passed to OpenTargetURL.
   std::string last_used_target_url_;
   // The targets passed to ShowPickerDialog.
-  std::vector<std::pair<base::string16, GURL>> targets_in_picker_;
+  std::vector<chrome::WebShareTarget> targets_in_picker_;
   // The callback passed to ShowPickerDialog (which is supposed to be called
   // with the user's chosen result, or nullopt if cancelled).
   chrome::WebShareTargetPickerCallback picker_callback_;
@@ -185,9 +185,9 @@ TEST_F(ShareServiceImplUnittest, ShareCallbackParams) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlHigh)),
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
+  const std::vector<chrome::WebShareTarget> kExpectedTargets{
+      chrome::WebShareTarget(kTargetName, GURL(kManifestUrlHigh)),
+      chrome::WebShareTarget(kTargetName, GURL(kManifestUrlLow))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-low.com.
@@ -243,9 +243,9 @@ TEST_F(ShareServiceImplUnittest, ShareCancelWithTargets) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlHigh)),
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
+  const std::vector<chrome::WebShareTarget> kExpectedTargets{
+      chrome::WebShareTarget(kTargetName, GURL(kManifestUrlHigh)),
+      chrome::WebShareTarget(kTargetName, GURL(kManifestUrlLow))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Cancel the dialog.
@@ -274,8 +274,8 @@ TEST_F(ShareServiceImplUnittest, ShareBrokenUrl) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlHigh))};
+  const std::vector<chrome::WebShareTarget> kExpectedTargets{
+      chrome::WebShareTarget(kTargetName, GURL(kManifestUrlHigh))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-high.com.
@@ -303,8 +303,8 @@ TEST_F(ShareServiceImplUnittest, ShareWithSomeInsufficientlyEngagedTargets) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
+  const std::vector<chrome::WebShareTarget> kExpectedTargets{
+      chrome::WebShareTarget(kTargetName, GURL(kManifestUrlLow))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-low.com.
@@ -338,8 +338,8 @@ TEST_F(ShareServiceImplUnittest, ShareServiceDeletion) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
+  const std::vector<chrome::WebShareTarget> kExpectedTargets{
+      chrome::WebShareTarget(kTargetName, GURL(kManifestUrlLow))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   chrome::WebShareTargetPickerCallback picker_callback =

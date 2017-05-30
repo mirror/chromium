@@ -58,7 +58,7 @@ class ShareServiceImpl : public blink::mojom::ShareService {
   // target, the result passed to |callback| is the manifest URL of the chosen
   // target, or is null if the user cancelled the share. Virtual for testing.
   virtual void ShowPickerDialog(
-      const std::vector<std::pair<base::string16, GURL>>& targets,
+      const std::vector<chrome::WebShareTarget>& targets,
       chrome::WebShareTargetPickerCallback callback);
 
   // Opens a new tab and navigates to |target_url|.
@@ -67,8 +67,7 @@ class ShareServiceImpl : public blink::mojom::ShareService {
 
   // Returns all stored Share Targets that have a high enough engagement score
   // with the user.
-  std::vector<std::pair<base::string16, GURL>>
-  GetTargetsWithSufficientEngagement(
+  std::vector<chrome::WebShareTarget> GetTargetsWithSufficientEngagement(
       const base::DictionaryValue& share_targets);
 
   // Writes to |url_template_filled|, a copy of |url_template| with all

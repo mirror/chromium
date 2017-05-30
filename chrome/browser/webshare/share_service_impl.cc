@@ -105,7 +105,7 @@ bool ShareServiceImpl::ReplacePlaceholders(base::StringPiece url_template,
 }
 
 void ShareServiceImpl::ShowPickerDialog(
-    const std::vector<std::pair<base::string16, GURL>>& targets,
+    const std::vector<chrome::WebShareTarget>& targets,
     chrome::WebShareTargetPickerCallback callback) {
   // TODO(mgiuca): Get the browser window as |parent_window|.
   chrome::ShowWebShareTargetPickerDialog(nullptr /* parent_window */, targets,
@@ -146,13 +146,13 @@ blink::mojom::EngagementLevel ShareServiceImpl::GetEngagementLevel(
 }
 
 // static
-std::vector<std::pair<base::string16, GURL>>
+std::vector<chrome::WebShareTarget>
 ShareServiceImpl::GetTargetsWithSufficientEngagement(
     const base::DictionaryValue& share_targets) {
   constexpr blink::mojom::EngagementLevel kMinimumEngagementLevel =
       blink::mojom::EngagementLevel::LOW;
 
-  std::vector<std::pair<base::string16, GURL>> sufficiently_engaged_targets;
+  std::vector<chrome::WebShareTarget> sufficiently_engaged_targets;
 
   for (base::DictionaryValue::Iterator it(share_targets); !it.IsAtEnd();
        it.Advance()) {
@@ -165,8 +165,7 @@ ShareServiceImpl::GetTargetsWithSufficientEngagement(
       std::string name;
       share_target_dict->GetString("name", &name);
 
-      sufficiently_engaged_targets.push_back(
-          make_pair(base::UTF8ToUTF16(name), manifest_url));
+      sufficiently_engaged_targets.emplace_back(name, manifest_url);
     }
   }
 
@@ -183,7 +182,7 @@ void ShareServiceImpl::Share(const std::string& title,
                       ->GetDictionary(prefs::kWebShareVisitedTargets)
                       ->CreateDeepCopy();
 
-  std::vector<std::pair<base::string16, GURL>> sufficiently_engaged_targets =
+  std::vector<chrome::WebShareTarget> sufficiently_engaged_targets =
       GetTargetsWithSufficientEngagement(*share_targets);
 
   ShowPickerDialog(

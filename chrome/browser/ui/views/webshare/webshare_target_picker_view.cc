@@ -30,7 +30,7 @@ int kDialogHeight = 400;
 class TargetPickerTableModel : public ui::TableModel {
  public:
   explicit TargetPickerTableModel(
-      const std::vector<std::pair<base::string16, GURL>>* targets);
+      const std::vector<chrome::WebShareTarget>* targets);
 
  private:
   // ui::TableModel overrides:
@@ -39,13 +39,13 @@ class TargetPickerTableModel : public ui::TableModel {
   void SetObserver(ui::TableModelObserver* observer) override;
 
   // Owned by WebShareTargetPickerView.
-  const std::vector<std::pair<base::string16, GURL>>* targets_;
+  const std::vector<chrome::WebShareTarget>* targets_;
 
   DISALLOW_COPY_AND_ASSIGN(TargetPickerTableModel);
 };
 
 TargetPickerTableModel::TargetPickerTableModel(
-    const std::vector<std::pair<base::string16, GURL>>* targets)
+    const std::vector<chrome::WebShareTarget>* targets)
     : targets_(targets) {}
 
 int TargetPickerTableModel::RowCount() {
@@ -55,9 +55,9 @@ int TargetPickerTableModel::RowCount() {
 base::string16 TargetPickerTableModel::GetText(int row, int /*column_id*/) {
   // Show "title (origin)", to disambiguate titles that are the same, and as a
   // security measure.
-  return (*targets_)[row].first +
-         base::UTF8ToUTF16(" (" + (*targets_)[row].second.GetOrigin().spec() +
-                           ")");
+  return (*targets_)[row].name +
+         base::UTF8ToUTF16(
+             " (" + (*targets_)[row].manifest_url.GetOrigin().spec() + ")");
 }
 
 void TargetPickerTableModel::SetObserver(ui::TableModelObserver* observer) {}
@@ -66,7 +66,7 @@ namespace chrome {
 
 void ShowWebShareTargetPickerDialog(
     gfx::NativeWindow parent_window,
-    const std::vector<std::pair<base::string16, GURL>>& targets,
+    const std::vector<WebShareTarget>& targets,
     chrome::WebShareTargetPickerCallback callback) {
   constrained_window::CreateBrowserModalDialogViews(
       new WebShareTargetPickerView(targets, std::move(callback)), parent_window)
@@ -76,7 +76,7 @@ void ShowWebShareTargetPickerDialog(
 }  // namespace chrome
 
 WebShareTargetPickerView::WebShareTargetPickerView(
-    const std::vector<std::pair<base::string16, GURL>>& targets,
+    const std::vector<chrome::WebShareTarget>& targets,
     chrome::WebShareTargetPickerCallback close_callback)
     : targets_(targets),
       table_model_(base::MakeUnique<TargetPickerTableModel>(&targets_)),
@@ -144,7 +144,7 @@ bool WebShareTargetPickerView::Accept() {
   if (!close_callback_.is_null()) {
     DCHECK(!table_->selection_model().empty());
     std::move(close_callback_)
-        .Run(targets_[table_->FirstSelectedRow()].second.spec());
+        .Run(targets_[table_->FirstSelectedRow()].manifest_url.spec());
   }
 
   return true;
