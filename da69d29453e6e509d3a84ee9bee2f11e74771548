@@ -90,6 +90,29 @@
     },
     {
       "key": {
+        "uuid": "91483536_a6a7856a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_duration_metric_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-05-30T17:15:59Z",
+      "side": 1,
+      "message": "instead of hand crafting this, can you use UmaHistogramEnumeration from histogram_functions.h?",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b644dc7e_ed1d901c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -158,6 +181,23 @@
       "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c60beb28_5f2f834e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59422,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-05-30T17:15:59Z",
+      "side": 1,
+      "message": "optional, but you can use histogram suffixes to make this more concise.",
+      "revId": "da69d29453e6e509d3a84ee9bee2f11e74771548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
