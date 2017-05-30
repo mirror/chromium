@@ -16,6 +16,24 @@
       "revId": "18c35714dcada976737adc70bae945b3177531a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcb599b_e2ef52fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-30T20:59:56Z",
+      "side": 1,
+      "message": "Yeah so the idea is we won\u0027t explicitly kill the service if we have any running or paused downloads.  Since it\u0027s a background service we\u0027re available for Android to kill us as necessary.  The SystemDownloadNotifier detaches the bind at this point too (IIRC) so the service could die at any time if the system decides to kill it.\n\nHappy to talk if you think we should kill if we have paused downloads too. :)",
+      "parentUuid": "0c485ced_f5180399",
+      "revId": "18c35714dcada976737adc70bae945b3177531a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
