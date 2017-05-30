@@ -596,7 +596,7 @@ void RootWindowController::CloseChildWindows() {
   shelf->DestroyShelfWidget();
 
   aura::client::SetDragDropClient(GetRootWindow(), nullptr);
-  aura::client::SetTooltipClient(GetRootWindow(), nullptr);
+  ::wm::SetTooltipClient(GetRootWindow(), nullptr);
 }
 
 void RootWindowController::MoveWindowsTo(aura::Window* dst) {
