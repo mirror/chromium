@@ -59,6 +59,8 @@ blink_core_sources("page") {
     "SpatialNavigation.cpp",
     "SpatialNavigation.h",
     "SpellCheckerClient.h",
+    "SpellCheckerClientImpl.cpp",
+    "SpellCheckerClientImpl.h",
     "TouchAdjustment.cpp",
     "TouchAdjustment.h",
     "TouchDisambiguation.cpp",
