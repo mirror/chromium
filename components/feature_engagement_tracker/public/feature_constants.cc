@@ -13,6 +13,8 @@ const base::Feature kIPHDemoMode{"IPH_DemoMode",
 
 const base::Feature kIPHDataSaverPreview{"IPH_DataSaverPreview",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kIPHDataSaverDetail{"IPH_DataSaverDetail",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kIPHDownloadPageFeature{"IPH_DownloadPage",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kIPHDownloadHomeFeature{"IPH_DownloadHome",

@@ -81,7 +81,11 @@ FeatureEngagementTracker* FeatureEngagementTracker::Create(
   base::FilePath event_storage_dir = storage_dir.Append(kEventDBStorageDir);
   auto store =
       base::MakeUnique<PersistentStore>(event_storage_dir, std::move(db));
-  auto storage_validator = base::MakeUnique<FeatureConfigStorageValidator>();
+
+  std::unique_ptr<FeatureConfigStorageValidator> storage_validator =
+      base::MakeUnique<FeatureConfigStorageValidator>();
+  FeatureConfigStorageValidator* storage_validator_ptr =
+      storage_validator.get();
   auto raw_model = base::MakeUnique<ModelImpl>(std::move(store),
                                                std::move(storage_validator));
 
@@ -105,7 +109,7 @@ FeatureEngagementTracker* FeatureEngagementTracker::Create(
 
   // Initialize the configuration.
   configuration->ParseFeatureConfigs(GetAllFeatures());
-  storage_validator->InitializeFeatures(GetAllFeatures(), *configuration);
+  storage_validator_ptr->InitializeFeatures(GetAllFeatures(), *configuration);
 
   return new FeatureEngagementTrackerImpl(
       std::move(model), std::move(availability_model), std::move(configuration),
