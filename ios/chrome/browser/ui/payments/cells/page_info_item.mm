@@ -17,7 +17,8 @@
 #endif
 
 NSString* const kPageInfoFaviconImageViewID = @"kPageInfoFaviconImageViewID";
-NSString* const kPageInfoLockIndicatorImageViewID = @"kPageInfoLockIndicatorImageViewID";
+NSString* const kPageInfoLockIndicatorImageViewID =
+    @"kPageInfoLockIndicatorImageViewID";
 
 namespace {
 // Padding used on the top and bottom edges of the cell.
@@ -26,7 +27,7 @@ const CGFloat kVerticalPadding = 12;
 // Padding used on the leading and trailing edges of the cell and between the
 // favicon and labels.
 const CGFloat kHorizontalPadding = 16;
-  
+
 // Dimension for lock indicator.
 const CGFloat kLockIndicatorDimension = 16;
 }
@@ -53,11 +54,11 @@ const CGFloat kLockIndicatorDimension = 16;
   cell.pageTitleLabel.text = self.pageTitle;
   cell.pageHostLabel.text = self.pageHost;
   cell.pageLockIndicatorView.image = nil;
-    
+
   if ([self.pageHost hasPrefix:@"https://"]) {
     // Set lock image.
     cell.pageLockIndicatorView.image = [NativeImage(IDR_IOS_OMNIBOX_HTTPS_VALID)
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   }
 
   // Invalidate the constraints so that layout can account for whether or not a
@@ -109,12 +110,14 @@ const CGFloat kLockIndicatorDimension = 16;
     _pageHostLabel.backgroundColor = [UIColor clearColor];
     _pageHostLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_pageHostLabel];
-    
+
     // Lock icon
     _pageLockIndicatorView = [[UIImageView alloc] initWithFrame:CGRectZero];
     _pageLockIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    _pageLockIndicatorView.accessibilityIdentifier = kPageInfoLockIndicatorImageViewID;
-    [_pageLockIndicatorView setTintColor:skia::UIColorFromSkColor(gfx::kGoogleGreen700)];
+    _pageLockIndicatorView.accessibilityIdentifier =
+        kPageInfoLockIndicatorImageViewID;
+    [_pageLockIndicatorView
+        setTintColor:skia::UIColorFromSkColor(gfx::kGoogleGreen700)];
     [self.contentView addSubview:_pageLockIndicatorView];
 
     // Layout
@@ -129,19 +132,20 @@ const CGFloat kLockIndicatorDimension = 16;
                          constant:-(2 * kVerticalPadding)],
       [_pageFaviconView.widthAnchor
           constraintEqualToAnchor:_pageFaviconView.heightAnchor],
-      
+
       // The constraint on the leading achor of the lock icon is activated in
       // updateConstraints rather than here so that it can depend on whether a
       // favicon is present or not.
       [_pageLockIndicatorView.leadingAnchor
           constraintEqualToAnchor:_pageTitleLabel.leadingAnchor
-                         constant: -4.0],
-      [_pageLockIndicatorView.heightAnchor constraintEqualToConstant:kLockIndicatorDimension],
+                         constant:-4.0],
+      [_pageLockIndicatorView.heightAnchor
+          constraintEqualToConstant:kLockIndicatorDimension],
       [_pageLockIndicatorView.widthAnchor
           constraintEqualToAnchor:_pageLockIndicatorView.heightAnchor],
       [_pageLockIndicatorView.bottomAnchor
           constraintEqualToAnchor:_pageFaviconView.bottomAnchor
-                         constant: 3.0],
+                         constant:3.0],
 
       [_pageTitleLabel.trailingAnchor
           constraintLessThanOrEqualToAnchor:self.contentView.trailingAnchor
@@ -173,12 +177,12 @@ const CGFloat kLockIndicatorDimension = 16;
                                   : self.contentView.leadingAnchor
                      constant:kHorizontalPadding];
   _pageTitleLabelLeadingConstraint.active = YES;
-    
+
   _pageHostLabelLeadingConstraint.active = NO;
   _pageHostLabelLeadingConstraint = [_pageHostLabel.leadingAnchor
       constraintEqualToAnchor:_pageLockIndicatorView.image
                                   ? _pageLockIndicatorView.trailingAnchor
-                                     : _pageTitleLabel.leadingAnchor];
+                                  : _pageTitleLabel.leadingAnchor];
   _pageHostLabelLeadingConstraint.active = YES;
 
   [super updateConstraints];
