@@ -1,0 +1,249 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutInline (relative positioned) SPAN id='child'",
+          "rect": [135, 361, 159, 195],
+          "reason": "appeared"
+        },
+        {
+          "object": "InlineTextBox 'A B C'",
+          "rect": [300, 302, 80, 177],
+          "reason": "disappeared"
+        },
+        {
+          "object": "InlineTextBox 'D E F'",
+          "rect": [300, 302, 80, 177],
+          "reason": "disappeared"
+        },
+        {
+          "object": "InlineTextBox 'G H I'",
+          "rect": [300, 302, 80, 177],
+          "reason": "disappeared"
+        },
+        {
+          "object": "InlineTextBox 'J K L'",
+          "rect": [300, 302, 80, 177],
+          "reason": "disappeared"
+        },
+        {
+          "object": "InlineTextBox 'M N O'",
+          "rect": [300, 302, 80, 177],
+          "reason": "disappeared"
+        },
+        {
+          "object": "InlineTextBox 'P Q R'",
+          "rect": [300, 302, 80, 177],
+          "reason": "disappeared"
+        },
+        {
+          "object": "InlineTextBox 'S T U'",
+          "rect": [300, 302, 80, 177],
+          "reason": "disappeared"
+        },
+        {
+          "object": "InlineTextBox 'V W X'",
+          "rect": [300, 302, 80, 177],
+          "reason": "disappeared"
+        },
+        {
+          "object": "InlineTextBox 'Y Z'",
+          "rect": [300, 302, 80, 177],
+          "reason": "disappeared"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutBlockFlow (positioned) DIV id='box'",
+      "reason": "subtree"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutInline (relative positioned) SPAN id='child'",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'A B C'",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'D E F'",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'G H I'",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'J K L'",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'M N O'",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'P Q R'",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'S T U'",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'V W X'",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'Y Z'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV id='box'",
+      "reason": "style change"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutInline (relative positioned) SPAN id='child'",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'A B C'",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'D E F'",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'G H I'",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'J K L'",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'M N O'",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'P Q R'",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'S T U'",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'V W X'",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'Y Z'",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "style change"
+    }
+  ]
+}
+
