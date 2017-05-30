@@ -41,6 +41,9 @@ blink_core_sources("exported") {
     "WebSelection.cpp",
     "WebSelector.cpp",
     "WebSerializedScriptValue.cpp",
+    "WebTextCheckingCompletionImpl.cpp",
+    "WebTextCheckingCompletionImpl.h",
+    "WebTextCheckingResult.cpp",
     "WebViewBase.h",
   ]
 
