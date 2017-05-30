@@ -70,6 +70,7 @@ class SystemHealthStory(page.Page):
   SUPPORTED_PLATFORMS = platforms.ALL_PLATFORMS
   TAGS = None
   PLATFORM_SPECIFIC = False
+  _COUNTER = 0
 
   def __init__(self, story_set, take_memory_measurement):
     case, group, _ = self.NAME.split(':')
@@ -122,6 +123,16 @@ class SystemHealthStory(page.Page):
       action_runner.MeasureMemory(deterministic_mode=True)
     else:
       action_runner.Wait(_WAIT_TIME_AFTER_LOAD)
+    device = action_runner.tab.browser.platform._platform_backend.device
+    device.RunShellCommand([
+        'am', 'dumpheap', 'com.google.android.apps.chrome',
+        '/data/local/tmp/dumpheap.hprof'], check_return=True)
+    action_runner.Wait(20)
+    self._COUNTER += 1
+    device.PullFile(
+        '/data/local/tmp/dumpheap.hprof',
+        '/usr/local/google/code/clankium/src/tools/perf/dumpheap_%02d.hprof' %
+        self._COUNTER)
 
   def _Login(self, action_runner):
     pass
