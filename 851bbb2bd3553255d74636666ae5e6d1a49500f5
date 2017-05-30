@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2987c1e5_6191ae19",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-05-30T22:37:52Z",
+      "side": 1,
+      "message": "Move this into a json dictionary and do a simple lookup here.",
+      "range": {
+        "startLine": 1182,
+        "startChar": 14,
+        "endLine": 1182,
+        "endChar": 36
+      },
+      "revId": "851bbb2bd3553255d74636666ae5e6d1a49500f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0dbe510_0f8f8660",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-05-30T22:37:52Z",
+      "side": 1,
+      "message": "These message ids are *not* valid.\n\nPlease add a test for these three states.",
+      "range": {
+        "startLine": 1190,
+        "startChar": 14,
+        "endLine": 1190,
+        "endChar": 36
+      },
+      "revId": "851bbb2bd3553255d74636666ae5e6d1a49500f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
