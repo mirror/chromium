@@ -384,6 +384,7 @@ nacl_list="\
   lib32ncurses5-dev
   libnss3:i386
   libpango1.0-0:i386
+  libpci3:i386
   libssl-dev:i386
   libtinfo-dev
   libtinfo-dev:i386
