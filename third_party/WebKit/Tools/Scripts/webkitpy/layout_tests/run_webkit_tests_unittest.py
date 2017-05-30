@@ -1133,13 +1133,31 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
         # for both existing and new baselines.
         host = MockHost()
         details, err, _ = logging_run(
-            ['--pixel-tests', '--new-baseline', 'passes/image.html'],
+            ['--pixel-tests', '--new-baseline', 'failures/unexpected/text-image-checksum.html'],
             tests_included=True, host=host, new_results=True)
         file_list = host.filesystem.written_files.keys()
         self.assertEqual(details.exit_code, 0)
+        print file_list
         self.assertEqual(len(file_list), 8)
         self.assert_baselines(file_list,
-                              'platform/test-mac-mac10.10/passes/image', ['.txt', '.png'], err)
+                              'platform/test-mac-mac10.10/failures/unexpected/text-image-checksum', ['.txt', '.png'], err)
+
+    def test_new_baseline_same_as_fallback(self):
+        # Test that we update the platform expectations in the version-specific directories
+        # for both existing and new baselines.
+        host = MockHost()
+        host.filesystem.write_text_file(
+            test.LAYOUT_TEST_DIR + '/failures/unexpected/text-image-checksum-expected.txt',
+            'text-image-checksum_fail-txt')
+        details, err, _ = logging_run(
+            ['--pixel-tests', '--new-baseline', 'failures/unexpected/text-image-checksum.html'],
+            tests_included=True, host=host, new_results=True)
+        file_list = host.filesystem.written_files.keys()
+        self.assertEqual(details.exit_code, 0)
+        print file_list
+        self.assertEqual(len(file_list), 8)
+        self.assert_baselines(file_list,
+                              'platform/test-mac-mac10.10/failures/unexpected/text-image-checksum', ['.png'], err)
 
     def test_reftest_reset_results(self):
         # Test rebaseline of reftests.

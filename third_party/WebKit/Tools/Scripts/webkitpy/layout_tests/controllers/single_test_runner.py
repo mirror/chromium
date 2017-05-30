@@ -27,6 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+import hashlib
 import logging
 import re
 
@@ -188,13 +189,13 @@ class SingleTestRunner(object):
         missingImage = test_result.has_failure_matching_types(
             test_failures.FailureMissingImage, test_failures.FailureMissingImageHash)
         if test_result.has_failure_matching_types(test_failures.FailureMissingResult):
-            self._save_baseline_data(driver_output.text, '.txt', self._location_for_new_baseline(driver_output.text, '.txt'))
+            self._save_baseline_data(driver_output.text, '.txt', self._location_for_missing_baseline(driver_output.text, '.txt'))
         if test_result.has_failure_matching_types(test_failures.FailureMissingAudio):
-            self._save_baseline_data(driver_output.audio, '.wav', self._location_for_new_baseline(driver_output.audio, '.wav'))
+            self._save_baseline_data(driver_output.audio, '.wav', self._location_for_missing_baseline(driver_output.audio, '.wav'))
         if missingImage:
-            self._save_baseline_data(driver_output.image, '.png', self._location_for_new_baseline(driver_output.image, '.png'))
+            self._save_baseline_data(driver_output.image, '.png', self._location_for_missing_baseline(driver_output.image, '.png'))
 
-    def _location_for_new_baseline(self, data, extension):
+    def _location_for_missing_baseline(self, data, extension):
         if self._options.add_platform_exceptions:
             return self.VERSION_DIR
         if extension == '.png':
@@ -217,6 +218,8 @@ class SingleTestRunner(object):
             return
         port = self._port
         fs = self._filesystem
+        output_basename = fs.basename(fs.splitext(self._test_name)[0] + '-expected' + extension)
+
         if location == self.ALONGSIDE_TEST:
             output_dir = fs.dirname(port.abspath_for_test(self._test_name))
         elif location == self.VERSION_DIR:
@@ -229,10 +232,18 @@ class SingleTestRunner(object):
             raise AssertionError('unrecognized baseline location: %s' % location)
 
         fs.maybe_make_directory(output_dir)
-        output_basename = fs.basename(fs.splitext(self._test_name)[0] + '-expected' + extension)
         output_path = fs.join(output_dir, output_basename)
+
+        if location == self.VERSION_DIR:
+            fallback_path = port.expected_filename(self._test_name, extension)
+            if fallback_path != output_path and fs.sha1(fallback_path) == hashlib.sha1(data).hexdigest():
+                _log.info('Not writing new expected result "%s" because it is the same as "%s"',
+                          port.relative_test_filename(output_path), port.relative_test_filename(fallback_path))
+                return
+
         _log.info('Writing new expected result "%s"', port.relative_test_filename(output_path))
         port.update_baseline(output_path, data)
+
 
     def _handle_error(self, driver_output, reference_filename=None):
         """Returns test failures if some unusual errors happen in driver's run.
