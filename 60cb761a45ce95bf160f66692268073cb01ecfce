@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54a7bc35_2074e44f",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-05-30T14:29:21Z",
+      "side": 1,
+      "message": "Initially I changed this to\n`time_list_ \u003d denial_time_dict-\u003eSetList(language_, base::MakeUnique\u003cbase::ListValue\u003e());`\nbut this caused tests to fail. The reason we can\u0027t do this is that |denial_value| points to |denial_time_dict[language_]|.\nSetting time_list_ directly would overwrite this and |has_old_style| would always evaluate to false.",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 57
+      },
+      "revId": "60cb761a45ce95bf160f66692268073cb01ecfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ac2303_961703ca",
+        "filename": "extensions/browser/api/web_request/upload_data_presenter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-05-30T14:29:21Z",
+      "side": 1,
+      "message": "There was an inconsistency in the initial code. It used no path expansion in the if check, but then made use of path expansion in the body. Initially I changed it to do path expansion in both cases, but this again caused tests to fail. Thus there isn\u0027t any path expansion now.",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "60cb761a45ce95bf160f66692268073cb01ecfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
