@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5cc74b0_0ffee68f",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-30T22:31:27Z",
+      "side": 1,
+      "message": "FWIW, I think the old name is clearer. I have no idea what \u0027local\u0027 means in this context.",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "561915cd4c2c152dc7207f5d1cbea910f56079f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16f8522_520ed39d",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-30T22:31:27Z",
+      "side": 1,
+      "message": "Basically, the return values + this comment confuse me. I would imagine this just returns true if a user gesture is required--and that\u0027s what we do for the other two cases where user gestures are required.\n\nBut this one case is the opposite--we allow (but then deny later?)\n\nCan we make these paths consistent? I think it will be easy for other people to be confused about this as well.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 72
+      },
+      "revId": "561915cd4c2c152dc7207f5d1cbea910f56079f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
