@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c485ced_f5180399",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-05-30T20:49:03Z",
+      "side": 1,
+      "message": "why early return if \u003e 0? the SharedPreferenceHelper can contain paused downloads, right?",
+      "revId": "18c35714dcada976737adc70bae945b3177531a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
