@@ -151,6 +151,8 @@ void ProcessingInstruction::Process(const String& href, const String& charset) {
   StyleSheetResource* resource = nullptr;
   FetchParameters params(ResourceRequest(GetDocument().CompleteURL(href)),
                          FetchInitiatorTypeNames::processinginstruction);
+  params.MutableResourceRequest().SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeInclude);
   if (is_xsl_) {
     if (RuntimeEnabledFeatures::xsltEnabled())
       resource = XSLStyleSheetResource::Fetch(params, GetDocument().Fetcher());

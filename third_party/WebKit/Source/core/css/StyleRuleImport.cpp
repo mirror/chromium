@@ -132,6 +132,8 @@ void StyleRuleImport::RequestStyleSheet() {
 
   FetchParameters params(ResourceRequest(abs_url), FetchInitiatorTypeNames::css,
                          parent_style_sheet_->Charset());
+  params.MutableResourceRequest().SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeInclude);
   resource_ = CSSStyleSheetResource::Fetch(params, fetcher);
   if (resource_) {
     // if the import rule is issued dynamically, the sheet may be
