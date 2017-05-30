@@ -5,7 +5,6 @@
 #import "ios/chrome/browser/ui/payments/cells/page_info_item.h"
 
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
-
 #include "ios/chrome/grit/ios_theme_resources.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
 #import "ios/third_party/material_roboto_font_loader_ios/src/src/MaterialRobotoFontLoader.h"
@@ -28,8 +27,20 @@ const CGFloat kVerticalPadding = 12;
 // favicon and labels.
 const CGFloat kHorizontalPadding = 16;
 
-// Dimension for lock indicator.
+// Dimension for lock indicator in dp.
 const CGFloat kLockIndicatorDimension = 16;
+
+// There is some empty space between the left and right edges of the lock
+// indicator image contents and the square box it is contained within.
+// This padding represents that difference. This is useful when it comes
+// to aligning the lock indicator image with the title label.
+const CGFloat kLockIndicatorHorizontalPadding = 4;
+
+// There is some empty space between the top and bottom edges of the lock
+// indicator image contents and the square box it is contained within.
+// This padding represents that difference. This is useful when it comes
+// to aligning the lock indicator image with the bottom of the host label.
+const CGFloat kLockIndicatorVerticalPadding = 3;
 }
 
 @implementation PageInfoItem
@@ -37,6 +48,7 @@ const CGFloat kLockIndicatorDimension = 16;
 @synthesize pageFavicon = _pageFavicon;
 @synthesize pageTitle = _pageTitle;
 @synthesize pageHost = _pageHost;
+@synthesize connectionSecure = _connectionSecure;
 
 #pragma mark CollectionViewItem
 
@@ -55,8 +67,9 @@ const CGFloat kLockIndicatorDimension = 16;
   cell.pageHostLabel.text = self.pageHost;
   cell.pageLockIndicatorView.image = nil;
 
-  if ([self.pageHost hasPrefix:@"https://"]) {
-    // Set lock image.
+  if (self.connectionSecure) {
+    // Set lock image. UIImageRenderingModeAlwaysTemplate is used so that
+    // the color of the lock indicator image can be changed to green.
     cell.pageLockIndicatorView.image = [NativeImage(IDR_IOS_OMNIBOX_HTTPS_VALID)
         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   }
@@ -138,14 +151,14 @@ const CGFloat kLockIndicatorDimension = 16;
       // favicon is present or not.
       [_pageLockIndicatorView.leadingAnchor
           constraintEqualToAnchor:_pageTitleLabel.leadingAnchor
-                         constant:-4.0],
+                         constant:-kLockIndicatorHorizontalPadding],
       [_pageLockIndicatorView.heightAnchor
           constraintEqualToConstant:kLockIndicatorDimension],
       [_pageLockIndicatorView.widthAnchor
           constraintEqualToAnchor:_pageLockIndicatorView.heightAnchor],
       [_pageLockIndicatorView.bottomAnchor
           constraintEqualToAnchor:_pageFaviconView.bottomAnchor
-                         constant:3.0],
+                         constant:kLockIndicatorVerticalPadding],
 
       [_pageTitleLabel.trailingAnchor
           constraintLessThanOrEqualToAnchor:self.contentView.trailingAnchor
