@@ -80,10 +80,10 @@ class WebShareTargetPickerViewTest : public views::ViewsTestBase {
   views::TableView* table() { return view_->table_; }
 
   // The result that was returned to the dialog's callback.
-  const base::Optional<std::string>& result() { return result_; }
+  const base::Optional<GURL>& result() { return result_; }
 
  private:
-  void OnCallback(const base::Optional<std::string>& result) {
+  void OnCallback(const base::Optional<GURL>& result) {
     result_ = result;
     if (quit_closure_)
       quit_closure_.Run();
@@ -92,7 +92,7 @@ class WebShareTargetPickerViewTest : public views::ViewsTestBase {
   std::unique_ptr<views::Widget> parent_widget_;
   WebShareTargetPickerView* view_ = nullptr;
 
-  base::Optional<std::string> result_;
+  base::Optional<GURL> result_;
 
   base::Closure quit_closure_;
 
@@ -147,7 +147,7 @@ TEST_F(WebShareTargetPickerViewTest, ChooseItem) {
 
   run_loop.Run();
 
-  EXPECT_EQ(base::Optional<std::string>("https://apptwo.xyz/"), result());
+  EXPECT_EQ(base::make_optional(GURL("https://apptwo.xyz/")), result());
 }
 
 // Table with 1 target. Select using double-click.
@@ -168,6 +168,6 @@ TEST_F(WebShareTargetPickerViewTest, ChooseItemWithDoubleClick) {
 
   run_loop.Run();
 
-  EXPECT_EQ(base::Optional<std::string>("https://appone.com/path/bits"),
+  EXPECT_EQ(base::make_optional(GURL("https://appone.com/path/bits")),
             result());
 }

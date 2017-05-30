@@ -90,7 +90,7 @@ class ShareServiceImpl : public blink::mojom::ShareService {
                       const std::string& text,
                       const GURL& share_url,
                       const ShareCallback& callback,
-                      const base::Optional<std::string>& result);
+                      const base::Optional<GURL>& result);
 
   base::WeakPtrFactory<ShareServiceImpl> weak_factory_;
 

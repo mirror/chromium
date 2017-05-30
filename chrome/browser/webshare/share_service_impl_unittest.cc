@@ -191,8 +191,7 @@ TEST_F(ShareServiceImplUnittest, ShareCallbackParams) {
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-low.com.
-  share_service_helper()->picker_callback().Run(
-      base::Optional<std::string>(kManifestUrlLow));
+  share_service_helper()->picker_callback().Run(GURL(kManifestUrlLow));
 
   const char kExpectedURL[] =
       "https://www.example-low.com/target/"
@@ -279,8 +278,7 @@ TEST_F(ShareServiceImplUnittest, ShareBrokenUrl) {
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-high.com.
-  share_service_helper()->picker_callback().Run(
-      base::Optional<std::string>(kManifestUrlHigh));
+  share_service_helper()->picker_callback().Run(GURL(kManifestUrlHigh));
 
   EXPECT_TRUE(share_service_helper()->GetLastUsedTargetURL().empty());
 }
@@ -308,8 +306,7 @@ TEST_F(ShareServiceImplUnittest, ShareWithSomeInsufficientlyEngagedTargets) {
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-low.com.
-  share_service_helper()->picker_callback().Run(
-      base::Optional<std::string>(kManifestUrlLow));
+  share_service_helper()->picker_callback().Run(GURL(kManifestUrlLow));
 
   const char kExpectedURL[] =
       "https://www.example-low.com/target/"
@@ -348,7 +345,7 @@ TEST_F(ShareServiceImplUnittest, ShareServiceDeletion) {
   DeleteShareService();
 
   // Pick example-low.com.
-  std::move(picker_callback).Run(base::Optional<std::string>(kManifestUrlLow));
+  std::move(picker_callback).Run(GURL(kManifestUrlLow));
 }
 
 // Replace various numbers of placeholders in various orders. Placeholders are

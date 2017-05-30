@@ -152,7 +152,7 @@ payments::PaymentRequestDialog* CreatePaymentRequestDialog(
 // Used to return the target the user picked or nullopt if the user cancelled
 // the share.
 using WebShareTargetPickerCallback =
-    base::OnceCallback<void(const base::Optional<std::string>&)>;
+    base::OnceCallback<void(const base::Optional<GURL>&)>;
 
 // Shows the dialog to choose a share target app. |targets| is a list of app
 // title and manifest URL pairs that will be shown in a list. If the user picks

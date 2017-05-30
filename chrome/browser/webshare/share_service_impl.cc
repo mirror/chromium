@@ -199,13 +199,13 @@ void ShareServiceImpl::OnPickerClosed(
     const std::string& text,
     const GURL& share_url,
     const ShareCallback& callback,
-    const base::Optional<std::string>& result) {
+    const base::Optional<GURL>& result) {
   if (!result.has_value()) {
     callback.Run(blink::mojom::ShareError::CANCELED);
     return;
   }
 
-  std::string chosen_target = result.value();
+  std::string chosen_target = result->spec();
 
   std::string url_template = GetTargetTemplate(chosen_target, *share_targets);
   std::string url_template_filled;
