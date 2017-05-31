@@ -599,7 +599,7 @@ Node* ContainerNode::RemoveChild(Node* old_child,
   }
 
   {
-    HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+    HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
     DocumentOrderedMap::RemoveScope tree_remove_scope;
 
     Node* prev = child->previousSibling();
@@ -655,7 +655,7 @@ void ContainerNode::ParserRemoveChild(Node& old_child) {
   ChildListMutationScope(*this).WillRemoveChild(old_child);
   old_child.NotifyMutationObserversNodeWillDetach();
 
-  HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   DocumentOrderedMap::RemoveScope tree_remove_scope;
 
   Node* prev = old_child.previousSibling();
@@ -693,7 +693,7 @@ void ContainerNode::RemoveChildren(SubtreeModificationAction action) {
   }
 
   {
-    HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+    HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
     DocumentOrderedMap::RemoveScope tree_remove_scope;
     {
       EventDispatchForbiddenScope assert_no_event_dispatch;
