@@ -146,18 +146,24 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
       TransferableResource::ReturnResources(frame.resource_list, &resources);
       ReturnResources(resources);
       DidReceiveCompositorFrameAck();
+      DidDiscardCompositorFrame(frame.metadata.presentation_token);
       return true;
     }
 
     surface = CreateSurface(surface_info);
   }
 
+  uint32_t presentation_token = frame.metadata.presentation_token;
   bool result = surface->QueueFrame(
       std::move(frame),
       base::Bind(&CompositorFrameSinkSupport::DidReceiveCompositorFrameAck,
                  weak_factory_.GetWeakPtr()),
       base::BindRepeating(&CompositorFrameSinkSupport::WillDrawSurface,
-                          weak_factory_.GetWeakPtr()));
+                          weak_factory_.GetWeakPtr()),
+      base::Bind(&CompositorFrameSinkSupport::DidPresentCompositorFrame,
+                 weak_factory_.GetWeakPtr(), presentation_token),
+      base::Bind(&CompositorFrameSinkSupport::DidDiscardCompositorFrame,
+                 weak_factory_.GetWeakPtr(), presentation_token));
 
   if (!result) {
     surface_manager_->DestroySurface(std::move(surface));
@@ -250,6 +256,22 @@ void CompositorFrameSinkSupport::DidReceiveCompositorFrameAck() {
 
   client_->DidReceiveCompositorFrameAck(surface_returned_resources_);
   surface_returned_resources_.clear();
+}
+
+void CompositorFrameSinkSupport::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  if (!presentation_token || !client_)
+    return;
+  client_->DidPresentCompositorFrame(presentation_token, timestamp, refresh);
+}
+
+void CompositorFrameSinkSupport::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  if (!presentation_token || !client_)
+    return;
+  client_->DidDiscardCompositorFrame(presentation_token);
 }
 
 void CompositorFrameSinkSupport::WillDrawSurface(

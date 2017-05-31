@@ -64,6 +64,20 @@ void GpuCompositorFrameSink::DidReceiveCompositorFrameAck(
     client_->DidReceiveCompositorFrameAck(resources);
 }
 
+void GpuCompositorFrameSink::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  if (client_)
+    client_->DidPresentCompositorFrame(presentation_token, timestamp, refresh);
+}
+
+void GpuCompositorFrameSink::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  if (client_)
+    client_->DidDiscardCompositorFrame(presentation_token);
+}
+
 void GpuCompositorFrameSink::ClaimTemporaryReference(
     const cc::SurfaceId& surface_id) {
   support_->ClaimTemporaryReference(surface_id);

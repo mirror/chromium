@@ -40,6 +40,9 @@ class CC_SURFACES_EXPORT Surface {
  public:
   using WillDrawCallback =
       base::RepeatingCallback<void(const LocalSurfaceId&, const gfx::Rect&)>;
+  using PresentedCallback =
+      base::Callback<void(base::TimeTicks, base::TimeDelta)>;
+  using DiscardedCallback = base::Callback<void()>;
 
   Surface(
       const SurfaceInfo& surface_info,
@@ -61,7 +64,9 @@ class CC_SURFACES_EXPORT Surface {
   // there is visible damage.
   bool QueueFrame(CompositorFrame frame,
                   const base::Closure& draw_callback,
-                  const WillDrawCallback& will_draw_callback);
+                  const WillDrawCallback& will_draw_callback,
+                  const PresentedCallback& presented_callback,
+                  const DiscardedCallback& discarded_callback);
   void RequestCopyOfOutput(std::unique_ptr<CopyOutputRequest> copy_request);
 
   // Notifies the Surface that a blocking SurfaceId now has an active frame.
@@ -132,13 +137,17 @@ class CC_SURFACES_EXPORT Surface {
   struct FrameData {
     FrameData(CompositorFrame&& frame,
               const base::Closure& draw_callback,
-              const WillDrawCallback& will_draw_callback);
+              const WillDrawCallback& will_draw_callback,
+              const PresentedCallback& presented_callback,
+              const DiscardedCallback& discarded_callback);
     FrameData(FrameData&& other);
     ~FrameData();
     FrameData& operator=(FrameData&& other);
     CompositorFrame frame;
     base::Closure draw_callback;
     WillDrawCallback will_draw_callback;
+    PresentedCallback presented_callback;
+    DiscardedCallback discarded_callback;
   };
 
   // Called to prevent additional CompositorFrames from being accepted into this

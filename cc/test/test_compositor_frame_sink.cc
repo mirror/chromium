@@ -179,6 +179,17 @@ void TestCompositorFrameSink::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
+void TestCompositorFrameSink::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  client_->DidPresentCompositorFrame(presentation_token, timestamp, refresh);
+}
+
+void TestCompositorFrameSink::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  client_->DidDiscardCompositorFrame(presentation_token);
+}
 void TestCompositorFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
   external_begin_frame_source_.OnBeginFrame(args);
 }

@@ -45,6 +45,10 @@ class FrameGenerator : public cc::mojom::MojoCompositorFrameSinkClient {
   // cc::mojom::MojoCompositorFrameSinkClient implementation:
   void DidReceiveCompositorFrameAck(
       const cc::ReturnedResourceArray& resources) override;
+  void DidPresentCompositorFrame(uint32_t presentation_token,
+                                 base::TimeTicks timestamp,
+                                 base::TimeDelta refresh) override;
+  void DidDiscardCompositorFrame(uint32_t presentation_token) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
   void ReclaimResources(const cc::ReturnedResourceArray& resources) override;
 

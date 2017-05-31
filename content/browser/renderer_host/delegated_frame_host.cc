@@ -503,6 +503,19 @@ void DelegatedFrameHost::DidReceiveCompositorFrameAck(
   renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources);
 }
 
+void DelegatedFrameHost::DidPresentCompositorFrame(uint32_t presentation_token,
+                                                   base::TimeTicks timestamp,
+                                                   base::TimeDelta refresh) {
+  renderer_compositor_frame_sink_->DidPresentCompositorFrame(
+      presentation_token, timestamp, refresh);
+}
+
+void DelegatedFrameHost::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  renderer_compositor_frame_sink_->DidDiscardCompositorFrame(
+      presentation_token);
+}
+
 void DelegatedFrameHost::ReclaimResources(
     const cc::ReturnedResourceArray& resources) {
   renderer_compositor_frame_sink_->ReclaimResources(resources);

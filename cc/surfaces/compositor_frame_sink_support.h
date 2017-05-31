@@ -96,6 +96,10 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
       const std::vector<SurfaceId>* active_referenced_surfaces);
 
   void DidReceiveCompositorFrameAck();
+  void DidPresentCompositorFrame(uint32_t presentation_token,
+                                 base::TimeTicks timestamp,
+                                 base::TimeDelta refresh);
+  void DidDiscardCompositorFrame(uint32_t presentation_token);
   void WillDrawSurface(const LocalSurfaceId& local_surface_id,
                        const gfx::Rect& damage_rect);
 
