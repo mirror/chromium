@@ -26,6 +26,7 @@ TEST(PaymentRequestPageInfoItemTest, TextLabels) {
   item.pageFavicon = pageFavicon;
   item.pageTitle = pageTitle;
   item.pageHost = pageHost;
+  item.connectionSecure = false;
 
   id cell = [[[item cellClass] alloc] init];
   ASSERT_TRUE([cell isMemberOfClass:[PageInfoCell class]]);
@@ -34,11 +35,13 @@ TEST(PaymentRequestPageInfoItemTest, TextLabels) {
   EXPECT_FALSE(pageInfoCell.pageTitleLabel.text);
   EXPECT_FALSE(pageInfoCell.pageHostLabel.text);
   EXPECT_FALSE(pageInfoCell.pageFaviconView.image);
+  EXPECT_FALSE(pageInfoCell.pageLockIndicatorView.image);
 
   [item configureCell:pageInfoCell];
   EXPECT_NSEQ(pageTitle, pageInfoCell.pageTitleLabel.text);
   EXPECT_NSEQ(pageHost, pageInfoCell.pageHostLabel.text);
   EXPECT_NSEQ(pageFavicon, pageInfoCell.pageFaviconView.image);
+  EXPECT_FALSE(pageInfoCell.pageLockIndicatorView.image);
 }
 
 }  // namespace
