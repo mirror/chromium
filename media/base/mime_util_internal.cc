@@ -225,7 +225,7 @@ SupportsType MimeUtil::AreSupportedCodecs(
         mime_type_lower_case, parsed_codec.codec, video_profile, video_level,
         parsed_codec.video_color_space, is_encrypted);
     if (result == IsNotSupported) {
-      DVLOG(2) << __func__ << " Codec " << parsed_codec.codec
+      DVLOG(2) << __func__ << ": Codec " << parsed_codec.codec
                << " not supported by platform.";
       return IsNotSupported;
     }
@@ -521,6 +521,7 @@ bool MimeUtil::IsCodecSupportedOnAndroid(
     const std::string& mime_type_lower_case,
     bool is_encrypted,
     const PlatformInfo& platform_info) {
+  DVLOG(3) << __func__;
   DCHECK_NE(mime_type_lower_case, "");
 
   // Encrypted block support is never available without platform decoders.
@@ -570,8 +571,10 @@ bool MimeUtil::IsCodecSupportedOnAndroid(
         return true;
 
       // Otherwise, platform support is required.
-      if (!platform_info.supports_opus)
+      if (!platform_info.supports_opus) {
+        DVLOG(3) << "Platform does not support opus";
         return false;
+      }
 
       // MediaPlayer does not support Opus in ogg containers.
       if (base::EndsWith(mime_type_lower_case, "ogg",
@@ -839,6 +842,8 @@ SupportsType MimeUtil::IsCodecSupported(const std::string& mime_type_lower_case,
                                         uint8_t video_level,
                                         const VideoColorSpace& color_space,
                                         bool is_encrypted) const {
+  DVLOG(3) << __func__;
+
   DCHECK_EQ(base::ToLowerASCII(mime_type_lower_case), mime_type_lower_case);
   DCHECK_NE(codec, INVALID_CODEC);
 
@@ -852,6 +857,7 @@ SupportsType MimeUtil::IsCodecSupported(const std::string& mime_type_lower_case,
 
   // Bail early for disabled proprietary codecs
   if (!allow_proprietary_codecs_ && IsCodecProprietary(codec)) {
+    LOG(ERROR) << "0000";
     return IsNotSupported;
   }
 
@@ -891,13 +897,17 @@ SupportsType MimeUtil::IsCodecSupported(const std::string& mime_type_lower_case,
 
     // If MediaClient is provided use it to check for decoder support.
     MediaClient* media_client = GetMediaClient();
-    if (media_client && !media_client->IsSupportedAudioConfig(audio_config))
+    if (media_client && !media_client->IsSupportedAudioConfig(audio_config)) {
+      LOG(ERROR) << "1111";
       return IsNotSupported;
+    }
 
     // When no MediaClient is provided, assume default decoders are available
     // as described by media::IsSupportedAudioConfig().
-    if (!media_client && !IsSupportedAudioConfig(audio_config))
+    if (!media_client && !IsSupportedAudioConfig(audio_config)) {
+      LOG(ERROR) << "2222";
       return IsNotSupported;
+    }
   }
 
   if (video_codec != kUnknownVideoCodec) {
@@ -914,6 +924,8 @@ SupportsType MimeUtil::IsCodecSupported(const std::string& mime_type_lower_case,
     if (!media_client && !IsSupportedVideoConfig(video_config))
       return IsNotSupported;
   }
+
+  LOG(ERROR) << "3333";
 
 #if defined(OS_ANDROID)
   // TODO(chcunningham): Delete this. Android platform support should be

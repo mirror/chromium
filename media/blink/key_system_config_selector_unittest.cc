@@ -80,6 +80,7 @@ class FakeKeySystems : public KeySystems {
   }
 
   bool IsSupportedKeySystem(const std::string& key_system) const override {
+    LOG(ERROR) << __func__;
     if (key_system == kSupported)
       return true;
     return false;

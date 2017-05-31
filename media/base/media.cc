@@ -96,7 +96,9 @@ bool HasPlatformDecoderSupport() {
 }
 
 bool PlatformHasOpusSupport() {
-  return base::android::BuildInfo::GetInstance()->sdk_int() >= 21;
+  bool supported = base::android::BuildInfo::GetInstance()->sdk_int() >= 21;
+  LOG(ERROR) << __func__ << supported;
+  return supported;
 }
 #endif  // defined(OS_ANDROID)
 
