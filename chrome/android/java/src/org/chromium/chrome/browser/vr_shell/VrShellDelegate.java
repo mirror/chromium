@@ -177,8 +177,9 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
             if (sInstance.mPaused) {
                 if (sInstance.mInVrAtChromeLaunch == null) sInstance.mInVrAtChromeLaunch = false;
                 sInstance.addOverlayView();
-                Bundle options = ActivityOptions
-                        .makeCustomAnimation(activity, R.anim.stay_hidden, 0).toBundle();
+                Bundle options =
+                        ActivityOptions.makeCustomAnimation(activity, R.anim.stay_hidden, 0)
+                                .toBundle();
                 ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE))
                         .moveTaskToFront(activity.getTaskId(), 0, options);
             } else {
