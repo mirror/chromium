@@ -43,6 +43,7 @@ RenderFrameAudioOutputStreamFactory::RenderFrameAudioOutputStreamFactory(
       context_(context),
       weak_ptr_factory_(this) {
   DCHECK(context_);
+  thread_checker_.DetachFromThread();
 }
 
 RenderFrameAudioOutputStreamFactory::~RenderFrameAudioOutputStreamFactory() {
