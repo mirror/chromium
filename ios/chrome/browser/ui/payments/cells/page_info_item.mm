@@ -9,6 +9,7 @@
 #include "ios/chrome/grit/ios_theme_resources.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
 #import "ios/third_party/material_roboto_font_loader_ios/src/src/MaterialRobotoFontLoader.h"
+#include "url/url_constants.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -17,8 +18,6 @@
 NSString* const kPageInfoFaviconImageViewID = @"kPageInfoFaviconImageViewID";
 NSString* const kPageInfoLockIndicatorImageViewID =
     @"kPageInfoLockIndicatorImageViewID";
-
-NSString* const kHttpsScheme = @"https";
 
 namespace {
 // Padding used on the top and bottom edges of the cell.
@@ -67,17 +66,20 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
   cell.pageTitleLabel.text = self.pageTitle;
 
   if (self.connectionSecure) {
-    cell.pageHostLabel.text =
-        [NSString stringWithFormat:@"%@://%@", kHttpsScheme, self.pageHost];
+    cell.pageHostLabel.text = [NSString
+        stringWithFormat:@"%s://%@", url::kHttpsScheme, self.pageHost];
     NSMutableAttributedString* text = [[NSMutableAttributedString alloc]
         initWithString:cell.pageHostLabel.text];
     [text addAttribute:NSForegroundColorAttributeName
                  value:[[MDCPalette cr_greenPalette] tint700]
-                 range:NSMakeRange(0, [kHttpsScheme length])];
+                 range:NSMakeRange(0, strlen(url::kHttpsScheme))];
     [cell.pageHostLabel setAttributedText:text];
     // Set lock image. UIImageRenderingModeAlwaysTemplate is used so that
     // the color of the lock indicator image can be changed to green.
-    cell.pageLockIndicatorView.image = [NativeImage(IDR_IOS_OMNIBOX_HTTPS_VALID)
+    cell.pageLockIndicatorView.image = [ResizeImage(
+        NativeImage(IDR_IOS_OMNIBOX_HTTPS_VALID),
+        CGSizeMake(kLockIndicatorDimension, kLockIndicatorDimension),
+        ProjectionMode::kAspectFillNoClipping)
         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   } else {
     cell.pageHostLabel.text = self.pageHost;
@@ -94,8 +96,6 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
 @implementation PageInfoCell {
   NSLayoutConstraint* _pageTitleLabelLeadingConstraint;
   NSLayoutConstraint* _pageHostLabelLeadingConstraint;
-  NSLayoutConstraint* _lockIndicatorHeightConstraint;
-  NSLayoutConstraint* _lockIndicatorWidthConstraint;
 }
 
 @synthesize pageTitleLabel = _pageTitleLabel;
@@ -145,13 +145,6 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
         setTintColor:[[MDCPalette cr_greenPalette] tint700]];
     [self.contentView addSubview:_pageLockIndicatorView];
 
-    // Set up the lock indicator size constraints. They are activated here
-    // and updated in layoutSubviews.
-    _lockIndicatorHeightConstraint =
-        [_pageLockIndicatorView.heightAnchor constraintEqualToConstant:0];
-    _lockIndicatorWidthConstraint =
-        [_pageLockIndicatorView.widthAnchor constraintEqualToConstant:0];
-
     // Layout
     [NSLayoutConstraint activateConstraints:@[
       [_pageFaviconView.leadingAnchor
@@ -171,10 +164,6 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
       [_pageLockIndicatorView.leadingAnchor
           constraintEqualToAnchor:_pageTitleLabel.leadingAnchor
                          constant:-kLockIndicatorHorizontalPadding],
-      // Without these height and width constraints the lock indicator image
-      // view becomes too large relative to the host label text.
-      _lockIndicatorHeightConstraint,
-      _lockIndicatorWidthConstraint,
       [_pageLockIndicatorView.bottomAnchor
           constraintEqualToAnchor:_pageFaviconView.bottomAnchor
                          constant:kLockIndicatorVerticalPadding],
@@ -218,15 +207,6 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
   _pageHostLabelLeadingConstraint.active = YES;
 
   [super updateConstraints];
-}
-
-- (void)layoutSubviews {
-  // Set the size constraints of the lock indicator view to the necessary
-  // dimensions for the image.
-  _lockIndicatorHeightConstraint.constant = kLockIndicatorDimension;
-  _lockIndicatorWidthConstraint.constant = kLockIndicatorDimension;
-
-  [super layoutSubviews];
 }
 
 #pragma mark - UICollectionReusableView
