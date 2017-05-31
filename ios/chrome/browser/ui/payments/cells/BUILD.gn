@@ -22,6 +22,7 @@ source_set("cells") {
   ]
 
   deps = [
+    "//ios/chrome/app/theme",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/autofill:autofill_ui",
     "//ios/chrome/browser/ui/collection_view/cells",
