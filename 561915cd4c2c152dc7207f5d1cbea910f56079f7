@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8905a492_f7f56f98",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-31T12:48:15Z",
+      "side": 1,
+      "message": "Fair enough, moved back to ComputeLockedPendingUserGesture.",
+      "parentUuid": "b5cc74b0_0ffee68f",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "561915cd4c2c152dc7207f5d1cbea910f56079f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c16f8522_520ed39d",
         "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "561915cd4c2c152dc7207f5d1cbea910f56079f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c11090_f589e72d",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-05-31T12:48:15Z",
+      "side": 1,
+      "message": "`locked_pending_user_gesture_` is a local state and means that the media element needs to be unlocked. With the \"document\" policy, the document needs to be \"unlocked\". It is hard to merge the two paths by having bot hof them using the same boolean. The best I cana do is avoid to call that method when this policy is set.\n\nI rewrote the comment and I hope this will help the reader to understand. It might be possible to refactor the entire thing for it to be cleaner but that might be more work than we want for things that in the long run will be deleted (we intend to have documentactivation and no user gesture policies and drop the two other ones).",
+      "parentUuid": "c16f8522_520ed39d",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 72
+      },
+      "revId": "561915cd4c2c152dc7207f5d1cbea910f56079f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
