@@ -71,7 +71,7 @@ class WebLocalFrameBase : public GarbageCollectedFinalized<WebLocalFrameBase>,
   virtual void CreateFrameView() = 0;
   virtual LocalFrame* CreateChildFrame(const FrameLoadRequest&,
                                        const AtomicString& name,
-                                       HTMLFrameOwnerElement*) = 0;
+                                       HTMLEmbeddedContentElement*) = 0;
   virtual ContentSettingsClient& GetContentSettingsClient() = 0;
   virtual SharedWorkerRepositoryClientImpl* SharedWorkerRepositoryClient()
       const = 0;

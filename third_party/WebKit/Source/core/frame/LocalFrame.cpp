@@ -336,7 +336,7 @@ void LocalFrame::CreateView(const IntSize& viewport_size,
 
   // FIXME: Not clear what the right thing for OOPI is here.
   if (!OwnerLayoutItem().IsNull()) {
-    HTMLFrameOwnerElement* owner = DeprecatedLocalOwner();
+    HTMLEmbeddedContentElement* owner = DeprecatedLocalOwner();
     DCHECK(owner);
     // FIXME: OOPI might lead to us temporarily lying to a frame and telling it
     // that it's owned by a FrameOwner that knows nothing about it. If we're

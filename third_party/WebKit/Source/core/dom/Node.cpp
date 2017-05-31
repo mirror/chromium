@@ -86,7 +86,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLDialogElement.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLSlotElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutBox.h"
@@ -1863,12 +1863,15 @@ static void PrintSubTreeAcrossFrame(const Node* node,
       PrintSubTreeAcrossFrame(younger_shadow_root, marked_node, indent + "\t",
                               stream);
   } else {
-    if (node->IsFrameOwnerElement())
-      PrintSubTreeAcrossFrame(ToHTMLFrameOwnerElement(node)->contentDocument(),
-                              marked_node, indent + "\t", stream);
-    if (ShadowRoot* oldest_shadow_root = OldestShadowRootFor(node))
+    if (node->IsEmbeddedContentElement()) {
+      PrintSubTreeAcrossFrame(
+          ToHTMLEmbeddedContentElement(node)->contentDocument(), marked_node,
+          indent + "\t", stream);
+    }
+    if (ShadowRoot* oldest_shadow_root = OldestShadowRootFor(node)) {
       PrintSubTreeAcrossFrame(oldest_shadow_root, marked_node, indent + "\t",
                               stream);
+    }
   }
   for (const Node* child = node->firstChild(); child;
        child = child->nextSibling())

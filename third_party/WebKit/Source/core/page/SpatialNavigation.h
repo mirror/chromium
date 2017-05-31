@@ -32,7 +32,7 @@ namespace blink {
 
 class LocalFrame;
 class HTMLAreaElement;
-class HTMLFrameOwnerElement;
+class HTMLEmbeddedContentElement;
 
 inline double MaxDistance() {
   return std::numeric_limits<double>::max();
@@ -108,8 +108,8 @@ struct FocusCandidate {
   bool InScrollableContainer() const {
     return visible_node && enclosing_scrollable_box;
   }
-  bool IsFrameOwnerElement() const {
-    return visible_node && visible_node->IsFrameOwnerElement();
+  bool IsEmbeddedContentElement() const {
+    return visible_node && visible_node->IsEmbeddedContentElement();
   }
   Document* GetDocument() const {
     return visible_node ? &visible_node->GetDocument() : nullptr;
@@ -148,7 +148,7 @@ LayoutRect VirtualRectForDirection(WebFocusType,
                                    LayoutUnit width = LayoutUnit());
 LayoutRect VirtualRectForAreaElementAndDirection(HTMLAreaElement&,
                                                  WebFocusType);
-HTMLFrameOwnerElement* FrameOwnerElement(FocusCandidate&);
+HTMLEmbeddedContentElement* FrameOwnerElement(FocusCandidate&);
 
 }  // namespace blink
 

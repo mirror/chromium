@@ -147,7 +147,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void TransitionToCommittedForNewPage() override;
   LocalFrame* CreateFrame(const FrameLoadRequest&,
                           const WTF::AtomicString& name,
-                          HTMLFrameOwnerElement*) override;
+                          HTMLEmbeddedContentElement*) override;
   virtual bool CanCreatePluginWithoutRenderer(const String& mime_type) const;
   PluginView* CreatePlugin(HTMLPlugInElement*,
                            const KURL&,
@@ -183,7 +183,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
       const WebParsedFeaturePolicy& parsed_header) override;
   void DidAddContentSecurityPolicies(
       const blink::WebVector<WebContentSecurityPolicy>&) override;
-  void DidChangeFrameOwnerProperties(HTMLFrameOwnerElement*) override;
+  void DidChangeFrameOwnerProperties(HTMLEmbeddedContentElement*) override;
 
   void DispatchWillStartUsingPeerConnectionHandler(
       WebRTCPeerConnectionHandler*) override;

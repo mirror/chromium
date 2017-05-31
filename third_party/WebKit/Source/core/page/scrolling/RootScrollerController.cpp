@@ -116,7 +116,7 @@ bool RootScrollerController::IsValidRootScroller(const Element& element) const {
     return false;
 
   if (!element.GetLayoutObject()->HasOverflowClip() &&
-      !element.IsFrameOwnerElement())
+      !element.IsEmbeddedContentElement())
     return false;
 
   if (!RootScrollerUtil::ScrollableAreaForRootScroller(&element))

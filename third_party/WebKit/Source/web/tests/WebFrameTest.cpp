@@ -11776,8 +11776,9 @@ TEST_F(WebFrameSimTest, DisplayNoneIFrameHasNoLayoutObjects) {
       "<html><body>This is a visible iframe.</body></html>");
 
   Element* element = GetDocument().QuerySelector("iframe");
-  HTMLFrameOwnerElement* frame_owner_element = ToHTMLFrameOwnerElement(element);
-  Document* iframe_doc = frame_owner_element->contentDocument();
+  HTMLEmbeddedContentElement* embedded_content_element =
+      ToHTMLEmbeddedContentElement(element);
+  Document* iframe_doc = embedded_content_element->contentDocument();
   EXPECT_FALSE(iframe_doc->documentElement()->GetLayoutObject());
 
   // Changing the display from 'none' -> 'block' should cause layout objects to
@@ -11807,8 +11808,9 @@ TEST_F(WebFrameSimTest, NormalIFrameHasLayoutObjects) {
       "<html><body>This is a visible iframe.</body></html>");
 
   Element* element = GetDocument().QuerySelector("iframe");
-  HTMLFrameOwnerElement* frame_owner_element = ToHTMLFrameOwnerElement(element);
-  Document* iframe_doc = frame_owner_element->contentDocument();
+  HTMLEmbeddedContentElement* embedded_content_element =
+      ToHTMLEmbeddedContentElement(element);
+  Document* iframe_doc = embedded_content_element->contentDocument();
   EXPECT_TRUE(iframe_doc->documentElement()->GetLayoutObject());
 
   // Changing the display from 'block' -> 'none' should cause layout objects to

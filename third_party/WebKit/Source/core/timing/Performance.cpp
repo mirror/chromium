@@ -39,12 +39,12 @@
 #include "core/frame/DOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "core/timing/PerformanceTiming.h"
-#include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/loader/fetch/ResourceTimingInfo.h"
 
 static const double kLongTaskThreshold = 0.05;
 
@@ -63,7 +63,7 @@ namespace blink {
 
 namespace {
 
-String GetFrameAttribute(HTMLFrameOwnerElement* frame_owner,
+String GetFrameAttribute(HTMLEmbeddedContentElement* frame_owner,
                          const QualifiedName& attr_name,
                          bool truncate) {
   String attr_value;
@@ -253,7 +253,7 @@ void Performance::ReportLongTask(double start_time,
     AddLongTaskTiming(start_time, end_time, attribution.first, g_empty_string,
                       g_empty_string, g_empty_string);
   } else {
-    HTMLFrameOwnerElement* frame_owner =
+    HTMLEmbeddedContentElement* frame_owner =
         culprit_dom_window->GetFrame()->DeprecatedLocalOwner();
     AddLongTaskTiming(
         start_time, end_time, attribution.first,

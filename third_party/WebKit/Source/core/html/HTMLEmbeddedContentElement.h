@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef HTMLFrameOwnerElement_h
-#define HTMLFrameOwnerElement_h
+#ifndef HTMLEmbeddedContentElement_h
+#define HTMLEmbeddedContentElement_h
 
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
@@ -39,12 +39,12 @@ class Frame;
 class FrameOrPlugin;
 class LayoutPart;
 
-class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
-                                          public FrameOwner {
-  USING_GARBAGE_COLLECTED_MIXIN(HTMLFrameOwnerElement);
+class CORE_EXPORT HTMLEmbeddedContentElement : public HTMLElement,
+                                               public FrameOwner {
+  USING_GARBAGE_COLLECTED_MIXIN(HTMLEmbeddedContentElement);
 
  public:
-  ~HTMLFrameOwnerElement() override;
+  ~HTMLEmbeddedContentElement() override;
 
   DOMWindow* contentWindow() const;
   Document* contentDocument() const;
@@ -107,7 +107,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   DECLARE_VIRTUAL_TRACE();
 
  protected:
-  HTMLFrameOwnerElement(const QualifiedName& tag_name, Document&);
+  HTMLEmbeddedContentElement(const QualifiedName& tag_name, Document&);
   void SetSandboxFlags(SandboxFlags);
 
   bool LoadOrRedirectSubframe(const KURL&,
@@ -133,11 +133,11 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
 
  private:
   // Intentionally private to prevent redundant checks when the type is
-  // already HTMLFrameOwnerElement.
+  // already HTMLEmbeddedContentElement.
   bool IsLocal() const final { return true; }
   bool IsRemote() const final { return false; }
 
-  bool IsFrameOwnerElement() const final { return true; }
+  bool IsEmbeddedContentElement() const final { return true; }
 
   virtual ReferrerPolicy ReferrerPolicyAttribute() {
     return kReferrerPolicyDefault;
@@ -150,7 +150,8 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   WebParsedFeaturePolicy container_policy_;
 };
 
-DEFINE_ELEMENT_TYPE_CASTS(HTMLFrameOwnerElement, IsFrameOwnerElement());
+DEFINE_ELEMENT_TYPE_CASTS(HTMLEmbeddedContentElement,
+                          IsEmbeddedContentElement());
 
 class SubframeLoadingDisabler {
   STACK_ALLOCATED();
@@ -169,7 +170,7 @@ class SubframeLoadingDisabler {
       DisabledSubtreeRoots().erase(root_);
   }
 
-  static bool CanLoadFrame(HTMLFrameOwnerElement& owner) {
+  static bool CanLoadFrame(HTMLEmbeddedContentElement& owner) {
     for (Node* node = &owner; node; node = node->ParentOrShadowHostNode()) {
       if (DisabledSubtreeRoots().Contains(node))
         return false;
@@ -190,7 +191,7 @@ class SubframeLoadingDisabler {
   Member<Node> root_;
 };
 
-DEFINE_TYPE_CASTS(HTMLFrameOwnerElement,
+DEFINE_TYPE_CASTS(HTMLEmbeddedContentElement,
                   FrameOwner,
                   owner,
                   owner->IsLocal(),
@@ -198,4 +199,4 @@ DEFINE_TYPE_CASTS(HTMLFrameOwnerElement,
 
 }  // namespace blink
 
-#endif  // HTMLFrameOwnerElement_h
+#endif  // HTMLEmbeddedContentElement_h

@@ -12,7 +12,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/page/Page.h"
 #include "platform/bindings/DOMWrapperWorld.h"
@@ -391,7 +391,7 @@ void WebRemoteFrameImpl::SetReplicatedOrigin(const WebSecurityOrigin& origin) {
   // ensure an alternate fix works.  http://crbug.com/566222
   FrameOwner* owner = GetFrame()->Owner();
   if (owner && owner->IsLocal()) {
-    HTMLElement* owner_element = ToHTMLFrameOwnerElement(owner);
+    HTMLElement* owner_element = ToHTMLEmbeddedContentElement(owner);
     AXObjectCache* cache = owner_element->GetDocument().ExistingAXObjectCache();
     if (cache)
       cache->ChildrenChanged(owner_element);
@@ -481,7 +481,7 @@ void WebRemoteFrameImpl::DidStopLoading() {
 }
 
 bool WebRemoteFrameImpl::IsIgnoredForHitTest() const {
-  HTMLFrameOwnerElement* owner = GetFrame()->DeprecatedLocalOwner();
+  HTMLEmbeddedContentElement* owner = GetFrame()->DeprecatedLocalOwner();
   if (!owner || !owner->GetLayoutObject())
     return false;
   return owner->GetLayoutObject()->Style()->PointerEvents() ==
@@ -490,8 +490,8 @@ bool WebRemoteFrameImpl::IsIgnoredForHitTest() const {
 
 void WebRemoteFrameImpl::WillEnterFullscreen() {
   // This should only ever be called when the FrameOwner is local.
-  HTMLFrameOwnerElement* owner_element =
-      ToHTMLFrameOwnerElement(GetFrame()->Owner());
+  HTMLEmbeddedContentElement* owner_element =
+      ToHTMLEmbeddedContentElement(GetFrame()->Owner());
 
   // Call requestFullscreen() on |ownerElement| to make it the provisional
   // fullscreen element in FullscreenController, and to prepare

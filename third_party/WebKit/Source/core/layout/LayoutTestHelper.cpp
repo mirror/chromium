@@ -19,7 +19,7 @@ namespace blink {
 LocalFrame* SingleChildLocalFrameClient::CreateFrame(
     const FrameLoadRequest&,
     const AtomicString& name,
-    HTMLFrameOwnerElement* owner_element) {
+    HTMLEmbeddedContentElement* owner_element) {
   DCHECK(!child_) << "This test helper only supports one child frame.";
 
   LocalFrame* parent_frame = owner_element->GetDocument().GetFrame();

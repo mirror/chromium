@@ -9,7 +9,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameClient.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutPartItem.h"
 
@@ -93,7 +93,8 @@ void RemoteFrameView::UpdateViewportIntersectionsForSubtree(
 }
 
 void RemoteFrameView::Dispose() {
-  HTMLFrameOwnerElement* owner_element = remote_frame_->DeprecatedLocalOwner();
+  HTMLEmbeddedContentElement* owner_element =
+      remote_frame_->DeprecatedLocalOwner();
   // ownerElement can be null during frame swaps, because the
   // RemoteFrameView is disconnected before detachment.
   if (owner_element && owner_element->OwnedWidget() == this)

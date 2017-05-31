@@ -18,7 +18,7 @@
 #include "core/events/Event.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/parser/HTMLDocumentParser.h"
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/layout/HitTestResult.h"
@@ -954,7 +954,7 @@ void FillCommonFrameData(TracedValue* frame_data, LocalFrame* frame) {
   FrameOwner* owner = frame->Owner();
   if (owner && owner->IsLocal()) {
     frame_data->SetInteger(
-        "nodeId", DOMNodeIds::IdForNode(ToHTMLFrameOwnerElement(owner)));
+        "nodeId", DOMNodeIds::IdForNode(ToHTMLEmbeddedContentElement(owner)));
   }
   Frame* parent = frame->Tree().Parent();
   if (parent && parent->IsLocalFrame())

@@ -118,8 +118,8 @@ bool Frame::IsLocalRoot() const {
   return Tree().Parent()->IsRemoteFrame();
 }
 
-HTMLFrameOwnerElement* Frame::DeprecatedLocalOwner() const {
-  return owner_ && owner_->IsLocal() ? ToHTMLFrameOwnerElement(owner_)
+HTMLEmbeddedContentElement* Frame::DeprecatedLocalOwner() const {
+  return owner_ && owner_->IsLocal() ? ToHTMLEmbeddedContentElement(owner_)
                                      : nullptr;
 }
 

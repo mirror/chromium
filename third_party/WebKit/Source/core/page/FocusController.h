@@ -42,7 +42,7 @@ class Document;
 class Element;
 class FocusChangedObserver;
 class Frame;
-class HTMLFrameOwnerElement;
+class HTMLEmbeddedContentElement;
 class InputDeviceCapabilities;
 class LocalFrame;
 class Node;
@@ -61,10 +61,10 @@ class CORE_EXPORT FocusController final
   LocalFrame* FocusedFrame() const;
   Frame* FocusedOrMainFrame() const;
 
-  // Finds the focused HTMLFrameOwnerElement, if any, in the provided frame.
-  // An HTMLFrameOwnerElement is considered focused if the frame it owns, or
-  // one of its descendant frames, is currently focused.
-  HTMLFrameOwnerElement* FocusedFrameOwnerElement(
+  // Finds the focused HTMLEmbeddedContentElement, if any, in the provided
+  // frame. An HTMLEmbeddedContentElement is considered focused if the frame it
+  // owns, or one of its descendant frames, is currently focused.
+  HTMLEmbeddedContentElement* FocusedFrameOwnerElement(
       LocalFrame& current_frame) const;
 
   // Determines whether the provided Document has focus according to

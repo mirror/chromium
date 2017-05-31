@@ -57,8 +57,8 @@
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLFormElement.h"
-#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoadTiming.h"
@@ -1480,7 +1480,7 @@ bool FrameLoader::ShouldTreatURLAsSameAsCurrent(const KURL& url) const {
 bool FrameLoader::ShouldTreatURLAsSrcdocDocument(const KURL& url) const {
   if (!url.IsAboutSrcdocURL())
     return false;
-  HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
+  HTMLEmbeddedContentElement* owner_element = frame_->DeprecatedLocalOwner();
   if (!isHTMLIFrameElement(owner_element))
     return false;
   return owner_element->FastHasAttribute(srcdocAttr);

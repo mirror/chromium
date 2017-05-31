@@ -6,7 +6,7 @@
 
 #include "core/dom/shadow/ElementShadow.h"
 #include "core/dom/shadow/ShadowRoot.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {
@@ -37,8 +37,8 @@ void ChildFrameDisconnector::CollectFrameOwners(Node& root) {
   if (!root.ConnectedSubframeCount())
     return;
 
-  if (root.IsHTMLElement() && root.IsFrameOwnerElement())
-    frame_owners_.push_back(&ToHTMLFrameOwnerElement(root));
+  if (root.IsHTMLElement() && root.IsEmbeddedContentElement())
+    frame_owners_.push_back(&ToHTMLEmbeddedContentElement(root));
 
   for (Node* child = root.firstChild(); child; child = child->nextSibling())
     CollectFrameOwners(*child);
@@ -54,7 +54,7 @@ void ChildFrameDisconnector::DisconnectCollectedFrameOwners() {
   SubframeLoadingDisabler disabler(Root());
 
   for (unsigned i = 0; i < frame_owners_.size(); ++i) {
-    HTMLFrameOwnerElement* owner = frame_owners_[i].Get();
+    HTMLEmbeddedContentElement* owner = frame_owners_[i].Get();
     // Don't need to traverse up the tree for the first owner since no
     // script could have moved it.
     if (!i || Root().IsShadowIncludingInclusiveAncestorOf(owner))
@@ -73,8 +73,8 @@ static unsigned CheckConnectedSubframeCountIsConsistent(Node& node) {
   unsigned count = 0;
 
   if (node.IsElementNode()) {
-    if (node.IsFrameOwnerElement() &&
-        ToHTMLFrameOwnerElement(node).ContentFrame())
+    if (node.IsEmbeddedContentElement() &&
+        ToHTMLEmbeddedContentElement(node).ContentFrame())
       count++;
 
     if (ElementShadow* shadow = ToElement(node).Shadow()) {

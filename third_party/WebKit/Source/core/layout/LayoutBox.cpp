@@ -34,8 +34,8 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLFrameElementBase.h"
-#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
@@ -645,7 +645,7 @@ void LayoutBox::ScrollToPosition(const FloatPoint& position,
 
 // Returns true iff we are attempting an autoscroll inside an iframe with
 // scrolling="no".
-static bool IsDisallowedAutoscroll(HTMLFrameOwnerElement* owner_element,
+static bool IsDisallowedAutoscroll(HTMLEmbeddedContentElement* owner_element,
                                    LocalFrameView* frame_view) {
   if (owner_element && IsHTMLFrameElementBase(*owner_element)) {
     HTMLFrameElementBase* frame_element_base =
@@ -695,7 +695,7 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
       return;
   } else if (!parent_box && CanBeProgramaticallyScrolled()) {
     if (LocalFrameView* frame_view = this->GetFrameView()) {
-      HTMLFrameOwnerElement* owner_element = GetDocument().LocalOwner();
+      HTMLEmbeddedContentElement* owner_element = GetDocument().LocalOwner();
       if (!IsDisallowedAutoscroll(owner_element, frame_view)) {
         if (make_visible_in_visual_viewport) {
           frame_view->GetScrollableArea()->ScrollIntoView(

@@ -32,7 +32,7 @@ function runTest()
     // 3. The frame is already detached.
     // One way to satisfy this condition is to test the value of document.defaultView when removing
     // a DOM node that contains multiple subframes, since ChildFrameDisconnector keeps a ref to the
-    // affected HTMLFrameOwnerElements (and consequently the Frame) on the stack.
+    // affected HTMLEmbeddedContentElements (and consequently the Frame) on the stack.
     var frameContainer = document.getElementById("frames");
     frameContainer.parentNode.removeChild(frameContainer);
 }

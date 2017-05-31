@@ -12,7 +12,7 @@
 #include "core/frame/RemoteDOMWindow.h"
 #include "core/frame/RemoteFrameClient.h"
 #include "core/frame/RemoteFrameView.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/layout/api/LayoutPartItem.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
@@ -153,7 +153,7 @@ void RemoteFrame::SetWebLayer(WebLayer* web_layer) {
     GraphicsLayer::RegisterContentsLayer(web_layer_);
 
   DCHECK(Owner());
-  ToHTMLFrameOwnerElement(Owner())->SetNeedsCompositingUpdate();
+  ToHTMLEmbeddedContentElement(Owner())->SetNeedsCompositingUpdate();
 }
 
 void RemoteFrame::AdvanceFocus(WebFocusType type, LocalFrame* source) {
