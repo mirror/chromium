@@ -57,6 +57,9 @@ namespace {
 // Command prefix for injected JavaScript.
 const char kCommandPrefix[] = "paymentRequest";
 
+// Prefix for hostnames that are secure.
+NSString* const kHttpsScheme = @"https://";
+
 // Time interval between attempts to unblock the webview's JS event queue.
 const NSTimeInterval kNoopInterval = 0.1;
 
@@ -433,6 +436,10 @@ struct PendingPaymentResponse {
   NSString* pageTitle = base::SysUTF16ToNSString([self webState]->GetTitle());
   NSString* pageHost =
       base::SysUTF8ToNSString([self webState]->GetLastCommittedURL().host());
+  // Should we use this function instead?
+  // https://cs.chromium.org/chromium/src/ios/web/public/origin_util.h?type=cs
+  BOOL connectionSecure =
+      [self webState]->GetVisibleURL().SchemeIsCryptographic();
   autofill::AutofillManager* autofillManager =
       autofill::AutofillDriverIOS::FromWebState(_webState)->autofill_manager();
   _paymentRequestCoordinator = [[PaymentRequestCoordinator alloc]
@@ -443,6 +450,7 @@ struct PendingPaymentResponse {
   [_paymentRequestCoordinator setPageFavicon:pageFavicon];
   [_paymentRequestCoordinator setPageTitle:pageTitle];
   [_paymentRequestCoordinator setPageHost:pageHost];
+  [_paymentRequestCoordinator setConnectionSecure:connectionSecure];
   [_paymentRequestCoordinator setDelegate:self];
 
   [_paymentRequestCoordinator start];
