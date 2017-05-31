@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5831c926_7dc8ccbd",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-05-31T23:10:42Z",
+      "side": 1,
+      "message": "Avoid auto where possible, it\u0027s clearer that way",
+      "revId": "b7cb583ce5b52a00a5c4cff7696263810d78d92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf2834c_438dc204",
+        "filename": "third_party/WebKit/public/web/WebAXObject.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-05-31T23:10:42Z",
+      "side": 1,
+      "message": "This needs to go in modules/ :)",
+      "revId": "b7cb583ce5b52a00a5c4cff7696263810d78d92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
