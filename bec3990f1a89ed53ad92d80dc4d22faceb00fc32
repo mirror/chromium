@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37f432e8_6876fc23",
+        "filename": "chrome/browser/android/metrics/uma_session_stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-31T19:54:25Z",
+      "side": 1,
+      "message": "This is equivalent to UMA_HISTOGRAM_BOOLEAN(), so use that macro.\n\nAlso, not sure this should use the \"Tab.\" prefix. How about \"Stability.\"?\n\nAlso, are you sure that the other code that increments kStabilityRendererCrashCount doesn\u0027t run on Android? (i.e. in stability_metrics_helper.cc)",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "bec3990f1a89ed53ad92d80dc4d22faceb00fc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
