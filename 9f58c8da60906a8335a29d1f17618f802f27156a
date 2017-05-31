@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7086d57_621b7d6d",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-31T10:28:11Z",
+      "side": 1,
+      "message": "As you know this is behind-the-flag feature, what\u0027s your plan plan here?",
+      "revId": "9f58c8da60906a8335a29d1f17618f802f27156a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149b56c1_7514e33f",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-31T10:28:11Z",
+      "side": 1,
+      "message": "Maybe we should have a common code for setting up in-process WorkerFetchContext?  It feels it\u0027s easy to update one path but not the other.",
+      "revId": "9f58c8da60906a8335a29d1f17618f802f27156a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
