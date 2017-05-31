@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "7bc54b26_444cff43",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-05-31T21:17:02Z",
+      "side": 1,
+      "message": "I guess my main question is: can NVH encapsulate the fix a bit more? ie. can NVH observe the widget/window parenting change and then use existing FocusManager api to clear focus as needed? It\u0027d be nice if FocusManager didn\u0027t need to know so much about native view hosting. Perhaps I don\u0027t understand the action that triggers this bug.",
+      "parentUuid": "c5136c77_d139cf07",
+      "range": {
+        "startLine": 557,
+        "startChar": 15,
+        "endLine": 557,
+        "endChar": 26
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f016659_2dab1dbe",
         "filename": "ui/views/focus/focus_manager.cc",
         "patchSetId": 1
