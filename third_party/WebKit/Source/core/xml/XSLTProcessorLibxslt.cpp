@@ -104,10 +104,11 @@ static xmlDocPtr DocLoaderFunc(const xmlChar* uri,
                reinterpret_cast<const char*>(uri));
       xmlFree(base);
 
-      ResourceLoaderOptions fetch_options(
-          ResourceFetcher::DefaultResourceOptions());
-      FetchParameters params(ResourceRequest(url), FetchInitiatorTypeNames::xml,
-                             fetch_options);
+      ResourceLoaderOptions fetch_options;
+      fetch_options.allow_credentials = kAllowStoredCredentials;
+      fetch_options.credentials_requested = kClientRequestedCredentials;
+      fetch_options.initiator_info.name = FetchInitiatorTypeNames::xml;
+      FetchParameters params(ResourceRequest(url), fetch_options);
       params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
       Resource* resource =
           RawResource::FetchSynchronously(params, g_global_resource_fetcher);
