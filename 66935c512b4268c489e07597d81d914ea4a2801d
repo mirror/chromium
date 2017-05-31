@@ -94,6 +94,30 @@
       "revId": "66935c512b4268c489e07597d81d914ea4a2801d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24716293_b2abaa21",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-05-31T01:33:18Z",
+      "side": 1,
+      "message": "I chatted with horo@ a few days ago and he said it should have been safe.",
+      "parentUuid": "ca0aa3d9_a5ac68b4",
+      "range": {
+        "startLine": 463,
+        "startChar": 6,
+        "endLine": 463,
+        "endChar": 61
+      },
+      "revId": "66935c512b4268c489e07597d81d914ea4a2801d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
