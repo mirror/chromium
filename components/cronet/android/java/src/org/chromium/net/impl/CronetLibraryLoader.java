@@ -53,7 +53,7 @@ public class CronetLibraryLoader {
                 postToInitThread(new Runnable() {
                     @Override
                     public void run() {
-                        ensureInitializedOnInitThread(applicationContext);
+                        ensureInitializedOnInitThread();
                     }
                 });
             }
@@ -89,12 +89,12 @@ public class CronetLibraryLoader {
      * the init thread. Ensures that the NetworkChangeNotifier is initialzied and the
      * init thread native MessageLoop is initialized.
      */
-    static void ensureInitializedOnInitThread(Context context) {
+    static void ensureInitializedOnInitThread() {
         assert onInitThread();
         if (sInitThreadInitDone) {
             return;
         }
-        NetworkChangeNotifier.init(context);
+        NetworkChangeNotifier.init();
         // Registers to always receive network notifications. Note
         // that this call is fine for Cronet because Cronet
         // embedders do not have API access to create network change
