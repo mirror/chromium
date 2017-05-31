@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca8eaa78_f0636338",
+        "filename": "third_party/WebKit/Source/devtools/front_end/animation/AnimationModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-31T00:47:00Z",
+      "side": 1,
+      "message": "Rename it to playbackRate() while you are here.",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 27
+      },
+      "revId": "c96caadba8d42cc92eb836121b8ef5341118215a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
