@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c99c8a9_273eb644",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-05-31T20:32:34Z",
+      "side": 1,
+      "message": "Is !document_-\u003eGetFrame()-\u003eTree().Parent() equivalent to document_-\u003eGetFrame()-\u003eIsMainFrame()?  The latter seems clearer.",
+      "range": {
+        "startLine": 94,
+        "startChar": 31,
+        "endLine": 94,
+        "endChar": 70
+      },
+      "revId": "2890746e34e89d4b443afa2da7f1f7bc3a9271d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
