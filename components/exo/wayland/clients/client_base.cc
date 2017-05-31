@@ -99,6 +99,9 @@ void RegistryHandler(void* data,
   } else if (strcmp(interface, "zwp_linux_dmabuf_v1") == 0) {
     globals->linux_dmabuf.reset(static_cast<zwp_linux_dmabuf_v1*>(
         wl_registry_bind(registry, id, &zwp_linux_dmabuf_v1_interface, 1)));
+  } else if (strcmp(interface, "wl_subcompositor") == 0) {
+    globals->subcompositor.reset(static_cast<wl_subcompositor*>(
+        wl_registry_bind(registry, id, &wl_subcompositor_interface, 1)));
   }
 }
 
@@ -304,7 +307,7 @@ bool ClientBase::Init(const InitParams& params) {
   }
 #endif
   for (size_t i = 0; i < params.num_buffers; ++i) {
-    auto buffer = CreateBuffer(params.drm_format);
+    auto buffer = CreateBuffer(width_, height_, params.drm_format);
     if (!buffer) {
       LOG(ERROR) << "Failed to create buffer";
       return false;
@@ -318,9 +321,6 @@ bool ClientBase::Init(const InitParams& params) {
       LOG(ERROR) << "LinuxBufferParamsCreated was not called on the buffer.";
       return false;
     }
-
-    wl_buffer_add_listener(buffers_[i]->buffer.get(), &g_buffer_listener,
-                           buffers_[i].get());
   }
 
   surface_.reset(static_cast<wl_surface*>(
@@ -372,12 +372,12 @@ ClientBase::~ClientBase() {}
 ////////////////////////////////////////////////////////////////////////////////
 // ClientBase, private:
 
-std::unique_ptr<ClientBase::Buffer> ClientBase::CreateBuffer(
-    int32_t drm_format) {
+std::unique_ptr<ClientBase::Buffer>
+ClientBase::CreateBuffer(uint32_t width, uint32_t height, int32_t drm_format) {
   std::unique_ptr<Buffer> buffer(new Buffer());
 #if defined(OZONE_PLATFORM_GBM)
   if (device_) {
-    buffer->bo.reset(gbm_bo_create(device_.get(), width_, height_, drm_format,
+    buffer->bo.reset(gbm_bo_create(device_.get(), width, height, drm_format,
                                    GBM_BO_USE_SCANOUT | GBM_BO_USE_RENDERING));
     if (!buffer->bo) {
       LOG(ERROR) << "Can't create gbm buffer";
@@ -396,7 +396,7 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateBuffer(
       zwp_linux_buffer_params_v1_add(buffer->params.get(), fd.get(), i, offset,
                                      stride, 0, 0);
     }
-    zwp_linux_buffer_params_v1_create(buffer->params.get(), width_, height_,
+    zwp_linux_buffer_params_v1_create(buffer->params.get(), width, height,
                                       drm_format, 0);
 
     if (gbm_bo_get_num_planes(buffer->bo.get()) != 1)
@@ -405,9 +405,9 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateBuffer(
     EGLint khr_image_attrs[] = {EGL_DMA_BUF_PLANE0_FD_EXT,
                                 fd.get(),
                                 EGL_WIDTH,
-                                width_,
+                                width,
                                 EGL_HEIGHT,
-                                height_,
+                                height,
                                 EGL_LINUX_DRM_FOURCC_EXT,
                                 drm_format,
                                 EGL_DMA_BUF_PLANE0_PITCH_EXT,
@@ -433,8 +433,8 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateBuffer(
     texture_info.fTarget = GL_TEXTURE_2D;
     GrBackendTextureDesc desc;
     desc.fFlags = kRenderTarget_GrBackendTextureFlag;
-    desc.fWidth = width_;
-    desc.fHeight = height_;
+    desc.fWidth = width;
+    desc.fHeight = height;
     desc.fConfig = kGrPixelConfig;
     desc.fOrigin = kTopLeft_GrSurfaceOrigin;
     desc.fTextureHandle = reinterpret_cast<GrBackendObject>(&texture_info);
@@ -446,22 +446,25 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateBuffer(
   }
 #endif
 
-  size_t stride = width_ * kBytesPerPixel;
+  size_t stride = width * kBytesPerPixel;
   buffer->shared_memory.reset(new base::SharedMemory());
-  buffer->shared_memory->CreateAndMapAnonymous(stride * height_);
+  buffer->shared_memory->CreateAndMapAnonymous(stride * height);
   buffer->shm_pool.reset(wl_shm_create_pool(
       globals_.shm.get(), buffer->shared_memory->handle().GetHandle(),
       buffer->shared_memory->requested_size()));
 
   buffer->buffer.reset(static_cast<wl_buffer*>(wl_shm_pool_create_buffer(
-      buffer->shm_pool.get(), 0, width_, height_, stride, kShmFormat)));
+      buffer->shm_pool.get(), 0, width, height, stride, kShmFormat)));
   if (!buffer->buffer) {
     LOG(ERROR) << "Can't create buffer";
     return nullptr;
   }
 
+  wl_buffer_add_listener(buffer->buffer.get(), &g_buffer_listener,
+                         buffer.get());
+
   buffer->sk_surface = SkSurface::MakeRasterDirect(
-      SkImageInfo::Make(width_, height_, kColorType, kOpaque_SkAlphaType),
+      SkImageInfo::Make(width, height, kColorType, kOpaque_SkAlphaType),
       static_cast<uint8_t*>(buffer->shared_memory->memory()), stride);
   DCHECK(buffer->sk_surface);
   return buffer;
