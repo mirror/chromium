@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "70fa4779_016fac94",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-31T18:54:40Z",
+      "side": 1,
+      "message": "This should be between \nkEnableIdleTimeSpellCheckingDescription[];\nand\nkEnableMaterialDesignBookmarksName[];",
+      "parentUuid": "d43cc00a_78c52f7f",
+      "range": {
+        "startLine": 1987,
+        "startChar": 0,
+        "endLine": 1990,
+        "endChar": 41
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7b70011_6ee32eb0",
         "filename": "components/BUILD.gn",
         "patchSetId": 1
@@ -211,6 +235,30 @@
       "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cba3721a_28d7d94f",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-31T18:54:40Z",
+      "side": 1,
+      "message": "Instead of creating a separate deps +\u003d statement here, there\u0027s a list of deps above on line 64. This can go there.",
+      "parentUuid": "847eb26c_69d897ec",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 61
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
