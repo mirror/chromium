@@ -129,16 +129,16 @@ void RemoteFrame::SetView(RemoteFrameView* view) {
 
 void RemoteFrame::CreateView() {
   // If the RemoteFrame does not have a LocalFrame parent, there's no need to
-  // create a widget for it.
+  // create a EmbeddedContentView for it.
   if (!DeprecatedLocalOwner())
     return;
 
-  DCHECK(!DeprecatedLocalOwner()->OwnedWidget());
+  DCHECK(!DeprecatedLocalOwner()->OwnedEmbeddedContentView());
 
   SetView(RemoteFrameView::Create(this));
 
   if (!OwnerLayoutItem().IsNull())
-    DeprecatedLocalOwner()->SetWidget(view_);
+    DeprecatedLocalOwner()->SetEmbeddedContentView(view_);
 }
 
 RemoteFrameClient* RemoteFrame::Client() const {
