@@ -145,13 +145,13 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
     [_pageLockIndicatorView
         setTintColor:skia::UIColorFromSkColor(gfx::kGoogleGreen700)];
     [self.contentView addSubview:_pageLockIndicatorView];
-    
+
     // Set up the lock indicator size constraints. They are activated here
     // and updated in layoutSubviews.
     _lockIndicatorHeightConstraint =
-    [_pageLockIndicatorView.heightAnchor constraintEqualToConstant:0];
+        [_pageLockIndicatorView.heightAnchor constraintEqualToConstant:0];
     _lockIndicatorWidthConstraint =
-    [_pageLockIndicatorView.widthAnchor constraintEqualToConstant:0];
+        [_pageLockIndicatorView.widthAnchor constraintEqualToConstant:0];
 
     // Layout
     [NSLayoutConstraint activateConstraints:@[
@@ -226,7 +226,7 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
   // dimensions for the image.
   _lockIndicatorHeightConstraint.constant = kLockIndicatorDimension;
   _lockIndicatorWidthConstraint.constant = kLockIndicatorDimension;
-  
+
   [super layoutSubviews];
 }
 

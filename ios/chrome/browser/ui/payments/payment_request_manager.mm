@@ -434,7 +434,7 @@ struct PendingPaymentResponse {
   NSString* pageHost =
       base::SysUTF8ToNSString([self webState]->GetLastCommittedURL().host());
   // TODO(rayraymond): Determine when connection is secure.
-  BOOL connectionSecure = true;
+  BOOL connectionSecure = false;
   autofill::AutofillManager* autofillManager =
       autofill::AutofillDriverIOS::FromWebState(_webState)->autofill_manager();
   _paymentRequestCoordinator = [[PaymentRequestCoordinator alloc]
