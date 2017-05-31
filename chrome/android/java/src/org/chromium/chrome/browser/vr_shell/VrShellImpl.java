@@ -25,6 +25,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
@@ -577,12 +578,17 @@ public class VrShellImpl
 
     @CalledByNative
     public void navigateBack() {
-        mActivity.getToolbarManager().back();
+        if (mActivity instanceof ChromeTabbedActivity) {
+            ((ChromeTabbedActivity) mActivity).handleBackPressed();
+        } else {
+            mActivity.getToolbarManager().back();
+        }
         updateHistoryButtonsVisibility();
     }
 
     private void updateHistoryButtonsVisibility() {
-        boolean canGoBack = mTab != null && mTab.canGoBack();
+        boolean canGoBack =
+                mTab != null && mTab.canGoBack() || mActivity instanceof ChromeTabbedActivity;
         boolean canGoForward = mTab != null && mTab.canGoForward();
         nativeSetHistoryButtonsEnabled(mNativeVrShell, canGoBack, canGoForward);
     }

@@ -139,6 +139,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     // Best effort whether or not the system was in VR when Chrome launched.
     private Boolean mInVrAtChromeLaunch;
     private boolean mShowingDaydreamDoff;
+    private boolean mDoffOptional;
     private boolean mExitingCct;
     private boolean mPaused;
     private int mRestoreSystemUiVisibilityFlag = -1;
@@ -281,6 +282,20 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         if (daydreamApi.isDaydreamReadyDevice()) return VR_DAYDREAM;
 
         return VR_CARDBOARD;
+    }
+
+    /**
+     * Returns whether or not Chrome should exit on back button press.
+     */
+    public static boolean shouldExitChromeOnBackPress() {
+        if (sInstance == null) return true;
+        if (sInstance.mInVrAtChromeLaunch == null) return true;
+        return sInstance.mInVrAtChromeLaunch || !sInstance.mInVr;
+    }
+
+    public static boolean askUserToTakeHeadsetOff() {
+        if (sInstance == null || !sInstance.mInVr) return false;
+        return sInstance.showDoff(true /* optional */);
     }
 
     /**
@@ -780,11 +795,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         if (!mInVr) return false;
         if (!isVrShellEnabled(mVrSupportLevel) || !isDaydreamCurrentViewer()
                 || !activitySupportsVrBrowsing(mActivity)) {
-            if (isDaydreamCurrentViewer()
-                    && mVrDaydreamApi.exitFromVr(EXIT_VR_RESULT, new Intent())) {
-                mShowingDaydreamDoff = true;
-                return false;
-            }
+            if (isDaydreamCurrentViewer() && showDoff(false /* optional */)) return false;
             shutdownVr(
                     true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
         } else {
@@ -886,6 +897,14 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         return true;
     }
 
+    private boolean showDoff(boolean optional) {
+        if (!isDaydreamCurrentViewer()) return false;
+        if (!mVrDaydreamApi.exitFromVr(EXIT_VR_RESULT, new Intent())) return false;
+        mShowingDaydreamDoff = true;
+        mDoffOptional = optional;
+        return true;
+    }
+
     private void onExitVrResult(boolean success) {
         assert mVrSupportLevel != VR_NOT_AVAILABLE;
 
@@ -894,8 +913,8 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         // real DOFF flow calls us back.
         if (!mShowingDaydreamDoff) return;
 
-        // For now, we don't handle re-entering VR when exit fails, so keep trying to exit.
-        if (!success && mVrDaydreamApi.exitFromVr(EXIT_VR_RESULT, new Intent())) return;
+        // If Doff is not optional and user backed out, keep trying to exit.
+        if (!success && (mDoffOptional || showDoff(mDoffOptional))) return;
 
         mShowingDaydreamDoff = false;
 
@@ -988,10 +1007,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
     /* package */ void showDoffAndExitVr() {
         if (mShowingDaydreamDoff) return;
-        if (mVrDaydreamApi.exitFromVr(EXIT_VR_RESULT, new Intent())) {
-            mShowingDaydreamDoff = true;
-            return;
-        }
+        if (showDoff(false /* optional */)) return;
         shutdownVr(true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
     }
 
@@ -999,11 +1015,13 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         if (mShowingDaydreamDoff) return;
         assert mActivity instanceof CustomTabActivity;
         if (mInVrAtChromeLaunch != null && !mInVrAtChromeLaunch) {
-            if (mVrDaydreamApi.exitFromVr(EXIT_VR_RESULT, new Intent())) {
+            if (showDoff(false /* optional */)) {
                 mExitingCct = true;
-                mShowingDaydreamDoff = true;
                 return;
             }
+            shutdownVr(
+                    true /* disableVrMode */, false /* canReenter */, false /* stayingInChrome */);
+            ((CustomTabActivity) mActivity).finishAndClose(false);
         }
     }
 

@@ -1742,6 +1742,12 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         //   exit Chrome on top of closing the tab
         final boolean minimizeApp = !shouldCloseTab || currentTab.isCreatedForExternalApp();
         if (minimizeApp) {
+            // If we're in VR, and Chrome wasn't launched in VR, then we should tell the user to
+            // take their headset off before backgrounding Chrome and showing 2D UI.
+            if (VrShellDelegate.isInVr() && !VrShellDelegate.shouldExitChromeOnBackPress()
+                    && VrShellDelegate.askUserToTakeHeadsetOff()) {
+                return true;
+            }
             if (shouldCloseTab) {
                 recordBackPressedUma("Minimized and closed tab", BACK_PRESSED_MINIMIZED_TAB_CLOSED);
                 mActivityStopMetrics.setStopReason(ActivityStopMetrics.STOP_REASON_BACK_BUTTON);
