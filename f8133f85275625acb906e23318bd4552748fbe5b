@@ -16,6 +16,24 @@
       "revId": "f8133f85275625acb906e23318bd4552748fbe5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368f0f9f_7f1cdef4",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-05-31T02:16:15Z",
+      "side": 1,
+      "message": "Good point, this isn\u0027t null-checked elsewhere in this file either. I\u0027ve removed this null check from the latest patch.",
+      "parentUuid": "50273757_ac979e72",
+      "revId": "f8133f85275625acb906e23318bd4552748fbe5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
