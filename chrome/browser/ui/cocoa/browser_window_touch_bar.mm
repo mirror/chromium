@@ -55,7 +55,8 @@ enum TouchBarAction {
   SEARCH,
   STAR,
   NEW_TAB,
-  TOUCH_BAR_ACTION_COUNT
+  TOUCH_BAR_ACTION_COUNT,
+  SLIDER
 };
 
 // Touch bar identifiers.
@@ -71,6 +72,7 @@ NSString* const kStarTouchId = @"BOOKMARK";
 NSString* const kNewTabTouchId = @"NEW-TAB";
 NSString* const kExitFullscreenTouchId = @"EXIT-FULLSCREEN";
 NSString* const kFullscreenOriginLabelTouchId = @"FULLSCREEN-ORIGIN-LABEL";
+NSString* const kSliderId = @"SLIDER";
 
 // The button indexes in the back and forward segment control.
 const int kBackSegmentIndex = 0;
@@ -104,10 +106,34 @@ NSButton* CreateTouchBarButton(const gfx::VectorIcon& icon,
       [NSButton buttonWithImage:CreateNSImageFromIcon(icon, color)
                          target:owner
                          action:@selector(executeCommand:)];
+
   button.tag = command;
   [button setAccessibilityLabel:l10n_util::GetNSString(tooltip_id)];
   return button;
 }
+
+NSButton* CreateTouchBarButton_(const gfx::VectorIcon& icon,
+                                BrowserWindowTouchBar* owner,
+                                int command,
+                                int tooltip_id,
+                                SkColor color = kTouchBarDefaultIconColor) {
+  NSButton* button = [NSButton buttonWithTitle:@"C"
+                                        target:owner
+                                        action:@selector(executeCommand:)];
+
+  button.tag = command;
+  [button setAccessibilityLabel:l10n_util::GetNSString(tooltip_id)];
+  return button;
+}
+
+// Creates a NSSlider for the touch bar.
+/*NSSlider* CreateTouchBarSlider(BrowserWindowTouchBar* owner,
+                               int command) {
+    NSSlider* slider =
+        [NSSlider sliderWithTarget: owner action: @selector(executeCommand:)];
+    slider.tag = command;
+    return slider;
+}*/
 
 NSString* GetTouchBarId(NSString* touch_bar_id) {
   NSString* chrome_bundle_id =
@@ -241,7 +267,7 @@ class HomePrefNotificationBridge {
 
   NSArray* touchBarItems = @[
     kBackForwardTouchId, kReloadOrStopTouchId, kHomeTouchId, kSearchTouchId,
-    kStarTouchId, kNewTabTouchId
+    kStarTouchId, kNewTabTouchId, kSliderId
   ];
 
   for (NSString* item in touchBarItems) {
@@ -336,6 +362,13 @@ class HomePrefNotificationBridge {
         setView:[NSTextField labelWithAttributedString:attributedString.get()]];
   } else if ([identifier hasSuffix:kExitFullscreenTouchId]) {
     return nil;
+  } else if ([identifier hasSuffix:kSliderId]) {
+    [touchBarItem
+        setView:CreateTouchBarButton_(kNewTabMacTouchbarIcon, self, IDC_NEW_TAB,
+                                      IDS_TOOLTIP_NEW_TAB)];
+    [touchBarItem
+        setCustomizationLabel:l10n_util::GetNSString(
+                                  IDS_TOUCH_BAR_NEW_TAB_CUSTOMIZATION_LABEL)];
   }
 
   return touchBarItem.autorelease();
