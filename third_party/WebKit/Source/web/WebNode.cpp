@@ -177,14 +177,6 @@ WebPluginContainer* WebNode::PluginContainer() const {
   return private_->GetWebPluginContainerBase();
 }
 
-WebAXObject WebNode::AccessibilityObject() {
-  WebDocument web_document = GetDocument();
-  const Document* doc = GetDocument().ConstUnwrap<Document>();
-  AXObjectCacheBase* cache = ToAXObjectCacheBase(doc->ExistingAXObjectCache());
-  Node* node = Unwrap<Node>();
-  return cache ? WebAXObject(cache->Get(node)) : WebAXObject();
-}
-
 WebNode::WebNode(Node* node) : private_(node) {}
 
 WebNode& WebNode::operator=(Node* node) {
