@@ -17,8 +17,6 @@ class ScrollOffset;
 }
 
 namespace views {
-class ViewObserverTest;
-
 namespace test {
 class ScrollViewTestApi;
 }
@@ -123,9 +121,11 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
 
  private:
   friend class test::ScrollViewTestApi;
-  FRIEND_TEST_ALL_PREFIXES(ViewObserverTest, ScrollViewChildAddLayerTest);
 
   class Viewport;
+
+  // Returns true if this or the viewport has a layer.
+  bool DoesViewportOrScrollViewHaveLayer() const;
 
   // Used internally by SetHeader() and SetContents() to reset the view.  Sets
   // |member| to |new_view|. If |new_view| is non-null it is added to |parent|.
@@ -214,9 +214,6 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
 
   // Focus ring, if one is installed.
   View* focus_ring_ = nullptr;
-
-  // Set to true if we enabled layering for the viewport.
-  bool viewport_layer_enabled_ = false;
 
   // Set to true if the scroll with layers feature is enabled.
   const bool scroll_with_layers_enabled_;

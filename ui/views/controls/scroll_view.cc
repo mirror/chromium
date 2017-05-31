@@ -537,8 +537,10 @@ void ScrollView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
 
 void ScrollView::ViewHierarchyChanged(
     const ViewHierarchyChangedDetails& details) {
-  if (details.is_add && !viewport_layer_enabled_ && Contains(details.parent))
+  if (details.is_add && !DoesViewportOrScrollViewHaveLayer() &&
+      Contains(details.parent)) {
     EnableLayeringRecursivelyForChild(details.child);
+  }
 }
 
 void ScrollView::OnChildLayerChanged(View* child) {
@@ -591,6 +593,10 @@ int ScrollView::GetScrollIncrement(ScrollBar* source, bool is_page,
   }
   return is_horizontal ? contents_viewport_->width() / 5 :
                          contents_viewport_->height() / 5;
+}
+
+bool ScrollView::DoesViewportOrScrollViewHaveLayer() const {
+  return layer() || contents_viewport_->layer();
 }
 
 void ScrollView::SetHeaderOrContents(View* parent,
@@ -743,10 +749,8 @@ bool ScrollView::ScrollsWithLayers() const {
 }
 
 void ScrollView::EnableViewPortLayer() {
-  if (viewport_layer_enabled_)
+  if (DoesViewportOrScrollViewHaveLayer())
     return;
-
-  viewport_layer_enabled_ = true;
 
   contents_viewport_->SetPaintToLayer();
 
@@ -796,9 +800,6 @@ void ScrollView::UpdateBorder() {
 }
 
 bool ScrollView::EnableLayeringRecursivelyForChild(View* view) {
-  if (viewport_layer_enabled_ || scroll_with_layers_enabled_)
-    return true;
-
   if (view->layer()) {
     EnableViewPortLayer();
     return true;
