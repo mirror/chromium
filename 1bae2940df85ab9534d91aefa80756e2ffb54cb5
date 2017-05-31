@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1818db27_1bfd2dc0",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-05-31T17:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44dc62b5_95a9a08c",
+      "revId": "1bae2940df85ab9534d91aefa80756e2ffb54cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d266c057_f1d4582c",
         "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-31T15:21:47Z",
       "side": 1,
       "message": "Code seems out of line with comment - how does the code below set up the static reference?",
+      "revId": "1bae2940df85ab9534d91aefa80756e2ffb54cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59323ad8_e2964412",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-05-31T17:11:46Z",
+      "side": 1,
+      "message": "That came in from alsa/cast_media_shlib.cc, which I used as a template for this. But I things got tweaked along the way. As far as I can see this whole piece of code is not needed, so I removed it. Please confirm. It looks like it is setting up some lazy pointer by reading it for the first time. I am assuming though this is not required here and will just be done wherever else we use a task runner the first time.",
+      "parentUuid": "d266c057_f1d4582c",
       "revId": "1bae2940df85ab9534d91aefa80756e2ffb54cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "1bae2940df85ab9534d91aefa80756e2ffb54cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11ab0f3_6998fa3b",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-05-31T17:11:46Z",
+      "side": 1,
+      "message": "It is being filled in the volume control change coming up - hopefully today. So should be ok to keep it here.",
+      "parentUuid": "490f4e49_58628447",
+      "revId": "1bae2940df85ab9534d91aefa80756e2ffb54cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
