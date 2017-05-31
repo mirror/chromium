@@ -11,6 +11,8 @@ import os
 import subprocess
 import sys
 
+from compute_hash_value import ComputeStringHash
+
 # These two lines are required to import protobuf from third_party directory
 # instead of the one installed with python.
 from prepare_protobuf import PrepareProtobuf
@@ -18,26 +20,6 @@ PrepareProtobuf()
 
 from google.protobuf import text_format
 import traffic_annotation_pb2
-
-
-def _RecursiveHash(string):
-  if len(string) == 1:
-    return ord(string[0])
-  last_character = ord(string[-1])
-  string = string[:-1]
-  return (_RecursiveHash(string) * 31 + last_character) % 138003713
-
-
-def _ComputeStringHash(unique_id):
-  """Computes the hash value of a string, as in
-  'net/traffic_annotation/network_traffic_annotation.h'.
-  args:
-    unique_id: str The string to be converted to hash code.
-
-  Returns:
-    unsigned int Hash code of the input string
-  """
-  return _RecursiveHash(unique_id) if len(unique_id) else -1
 
 
 def _RunClangTool(src_dir, build_dir, path_filters):
@@ -125,7 +107,7 @@ def _ParsRawAnnotations(raw_annotations):
 
         new_metadata = {'function_type': lines[current + 4],
                         'extra_id': lines[current + 6],
-                        'unique_id_hash': _ComputeStringHash(unique_id)}
+                        'unique_id_hash': ComputeStringHash(unique_id)}
         # Extract serialized proto.
         current += 7
         annotation_text = ""
@@ -222,7 +204,7 @@ def _WriteHashCodesFile(annotations, metadata, file_path):
           "%s,%s\n" % (annotation.unique_id, meta['unique_id_hash']))
     for keyword in ("test", "test_partial", "undefined", "missing"):
       summary_file.write(
-          "%s,%s\n" % (keyword, _ComputeStringHash(keyword)))
+          "%s,%s\n" % (keyword, ComputeStringHash(keyword)))
 
 
 def main():
