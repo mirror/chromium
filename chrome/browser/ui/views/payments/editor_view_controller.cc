@@ -51,8 +51,8 @@ std::unique_ptr<views::View> CreateErrorLabelView(
     autofill::ServerFieldType type) {
   std::unique_ptr<views::View> view = base::MakeUnique<views::View>();
 
-  std::unique_ptr<views::BoxLayout> layout =
-      base::MakeUnique<views::BoxLayout>(views::BoxLayout::kVertical, 0, 0, 0);
+  std::unique_ptr<views::BoxLayout> layout = base::MakeUnique<views::BoxLayout>(
+      views::BoxLayout::kVertical, gfx::Insets(), 0);
   layout->set_main_axis_alignment(views::BoxLayout::MAIN_AXIS_ALIGNMENT_START);
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_STRETCH);
@@ -141,7 +141,7 @@ std::unique_ptr<views::Button> EditorViewController::CreatePrimaryButton() {
 
 void EditorViewController::FillContentView(views::View* content_view) {
   views::BoxLayout* layout =
-      new views::BoxLayout(views::BoxLayout::kVertical, 0, 0, 0);
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0);
   layout->set_main_axis_alignment(views::BoxLayout::MAIN_AXIS_ALIGNMENT_START);
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_STRETCH);

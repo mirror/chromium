@@ -31,6 +31,7 @@
 #include "ui/base/ime/text_input_client.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/range/range.h"
 #include "ui/keyboard/keyboard_controller.h"
@@ -134,7 +135,7 @@ class ImeTitleView : public views::View, public views::ButtonListener {
                                       kMenuSeparatorColor),
         gfx::Insets(kMenuSeparatorVerticalPadding - kSeparatorWidth, 0)));
     auto* box_layout =
-        new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
+        new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 0);
     box_layout->set_minimum_cross_axis_size(kTrayPopupItemMinHeight);
     SetLayoutManager(box_layout);
     auto* title_label =
@@ -216,7 +217,7 @@ class ImeButtonsView : public views::View, public views::ButtonListener {
  private:
   void Init() {
     auto* box_layout =
-        new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
+        new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 0);
     box_layout->set_minimum_cross_axis_size(kTrayPopupItemMinHeight);
     SetLayoutManager(box_layout);
     SetBorder(views::CreatePaddedBorder(

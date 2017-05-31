@@ -25,6 +25,7 @@
 #include "ui/compositor/compositing_recorder.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/vector_icons/vector_icons.h"
@@ -226,7 +227,7 @@ views::View* CardUnmaskPromptViews::CreateFootnoteView() {
   // Local storage checkbox and (?) tooltip.
   storage_row_ = new FadeOutView();
   views::BoxLayout* storage_row_layout = new views::BoxLayout(
-      views::BoxLayout::kHorizontal, kEdgePadding, kEdgePadding, 0);
+      views::BoxLayout::kHorizontal, gfx::Insets(kEdgePadding), 0);
   storage_row_->SetLayoutManager(storage_row_layout);
   storage_row_->SetBorder(
       views::CreateSolidSidedBorder(1, 0, 0, 0, kSubtleBorderColor));
@@ -388,7 +389,7 @@ void CardUnmaskPromptViews::InitIfNecessary() {
 
   main_contents_ = new views::View();
   main_contents_->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical, 0, 0, 12));
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 12));
   AddChildView(main_contents_);
 
   permanent_error_label_ = new views::Label();
@@ -407,8 +408,8 @@ void CardUnmaskPromptViews::InitIfNecessary() {
   main_contents_->AddChildView(permanent_error_label_);
 
   views::View* controls_container = new views::View();
-  controls_container->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical, kEdgePadding, 0, 0));
+  controls_container->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical, gfx::Insets(0, kEdgePadding), 0));
   main_contents_->AddChildView(controls_container);
 
   instructions_ = new views::Label(controller_->GetInstructionsMessage());
@@ -420,7 +421,7 @@ void CardUnmaskPromptViews::InitIfNecessary() {
 
   input_row_ = new views::View();
   input_row_->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 5));
+      new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 5));
   controls_container->AddChildView(input_row_);
 
   month_input_ = new views::Combobox(&month_combobox_model_);
@@ -450,7 +451,7 @@ void CardUnmaskPromptViews::InitIfNecessary() {
 
   views::View* temporary_error = new views::View();
   views::BoxLayout* temporary_error_layout =
-      new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 4);
+      new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 4);
   temporary_error->SetLayoutManager(temporary_error_layout);
   temporary_error_layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
@@ -473,7 +474,7 @@ void CardUnmaskPromptViews::InitIfNecessary() {
   progress_overlay_ = new FadeOutView();
   progress_overlay_->set_fade_everything(true);
   views::BoxLayout* progress_layout =
-      new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 5);
+      new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 5);
   progress_layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   progress_layout->set_main_axis_alignment(

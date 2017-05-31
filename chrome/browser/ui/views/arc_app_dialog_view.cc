@@ -21,6 +21,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/ui_base_types.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
@@ -128,10 +129,10 @@ ArcAppDialogView::ArcAppDialogView(Profile* profile,
 
   SetLayoutManager(new views::BoxLayout(
       views::BoxLayout::kHorizontal,
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN),
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN),
+      gfx::Insets(provider->GetDistanceMetric(
+                      views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN),
+                  provider->GetDistanceMetric(
+                      views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN)),
       provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_HORIZONTAL)));
 
   icon_view_ = new views::ImageView();
@@ -140,7 +141,7 @@ ArcAppDialogView::ArcAppDialogView(Profile* profile,
 
   views::View* text_container = new views::View();
   views::BoxLayout* text_container_layout =
-      new views::BoxLayout(views::BoxLayout::kVertical, 0, 0, 0);
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0);
   text_container_layout->set_main_axis_alignment(
       views::BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
   text_container_layout->set_cross_axis_alignment(

@@ -7,6 +7,7 @@
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/layout_constants.h"
@@ -46,8 +47,8 @@ views::Label* AppInfoPanel::CreateHeading(const base::string16& text) const {
 
 views::View* AppInfoPanel::CreateVerticalStack(int child_spacing) const {
   views::View* vertically_stacked_view = new views::View();
-  vertically_stacked_view->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical, 0, 0, child_spacing));
+  vertically_stacked_view->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical, gfx::Insets(), child_spacing));
   return vertically_stacked_view;
 }
 
@@ -57,8 +58,8 @@ views::View* AppInfoPanel::CreateVerticalStack() const {
 
 views::View* AppInfoPanel::CreateHorizontalStack(int child_spacing) const {
   views::View* vertically_stacked_view = new views::View();
-  vertically_stacked_view->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, child_spacing));
+  vertically_stacked_view->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kHorizontal, gfx::Insets(), child_spacing));
   return vertically_stacked_view;
 }
 

@@ -21,7 +21,7 @@ namespace {
 // size.
 std::unique_ptr<views::LayoutManager> CreatePreferredSizeLayoutManager() {
   auto layout = base::MakeUnique<views::BoxLayout>(
-      views::BoxLayout::kHorizontal, 0, 0, 0);
+      views::BoxLayout::kHorizontal, gfx::Insets(), 0);
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
   return std::move(layout);

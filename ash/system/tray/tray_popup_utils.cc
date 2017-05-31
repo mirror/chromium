@@ -19,6 +19,7 @@
 #include "base/memory/ptr_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
@@ -49,7 +50,8 @@ namespace {
 std::unique_ptr<views::LayoutManager> CreateDefaultCenterLayoutManager() {
   // TODO(bruthig): Use constants instead of magic numbers.
   auto box_layout = base::MakeUnique<views::BoxLayout>(
-      views::BoxLayout::kVertical, kTrayPopupLabelHorizontalPadding, 8, 0);
+      views::BoxLayout::kVertical,
+      gfx::Insets(0, kTrayPopupLabelHorizontalPadding), 0);
   box_layout->set_main_axis_alignment(
       views::BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
   box_layout->set_cross_axis_alignment(
@@ -61,7 +63,7 @@ std::unique_ptr<views::LayoutManager> CreateDefaultCenterLayoutManager() {
 // centered along the horizontal and vertical axis.
 std::unique_ptr<views::LayoutManager> CreateDefaultEndsLayoutManager() {
   auto box_layout = base::MakeUnique<views::BoxLayout>(
-      views::BoxLayout::kHorizontal, 0, 0, 0);
+      views::BoxLayout::kHorizontal, gfx::Insets(), 0);
   box_layout->set_main_axis_alignment(
       views::BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
   box_layout->set_cross_axis_alignment(
