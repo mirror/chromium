@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "ab656302_573432e4",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T22:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6169628f_e0029683",
+      "range": {
+        "startLine": 335,
+        "startChar": 10,
+        "endLine": 335,
+        "endChar": 20
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52ea9a69_22d17123",
         "filename": "chrome/browser/extensions/policy_handlers.cc",
         "patchSetId": 3
@@ -293,6 +317,30 @@
       "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f160a1b1_9533e1e3",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T22:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec55c7b_730837c1",
+      "range": {
+        "startLine": 348,
+        "startChar": 34,
+        "endLine": 348,
+        "endChar": 42
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
