@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa8d703c_3cdd01ec",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-31T23:33:35Z",
+      "side": 1,
+      "message": "You can reset in_painting_ before this check, so that we reset it in either case. Can you also add a test for this case if one doesn\u0027t yet exist?",
+      "revId": "b5b26975bfa76fb56bc9172b033c681d0f2288d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7208bf_eed68579",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-31T23:33:35Z",
+      "side": 1,
+      "message": "nit: in_paired_begin_count_",
+      "revId": "b5b26975bfa76fb56bc9172b033c681d0f2288d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542aa920_09c2df8f",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-31T23:33:35Z",
+      "side": 1,
+      "message": "Is it possible to move this \"unwinding\" logic a helper?",
+      "revId": "b5b26975bfa76fb56bc9172b033c681d0f2288d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f592c740_e04aa271",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-05-31T23:33:35Z",
+      "side": 1,
+      "message": "Can you move this to the beginning of the loop, since if we keep hitting the path on 774, we don\u0027t check this.",
+      "revId": "b5b26975bfa76fb56bc9172b033c681d0f2288d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
