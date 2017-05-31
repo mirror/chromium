@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f405ce60_d86d78a8",
+        "filename": "third_party/WebKit/Source/core/css/threaded/CSSToLengthConversionDataThreadedTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-05-31T09:55:51Z",
+      "side": 1,
+      "message": "ComputedStyle is bound to a dom tree. Not only in the implementation, but also per spec. Hopefully we won\u0027t need to involve ComputedStyle off-main-thread. What exactly do you need from ComputedStyle in the off-main-thread parsing? Is it for relative units? Could we have a code path implementing length conversion which does not rely on ComputedStyle? Note that units like \"rem\" does not make immediate sense without a dom tree.",
+      "revId": "7968dcbef709fe1c01f5dc701407373d2397b1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afdd2912_1512e541",
         "filename": "third_party/WebKit/Source/core/css/threaded/MultiThreadedTestUtil.h",
         "patchSetId": 1
