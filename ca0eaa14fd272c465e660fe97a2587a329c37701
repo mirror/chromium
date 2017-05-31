@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "967e45c6_59d7f71a",
+        "filename": "components/feature_engagement_tracker/public/android/java/src/org/chromium/components/feature_engagement_tracker/EventConstants.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-31T17:03:28Z",
+      "side": 1,
+      "message": "So, we discussed a bit. I don\u0027t think we necessarily need this or data_saver_triggered.",
+      "revId": "ca0eaa14fd272c465e660fe97a2587a329c37701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfc037d_e7d1d33d",
+        "filename": "components/feature_engagement_tracker/public/android/java/src/org/chromium/components/feature_engagement_tracker/EventConstants.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-31T17:03:28Z",
+      "side": 1,
+      "message": "data_saver_overview_opened",
+      "revId": "ca0eaa14fd272c465e660fe97a2587a329c37701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
