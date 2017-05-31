@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df9255a0_968c4295",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-31T20:50:35Z",
+      "side": 1,
+      "message": "Probably don\u0027t want to have print statements in the test",
+      "revId": "5fc5bc1080ea49b3cf2ec35e1bb2aa758ddfd2bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bb98db_b461ba70",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-05-31T20:50:35Z",
+      "side": 1,
+      "message": "Also, is args[0] always supposed to be \"git\"?",
+      "revId": "5fc5bc1080ea49b3cf2ec35e1bb2aa758ddfd2bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
