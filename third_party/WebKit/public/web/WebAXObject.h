@@ -126,13 +126,11 @@ class WebAXObject {
   BLINK_EXPORT void GetSparseAXAttributes(WebAXSparseAttributeClient&) const;
 
   BLINK_EXPORT bool IsAnchor() const;
-  BLINK_EXPORT bool IsAriaReadOnly() const;
   BLINK_EXPORT WebAXCheckedState CheckedState() const;
   BLINK_EXPORT bool IsCheckable() const;
   BLINK_EXPORT bool IsClickable() const;
   BLINK_EXPORT bool IsCollapsed() const;
   BLINK_EXPORT bool IsControl() const;
-  BLINK_EXPORT bool IsEnabled() const;
   BLINK_EXPORT WebAXExpanded IsExpanded() const;
   BLINK_EXPORT bool IsFocused() const;
   BLINK_EXPORT bool IsHovered() const;
@@ -143,7 +141,6 @@ class WebAXObject {
   BLINK_EXPORT bool IsOffScreen() const;
   BLINK_EXPORT bool IsPasswordField() const;
   BLINK_EXPORT bool IsPressed() const;
-  BLINK_EXPORT bool IsReadOnly() const;
   BLINK_EXPORT bool IsRequired() const;
   BLINK_EXPORT bool IsSelected() const;
   BLINK_EXPORT bool IsSelectedOptionActive() const;
@@ -169,6 +166,7 @@ class WebAXObject {
   BLINK_EXPORT bool CanvasHasFallbackContent() const;
   // If this is an image, returns the image (scaled to maxSize) as a data url.
   BLINK_EXPORT WebString ImageDataUrl(const WebSize& max_size) const;
+  BLINK_EXPORT WebAXMutabilityState Mutability() const;
   BLINK_EXPORT WebAXInvalidState InvalidState() const;
   // Only used when invalidState() returns WebAXInvalidStateOther.
   BLINK_EXPORT WebString AriaInvalidValue() const;
@@ -267,7 +265,6 @@ class WebAXObject {
   BLINK_EXPORT bool CanPress() const;
   BLINK_EXPORT bool CanSetFocusAttribute() const;
   BLINK_EXPORT bool CanSetSelectedAttribute() const;
-  BLINK_EXPORT bool CanSetValueAttribute() const;
   BLINK_EXPORT bool PerformDefaultAction() const;
   BLINK_EXPORT bool Press() const;
   BLINK_EXPORT bool Increment() const;
