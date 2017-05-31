@@ -79,9 +79,8 @@ public class CustomNotificationBuilder extends NotificationBuilderBase {
 
     private final Context mContext;
 
-    public CustomNotificationBuilder(Context context) {
-        // TODO(crbug.com/726340): Pass in the ChannelDefinition
-        super(context.getResources(), ChannelDefinitions.CHANNEL_ID_SITES);
+    public CustomNotificationBuilder(Context context, String channelId) {
+        super(context.getResources(), channelId);
         mContext = context;
     }
 

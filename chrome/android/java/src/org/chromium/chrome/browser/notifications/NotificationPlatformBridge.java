@@ -513,9 +513,9 @@ public class NotificationPlatformBridge {
                 incognito, tag, webApkPackage, -1 /* actionIndex */);
 
         boolean hasImage = image != null;
-
+        boolean forWebApk = !webApkPackage.isEmpty();
         NotificationBuilderBase notificationBuilder =
-                createNotificationBuilder(context, hasImage)
+                createNotificationBuilder(context, forWebApk, hasImage)
                         .setTitle(title)
                         .setBody(body)
                         .setImage(image)
@@ -558,7 +558,10 @@ public class NotificationPlatformBridge {
         notificationBuilder.setVibrate(makeVibrationPattern(vibrationPattern));
 
         String platformTag = makePlatformTag(notificationId, origin, tag);
-        if (webApkPackage.isEmpty()) {
+        if (forWebApk) {
+            WebApkNotificationClient.notifyNotification(
+                    webApkPackage, notificationBuilder, platformTag, PLATFORM_ID);
+        } else {
             // Set up a pending intent for going to the settings screen for |origin|.
             Intent settingsIntent = PreferencesLauncher.createIntentForSettingsPage(
                     context, SingleWebsitePreferences.class.getName());
@@ -587,17 +590,18 @@ public class NotificationPlatformBridge {
             mNotificationManager.notify(platformTag, PLATFORM_ID, notificationBuilder.build());
             NotificationUmaTracker.getInstance().onNotificationShown(
                     NotificationUmaTracker.SITES, ChannelDefinitions.CHANNEL_ID_SITES);
-        } else {
-            WebApkNotificationClient.notifyNotification(
-                    webApkPackage, notificationBuilder, platformTag, PLATFORM_ID);
         }
     }
 
-    private NotificationBuilderBase createNotificationBuilder(Context context, boolean hasImage) {
+    private NotificationBuilderBase createNotificationBuilder(
+            Context context, boolean forWebApk, boolean hasImage) {
+        // It's okay to not set a valid channelId for web apk notifications because they don't
+        // target O yet.
+        String channelId = forWebApk ? null : ChannelDefinitions.CHANNEL_ID_SITES;
         if (useCustomLayouts(hasImage)) {
-            return new CustomNotificationBuilder(context);
+            return new CustomNotificationBuilder(context, channelId);
         }
-        return new StandardNotificationBuilder(context, ChannelDefinitions.CHANNEL_ID_SITES);
+        return new StandardNotificationBuilder(context, channelId);
     }
 
     /**
