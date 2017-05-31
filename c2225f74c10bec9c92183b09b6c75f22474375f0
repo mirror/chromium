@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3c1a04a_ed1ab089",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-05-31T12:06:36Z",
+      "side": 1,
+      "message": "Just a curious question: Is data_use_measurement orthogonal to NetworkTrafficAnnotation?",
+      "range": {
+        "startLine": 372,
+        "startChar": 18,
+        "endLine": 373,
+        "endChar": 65
+      },
+      "revId": "c2225f74c10bec9c92183b09b6c75f22474375f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527ce5e4_9fce8188",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-05-31T12:06:36Z",
+      "side": 1,
+      "message": "for an article suggestion on the new tab page (URLs are public and provided by Google).",
+      "range": {
+        "startLine": 258,
+        "startChar": 12,
+        "endLine": 258,
+        "endChar": 29
+      },
+      "revId": "c2225f74c10bec9c92183b09b6c75f22474375f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12c04e8_1f2e82c1",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-05-31T12:06:36Z",
+      "side": 1,
+      "message": "Please remove this.",
+      "range": {
+        "startLine": 261,
+        "startChar": 30,
+        "endLine": 266,
+        "endChar": 27
+      },
+      "revId": "c2225f74c10bec9c92183b09b6c75f22474375f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce73a8f6_d4df853e",
+        "filename": "components/ntp_tiles/icon_cacher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-05-31T12:06:36Z",
+      "side": 1,
+      "message": "for a server-suggested most visited tile on the new tab page (User gets these URLs from Google, only if history sync is enabled).",
+      "range": {
+        "startLine": 225,
+        "startChar": 12,
+        "endLine": 225,
+        "endChar": 29
+      },
+      "revId": "c2225f74c10bec9c92183b09b6c75f22474375f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50702470_41dcd015",
+        "filename": "components/ntp_tiles/icon_cacher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-05-31T12:06:36Z",
+      "side": 1,
+      "message": "Please remove this.",
+      "range": {
+        "startLine": 228,
+        "startChar": 29,
+        "endLine": 234,
+        "endChar": 49
+      },
+      "revId": "c2225f74c10bec9c92183b09b6c75f22474375f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
