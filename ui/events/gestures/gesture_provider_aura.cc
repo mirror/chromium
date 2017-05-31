@@ -24,7 +24,7 @@ GestureProviderAura::GestureProviderAura(GestureConsumer* consumer,
           this),
       handling_event_(false),
       gesture_consumer_(consumer) {
-  filtered_gesture_provider_.SetDoubleTapSupportForPlatformEnabled(false);
+  filtered_gesture_provider_.SetDoubleTapSupportForPlatformEnabled(true);
 }
 
 GestureProviderAura::~GestureProviderAura() {}

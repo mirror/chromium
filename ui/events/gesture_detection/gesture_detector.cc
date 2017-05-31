@@ -255,10 +255,12 @@ bool GestureDetector::OnTouchEvent(const MotionEvent& ev) {
     } break;
 
     case MotionEvent::ACTION_DOWN: {
+NOTIMPLEMENTED() << "                           Z";
       bool is_repeated_tap =
           current_down_event_ && previous_up_event_ &&
           IsRepeatedTap(*current_down_event_, *previous_up_event_, ev);
       if (double_tap_listener_) {
+NOTIMPLEMENTED() << "                           X";
         is_down_candidate_for_repeated_single_tap_ = false;
         bool had_tap_message = timeout_handler_->HasTimeout(TAP);
         if (had_tap_message)
@@ -268,6 +270,7 @@ bool GestureDetector::OnTouchEvent(const MotionEvent& ev) {
           is_double_tapping_ = true;
           // Give a callback with the first tap of the double-tap.
           handled |= double_tap_listener_->OnDoubleTap(*current_down_event_);
+NOTIMPLEMENTED() << "                           Y";
           // Give a callback with down event of the double-tap.
           handled |= double_tap_listener_->OnDoubleTapEvent(ev);
         } else {

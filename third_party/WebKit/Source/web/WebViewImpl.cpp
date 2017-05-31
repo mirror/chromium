@@ -30,6 +30,7 @@
 
 #include "web/WebViewImpl.h"
 
+#include "base/debug/stack_trace.h"
 #include <memory>
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
@@ -728,10 +729,14 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
   WebGestureEvent scaled_event =
       TransformWebGestureEvent(MainFrameImpl()->GetFrameView(), event);
 
+//base::debug::StackTrace().Print();
+ // NOTIMPLEMENTED() << " AA " << event.GetType() << " "
+   //                << WebInputEvent::kGestureDoubleTap;
   // Special handling for double tap and scroll events as we don't want to
   // hit test for them.
   switch (event.GetType()) {
     case WebInputEvent::kGestureDoubleTap:
+NOTIMPLEMENTED() << " GESTURE DOUBLE T";
       if (web_settings_->DoubleTapToZoomEnabled() &&
           MinimumPageScaleFactor() != MaximumPageScaleFactor()) {
         AnimateDoubleTapZoom(

@@ -333,10 +333,11 @@ void TouchDispositionGestureFilter::SendGesture(
         return;
       needs_show_press_event_ = false;
       break;
-    case ET_GESTURE_DOUBLE_TAP:
-      CancelTapIfNecessary(packet_being_sent);
-      needs_show_press_event_ = false;
-      break;
+ //   case ET_GESTURE_DOUBLE_TAP:
+//NOTIMPLEMENTED() << " M+M";
+ //     CancelTapIfNecessary(packet_being_sent);
+ //     needs_show_press_event_ = false;
+ //     break;
     case ET_GESTURE_TAP:
       DCHECK(needs_tap_ending_event_);
       if (needs_show_press_event_) {

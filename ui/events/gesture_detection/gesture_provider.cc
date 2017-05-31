@@ -463,16 +463,20 @@ class GestureProvider::GestureListenerImpl : public ScaleGestureListener,
   }
 
   bool OnDoubleTap(const MotionEvent& e) override {
+NOTIMPLEMENTED() << " ODT";
     return scale_gesture_detector_.OnDoubleTap(e);
   }
 
   bool OnDoubleTapEvent(const MotionEvent& e) override {
+NOTIMPLEMENTED() << " ODTE";
     switch (e.GetAction()) {
       case MotionEvent::ACTION_DOWN:
+NOTIMPLEMENTED() << " ODTE-A";
         gesture_detector_.set_longpress_enabled(false);
         break;
 
       case MotionEvent::ACTION_UP:
+NOTIMPLEMENTED() << " ODTE-B";
         if (!IsPinchInProgress() && !IsScrollInProgress()) {
           Send(CreateTapGesture(ET_GESTURE_DOUBLE_TAP, e, 1));
           return true;
@@ -915,6 +919,8 @@ void GestureProvider::UpdateDoubleTapDetectionSupport() {
 
   const bool double_tap_enabled =
       double_tap_support_for_page_ && double_tap_support_for_platform_;
+  NOTIMPLEMENTED() << " SUPPORT " << double_tap_support_for_page_
+                   << double_tap_support_for_platform_;
   gesture_listener_->SetDoubleTapEnabled(double_tap_enabled);
 }
 
