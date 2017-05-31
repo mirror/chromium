@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09804034_8f2149a7",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-05-31T23:09:08Z",
+      "side": 1,
+      "message": "Nice, done",
+      "parentUuid": "1452afed_0084b800",
+      "range": {
+        "startLine": 325,
+        "startChar": 6,
+        "endLine": 325,
+        "endChar": 44
+      },
+      "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b62863a_db917abe",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-31T21:56:02Z",
       "side": 1,
       "message": "IIUC this is the popup created by open_script. What happens to the popup opened by window_open_and_close.html?\n\nIf it\u0027s visible at the end of the test, then if you spin up a ShellAddedObserver (from content/public/test/content_browser_test_utils.h) here, can we capture it reliably? Or is this racy?",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 41
+      },
+      "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31041357_a670fb7f",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-05-31T23:09:08Z",
+      "side": 1,
+      "message": "The popup created by window_open_and_close is never really created, the IPC never reaches the browser process AFAICT.",
+      "parentUuid": "2b62863a_db917abe",
       "range": {
         "startLine": 347,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "38da34bf_8c84108f",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-05-31T23:09:08Z",
+      "side": 1,
+      "message": "This works really nicely, thanks",
+      "parentUuid": "00c5469f_e6e707f2",
+      "range": {
+        "startLine": 354,
+        "startChar": 18,
+        "endLine": 354,
+        "endChar": 30
+      },
+      "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93aa37b1_c31c49a4",
         "filename": "content/test/data/render_frame_host/window_open_and_close.html",
         "patchSetId": 4
@@ -82,6 +154,24 @@
       "writtenOn": "2017-05-31T21:57:58Z",
       "side": 1,
       "message": "what\u0027s the importance/signficance of the setTimeout here? I\u0027m wondering why this couldn\u0027t be:\n\nwindow.close();\nwindow.open();",
+      "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c023f26_0688d3f8",
+        "filename": "content/test/data/render_frame_host/window_open_and_close.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-05-31T23:09:08Z",
+      "side": 1,
+      "message": "This is really subtle, let me try to explain what I\u0027m seeing (and add comments to the CL)\n\nThe underlying problem is that the RenderFrameHostImpl is being destroyed while the RenderFrameImpl is still alive, this is how the channel communication is being broken.\n\n~RenderFrameHostImpl is being triggered by ViewHostMsg_Close (aka window.close()).\n\nNote that window.close() is *not* a synchronous IPC, so if we synchronously call window.open() we\u0027re fine because the RFH has not been destroyed yet. In fact, window.close() posts a task to actually send the IPC!\nhttps://cs.chromium.org/chromium/src/content/renderer/render_widget.cc?rcl\u003d3e3b397f8f49f4fc83c3f14593567eb9ea70e032\u0026l\u003d1485\n\nTherefore, we need to post a task to call window.open and ensure it runs after the close IPC. Since it is an associated interface the ordering is well defined.",
+      "parentUuid": "93aa37b1_c31c49a4",
       "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
