@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "dacd8911_a908f234",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T21:42:35Z",
+      "side": 1,
+      "message": "The main fix is really in NVH. Specifically I\u0027m adding a call in ~NativeViewHost() to NVH::ClearFocus(), which calls to FocusManager::ViewRemoved(). So, as far as at least one of the cases in the bug the code here isn\u0027t necessary. I prefer to keep this code (by which I mean OnViewIsDeleting()) as there are other weird cases with widget parenting not using NVH that could be problematic. In that case this code is necessary. If you prefer, I can split up the patches so that this is *only* the change to NVH (and the test) in this patch, and then a follow on patch that removes viewstorage usage here.",
+      "parentUuid": "7bc54b26_444cff43",
+      "range": {
+        "startLine": 557,
+        "startChar": 15,
+        "endLine": 557,
+        "endChar": 26
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f016659_2dab1dbe",
         "filename": "ui/views/focus/focus_manager.cc",
         "patchSetId": 1
