@@ -953,4 +953,36 @@ TEST_F(FrameFetchContextSubresourceFilterTest, WouldDisallow) {
   EXPECT_EQ(0, GetFilteredLoadCallCount());
 }
 
+TEST_F(FrameFetchContextTest, AddAdditionalRequestHeadersWhenDetached) {
+  ResourceRequest request(KURL(KURL(), "https://www.example.com/"));
+
+  Settings* settings = document->GetFrame()->GetSettings();
+  settings->SetDataSaverEnabled(true);
+
+  dummy_page_holder = nullptr;
+
+  fetch_context->AddAdditionalRequestHeaders(request, kFetchSubresource);
+
+  EXPECT_EQ(String(), request.HttpHeaderField("Save-Data"));
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidChangePriorityWhenDetached) {
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidChangeResourcePriority(2, kResourceLoadPriorityLow,
+                                                   3);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DispatchWillSendRequestWhenDetached) {
+  ResourceRequest request(KURL(KURL(), "https://www.example.com/"));
+  ResourceResponse response;
+  FetchInitiatorInfo initiator_info;
+
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchWillSendRequest(1, request, response, initiator_info);
+  // Should not crash.
+}
+
 }  // namespace blink
