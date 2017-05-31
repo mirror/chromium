@@ -22,6 +22,30 @@
       "revId": "6bf7744e81f43f90c89aaff7a8db339f11f3ba0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b165137_f378b6cc",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T23:48:46Z",
+      "side": 1,
+      "message": "Generally I agree and would definitely do so for an external API, but for an internal .cc level method like this where the call site is immediately adjacent I think it\u0027s fine.",
+      "parentUuid": "bdd7d0a1_98551703",
+      "range": {
+        "startLine": 352,
+        "startChar": 46,
+        "endLine": 352,
+        "endChar": 0
+      },
+      "revId": "6bf7744e81f43f90c89aaff7a8db339f11f3ba0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
