@@ -173,9 +173,9 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
             assert sInstance != null;
             if (sInstance == null) return;
             sInstance.mDonSucceeded = true;
-            sInstance.addOverlayViews();
             if (sInstance.mPaused) {
                 if (sInstance.mInVrAtChromeLaunch == null) sInstance.mInVrAtChromeLaunch = false;
+                sInstance.addOverlayViews();
                 ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE))
                         .moveTaskToFront(activity.getTaskId(),
                                 ActivityManager.MOVE_TASK_NO_USER_ACTION,
