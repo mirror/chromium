@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1b573c_f0e58172",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScopeTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-05-31T17:10:39Z",
+      "side": 1,
+      "message": "Not for this patch probably, but it would be nice to have a test which uses the compositing plumbing to let mutate get called from the scheduler. I think a RenderingTest would have the necessary infrastructure created, and then we could test things being passed all the way from the main thread to the AnimationWorklet.",
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
