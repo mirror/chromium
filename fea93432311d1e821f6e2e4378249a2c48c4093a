@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a37ab733_799aa50d",
+        "filename": "chrome/browser/extensions/extension_management_internal.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-05-31T07:36:06Z",
+      "side": 1,
+      "message": "nit: merge line 136 and 139 and you should be able to make the parse_result const.",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 20
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
