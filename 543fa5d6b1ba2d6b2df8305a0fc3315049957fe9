@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1244ba28_3f14b663",
+        "filename": "ios/web/public/app/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-05-31T14:49:58Z",
+      "side": 1,
+      "message": "This CL is a net positive change, so circular dependency is probably fine. However could you please file a bug with TODO to address this problem.",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "543fa5d6b1ba2d6b2df8305a0fc3315049957fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
