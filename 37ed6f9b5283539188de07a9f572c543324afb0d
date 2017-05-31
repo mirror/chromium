@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "35296863_3f559d64",
+        "filename": "cc/resources/resource_settings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T19:27:49Z",
+      "side": 1,
+      "message": "This is a copy constructor, not a move constructor. Let\u0027s not cargo-cult and add constructors if we don\u0027t need to.\n\nSecondly, things are by default copyable. If you want this to be movable-but-not-copyable, then please add DISALLOW_COPY_AND_ASSIGN and add a move constructor and operator\u003d",
+      "parentUuid": "15228692_3bacf914",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57a85e36_51b8e593",
         "filename": "cc/test/fake_resource_provider.h",
         "patchSetId": 3
