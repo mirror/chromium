@@ -27,7 +27,7 @@ void BudgetServiceImpl::Create(
 }
 
 void BudgetServiceImpl::GetCost(blink::mojom::BudgetOperationType type,
-                                const GetCostCallback& callback) {
+                                GetCostCallback callback) {
   // The RenderProcessHost should still be alive as long as any connections are
   // alive, and if the BudgetService mojo connection is down, the
   // BudgetServiceImpl should have been destroyed.
@@ -38,11 +38,11 @@ void BudgetServiceImpl::GetCost(blink::mojom::BudgetOperationType type,
   // Query the BudgetManager for the cost and return it.
   content::BrowserContext* context = host->GetBrowserContext();
   double cost = BudgetManagerFactory::GetForProfile(context)->GetCost(type);
-  callback.Run(cost);
+  std::move(callback).Run(cost);
 }
 
 void BudgetServiceImpl::GetBudget(const url::Origin& origin,
-                                  const GetBudgetCallback& callback) {
+                                  GetBudgetCallback callback) {
   // The RenderProcessHost should still be alive as long as any connections are
   // alive, and if the BudgetService mojo connection is down, the
   // BudgetServiceImpl should have been destroyed.
@@ -52,12 +52,13 @@ void BudgetServiceImpl::GetBudget(const url::Origin& origin,
 
   // Query the BudgetManager for the budget.
   content::BrowserContext* context = host->GetBrowserContext();
-  BudgetManagerFactory::GetForProfile(context)->GetBudget(origin, callback);
+  BudgetManagerFactory::GetForProfile(context)->GetBudget(origin,
+                                                          std::move(callback));
 }
 
 void BudgetServiceImpl::Reserve(const url::Origin& origin,
                                 blink::mojom::BudgetOperationType operation,
-                                const ReserveCallback& callback) {
+                                ReserveCallback callback) {
   // The RenderProcessHost should still be alive as long as any connections are
   // alive, and if the BudgetService mojo connection is down, the
   // BudgetServiceImpl should have been destroyed.
@@ -68,5 +69,5 @@ void BudgetServiceImpl::Reserve(const url::Origin& origin,
   // Request a reservation from the BudgetManager.
   content::BrowserContext* context = host->GetBrowserContext();
   BudgetManagerFactory::GetForProfile(context)->Reserve(origin, operation,
-                                                        callback);
+                                                        std::move(callback));
 }
