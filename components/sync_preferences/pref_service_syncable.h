@@ -44,15 +44,6 @@ class PrefServiceSyncable : public PrefService {
       bool async);
   ~PrefServiceSyncable() override;
 
-  // Creates an incognito copy of the pref service that shares most pref stores
-  // but uses a fresh non-persistent overlay for the user pref store and an
-  // individual extension pref store (to cache the effective extension prefs for
-  // incognito windows). |overlay_pref_names| is a list of preference names
-  // whose changes will not be persisted by the returned incognito pref service.
-  PrefServiceSyncable* CreateIncognitoPrefService(
-      PrefStore* incognito_extension_pref_store,
-      const std::vector<const char*>& overlay_pref_names);
-
   // Returns true if preferences state has synchronized with the remote
   // preferences. If true is returned it can be assumed the local preferences
   // has applied changes from the remote preferences. The two may not be

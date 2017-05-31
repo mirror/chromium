@@ -104,6 +104,7 @@ class TestExtensionPrefs {
 
  private:
   TestingProfile profile_;
+  std::unique_ptr<sync_preferences::PrefServiceMockFactory> factory_;
   bool extensions_disabled_;
   DISALLOW_COPY_AND_ASSIGN(TestExtensionPrefs);
 };
