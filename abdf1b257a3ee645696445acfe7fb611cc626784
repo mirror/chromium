@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ba66076_80a5077f",
+        "filename": "extensions/renderer/script_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-31T22:02:50Z",
+      "side": 1,
+      "message": "Note: I intentionally haven\u0027t modified this for the time being, but will be doing so in followup patches when we make GetDocument() a WebLocalFrame-only method.",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 40
+      },
+      "revId": "abdf1b257a3ee645696445acfe7fb611cc626784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
