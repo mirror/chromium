@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15299752_1bf3e244",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-05-31T23:12:05Z",
+      "side": 1,
+      "message": "I was excited as that hadn\u0027t occurred to me, but no:\n\n  TypeError: expected a string or other character buffer object",
+      "parentUuid": "d18eb372_1047ae95",
+      "range": {
+        "startLine": 39,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5157a1c_b44ea0fd",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd2f0e8_f93ee064",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-05-31T23:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5157a1c_b44ea0fd",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 11
+      },
+      "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd6ec2bf_6a575127",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-05-31T23:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0be9183_bae4fb85",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6715faf_87f90c55",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7b1bf5_b400c60b",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-05-31T23:12:05Z",
+      "side": 1,
+      "message": "Done\n\n(Back from when I couldn\u0027t tell if it was really actually running the script or not. :)",
+      "parentUuid": "f6715faf_87f90c55",
+      "range": {
+        "startLine": 96,
+        "startChar": 31,
+        "endLine": 96,
+        "endChar": 33
+      },
+      "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
