@@ -1236,10 +1236,10 @@ Node* Document::adoptNode(Node* source, ExceptionState& exception_state) {
       }
 
       if (source->IsFrameOwnerElement()) {
-        HTMLFrameOwnerElement* frame_owner_element =
+        HTMLFrameOwnerElement* embedded_content_element =
             ToHTMLFrameOwnerElement(source);
         if (GetFrame() && GetFrame()->Tree().IsDescendantOf(
-                              frame_owner_element->ContentFrame())) {
+                              embedded_content_element->ContentFrame())) {
           exception_state.ThrowDOMException(
               kHierarchyRequestError,
               "The node provided is a frame which contains this document.");

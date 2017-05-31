@@ -211,7 +211,7 @@ class CORE_EXPORT HitTestResult {
   Member<Element> inner_url_element_;
   Member<Scrollbar> scrollbar_;
   // Returns true if we are over a FrameViewBase (and not in the border/padding
-  // area of a LayoutPart for example).
+  // area of a LayoutEmbeddedContent for example).
   bool is_over_frame_view_base_;
 
   mutable Member<NodeSet> list_based_test_result_;

@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef LayoutPart_h
-#define LayoutPart_h
+#ifndef LayoutEmbeddedContent_h
+#define LayoutEmbeddedContent_h
 
 #include "core/CoreExport.h"
 #include "core/layout/LayoutReplaced.h"
@@ -33,10 +33,10 @@ class PluginView;
 
 // LayoutObject for frames via LayoutFrame and LayoutIFrame, and plugins via
 // LayoutEmbeddedObject.
-class CORE_EXPORT LayoutPart : public LayoutReplaced {
+class CORE_EXPORT LayoutEmbeddedContent : public LayoutReplaced {
  public:
-  explicit LayoutPart(Element*);
-  ~LayoutPart() override;
+  explicit LayoutEmbeddedContent(Element*);
+  ~LayoutEmbeddedContent() override;
 
   bool RequiresAcceleratedCompositing() const;
 
@@ -50,10 +50,10 @@ class CORE_EXPORT LayoutPart : public LayoutReplaced {
   void Ref() { ++ref_count_; }
   void Deref();
 
-  // LayoutPart::ChildFrameView returns the LocalFrameView associated with
-  // the current Node, if Node is HTMLFrameOwnerElement.
-  // This is different to LayoutObject::GetFrameView which returns
-  // the LocalFrameView associated with the root Document Frame.
+  // LayoutEmbeddedContent::ChildFrameView returns the LocalFrameView
+  // associated with the current Node, if Node is HTMLFrameOwnerElement. This is
+  // different to LayoutObject::GetFrameView which returns the LocalFrameView
+  // associated with the root Document Frame.
   LocalFrameView* ChildFrameView() const;
   PluginView* Plugin() const;
   FrameOrPlugin* GetFrameOrPlugin() const;
@@ -63,7 +63,7 @@ class CORE_EXPORT LayoutPart : public LayoutReplaced {
   void UpdateOnWidgetChange();
   void UpdateGeometry();
 
-  bool IsLayoutPart() const final { return true; }
+  bool IsLayoutEmbeddedContent() const final { return true; }
   virtual void PaintContents(const PaintInfo&, const LayoutPoint&) const;
 
   bool IsThrottledFrameView() const;
@@ -96,8 +96,9 @@ class CORE_EXPORT LayoutPart : public LayoutReplaced {
   int ref_count_;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutPart, IsLayoutPart());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutEmbeddedContent,
+                                IsLayoutEmbeddedContent());
 
 }  // namespace blink
 
-#endif  // LayoutPart_h
+#endif  // LayoutEmbeddedContent_h
