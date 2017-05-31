@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11862c59_3a2d1657",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-31T15:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2987c1e5_6191ae19",
+      "range": {
+        "startLine": 1182,
+        "startChar": 14,
+        "endLine": 1182,
+        "endChar": 36
+      },
+      "revId": "851bbb2bd3553255d74636666ae5e6d1a49500f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0dbe510_0f8f8660",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-30T22:37:52Z",
       "side": 1,
       "message": "These message ids are *not* valid.\n\nPlease add a test for these three states.",
+      "range": {
+        "startLine": 1190,
+        "startChar": 14,
+        "endLine": 1190,
+        "endChar": 36
+      },
+      "revId": "851bbb2bd3553255d74636666ae5e6d1a49500f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc78a8af_c71ee8b0",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-31T15:22:30Z",
+      "side": 1,
+      "message": "I think the message ids are valid because tests passed. I made to msgs.js and chromvox_strings.grd. What else do I need to do to make them valid?\n\nI\u0027ve added a check for aria-pressed\u003d\"mixed\", in the ToggleButton background_test. The other states were all already tested.",
+      "parentUuid": "e0dbe510_0f8f8660",
       "range": {
         "startLine": 1190,
         "startChar": 14,

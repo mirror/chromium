@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33073d87_769e529a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-05-31T15:22:30Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e8ab1b46_983c696c",
+      "range": {
+        "startLine": 378,
+        "startChar": 4,
+        "endLine": 378,
+        "endChar": 38
+      },
+      "revId": "a05726ef77312a57e1c392b8dac943abb0d97dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66794cfe_4a639326",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output_test.extjs",
         "patchSetId": 13
