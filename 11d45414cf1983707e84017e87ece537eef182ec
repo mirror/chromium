@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfe76a93_e74eeffd",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-31T00:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cdf9e4c_2c52d956",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d98500c_21bd9d0e",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
         "patchSetId": 2
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "So _location_for_missing_baseline is only responsible for deciding location when there are no baselines at all yet, right?",
       "parentUuid": "f67c8f7a_168c92a5",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92f132c_08b6b1c4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/single_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-31T00:34:20Z",
+      "side": 1,
+      "message": "Yes. Location for updated/new baselines is determined in _overwrite_baselines() (renamed to _update_or_add_new_baselines() in the latest patch).",
+      "parentUuid": "d2e61b8d_23de3e19",
       "revId": "11d45414cf1983707e84017e87ece537eef182ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -260,6 +296,24 @@
       "side": 1,
       "message": "Ah, I see -- so we\u0027re adding the text baseline here which would otherwise have been added by run-webkit-tests --new-baseline; and then below in the call to assert_baselines we assert that only an image baseline was added; the platform-specific text baseline was not written since there\u0027s already a cross-platform baseline present?",
       "parentUuid": "9436d092_fcceb328",
+      "revId": "11d45414cf1983707e84017e87ece537eef182ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc116d79_686129c9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-31T00:34:20Z",
+      "side": 1,
+      "message": "Yes. ... and is the same as the new baseline that would be created.",
+      "parentUuid": "0a795b3e_584c8e22",
       "revId": "11d45414cf1983707e84017e87ece537eef182ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
