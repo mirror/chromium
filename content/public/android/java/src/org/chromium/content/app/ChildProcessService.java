@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.ChildProcessLauncher;
+import org.chromium.content.browser.ChildProcessLauncherHelper;
 
 /**
  * This is the base class for child services; the [Non]SandboxedProcessService0, 1.. etc
@@ -19,7 +19,7 @@ import org.chromium.content.browser.ChildProcessLauncher;
  * of its AndroidManifest.xml, for example with N entries of the form:-
  *     <service android:name="org.chromium.content.app.[Non]SandboxedProcessServiceX"
  *              android:process=":[non]sandboxed_processX" />
- * for X in 0...N-1 (where N is {@link ChildProcessLauncher#MAX_REGISTERED_SERVICES})
+ * for X in 0...N-1 (where N is {@link ChildProcessLauncherHelper#MAX_REGISTERED_SERVICES})
  */
 @JNINamespace("content")
 public class ChildProcessService extends Service {
