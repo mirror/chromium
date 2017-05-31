@@ -953,4 +953,20 @@ TEST_F(FrameFetchContextSubresourceFilterTest, WouldDisallow) {
   EXPECT_EQ(0, GetFilteredLoadCallCount());
 }
 
+TEST_F(FrameFetchContextTest, DispatchWillSendRequestWhenDetached) {
+  document->Shutdown();
+
+  fetch_context->DispatchDidChangeResourcePriority(2, kResourceLoadPriorityLow,
+                                                   3);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidChangePriorityWhenDetached) {
+  document->Shutdown();
+
+  fetch_context->DispatchDidChangeResourcePriority(2, kResourceLoadPriorityLow,
+                                                   3);
+  // Should not crash.
+}
+
 }  // namespace blink
