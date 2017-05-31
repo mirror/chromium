@@ -22,6 +22,30 @@
       "revId": "98902b021c59abf02d5545d686f741dd8a4b1119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e6fc60_f28657e7",
+        "filename": "base/synchronization/lock_impl_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-05-31T18:00:35Z",
+      "side": 0,
+      "message": "I\u0027m working on running background tasks in the same pool as foreground tasks on platforms that don\u0027t support locks with multiple priorities. I don\u0027t absolutely need this to be a compile time check to make this change, but it would make things cleaner (e.g. the BACKGROUND and BACKGROUND_BLOCKING values wouldn\u0027t be defined on platforms where they don\u0027t make sense, the size of the worker_pools_ member of TaskSchedulerImpl would be determined at compile time).\n\nToday, it is possible to determine at compile time if lock handles multiple priorities. We could change the macro back to a function call if that becomes false in the future.",
+      "parentUuid": "a27ab17c_b1bf972e",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "98902b021c59abf02d5545d686f741dd8a4b1119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

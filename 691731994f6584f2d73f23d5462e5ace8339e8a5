@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65189eef_55a6ab94",
+        "filename": "base/synchronization/lock.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-05-31T18:00:35Z",
+      "side": 1,
+      "message": "robliao@: Did Android had different reasons not to use priority inheritance?",
+      "parentUuid": "6e0897e3_1f8e3c63",
+      "range": {
+        "startLine": 147,
+        "startChar": 52,
+        "endLine": 147,
+        "endChar": 60
+      },
+      "revId": "691731994f6584f2d73f23d5462e5ace8339e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7de9c017_14a5b2b8",
         "filename": "base/synchronization/lock.h",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c129c6ec_d8bf4470",
+        "filename": "base/synchronization/lock.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-05-31T18:00:35Z",
+      "side": 1,
+      "message": "Can\u0027t be a compile-time check since the glibc version depends on what is installed on the machine where this code runs. \n\nChrome does not support glibc \u003c 2.17 on Linux https://cs.chromium.org/chromium/src/chrome/browser/obsolete_system/obsolete_system_linux.cc?l\u003d43.  I\u0027d have to check for ChromeOS and Android.\n\nAnyways, that only matters in the hypothetical world where we allow lock to handle multiple thread priorities on Linux/Android/ChromeOS. Right now, it\u0027s simply disallowed on these platforms.",
+      "parentUuid": "7de9c017_14a5b2b8",
+      "range": {
+        "startLine": 157,
+        "startChar": 27,
+        "endLine": 157,
+        "endChar": 48
+      },
+      "revId": "691731994f6584f2d73f23d5462e5ace8339e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9aaec74_a423c3ef",
         "filename": "base/synchronization/lock_impl_posix.cc",
         "patchSetId": 2
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ba72befb_5370cfa6",
+        "filename": "base/synchronization/lock_impl_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-05-31T18:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9aaec74_a423c3ef",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "691731994f6584f2d73f23d5462e5ace8339e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b5d13d8_064625c9",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 2
@@ -115,6 +187,30 @@
       "revId": "691731994f6584f2d73f23d5462e5ace8339e8a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43286583_bd9ef1c6",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-05-31T18:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b5d13d8_064625c9",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 45
+      },
+      "revId": "691731994f6584f2d73f23d5462e5ace8339e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
