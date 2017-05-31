@@ -46,6 +46,30 @@
       "revId": "0f622f4cc72bb50df82f5bf673c04a57adffa2b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2599470a_de0ed65a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-31T23:51:35Z",
+      "side": 1,
+      "message": "I would say something along the lines of:\n\nDocument::Shutdown() can dispose EmbeddedContentViews for plugins which can run script.",
+      "parentUuid": "c611199c_bd06dd51",
+      "range": {
+        "startLine": 442,
+        "startChar": 39,
+        "endLine": 442,
+        "endChar": 66
+      },
+      "revId": "0f622f4cc72bb50df82f5bf673c04a57adffa2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
