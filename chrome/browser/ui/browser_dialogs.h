@@ -12,8 +12,10 @@
 #include "base/callback.h"
 #include "base/optional.h"
 #include "base/strings/string16.h"
+#include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/bookmarks/bookmark_editor.h"
+#include "chrome/browser/webshare/share_target.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/native_widget_types.h"
 
@@ -152,7 +154,7 @@ payments::PaymentRequestDialog* CreatePaymentRequestDialog(
 // Used to return the target the user picked or nullopt if the user cancelled
 // the share.
 using WebShareTargetPickerCallback =
-    base::OnceCallback<void(const base::Optional<std::string>&)>;
+    base::OnceCallback<void(const base::Optional<ShareTarget>&)>;
 
 // Shows the dialog to choose a share target app. |targets| is a list of app
 // title and manifest URL pairs that will be shown in a list. If the user picks
@@ -160,7 +162,7 @@ using WebShareTargetPickerCallback =
 // or supplies null if the user cancelled the share.
 void ShowWebShareTargetPickerDialog(
     gfx::NativeWindow parent_window,
-    const std::vector<std::pair<base::string16, GURL>>& targets,
+    std::vector<ShareTarget> targets,
     WebShareTargetPickerCallback callback);
 
 #endif  // TOOLKIT_VIEWS

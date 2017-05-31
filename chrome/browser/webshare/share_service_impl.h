@@ -19,6 +19,7 @@
 #include "third_party/WebKit/public/platform/modules/webshare/webshare.mojom.h"
 #include "third_party/WebKit/public/platform/site_engagement.mojom.h"
 
+class ShareTarget;
 class DictionaryValue;
 class GURL;
 
@@ -49,6 +50,10 @@ class ShareServiceImpl : public blink::mojom::ShareService {
   // Virtual for testing purposes.
   virtual PrefService* GetPrefService();
 
+  // Returns true if the site with |url| has enough engagement to be a Share
+  // Target.
+  bool HasSufficientEngagement(const GURL& url);
+
   // Returns the site engagement level of the site, |url|, with the user.
   // Virtual for testing purposes.
   virtual blink::mojom::EngagementLevel GetEngagementLevel(const GURL& url);
@@ -58,39 +63,18 @@ class ShareServiceImpl : public blink::mojom::ShareService {
   // target, the result passed to |callback| is the manifest URL of the chosen
   // target, or is null if the user cancelled the share. Virtual for testing.
   virtual void ShowPickerDialog(
-      const std::vector<std::pair<base::string16, GURL>>& targets,
+      std::vector<ShareTarget> targets,
       chrome::WebShareTargetPickerCallback callback);
 
   // Opens a new tab and navigates to |target_url|.
   // Virtual for testing purposes.
   virtual void OpenTargetURL(const GURL& target_url);
 
-  // Returns all stored Share Targets that have a high enough engagement score
-  // with the user.
-  std::vector<std::pair<base::string16, GURL>>
-  GetTargetsWithSufficientEngagement(
-      const base::DictionaryValue& share_targets);
-
-  // Writes to |url_template_filled|, a copy of |url_template| with all
-  // instances of "{title}", "{text}", and "{url}" replaced with
-  // |title|, |text|, and |url| respectively.
-  // Replaces instances of "{X}" where "X" is any string besides "title",
-  // "text", and "url", with an empty string, for forwards compatibility.
-  // Returns false, if there are badly nested placeholders.
-  // This includes any case in which two "{" occur before a "}", or a "}"
-  // occurs with no preceding "{".
-  static bool ReplacePlaceholders(base::StringPiece url_template,
-                                  base::StringPiece title,
-                                  base::StringPiece text,
-                                  const GURL& share_url,
-                                  std::string* url_template_filled);
-
-  void OnPickerClosed(std::unique_ptr<base::DictionaryValue> share_targets,
-                      const std::string& title,
+  void OnPickerClosed(const std::string& title,
                       const std::string& text,
                       const GURL& share_url,
                       const ShareCallback& callback,
-                      const base::Optional<std::string>& result);
+                      const base::Optional<ShareTarget>& result);
 
   base::WeakPtrFactory<ShareServiceImpl> weak_factory_;
 

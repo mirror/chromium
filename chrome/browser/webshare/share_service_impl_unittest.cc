@@ -81,7 +81,7 @@ class ShareServiceTestImpl : public ShareServiceImpl {
 
   const std::string& GetLastUsedTargetURL() { return last_used_target_url_; }
 
-  const std::vector<std::pair<base::string16, GURL>>& GetTargetsInPicker() {
+  const std::vector<std::unique_ptr<ShareTarget>>& GetTargetsInPicker() {
     return targets_in_picker_;
   }
 
@@ -91,10 +91,10 @@ class ShareServiceTestImpl : public ShareServiceImpl {
 
  private:
   void ShowPickerDialog(
-      const std::vector<std::pair<base::string16, GURL>>& targets,
+      std::vector<std::unique_ptr<ShareTarget>> targets,
       chrome::WebShareTargetPickerCallback callback) override {
     // Store the arguments passed to the picker dialog.
-    targets_in_picker_ = targets;
+    targets_in_picker_ = std::move(targets);
     picker_callback_ = std::move(callback);
 
     // Quit the test's run loop. It is the test's responsibility to call the
@@ -122,7 +122,7 @@ class ShareServiceTestImpl : public ShareServiceImpl {
   // The last URL passed to OpenTargetURL.
   std::string last_used_target_url_;
   // The targets passed to ShowPickerDialog.
-  std::vector<std::pair<base::string16, GURL>> targets_in_picker_;
+  std::vector<std::unique_ptr<ShareTarget>> targets_in_picker_;
   // The callback passed to ShowPickerDialog (which is supposed to be called
   // with the user's chosen result, or nullopt if cancelled).
   chrome::WebShareTargetPickerCallback picker_callback_;
@@ -185,14 +185,14 @@ TEST_F(ShareServiceImplUnittest, ShareCallbackParams) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlHigh)),
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
+  const std::vector<std::unique_ptr<ShareTarget>> kExpectedTargets{
+      base::MakeUnique<ShareTarget>(kTargetName, GURL(kManifestUrlHigh)),
+      base::MakeUnique<ShareTarget>(kTargetName, GURL(kManifestUrlLow))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-low.com.
   share_service_helper()->picker_callback().Run(
-      base::Optional<std::string>(kManifestUrlLow));
+      base::MakeUnique("", GURL(kManifestUrlLow), ""));
 
   const char kExpectedURL[] =
       "https://www.example-low.com/target/"
@@ -219,7 +219,7 @@ TEST_F(ShareServiceImplUnittest, ShareCancelNoTargets) {
   EXPECT_TRUE(share_service_helper()->GetTargetsInPicker().empty());
 
   // Cancel the dialog.
-  share_service_helper()->picker_callback().Run(base::nullopt);
+  share_service_helper()->picker_callback().Run(nullptr);
 
   EXPECT_TRUE(share_service_helper()->GetLastUsedTargetURL().empty());
 }
@@ -243,13 +243,13 @@ TEST_F(ShareServiceImplUnittest, ShareCancelWithTargets) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlHigh)),
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
+  const std::vector<std::unique_ptr<ShareTarget>> kExpectedTargets{
+      base::MakeUnique<ShareTarget>(kTargetName, GURL(kManifestUrlHigh)),
+      base::MakeUnique<ShareTarget>(kTargetName, GURL(kManifestUrlLow))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Cancel the dialog.
-  share_service_helper()->picker_callback().Run(base::nullopt);
+  share_service_helper()->picker_callback().Run(nullptr);
 
   EXPECT_TRUE(share_service_helper()->GetLastUsedTargetURL().empty());
 }
@@ -274,13 +274,13 @@ TEST_F(ShareServiceImplUnittest, ShareBrokenUrl) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlHigh))};
+  const std::vector<std::unique_ptr<ShareTarget>> kExpectedTargets{
+      base::MakeUnique<ShareTarget>(kTargetName, GURL(kManifestUrlHigh))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-high.com.
   share_service_helper()->picker_callback().Run(
-      base::Optional<std::string>(kManifestUrlHigh));
+      base::MakeUnique("", GURL(kManifestUrlHigh), ""));
 
   EXPECT_TRUE(share_service_helper()->GetLastUsedTargetURL().empty());
 }
@@ -303,12 +303,13 @@ TEST_F(ShareServiceImplUnittest, ShareWithSomeInsufficientlyEngagedTargets) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
+  const std::vector<std::unique_ptr<ShareTarget>> kExpectedTargets{
+      base::MakeUnique<ShareTarget>(kTargetName, GURL(kManifestUrlLow))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-low.com.
   share_service_helper()->picker_callback().Run(
+      base::MakeUnique<
       base::Optional<std::string>(kManifestUrlLow));
 
   const char kExpectedURL[] =
@@ -338,8 +339,8 @@ TEST_F(ShareServiceImplUnittest, ShareServiceDeletion) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
+  const std::vector<std::unique_ptr<ShareTarget>> kExpectedTargets{
+      base::MakeUnique<ShareTarget>(kTargetName, GURL(kManifestUrlLow))};
   EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
 
   chrome::WebShareTargetPickerCallback picker_callback =
@@ -351,206 +352,206 @@ TEST_F(ShareServiceImplUnittest, ShareServiceDeletion) {
   std::move(picker_callback).Run(base::Optional<std::string>(kManifestUrlLow));
 }
 
-// Replace various numbers of placeholders in various orders. Placeholders are
-// adjacent to eachother; there are no padding characters.
-TEST_F(ShareServiceImplUnittest, ReplacePlaceholders) {
-  const GURL url(kUrlSpec);
-  std::string url_template_filled;
-  bool succeeded;
+// // Replace various numbers of placeholders in various orders. Placeholders are
+// // adjacent to eachother; there are no padding characters.
+// TEST_F(ShareServiceImplUnittest, ReplacePlaceholders) {
+//   const GURL url(kUrlSpec);
+//   std::string url_template_filled;
+//   bool succeeded;
 
-  // No placeholders
-  std::string url_template = "blank";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("blank", url_template_filled);
+//   // No placeholders
+//   std::string url_template = "blank";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("blank", url_template_filled);
 
-  // Empty |url_template|
-  url_template = "";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("", url_template_filled);
+//   // Empty |url_template|
+//   url_template = "";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("", url_template_filled);
 
-  // One title placeholder.
-  url_template = "{title}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("My%20title", url_template_filled);
+//   // One title placeholder.
+//   url_template = "{title}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("My%20title", url_template_filled);
 
-  // One text placeholder.
-  url_template = "{text}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("My%20text", url_template_filled);
+//   // One text placeholder.
+//   url_template = "{text}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("My%20text", url_template_filled);
 
-  // One url placeholder.
-  url_template = "{url}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("https%3A%2F%2Fwww.google.com%2F", url_template_filled);
+//   // One url placeholder.
+//   url_template = "{url}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("https%3A%2F%2Fwww.google.com%2F", url_template_filled);
 
-  // One of each placeholder, in title, text, url order.
-  url_template = "{title}{text}{url}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("My%20titleMy%20texthttps%3A%2F%2Fwww.google.com%2F",
-            url_template_filled);
+//   // One of each placeholder, in title, text, url order.
+//   url_template = "{title}{text}{url}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("My%20titleMy%20texthttps%3A%2F%2Fwww.google.com%2F",
+//             url_template_filled);
 
-  // One of each placeholder, in url, text, title order.
-  url_template = "{url}{text}{title}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("https%3A%2F%2Fwww.google.com%2FMy%20textMy%20title",
-            url_template_filled);
+//   // One of each placeholder, in url, text, title order.
+//   url_template = "{url}{text}{title}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("https%3A%2F%2Fwww.google.com%2FMy%20textMy%20title",
+//             url_template_filled);
 
-  // Two of each placeholder, some next to each other, others not.
-  url_template = "{title}{url}{text}{text}{title}{url}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ(
-      "My%20titlehttps%3A%2F%2Fwww.google.com%2FMy%20textMy%20textMy%20"
-      "titlehttps%3A%2F%2Fwww.google.com%2F",
-      url_template_filled);
+//   // Two of each placeholder, some next to each other, others not.
+//   url_template = "{title}{url}{text}{text}{title}{url}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ(
+//       "My%20titlehttps%3A%2F%2Fwww.google.com%2FMy%20textMy%20textMy%20"
+//       "titlehttps%3A%2F%2Fwww.google.com%2F",
+//       url_template_filled);
 
-  // Placeholders are in a query string, as values. The expected use case.
-  // Two of each placeholder, some next to each other, others not.
-  url_template =
-      "?title={title}&url={url}&text={text}&text={text}&"
-      "title={title}&url={url}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ(
-      "?title=My%20title&url=https%3A%2F%2Fwww.google.com%2F&text=My%20text&"
-      "text=My%20text&title=My%20title&url=https%3A%2F%2Fwww.google.com%2F",
-      url_template_filled);
+//   // Placeholders are in a query string, as values. The expected use case.
+//   // Two of each placeholder, some next to each other, others not.
+//   url_template =
+//       "?title={title}&url={url}&text={text}&text={text}&"
+//       "title={title}&url={url}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ(
+//       "?title=My%20title&url=https%3A%2F%2Fwww.google.com%2F&text=My%20text&"
+//       "text=My%20text&title=My%20title&url=https%3A%2F%2Fwww.google.com%2F",
+//       url_template_filled);
 
-  // Badly nested placeholders.
-  url_template = "{";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_FALSE(succeeded);
+//   // Badly nested placeholders.
+//   url_template = "{";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_FALSE(succeeded);
 
-  url_template = "{title";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_FALSE(succeeded);
+//   url_template = "{title";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_FALSE(succeeded);
 
-  url_template = "{title{text}}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_FALSE(succeeded);
+//   url_template = "{title{text}}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_FALSE(succeeded);
 
-  url_template = "{title{}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_FALSE(succeeded);
+//   url_template = "{title{}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_FALSE(succeeded);
 
-  url_template = "{title}}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_FALSE(succeeded);
+//   url_template = "{title}}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_FALSE(succeeded);
 
-  // Placeholder with non-identifier character.
-  url_template = "{title?}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_FALSE(succeeded);
+//   // Placeholder with non-identifier character.
+//   url_template = "{title?}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_FALSE(succeeded);
 
-  // Placeholder with digit character.
-  url_template = "{title1}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("", url_template_filled);
+//   // Placeholder with digit character.
+//   url_template = "{title1}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("", url_template_filled);
 
-  // Empty placeholder.
-  url_template = "{}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("", url_template_filled);
+//   // Empty placeholder.
+//   url_template = "{}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("", url_template_filled);
 
-  // Unexpected placeholders.
-  url_template = "{nonexistentplaceholder}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("", url_template_filled);
+//   // Unexpected placeholders.
+//   url_template = "{nonexistentplaceholder}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("", url_template_filled);
 
-  // |url_template| with % escapes.
-  url_template = "%20{title}%20";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
-                                                    url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("%20My%20title%20", url_template_filled);
+//   // |url_template| with % escapes.
+//   url_template = "%20{title}%20";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(url_template, kTitle, kText,
+//                                                     url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("%20My%20title%20", url_template_filled);
 
-  // Share data that contains percent escapes.
-  url_template = "{title}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(
-      url_template, "My%20title", kText, url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("My%2520title", url_template_filled);
+//   // Share data that contains percent escapes.
+//   url_template = "{title}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(
+//       url_template, "My%20title", kText, url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("My%2520title", url_template_filled);
 
-  // Share data that contains placeholders. These should not be replaced.
-  url_template = "{title}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(
-      url_template, "{title}", kText, url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("%7Btitle%7D", url_template_filled);
+//   // Share data that contains placeholders. These should not be replaced.
+//   url_template = "{title}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(
+//       url_template, "{title}", kText, url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("%7Btitle%7D", url_template_filled);
 
-  // All characters that shouldn't be escaped.
-  url_template = "{title}";
-  succeeded =
-      ShareServiceImpl::ReplacePlaceholders(url_template,
-                                            "-_.!~*'()0123456789"
-                                            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                            "abcdefghijklmnopqrstuvwxyz",
-                                            kText, url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ(
-      "-_.!~*'()0123456789"
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-      "abcdefghijklmnopqrstuvwxyz",
-      url_template_filled);
+//   // All characters that shouldn't be escaped.
+//   url_template = "{title}";
+//   succeeded =
+//       ShareServiceImpl::ReplacePlaceholders(url_template,
+//                                             "-_.!~*'()0123456789"
+//                                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+//                                             "abcdefghijklmnopqrstuvwxyz",
+//                                             kText, url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ(
+//       "-_.!~*'()0123456789"
+//       "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+//       "abcdefghijklmnopqrstuvwxyz",
+//       url_template_filled);
 
-  // All characters that should be escaped.
-  url_template = "{title}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(
-      url_template, " \"#$%&+,/:;<=>?@[\\]^`{|}", kText, url,
-      &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ(
-      "%20%22%23%24%25%26%2B%2C%2F%3A%3B%3C%3D%3E%3F%40%5B%5C%5D%5E%60%7B%7C%"
-      "7D",
-      url_template_filled);
+//   // All characters that should be escaped.
+//   url_template = "{title}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(
+//       url_template, " \"#$%&+,/:;<=>?@[\\]^`{|}", kText, url,
+//       &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ(
+//       "%20%22%23%24%25%26%2B%2C%2F%3A%3B%3C%3D%3E%3F%40%5B%5C%5D%5E%60%7B%7C%"
+//       "7D",
+//       url_template_filled);
 
-  // Unicode chars.
-  // U+263B
-  url_template = "{title}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(
-      url_template, "\xe2\x98\xbb", kText, url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("%E2%98%BB", url_template_filled);
+//   // Unicode chars.
+//   // U+263B
+//   url_template = "{title}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(
+//       url_template, "\xe2\x98\xbb", kText, url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("%E2%98%BB", url_template_filled);
 
-  // U+00E9
-  url_template = "{title}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(
-      url_template, "\xc3\xa9", kText, url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("%C3%A9", url_template_filled);
+//   // U+00E9
+//   url_template = "{title}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(
+//       url_template, "\xc3\xa9", kText, url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("%C3%A9", url_template_filled);
 
-  // U+1F4A9
-  url_template = "{title}";
-  succeeded = ShareServiceImpl::ReplacePlaceholders(
-      url_template, "\xf0\x9f\x92\xa9", kText, url, &url_template_filled);
-  EXPECT_TRUE(succeeded);
-  EXPECT_EQ("%F0%9F%92%A9", url_template_filled);
-}
+//   // U+1F4A9
+//   url_template = "{title}";
+//   succeeded = ShareServiceImpl::ReplacePlaceholders(
+//       url_template, "\xf0\x9f\x92\xa9", kText, url, &url_template_filled);
+//   EXPECT_TRUE(succeeded);
+//   EXPECT_EQ("%F0%9F%92%A9", url_template_filled);
+// }

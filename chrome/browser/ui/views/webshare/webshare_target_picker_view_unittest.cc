@@ -59,7 +59,7 @@ class WebShareTargetPickerViewTest : public views::ViewsTestBase {
 
  protected:
   // Creates the WebShareTargetPickerView (available as view()).
-  void CreateView(const std::vector<std::pair<base::string16, GURL>>& targets) {
+  void CreateView(const std::vector<std::unique_ptr<ShareTarget>>& targets) {
     view_ = new WebShareTargetPickerView(
         targets, base::BindOnce(&WebShareTargetPickerViewTest::OnCallback,
                                 base::Unretained(this)));
@@ -83,8 +83,8 @@ class WebShareTargetPickerViewTest : public views::ViewsTestBase {
   const base::Optional<std::string>& result() { return result_; }
 
  private:
-  void OnCallback(const base::Optional<std::string>& result) {
-    result_ = result;
+  void OnCallback(std::unique_ptr<ShareTarget>& result) {
+    result_ = std::move(result);
     if (quit_closure_)
       quit_closure_.Run();
   }
@@ -101,7 +101,7 @@ class WebShareTargetPickerViewTest : public views::ViewsTestBase {
 
 // Table with 0 targets. Choose to cancel.
 TEST_F(WebShareTargetPickerViewTest, EmptyListCancel) {
-  CreateView(std::vector<std::pair<base::string16, GURL>>());
+  CreateView(std::vector<std::unique_ptr<ShareTarget>>());
   EXPECT_EQ(0, table()->RowCount());
   EXPECT_EQ(-1, table()->FirstSelectedRow());  // Nothing selected.
   EXPECT_FALSE(view()->IsDialogButtonEnabled(ui::DIALOG_BUTTON_OK));
@@ -118,11 +118,10 @@ TEST_F(WebShareTargetPickerViewTest, EmptyListCancel) {
 
 // Table with 2 targets. Choose second target and share.
 TEST_F(WebShareTargetPickerViewTest, ChooseItem) {
-  std::vector<std::pair<base::string16, GURL>> targets{
-      std::make_pair(base::ASCIIToUTF16("App One"),
-                     GURL("https://appone.com/path/bits")),
-      std::make_pair(base::ASCIIToUTF16("App Two"),
-                     GURL("https://apptwo.xyz"))};
+  std::vector<std::unique_ptr<ShareTarget>> targets;
+  targets.push_back(base::MakeUnique<ShareTarget>("App One", GURL("https://appone.com/path/bits")), "");
+  targets.push_back(base::MakeUnique<ShareTarget>("App Two", GURL("https://apptwo.xyz"), "");
+
   CreateView(targets);
   EXPECT_EQ(2, table()->RowCount());
   EXPECT_EQ(base::ASCIIToUTF16("App One (https://appone.com/)"),
@@ -152,8 +151,9 @@ TEST_F(WebShareTargetPickerViewTest, ChooseItem) {
 
 // Table with 1 target. Select using double-click.
 TEST_F(WebShareTargetPickerViewTest, ChooseItemWithDoubleClick) {
-  std::vector<std::pair<base::string16, GURL>> targets{std::make_pair(
-      base::ASCIIToUTF16("App One"), GURL("https://appone.com/path/bits"))};
+  std::vector<std::unique_ptr<ShareTarget>> targets;
+  targets.push_back(base::MakeUnique<ShareTarget>("App One", GURL("https://appone.com/path/bits")));
+
   CreateView(targets);
   EXPECT_EQ(1, table()->RowCount());
   EXPECT_EQ(base::ASCIIToUTF16("App One (https://appone.com/)"),
