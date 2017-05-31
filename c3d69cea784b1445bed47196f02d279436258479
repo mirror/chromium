@@ -16,6 +16,24 @@
       "revId": "c3d69cea784b1445bed47196f02d279436258479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2ada00_28631cb4",
+        "filename": "third_party/WebKit/Source/core/fileapi/FileReaderSync.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T13:49:36Z",
+      "side": 1,
+      "message": "Getting that to be equally fast is tricky, though. This is analogous to what the Chromium side does (except it does it with many more fancy macros). Someone could take another look at it, I guess.",
+      "parentUuid": "4e6ffa48_78f6b890",
+      "revId": "c3d69cea784b1445bed47196f02d279436258479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
