@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24caf6be_fa5c0d50",
+        "filename": "cc/output/gl_renderer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T16:06:15Z",
+      "side": 1,
+      "message": "Is already gone right?",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53085aec_66081420",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2160,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T16:06:15Z",
+      "side": 1,
+      "message": "Can you put this in a file-static method so all the tests can just call that to build the default settings?",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2a0ec8_85f59fca",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3921,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T16:06:15Z",
+      "side": 1,
+      "message": "And then places like this can just override the defaults",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7af371_18ba939c",
+        "filename": "cc/resources/resource_settings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T16:06:15Z",
+      "side": 1,
+      "message": "why is this user-defined?\n\nmaybe we want this to be movable-but-not-copyable since it has a map in it?",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a85e36_51b8e593",
+        "filename": "cc/test/fake_resource_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T16:06:15Z",
+      "side": 1,
+      "message": "don\u0027t need to set things that are the default already",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 53
+      },
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33af21e7_3289f9c4",
+        "filename": "cc/test/fake_resource_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T16:06:15Z",
+      "side": 1,
+      "message": "same",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f491cb_55c190a1",
+        "filename": "cc/test/layer_tree_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T16:06:15Z",
+      "side": 1,
+      "message": "unrelated change",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b39baa_3bcb4942",
+        "filename": "cc/test/pixel_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T16:06:15Z",
+      "side": 1,
+      "message": "is this needed for pixel tests? it is used for unit tests that want to track and count texture creations and might just be cargo culted over here",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b26c57_7f2e87cb",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T16:06:15Z",
+      "side": 1,
+      "message": "can we make the contextfactory just return ResourceSettings now?",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
