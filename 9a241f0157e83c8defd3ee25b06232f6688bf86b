@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e18b55_e2eb147d",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-05-31T02:00:07Z",
+      "side": 0,
+      "message": "what the...",
+      "revId": "9a241f0157e83c8defd3ee25b06232f6688bf86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
