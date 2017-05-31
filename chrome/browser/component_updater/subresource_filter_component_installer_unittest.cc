@@ -164,8 +164,8 @@ class SubresourceFilterComponentInstallerTest : public PlatformTest {
     ASSERT_TRUE(
         traits_->VerifyInstallation(*manifest, component_install_dir()));
     const base::Version expected_version(kTestRulesetVersion);
-    traits_->ComponentReady(expected_version, component_install_dir(),
-                            std::move(manifest));
+    traits_->ComponentReady(expected_version, *manifest,
+                            component_install_dir());
     base::RunLoop().RunUntilIdle();
   }
 

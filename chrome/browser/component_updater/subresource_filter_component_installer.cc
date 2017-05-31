@@ -64,12 +64,12 @@ SubresourceFilterComponentInstallerTraits::OnCustomInstall(
 
 void SubresourceFilterComponentInstallerTraits::ComponentReady(
     const base::Version& version,
-    const base::FilePath& install_dir,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& install_dir) {
   DCHECK(!install_dir.empty());
   DVLOG(1) << "Subresource Filter Version Ready: " << install_dir.value();
   int ruleset_format = 0;
-  if (!manifest->GetInteger(kManifestRulesetFormatKey, &ruleset_format) ||
+  if (!manifest.GetInteger(kManifestRulesetFormatKey, &ruleset_format) ||
       ruleset_format != kCurrentRulesetFormat) {
     DVLOG(1) << "Bailing out. Future ruleset version: " << ruleset_format;
     return;

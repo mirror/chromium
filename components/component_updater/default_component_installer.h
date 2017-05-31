@@ -72,10 +72,9 @@ class ComponentInstallerTraits {
   // |version| is the version of the component.
   // |install_dir| is the path to the install directory for this version.
   // |manifest| is the manifest for this version of the component.
-  virtual void ComponentReady(
-      const base::Version& version,
-      const base::FilePath& install_dir,
-      std::unique_ptr<base::DictionaryValue> manifest) = 0;
+  virtual void ComponentReady(const base::Version& version,
+                              const base::DictionaryValue& manifest,
+                              const base::FilePath& install_dir) = 0;
 
   // Returns a relative path that will be appended to the component updater
   // root directories to find the data for this particular component.
@@ -117,7 +116,7 @@ class DefaultComponentInstaller : public update_client::CrxInstaller {
   // Overridden from ComponentInstaller:
   void OnUpdateError(int error) override;
   update_client::CrxInstaller::Result Install(
-      const base::DictionaryValue& manifest,
+      std::unique_ptr<base::DictionaryValue> manifest,
       const base::FilePath& unpack_path) override;
   bool GetInstalledFile(const std::string& file,
                         base::FilePath* installed_file) override;
@@ -139,7 +138,7 @@ class DefaultComponentInstaller : public update_client::CrxInstaller {
   void StartRegistration(ComponentUpdateService* cus);
   void FinishRegistration(ComponentUpdateService* cus,
                           const base::Closure& callback);
-  void ComponentReady(std::unique_ptr<base::DictionaryValue> manifest);
+  void ComponentReady(const base::DictionaryValue& manifest);
   void UninstallOnTaskRunner();
 
   base::FilePath current_install_dir_;
