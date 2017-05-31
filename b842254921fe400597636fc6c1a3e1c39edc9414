@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b55f6fd5_33505b80",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-31T21:23:51Z",
+      "side": 1,
+      "message": "What is it that you expect will explode with NaCl?  Are you thinking of the StackTrace capture (in which case I\u0027d prefer that we have an explicit buildflag to indicate whether that is available, rather than scattering OS checks everywhere)?\n\nOr are you saying we sometimes set USE_ALLOCATOR_SHIM but it won\u0027t in fact work under NaCl..?",
+      "parentUuid": "b89332a0_228342ca",
+      "range": {
+        "startLine": 197,
+        "startChar": 33,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c12fef_808f0f74",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-31T11:59:58Z",
       "side": 1,
       "message": "should this check also that the cmdline flag is either empty (--enable-heap-profiling) or one of native|pseudo|task-profiler? To rule out the case of --enable-heap-profiling\u003dtypo?",
+      "range": {
+        "startLine": 198,
+        "startChar": 9,
+        "endLine": 198,
+        "endChar": 13
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53759e04_f2f432e3",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-31T21:23:51Z",
+      "side": 1,
+      "message": "I took the view that the flag being present but having an invalid value is equivalent to an unrecognized flag, which Chrome typically just ignores. \n\nCurrently this function is hard-wired at build-time to indicate whether the feature is available at all. We could replace it with e.g. a function which returns an enum based on the command-line, with values HEAP_PROFILING_NONE, ..._NATIVE, ..._PSEUDO, ..._UNKNOWN, say, and have bad_flags_prompt.cc verify that the result is _not_ ..._UNKNOWN - WDYT?",
+      "parentUuid": "e8c12fef_808f0f74",
       "range": {
         "startLine": 198,
         "startChar": 9,
