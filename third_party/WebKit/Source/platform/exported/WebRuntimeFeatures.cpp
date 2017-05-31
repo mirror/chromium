@@ -398,4 +398,8 @@ void WebRuntimeFeatures::EnableLocationHardReload(bool enable) {
   RuntimeEnabledFeatures::setLocationHardReloadEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableRemotePlaybackBackend(bool enable) {
+  RuntimeEnabledFeatures::setRemotePlaybackBackendEnabled(enable);
+}
+
 }  // namespace blink
