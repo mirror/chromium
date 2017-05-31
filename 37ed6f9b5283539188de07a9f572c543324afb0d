@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17627b30_f8808bf2",
+        "filename": "cc/output/gl_renderer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T19:24:59Z",
+      "side": 1,
+      "message": "Yes. The TODO is removed.",
+      "parentUuid": "24caf6be_fa5c0d50",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53085aec_66081420",
         "filename": "cc/resources/resource_provider_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135ca0a1_3273a80b",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2160,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T19:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53085aec_66081420",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "08362cec_61314b33",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3921,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T19:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e2a0ec8_85f59fca",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d7af371_18ba939c",
         "filename": "cc/resources/resource_settings.h",
         "patchSetId": 3
@@ -64,6 +118,30 @@
       "writtenOn": "2017-05-31T16:06:15Z",
       "side": 1,
       "message": "why is this user-defined?\n\nmaybe we want this to be movable-but-not-copyable since it has a map in it?",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15228692_3bacf914",
+        "filename": "cc/resources/resource_settings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T19:24:59Z",
+      "side": 1,
+      "message": "I think that\u0027s the reason.\nI did it because both LTSettings and RendererSettings are like this.",
+      "parentUuid": "9d7af371_18ba939c",
       "range": {
         "startLine": 18,
         "startChar": 19,
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "c53a3b02_768d52cb",
+        "filename": "cc/test/fake_resource_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T19:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57a85e36_51b8e593",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 53
+      },
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33af21e7_3289f9c4",
         "filename": "cc/test/fake_resource_provider.h",
         "patchSetId": 3
@@ -113,6 +215,24 @@
       "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2f5dfc_08dc2ed8",
+        "filename": "cc/test/fake_resource_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T19:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33af21e7_3289f9c4",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "9573fd1d_c49b9c3f",
+        "filename": "cc/test/layer_tree_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T19:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36f491cb_55c190a1",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24b39baa_3bcb4942",
         "filename": "cc/test/pixel_test.cc",
         "patchSetId": 3
@@ -144,6 +282,24 @@
       "writtenOn": "2017-05-31T16:06:15Z",
       "side": 1,
       "message": "is this needed for pixel tests? it is used for unit tests that want to track and count texture creations and might just be cargo culted over here",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c486b8e7_afeda89b",
+        "filename": "cc/test/pixel_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T19:24:59Z",
+      "side": 1,
+      "message": "All cc_unittests passed without this line. It\u0027s probably not needed.\nI added it there because PixelTest used to create ResourceProvider with texture_id_allocation_chunk_size set to 1 down below.\nIt\u0027s removed now.",
+      "parentUuid": "24b39baa_3bcb4942",
       "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -164,6 +320,24 @@
       "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588d281f_efb39322",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T19:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b26c57_7f2e87cb",
+      "revId": "37ed6f9b5283539188de07a9f572c543324afb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
