@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87a42dd4_087942d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationBuilderForO.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-05-31T14:10:39Z",
+      "side": 1,
+      "message": "Since channels are the reason that this class exists, it\u0027s worth documenting why it\u0027s OK to have a NULL channelId in this case.",
+      "revId": "6c8f90b674ba0c8def6e1d431bb376eb3eba5963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41808307_bb617246",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-05-31T14:10:39Z",
+      "side": 1,
+      "message": "nit: refer to a bug? There should be one if there\u0027s not an existing one, since it\u0027s pretty critical we get this right.",
+      "revId": "6c8f90b674ba0c8def6e1d431bb376eb3eba5963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
