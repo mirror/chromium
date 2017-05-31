@@ -20,6 +20,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_command_controller.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
+#import "chrome/browser/ui/cocoa/fast_resize_view.h"
 #import "chrome/browser/ui/cocoa/omnibox/omnibox_view_mac.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
@@ -225,6 +226,14 @@ class HomePrefNotificationBridge {
   if (!base::FeatureList::IsEnabled(features::kBrowserTouchBar))
     return nil;
 
+  if ([bwc_ browser]->is_type_popup()) {
+    NSTouchBar* touchBar =
+        [[[NSClassFromString(@"NSTouchBar") alloc] init] autorelease];
+    touchBar.delegate = self;
+    touchBar.defaultItemIdentifiers = @[ @"WebContent" ];
+    return touchBar;
+  }
+
   // When in tab fullscreen, we should show a touch bar containing only
   // items associated with that mode. Since the toolbar is hidden, only
   // the option to exit fullscreen should show up.
@@ -270,7 +279,11 @@ class HomePrefNotificationBridge {
 
   base::scoped_nsobject<NSCustomTouchBarItem> touchBarItem([[NSClassFromString(
       @"NSCustomTouchBarItem") alloc] initWithIdentifier:identifier]);
-  if ([identifier hasSuffix:kBackForwardTouchId]) {
+  if ([@"WebContent" isEqualToString:identifier]) {
+    NSView* tabContentArea = [bwc_ tabContentArea];
+    tabContentArea.layer.cornerRadius = 6;
+    [touchBarItem setView:tabContentArea];
+  } else if ([identifier hasSuffix:kBackForwardTouchId]) {
     [touchBarItem setView:[self backOrForwardTouchBarView]];
     [touchBarItem setCustomizationLabel:
                       l10n_util::GetNSString(

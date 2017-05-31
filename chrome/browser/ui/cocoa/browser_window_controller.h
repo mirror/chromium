@@ -221,6 +221,8 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 // Takes ownership of |browser|.
 - (id)initWithBrowser:(Browser*)browser;
 
+- (Browser*)browser;
+
 // Call to make the browser go away from other places in the cross-platform
 // code.
 - (void)destroyBrowser;

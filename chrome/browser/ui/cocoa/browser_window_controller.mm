@@ -563,6 +563,10 @@ bool IsTabDetachingInFullscreenEnabled() {
   return avatarButtonController_.get();
 }
 
+- (Browser*)browser {
+  return browser_.get();
+}
+
 - (void)destroyBrowser {
   [NSApp removeWindowsItem:[self window]];
 
