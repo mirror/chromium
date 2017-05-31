@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f251331_cdfdd628",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T22:50:11Z",
+      "side": 1,
+      "message": "I have rewritten this a bit which should make it more clear (also avoid some bugs when we fail to find a nested op to make sure we keep the original second op.",
+      "parentUuid": "8df64844_080b07d4",
+      "revId": "511a340a0e3c1c9612dc6d0ca0ce4548d5800a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d0a1a88_b3fc701d",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 25
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-29T22:42:53Z",
       "side": 1,
       "message": "I assume that after this patch DrawDisplayItemList is going to turn into DrawRecord shortly?",
+      "revId": "511a340a0e3c1c9612dc6d0ca0ce4548d5800a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1fc823_d7584ce7",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T22:50:11Z",
+      "side": 1,
+      "message": "Yeah we can do that then.",
+      "parentUuid": "4d0a1a88_b3fc701d",
       "revId": "511a340a0e3c1c9612dc6d0ca0ce4548d5800a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
