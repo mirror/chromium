@@ -160,6 +160,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   DECLARE_VIRTUAL_TRACE();
 
  private:
+  struct FrozenState;
+
   FrameFetchContext(DocumentLoader*, Document*);
 
   // m_documentLoader is null when loading resources from an HTML import
@@ -198,8 +200,15 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   const ContentSecurityPolicy* GetContentSecurityPolicy() const override;
   void AddConsoleMessage(ConsoleMessage*) const override;
 
+  String GetUserAgent() const;
+
+  bool IsDetached() const { return frozen_state_; }
+
   Member<DocumentLoader> document_loader_;
   Member<Document> document_;
+
+  // Non-null only when detached.
+  Member<const FrozenState> frozen_state_;
 };
 
 }  // namespace blink
