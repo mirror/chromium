@@ -620,8 +620,8 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
         addVrViews();
         boolean webVrMode = mRequestedWebVr || tentativeWebVrMode;
-        mVrShell.initializeNative(mActivity.getActivityTab(), webVrMode,
-                mActivity instanceof CustomTabActivity);
+        mVrShell.initializeNative(
+                mActivity.getActivityTab(), webVrMode, mActivity instanceof CustomTabActivity);
         mVrShell.setWebVrModeEnabled(webVrMode);
 
         // We're entering VR, but not in WebVr mode.
@@ -1149,8 +1149,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
     private void addOverlayViews() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT);
+                WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         mOverlayView = new View(mActivity);
         mOverlayView.setBackgroundColor(Color.BLACK);
