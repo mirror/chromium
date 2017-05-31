@@ -1301,28 +1301,36 @@ void XMLHttpRequest::overrideMimeType(const AtomicString& mime_type,
   mime_type_override_ = mime_type;
 }
 
+// https://xhr.spec.whatwg.org/#the-setrequestheader()-method
 void XMLHttpRequest::setRequestHeader(const AtomicString& name,
                                       const AtomicString& value,
                                       ExceptionState& exception_state) {
+  // "1. If |state| is not "opened", throw an InvalidStateError exception.
+  //  2. If the send() flag is set, throw an InvalidStateError exception."
   if (state_ != kOpened || send_flag_) {
     exception_state.ThrowDOMException(kInvalidStateError,
                                       "The object's state must be OPENED.");
     return;
   }
 
+  // "3. Normalize |value|."
+  const String normalized_value = FetchUtils::NormalizeHeaderValue(value);
+
+  // "4. If |name| is not a name or |value| is not a value, throw a SyntaxError
+  //     exception."
   if (!IsValidHTTPToken(name)) {
     exception_state.ThrowDOMException(
         kSyntaxError, "'" + name + "' is not a valid HTTP header field name.");
     return;
   }
-
-  if (!IsValidHTTPHeaderValue(value)) {
+  if (!IsValidHTTPHeaderValue(normalized_value)) {
     exception_state.ThrowDOMException(
         kSyntaxError,
-        "'" + value + "' is not a valid HTTP header field value.");
+        "'" + normalized_value + "' is not a valid HTTP header field value.");
     return;
   }
 
+  // "5. Terminate these steps if |name| is a forbidden header name."
   // No script (privileged or not) can set unsafe headers.
   if (FetchUtils::IsForbiddenHeaderName(name)) {
     LogConsoleError(GetExecutionContext(),
@@ -1330,7 +1338,8 @@ void XMLHttpRequest::setRequestHeader(const AtomicString& name,
     return;
   }
 
-  SetRequestHeaderInternal(name, value);
+  // "6. Combine |name|/|value| in author request headers."
+  SetRequestHeaderInternal(name, AtomicString(normalized_value));
 }
 
 void XMLHttpRequest::SetRequestHeaderInternal(const AtomicString& name,
