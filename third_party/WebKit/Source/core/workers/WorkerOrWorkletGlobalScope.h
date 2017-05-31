@@ -43,11 +43,11 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
   virtual void Dispose();
 
   // Called from UseCounter to record API use in this execution context.
-  void CountFeature(UseCounter::Feature);
+  void CountFeature(WebFeature);
 
   // Called from UseCounter to record deprecated API use in this execution
   // context.
-  void CountDeprecation(UseCounter::Feature);
+  void CountDeprecation(WebFeature);
 
   // May return nullptr if this global scope is not threaded (i.e.,
   // MainThreadWorkletGlobalScope) or after dispose() is called.
@@ -60,8 +60,8 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
   DECLARE_VIRTUAL_TRACE();
 
  protected:
-  virtual void ReportFeature(UseCounter::Feature) = 0;
-  virtual void ReportDeprecation(UseCounter::Feature) = 0;
+  virtual void ReportFeature(WebFeature) = 0;
+  virtual void ReportDeprecation(WebFeature) = 0;
 
  private:
   void RunTask(std::unique_ptr<ExecutionContextTask>, bool is_instrumented);
