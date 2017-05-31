@@ -22,6 +22,30 @@
       "revId": "9d1eb54b1c1c66865d1304fd901cc1b63da82aea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30acf7cc_4965185c",
+        "filename": "ios/chrome/browser/snapshots/snapshot_cache.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-05-31T15:42:11Z",
+      "side": 1,
+      "message": "This would mean having an std::array as a top-level static object. I\u0027m not sure whether std::array is a POD type or not (it should be as far as I understand). Using a plain C array works and is not that painful, so leaving as-is.",
+      "parentUuid": "4dd27a62_b40efdc6",
+      "range": {
+        "startLine": 342,
+        "startChar": 49,
+        "endLine": 342,
+        "endChar": 60
+      },
+      "revId": "9d1eb54b1c1c66865d1304fd901cc1b63da82aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

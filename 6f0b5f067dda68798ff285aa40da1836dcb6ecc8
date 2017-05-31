@@ -22,6 +22,30 @@
       "revId": "6f0b5f067dda68798ff285aa40da1836dcb6ecc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9350b927_2201db0d",
+        "filename": "ios/chrome/browser/snapshots/snapshot_cache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-05-31T15:42:11Z",
+      "side": 1,
+      "message": "Because it would require changing two location (-init and +snapshotScaleForDevice) if I want to change how snapshotsScale_ is initialised.",
+      "parentUuid": "bf58d03d_f0061358",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "6f0b5f067dda68798ff285aa40da1836dcb6ecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
