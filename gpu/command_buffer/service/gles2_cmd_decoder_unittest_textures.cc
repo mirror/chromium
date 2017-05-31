@@ -3308,8 +3308,8 @@ TEST_P(GLES2DecoderTest, BindTexImage2DCHROMIUM) {
   EXPECT_EQ(kServiceTextureId, texture->service_id());
 
   scoped_refptr<gl::GLImage> image(new gl::GLImageStub);
-  GetImageManager()->AddImage(image.get(), 1);
-  EXPECT_FALSE(GetImageManager()->LookupImage(1) == NULL);
+  GetImageManagerForTest()->AddImage(image.get(), 1);
+  EXPECT_FALSE(GetImageManagerForTest()->LookupImage(1) == NULL);
 
   GLsizei width;
   GLsizei height;
@@ -3344,7 +3344,7 @@ TEST_P(GLES2DecoderTest, BindTexImage2DCHROMIUM) {
 
 TEST_P(GLES2DecoderTest, BindTexImage2DCHROMIUMCubeMapNotAllowed) {
   scoped_refptr<gl::GLImage> image(new gl::GLImageStub);
-  GetImageManager()->AddImage(image.get(), 1);
+  GetImageManagerForTest()->AddImage(image.get(), 1);
   DoBindTexture(GL_TEXTURE_CUBE_MAP, client_texture_id_, kServiceTextureId);
 
   BindTexImage2DCHROMIUM bind_tex_image_2d_cmd;
@@ -3355,7 +3355,7 @@ TEST_P(GLES2DecoderTest, BindTexImage2DCHROMIUMCubeMapNotAllowed) {
 
 TEST_P(GLES2DecoderTest, OrphanGLImageWithTexImage2D) {
   scoped_refptr<gl::GLImage> image(new gl::GLImageStub);
-  GetImageManager()->AddImage(image.get(), 1);
+  GetImageManagerForTest()->AddImage(image.get(), 1);
   DoBindTexture(GL_TEXTURE_2D, client_texture_id_, kServiceTextureId);
 
   DoBindTexImage2DCHROMIUM(GL_TEXTURE_2D, 1);
@@ -3378,7 +3378,7 @@ TEST_P(GLES2DecoderTest, GLImageAttachedAfterSubTexImage2D) {
       feature_info()->workarounds().texsubimage_faster_than_teximage);
 
   scoped_refptr<gl::GLImage> image(new gl::GLImageStub);
-  GetImageManager()->AddImage(image.get(), 1);
+  GetImageManagerForTest()->AddImage(image.get(), 1);
   DoBindTexture(GL_TEXTURE_2D, client_texture_id_, kServiceTextureId);
 
   GLenum target = GL_TEXTURE_2D;
@@ -3423,7 +3423,7 @@ TEST_P(GLES2DecoderTest, GLImageAttachedAfterSubTexImage2D) {
 
 TEST_P(GLES2DecoderTest, GLImageAttachedAfterClearLevel) {
   scoped_refptr<gl::GLImage> image(new gl::GLImageStub);
-  GetImageManager()->AddImage(image.get(), 1);
+  GetImageManagerForTest()->AddImage(image.get(), 1);
   DoBindTexture(GL_TEXTURE_2D, client_texture_id_, kServiceTextureId);
 
   GLenum target = GL_TEXTURE_2D;
@@ -3476,8 +3476,8 @@ TEST_P(GLES2DecoderTest, ReleaseTexImage2DCHROMIUM) {
   EXPECT_EQ(kServiceTextureId, texture->service_id());
 
   scoped_refptr<gl::GLImage> image(new gl::GLImageStub);
-  GetImageManager()->AddImage(image.get(), 1);
-  EXPECT_FALSE(GetImageManager()->LookupImage(1) == NULL);
+  GetImageManagerForTest()->AddImage(image.get(), 1);
+  EXPECT_FALSE(GetImageManagerForTest()->LookupImage(1) == NULL);
 
   GLsizei width;
   GLsizei height;
@@ -3556,7 +3556,7 @@ TEST_P(GLES2DecoderWithShaderTest, CopyTexImage) {
 
   const int32_t kImageId = 1;
   scoped_refptr<MockGLImage> image(new MockGLImage);
-  GetImageManager()->AddImage(image.get(), kImageId);
+  GetImageManagerForTest()->AddImage(image.get(), kImageId);
 
   // Bind image to texture.
   EXPECT_CALL(*image.get(), BindTexImage(GL_TEXTURE_2D))
@@ -4397,8 +4397,8 @@ TEST_P(GLES2DecoderWithShaderTest, CHROMIUMImageEmulatingRGB) {
         image = new EmulatingRGBImageStub;
       else
         image = new gl::GLImageStub;
-      GetImageManager()->AddImage(image.get(), image_id);
-      EXPECT_FALSE(GetImageManager()->LookupImage(image_id) == NULL);
+      GetImageManagerForTest()->AddImage(image.get(), image_id);
+      EXPECT_FALSE(GetImageManagerForTest()->LookupImage(image_id) == NULL);
       DoBindTexture(GL_TEXTURE_2D, kFBOClientTextureId, kFBOServiceTextureId);
 
       DoBindTexImage2DCHROMIUM(GL_TEXTURE_2D, image_id);
