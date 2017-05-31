@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "c246196a_a31cb5a5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSMatchedStyles.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-31T00:44:43Z",
+      "side": 1,
+      "message": "Well, you added type cast just because of the new code. With old version, compiler was able to understand what\u0027s happening, which tells me it was better :-)\n\nvar promises \u003d [];\nfor (var selector of rule.selectors)\n  promises.push(this.querySelector(node, selector.text));\nreturn Promise.all(promises);\n\nThis is -50 characters. And looks easier!",
+      "parentUuid": "1435cbc0_024dadbd",
+      "revId": "f081e9a893a3147881f2cfc72d951a9820354855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd13c852_b66cdbce",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSMatchedStyles.js",
         "patchSetId": 3

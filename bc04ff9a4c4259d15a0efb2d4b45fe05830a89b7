@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a80bdbc_78537f21",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-05-31T00:44:43Z",
+      "side": 1,
+      "message": "Instead of \"let\", maybe bind? Do we even use let in frontend?",
+      "range": {
+        "startLine": 1218,
+        "startChar": 9,
+        "endLine": 1218,
+        "endChar": 12
+      },
+      "revId": "bc04ff9a4c4259d15a0efb2d4b45fe05830a89b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
