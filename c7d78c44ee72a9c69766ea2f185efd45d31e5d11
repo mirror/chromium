@@ -46,6 +46,30 @@
       "revId": "c7d78c44ee72a9c69766ea2f185efd45d31e5d11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ebffd1_42098e76",
+        "filename": "services/identity/public/cpp/account_info_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-31T11:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1608eb1a_97f6264c",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "c7d78c44ee72a9c69766ea2f185efd45d31e5d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
