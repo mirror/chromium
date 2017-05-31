@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "e217218a_c2bb3435",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-05-31T00:54:21Z",
+      "side": 1,
+      "message": "Disclaimer: I don\u0027t know much about overflow.\nThe corresponding deleted code constructed a border box IntRect and used that to set overflow. Does that happen in the new code somewhere or is it obviated by part of this refactoring?",
+      "range": {
+        "startLine": 838,
+        "startChar": 29,
+        "endLine": 838,
+        "endChar": 34
+      },
+      "revId": "12f7f44c879677402fb26065301e4f75591e9b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61c3b25c_f3762273",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 5
