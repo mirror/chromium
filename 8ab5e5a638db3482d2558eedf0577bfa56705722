@@ -87,6 +87,24 @@
       "revId": "8ab5e5a638db3482d2558eedf0577bfa56705722",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd4121e_218191e0",
+        "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002248
+      },
+      "writtenOn": "2017-05-31T01:38:10Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Will move it to the bug thread for the record\u0027s sake.",
+      "parentUuid": "b6e502c8_5ee45b27",
+      "revId": "8ab5e5a638db3482d2558eedf0577bfa56705722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
