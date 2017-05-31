@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf58d03d_f0061358",
+        "filename": "ios/chrome/browser/snapshots/snapshot_cache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-05-31T15:27:36Z",
+      "side": 1,
+      "message": "why don\u0027t you want this to be a class method?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "6f0b5f067dda68798ff285aa40da1836dcb6ecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

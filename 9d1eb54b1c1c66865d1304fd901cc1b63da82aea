@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dd27a62_b40efdc6",
+        "filename": "ios/chrome/browser/snapshots/snapshot_cache.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-05-31T15:27:36Z",
+      "side": 1,
+      "message": "Optional:\nYou can do a range-based for loop if you define |kImageTypes| as a std::array.",
+      "range": {
+        "startLine": 342,
+        "startChar": 49,
+        "endLine": 342,
+        "endChar": 60
+      },
+      "revId": "9d1eb54b1c1c66865d1304fd901cc1b63da82aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
