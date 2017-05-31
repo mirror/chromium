@@ -210,12 +210,11 @@ std::string GetCodecs(const base::DictionaryValue& manifest) {
   return codecs;
 }
 
-void RegisterWidevineCdmWithChrome(
-    const base::Version& cdm_version,
-    const base::FilePath& cdm_install_dir,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+void RegisterWidevineCdmWithChrome(const base::Version& cdm_version,
+                                   const base::DictionaryValue& manifest,
+                                   const base::FilePath& cdm_install_dir) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  const std::string codecs = GetCodecs(*manifest);
+  const std::string codecs = GetCodecs(manifest);
 
   content::PepperPluginInfo plugin_info;
   if (!MakeWidevineCdmPluginInfo(cdm_version, cdm_install_dir, codecs,
@@ -262,8 +261,8 @@ class WidevineCdmComponentInstallerTraits : public ComponentInstallerTraits {
       const base::DictionaryValue& manifest,
       const base::FilePath& install_dir) const override;
   void ComponentReady(const base::Version& version,
-                      const base::FilePath& path,
-                      std::unique_ptr<base::DictionaryValue> manifest) override;
+                      const base::DictionaryValue& manifest,
+                      const base::FilePath& path) override;
   base::FilePath GetRelativeInstallDir() const override;
   void GetHash(std::vector<uint8_t>* hash) const override;
   std::string GetName() const override;
@@ -276,8 +275,8 @@ class WidevineCdmComponentInstallerTraits : public ComponentInstallerTraits {
   // registered until the adapter is copied by this function (see
   // VerifyInstallation).
   void UpdateCdmAdapter(const base::Version& cdm_version,
-                        const base::FilePath& cdm_install_dir,
-                        std::unique_ptr<base::DictionaryValue> manifest);
+                        const base::DictionaryValue& manifest,
+                        const base::FilePath& cdm_install_dir);
 
   DISALLOW_COPY_AND_ASSIGN(WidevineCdmComponentInstallerTraits);
 };
@@ -304,9 +303,9 @@ WidevineCdmComponentInstallerTraits::OnCustomInstall(
 // Once the CDM is ready, check the CDM adapter.
 void WidevineCdmComponentInstallerTraits::ComponentReady(
     const base::Version& version,
-    const base::FilePath& path,
-    std::unique_ptr<base::DictionaryValue> manifest) {
-  if (!IsCompatibleWithChrome(*manifest)) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& path) {
+  if (!IsCompatibleWithChrome(manifest)) {
     VLOG(1) << "Installed Widevine CDM component is incompatible.";
     return;
   }
@@ -314,8 +313,8 @@ void WidevineCdmComponentInstallerTraits::ComponentReady(
   base::PostTaskWithTraits(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&WidevineCdmComponentInstallerTraits::UpdateCdmAdapter,
-                 base::Unretained(this), version, path,
-                 base::Passed(&manifest)));
+                 base::Unretained(this), version, base::ConstRef(manifest),
+                 path));
 }
 
 bool WidevineCdmComponentInstallerTraits::VerifyInstallation(
@@ -364,8 +363,8 @@ static bool HasValidAdapter(const base::FilePath& adapter_version_path,
 
 void WidevineCdmComponentInstallerTraits::UpdateCdmAdapter(
     const base::Version& cdm_version,
-    const base::FilePath& cdm_install_dir,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& cdm_install_dir) {
   // On some platforms (e.g. Mac) we use symlinks for paths. Since we are
   // comparing paths below, convert paths to absolute paths to avoid unexpected
   // failure. base::MakeAbsoluteFilePath() requires IO so it can only be done
@@ -431,7 +430,7 @@ void WidevineCdmComponentInstallerTraits::UpdateCdmAdapter(
   BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
       base::Bind(&RegisterWidevineCdmWithChrome, cdm_version,
-                 absolute_cdm_install_dir, base::Passed(&manifest)));
+                 base::ConstRef(manifest), absolute_cdm_install_dir));
 }
 
 #endif  // defined(WIDEVINE_CDM_AVAILABLE) && defined(WIDEVINE_CDM_IS_COMPONENT)
