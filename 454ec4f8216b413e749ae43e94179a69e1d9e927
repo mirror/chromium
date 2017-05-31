@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee327dde_fc9b9b32",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-31T19:04:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 724,
+        "startChar": 11,
+        "endLine": 724,
+        "endChar": 37
+      },
+      "revId": "454ec4f8216b413e749ae43e94179a69e1d9e927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccec3cb7_d6736276",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-05-31T19:04:59Z",
+      "side": 1,
+      "message": "This is in a block of alphabetized switches. Please conform to the existing ordering.",
+      "range": {
+        "startLine": 216,
+        "startChar": 33,
+        "endLine": 216,
+        "endChar": 59
+      },
+      "revId": "454ec4f8216b413e749ae43e94179a69e1d9e927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
