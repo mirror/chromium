@@ -1982,17 +1982,6 @@ const char kChromeHomeSwipeLogicRestrictArea[] = "Restrict swipable area";
 
 #endif  // defined(OS_ANDROID)
 
-//  In-Product Help flags
-
-#if defined(OS_ANDROID)
-
-const char kEnableIphDemoModeName[] = "In-Product Help Demo Mode";
-
-const char kEnableIphDemoModeDescription[] =
-    "Enables In-Product Help demo mode on Android.";
-
-#endif  // defined(OS_ANDROID)
-
 //  Settings window flags
 
 const char kSettingsWindowName[] = "Show settings in a window";
@@ -3087,6 +3076,11 @@ const char kEnableIdleTimeSpellCheckingName[] =
 const char kEnableIdleTimeSpellCheckingDescription[] =
     "Make spell-checking code run only when the browser is idle, so that input "
     "latency is reduced, especially when editing long articles, emails, etc.";
+
+const char kEnableIphDemoModeName[] = "In-Product Help Demo Mode";
+
+const char kEnableIphDemoModeDescription[] =
+    "Enables In-Product Help demo mode for all platforms.";
 
 #if defined(OS_ANDROID)
 
