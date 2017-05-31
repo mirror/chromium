@@ -544,6 +544,7 @@ if (enable_vr) {
       "javatests/src/org/chromium/chrome/browser/vr_shell/EmulatedVrController.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/MockVrCoreVersionCheckerImpl.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/MockVrDaydreamApi.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/NfcSimUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrFeedbackInfoBarTest.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTest.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
@@ -578,6 +579,14 @@ if (enable_vr) {
       "//third_party/WebKit/LayoutTests/resources/testharness.js",
     ]
   }
+}
+
+android_library("vr_nfc_java") {
+  java_files = [
+    "//chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/NfcSimUtils.java",
+    "//chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/nfc_apk/SimNfcActivity.java",
+  ]
+  deps = []
 }
 
 # Overrides icon / name defined in chrome_java_resources.
@@ -934,6 +943,15 @@ if (enable_vr) {
     ]
     proguard_enabled = !is_java_debug
   }
+}
+
+android_apk("vr_nfc_apk") {
+  apk_name = "VrNfcSimulator"
+  android_manifest = "//chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/nfc_apk/AndroidManifest.xml"
+  deps = [
+    ":vr_nfc_java",
+  ]
+  proguard_enabled = false
 }
 
 android_library("chrome_sync_shell_test_apk_java") {
