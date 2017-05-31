@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "6169628f_e0029683",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T22:23:46Z",
+      "side": 1,
+      "message": "Not sure I understand entirely, I don\u0027t see any parsing done in line 335, and \"URLPattern pattern(extension_scheme_mask)\" wouldn\u0027t do any parsing either. (Maybe you thought I was talking about line 336 below?)",
+      "parentUuid": "04f4e75b_94ac0059",
+      "range": {
+        "startLine": 335,
+        "startChar": 10,
+        "endLine": 335,
+        "endChar": 20
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52ea9a69_22d17123",
         "filename": "chrome/browser/extensions/policy_handlers.cc",
         "patchSetId": 3
@@ -236,6 +260,30 @@
       "side": 1,
       "message": "We only have a string at this point, not a parsed URL so we can\u0027t use URLPattern::match_all_urls. Good catch on the \u003call_urls\u003e constant, I used it in the extension_management_internal.cc but forgot to use it here.",
       "parentUuid": "52ea9a69_22d17123",
+      "range": {
+        "startLine": 348,
+        "startChar": 34,
+        "endLine": 348,
+        "endChar": 42
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec55c7b_730837c1",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T22:23:46Z",
+      "side": 1,
+      "message": "We have parse_result \u003d\u003d PARSE_SUCCESS from calling Parse on line 336 above, so shouldn\u0027t |pattern| have stuff parsed?, i.e. match_all_urls() should be returning valid result.",
+      "parentUuid": "82bdd87b_c639df1f",
       "range": {
         "startLine": 348,
         "startChar": 34,
@@ -292,6 +340,30 @@
       "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a06f17e_6b8457c6",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T22:23:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5bebdaff_5546eb62",
+      "range": {
+        "startLine": 354,
+        "startChar": 14,
+        "endLine": 354,
+        "endChar": 20
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
