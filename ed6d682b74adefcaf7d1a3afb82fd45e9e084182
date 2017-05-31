@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3582d6e2_e72bd16d",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-05-31T06:36:47Z",
+      "side": 1,
+      "message": "Streamlined the comment.",
+      "parentUuid": "094357b1_ea8b2a53",
+      "revId": "ed6d682b74adefcaf7d1a3afb82fd45e9e084182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84c90f87_5e6b7b20",
         "filename": "components/url_formatter/url_formatter_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-31T01:59:00Z",
       "side": 1,
       "message": "Nit: Similarly, if these are all really \"blocked due to font issues\", I\u0027d place that kind of comment just once atop this #if.",
+      "revId": "ed6d682b74adefcaf7d1a3afb82fd45e9e084182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a983c496_0a9fe468",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-05-31T06:36:47Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "84c90f87_5e6b7b20",
       "revId": "ed6d682b74adefcaf7d1a3afb82fd45e9e084182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
