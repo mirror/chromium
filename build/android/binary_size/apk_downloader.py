@@ -12,7 +12,6 @@ sys.path.append(_BUILD_ANDROID)
 from pylib.constants import host_paths
 
 sys.path.append(os.path.join(host_paths.DIR_SOURCE_ROOT, 'build'))
-import find_depot_tools  # pylint: disable=import-error,unused-import
 import download_from_google_storage
 
 CURRENT_MILESTONE = '59'

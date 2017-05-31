@@ -25,9 +25,6 @@ from pylib import constants
 from pylib.constants import host_paths
 from pylib.utils import logging_utils
 
-sys.path.append(os.path.join(host_paths.DIR_SOURCE_ROOT, 'build'))
-import find_depot_tools  # pylint: disable=import-error,unused-import
-import breakpad
 import download_from_google_storage
 import upload_to_google_storage
 
@@ -240,12 +237,6 @@ def UpdateSdk(args):
   locally. Its usual installation path is
   //third_party/android_tools/sdk/extras/google/m2repository
   '''
-
-  # This should function should not run on bots and could fail for many user
-  # and setup related reasons. Also, exceptions here are not caught, so we
-  # disable breakpad to avoid spamming the logs.
-  breakpad.IS_ENABLED = False
-
   # `android update sdk` fails if the library is not installed yet, but it does
   # not allow to install it from scratch using the command line. We then create
   # a fake outdated installation.
@@ -272,12 +263,6 @@ def Upload(args):
 
   By default, a local commit will be made at the end of the operation.
   '''
-
-  # This should function should not run on bots and could fail for many user
-  # and setup related reasons. Also, exceptions here are not caught, so we
-  # disable breakpad to avoid spamming the logs.
-  breakpad.IS_ENABLED = False
-
   config = utils.ConfigParser(args.config)
   paths = PlayServicesPaths(args.sdk_root, config.version_number,
                             config.clients)
