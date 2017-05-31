@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de0fc8fc_ab77e0cf",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-31T23:31:09Z",
+      "side": 1,
+      "message": "I think the function can make the callsite clearer.\n\nThe same function in GraphicsLayer.cpp is also used to output transformOrigin. Will it also apply in SPv2?",
+      "parentUuid": "e6e5af38_73872cc1",
+      "revId": "80bc1e998eb1b7ba57bdc6c6245169f7dac69782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ba7c3ec_5fe410db",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-31T15:37:41Z",
       "side": 1,
       "message": "Pass rect as a second parameter to reduce copies?",
+      "revId": "80bc1e998eb1b7ba57bdc6c6245169f7dac69782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfbb5fc1_bf873794",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-31T23:31:09Z",
+      "side": 1,
+      "message": "The function is marked inline. The compiler can eliminate the copy of return values for inline functions.",
+      "parentUuid": "6ba7c3ec_5fe410db",
       "revId": "80bc1e998eb1b7ba57bdc6c6245169f7dac69782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
