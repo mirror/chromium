@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86492fa5_05f87b5d",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-05-31T20:36:01Z",
+      "side": 1,
+      "message": "Don\u0027t use a literal string like this :). Follow the pattern in the rest of the file.",
+      "revId": "c96ba633955cdb8a2ab9dc0ccd3054dd371437e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
