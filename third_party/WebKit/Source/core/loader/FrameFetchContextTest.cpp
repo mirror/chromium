@@ -953,4 +953,48 @@ TEST_F(FrameFetchContextSubresourceFilterTest, WouldDisallow) {
   EXPECT_EQ(0, GetFilteredLoadCallCount());
 }
 
+TEST_F(FrameFetchContextTest, AddAdditionalRequestHeadersWhenDetached) {
+  const KURL document_url(KURL(), "https://www2.example.com/fuga/hoge.html");
+  const String origin = "https://www2.example.com";
+  ResourceRequest request(KURL(KURL(), "https://localhost/"));
+  request.SetHTTPMethod("PUT");
+
+  Settings* settings = document->GetFrame()->GetSettings();
+  settings->SetDataSaverEnabled(true);
+  document->SetSecurityOrigin(SecurityOrigin::Create(KURL(KURL(), origin)));
+  document->SetURL(document_url);
+  document->SetReferrerPolicy(kReferrerPolicyOrigin);
+  document->SetAddressSpace(kWebAddressSpacePublic);
+
+  dummy_page_holder = nullptr;
+
+  EXPECT_FALSE(request.IsExternalRequest());
+
+  fetch_context->AddAdditionalRequestHeaders(request, kFetchSubresource);
+
+  EXPECT_EQ(origin, request.HttpHeaderField(HTTPNames::Origin));
+  EXPECT_EQ(String(origin + "/"), request.HttpHeaderField(HTTPNames::Referer));
+  EXPECT_EQ(String(), request.HttpHeaderField("Save-Data"));
+  EXPECT_TRUE(request.IsExternalRequest());
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidChangePriorityWhenDetached) {
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidChangeResourcePriority(2, kResourceLoadPriorityLow,
+                                                   3);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DispatchWillSendRequestWhenDetached) {
+  ResourceRequest request(KURL(KURL(), "https://www.example.com/"));
+  ResourceResponse response;
+  FetchInitiatorInfo initiator_info;
+
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchWillSendRequest(1, request, response, initiator_info);
+  // Should not crash.
+}
+
 }  // namespace blink

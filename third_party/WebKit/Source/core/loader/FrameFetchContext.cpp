@@ -169,6 +169,33 @@ WebCachePolicy DetermineFrameWebCachePolicy(Frame* frame,
 
 }  // namespace
 
+struct FrameFetchContext::FrozenState final
+    : GarbageCollectedFinalized<FrozenState> {
+  explicit FrozenState(FrameFetchContext* context)
+      : referrer_policy(context->GetReferrerPolicy()),
+        outgoing_referrer(context->GetOutgoingReferrer()),
+        url(context->Url()),
+        security_origin(context->GetSecurityOrigin()),
+        parent_security_origin(context->GetParentSecurityOrigin()),
+        address_space(context->GetAddressSpace()),
+        content_security_policy(context->GetContentSecurityPolicy()),
+        user_agent(context->GetUserAgent()),
+        is_main_frame(context->IsMainFrame()) {}
+
+  const ReferrerPolicy referrer_policy;
+  const String outgoing_referrer;
+  const KURL url;
+  const RefPtr<SecurityOrigin> security_origin;
+  const RefPtr<const SecurityOrigin> parent_security_origin;
+  const Optional<WebAddressSpace> address_space;
+  const Member<const ContentSecurityPolicy> content_security_policy;
+
+  const String user_agent;
+  const bool is_main_frame;
+
+  DEFINE_INLINE_TRACE() { visitor->Trace(content_security_policy); }
+};
+
 FrameFetchContext::FrameFetchContext(DocumentLoader* loader, Document* document)
     : document_loader_(loader), document_(document) {
   DCHECK(GetFrame());
@@ -224,6 +251,9 @@ void FrameFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
   if (!request.Url().IsEmpty() && !request.Url().ProtocolIsInHTTPFamily())
     return;
 
+  if (IsDetached())
+    return;
+
   // Reload should reflect the current data saver setting.
   if (IsReloadLoadType(MasterDocumentLoader()->LoadType()))
     request.ClearHTTPHeaderField("Save-Data");
@@ -241,6 +271,9 @@ WebCachePolicy FrameFetchContext::ResourceRequestCachePolicy(
     const ResourceRequest& request,
     Resource::Type type,
     FetchParameters::DeferOption defer) const {
+  if (IsDetached())
+    return WebCachePolicy::kUseProtocolCachePolicy;
+
   DCHECK(GetFrame());
   if (type == Resource::kMainResource) {
     const WebCachePolicy cache_policy = DetermineWebCachePolicy(
@@ -288,6 +321,8 @@ void FrameFetchContext::DispatchDidChangeResourcePriority(
     unsigned long identifier,
     ResourceLoadPriority load_priority,
     int intra_priority_value) {
+  if (IsDetached())
+    return;
   TRACE_EVENT1(
       "devtools.timeline", "ResourceChangePriority", "data",
       InspectorChangeResourcePriorityEvent::Data(identifier, load_priority));
@@ -296,7 +331,11 @@ void FrameFetchContext::DispatchDidChangeResourcePriority(
 
 void FrameFetchContext::PrepareRequest(ResourceRequest& request,
                                        RedirectType redirect_type) {
-  GetFrame()->Loader().ApplyUserAgent(request);
+  String user_agent = GetUserAgent();
+  request.SetHTTPUserAgent(AtomicString(user_agent));
+
+  if (IsDetached())
+    return;
   GetLocalFrameClient()->DispatchWillSendRequest(request);
 
   // ServiceWorker hook ups.
@@ -319,6 +358,9 @@ void FrameFetchContext::DispatchWillSendRequest(
     ResourceRequest& request,
     const ResourceResponse& redirect_response,
     const FetchInitiatorInfo& initiator_info) {
+  if (IsDetached())
+    return;
+
   if (redirect_response.IsNull()) {
     // Progress doesn't care about redirects, only notify it when an
     // initial request is sent.
@@ -338,6 +380,9 @@ void FrameFetchContext::DispatchDidReceiveResponse(
     WebURLRequest::RequestContext request_context,
     Resource* resource,
     ResourceResponseType response_type) {
+  if (IsDetached())
+    return;
+
   if (response_type == ResourceResponseType::kFromMemoryCache) {
     // Note: probe::willSendRequest needs to precede before this probe method.
     probe::markResourceAsCached(GetFrame(), identifier);
@@ -397,12 +442,18 @@ void FrameFetchContext::DispatchDidReceiveResponse(
 void FrameFetchContext::DispatchDidReceiveData(unsigned long identifier,
                                                const char* data,
                                                int data_length) {
+  if (IsDetached())
+    return;
+
   GetFrame()->Loader().Progress().IncrementProgress(identifier, data_length);
   probe::didReceiveData(GetFrame(), identifier, data, data_length);
 }
 
 void FrameFetchContext::DispatchDidReceiveEncodedData(unsigned long identifier,
                                                       int encoded_data_length) {
+  if (IsDetached())
+    return;
+
   probe::didReceiveEncodedDataLength(GetFrame(), identifier,
                                      encoded_data_length);
 }
@@ -410,6 +461,9 @@ void FrameFetchContext::DispatchDidReceiveEncodedData(unsigned long identifier,
 void FrameFetchContext::DispatchDidDownloadData(unsigned long identifier,
                                                 int data_length,
                                                 int encoded_data_length) {
+  if (IsDetached())
+    return;
+
   GetFrame()->Loader().Progress().IncrementProgress(identifier, data_length);
   probe::didReceiveData(GetFrame(), identifier, 0, data_length);
   probe::didReceiveEncodedDataLength(GetFrame(), identifier,
@@ -420,6 +474,9 @@ void FrameFetchContext::DispatchDidFinishLoading(unsigned long identifier,
                                                  double finish_time,
                                                  int64_t encoded_data_length,
                                                  int64_t decoded_body_length) {
+  if (IsDetached())
+    return;
+
   GetFrame()->Loader().Progress().CompleteProgress(identifier);
   probe::didFinishLoading(GetFrame(), identifier, finish_time,
                           encoded_data_length, decoded_body_length);
@@ -431,6 +488,9 @@ void FrameFetchContext::DispatchDidFail(unsigned long identifier,
                                         const ResourceError& error,
                                         int64_t encoded_data_length,
                                         bool is_internal_request) {
+  if (IsDetached())
+    return;
+
   GetFrame()->Loader().Progress().CompleteProgress(identifier);
   probe::didFailLoading(GetFrame(), identifier, error);
   // Notification to FrameConsole should come AFTER InspectorInstrumentation
@@ -445,6 +505,9 @@ void FrameFetchContext::DispatchDidLoadResourceFromMemoryCache(
     unsigned long identifier,
     const ResourceRequest& resource_request,
     const ResourceResponse& resource_response) {
+  if (IsDetached())
+    return;
+
   GetLocalFrameClient()->DispatchDidLoadResourceFromMemoryCache(
       resource_request, resource_response);
 }
@@ -516,10 +579,16 @@ void FrameFetchContext::AddResourceTiming(const ResourceTimingInfo& info) {
 }
 
 bool FrameFetchContext::AllowImage(bool images_enabled, const KURL& url) const {
+  // "keepalive" fetch should have nothing to do with image load.
+  DCHECK(!IsDetached());
+
   return GetContentSettingsClient()->AllowImage(images_enabled, url);
 }
 
 bool FrameFetchContext::IsControlledByServiceWorker() const {
+  if (IsDetached())
+    return false;
+
   DCHECK(MasterDocumentLoader());
 
   // Service workers are bypassed by suborigins (see
@@ -552,11 +621,13 @@ int64_t FrameFetchContext::ServiceWorkerID() const {
 }
 
 bool FrameFetchContext::IsMainFrame() const {
+  if (IsDetached())
+    return frozen_state_->is_main_frame;
   return GetFrame()->IsMainFrame();
 }
 
 bool FrameFetchContext::DefersLoading() const {
-  return GetFrame()->GetPage()->Suspended();
+  return IsDetached() ? false : GetFrame()->GetPage()->Suspended();
 }
 
 bool FrameFetchContext::IsLoadComplete() const {
@@ -570,6 +641,9 @@ bool FrameFetchContext::PageDismissalEventBeingDispatched() const {
 
 bool FrameFetchContext::UpdateTimingInfoForIFrameNavigation(
     ResourceTimingInfo* info) {
+  if (IsDetached())
+    return false;
+
   // <iframe>s should report the initial navigation requested by the parent
   // document, but not subsequent navigations.
   // FIXME: Resource timing is broken when the parent is a remote frame.
@@ -591,6 +665,9 @@ void FrameFetchContext::SendImagePing(const KURL& url) {
 
 void FrameFetchContext::AddConsoleMessage(const String& message,
                                           LogMessageType message_type) const {
+  if (IsDetached())
+    return;
+
   MessageLevel level = message_type == kLogWarningMessage ? kWarningMessageLevel
                                                           : kErrorMessageLevel;
   ConsoleMessage* console_message =
@@ -605,6 +682,8 @@ void FrameFetchContext::AddConsoleMessage(const String& message,
 }
 
 SecurityOrigin* FrameFetchContext::GetSecurityOrigin() const {
+  if (IsDetached())
+    return frozen_state_->security_origin.Get();
   return document_ ? document_->GetSecurityOrigin() : nullptr;
 }
 
@@ -796,24 +875,42 @@ bool FrameFetchContext::ShouldBlockFetchByMixedContentCheck(
                                                url, reporting_policy);
 }
 ReferrerPolicy FrameFetchContext::GetReferrerPolicy() const {
+  if (IsDetached())
+    return frozen_state_->referrer_policy;
+  if (!document_)
+    return kReferrerPolicyDefault;
   return document_->GetReferrerPolicy();
 }
 
 String FrameFetchContext::GetOutgoingReferrer() const {
+  if (IsDetached())
+    return frozen_state_->outgoing_referrer;
+  if (!document_)
+    return String();
   return document_->OutgoingReferrer();
 }
 
 const KURL& FrameFetchContext::Url() const {
+  DEFINE_STATIC_LOCAL(KURL, empty_url, ());
+  if (IsDetached())
+    return frozen_state_->url;
+  if (!document_)
+    return empty_url;
   return document_->Url();
 }
 
 const SecurityOrigin* FrameFetchContext::GetParentSecurityOrigin() const {
+  if (IsDetached())
+    return frozen_state_->parent_security_origin.Get();
   Frame* parent = GetFrame()->Tree().Parent();
-  DCHECK(parent);
+  if (!parent)
+    return nullptr;
   return parent->GetSecurityContext()->GetSecurityOrigin();
 }
 
 Optional<WebAddressSpace> FrameFetchContext::GetAddressSpace() const {
+  if (IsDetached())
+    return frozen_state_->address_space;
   if (!document_)
     return WTF::nullopt;
   ExecutionContext* context = document_;
@@ -822,11 +919,20 @@ Optional<WebAddressSpace> FrameFetchContext::GetAddressSpace() const {
 
 const ContentSecurityPolicy* FrameFetchContext::GetContentSecurityPolicy()
     const {
+  if (IsDetached())
+    return frozen_state_->content_security_policy;
   return document_ ? document_->GetContentSecurityPolicy() : nullptr;
 }
 
 void FrameFetchContext::AddConsoleMessage(ConsoleMessage* message) const {
-  return document_->AddConsoleMessage(message);
+  if (document_)
+    document_->AddConsoleMessage(message);
+}
+
+String FrameFetchContext::GetUserAgent() const {
+  if (IsDetached())
+    return frozen_state_->user_agent;
+  return GetFrame()->Loader().UserAgent();
 }
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
@@ -847,6 +953,11 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
 }
 
 void FrameFetchContext::Detach() {
+  if (IsDetached())
+    return;
+
+  frozen_state_ = new FrozenState(this);
+
   // This is needed to break a reference cycle in which off-heap
   // ComputedStyle is involved. See https://crbug.com/383860 for details.
   document_ = nullptr;
@@ -855,6 +966,7 @@ void FrameFetchContext::Detach() {
 DEFINE_TRACE(FrameFetchContext) {
   visitor->Trace(document_loader_);
   visitor->Trace(document_);
+  visitor->Trace(frozen_state_);
   BaseFetchContext::Trace(visitor);
 }
 
