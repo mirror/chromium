@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "569d5506_efee62e7",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-05-31T17:48:18Z",
+      "side": 1,
+      "message": "Well, you\u0027ve only copied half of that piece of code :)  The code that sets the static reference looks like this:\n\ng_thread_task_runner_handle.reset(\n        new base::ThreadTaskRunnerHandle(task_runner));\n\nAnyway, you can indeed remove it, since this code will be not be linked in a shared lib on android.",
+      "parentUuid": "59323ad8_e2964412",
+      "revId": "1bae2940df85ab9534d91aefa80756e2ffb54cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "490f4e49_58628447",
         "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
         "patchSetId": 3
