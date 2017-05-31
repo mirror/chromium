@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a82fa368_ddba915a",
+        "filename": "content/child/blink_platform_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-05-31T10:37:52Z",
+      "side": 1,
+      "message": "Does this method read an embedded resource file? If so, ReadDataResource is clearer to me. Get is unclearer than Load, though I agreed that Load is confusing.",
+      "range": {
+        "startLine": 87,
+        "startChar": 17,
+        "endLine": 87,
+        "endChar": 32
+      },
+      "revId": "31fbc8bebd8169b2d736cc81cea932c94f177a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5b9a98_534857eb",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-05-31T10:37:52Z",
+      "side": 1,
+      "message": "is this intentional change? also, it we want to change, just using a similar name with underlying method, DecodeAudioResource makes much sense? not strong opinion, but for me, GetFoo returning boolean is a little surprising signature.",
+      "range": {
+        "startLine": 154,
+        "startChar": 7,
+        "endLine": 154,
+        "endChar": 23
+      },
+      "revId": "31fbc8bebd8169b2d736cc81cea932c94f177a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
