@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eba84583_4a19a096",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-31T15:19:39Z",
+      "side": 1,
+      "message": "It\u0027s not a very helpful name when looking at it in the list of chromium commits. Possible improvements include  adding a [Suggestions] tag, and specifying that it\u0027s being extracted from SnippetArticleViewHolder",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "92b86495a3aa6f0a4c413e7ab803eb2bc59e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c944547_a49b0f1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-31T15:19:39Z",
+      "side": 1,
+      "message": "nit: remove references (here and in the above methods) to a default icon or a placeholder. Instead add to the ImageFetcherRequest doc that we do not call the callback when there is an error.",
+      "range": {
+        "startLine": 145,
+        "startChar": 64,
+        "endLine": 145,
+        "endChar": 75
+      },
+      "revId": "92b86495a3aa6f0a4c413e7ab803eb2bc59e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6cf72e_b9c6c67a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-31T15:19:39Z",
+      "side": 1,
+      "message": "nit: it would be nice if the histogram recording was moved to SuggestionsMetrics, but it doesn\u0027t have to be in this CL.",
+      "range": {
+        "startLine": 194,
+        "startChar": 17,
+        "endLine": 194,
+        "endChar": 39
+      },
+      "revId": "92b86495a3aa6f0a4c413e7ab803eb2bc59e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09662f5_b525bf1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-31T15:19:39Z",
+      "side": 1,
+      "message": "nit: it\u0027s  a one liner used only in one place, so inline it?",
+      "range": {
+        "startLine": 276,
+        "startChar": 17,
+        "endLine": 276,
+        "endChar": 39
+      },
+      "revId": "92b86495a3aa6f0a4c413e7ab803eb2bc59e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24111475_d892f86b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-31T15:19:39Z",
+      "side": 1,
+      "message": "nit: asserts are redundant here, they should already be checked in ImageFetcherRequest#fetch",
+      "range": {
+        "startLine": 295,
+        "startChar": 19,
+        "endLine": 295,
+        "endChar": 26
+      },
+      "revId": "92b86495a3aa6f0a4c413e7ab803eb2bc59e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
