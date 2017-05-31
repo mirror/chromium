@@ -16,6 +16,98 @@
       "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59965151_f0bd0303",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-31T08:25:29Z",
+      "side": 1,
+      "message": "I think this is missing the traces that were in the OnGetTokenSuccess and  in OnGetTokenFailure",
+      "range": {
+        "startLine": 496,
+        "startChar": 21,
+        "endLine": 496,
+        "endChar": 33
+      },
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4c98b6_79fc32f4",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-31T08:25:29Z",
+      "side": 1,
+      "message": "I think these methods (OnGetTokenSuccess  and OnGetTokenFailure) will no longer be called on desktop, as the method service-\u003eStartRequest is not longer called.\n\nWould it be possible to add a DCHECK that these are only called on Chrome OS?",
+      "range": {
+        "startLine": 503,
+        "startChar": 5,
+        "endLine": 503,
+        "endChar": 33
+      },
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2073d9_dc679439",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-31T08:25:29Z",
+      "side": 1,
+      "message": "I think this can be moved inside the if as the service is not used outside the if.",
+      "range": {
+        "startLine": 571,
+        "startChar": 2,
+        "endLine": 571,
+        "endChar": 27
+      },
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520bcb66_55b888e9",
+        "filename": "services/identity/identity_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-31T08:25:29Z",
+      "side": 1,
+      "message": "The current API does not allow the caller to cancel a request. This may be something that may be needed.",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
