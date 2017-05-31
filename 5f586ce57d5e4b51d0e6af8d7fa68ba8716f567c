@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2017777a_fdaa85fe",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-05-31T23:13:07Z",
+      "side": 1,
+      "message": "Use D3D11_DECODER_PROFILE_VP9_VLD_PROFILE0 instead of this. It should be defined in d3d11.h",
+      "revId": "5f586ce57d5e4b51d0e6af8d7fa68ba8716f567c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
