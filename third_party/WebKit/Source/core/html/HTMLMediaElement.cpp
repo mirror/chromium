@@ -1132,6 +1132,10 @@ void HTMLMediaElement::LoadResource(const WebMediaPlayerSource& source,
 
   if (audio_source_node_)
     audio_source_node_->OnCurrentSrcChanged(current_src_);
+  if (RuntimeEnabledFeatures::newRemotePlaybackPipelineEnabled() &&
+      RemotePlaybackClient()) {
+    RemotePlaybackClient()->SourceChanged(current_src_);
+  }
 
   BLINK_MEDIA_LOG << "loadResource(" << (void*)this << ") - current_src_ -> "
                   << UrlForLoggingMedia(current_src_);
@@ -3146,8 +3150,10 @@ void HTMLMediaElement::RequestSeek(double time) {
 
 void HTMLMediaElement::RemoteRouteAvailabilityChanged(
     WebRemotePlaybackAvailability availability) {
-  if (RemotePlaybackClient())
+  if (RemotePlaybackClient() &&
+      !RuntimeEnabledFeatures::newRemotePlaybackPipelineEnabled()) {
     RemotePlaybackClient()->AvailabilityChanged(availability);
+  }
 }
 
 bool HTMLMediaElement::HasRemoteRoutes() const {
