@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "985e3866_10d55887",
+        "filename": "services/identity/public/cpp/google_service_auth_error_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-31T09:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42e79aab_bfc392da",
+      "range": {
+        "startLine": 87,
+        "startChar": 34,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "aa4cbeccc7855fb8b885a26473d8c965dbe79fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56f43e2a_07acd78d",
         "filename": "services/identity/public/cpp/google_service_auth_error_struct_traits.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "aa4cbeccc7855fb8b885a26473d8c965dbe79fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e570bea6_c4fcd1bc",
+        "filename": "services/identity/public/cpp/google_service_auth_error_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-31T09:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56f43e2a_07acd78d",
+      "range": {
+        "startLine": 126,
+        "startChar": 57,
+        "endLine": 126,
+        "endChar": 69
+      },
+      "revId": "aa4cbeccc7855fb8b885a26473d8c965dbe79fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
