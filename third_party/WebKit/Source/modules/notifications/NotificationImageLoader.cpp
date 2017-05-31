@@ -113,6 +113,8 @@ void NotificationImageLoader::Start(
   // FetchInitiatorTypeNames and use it.
   ResourceLoaderOptions resource_loader_options;
   resource_loader_options.allow_credentials = kAllowStoredCredentials;
+  resource_loader_options.credentials_requested =
+      kClientDidNotRequestCredentials;
   if (execution_context->IsWorkerGlobalScope())
     resource_loader_options.request_initiator_context = kWorkerContext;
 

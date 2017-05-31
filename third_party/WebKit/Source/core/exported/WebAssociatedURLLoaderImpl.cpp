@@ -396,6 +396,8 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
     resource_loader_options.allow_credentials =
         options_.allow_credentials ? kAllowStoredCredentials
                                    : kDoNotAllowStoredCredentials;
+    resource_loader_options.credentials_requested =
+        kClientDidNotRequestCredentials;
     resource_loader_options.data_buffering_policy = kDoNotBufferData;
 
     const ResourceRequest& webcore_request = new_request.ToResourceRequest();

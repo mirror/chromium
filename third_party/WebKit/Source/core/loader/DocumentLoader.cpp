@@ -859,12 +859,10 @@ void DocumentLoader::StartLoadingMainResource() {
     GetTiming().MarkFetchStart();
   }
 
-  DEFINE_STATIC_LOCAL(
-      ResourceLoaderOptions, main_resource_load_options,
-      (kDoNotBufferData, kAllowStoredCredentials, kClientRequestedCredentials,
-       kCheckContentSecurityPolicy, kDocumentContext));
-  FetchParameters fetch_params(request_, FetchInitiatorTypeNames::document,
-                               main_resource_load_options);
+  ResourceLoaderOptions main_resource_load_options;
+  main_resource_load_options.initiator_info.name =
+      FetchInitiatorTypeNames::document;
+  FetchParameters fetch_params(request_, main_resource_load_options);
   main_resource_ =
       RawResource::FetchMainResource(fetch_params, Fetcher(), substitute_data_);
 
