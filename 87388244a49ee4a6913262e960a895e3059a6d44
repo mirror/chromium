@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc503e93_fe3ec5bf",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2185,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-05-31T18:08:03Z",
+      "side": 1,
+      "message": "I was thinking about it but lean to having it on PrefeetchService, mostly because:\n- it\u0027s a part of Prefetch Landing UMA as per design doc\n- I need a lifetime-controlling service to park it, and PS is so far the best one we have - light weight to pull anywhere.\n- This most likely will grow Prefetch-specific functionality, for example generating automatic opt-out if user is not likely to benefit from the feature.",
+      "parentUuid": "9e61a951_049cd9bf",
+      "range": {
+        "startLine": 2185,
+        "startChar": 21,
+        "endLine": 2185,
+        "endChar": 29
+      },
+      "revId": "87388244a49ee4a6913262e960a895e3059a6d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e536e94f_55543828",
         "filename": "components/offline_pages/core/prefetch/BUILD.gn",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-31T04:55:25Z",
       "side": 1,
       "message": "same here, why not simply core?",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "87388244a49ee4a6913262e960a895e3059a6d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bc53d7_67b1656a",
+        "filename": "components/offline_pages/core/prefetch/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-05-31T18:08:03Z",
+      "side": 1,
+      "message": "See the reasons above...",
+      "parentUuid": "e536e94f_55543828",
       "range": {
         "startLine": 16,
         "startChar": 5,
@@ -68,6 +116,30 @@
       "revId": "87388244a49ee4a6913262e960a895e3059a6d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0fc601_5f7e4483",
+        "filename": "components/offline_pages/core/prefetch/offline_metrics_collector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-05-31T18:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7935f19_a7c58d7c",
+      "range": {
+        "startLine": 14,
+        "startChar": 29,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "87388244a49ee4a6913262e960a895e3059a6d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
