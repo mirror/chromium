@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "406b4946_c26140ec",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-05-31T11:52:36Z",
+      "side": 1,
+      "message": "If you write the string as the last thing in the pickle, I believe you can avoid bumping the version number.\n\nWhen reading the pickle, you can check if you can read the string at the end. If so, fill out the proxy server with the string. If not, perhaps you can fake a proxy server with RESPONSE_INFO_WAS_PROXY?\n\nhttps://codereview.chromium.org/6488010/diff/35001/net/http/http_response_info.cc did something similar.",
+      "revId": "e6abe61815293f42cdb7853596cfaae84d9d8f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
