@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e0897e3_1f8e3c63",
+        "filename": "base/synchronization/lock.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-31T17:28:08Z",
+      "side": 1,
+      "message": "Those concerns are for Linux IIRC, Android had a different reason (just don\u0027t honor the value IIRC)",
+      "range": {
+        "startLine": 147,
+        "startChar": 52,
+        "endLine": 147,
+        "endChar": 60
+      },
+      "revId": "691731994f6584f2d73f23d5462e5ace8339e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de9c017_14a5b2b8",
+        "filename": "base/synchronization/lock.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-31T17:28:08Z",
+      "side": 1,
+      "message": "Would be great if we could have a preprocessor check that this is true.",
+      "range": {
+        "startLine": 157,
+        "startChar": 27,
+        "endLine": 157,
+        "endChar": 48
+      },
+      "revId": "691731994f6584f2d73f23d5462e5ace8339e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9aaec74_a423c3ef",
+        "filename": "base/synchronization/lock_impl_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-31T17:28:08Z",
+      "side": 1,
+      "message": "fix",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "691731994f6584f2d73f23d5462e5ace8339e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5d13d8_064625c9",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-05-31T17:28:08Z",
+      "side": 1,
+      "message": "Flip this to handle positive case first.",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 45
+      },
+      "revId": "691731994f6584f2d73f23d5462e5ace8339e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
