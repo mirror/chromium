@@ -22,7 +22,7 @@
  *
  */
 
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 
 #include "core/dom/AXObjectCache.h"
 #include "core/frame/FrameOrPlugin.h"
@@ -36,12 +36,12 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutAPIShim.h"
 #include "core/layout/api/LayoutViewItem.h"
-#include "core/paint/PartPainter.h"
+#include "core/paint/EmbeddedContentPainter.h"
 #include "core/plugins/PluginView.h"
 
 namespace blink {
 
-LayoutPart::LayoutPart(Element* element)
+LayoutEmbeddedContent::LayoutEmbeddedContent(Element* element)
     : LayoutReplaced(element),
       // Reference counting is used to prevent the part from being destroyed
       // while inside the FrameViewBase code, which might not be able to handle
@@ -52,12 +52,12 @@ LayoutPart::LayoutPart(Element* element)
   SetInline(false);
 }
 
-void LayoutPart::Deref() {
+void LayoutEmbeddedContent::Deref() {
   if (--ref_count_ <= 0)
     delete this;
 }
 
-void LayoutPart::WillBeDestroyed() {
+void LayoutEmbeddedContent::WillBeDestroyed() {
   GetFrameView()->RemovePart(this);
 
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache()) {
@@ -72,13 +72,13 @@ void LayoutPart::WillBeDestroyed() {
   LayoutReplaced::WillBeDestroyed();
 }
 
-void LayoutPart::Destroy() {
+void LayoutEmbeddedContent::Destroy() {
   WillBeDestroyed();
-  // We call clearNode here because LayoutPart is ref counted. This call to
-  // destroy may not actually destroy the layout object. We can keep it around
-  // because of references from the LocalFrameView class. (The actual
-  // destruction of the class happens in PostDestroy() which is called from
-  // Deref()).
+  // We call clearNode here because LayoutEmbeddedContent is ref counted.
+  // This call to destroy may not actually destroy the layout object. We can
+  // keep it around because of references from the LocalFrameView class. (The
+  // actual destruction of the class happens in PostDestroy() which is called
+  // from Deref()).
   //
   // But, we've told the system we've destroyed the layoutObject, which happens
   // when the DOM node is destroyed. So there is a good change the DOM node this
@@ -88,39 +88,39 @@ void LayoutPart::Destroy() {
   Deref();
 }
 
-LayoutPart::~LayoutPart() {
+LayoutEmbeddedContent::~LayoutEmbeddedContent() {
   DCHECK_LE(ref_count_, 0);
 }
 
-LocalFrameView* LayoutPart::ChildFrameView() const {
+LocalFrameView* LayoutEmbeddedContent::ChildFrameView() const {
   FrameOrPlugin* frame_or_plugin = GetFrameOrPlugin();
   if (frame_or_plugin && frame_or_plugin->IsFrameView())
     return ToLocalFrameView(frame_or_plugin);
   return nullptr;
 }
 
-PluginView* LayoutPart::Plugin() const {
+PluginView* LayoutEmbeddedContent::Plugin() const {
   FrameOrPlugin* frame_or_plugin = GetFrameOrPlugin();
   if (frame_or_plugin && frame_or_plugin->IsPluginView())
     return ToPluginView(frame_or_plugin);
   return nullptr;
 }
 
-FrameOrPlugin* LayoutPart::GetFrameOrPlugin() const {
+FrameOrPlugin* LayoutEmbeddedContent::GetFrameOrPlugin() const {
   Node* node = GetNode();
   if (node && node->IsFrameOwnerElement())
     return ToHTMLFrameOwnerElement(node)->OwnedWidget();
   return nullptr;
 }
 
-PaintLayerType LayoutPart::LayerTypeRequired() const {
+PaintLayerType LayoutEmbeddedContent::LayerTypeRequired() const {
   PaintLayerType type = LayoutReplaced::LayerTypeRequired();
   if (type != kNoPaintLayer)
     return type;
   return kForcedPaintLayer;
 }
 
-bool LayoutPart::RequiresAcceleratedCompositing() const {
+bool LayoutEmbeddedContent::RequiresAcceleratedCompositing() const {
   // There are two general cases in which we can return true. First, if this is
   // a plugin LayoutObject and the plugin has a layer, then we need a layer.
   // Second, if this is a LayoutObject with a contentDocument and that document
@@ -145,13 +145,13 @@ bool LayoutPart::RequiresAcceleratedCompositing() const {
   return false;
 }
 
-bool LayoutPart::NeedsPreferredWidthsRecalculation() const {
+bool LayoutEmbeddedContent::NeedsPreferredWidthsRecalculation() const {
   if (LayoutReplaced::NeedsPreferredWidthsRecalculation())
     return true;
   return EmbeddedReplacedContent();
 }
 
-bool LayoutPart::NodeAtPointOverFrameViewBase(
+bool LayoutEmbeddedContent::NodeAtPointOverFrameViewBase(
     HitTestResult& result,
     const HitTestLocation& location_in_container,
     const LayoutPoint& accumulated_offset,
@@ -170,10 +170,11 @@ bool LayoutPart::NodeAtPointOverFrameViewBase(
   return inside;
 }
 
-bool LayoutPart::NodeAtPoint(HitTestResult& result,
-                             const HitTestLocation& location_in_container,
-                             const LayoutPoint& accumulated_offset,
-                             HitTestAction action) {
+bool LayoutEmbeddedContent::NodeAtPoint(
+    HitTestResult& result,
+    const HitTestLocation& location_in_container,
+    const LayoutPoint& accumulated_offset,
+    HitTestAction action) {
   LocalFrameView* frame_view = ChildFrameView();
   if (!frame_view || !result.GetHitTestRequest().AllowsChildFrameContent()) {
     return NodeAtPointOverFrameViewBase(result, location_in_container,
@@ -245,14 +246,14 @@ bool LayoutPart::NodeAtPoint(HitTestResult& result,
                                       accumulated_offset, action);
 }
 
-CompositingReasons LayoutPart::AdditionalCompositingReasons() const {
+CompositingReasons LayoutEmbeddedContent::AdditionalCompositingReasons() const {
   if (RequiresAcceleratedCompositing())
     return kCompositingReasonIFrame;
   return kCompositingReasonNone;
 }
 
-void LayoutPart::StyleDidChange(StyleDifference diff,
-                                const ComputedStyle* old_style) {
+void LayoutEmbeddedContent::StyleDidChange(StyleDifference diff,
+                                           const ComputedStyle* old_style) {
   LayoutReplaced::StyleDidChange(diff, old_style);
   FrameOrPlugin* frame_or_plugin = GetFrameOrPlugin();
   if (!frame_or_plugin)
@@ -269,25 +270,26 @@ void LayoutPart::StyleDidChange(StyleDifference diff,
   }
 }
 
-void LayoutPart::UpdateLayout() {
+void LayoutEmbeddedContent::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
   UpdateAfterLayout();
   ClearNeedsLayout();
 }
 
-void LayoutPart::Paint(const PaintInfo& paint_info,
-                       const LayoutPoint& paint_offset) const {
-  PartPainter(*this).Paint(paint_info, paint_offset);
+void LayoutEmbeddedContent::Paint(const PaintInfo& paint_info,
+                                  const LayoutPoint& paint_offset) const {
+  EmbeddedContentPainter(*this).Paint(paint_info, paint_offset);
 }
 
-void LayoutPart::PaintContents(const PaintInfo& paint_info,
-                               const LayoutPoint& paint_offset) const {
-  PartPainter(*this).PaintContents(paint_info, paint_offset);
+void LayoutEmbeddedContent::PaintContents(
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) const {
+  EmbeddedContentPainter(*this).PaintContents(paint_info, paint_offset);
 }
 
-CursorDirective LayoutPart::GetCursor(const LayoutPoint& point,
-                                      Cursor& cursor) const {
+CursorDirective LayoutEmbeddedContent::GetCursor(const LayoutPoint& point,
+                                                 Cursor& cursor) const {
   if (Plugin()) {
     // A plugin is responsible for setting the cursor when the pointer is over
     // it.
@@ -296,7 +298,7 @@ CursorDirective LayoutPart::GetCursor(const LayoutPoint& point,
   return LayoutReplaced::GetCursor(point, cursor);
 }
 
-LayoutRect LayoutPart::ReplacedContentRect() const {
+LayoutRect LayoutEmbeddedContent::ReplacedContentRect() const {
   // We don't propagate sub-pixel into sub-frame layout, in other words, the
   // rect is snapped at the document boundary, and sub-pixel movement could
   // cause the sub-frame to layout due to the 1px snap difference. In order to
@@ -307,7 +309,7 @@ LayoutRect LayoutPart::ReplacedContentRect() const {
   return size_rounded_rect;
 }
 
-void LayoutPart::UpdateOnWidgetChange() {
+void LayoutEmbeddedContent::UpdateOnWidgetChange() {
   FrameOrPlugin* frame_or_plugin = GetFrameOrPlugin();
   if (!frame_or_plugin)
     return;
@@ -328,7 +330,7 @@ void LayoutPart::UpdateOnWidgetChange() {
   }
 }
 
-void LayoutPart::UpdateGeometry() {
+void LayoutEmbeddedContent::UpdateGeometry() {
   FrameOrPlugin* frame_or_plugin = GetFrameOrPlugin();
   if (!frame_or_plugin)
     return;
@@ -360,7 +362,8 @@ void LayoutPart::UpdateGeometry() {
     plugin->GeometryMayHaveChanged();
 }
 
-void LayoutPart::UpdateGeometryInternal(FrameOrPlugin& frame_or_plugin) {
+void LayoutEmbeddedContent::UpdateGeometryInternal(
+    FrameOrPlugin& frame_or_plugin) {
   // Ignore transform here, as we only care about the sub-pixel accumulation.
   // TODO(trchen): What about multicol? Need a LayoutBox function to query
   // sub-pixel accumulation.
@@ -384,11 +387,11 @@ void LayoutPart::UpdateGeometryInternal(FrameOrPlugin& frame_or_plugin) {
   frame_rect.SetLocation(RoundedIntPoint(absolute_bounding_box.Location()));
 
   // Why is the protector needed?
-  RefPtr<LayoutPart> protector(this);
+  RefPtr<LayoutEmbeddedContent> protector(this);
   frame_or_plugin.SetFrameRect(frame_rect);
 }
 
-void LayoutPart::DeprecatedInvalidatePaintOfSubtrees(
+void LayoutEmbeddedContent::DeprecatedInvalidatePaintOfSubtrees(
     const PaintInvalidationState& paint_invalidation_state) {
   LocalFrameView* frame_view = ChildFrameView();
   if (frame_view && !IsThrottledFrameView()) {
@@ -406,7 +409,7 @@ void LayoutPart::DeprecatedInvalidatePaintOfSubtrees(
   LayoutReplaced::DeprecatedInvalidatePaintOfSubtrees(paint_invalidation_state);
 }
 
-bool LayoutPart::IsThrottledFrameView() const {
+bool LayoutEmbeddedContent::IsThrottledFrameView() const {
   if (LocalFrameView* frame_view = ChildFrameView())
     return frame_view->ShouldThrottleRendering();
   return false;

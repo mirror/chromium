@@ -29,8 +29,8 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrameView.h"
-#include "core/layout/LayoutPart.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/LayoutEmbeddedContent.h"
+#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
@@ -147,12 +147,12 @@ HTMLFrameOwnerElement::HTMLFrameOwnerElement(const QualifiedName& tag_name,
       widget_(nullptr),
       sandbox_flags_(kSandboxNone) {}
 
-LayoutPart* HTMLFrameOwnerElement::GetLayoutPart() const {
+LayoutEmbeddedContent* HTMLFrameOwnerElement::GetLayoutEmbeddedContent() const {
   // HTMLObjectElement and HTMLEmbedElement may return arbitrary layoutObjects
   // when using fallback content.
-  if (!GetLayoutObject() || !GetLayoutObject()->IsLayoutPart())
+  if (!GetLayoutObject() || !GetLayoutObject()->IsLayoutEmbeddedContent())
     return nullptr;
-  return ToLayoutPart(GetLayoutObject());
+  return ToLayoutEmbeddedContent(GetLayoutObject());
 }
 
 void HTMLFrameOwnerElement::SetContentFrame(Frame& frame) {
@@ -297,21 +297,25 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
   widget_ = frame_or_plugin;
   FrameOwnerPropertiesChanged();
 
-  LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
-  LayoutPartItem layout_part_item = LayoutPartItem(layout_part);
-  if (layout_part_item.IsNull())
+  LayoutEmbeddedContent* layout_embedded_content =
+      ToLayoutEmbeddedContent(GetLayoutObject());
+  LayoutEmbeddedContentItem layout_embedded_content_item =
+      LayoutEmbeddedContentItem(layout_embedded_content);
+  if (layout_embedded_content_item.IsNull())
     return;
 
   if (widget_) {
-    layout_part_item.UpdateOnWidgetChange();
+    layout_embedded_content_item.UpdateOnWidgetChange();
 
-    DCHECK_EQ(GetDocument().View(), layout_part_item.GetFrameView());
-    DCHECK(layout_part_item.GetFrameView());
-    MoveFrameOrPluginToParentSoon(widget_, layout_part_item.GetFrameView());
+    DCHECK_EQ(GetDocument().View(),
+              layout_embedded_content_item.GetFrameView());
+    DCHECK(layout_embedded_content_item.GetFrameView());
+    MoveFrameOrPluginToParentSoon(widget_,
+                                  layout_embedded_content_item.GetFrameView());
   }
 
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
-    cache->ChildrenChanged(layout_part);
+    cache->ChildrenChanged(layout_embedded_content);
 }
 
 FrameOrPlugin* HTMLFrameOwnerElement::ReleaseWidget() {
@@ -319,10 +323,11 @@ FrameOrPlugin* HTMLFrameOwnerElement::ReleaseWidget() {
     return nullptr;
   if (widget_->IsAttached())
     TemporarilyRemoveFrameOrPluginFromParentSoon(widget_);
-  LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
-  if (layout_part) {
+  LayoutEmbeddedContent* layout_embedded_content =
+      ToLayoutEmbeddedContent(GetLayoutObject());
+  if (layout_embedded_content) {
     if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
-      cache->ChildrenChanged(layout_part);
+      cache->ChildrenChanged(layout_embedded_content);
   }
   return widget_.Release();
 }

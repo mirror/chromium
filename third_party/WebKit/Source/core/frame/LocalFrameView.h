@@ -73,9 +73,9 @@ class FloatSize;
 class IntRect;
 class JSONArray;
 class JSONObject;
+class LayoutEmbeddedContent;
 class LayoutItem;
 class LayoutViewItem;
-class LayoutPart;
 class LocalFrame;
 class KURL;
 class Node;
@@ -109,7 +109,7 @@ class CORE_EXPORT LocalFrameView final
 
   friend class PaintControllerPaintTestBase;
   friend class Internals;
-  friend class LayoutPart;  // for invalidateTreeIfNeeded
+  friend class LayoutEmbeddedContent;  // for invalidateTreeIfNeeded
 
  public:
   static LocalFrameView* Create(LocalFrame&);
@@ -281,8 +281,8 @@ class CORE_EXPORT LocalFrameView final
     safe_to_propagate_scroll_to_parent_ = is_safe;
   }
 
-  void AddPart(LayoutPart*);
-  void RemovePart(LayoutPart*);
+  void AddPart(LayoutEmbeddedContent*);
+  void RemovePart(LayoutEmbeddedContent*);
 
   void UpdateGeometries();
 
@@ -879,7 +879,8 @@ class CORE_EXPORT LocalFrameView final
     AutoReset<bool> scope_;
   };
 
-  // Only for LayoutPart to traverse into sub frames during paint invalidation.
+  // Only for LayoutEmbeddedContent to traverse into sub frames during paint
+  // invalidation.
   void DeprecatedInvalidateTree(const PaintInvalidationState&);
 
  private:
@@ -1061,7 +1062,7 @@ class CORE_EXPORT LocalFrameView final
 
   // FIXME: These are just "children" of the LocalFrameView and should be
   // Member<LocalFrameView> instead.
-  HashSet<RefPtr<LayoutPart>> parts_;
+  HashSet<RefPtr<LayoutEmbeddedContent>> parts_;
 
   Member<LocalFrame> frame_;
 
