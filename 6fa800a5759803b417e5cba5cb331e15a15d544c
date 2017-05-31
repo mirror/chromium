@@ -159,6 +159,24 @@
       "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79eba409_e5867745",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T17:59:51Z",
+      "side": 1,
+      "message": "GPTF::RemoveCompositor is one of the places where Display gets destroyed. (see patch set 16)\nMany other places destroy Displays in addition to RemoveCompositor.\n\ne.g. display_.reset() is called here at line 572 \nGPTF::EstablishGpuChannel also destroys the existing Display if there is one.",
+      "parentUuid": "3b8f243e_332839c4",
+      "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
