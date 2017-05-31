@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f3a9001f_69a976be",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-31T17:58:58Z",
+      "side": 1,
+      "message": "Simplified the condition to\n  if (box_.BorderRight() || box_.BorderRight()).\ninstead of checking style border because LayoutBox::BorderXXX() methods are virtual and may return values different from style. For example, LayoutTable and LayoutTableCell can return values depending on collapsed borders which may from another layout object.",
+      "parentUuid": "10acc29a_082a6a95",
+      "revId": "4215a7488d80fad6eb2d340254bb4263c2c576d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4729869_51ad7190",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
         "patchSetId": 16
