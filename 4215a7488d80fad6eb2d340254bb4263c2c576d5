@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "10acc29a_082a6a95",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-05-31T17:40:33Z",
+      "side": 1,
+      "message": "I think just giving up if there is any border at all seems good enough.",
+      "parentUuid": "209aeb81_e2ec5519",
+      "revId": "4215a7488d80fad6eb2d340254bb4263c2c576d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4729869_51ad7190",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
         "patchSetId": 16
