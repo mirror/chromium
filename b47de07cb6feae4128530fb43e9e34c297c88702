@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46d6d9ea_6791f3e6",
+        "filename": "chromecast/media/cma/backend/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-05-31T15:24:47Z",
+      "side": 1,
+      "message": "as mentioned on other review, replace com/google/cast -\u003e org/chromium/chromecast",
+      "revId": "b47de07cb6feae4128530fb43e9e34c297c88702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066b010f_c65e543d",
+        "filename": "chromecast/media/cma/backend/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-05-31T15:24:47Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 46,
+        "startChar": 94,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "b47de07cb6feae4128530fb43e9e34c297c88702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
