@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "168ff059_51c3e101",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationBuilderForO.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-05-31T15:41:12Z",
+      "side": 1,
+      "message": "this is not super-awesome (to notification code) so appreciate you tolerating it :)",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "fe26816ea2fb8cb0050f315fb335877476888a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
