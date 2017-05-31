@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.os.SystemClock;
@@ -167,7 +168,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            final ChromeActivity activity = mTargetActivity.get();
+            ChromeActivity activity = mTargetActivity.get();
             if (activity == null) return;
             getInstance(activity);
             assert sInstance != null;
@@ -175,12 +176,11 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
             sInstance.mDonSucceeded = true;
             if (sInstance.mPaused) {
                 if (sInstance.mInVrAtChromeLaunch == null) sInstance.mInVrAtChromeLaunch = false;
-                sInstance.addOverlayViews();
+                sInstance.addOverlayView();
+                Bundle options = ActivityOptions
+                        .makeCustomAnimation(activity, R.anim.stay_hidden, 0).toBundle();
                 ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE))
-                        .moveTaskToFront(activity.getTaskId(),
-                                ActivityManager.MOVE_TASK_NO_USER_ACTION,
-                                ActivityOptions.makeCustomAnimation(activity, R.anim.stay_hidden, 0)
-                                        .toBundle());
+                        .moveTaskToFront(activity.getTaskId(), 0, options);
             } else {
                 if (sInstance.mInVrAtChromeLaunch == null) sInstance.mInVrAtChromeLaunch = true;
                 // If a WebVR app calls requestPresent in response to the displayactivate event
@@ -1147,7 +1147,8 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         mRestoreSystemUiVisibilityFlag = -1;
     }
 
-    private void addOverlayViews() {
+    private void addOverlayView() {
+        if (mOverlayView != null) return;
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
