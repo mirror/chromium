@@ -37,7 +37,7 @@ namespace blink {
 
 class ExceptionState;
 class Frame;
-class LayoutPart;
+class LayoutEmbeddedContentView;
 
 class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
                                           public FrameOwner {
@@ -51,10 +51,10 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
 
   virtual void DisconnectContentFrame();
 
-  // Most subclasses use LayoutPart (either LayoutEmbeddedObject or
-  // LayoutIFrame) except for HTMLObjectElement and HTMLEmbedElement which may
-  // return any LayoutObject when using fallback content.
-  LayoutPart* GetLayoutPart() const;
+  // Most subclasses use LayoutEmbeddedContentView (either LayoutEmbeddedObject
+  // or LayoutIFrame) except for HTMLObjectElement and HTMLEmbedElement which
+  // may return any LayoutObject when using fallback content.
+  LayoutEmbeddedContentView* GetLayoutEmbeddedContentView() const;
 
   // Whether to collapse the frame owner element in the embedder document. That
   // is, to remove it from the layout as if it did not exist.

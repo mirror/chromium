@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContentView.h"
 
 #include "core/html/HTMLElement.h"
 #include "core/layout/ImageQualityController.h"
@@ -11,18 +11,21 @@
 
 namespace blink {
 
-class LayoutPartTest : public RenderingTest {};
+class LayoutEmbeddedContentViewTest : public RenderingTest {};
 
-class OverriddenLayoutPart : public LayoutPart {
+class OverriddenLayoutEmbeddedContentView : public LayoutEmbeddedContentView {
  public:
-  explicit OverriddenLayoutPart(Element* element) : LayoutPart(element) {}
+  explicit OverriddenLayoutEmbeddedContentView(Element* element)
+      : LayoutEmbeddedContentView(element) {}
 
-  const char* GetName() const override { return "OverriddenLayoutPart"; }
+  const char* GetName() const override {
+    return "OverriddenLayoutEmbeddedContentView";
+  }
 };
 
-TEST_F(LayoutPartTest, DestroyUpdatesImageQualityController) {
+TEST_F(LayoutEmbeddedContentViewTest, DestroyUpdatesImageQualityController) {
   Element* element = HTMLElement::Create(HTMLNames::divTag, GetDocument());
-  LayoutObject* part = new OverriddenLayoutPart(element);
+  LayoutObject* part = new OverriddenLayoutEmbeddedContentView(element);
   // The third and forth arguments are not important in this test.
   ImageQualityController::GetImageQualityController()->Set(
       *part, 0, this, LayoutSize(1, 1), false);

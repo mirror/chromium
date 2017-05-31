@@ -26,11 +26,11 @@
 #ifndef LayoutIFrame_h
 #define LayoutIFrame_h
 
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContentView.h"
 
 namespace blink {
 
-class LayoutIFrame final : public LayoutPart {
+class LayoutIFrame final : public LayoutEmbeddedContentView {
  public:
   explicit LayoutIFrame(Element*);
 
@@ -43,7 +43,8 @@ class LayoutIFrame final : public LayoutPart {
   void UpdateLayout() override;
 
   bool IsOfType(LayoutObjectType type) const override {
-    return type == kLayoutObjectLayoutIFrame || LayoutPart::IsOfType(type);
+    return type == kLayoutObjectLayoutIFrame ||
+           LayoutEmbeddedContentView::IsOfType(type);
   }
 
   PaintLayerType LayerTypeRequired() const override;

@@ -11,7 +11,7 @@
 #include "core/frame/RemoteFrameClient.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/api/LayoutEmbeddedContentViewItem.h"
 
 namespace blink {
 
@@ -101,7 +101,7 @@ void RemoteFrameView::Dispose() {
 }
 
 void RemoteFrameView::InvalidateRect(const IntRect& rect) {
-  LayoutPartItem layout_item = remote_frame_->OwnerLayoutItem();
+  LayoutEmbeddedContentViewItem layout_item = remote_frame_->OwnerLayoutItem();
   if (layout_item.IsNull())
     return;
 

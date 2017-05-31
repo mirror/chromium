@@ -6,20 +6,22 @@
 #define LayoutEmbeddedItem_h
 
 #include "core/layout/LayoutEmbeddedObject.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/api/LayoutEmbeddedContentViewItem.h"
 
 namespace blink {
 
-class LayoutEmbeddedItem : public LayoutPartItem {
+class LayoutEmbeddedItem : public LayoutEmbeddedContentViewItem {
  public:
   explicit LayoutEmbeddedItem(LayoutEmbeddedObject* layout_embedded_object)
-      : LayoutPartItem(layout_embedded_object) {}
+      : LayoutEmbeddedContentViewItem(layout_embedded_object) {}
 
-  explicit LayoutEmbeddedItem(const LayoutItem& item) : LayoutPartItem(item) {
+  explicit LayoutEmbeddedItem(const LayoutItem& item)
+      : LayoutEmbeddedContentViewItem(item) {
     SECURITY_DCHECK(!item || item.IsEmbeddedObject());
   }
 
-  explicit LayoutEmbeddedItem(std::nullptr_t) : LayoutPartItem(nullptr) {}
+  explicit LayoutEmbeddedItem(std::nullptr_t)
+      : LayoutEmbeddedContentViewItem(nullptr) {}
 
   LayoutEmbeddedItem() {}
 

@@ -34,7 +34,7 @@
 #include "core/html/HTMLObjectElement.h"
 #include "core/html/PluginDocument.h"
 #include "core/html/parser/HTMLParserIdioms.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContentView.h"
 #include "core/layout/api/LayoutEmbeddedItem.h"
 
 namespace blink {
@@ -55,17 +55,19 @@ HTMLEmbedElement* HTMLEmbedElement::Create(Document& document,
   return element;
 }
 
-static inline LayoutPart* FindPartLayoutObject(const Node* n) {
+static inline LayoutEmbeddedContentView* FindPartLayoutObject(const Node* n) {
   if (!n->GetLayoutObject())
     n = Traversal<HTMLObjectElement>::FirstAncestor(*n);
 
-  if (n && n->GetLayoutObject() && n->GetLayoutObject()->IsLayoutPart())
-    return ToLayoutPart(n->GetLayoutObject());
+  if (n && n->GetLayoutObject() &&
+      n->GetLayoutObject()->IsLayoutEmbeddedContentView())
+    return ToLayoutEmbeddedContentView(n->GetLayoutObject());
 
   return nullptr;
 }
 
-LayoutPart* HTMLEmbedElement::ExistingLayoutPart() const {
+LayoutEmbeddedContentView* HTMLEmbedElement::ExistingLayoutEmbeddedContentView()
+    const {
   return FindPartLayoutObject(this);
 }
 
