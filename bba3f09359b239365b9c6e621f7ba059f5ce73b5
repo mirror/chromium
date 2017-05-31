@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c5fcae_598cdfd0",
+        "filename": "content/child/runtime_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-05-31T18:40:33Z",
+      "side": 1,
+      "message": "Can you add a comment referencing the bug?",
+      "range": {
+        "startLine": 54,
+        "startChar": 57,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "bba3f09359b239365b9c6e621f7ba059f5ce73b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6bba31_13bee4c0",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-05-31T18:40:33Z",
+      "side": 1,
+      "message": "Per spec this should also be NotSupportedError if availability monitoring is disabled.\n\nhttps://w3c.github.io/remote-playback/#prompt-user-for-changing-remote-playback-state",
+      "revId": "bba3f09359b239365b9c6e621f7ba059f5ce73b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
