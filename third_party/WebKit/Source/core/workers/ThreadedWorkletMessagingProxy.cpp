@@ -8,14 +8,20 @@
 #include "core/dom/Document.h"
 #include "core/dom/SecurityContext.h"
 #include "core/dom/TaskRunnerHelper.h"
+#include "core/frame/WebLocalFrameBase.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/loader/WorkerFetchContext.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/ThreadedWorkletObjectProxy.h"
+#include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerThreadStartupData.h"
 #include "core/workers/WorkletGlobalScope.h"
 #include "platform/CrossThreadFunctional.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebTaskRunner.h"
+#include "public/platform/WebWorkerFetchContext.h"
+#include "public/web/WebFrameClient.h"
 
 namespace blink {
 
@@ -98,12 +104,25 @@ void ThreadedWorkletMessagingProxy::Initialize() {
   std::unique_ptr<WorkerSettings> worker_settings =
       WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
 
+  WorkerClients* worker_clients = WorkerClients::Create();
+  if (RuntimeEnabledFeatures::offMainThreadFetchEnabled()) {
+    WebLocalFrameBase* web_frame =
+        WebLocalFrameBase::FromFrame(document->GetFrame());
+    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
+        web_frame->Client()->CreateWorkerFetchContext();
+    DCHECK(web_worker_fetch_context);
+    // TODO(horo): Set more information about the context (ex:
+    // AppCacheHostID) to |web_worker_fetch_context|.
+    ProvideWorkerFetchContextToWorker(worker_clients,
+                                      std::move(web_worker_fetch_context));
+  }
+
   // TODO(ikilpatrick): Decide on sensible a value for referrerPolicy.
   std::unique_ptr<WorkerThreadStartupData> startup_data =
       WorkerThreadStartupData::Create(
           script_url, document->UserAgent(), String(), nullptr, start_mode,
           csp->Headers().get(), /* referrerPolicy */ String(), starter_origin,
-          nullptr, document->AddressSpace(),
+          worker_clients, document->AddressSpace(),
           OriginTrialContext::GetTokens(document).get(),
           std::move(worker_settings), WorkerV8Settings::Default());
 
