@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e41d59c5_9146c5a9",
+        "filename": "ash/system/audio/volume_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T20:47:03Z",
+      "side": 1,
+      "message": "Should all this code be adding ui::AX_CHECKED_STATE_FALSE for the else cases?",
+      "range": {
+        "startLine": 104,
+        "startChar": 37,
+        "endLine": 104,
+        "endChar": 58
+      },
+      "revId": "a1670407017f2b4a29c9ca13390a0bce5f6ecc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
