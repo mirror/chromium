@@ -216,7 +216,6 @@
     busy,
     collapsed,
     default,
-    disabled,
     editable,
     expanded,
     focusable,
@@ -231,7 +230,6 @@
     offscreen,
     pressed,
     protected,
-    read_only,
     required,
     richly_editable,
     selectable,
@@ -415,6 +413,11 @@
     // Identifies a child tree which this node hosts.
     child_tree_id,
 
+    // Is there a user-modifiable value and can it be changed?
+    // For example, a value can be changed in a text input or slider range.
+    // Of type AXMutability.
+    mutability,
+
     // Position or Number of items in current set of listitems or treeitems
     set_size,
     pos_in_set,
@@ -466,9 +469,6 @@
 
     // If a dialog box is marked as explicitly modal
     modal,
-
-    // ARIA readonly flag.
-    aria_readonly,
 
     // If this is set, all of the other fields in this struct should
     // be ignored and only the locations should change.
@@ -589,6 +589,13 @@
     spelling,
     grammar,
     other
+  };
+
+  enum AXMutability {
+    none,     // No value to change
+    enabled,
+    disabled, // Typically means cannot be focused 
+    readonly  // Typically means can be focused
   };
 
   enum AXCheckedState {

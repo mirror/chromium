@@ -207,7 +207,6 @@ enum WebAXRole {
 enum WebAXState {
   kWebAXStateBusy,
   kWebAXStateChecked,
-  kWebAXStateEnabled,
   kWebAXStateExpanded,
   kWebAXStateFocusable,
   kWebAXStateFocused,
@@ -220,7 +219,6 @@ enum WebAXState {
   kWebAXStateOffscreen,
   kWebAXStatePressed,
   kWebAXStateProtected,
-  kWebAXStateReadonly,
   kWebAXStateRequired,
   kWebAXStateSelectable,
   kWebAXStateSelected,
@@ -300,6 +298,14 @@ enum WebAXInvalidState {
   kWebAXInvalidStateSpelling,
   kWebAXInvalidStateGrammar,
   kWebAXInvalidStateOther
+};
+
+// For form controls and editors that have a potentially user-modifiable value
+enum WebAXMutabilityState {
+  kWebAXMutabilityNone = 0,
+  kWebAXMutabilityEnabled,
+  kWebAXMutabilityDisabled,
+  kWebAXMutabilityReadonly
 };
 
 enum WebAXMarkerType {
