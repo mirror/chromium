@@ -283,16 +283,9 @@ WebAXAriaCurrentState WebAXObject::AriaCurrentState() const {
   return static_cast<WebAXAriaCurrentState>(private_->GetAriaCurrentState());
 }
 
-bool WebAXObject::IsCheckable() const {
-  if (IsDetached())
-    return false;
-
-  return private_->IsCheckable();
-}
-
 WebAXCheckedState WebAXObject::CheckedState() const {
   if (IsDetached())
-    return WebAXCheckedFalse;
+    return kWebAXCheckedUndefined;
 
   return static_cast<WebAXCheckedState>(private_->CheckedState());
 }
@@ -386,13 +379,6 @@ bool WebAXObject::IsPasswordField() const {
     return false;
 
   return private_->IsPasswordField();
-}
-
-bool WebAXObject::IsPressed() const {
-  if (IsDetached())
-    return false;
-
-  return private_->IsPressed();
 }
 
 bool WebAXObject::IsReadOnly() const {
