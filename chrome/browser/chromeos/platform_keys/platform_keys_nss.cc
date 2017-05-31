@@ -25,6 +25,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_platform_part_chromeos.h"
 #include "chrome/browser/chromeos/certificate_provider/certificate_provider.h"
+#include "chrome/browser/chromeos/certificate_provider/certificate_provider_service.h"
+#include "chrome/browser/chromeos/certificate_provider/certificate_provider_service_factory.h"
 #include "chrome/browser/chromeos/net/client_cert_filter_chromeos.h"
 #include "chrome/browser/chromeos/net/client_cert_store_chromeos.h"
 #include "chrome/browser/chromeos/platform_keys/platform_keys.h"
@@ -48,11 +50,6 @@ using content::BrowserContext;
 using content::BrowserThread;
 
 namespace {
-const char kErrorInternal[] = "Internal Error.";
-const char kErrorKeyNotFound[] = "Key not found.";
-const char kErrorCertificateNotFound[] = "Certificate could not be found.";
-const char kErrorAlgorithmNotSupported[] = "Algorithm not supported.";
-
 // The current maximal RSA modulus length that ChromeOS's TPM supports for key
 // generation.
 const unsigned int kMaxRSAModulusLengthBits = 2048;
@@ -275,6 +272,30 @@ class GetCertificatesState : public NSSOperationState {
   GetCertificatesCallback callback_;
 };
 
+class PlatformClientCertificateExistsState : public NSSOperationState {
+ public:
+  PlatformClientCertificateExistsState(
+      const std::string& public_key,
+      const PlatformClientCertificateExistsCallback& callback);
+  ~PlatformClientCertificateExistsState() override {}
+
+  void OnError(const tracked_objects::Location& from,
+               const std::string& error_message) override {
+    CallBack(from, false);
+  }
+
+  void CallBack(const tracked_objects::Location& from, bool result) {
+    origin_task_runner_->PostTask(from, base::Bind(callback_, result));
+  }
+
+  // Must be the DER encoding of a SubjectPublicKeyInfo.
+  const std::string public_key_;
+
+ private:
+  // Must be called on origin thread, therefore use CallBack().
+  PlatformClientCertificateExistsCallback callback_;
+};
+
 class ImportCertificateState : public NSSOperationState {
  public:
   ImportCertificateState(const scoped_refptr<net::X509Certificate>& certificate,
@@ -382,6 +403,11 @@ GetCertificatesState::GetCertificatesState(
     const GetCertificatesCallback& callback)
     : callback_(callback) {
 }
+
+PlatformClientCertificateExistsState::PlatformClientCertificateExistsState(
+    const std::string& public_key,
+    const PlatformClientCertificateExistsCallback& callback)
+    : public_key_(public_key), callback_(callback) {}
 
 ImportCertificateState::ImportCertificateState(
     const scoped_refptr<net::X509Certificate>& certificate,
@@ -556,10 +582,11 @@ void DidSelectCertificatesOnIOThread(
 // Continues selecting certificates on the IO thread. Used by
 // SelectClientCertificates().
 void SelectCertificatesOnIOThread(
-    std::unique_ptr<SelectCertificatesState> state) {
+    std::unique_ptr<SelectCertificatesState> state,
+    std::unique_ptr<CertificateProvider> cert_provider) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   state->cert_store_.reset(new ClientCertStoreChromeOS(
-      nullptr,  // no additional provider
+      std::move(cert_provider),
       base::MakeUnique<ClientCertFilterChromeOS>(state->use_system_key_slot_,
                                                  state->username_hash_),
       ClientCertStoreChromeOS::PasswordDelegateFactory()));
@@ -618,6 +645,48 @@ void GetCertificatesWithDB(std::unique_ptr<GetCertificatesState> state,
   PK11SlotInfo* slot = state->slot_.get();
   cert_db->ListCertsInSlot(
       base::Bind(&DidGetCertificates, base::Passed(&state)), slot);
+}
+
+// Does the actual search for the platform client certificate on a worker
+// thread. Used by PlatformClientCertificateExistsWithDB().
+void PlatformClientCertificateExistsWorkerThread(
+    std::unique_ptr<PlatformClientCertificateExistsState> state) {
+  const uint8_t* public_key_uint8 =
+      reinterpret_cast<const uint8_t*>(state->public_key_.data());
+  std::vector<uint8_t> public_key_vector(
+      public_key_uint8, public_key_uint8 + state->public_key_.size());
+
+  crypto::ScopedSECKEYPrivateKey rsa_key;
+  if (state->slot_) {
+    rsa_key = crypto::FindNSSKeyFromPublicKeyInfoInSlot(public_key_vector,
+                                                        state->slot_.get());
+  } else {
+    rsa_key = crypto::FindNSSKeyFromPublicKeyInfo(public_key_vector);
+  }
+
+  // Fail if the key was not found or is of the wrong type.
+  if (!rsa_key || SECKEY_GetPrivateKeyType(rsa_key.get()) != rsaKey) {
+    state->CallBack(FROM_HERE, false);
+    return;
+  } else {
+    state->CallBack(FROM_HERE, true);
+    return;
+  }
+}
+
+// Continues checking for existence of platform client certificate with the
+// obtained NSSCertDatabase. Used by PlatformClientCertificateExists().
+void PlatformClientCertificateExistsWithDB(
+    std::unique_ptr<PlatformClientCertificateExistsState> state,
+    net::NSSCertDatabase* cert_db) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  // Only the slot and not the NSSCertDatabase is required. Ignore |cert_db|.
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::Bind(&PlatformClientCertificateExistsWorkerThread,
+                 base::Passed(&state)));
 }
 
 // Does the actual certificate importing on the IO thread. Used by
@@ -792,9 +861,16 @@ void SelectClientCertificates(
   std::unique_ptr<SelectCertificatesState> state(new SelectCertificatesState(
       user->username_hash(), use_system_key_slot, cert_request_info, callback));
 
+  chromeos::CertificateProviderService* const service =
+      chromeos::CertificateProviderServiceFactory::GetForBrowserContext(
+          browser_context);
+  std::unique_ptr<CertificateProvider> cert_provider =
+      service->CreateCertificateProvider();
+
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&SelectCertificatesOnIOThread, base::Passed(&state)));
+      base::Bind(&SelectCertificatesOnIOThread, base::Passed(&state),
+                 base::Passed(&cert_provider)));
 }
 
 }  // namespace subtle
@@ -852,6 +928,27 @@ void GetCertificates(const std::string& token_id,
                   base::Bind(&GetCertificatesWithDB, base::Passed(&state)),
                   browser_context,
                   state_ptr);
+}
+
+// Queries if a client certificate with the given |public_key| exists and has a
+// corresponding private key. If |token_id| is non-empty, only the specified
+// token will be examined when looking for the private key.
+void PlatformClientCertificateExists(
+    const std::string& token_id,
+    const std::string& public_key,
+    PlatformClientCertificateExistsCallback callback,
+    content::BrowserContext* browser_context) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  std::unique_ptr<PlatformClientCertificateExistsState> state =
+      base::MakeUnique<PlatformClientCertificateExistsState>(public_key,
+                                                             callback);
+  // Get the pointer to |state| before base::Passed releases |state|.
+  NSSOperationState* state_ptr = state.get();
+
+  GetCertDatabase(
+      token_id,
+      base::Bind(&PlatformClientCertificateExistsWithDB, base::Passed(&state)),
+      browser_context, state_ptr);
 }
 
 void ImportCertificate(const std::string& token_id,

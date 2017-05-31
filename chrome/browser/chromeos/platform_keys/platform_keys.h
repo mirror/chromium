@@ -33,6 +33,12 @@ namespace platform_keys {
 extern const char kTokenIdUser[];
 extern const char kTokenIdSystem[];
 
+extern const char kErrorInternal[];
+extern const char kErrorKeyNotFound[];
+extern const char kErrorCertificateNotFound[];
+extern const char kErrorAlgorithmNotSupported[];
+extern const char kErrorHashNotSupported[];
+
 // Supported hash algorithms.
 enum HashAlgorithm {
   HASH_ALGORITHM_NONE,  // The value if no hash function is selected.
@@ -157,6 +163,20 @@ typedef base::Callback<void(std::unique_ptr<net::CertificateList> certs,
 void GetCertificates(const std::string& token_id,
                      const GetCertificatesCallback& callback,
                      content::BrowserContext* browser_context);
+
+// If the client certificate was found among the platform certificates, |result|
+// will be true.
+typedef base::Callback<void(bool result)>
+    PlatformClientCertificateExistsCallback;
+
+// Queries if a client certificate with the given |public_key| exists and has a
+// corresponding private key. If |token_id| is non-empty, only the specified
+// token will be examined when looking for the private key.
+void PlatformClientCertificateExists(
+    const std::string& token_id,
+    const std::string& public_key,
+    PlatformClientCertificateExistsCallback callback,
+    content::BrowserContext* browser_context);
 
 // If an error occurred during import, |error_message| will be set to an error
 // message.
