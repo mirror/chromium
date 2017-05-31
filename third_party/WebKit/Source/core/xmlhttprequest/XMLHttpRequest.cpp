@@ -1018,7 +1018,6 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
   options.fetch_request_mode =
       upload_events ? WebURLRequest::kFetchRequestModeCORSWithForcedPreflight
                     : WebURLRequest::kFetchRequestModeCORS;
-  options.initiator = FetchInitiatorTypeNames::xmlhttprequest;
   options.content_security_policy_enforcement =
       ContentSecurityPolicy::ShouldBypassMainWorld(&execution_context)
           ? kDoNotEnforceContentSecurityPolicy
@@ -1034,6 +1033,8 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
       include_credentials ? kClientRequestedCredentials
                           : kClientDidNotRequestCredentials;
   resource_loader_options.security_origin = GetSecurityOrigin();
+  resource_loader_options.initiator_info.name =
+      FetchInitiatorTypeNames::xmlhttprequest;
 
   // When responseType is set to "blob", we redirect the downloaded data to a
   // file-handle directly.
