@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "209aeb81_e2ec5519",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-31T02:10:47Z",
+      "side": 1,
+      "message": "For SPv1, we do paint invalidation and incremental raster invalidation at the same time. We know the border width, so we can include border width into the incremental part for raster invalidation. For SPv2, we do raster invalidation after paint when we don\u0027t know the border width.\n\nThe following example shows why border width matters:\n  \u003cdiv style\u003d\"border: 100px solid; width: 100px; height: 100px; background: blue\"\u003e\u003c/div\u003e\n\nWhen the div changes width to 200px, div\u0027s visual rect changes from (0,0 300x300) to (0,0 400x300). On SPv1, we invalidate (200,0 200x300) which covers the old and new right border and new background. On SPv2, we need to force full invalidation, otherwise we would invalidate just (300,0 100x300) which miss the old right border.",
+      "parentUuid": "567c7339_84f3b916",
+      "revId": "4215a7488d80fad6eb2d340254bb4263c2c576d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4729869_51ad7190",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-31T00:40:26Z",
       "side": 1,
       "message": "Why is this needed? SPv2 has only one PaintController.",
+      "revId": "4215a7488d80fad6eb2d340254bb4263c2c576d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaef9cc0_fd9b5d97",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-31T02:10:47Z",
+      "side": 1,
+      "message": "I encountered this with SVG filter tests (paint/invalidation/svg/feImage-*.svg). The extra PaintController is created by SVGFilterRecordingContext (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/SVGFilterPainter.h?q\u003dSVGFilterPainter.h\u0026dr\u003dCSs\u0026l\u003d18).\n\nI think in the future we can create a light version of PaintController, then only one PaintController will handle caching and invalidation.",
+      "parentUuid": "e4729869_51ad7190",
       "revId": "4215a7488d80fad6eb2d340254bb4263c2c576d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "4215a7488d80fad6eb2d340254bb4263c2c576d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ef539d_bbcd79a6",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-05-31T02:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba6e6d95_45ddc44f",
+      "revId": "4215a7488d80fad6eb2d340254bb4263c2c576d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
