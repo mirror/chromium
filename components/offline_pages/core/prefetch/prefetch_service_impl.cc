@@ -7,14 +7,17 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "components/offline_pages/core/prefetch/offline_metrics_collector.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
 
 namespace offline_pages {
 
 PrefetchServiceImpl::PrefetchServiceImpl(
-    std::unique_ptr<PrefetchGCMHandler> gcm_handler)
+    std::unique_ptr<PrefetchGCMHandler> gcm_handler,
+    std::unique_ptr<OfflineMetricsCollector> offline_metrics_collector)
     : gcm_handler_(std::move(gcm_handler)),
-      dispatcher_(base::MakeUnique<PrefetchDispatcherImpl>()) {}
+      dispatcher_(base::MakeUnique<PrefetchDispatcherImpl>()),
+      offline_metrics_collector_(offline_metrics_collector) {}
 
 PrefetchServiceImpl::~PrefetchServiceImpl() = default;
 
@@ -30,6 +33,10 @@ void PrefetchServiceImpl::ObserveContentSuggestionsService(
     ntp_snippets::ContentSuggestionsService* service) {
   suggested_articles_observer_ =
       base::MakeUnique<SuggestedArticlesObserver>(service, this);
+}
+
+OfflineMetricsCollector* PrefetchServiceImpl::GetOfflineMetricsCollector() {
+  return offline_metrics_collector_.get();
 }
 
 void PrefetchServiceImpl::Shutdown() {}
