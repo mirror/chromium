@@ -970,7 +970,7 @@ void WebPluginContainerImpl::IssuePaintInvalidations() {
 }
 
 void WebPluginContainerImpl::ComputeClipRectsForPlugin(
-    const HTMLFrameOwnerElement* owner_element,
+    const HTMLEmbeddedContentElement* owner_element,
     IntRect& window_rect,
     IntRect& clipped_local_rect,
     IntRect& unclipped_int_local_rect) const {

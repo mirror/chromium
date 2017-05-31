@@ -337,7 +337,7 @@ class CORE_EXPORT Node : public EventTarget {
   virtual bool IsVTTElement() const { return false; }
   virtual bool IsAttributeNode() const { return false; }
   virtual bool IsCharacterDataNode() const { return false; }
-  virtual bool IsFrameOwnerElement() const { return false; }
+  virtual bool IsEmbeddedContentElement() const { return false; }
   virtual bool IsMediaRemotingInterstitial() const { return false; }
 
   bool IsStyledElement() const;

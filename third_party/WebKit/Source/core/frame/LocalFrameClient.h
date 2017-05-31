@@ -63,7 +63,7 @@ class Document;
 class DocumentLoader;
 struct FrameLoadRequest;
 class HTMLFormElement;
-class HTMLFrameOwnerElement;
+class HTMLEmbeddedContentElement;
 class HTMLMediaElement;
 class HTMLPlugInElement;
 class HistoryItem;
@@ -194,7 +194,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual LocalFrame* CreateFrame(const FrameLoadRequest&,
                                   const AtomicString& name,
-                                  HTMLFrameOwnerElement*) = 0;
+                                  HTMLEmbeddedContentElement*) = 0;
   // Whether or not plugin creation should fail if the HTMLPlugInElement isn't
   // in the DOM after plugin initialization.
   enum DetachedPluginPolicy {
@@ -266,7 +266,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidAddContentSecurityPolicies(
       const blink::WebVector<WebContentSecurityPolicy>&) {}
 
-  virtual void DidChangeFrameOwnerProperties(HTMLFrameOwnerElement*) {}
+  virtual void DidChangeFrameOwnerProperties(HTMLEmbeddedContentElement*) {}
 
   virtual void DispatchWillStartUsingPeerConnectionHandler(
       WebRTCPeerConnectionHandler*) {}

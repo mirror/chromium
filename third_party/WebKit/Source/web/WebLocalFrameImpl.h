@@ -345,7 +345,7 @@ class WEB_EXPORT WebLocalFrameImpl final
 
   LocalFrame* CreateChildFrame(const FrameLoadRequest&,
                                const AtomicString& name,
-                               HTMLFrameOwnerElement*) override;
+                               HTMLEmbeddedContentElement*) override;
 
   void DidChangeContentsSize(const IntSize&);
 

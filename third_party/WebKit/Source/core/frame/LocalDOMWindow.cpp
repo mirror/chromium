@@ -66,7 +66,7 @@
 #include "core/frame/SuspendableTimer.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/InspectorTraceEvents.h"
@@ -714,7 +714,7 @@ Element* LocalDOMWindow::frameElement() const {
   if (!(GetFrame() && GetFrame()->Owner() && GetFrame()->Owner()->IsLocal()))
     return nullptr;
 
-  return ToHTMLFrameOwnerElement(GetFrame()->Owner());
+  return ToHTMLEmbeddedContentElement(GetFrame()->Owner());
 }
 
 void LocalDOMWindow::blur() {}

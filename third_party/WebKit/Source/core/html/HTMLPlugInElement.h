@@ -25,7 +25,7 @@
 #define HTMLPlugInElement_h
 
 #include "core/CoreExport.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/SharedPersistent.h"
 #include "v8/include/v8.h"
@@ -43,7 +43,7 @@ enum PreferPlugInsForImagesOption {
 };
 
 class CORE_EXPORT HTMLPlugInElement
-    : public HTMLFrameOwnerElement,
+    : public HTMLEmbeddedContentElement,
       public ActiveScriptWrappable<HTMLPlugInElement> {
   USING_GARBAGE_COLLECTED_MIXIN(HTMLPlugInElement);
 
@@ -61,9 +61,10 @@ class CORE_EXPORT HTMLPlugInElement
   // TODO(joelhockey): Clean up PluginWidget and OwnedPlugin (maybe also
   // PluginWrapper).  It would be good to remove and/or rename some of these.
   // PluginWidget and OwnedPlugin both return the plugin that is stored as
-  // widget in HTMLFrameOwnerElement.  However PluginWidget will synchronously
-  // create the plugin if required by calling LayoutPartForJSBindings.
-  // Possibly the PluginWidget code can be inlined into PluginWrapper.
+  // widget in HTMLEmbeddedContentElement.  However PluginWidget will
+  // synchronously create the plugin if required by calling
+  // LayoutPartForJSBindings. Possibly the PluginWidget code can be inlined into
+  // PluginWrapper.
   PluginView* PluginWidget() const;
   PluginView* OwnedPlugin() const;
   bool CanProcessDrag() const;
@@ -152,7 +153,7 @@ class CORE_EXPORT HTMLPlugInElement
   bool HasCustomFocusLogic() const override;
   bool IsPluginElement() const final;
 
-  // HTMLFrameOwnerElement overrides:
+  // HTMLEmbeddedContentElement overrides:
   void DisconnectContentFrame() override;
 
   // Return any existing LayoutPart without triggering relayout, or 0 if it
@@ -188,7 +189,7 @@ class CORE_EXPORT HTMLPlugInElement
   // avoid accessing |layoutObject()| in layoutObjectIsFocusable().
   bool plugin_is_available_ = false;
 
-  // Normally the plugin is stored in HTMLFrameOwnerElement::widget_.
+  // Normally the plugin is stored in HTMLEmbeddedContentElement::widget_.
   // However, plugins can persist even when not rendered. In order to
   // prevent confusing code which may assume that OwnedWidget() != null
   // means the frame is active, we save off widget_ here while

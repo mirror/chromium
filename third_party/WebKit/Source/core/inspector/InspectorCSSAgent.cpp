@@ -62,7 +62,7 @@
 #include "core/dom/shadow/ElementShadow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLHeadElement.h"
 #include "core/html/VoidCallback.h"
 #include "core/inspector/IdentifiersFactory.h"
@@ -2288,7 +2288,7 @@ Response InspectorCSSAgent::getBackgroundColors(
       GetColorsFromRect(text_bounds, element->GetDocument(), element, colors);
 
   if (!found_opaque_color && !is_main_frame) {
-    for (HTMLFrameOwnerElement* owner_element = document.LocalOwner();
+    for (HTMLEmbeddedContentElement* owner_element = document.LocalOwner();
          !found_opaque_color && owner_element;
          owner_element = owner_element->GetDocument().LocalOwner()) {
       found_opaque_color = GetColorsFromRect(
@@ -2396,9 +2396,9 @@ void InspectorCSSAgent::VisitLayoutTreeNodes(
     }
 
     // Pierce iframe boundaries.
-    if (node->IsFrameOwnerElement()) {
+    if (node->IsEmbeddedContentElement()) {
       Document* content_document =
-          ToHTMLFrameOwnerElement(node)->contentDocument();
+          ToHTMLEmbeddedContentElement(node)->contentDocument();
       if (content_document) {
         content_document->UpdateStyleAndLayoutTree();
         VisitLayoutTreeNodes(content_document->documentElement(),

@@ -1518,15 +1518,15 @@ void EventHandler::UpdateGestureHoverActiveState(const HitTestRequest& request,
     // Clear the hover state on any frames which are no longer in the frame
     // chain of the hovered element.
     while (old_hover_element_in_cur_doc &&
-           old_hover_element_in_cur_doc->IsFrameOwnerElement()) {
+           old_hover_element_in_cur_doc->IsEmbeddedContentElement()) {
       LocalFrame* new_hover_frame = nullptr;
       // If we can't get the frame from the new hover frame chain,
       // the newHoverFrame will be null and the old hover state will be cleared.
       if (index_frame_chain > 0)
         new_hover_frame = new_hover_frame_chain[--index_frame_chain];
 
-      HTMLFrameOwnerElement* owner =
-          ToHTMLFrameOwnerElement(old_hover_element_in_cur_doc);
+      HTMLEmbeddedContentElement* owner =
+          ToHTMLEmbeddedContentElement(old_hover_element_in_cur_doc);
       if (!owner->ContentFrame() || !owner->ContentFrame()->IsLocalFrame())
         break;
 
@@ -1591,9 +1591,9 @@ void EventHandler::UpdateGestureTargetNodeForMouseEvent(
       break;
 
     LocalFrame* next_exited_frame_in_document = nullptr;
-    if (last_node_under_tap->IsFrameOwnerElement()) {
-      HTMLFrameOwnerElement* owner =
-          ToHTMLFrameOwnerElement(last_node_under_tap);
+    if (last_node_under_tap->IsEmbeddedContentElement()) {
+      HTMLEmbeddedContentElement* owner =
+          ToHTMLEmbeddedContentElement(last_node_under_tap);
       if (owner->ContentFrame() && owner->ContentFrame()->IsLocalFrame())
         next_exited_frame_in_document = ToLocalFrame(owner->ContentFrame());
     }
@@ -1638,7 +1638,7 @@ void EventHandler::UpdateGestureTargetNodeForMouseEvent(
       ToLocalFrame(parent_frame)
           ->GetEventHandler()
           .mouse_event_manager_->SetNodeUnderMouse(
-              UpdateMouseEventTargetNode(ToHTMLFrameOwnerElement(
+              UpdateMouseEventTargetNode(ToHTMLEmbeddedContentElement(
                   entered_frame_chain[index_entered_frame_chain]->Owner())),
               String(), fake_mouse_move);
     }

@@ -136,9 +136,9 @@
 #include "core/frame/VisualViewport.h"
 #include "core/html/HTMLAnchorElement.h"
 #include "core/html/HTMLCollection.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLFrameElementBase.h"
-#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLHeadElement.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLInputElement.h"
@@ -1663,7 +1663,7 @@ void WebLocalFrameImpl::InitializeCoreFrame(Page& page,
 LocalFrame* WebLocalFrameImpl::CreateChildFrame(
     const FrameLoadRequest& request,
     const AtomicString& name,
-    HTMLFrameOwnerElement* owner_element) {
+    HTMLEmbeddedContentElement* owner_element) {
   DCHECK(client_);
   TRACE_EVENT0("blink", "WebLocalFrameImpl::createChildframe");
   WebTreeScopeType scope =
@@ -1799,10 +1799,10 @@ WebLocalFrameImpl* WebLocalFrameImpl::FromFrame(LocalFrame& frame) {
 }
 
 WebLocalFrameImpl* WebLocalFrameImpl::FromFrameOwnerElement(Element* element) {
-  if (!element->IsFrameOwnerElement())
+  if (!element->IsEmbeddedContentElement())
     return nullptr;
   return FromFrame(
-      ToLocalFrame(ToHTMLFrameOwnerElement(element)->ContentFrame()));
+      ToLocalFrame(ToHTMLEmbeddedContentElement(element)->ContentFrame()));
 }
 
 WebViewBase* WebLocalFrameImpl::ViewImpl() const {

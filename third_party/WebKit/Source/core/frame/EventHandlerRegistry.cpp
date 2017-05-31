@@ -8,7 +8,7 @@
 #include "core/events/EventUtil.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 

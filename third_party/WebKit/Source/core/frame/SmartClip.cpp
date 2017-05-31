@@ -35,7 +35,7 @@
 #include "core/dom/NodeTraversal.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrameView.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/page/Page.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -54,8 +54,8 @@ static IntRect ConvertToContentCoordinatesWithoutCollapsingToZero(
 }
 
 static Node* NodeInsideFrame(Node* node) {
-  if (node->IsFrameOwnerElement())
-    return ToHTMLFrameOwnerElement(node)->contentDocument();
+  if (node->IsEmbeddedContentElement())
+    return ToHTMLEmbeddedContentElement(node)->contentDocument();
   return nullptr;
 }
 
@@ -181,7 +181,7 @@ Node* SmartClip::FindBestOverlappingNode(Node* root_node,
     LayoutObject* layout_object = node->GetLayoutObject();
     if (layout_object && !node_rect.IsEmpty()) {
       if (layout_object->IsText() || layout_object->IsLayoutImage() ||
-          node->IsFrameOwnerElement() ||
+          node->IsEmbeddedContentElement() ||
           (layout_object->Style()->HasBackgroundImage() &&
            !ShouldSkipBackgroundImage(node))) {
         if (resized_crop_rect.Intersects(node_rect)) {

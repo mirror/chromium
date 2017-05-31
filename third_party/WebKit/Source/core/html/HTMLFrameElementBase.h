@@ -25,12 +25,12 @@
 #define HTMLFrameElementBase_h
 
 #include "core/CoreExport.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "public/platform/WebFocusType.h"
 
 namespace blink {
 
-class CORE_EXPORT HTMLFrameElementBase : public HTMLFrameOwnerElement {
+class CORE_EXPORT HTMLFrameElementBase : public HTMLEmbeddedContentElement {
  public:
   bool CanContainRangeEndPoint() const final { return false; }
 

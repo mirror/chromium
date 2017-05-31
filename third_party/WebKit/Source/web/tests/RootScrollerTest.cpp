@@ -9,7 +9,7 @@
 #include "core/frame/RootFrameViewport.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameBase.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/CompositedLayerMapping.h"
@@ -430,7 +430,7 @@ TEST_F(RootScrollerTest, TestSetRootScrollerOnElementInIframe) {
 
   {
     // Trying to set an element from a nested document should fail.
-    HTMLFrameOwnerElement* iframe = ToHTMLFrameOwnerElement(
+    HTMLEmbeddedContentElement* iframe = ToHTMLEmbeddedContentElement(
         MainFrame()->GetDocument()->getElementById("iframe"));
     Element* inner_container =
         iframe->contentDocument()->getElementById("container");
@@ -445,7 +445,7 @@ TEST_F(RootScrollerTest, TestSetRootScrollerOnElementInIframe) {
 
   {
     // Setting the iframe itself should also work.
-    HTMLFrameOwnerElement* iframe = ToHTMLFrameOwnerElement(
+    HTMLEmbeddedContentElement* iframe = ToHTMLEmbeddedContentElement(
         MainFrame()->GetDocument()->getElementById("iframe"));
 
     MainFrame()->GetDocument()->setRootScroller(iframe);
@@ -464,7 +464,7 @@ TEST_F(RootScrollerTest, TestRootScrollerWithinIframe) {
   ASSERT_EQ(nullptr, MainFrame()->GetDocument()->rootScroller());
 
   {
-    HTMLFrameOwnerElement* iframe = ToHTMLFrameOwnerElement(
+    HTMLEmbeddedContentElement* iframe = ToHTMLEmbeddedContentElement(
         MainFrame()->GetDocument()->getElementById("iframe"));
 
     EXPECT_EQ(iframe->contentDocument(),
@@ -492,7 +492,7 @@ TEST_F(RootScrollerTest, SetRootScrollerIframeBecomesEffective) {
 
     // Try to set the root scroller in the main frame to be the iframe
     // element.
-    HTMLFrameOwnerElement* iframe = ToHTMLFrameOwnerElement(
+    HTMLEmbeddedContentElement* iframe = ToHTMLEmbeddedContentElement(
         MainFrame()->GetDocument()->getElementById("iframe"));
 
     MainFrame()->GetDocument()->setRootScroller(iframe, non_throw);
@@ -518,7 +518,7 @@ TEST_F(RootScrollerTest, SetRootScrollerIframeUsesCorrectLayerAndCallback) {
   Initialize("root-scroller-iframe.html");
   ASSERT_EQ(nullptr, MainFrame()->GetDocument()->rootScroller());
 
-  HTMLFrameOwnerElement* iframe = ToHTMLFrameOwnerElement(
+  HTMLEmbeddedContentElement* iframe = ToHTMLEmbeddedContentElement(
       MainFrame()->GetDocument()->getElementById("iframe"));
   Element* container = iframe->contentDocument()->getElementById("container");
 
@@ -622,7 +622,7 @@ TEST_F(RootScrollerTest,
   {
     // Try to set the the root scroller of the child document to be the
     // <iframe> element in the parent document.
-    HTMLFrameOwnerElement* iframe = ToHTMLFrameOwnerElement(
+    HTMLEmbeddedContentElement* iframe = ToHTMLEmbeddedContentElement(
         MainFrame()->GetDocument()->getElementById("iframe"));
     NonThrowableExceptionState non_throw;
     Element* body =
@@ -747,7 +747,7 @@ TEST_F(RootScrollerTest, RemoveRootScrollerFromDom) {
   Initialize("root-scroller-iframe.html");
 
   {
-    HTMLFrameOwnerElement* iframe = ToHTMLFrameOwnerElement(
+    HTMLEmbeddedContentElement* iframe = ToHTMLEmbeddedContentElement(
         MainFrame()->GetDocument()->getElementById("iframe"));
     Element* inner_container =
         iframe->contentDocument()->getElementById("container");
@@ -819,7 +819,7 @@ TEST_F(RootScrollerTest, UseVisualViewportScrollbarsIframe) {
 
   Element* iframe = MainFrame()->GetDocument()->getElementById("iframe");
   LocalFrame* child_frame =
-      ToLocalFrame(ToHTMLFrameOwnerElement(iframe)->ContentFrame());
+      ToLocalFrame(ToHTMLEmbeddedContentElement(iframe)->ContentFrame());
 
   NonThrowableExceptionState non_throw;
   MainFrame()->GetDocument()->setRootScroller(iframe, non_throw);
@@ -980,7 +980,7 @@ TEST_F(RootScrollerTest, ImmediateUpdateOfLayoutViewport) {
   Initialize("root-scroller-iframe.html");
 
   Document* document = MainFrame()->GetDocument();
-  HTMLFrameOwnerElement* iframe = ToHTMLFrameOwnerElement(
+  HTMLEmbeddedContentElement* iframe = ToHTMLEmbeddedContentElement(
       MainFrame()->GetDocument()->getElementById("iframe"));
 
   document->setRootScroller(iframe);

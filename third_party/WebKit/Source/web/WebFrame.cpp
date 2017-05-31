@@ -14,8 +14,8 @@
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/frame/WebRemoteFrameBase.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLFrameElementBase.h"
-#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/page/Page.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -106,7 +106,7 @@ bool WebFrame::Swap(WebFrame* frame) {
     if (owner) {
       owner->SetContentFrame(local_frame);
       if (owner->IsLocal())
-        ToHTMLFrameOwnerElement(owner)->SetWidget(local_frame.View());
+        ToHTMLEmbeddedContentElement(owner)->SetWidget(local_frame.View());
     } else {
       local_frame.GetPage()->SetMainFrame(&local_frame);
       // This trace event is needed to detect the main frame of the
@@ -184,7 +184,7 @@ void WebFrame::SetFrameOwnerProperties(
 void WebFrame::Collapse(bool collapsed) {
   FrameOwner* owner = ToCoreFrame(*this)->Owner();
   DCHECK(owner->IsLocal());
-  ToHTMLFrameOwnerElement(owner)->SetCollapsed(collapsed);
+  ToHTMLEmbeddedContentElement(owner)->SetCollapsed(collapsed);
 }
 
 WebFrame* WebFrame::Opener() const {
@@ -282,9 +282,9 @@ WebFrame* WebFrame::TraverseNext() const {
 WebFrame* WebFrame::FromFrameOwnerElement(const WebElement& web_element) {
   Element* element = web_element;
 
-  if (!element->IsFrameOwnerElement())
+  if (!element->IsEmbeddedContentElement())
     return nullptr;
-  return FromFrame(ToHTMLFrameOwnerElement(element)->ContentFrame());
+  return FromFrame(ToHTMLEmbeddedContentElement(element)->ContentFrame());
 }
 
 bool WebFrame::IsLoading() const {

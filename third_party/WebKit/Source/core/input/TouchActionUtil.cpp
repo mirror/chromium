@@ -5,7 +5,7 @@
 #include "core/input/TouchActionUtil.h"
 
 #include "core/dom/Node.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutObject.h"
 

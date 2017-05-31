@@ -104,9 +104,9 @@
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLDocument.h"
 #include "core/html/HTMLElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLFormControlsCollection.h"
 #include "core/html/HTMLFrameElementBase.h"
-#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLOptionsCollection.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLSlotElement.h"
@@ -1792,7 +1792,8 @@ void Element::AttachLayoutTree(const AttachContext& context) {
 }
 
 void Element::DetachLayoutTree(const AttachContext& context) {
-  HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+  HTMLEmbeddedContentElement::UpdateSuspendScope
+      suspend_widget_hierarchy_updates;
   CancelFocusAppearanceUpdate();
   RemoveCallbackSelectors();
   if (HasRareData()) {
@@ -2702,9 +2703,9 @@ void Element::focus(const FocusParams& params) {
   if (!GetDocument().IsActive())
     return;
 
-  if (IsFrameOwnerElement() &&
-      ToHTMLFrameOwnerElement(this)->contentDocument() &&
-      ToHTMLFrameOwnerElement(this)->contentDocument()->UnloadStarted())
+  if (IsEmbeddedContentElement() &&
+      ToHTMLEmbeddedContentElement(this)->contentDocument() &&
+      ToHTMLEmbeddedContentElement(this)->contentDocument()->UnloadStarted())
     return;
 
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
@@ -3619,7 +3620,7 @@ static Element* NextAncestorElement(Element* element) {
     frame = frame->Tree().Parent();
 
   if (frame->Owner() && frame->Owner()->IsLocal())
-    return ToHTMLFrameOwnerElement(frame->Owner());
+    return ToHTMLEmbeddedContentElement(frame->Owner());
 
   return nullptr;
 }

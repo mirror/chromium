@@ -165,7 +165,7 @@ DocumentLoader* EmptyLocalFrameClient::CreateDocumentLoader(
 
 LocalFrame* EmptyLocalFrameClient::CreateFrame(const FrameLoadRequest&,
                                                const AtomicString&,
-                                               HTMLFrameOwnerElement*) {
+                                               HTMLEmbeddedContentElement*) {
   return nullptr;
 }
 

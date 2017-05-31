@@ -47,7 +47,7 @@ class DOMWrapperWorld;
 class Document;
 class FrameClient;
 class FrameOwner;
-class HTMLFrameOwnerElement;
+class HTMLEmbeddedContentElement;
 class LayoutPart;
 class LayoutPartItem;
 class LocalFrame;
@@ -99,7 +99,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
 
   FrameOwner* Owner() const;
   void SetOwner(FrameOwner* owner) { owner_ = owner; }
-  HTMLFrameOwnerElement* DeprecatedLocalOwner() const;
+  HTMLEmbeddedContentElement* DeprecatedLocalOwner() const;
 
   DOMWindow* DomWindow() const { return dom_window_; }
 

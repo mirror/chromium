@@ -66,8 +66,8 @@ void LayoutPart::WillBeDestroyed() {
   }
 
   Node* node = GetNode();
-  if (node && node->IsFrameOwnerElement())
-    ToHTMLFrameOwnerElement(node)->SetWidget(nullptr);
+  if (node && node->IsEmbeddedContentElement())
+    ToHTMLEmbeddedContentElement(node)->SetWidget(nullptr);
 
   LayoutReplaced::WillBeDestroyed();
 }
@@ -108,8 +108,8 @@ PluginView* LayoutPart::Plugin() const {
 
 FrameOrPlugin* LayoutPart::GetFrameOrPlugin() const {
   Node* node = GetNode();
-  if (node && node->IsFrameOwnerElement())
-    return ToHTMLFrameOwnerElement(node)->OwnedWidget();
+  if (node && node->IsEmbeddedContentElement())
+    return ToHTMLEmbeddedContentElement(node)->OwnedWidget();
   return nullptr;
 }
 
@@ -129,10 +129,10 @@ bool LayoutPart::RequiresAcceleratedCompositing() const {
   if (plugin_view && plugin_view->PlatformLayer())
     return true;
 
-  if (!GetNode() || !GetNode()->IsFrameOwnerElement())
+  if (!GetNode() || !GetNode()->IsEmbeddedContentElement())
     return false;
 
-  HTMLFrameOwnerElement* element = ToHTMLFrameOwnerElement(GetNode());
+  HTMLEmbeddedContentElement* element = ToHTMLEmbeddedContentElement(GetNode());
   if (element->ContentFrame() && element->ContentFrame()->IsRemoteFrame())
     return true;
 

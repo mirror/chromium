@@ -47,7 +47,7 @@ using namespace HTMLNames;
 
 HTMLFrameElementBase::HTMLFrameElementBase(const QualifiedName& tag_name,
                                            Document& document)
-    : HTMLFrameOwnerElement(tag_name, document),
+    : HTMLEmbeddedContentElement(tag_name, document),
       scrolling_mode_(kScrollbarAuto),
       margin_width_(-1),
       margin_height_(-1) {}
@@ -138,7 +138,7 @@ void HTMLFrameElementBase::ParseAttribute(
   } else if (name == idAttr) {
     // Important to call through to base for the id attribute so the hasID bit
     // gets set.
-    HTMLFrameOwnerElement::ParseAttribute(params);
+    HTMLEmbeddedContentElement::ParseAttribute(params);
     frame_name_ = value;
   } else if (name == nameAttr) {
     frame_name_ = value;
@@ -160,7 +160,7 @@ void HTMLFrameElementBase::ParseAttribute(
         EventTypeNames::beforeunload,
         CreateAttributeEventListener(this, name, value, EventParameterName()));
   } else {
-    HTMLFrameOwnerElement::ParseAttribute(params);
+    HTMLEmbeddedContentElement::ParseAttribute(params);
   }
 }
 
@@ -187,7 +187,7 @@ void HTMLFrameElementBase::SetNameAndOpenURL() {
 
 Node::InsertionNotificationRequest HTMLFrameElementBase::InsertedInto(
     ContainerNode* insertion_point) {
-  HTMLFrameOwnerElement::InsertedInto(insertion_point);
+  HTMLEmbeddedContentElement::InsertedInto(insertion_point);
   return kInsertionShouldCallDidNotifySubtreeInsertions;
 }
 
@@ -206,7 +206,7 @@ void HTMLFrameElementBase::DidNotifySubtreeInsertionsToDocument() {
 }
 
 void HTMLFrameElementBase::AttachLayoutTree(const AttachContext& context) {
-  HTMLFrameOwnerElement::AttachLayoutTree(context);
+  HTMLEmbeddedContentElement::AttachLayoutTree(context);
 
   if (GetLayoutPart() && ContentFrame())
     SetWidget(ContentFrame()->View());
@@ -224,7 +224,7 @@ bool HTMLFrameElementBase::SupportsFocus() const {
 }
 
 void HTMLFrameElementBase::SetFocused(bool received, WebFocusType focus_type) {
-  HTMLFrameOwnerElement::SetFocused(received, focus_type);
+  HTMLEmbeddedContentElement::SetFocused(received, focus_type);
   if (Page* page = GetDocument().GetPage()) {
     if (received) {
       page->GetFocusController().SetFocusedFrame(ContentFrame());
@@ -238,18 +238,19 @@ void HTMLFrameElementBase::SetFocused(bool received, WebFocusType focus_type) {
 bool HTMLFrameElementBase::IsURLAttribute(const Attribute& attribute) const {
   return attribute.GetName() == longdescAttr ||
          attribute.GetName() == srcAttr ||
-         HTMLFrameOwnerElement::IsURLAttribute(attribute);
+         HTMLEmbeddedContentElement::IsURLAttribute(attribute);
 }
 
 bool HTMLFrameElementBase::HasLegalLinkAttribute(
     const QualifiedName& name) const {
-  return name == srcAttr || HTMLFrameOwnerElement::HasLegalLinkAttribute(name);
+  return name == srcAttr ||
+         HTMLEmbeddedContentElement::HasLegalLinkAttribute(name);
 }
 
 bool HTMLFrameElementBase::IsHTMLContentAttribute(
     const Attribute& attribute) const {
   return attribute.GetName() == srcdocAttr ||
-         HTMLFrameOwnerElement::IsHTMLContentAttribute(attribute);
+         HTMLEmbeddedContentElement::IsHTMLContentAttribute(attribute);
 }
 
 void HTMLFrameElementBase::SetScrollingMode(ScrollbarMode scrollbar_mode) {

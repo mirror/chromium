@@ -51,7 +51,7 @@ class CORE_EXPORT LayoutPart : public LayoutReplaced {
   void Deref();
 
   // LayoutPart::ChildFrameView returns the LocalFrameView associated with
-  // the current Node, if Node is HTMLFrameOwnerElement.
+  // the current Node, if Node is HTMLEmbeddedContentElement.
   // This is different to LayoutObject::GetFrameView which returns
   // the LocalFrameView associated with the root Document Frame.
   LocalFrameView* ChildFrameView() const;

@@ -75,7 +75,7 @@ HTMLPlugInElement::HTMLPlugInElement(
     Document& doc,
     bool created_by_parser,
     PreferPlugInsForImagesOption prefer_plug_ins_for_images_option)
-    : HTMLFrameOwnerElement(tag_name, doc),
+    : HTMLEmbeddedContentElement(tag_name, doc),
       is_delaying_load_event_(false),
       // m_needsPluginUpdate(!createdByParser) allows HTMLObjectElement to delay
       // FrameViewBase updates until after all children are parsed. For
@@ -93,7 +93,7 @@ HTMLPlugInElement::~HTMLPlugInElement() {
 DEFINE_TRACE(HTMLPlugInElement) {
   visitor->Trace(image_loader_);
   visitor->Trace(persisted_plugin_);
-  HTMLFrameOwnerElement::Trace(visitor);
+  HTMLEmbeddedContentElement::Trace(visitor);
 }
 
 bool HTMLPlugInElement::HasPendingActivity() const {
@@ -114,7 +114,7 @@ void HTMLPlugInElement::SetFocused(bool focused, WebFocusType focus_type) {
   PluginView* plugin = OwnedPlugin();
   if (plugin)
     plugin->SetFocused(focused, focus_type);
-  HTMLFrameOwnerElement::SetFocused(focused, focus_type);
+  HTMLEmbeddedContentElement::SetFocused(focused, focus_type);
 }
 
 bool HTMLPlugInElement::RequestObjectInternal(
@@ -162,7 +162,7 @@ bool HTMLPlugInElement::WillRespondToMouseClickEvents() {
 }
 
 void HTMLPlugInElement::RemoveAllEventListeners() {
-  HTMLFrameOwnerElement::RemoveAllEventListeners();
+  HTMLEmbeddedContentElement::RemoveAllEventListeners();
   PluginView* plugin = OwnedPlugin();
   if (plugin)
     plugin->EventListenersRemoved();
@@ -171,17 +171,17 @@ void HTMLPlugInElement::RemoveAllEventListeners() {
 void HTMLPlugInElement::DidMoveToNewDocument(Document& old_document) {
   if (image_loader_)
     image_loader_->ElementDidMoveToNewDocument();
-  HTMLFrameOwnerElement::DidMoveToNewDocument(old_document);
+  HTMLEmbeddedContentElement::DidMoveToNewDocument(old_document);
 }
 
 void HTMLPlugInElement::AttachLayoutTree(const AttachContext& context) {
-  HTMLFrameOwnerElement::AttachLayoutTree(context);
+  HTMLEmbeddedContentElement::AttachLayoutTree(context);
 
   if (!GetLayoutObject() || UseFallbackContent()) {
     // If we don't have a layoutObject we have to dispose of any plugins
     // which we persisted over a reattach.
     if (persisted_plugin_) {
-      HTMLFrameOwnerElement::UpdateSuspendScope
+      HTMLEmbeddedContentElement::UpdateSuspendScope
           suspend_widget_hierarchy_updates;
       SetPersistedPlugin(nullptr);
     }
@@ -216,10 +216,11 @@ void HTMLPlugInElement::RemovedFrom(ContainerNode* insertion_point) {
   if (persisted_plugin_) {
     // TODO(dcheng): This UpdateSuspendScope doesn't seem to provide much;
     // investigate removing it.
-    HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+    HTMLEmbeddedContentElement::UpdateSuspendScope
+        suspend_widget_hierarchy_updates;
     SetPersistedPlugin(nullptr);
   }
-  HTMLFrameOwnerElement::RemovedFrom(insertion_point);
+  HTMLEmbeddedContentElement::RemovedFrom(insertion_point);
 }
 
 void HTMLPlugInElement::RequestPluginCreationWithoutLayoutObjectIfPossible() {
@@ -291,7 +292,7 @@ void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
 
   ResetInstance();
 
-  HTMLFrameOwnerElement::DetachLayoutTree(context);
+  HTMLEmbeddedContentElement::DetachLayoutTree(context);
 }
 
 LayoutObject* HTMLPlugInElement::CreateLayoutObject(
@@ -313,7 +314,7 @@ LayoutObject* HTMLPlugInElement::CreateLayoutObject(
 }
 
 void HTMLPlugInElement::FinishParsingChildren() {
-  HTMLFrameOwnerElement::FinishParsingChildren();
+  HTMLEmbeddedContentElement::FinishParsingChildren();
   if (UseFallbackContent())
     return;
 
@@ -367,7 +368,7 @@ bool HTMLPlugInElement::IsPresentationAttribute(
   if (name == widthAttr || name == heightAttr || name == vspaceAttr ||
       name == hspaceAttr || name == alignAttr)
     return true;
-  return HTMLFrameOwnerElement::IsPresentationAttribute(name);
+  return HTMLEmbeddedContentElement::IsPresentationAttribute(name);
 }
 
 void HTMLPlugInElement::CollectStyleForPresentationAttribute(
@@ -387,8 +388,8 @@ void HTMLPlugInElement::CollectStyleForPresentationAttribute(
   } else if (name == alignAttr) {
     ApplyAlignmentAttributeToStyle(value, style);
   } else {
-    HTMLFrameOwnerElement::CollectStyleForPresentationAttribute(name, value,
-                                                                style);
+    HTMLEmbeddedContentElement::CollectStyleForPresentationAttribute(
+        name, value, style);
   }
 }
 
@@ -417,7 +418,7 @@ void HTMLPlugInElement::DefaultEventHandler(Event* event) {
   plugin->HandleEvent(event);
   if (event->DefaultHandled())
     return;
-  HTMLFrameOwnerElement::DefaultEventHandler(event);
+  HTMLEmbeddedContentElement::DefaultEventHandler(event);
 }
 
 LayoutPart* HTMLPlugInElement::LayoutPartForJSBindings() const {
@@ -430,7 +431,7 @@ LayoutPart* HTMLPlugInElement::LayoutPartForJSBindings() const {
 }
 
 bool HTMLPlugInElement::IsKeyboardFocusable() const {
-  if (HTMLFrameOwnerElement::IsKeyboardFocusable())
+  if (HTMLEmbeddedContentElement::IsKeyboardFocusable())
     return true;
   return GetDocument().IsActive() && PluginWidget() &&
          PluginWidget()->SupportsKeyboardFocus();
@@ -452,16 +453,17 @@ bool HTMLPlugInElement::IsErrorplaceholder() {
 }
 
 void HTMLPlugInElement::DisconnectContentFrame() {
-  HTMLFrameOwnerElement::DisconnectContentFrame();
+  HTMLEmbeddedContentElement::DisconnectContentFrame();
   SetPersistedPlugin(nullptr);
 }
 
 bool HTMLPlugInElement::LayoutObjectIsFocusable() const {
-  if (HTMLFrameOwnerElement::SupportsFocus() &&
-      HTMLFrameOwnerElement::LayoutObjectIsFocusable())
+  if (HTMLEmbeddedContentElement::SupportsFocus() &&
+      HTMLEmbeddedContentElement::LayoutObjectIsFocusable())
     return true;
 
-  if (UseFallbackContent() || !HTMLFrameOwnerElement::LayoutObjectIsFocusable())
+  if (UseFallbackContent() ||
+      !HTMLEmbeddedContentElement::LayoutObjectIsFocusable())
     return false;
   return plugin_is_available_;
 }

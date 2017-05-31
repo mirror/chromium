@@ -6,7 +6,7 @@
 
 #include "core/HTMLNames.h"
 #include "core/frame/Settings.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/layout/BackgroundBleedAvoidance.h"
 #include "core/layout/ImageQualityController.h"
 #include "core/layout/LayoutBox.h"
