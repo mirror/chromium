@@ -438,7 +438,8 @@ struct PendingPaymentResponse {
       base::SysUTF8ToNSString([self webState]->GetLastCommittedURL().host());
   // Should we use this function instead?
   // https://cs.chromium.org/chromium/src/ios/web/public/origin_util.h?type=cs
-  BOOL connectionSecure = [self webState]->GetVisibleURL().SchemeIsCryptographic();
+  BOOL connectionSecure =
+      [self webState]->GetVisibleURL().SchemeIsCryptographic();
   autofill::AutofillManager* autofillManager =
       autofill::AutofillDriverIOS::FromWebState(_webState)->autofill_manager();
   _paymentRequestCoordinator = [[PaymentRequestCoordinator alloc]

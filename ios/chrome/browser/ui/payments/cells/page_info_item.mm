@@ -68,9 +68,10 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
   cell.pageTitleLabel.text = self.pageTitle;
 
   if (self.connectionSecure) {
-    cell.pageHostLabel.text = [NSString stringWithFormat:@"%@://%@", kHttpsScheme, self.pageHost];
-    NSMutableAttributedString* text =
-    [[NSMutableAttributedString alloc] initWithString:cell.pageHostLabel.text];
+    cell.pageHostLabel.text =
+        [NSString stringWithFormat:@"%@://%@", kHttpsScheme, self.pageHost];
+    NSMutableAttributedString* text = [[NSMutableAttributedString alloc]
+        initWithString:cell.pageHostLabel.text];
     [text addAttribute:NSForegroundColorAttributeName
                  value:skia::UIColorFromSkColor(gfx::kGoogleGreen700)
                  range:NSMakeRange(0, [kHttpsScheme length])];

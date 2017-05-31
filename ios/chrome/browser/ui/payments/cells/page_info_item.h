@@ -34,14 +34,14 @@ extern NSString* const kPageInfoLockIndicatorImageViewID;
 @end
 
 // PageInfoCell implements a MDCCollectionViewCell subclass containing two image
-// views displaying the current page's favicon and a lock indicator if connection
-// is secure and two text labels representing the current page's title and host.
-// The favicon image is laid out on the leading edge of the cell while the two
-// labels are laid out trailing the favicon and one on top of the other, filling
-// the full width of the cell, if the connection is not secure. In the case that
-// the connection is secure, the lock indicator image is placed ahead of the host
-// label and trails the favicon image. Labels are truncated as needed to fit in
-// the cell.
+// views displaying the current page's favicon and a lock indicator if
+// connection is secure and two text labels representing the current page's
+// title and host. The favicon image is laid out on the leading edge of the cell
+// while the two labels are laid out trailing the favicon and one on top of the
+// other, filling the full width of the cell, if the connection is not secure.
+// In the case that the connection is secure, the lock indicator image is placed
+// ahead of the host label and trails the favicon image. Labels are truncated as
+// needed to fit in the cell.
 @interface PageInfoCell : MDCCollectionViewCell
 
 // UILabels containing the page's title and host.
