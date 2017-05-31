@@ -87,10 +87,12 @@ void XSLImportRule::LoadSheet() {
       return;
   }
 
-  ResourceLoaderOptions fetch_options(
-      ResourceFetcher::DefaultResourceOptions());
+  ResourceLoaderOptions fetch_options;
+  fetch_options.allow_credentials = kAllowStoredCredentials;
+  fetch_options.credentials_requested = kClientRequestedCredentials;
+  fetch_options.initiator_info.name = FetchInitiatorTypeNames::xml;
   FetchParameters params(ResourceRequest(owner_document->CompleteURL(abs_href)),
-                         FetchInitiatorTypeNames::xml, fetch_options);
+                         fetch_options);
   params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
   XSLStyleSheetResource* resource = XSLStyleSheetResource::FetchSynchronously(
       params, owner_document->Fetcher());
