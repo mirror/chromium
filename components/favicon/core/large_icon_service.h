@@ -12,6 +12,7 @@
 #include "components/favicon_base/favicon_callback.h"
 #include "components/image_fetcher/core/image_fetcher.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 class GURL;
 
@@ -54,6 +55,7 @@ class LargeIconService : public KeyedService {
       int min_source_size_in_pixel,
       int desired_size_in_pixel,
       const favicon_base::LargeIconCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
       base::CancelableTaskTracker* tracker);
 
   // Behaves the same as GetLargeIconOrFallbackStyle(), only returns the large
@@ -63,6 +65,7 @@ class LargeIconService : public KeyedService {
       int min_source_size_in_pixel,
       int desired_size_in_pixel,
       const favicon_base::LargeIconImageCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
       base::CancelableTaskTracker* tracker);
 
   // Fetches the best large icon for the page at |page_url| from a Google
@@ -94,6 +97,7 @@ class LargeIconService : public KeyedService {
       int min_source_size_in_pixel,
       int desired_size_in_pixel,
       bool may_page_url_be_private,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
       const base::Callback<void(bool success)>& callback);
 
  private:
@@ -103,6 +107,7 @@ class LargeIconService : public KeyedService {
       int desired_size_in_pixel,
       const favicon_base::LargeIconCallback& raw_bitmap_callback,
       const favicon_base::LargeIconImageCallback& image_callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
       base::CancelableTaskTracker* tracker);
 
   FaviconService* favicon_service_;

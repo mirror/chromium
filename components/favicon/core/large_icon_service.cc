@@ -326,10 +326,12 @@ LargeIconService::GetLargeIconOrFallbackStyle(
     int min_source_size_in_pixel,
     int desired_size_in_pixel,
     const favicon_base::LargeIconCallback& raw_bitmap_callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
     base::CancelableTaskTracker* tracker) {
   return GetLargeIconOrFallbackStyleImpl(
       page_url, min_source_size_in_pixel, desired_size_in_pixel,
-      raw_bitmap_callback, favicon_base::LargeIconImageCallback(), tracker);
+      raw_bitmap_callback, favicon_base::LargeIconImageCallback(),
+      traffic_annotation, tracker);
 }
 
 base::CancelableTaskTracker::TaskId
@@ -338,10 +340,12 @@ LargeIconService::GetLargeIconImageOrFallbackStyle(
     int min_source_size_in_pixel,
     int desired_size_in_pixel,
     const favicon_base::LargeIconImageCallback& image_callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
     base::CancelableTaskTracker* tracker) {
   return GetLargeIconOrFallbackStyleImpl(
       page_url, min_source_size_in_pixel, desired_size_in_pixel,
-      favicon_base::LargeIconCallback(), image_callback, tracker);
+      favicon_base::LargeIconCallback(), image_callback, traffic_annotation,
+      tracker);
 }
 
 void LargeIconService::
@@ -350,6 +354,7 @@ void LargeIconService::
         int min_source_size_in_pixel,
         int desired_size_in_pixel,
         bool may_page_url_be_private,
+        const net::NetworkTrafficAnnotationTag& traffic_annotation,
         const base::Callback<void(bool success)>& callback) {
   DCHECK_LE(0, min_source_size_in_pixel);
 
@@ -370,29 +375,6 @@ void LargeIconService::
 
   image_fetcher_->SetDataUseServiceName(
       data_use_measurement::DataUseUserData::LARGE_ICON_SERVICE);
-  net::NetworkTrafficAnnotationTag traffic_annotation =
-      net::DefineNetworkTrafficAnnotation("favicon_component", R"(
-        semantics {
-          sender: "Favicon Component"
-          description:
-            "Sends a request to a Google server to retrieve the favicon bitmap "
-            "for a page URL."
-          trigger:
-            "A request can be sent if Chrome does not have a favicon for a "
-            "particular page. This is done in two scenarios:\n"
-            " 1- For articles suggestions on the new tab page (URLs are public "
-            "    and provided by Google).\n"
-            " 2- For server-suggested most visited tiles on the new tab page "
-            "    (User gets these URLs from Google, only if history sync is "
-            "    enabled)."
-          data: "Page URL and desired icon size."
-          destination: GOOGLE_OWNED_SERVICE
-        }
-        policy {
-          cookies_allowed: false
-          setting: "This feature cannot be disabled by settings."
-          policy_exception_justification: "Not implemented."
-        })");
   image_fetcher_->StartOrQueueNetworkRequest(
       server_request_url.spec(), server_request_url,
       base::Bind(&OnFetchIconFromGoogleServerComplete, favicon_service_,
@@ -407,6 +389,7 @@ LargeIconService::GetLargeIconOrFallbackStyleImpl(
     int desired_size_in_pixel,
     const favicon_base::LargeIconCallback& raw_bitmap_callback,
     const favicon_base::LargeIconImageCallback& image_callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
     base::CancelableTaskTracker* tracker) {
   DCHECK_LE(1, min_source_size_in_pixel);
   DCHECK_LE(0, desired_size_in_pixel);

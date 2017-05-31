@@ -203,7 +203,7 @@ void IconCacherImpl::StartFetchMostLikely(const GURL& page_url,
       page_url, kTileIconMinSizePx, /*desired_size_in_pixel=*/0,
       base::Bind(&IconCacherImpl::OnGetLargeIconOrFallbackStyleFinished,
                  weak_ptr_factory_.GetWeakPtr(), page_url),
-      &tracker_);
+      NO_TRAFFIC_ANNOTATION_YET, &tracker_);
 }
 
 void IconCacherImpl::OnGetLargeIconOrFallbackStyleFinished(
@@ -216,10 +216,33 @@ void IconCacherImpl::OnGetLargeIconOrFallbackStyleFinished(
     return;
   }
 
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("icon_catcher_get_large_icon", R"(
+        semantics {
+          sender: "Favicon Component"
+          description:
+            "Sends a request to a Google server to retrieve the favicon bitmap "
+            "for a page URL."
+          trigger:
+            "A request can be sent if Chrome does not have a favicon for a "
+            "particular page. This is done in two scenarios:\n"
+            " 1- For articles suggestions on the new tab page (URLs are public "
+            "    and provided by Google).\n"
+            " 2- For server-suggested most visited tiles on the new tab page "
+            "    (User gets these URLs from Google, only if history sync is "
+            "    enabled)."
+          data: "Page URL and desired icon size."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting: "This feature cannot be disabled by settings."
+          policy_exception_justification: "Not implemented."
+        })");
   large_icon_service_
       ->GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           page_url, kTileIconMinSizePx, kTileIconDesiredSizePx,
-          /*may_page_url_be_private=*/true,
+          /*may_page_url_be_private=*/true, traffic_annotation,
           base::Bind(&IconCacherImpl::OnMostLikelyFaviconDownloaded,
                      weak_ptr_factory_.GetWeakPtr(), page_url));
 }

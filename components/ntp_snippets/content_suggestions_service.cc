@@ -25,6 +25,7 @@
 #include "components/ntp_snippets/remote/remote_suggestions_provider.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "ui/gfx/image/image.h"
 
 namespace ntp_snippets {
@@ -213,7 +214,7 @@ void ContentSuggestionsService::GetFaviconFromCache(
                  base::Unretained(this), publisher_url, minimum_size_in_pixel,
                  /*desired_size_in_pixel=*/0, callback,
                  continue_to_google_server),
-      &favicons_task_tracker_);
+      NO_TRAFFIC_ANNOTATION_YET, &favicons_task_tracker_);
 }
 
 void ContentSuggestionsService::OnGetFaviconFromCacheFinished(
@@ -248,10 +249,33 @@ void ContentSuggestionsService::OnGetFaviconFromCacheFinished(
   // TODO(jkrcal): Currently used only for Articles for you which have public
   // URLs. Let the provider decide whether |publisher_url| may be private or
   // not.
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("content_suggestion_get_favicon", R"(
+        semantics {
+          sender: "Content Suggestion"
+          description:
+            "Sends a request to a Google server to retrieve the favicon bitmap "
+            "for a page URL."
+          trigger:
+            "A request can be sent if Chrome does not have a favicon for a "
+            "particular page. This is done in two scenarios:\n"
+            " 1- For articles suggestions on the new tab page (URLs are public "
+            "    and provided by Google).\n"
+            " 2- For server-suggested most visited tiles on the new tab page "
+            "    (User gets these URLs from Google, only if history sync is "
+            "    enabled)."
+          data: "Page URL and desired icon size."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting: "This feature cannot be disabled by settings."
+          policy_exception_justification: "Not implemented."
+        })");
   large_icon_service_
       ->GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           publisher_url, minimum_size_in_pixel, desired_size_in_pixel,
-          /*may_page_url_be_private=*/false,
+          /*may_page_url_be_private=*/false, traffic_annotation,
           base::Bind(
               &ContentSuggestionsService::OnGetFaviconFromGoogleServerFinished,
               base::Unretained(this), publisher_url, minimum_size_in_pixel,
