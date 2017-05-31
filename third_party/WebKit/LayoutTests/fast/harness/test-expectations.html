@@ -1,0 +1,185 @@
+<!doctype html>
+<title>Results query</title>
+<style>
+.red {
+  color: red;
+}
+</style>
+<body>
+<div id="serverError" style="display:none;color:red;font-size:larger">
+  Error: cannot load results.json.<br>
+  test-expectations.html must be loaded over http, because file:// does
+  not work with xhr JSON.<br>
+  Start a server in your results directory (or src if you want test links to work).
+</div>
+<h3>layout test results <a style="font-target="dashboard" href="results.html">original</a></h3>
+<pre id="summary">
+</pre>
+<div>Unexpected:
+  <button onclick="javascript:generateReport(Filters.unexpectedPass)">Pass
+    <span id="unexpected_passcount"></span>
+  </button>
+  <button onclick="javascript:generateReport(Filters.unexpectedFailure)">Failure
+    <span id="unexpected_failcount"></span>
+  </button>
+</div>
+<div>Results as:
+  <button onclick="javascript:generateReport(Filters.failure)">TestExpectations
+    <span id="failcount"></span>
+  </button>
+</div>
+<pre id="report">
+</pre>
+<script>
+
+var fullResults = "";
+
+function printSummary(r) {
+  let html = [];
+  html.push("Total: " + (r.num_passes + r.num_regressions));
+  html.push("Passed: " + r.num_passes);
+  html.push("Regressions: " + r.num_regressions);
+  let failures = r["num_failures_by_type"];
+  var totalFailures = 0;
+  for (p in failures) {
+    if (failures[p] != 0 && p != "PASS") {
+      totalFailures += failures[p];
+      html.push(p + ": " + failures[p]);
+    }
+  }
+  html.push("Total typed failures: " + totalFailures);
+  document.querySelector("#summary").innerHTML = html.join("\n");
+
+  var t = new Traversal(fullResults.tests);
+  t.traverse(Filters.unexpectedPass);
+  document.querySelector("#unexpected_passcount").innerText = t.filteredCount;
+  t.reset().traverse(Filters.unexpectedFailure);
+  document.querySelector("#unexpected_failcount").innerText = t.filteredCount;
+  t.reset().traverse(Filters.failure);
+  document.querySelector("#failcount").innerText = t.filteredCount;
+}
+
+let Traversal = function(testRoot) {
+  this.root = testRoot;
+  this.reset();
+}
+
+Traversal.prototype = {
+  traverse: function(filter, action) {
+    action = action || function() {};
+    this._helper(this.root, "", filter, action);
+  },
+  reset: function() {
+    this.testCount = 0;
+    this.filteredCount = 0;
+    this.lastDir = "";
+    this.html = [];
+    return this;
+  },
+
+  _helper: function(node, path, filter, action) {
+    if ("actual" in node) {
+      this.testCount++;
+      if (filter(node)) {
+        this.filteredCount++;
+        action(node, path, this);
+      }
+    }
+    else {
+      var keys = Object.keys(node).sort();
+      for (p of keys)
+        this._helper(node[p], path + "/" + p, filter, action);
+    }
+  }
+}
+
+// TestExpectations file format is documented at:
+// https://chromium.googlesource.com/chromium/src/+/master/docs/testing/layout_test_expectations.md
+function printExpectation(test, path, traversal) {
+
+    var dir, file, href;
+    [href, dir, file] = path.match("/(.*)/(.*)");
+    // Print directory header if this test's directory is different from the last.
+    if (dir != traversal.lastDir) {
+      traversal.html.push("");
+      traversal.html.push("### " + dir);
+      traversal.lastDir = dir;
+    }
+    href = "../../../third_party/WebKit/LayoutTests" + href.replace(/\/virtual\/\w*/, "");
+
+    let status = "";
+    let actual = test.actual;
+    let expected = test.expected;
+    if (actual == "TEXT" || actual == "IMAGE")
+      actual = "FAIL";
+    if (expected.indexOf(actual) == -1)
+      expected = actual;
+    if (expected.indexOf(" ") != -1) {  // make actual result bold
+      var regex = new RegExp("(" + actual + ")")
+      var substitute = "<b>$&</b>";
+      expected = expected.replace(regex, substitute);
+    }
+    expected = expected
+      .replace("CRASH", "Crash")
+      .replace("MISSING", "Skip")
+      .replace("PASS", "Pass")
+      .replace("FAIL", "Failure")
+      .replace("SKIP", "Skip");
+    status = expected;
+    let bug = "<span class='red'>NEEDBUG</span>";
+    if ("bugs" in test && test.bugs.length > 0) {
+      bug = test.bugs.join(" ");
+      bug = "<a target='crbug' href='https://" + test.bugs[0] + "'>" + bug + "</a>";
+    }
+    html = "";
+    html += bug;
+    html += " " + dir + "/" + "<a target='test' href='" + href + "'>" + file + "</a>";
+    html += " [ " + status + " ]";
+    traversal.html.push(html);
+}
+
+let Filters = {
+  unexpectedPass: test => {
+    return test.actual == "PASS" && test.expected.indexOf(test.actual) == -1;
+  },
+  unexpectedFailure: test => {
+    if (test.actual == "PASS")
+      return false;
+    switch (test.actual) {
+      case "SKIP":
+      case "CRASH":
+        if (test.expected.indexOf(test.actual) != -1)
+          return false;
+        break;
+      case "TEXT":
+      case "IMAGE":
+        if (test.expected.indexOf("FAIL") != -1)
+          return false;
+        break;
+      default:
+        console.error("Unexpected test result", test.expected);
+      }
+    return true;
+  },
+  all: _ => true,
+  failure: test => test.actual != "PASS"
+}
+
+function debugPrint(test, path) {
+  console.log(test.actual, test.expected, path);
+}
+
+function generateReport(filter, report) {
+  report = report || printExpectation;
+  var t = new Traversal(fullResults.tests);
+  document.querySelector("#report").innerHTML = "";
+  t.traverse(filter, report);
+  document.querySelector("#report").innerHTML = t.html.join("\n");
+}
+
+function ADD_FULL_RESULTS(results) {
+  fullResults = results;
+  printSummary(results);
+}
+</script>
+<script src="full_results_jsonp.json"></script>
