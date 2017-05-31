@@ -18,6 +18,7 @@ struct vpx_codec_ctx;
 struct vpx_image;
 
 namespace base {
+class AtomicFlag;
 class SingleThreadTaskRunner;
 }
 
@@ -45,6 +46,7 @@ class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
   void Decode(const scoped_refptr<DecoderBuffer>& buffer,
               const DecodeCB& decode_cb) override;
   void Reset(const base::Closure& closure) override;
+  int GetMaxDecodeRequests() const override;
 
  private:
   enum DecoderState {
@@ -111,6 +113,7 @@ class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
   // High resolution vp9 may block the media thread for too long, in such cases
   // we share a per-process thread to avoid overly long blocks.
   scoped_refptr<base::SingleThreadTaskRunner> offload_task_runner_;
+  std::unique_ptr<base::AtomicFlag> should_abort_decodes_;
 
   VideoFramePool frame_pool_;
 
