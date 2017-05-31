@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d0ddc8a_efa5838e",
+        "filename": "third_party/WebKit/Source/core/dom/SpaceSplitString.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-05-31T09:01:56Z",
+      "side": 1,
+      "message": "If I understand correctly, vector_ is created from the constructor and never modified - in that case, these\nline 46-49 is good enough optimization?\n\nI also looked at patchset 1 and you did it like above, was it not enough?",
+      "revId": "0a9d65213147e7b06e005a89aa0bcd676cee00d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
