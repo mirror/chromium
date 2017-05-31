@@ -64,7 +64,7 @@
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/api/LayoutEmbeddedContentViewItem.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/page/ChromeClient.h"
@@ -990,8 +990,8 @@ void WebPluginContainerImpl::ComputeClipRectsForPlugin(
 
   // Note: FrameRect() for this plugin is equal to contentBoxRect, mapped to the
   // containing view space, and rounded off.
-  // See LayoutPart.cpp::updateGeometryInternal. To remove the lossy
-  // effect of rounding off, use contentBoxRect directly.
+  // See LayoutEmbeddedContentView.cpp::updateGeometryInternal. To remove the
+  // lossy effect of rounding off, use contentBoxRect directly.
   LayoutRect unclipped_absolute_rect(box->ContentBoxRect());
   box->MapToVisualRectInAncestorSpace(root_view, unclipped_absolute_rect);
 

@@ -23,14 +23,14 @@
 #ifndef LayoutFrame_h
 #define LayoutFrame_h
 
+#include "core/layout/LayoutEmbeddedContentView.h"
 #include "core/layout/LayoutFrameSet.h"
-#include "core/layout/LayoutPart.h"
 
 namespace blink {
 
 class HTMLFrameElement;
 
-class LayoutFrame final : public LayoutPart {
+class LayoutFrame final : public LayoutEmbeddedContentView {
  public:
   explicit LayoutFrame(HTMLFrameElement*);
 
@@ -42,7 +42,8 @@ class LayoutFrame final : public LayoutPart {
 
  private:
   bool IsOfType(LayoutObjectType type) const override {
-    return type == kLayoutObjectFrame || LayoutPart::IsOfType(type);
+    return type == kLayoutObjectFrame ||
+           LayoutEmbeddedContentView::IsOfType(type);
   }
 
   void UpdateFromElement() override;

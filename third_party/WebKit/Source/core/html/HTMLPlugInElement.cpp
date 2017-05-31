@@ -39,8 +39,8 @@
 #include "core/html/PluginDocument.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/layout/LayoutEmbeddedContentView.h"
 #include "core/layout/LayoutImage.h"
-#include "core/layout/LayoutPart.h"
 #include "core/layout/api/LayoutEmbeddedItem.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/page/Page.h"
@@ -137,8 +137,8 @@ bool HTMLPlugInElement::RequestObjectInternal(
                        use_fallback)) {
     // If the plugin element already contains a subframe,
     // loadOrRedirectSubframe will re-use it. Otherwise, it will create a
-    // new frame and set it as the LayoutPart's EmbeddedContentView,
-    // causing what was previously in the EmbeddedContentView to be torn down.
+    // new frame and set it as the LayoutEmbeddedContentView's FrameViewBase,
+    // causing what was previously in the FrameViewBase to be torn down.
     return LoadOrRedirectSubframe(completed_url, GetNameAttribute(), true);
   }
 
@@ -159,7 +159,7 @@ bool HTMLPlugInElement::WillRespondToMouseClickEvents() {
   if (IsDisabledFormControl())
     return false;
   LayoutObject* r = GetLayoutObject();
-  return r && (r->IsEmbeddedObject() || r->IsLayoutPart());
+  return r && (r->IsEmbeddedObject() || r->IsLayoutEmbeddedContentView());
 }
 
 void HTMLPlugInElement::RemoveAllEventListeners() {
@@ -234,7 +234,7 @@ void HTMLPlugInElement::RequestPluginCreationWithoutLayoutObjectIfPossible() {
            ->CanCreatePluginWithoutRenderer(service_type_))
     return;
 
-  if (GetLayoutObject() && GetLayoutObject()->IsLayoutPart())
+  if (GetLayoutObject() && GetLayoutObject()->IsLayoutEmbeddedContentView())
     return;
 
   CreatePluginWithoutLayoutObject();
@@ -298,7 +298,7 @@ LayoutObject* HTMLPlugInElement::CreateLayoutObject(
     const ComputedStyle& style) {
   // Fallback content breaks the DOM->layoutObject class relationship of this
   // class and all superclasses because createObject won't necessarily return
-  // a LayoutEmbeddedObject or LayoutPart.
+  // a LayoutEmbeddedObject or LayoutEmbeddedContentView.
   if (UseFallbackContent())
     return LayoutObject::CreateObject(this, style);
 
@@ -350,8 +350,9 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
 }
 
 PluginView* HTMLPlugInElement::PluginEmbeddedContentView() const {
-  if (LayoutPart* layout_part = LayoutPartForJSBindings())
-    return layout_part->Plugin();
+  if (LayoutEmbeddedContentView* layout_embedded_content_view =
+          LayoutEmbeddedContentViewForJSBindings())
+    return layout_embedded_content_view->Plugin();
   return nullptr;
 }
 
@@ -404,7 +405,7 @@ void HTMLPlugInElement::DefaultEventHandler(Event* event) {
   // code in EventHandler; these code paths should be united.
 
   LayoutObject* r = GetLayoutObject();
-  if (!r || !r->IsLayoutPart())
+  if (!r || !r->IsLayoutEmbeddedContentView())
     return;
   if (r->IsEmbeddedObject()) {
     if (LayoutEmbeddedItem(ToLayoutEmbeddedObject(r))
@@ -420,13 +421,14 @@ void HTMLPlugInElement::DefaultEventHandler(Event* event) {
   HTMLFrameOwnerElement::DefaultEventHandler(event);
 }
 
-LayoutPart* HTMLPlugInElement::LayoutPartForJSBindings() const {
+LayoutEmbeddedContentView*
+HTMLPlugInElement::LayoutEmbeddedContentViewForJSBindings() const {
   // Needs to load the plugin immediatedly because this function is called
   // when JavaScript code accesses the plugin.
   // FIXME: Check if dispatching events here is safe.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets(
       Document::kRunPostLayoutTasksSynchronously);
-  return ExistingLayoutPart();
+  return ExistingLayoutEmbeddedContentView();
 }
 
 bool HTMLPlugInElement::IsKeyboardFocusable() const {

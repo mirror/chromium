@@ -50,7 +50,7 @@ class CORE_EXPORT HTMLEmbedElement final : public HTMLPlugInElement {
   bool IsURLAttribute(const Attribute&) const override;
   const QualifiedName& SubResourceAttributeName() const override;
 
-  LayoutPart* ExistingLayoutPart() const override;
+  LayoutEmbeddedContentView* ExistingLayoutEmbeddedContentView() const override;
 
   void UpdatePluginInternal() override;
 

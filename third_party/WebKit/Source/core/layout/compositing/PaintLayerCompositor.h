@@ -39,8 +39,8 @@ class PaintLayer;
 class GraphicsLayer;
 class IntPoint;
 class JSONObject;
+class LayoutEmbeddedContentView;
 class Page;
-class LayoutPart;
 class Scrollbar;
 class ScrollingCoordinator;
 class VisualViewport;
@@ -153,9 +153,10 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
 
   void SetIsInWindow(bool);
 
-  static PaintLayerCompositor* FrameContentsCompositor(LayoutPart&);
+  static PaintLayerCompositor* FrameContentsCompositor(
+      LayoutEmbeddedContentView&);
   // Return true if the layers changed.
-  static bool AttachFrameContentLayersToIframeLayer(LayoutPart&);
+  static bool AttachFrameContentLayersToIframeLayer(LayoutEmbeddedContentView&);
 
   // Update the geometry of the layers used for clipping and scrolling in
   // frames.

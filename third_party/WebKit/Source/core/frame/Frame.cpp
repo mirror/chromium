@@ -39,8 +39,8 @@
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/input/EventHandler.h"
-#include "core/layout/LayoutPart.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/LayoutEmbeddedContentView.h"
+#include "core/layout/api/LayoutEmbeddedContentViewItem.h"
 #include "core/loader/EmptyClients.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/page/FocusController.h"
@@ -156,7 +156,7 @@ Frame* Frame::FindUnsafeParentScrollPropagationBoundary() {
   return nullptr;
 }
 
-LayoutPart* Frame::OwnerLayoutObject() const {
+LayoutEmbeddedContentView* Frame::OwnerLayoutObject() const {
   if (!DeprecatedLocalOwner())
     return nullptr;
   LayoutObject* object = DeprecatedLocalOwner()->GetLayoutObject();
@@ -166,13 +166,13 @@ LayoutPart* Frame::OwnerLayoutObject() const {
   // that it has started but canceled, then this can turn into an ASSERT
   // since ownerElement() would be 0 when the load is canceled.
   // https://bugs.webkit.org/show_bug.cgi?id=18585
-  if (!object->IsLayoutPart())
+  if (!object->IsLayoutEmbeddedContentView())
     return nullptr;
-  return ToLayoutPart(object);
+  return ToLayoutEmbeddedContentView(object);
 }
 
-LayoutPartItem Frame::OwnerLayoutItem() const {
-  return LayoutPartItem(OwnerLayoutObject());
+LayoutEmbeddedContentViewItem Frame::OwnerLayoutItem() const {
+  return LayoutEmbeddedContentViewItem(OwnerLayoutObject());
 }
 
 Settings* Frame::GetSettings() const {
