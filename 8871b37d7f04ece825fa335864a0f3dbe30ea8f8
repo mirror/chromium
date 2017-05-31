@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7843a32_d38afccd",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-31T09:24:30Z",
+      "side": 1,
+      "message": "tiny nit: this",
+      "range": {
+        "startLine": 377,
+        "startChar": 18,
+        "endLine": 377,
+        "endChar": 21
+      },
+      "revId": "8871b37d7f04ece825fa335864a0f3dbe30ea8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
