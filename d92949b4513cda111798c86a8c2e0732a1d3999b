@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cab0dc4_0235b376",
+        "filename": "base/threading/platform_thread_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-05-31T23:27:23Z",
+      "side": 1,
+      "message": "How are you preventing this from being called from the main thread? If you\u0027re just relying on callers doing the right thing, this should be a conditional with an early return, and you should update the comment for this function to reflect that this has no effect on the main thread.",
+      "revId": "d92949b4513cda111798c86a8c2e0732a1d3999b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
