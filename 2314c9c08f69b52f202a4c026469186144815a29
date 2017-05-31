@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36ef38a0_e84566a1",
+        "filename": "content/public/renderer/render_frame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-31T22:08:49Z",
+      "side": 1,
+      "message": "I suppose we might want to eventually call this FromWebLocalFrame, but I want to do the simple thing for now and not rename all the things. It\u0027ll be easier to do a rename (if desired) once all the deprecated usage is gone.\n\n(technically, Local is redundant with RenderFrame as well, but that would better match the actual type of the argument)\n\nOther things to consider as we update this code:\n- Make this never return null. Technically, the table lookup can fail, but you probably don\u0027t have a pointer to a valid WebFrame then.\n- Make this never accept null arguments--because that seems like a silly thing to accommodate as well.",
+      "range": {
+        "startLine": 100,
+        "startChar": 22,
+        "endLine": 100,
+        "endChar": 34
+      },
+      "revId": "2314c9c08f69b52f202a4c026469186144815a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
