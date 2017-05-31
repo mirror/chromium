@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fc70d87_18d4875b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-05-31T10:11:52Z",
+      "side": 1,
+      "message": "Do we know that the returned bitmap is square? Maybe assert that the height matches the size in the request?",
+      "range": {
+        "startLine": 132,
+        "startChar": 62,
+        "endLine": 132,
+        "endChar": 71
+      },
+      "revId": "5550e0fda3509e571b2491974f968e19984ca8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
