@@ -55,8 +55,10 @@ void Surface::Close() {
 }
 
 bool Surface::QueueFrame(CompositorFrame frame,
-                         const base::Closure& callback,
-                         const WillDrawCallback& will_draw_callback) {
+                         const base::Closure& draw_callback,
+                         const WillDrawCallback& will_draw_callback,
+                         const PresentedCallback& presented_callback,
+                         const DiscardedCallback& discarded_callback) {
   gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
   float device_scale_factor = frame.metadata.device_scale_factor;
 
@@ -64,6 +66,7 @@ bool Surface::QueueFrame(CompositorFrame frame,
       device_scale_factor != surface_info_.device_scale_factor()) {
     TRACE_EVENT_INSTANT0("cc", "Surface invariants violation",
                          TRACE_EVENT_SCOPE_THREAD);
+    discarded_callback.Run();
     return false;
   }
 
@@ -73,7 +76,8 @@ bool Surface::QueueFrame(CompositorFrame frame,
       TransferableResource::ReturnResources(frame.resource_list, &resources);
       compositor_frame_sink_support_->ReturnResources(resources);
     }
-    callback.Run();
+    draw_callback.Run();
+    discarded_callback.Run();
     return true;
   }
 
@@ -115,13 +119,15 @@ bool Surface::QueueFrame(CompositorFrame frame,
       }
     }
     pending_frame_data_ =
-        FrameData(std::move(frame), callback, will_draw_callback);
+        FrameData(std::move(frame), draw_callback, will_draw_callback,
+                  presented_callback, discarded_callback);
     // Ask the surface manager to inform |this| when its dependencies are
     // resolved.
     surface_manager_->RequestSurfaceResolution(this);
   } else {
     // If there are no blockers, then immediately activate the frame.
-    ActivateFrame(FrameData(std::move(frame), callback, will_draw_callback));
+    ActivateFrame(FrameData(std::move(frame), draw_callback, will_draw_callback,
+                            presented_callback, discarded_callback));
   }
 
   // Returns resources for the previous pending frame.
@@ -181,10 +187,14 @@ void Surface::ActivatePendingFrameForDeadline() {
 
 Surface::FrameData::FrameData(CompositorFrame&& frame,
                               const base::Closure& draw_callback,
-                              const WillDrawCallback& will_draw_callback)
+                              const WillDrawCallback& will_draw_callback,
+                              const PresentedCallback& presented_callback,
+                              const DiscardedCallback& discarded_callback)
     : frame(std::move(frame)),
       draw_callback(draw_callback),
-      will_draw_callback(will_draw_callback) {}
+      will_draw_callback(will_draw_callback),
+      presented_callback(presented_callback),
+      discarded_callback(discarded_callback) {}
 
 Surface::FrameData::FrameData(FrameData&& other) = default;
 
@@ -354,6 +364,9 @@ void Surface::UnrefFrameResourcesAndRunDrawCallback(
 
   if (!frame_data->draw_callback.is_null())
     frame_data->draw_callback.Run();
+
+  if (!frame_data->discarded_callback)
+    frame_data->discarded_callback.Run();
 }
 
 void Surface::ClearCopyRequests() {

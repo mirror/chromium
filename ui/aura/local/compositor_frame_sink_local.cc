@@ -20,7 +20,9 @@ CompositorFrameSinkLocal::CompositorFrameSinkLocal(
     cc::SurfaceManager* surface_manager)
     : cc::CompositorFrameSink(nullptr, nullptr, nullptr, nullptr),
       frame_sink_id_(frame_sink_id),
-      surface_manager_(surface_manager) {}
+      surface_manager_(surface_manager) {
+  DETACH_FROM_THREAD(thread_checker_);
+}
 
 CompositorFrameSinkLocal::~CompositorFrameSinkLocal() {}
 
@@ -28,8 +30,7 @@ bool CompositorFrameSinkLocal::BindToClient(
     cc::CompositorFrameSinkClient* client) {
   if (!cc::CompositorFrameSink::BindToClient(client))
     return false;
-  DCHECK(!thread_checker_);
-  thread_checker_ = base::MakeUnique<base::ThreadChecker>();
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   support_ = cc::CompositorFrameSinkSupport::Create(
       this, surface_manager_, frame_sink_id_, false /* is_root */,
@@ -47,20 +48,18 @@ void CompositorFrameSinkLocal::SetSurfaceChangedCallback(
 }
 
 void CompositorFrameSinkLocal::DetachFromClient() {
-  DCHECK(thread_checker_);
-  DCHECK(thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   client_->SetBeginFrameSource(nullptr);
   begin_frame_source_.reset();
   support_->EvictCurrentSurface();
   support_.reset();
-  thread_checker_.reset();
+  DETACH_FROM_THREAD(thread_checker_);
   cc::CompositorFrameSink::DetachFromClient();
 }
 
 void CompositorFrameSinkLocal::SubmitCompositorFrame(
     cc::CompositorFrame frame) {
-  DCHECK(thread_checker_);
-  DCHECK(thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(frame.metadata.begin_frame_ack.has_damage);
   DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber,
             frame.metadata.begin_frame_ack.sequence_number);
@@ -86,8 +85,7 @@ void CompositorFrameSinkLocal::SubmitCompositorFrame(
 
 void CompositorFrameSinkLocal::DidNotProduceFrame(
     const cc::BeginFrameAck& ack) {
-  DCHECK(thread_checker_);
-  DCHECK(thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(!ack.has_damage);
   DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
   support_->DidNotProduceFrame(ack);
@@ -95,8 +93,7 @@ void CompositorFrameSinkLocal::DidNotProduceFrame(
 
 void CompositorFrameSinkLocal::DidReceiveCompositorFrameAck(
     const cc::ReturnedResourceArray& resources) {
-  DCHECK(thread_checker_);
-  DCHECK(thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!client_)
     return;
   if (!resources.empty())
@@ -104,24 +101,39 @@ void CompositorFrameSinkLocal::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
+void CompositorFrameSinkLocal::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (!client_)
+    return;
+  client_->DidPresentCompositorFrame(presentation_token, timestamp, refresh);
+}
+
+void CompositorFrameSinkLocal::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (!client_)
+    return;
+  client_->DidDiscardCompositorFrame(presentation_token);
+}
+
 void CompositorFrameSinkLocal::OnBeginFrame(const cc::BeginFrameArgs& args) {
-  DCHECK(thread_checker_);
-  DCHECK(thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   begin_frame_source_->OnBeginFrame(args);
 }
 
 void CompositorFrameSinkLocal::ReclaimResources(
     const cc::ReturnedResourceArray& resources) {
-  DCHECK(thread_checker_);
-  DCHECK(thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!client_)
     return;
   client_->ReclaimResources(resources);
 }
 
 void CompositorFrameSinkLocal::OnNeedsBeginFrames(bool needs_begin_frames) {
-  DCHECK(thread_checker_);
-  DCHECK(thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   support_->SetNeedsBeginFrame(needs_begin_frames);
 }
 

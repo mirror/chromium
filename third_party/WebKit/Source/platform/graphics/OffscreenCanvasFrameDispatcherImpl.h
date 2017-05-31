@@ -42,6 +42,11 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
   // cc::mojom::blink::MojoCompositorFrameSinkClient implementation.
   void DidReceiveCompositorFrameAck(
       const cc::ReturnedResourceArray& resources) final;
+  void DidPresentCompositorFrame(
+      uint32_t presentation_token,
+      mojo::common::mojom::blink::TimeTicksPtr timestamp,
+      mojo::common::mojom::blink::TimeDeltaPtr refresh) final;
+  void DidDiscardCompositorFrame(uint32_t presentation_token) final;
   void OnBeginFrame(const cc::BeginFrameArgs&) final;
   void ReclaimResources(const cc::ReturnedResourceArray& resources) final;
 

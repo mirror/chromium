@@ -414,6 +414,14 @@ void OffscreenCanvasFrameDispatcherImpl::DidReceiveCompositorFrameAck(
   DCHECK_GE(pending_compositor_frames_, 0);
 }
 
+void OffscreenCanvasFrameDispatcherImpl::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    mojo::common::mojom::blink::TimeTicksPtr timestamp,
+    mojo::common::mojom::blink::TimeDeltaPtr refresh) {}
+
+void OffscreenCanvasFrameDispatcherImpl::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {}
+
 void OffscreenCanvasFrameDispatcherImpl::SetNeedsBeginFrame(
     bool needs_begin_frame) {
   if (sink_ && needs_begin_frame != needs_begin_frame_) {

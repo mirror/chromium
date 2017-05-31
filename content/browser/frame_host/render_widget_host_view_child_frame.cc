@@ -404,6 +404,20 @@ void RenderWidgetHostViewChildFrame::DidReceiveCompositorFrameAck(
   renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources);
 }
 
+void RenderWidgetHostViewChildFrame::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  renderer_compositor_frame_sink_->DidPresentCompositorFrame(
+      presentation_token, timestamp, refresh);
+}
+
+void RenderWidgetHostViewChildFrame::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  renderer_compositor_frame_sink_->DidDiscardCompositorFrame(
+      presentation_token);
+}
+
 void RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink(
     cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink) {
   ResetCompositorFrameSinkSupport();
