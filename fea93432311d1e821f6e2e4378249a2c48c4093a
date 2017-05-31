@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "8f8cbd60_66ccc4af",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2de2eda0_661a202a",
+      "range": {
+        "startLine": 289,
+        "startChar": 8,
+        "endLine": 289,
+        "endChar": 11
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3f11f33_117f42a0",
         "filename": "chrome/browser/extensions/policy_handlers.cc",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "649a319a_c4c04ed2",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3f11f33_117f42a0",
+      "range": {
+        "startLine": 326,
+        "startChar": 10,
+        "endLine": 326,
+        "endChar": 14
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de369f87_4dd245e3",
         "filename": "chrome/browser/extensions/policy_handlers.cc",
         "patchSetId": 3
@@ -88,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "55b11f01_a255c15d",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de369f87_4dd245e3",
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7f70d22_2a546cb0",
         "filename": "chrome/browser/extensions/policy_handlers.cc",
         "patchSetId": 3
@@ -99,6 +165,30 @@
       "writtenOn": "2017-05-31T18:27:56Z",
       "side": 1,
       "message": "Construct directly instead of construct + assign:\nURLPattern pattern(extension_scheme_mask)",
+      "range": {
+        "startLine": 335,
+        "startChar": 10,
+        "endLine": 335,
+        "endChar": 20
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f4e75b_94ac0059",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "construct + assign returns the parse result (e.g. URLPattern::PARSE_ERROR_EMPTY_PATH). If I construct directly this is hidden and I can\u0027t determine if the parsing failed due to an empty path.",
+      "parentUuid": "b7f70d22_2a546cb0",
       "range": {
         "startLine": 335,
         "startChar": 10,
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "82bdd87b_c639df1f",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "We only have a string at this point, not a parsed URL so we can\u0027t use URLPattern::match_all_urls. Good catch on the \u003call_urls\u003e constant, I used it in the extension_management_internal.cc but forgot to use it here.",
+      "parentUuid": "52ea9a69_22d17123",
+      "range": {
+        "startLine": 348,
+        "startChar": 34,
+        "endLine": 348,
+        "endChar": 42
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf66cdf6_9314f192",
         "filename": "chrome/browser/extensions/policy_handlers.cc",
         "patchSetId": 3
@@ -145,6 +259,30 @@
       "writtenOn": "2017-05-31T18:27:56Z",
       "side": 1,
       "message": "So http://foo -\u003e PARSE_ERROR_EMPTY_PATH, but http://foo/ -\u003e PARSE_SUCCESS?\nI\u0027d expect policy admins to put one for the other, maybe we can improve the error message in this case to help them? Because \"contains a path\" isn\u0027t super targeted message. Might not be worth it though.",
+      "range": {
+        "startLine": 354,
+        "startChar": 14,
+        "endLine": 354,
+        "endChar": 20
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bebdaff_5546eb62",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Correct. I changed the wording a little and included an example. The only way I could make this better is to get the URLPattern without the path and display that as part of the error. Not sure its worth adding another method to URLPattern to support that.",
+      "parentUuid": "cf66cdf6_9314f192",
       "range": {
         "startLine": 354,
         "startChar": 14,
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "da3f08a2_8c53fddc",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26091997_18e60256",
+      "range": {
+        "startLine": 359,
+        "startChar": 28,
+        "endLine": 359,
+        "endChar": 29
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3b3c605_9bfd3abc",
         "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
         "patchSetId": 3
@@ -200,6 +362,30 @@
       "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbf5e78_e90889b5",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Yes, I normally run that and cpplint. I just re-ran it on this file specifically and it didn\u0027t change anything. This does look odd though so I removed the extra spacing.",
+      "parentUuid": "e3b3c605_9bfd3abc",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 19
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "d4ad0ba5_f010b41b",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f71e26c_f0246e18",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35837d89_fdddfc7b",
         "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
         "patchSetId": 3
@@ -246,6 +456,30 @@
       "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1af8bb_b1e6a2d0",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35837d89_fdddfc7b",
+      "range": {
+        "startLine": 106,
+        "startChar": 26,
+        "endLine": 106,
+        "endChar": 43
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "4768a263_39ae72fc",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36483169_e20ddb5a",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 21
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56d1d532_6091ba10",
         "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
         "patchSetId": 3
@@ -292,6 +550,30 @@
       "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd57510_076e6af0",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-05-31T21:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56d1d532_6091ba10",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 5
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
