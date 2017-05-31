@@ -150,9 +150,9 @@ class SchedulerWorker::Thread : public PlatformThread::Delegate {
 
     // All threads have a NORMAL priority when Lock doesn't handle multiple
     // thread priorities.
-    if (!Lock::HandlesMultipleThreadPriorities())
-      return ThreadPriority::NORMAL;
-
+#if !LOCK_HANDLES_MULTIPLE_THREAD_PRIORITES()
+    return ThreadPriority::NORMAL;
+#else
     // To avoid shutdown hangs, disallow a priority below NORMAL during
     // shutdown. If thread priority cannot be increased, never allow a priority
     // below NORMAL.
@@ -164,6 +164,7 @@ class SchedulerWorker::Thread : public PlatformThread::Delegate {
     }
 
     return outer_->priority_hint_;
+#endif  // !LOCK_HANDLES_MULTIPLE_THREAD_PRIORITES()
   }
 
   void UpdateThreadPriority(ThreadPriority desired_thread_priority) {
