@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33b7178f_dfb18de9",
+        "filename": "content/renderer/media/media_permission_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-31T16:42:44Z",
+      "side": 1,
+      "message": "This is an std::map so I switched to calling requests.swap(requests_).",
+      "parentUuid": "a85eb803_8aa14101",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 7
+      },
+      "revId": "bfee65b0471f66b0b537d8ad2606d10928ef2492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "400603f4_6018b2b5",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 2
