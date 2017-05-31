@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7c25244_b2189c0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-31T16:56:15Z",
+      "side": 1,
+      "message": "I\u0027d describe this as \"Break IO-thread parts of LocalNtpSource into a Core object.\"\n\nThis isn\u0027t about the stricter WeakPtr checks - the original code was fundamentally using WeakPtr incorrectly, with the WeakPtrFactory deleted on the UI thread but WeakPtrs used on the IO thread.",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "657e23015de7bd9b43e662a7bc0480090afd7901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8577e86_79b03690",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-31T16:56:15Z",
+      "side": 1,
+      "message": "AFAICT this is the only member that should move to the IO-thread Core object; it\u0027s the only member actually used on the IO thread.\n\nHowever, it is only actually used to allow GetContentSecurityPolicyScriptSrc (called on the Io thread, because URLDataSource threading is insane) to tell GetConfigData the correct value for the is_google field. \n\nAFAICT that is a global setting provided by the TemplateURLService, so it could be set as a static global. However, it\u0027s set on the UI thread, but read by the URLDataManagerBackend on the IO thread - it\u0027s OK the first time it\u0027s set, since there is a task posted in the URLDataSource constructor, which we know will execute before any later posted task to the IO thread, but the rest of the time it is a racey operation.",
+      "revId": "657e23015de7bd9b43e662a7bc0480090afd7901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67568744_6cbffe21",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-31T16:56:15Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need WeakPtr any more, since you are in control of the lifetime of the IO-thread delegate/core - you know that a posted SetDefaultSearchProviderIsGoogleOnIOThread() must arrive in-sequence with DeleteSoon(core) on the IO thread.\n\nIf you look at e.g. ImageSource you\u0027ll see that it has a WeakPtrFactory, but only to decouple a reply callback, on the UI thread.",
+      "revId": "657e23015de7bd9b43e662a7bc0480090afd7901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefb0f33_5d86ee8e",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-31T16:56:15Z",
+      "side": 1,
+      "message": "|weak_ptr_factory_| will invalidate itself implicitly; you only really need to do this if you bound a WeakPtr into a callback that might be called implicitly via some member object\u0027s destructor.",
+      "range": {
+        "startLine": 329,
+        "startChar": 20,
+        "endLine": 329,
+        "endChar": 38
+      },
+      "revId": "657e23015de7bd9b43e662a7bc0480090afd7901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec092053_48ef53a1",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-31T16:56:15Z",
+      "side": 1,
+      "message": "Note that this can fail (and therefore leak the |ntp_source_|) during teardown - is that acceptable for this class?",
+      "range": {
+        "startLine": 590,
+        "startChar": 37,
+        "endLine": 590,
+        "endChar": 48
+      },
+      "revId": "657e23015de7bd9b43e662a7bc0480090afd7901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0114eff_e8067a17",
+        "filename": "chrome/browser/search/local_ntp_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-05-31T16:56:15Z",
+      "side": 1,
+      "message": "I\u0027d suggest renaming the class to Core and similarly renaming ntp_source_ -\u003e core_.",
+      "revId": "657e23015de7bd9b43e662a7bc0480090afd7901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
