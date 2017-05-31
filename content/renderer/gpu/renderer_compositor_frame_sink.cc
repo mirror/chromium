@@ -179,6 +179,18 @@ void RendererCompositorFrameSink::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
+void RendererCompositorFrameSink::DidPresentCompositorFrame(
+    uint32_t presentation_token,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh) {
+  client_->DidPresentCompositorFrame(presentation_token, timestamp, refresh);
+}
+
+void RendererCompositorFrameSink::DidDiscardCompositorFrame(
+    uint32_t presentation_token) {
+  client_->DidDiscardCompositorFrame(presentation_token);
+}
+
 void RendererCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
   if (external_begin_frame_source_)
     external_begin_frame_source_->OnBeginFrame(args);

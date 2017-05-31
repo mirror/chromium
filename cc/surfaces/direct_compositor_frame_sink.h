@@ -64,6 +64,10 @@ class CC_SURFACES_EXPORT DirectCompositorFrameSink
   // CompositorFrameSinkSupportClient implementation:
   void DidReceiveCompositorFrameAck(
       const ReturnedResourceArray& resources) override;
+  void DidPresentCompositorFrame(uint32_t presentation_token,
+                                 base::TimeTicks timestamp,
+                                 base::TimeDelta refresh) override;
+  void DidDiscardCompositorFrame(uint32_t presentation_token) override;
   void OnBeginFrame(const BeginFrameArgs& args) override;
   void ReclaimResources(const ReturnedResourceArray& resources) override;
   void WillDrawSurface(const LocalSurfaceId& local_surface_id,
