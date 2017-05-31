@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2616e33d_473eebbe",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-05-31T07:11:26Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I moved U+058A where 4 other characters are and add an explanation applicable to all five of them.",
+      "parentUuid": "8725f267_4d443072",
+      "revId": "9f6bd92ea083d3807caed4c66596620f05e0852d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51e03cca_433f9ba0",
         "filename": "components/url_formatter/idn_spoof_checker.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7e4b14fd_11cb5fda",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-05-31T07:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51e03cca_433f9ba0",
+      "revId": "9f6bd92ea083d3807caed4c66596620f05e0852d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61752da8_fcb554a1",
         "filename": "components/url_formatter/url_formatter_unittest.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-05-31T01:48:08Z",
       "side": 1,
       "message": "For clarity, this one should have already been tested elsewhere, I hope?",
+      "revId": "9f6bd92ea083d3807caed4c66596620f05e0852d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f11ffe_cbe75b4f",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-05-31T07:11:26Z",
+      "side": 1,
+      "message": "Yes, it is. In line 409. Thanks for alerting me. \u0027Fortunately\u0027, there is already a check in place.",
+      "parentUuid": "61752da8_fcb554a1",
       "revId": "9f6bd92ea083d3807caed4c66596620f05e0852d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
