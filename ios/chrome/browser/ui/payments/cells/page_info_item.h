@@ -13,7 +13,7 @@
 // The accessibility identifier for the favicon image view.
 extern NSString* const kPageInfoFaviconImageViewID;
 
-// The accessibility identifier for the lock indicator.
+// The accessibility identifier for the lock indicator image view.
 extern NSString* const kPageInfoLockIndicatorImageViewID;
 
 // PageInfoItem is the model class corresponding to PageInfoCell.

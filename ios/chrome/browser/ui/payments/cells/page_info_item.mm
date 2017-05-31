@@ -95,6 +95,8 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
 @implementation PageInfoCell {
   NSLayoutConstraint* _pageTitleLabelLeadingConstraint;
   NSLayoutConstraint* _pageHostLabelLeadingConstraint;
+  NSLayoutConstraint* _lockIndicatorHeightConstraint;
+  NSLayoutConstraint* _lockIndicatorWidthConstraint;
 }
 
 @synthesize pageTitleLabel = _pageTitleLabel;
@@ -135,7 +137,7 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
     _pageHostLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_pageHostLabel];
 
-    // Lock icon
+    // Lock indicator
     _pageLockIndicatorView = [[UIImageView alloc] initWithFrame:CGRectZero];
     _pageLockIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
     _pageLockIndicatorView.accessibilityIdentifier =
@@ -143,6 +145,13 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
     [_pageLockIndicatorView
         setTintColor:skia::UIColorFromSkColor(gfx::kGoogleGreen700)];
     [self.contentView addSubview:_pageLockIndicatorView];
+    
+    // Set up the lock indicator size constraints. They are activated here
+    // and updated in layoutSubviews.
+    _lockIndicatorHeightConstraint =
+    [_pageLockIndicatorView.heightAnchor constraintEqualToConstant:0];
+    _lockIndicatorWidthConstraint =
+    [_pageLockIndicatorView.widthAnchor constraintEqualToConstant:0];
 
     // Layout
     [NSLayoutConstraint activateConstraints:@[
@@ -157,16 +166,16 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
       [_pageFaviconView.widthAnchor
           constraintEqualToAnchor:_pageFaviconView.heightAnchor],
 
-      // The constraint on the leading achor of the lock icon is activated in
-      // updateConstraints rather than here so that it can depend on whether a
-      // favicon is present or not.
+      // The constraint on the leading anchor of the lock indicator is
+      // activated in updateConstraints rather than here so that it can
+      // depend on whether a favicon is present or not.
       [_pageLockIndicatorView.leadingAnchor
           constraintEqualToAnchor:_pageTitleLabel.leadingAnchor
                          constant:-kLockIndicatorHorizontalPadding],
-      [_pageLockIndicatorView.heightAnchor
-          constraintEqualToConstant:kLockIndicatorDimension],
-      [_pageLockIndicatorView.widthAnchor
-          constraintEqualToAnchor:_pageLockIndicatorView.heightAnchor],
+      // Without these height and width constraints the lock indicator image
+      // view becomes too large relative to the host label text.
+      _lockIndicatorHeightConstraint,
+      _lockIndicatorWidthConstraint,
       [_pageLockIndicatorView.bottomAnchor
           constraintEqualToAnchor:_pageFaviconView.bottomAnchor
                          constant:kLockIndicatorVerticalPadding],
@@ -210,6 +219,15 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
   _pageHostLabelLeadingConstraint.active = YES;
 
   [super updateConstraints];
+}
+
+- (void)layoutSubviews {
+  // Set the size constraints of the lock indicator view to the necessary
+  // dimensions for the image.
+  _lockIndicatorHeightConstraint.constant = kLockIndicatorDimension;
+  _lockIndicatorWidthConstraint.constant = kLockIndicatorDimension;
+  
+  [super layoutSubviews];
 }
 
 #pragma mark - UICollectionReusableView
