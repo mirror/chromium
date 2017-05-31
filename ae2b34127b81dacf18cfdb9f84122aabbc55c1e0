@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58e0f623_921035b5",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-05-31T03:00:05Z",
+      "side": 1,
+      "message": "nit: can be a static method?\n\nBy the way is Worklet the only module that needs this string \u003c-\u003e credential option conversion? (I assume so)",
+      "revId": "ae2b34127b81dacf18cfdb9f84122aabbc55c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
