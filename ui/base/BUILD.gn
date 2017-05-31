@@ -150,6 +150,8 @@ component("base") {
     "cocoa/user_interface_item_command_handler.h",
     "cocoa/view_description.h",
     "cocoa/view_description.mm",
+    "cocoa/window_closure_listener.h",
+    "cocoa/window_closure_listener.mm",
     "cocoa/window_size_constants.h",
     "cocoa/window_size_constants.mm",
     "cursor/cursor.cc",

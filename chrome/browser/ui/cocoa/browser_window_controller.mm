@@ -52,6 +52,7 @@
 #import "chrome/browser/ui/cocoa/browser_window_layout.h"
 #import "chrome/browser/ui/cocoa/browser_window_touch_bar.h"
 #import "chrome/browser/ui/cocoa/browser_window_utils.h"
+#include "chrome/browser/ui/cocoa/bubble_anchor_helper_views.h"
 #import "chrome/browser/ui/cocoa/dev_tools_controller.h"
 #import "chrome/browser/ui/cocoa/download/download_shelf_controller.h"
 #include "chrome/browser/ui/cocoa/extensions/extension_keybinding_registry_cocoa.h"
@@ -68,6 +69,7 @@
 #import "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_editor.h"
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #import "chrome/browser/ui/cocoa/location_bar/star_decoration.h"
+#import "chrome/browser/ui/cocoa/location_bar/translate_decoration.h"
 #include "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_cocoa.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_base_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_button_controller.h"
@@ -85,6 +87,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_delegate.h"
 #include "chrome/browser/ui/translate/translate_bubble_model_impl.h"
+#include "chrome/browser/ui/views/translate/translate_bubble_view.h"
 #include "chrome/browser/ui/window_sizer/window_sizer.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/command.h"
@@ -1627,49 +1630,7 @@ bool IsTabDetachingInFullscreenEnabled() {
                                      step:(translate::TranslateStep)step
                                 errorType:(translate::TranslateErrors::Type)
                                 errorType {
-  // TODO(hajimehoshi): The similar logic exists at TranslateBubbleView::
-  // ShowBubble. This should be unified.
-  if (translateBubbleController_) {
-    // When the user reads the advanced setting panel, the bubble should not be
-    // changed because they are focusing on the bubble.
-    if (translateBubbleController_.webContents == contents &&
-        translateBubbleController_.model->GetViewState() ==
-        TranslateBubbleModel::VIEW_STATE_ADVANCED) {
-      return;
-    }
-    if (step != translate::TRANSLATE_STEP_TRANSLATE_ERROR) {
-      TranslateBubbleModel::ViewState viewState =
-          TranslateBubbleModelImpl::TranslateStepToViewState(step);
-      [translateBubbleController_ switchView:viewState];
-    } else {
-      [translateBubbleController_ switchToErrorView:errorType];
-    }
-    return;
-  }
-
-  std::string sourceLanguage;
-  std::string targetLanguage;
-  ChromeTranslateClient::GetTranslateLanguages(
-      contents, &sourceLanguage, &targetLanguage);
-
-  std::unique_ptr<translate::TranslateUIDelegate> uiDelegate(
-      new translate::TranslateUIDelegate(
-          ChromeTranslateClient::GetManagerFromWebContents(contents)
-              ->GetWeakPtr(),
-          sourceLanguage, targetLanguage));
-  std::unique_ptr<TranslateBubbleModel> model(
-      new TranslateBubbleModelImpl(step, std::move(uiDelegate)));
-  translateBubbleController_ =
-      [[TranslateBubbleController alloc] initWithParentWindow:self
-                                                        model:std::move(model)
-                                                  webContents:contents];
-  [translateBubbleController_ showWindow:nil];
-
-  NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-  [center addObserver:self
-             selector:@selector(translateBubbleWindowWillClose:)
-                 name:NSWindowWillCloseNotification
-               object:[translateBubbleController_ window]];
+  LOG(ERROR) << "nah";
 }
 
 - (void)dismissPermissionBubble {

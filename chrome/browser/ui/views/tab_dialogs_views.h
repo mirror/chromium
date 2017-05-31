@@ -27,6 +27,11 @@ class TabDialogsViews : public TabDialogs {
       std::unique_ptr<ui::ProfileSigninConfirmationDelegate> delegate) override;
   void ShowManagePasswordsBubble(bool user_action) override;
   void HideManagePasswordsBubble() override;
+  ShowTranslateBubbleResult ShowTranslateBubble(
+      BrowserWindow* window,
+      translate::TranslateStep step,
+      translate::TranslateErrors::Type error_type,
+      bool is_user_gesture) override;
   base::WeakPtr<ValidationMessageBubble> ShowValidationMessage(
       const gfx::Rect& anchor_in_root_view,
       const base::string16& main_text,

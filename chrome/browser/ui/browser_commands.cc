@@ -867,8 +867,11 @@ void Translate(Browser* browser) {
     else if (chrome_translate_client->GetLanguageState().IsPageTranslated())
       step = translate::TRANSLATE_STEP_AFTER_TRANSLATE;
   }
-  ShowTranslateBubbleResult result = browser->window()->ShowTranslateBubble(
-      web_contents, step, translate::TranslateErrors::NONE, true);
+
+  ShowTranslateBubbleResult result =
+      TabDialogs::FromWebContents(web_contents)->ShowTranslateBubble(
+          browser->window(), step, translate::TranslateErrors::NONE, true);
+
   if (result != ShowTranslateBubbleResult::SUCCESS)
     translate::ReportUiAction(TranslateBubbleResultToUiEvent(result));
 }

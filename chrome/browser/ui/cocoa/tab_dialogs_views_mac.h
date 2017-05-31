@@ -22,6 +22,10 @@ class TabDialogsViewsMac : public TabDialogsCocoa {
       std::unique_ptr<ui::ProfileSigninConfirmationDelegate> delegate) override;
   void ShowManagePasswordsBubble(bool user_action) override;
   void HideManagePasswordsBubble() override;
+  ShowTranslateBubbleResult ShowTranslateBubble(BrowserWindow* window,
+      translate::TranslateStep step,
+      translate::TranslateErrors::Type error_type,
+      bool is_user_gesture) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TabDialogsViewsMac);

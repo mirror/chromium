@@ -8,12 +8,16 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/ui/cocoa/browser_window_cocoa.h"
 #include "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/bubble_anchor_helper_views.h"
+#import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
+#import "chrome/browser/ui/cocoa/location_bar/translate_decoration.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_controller.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/browser/ui/views/sync/profile_signin_confirmation_dialog_views.h"
+#include "chrome/browser/ui/views/translate/translate_bubble_view.h"
 #include "content/public/browser/web_contents.h"
 #import "ui/base/cocoa/cocoa_base_utils.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -88,4 +92,24 @@ void TabDialogsViewsMac::HideManagePasswordsBubble() {
     return;
   }
   ManagePasswordsBubbleView::CloseCurrentBubble();
+}
+
+ShowTranslateBubbleResult TabDialogsViewsMac::ShowTranslateBubble(
+    BrowserWindow* window,
+    translate::TranslateStep step,
+    translate::TranslateErrors::Type error_type,
+    bool is_user_gesture) {
+  BrowserWindowController* controller =
+      static_cast<BrowserWindowCocoa*>(window)->cocoa_controller();
+  LocationBarViewMac* location_bar = [controller locationBarBridge];
+  gfx::Point anchor_point =
+      gfx::ScreenPointFromNSPoint(ui::ConvertPointFromWindowToScreen(
+          [controller window], location_bar->GetBubblePointForDecoration(
+              location_bar->translate_decoration())));
+  TranslateBubbleView::DisplayReason reason =
+      is_user_gesture ? TranslateBubbleView::DisplayReason::USER_GESTURE :
+TranslateBubbleView::DisplayReason::AUTOMATIC;
+  TranslateBubbleView::ShowBubble(nullptr, anchor_point, web_contents(),
+                                  step, error_type, reason);
+  return ShowTranslateBubbleResult::SUCCESS;
 }

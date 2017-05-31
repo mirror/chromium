@@ -84,6 +84,14 @@ void TabDialogsViews::HideManagePasswordsBubble() {
     ManagePasswordsBubbleView::CloseCurrentBubble();
 }
 
+ShowTranslateBubbleResult TabDialogsViews::ShowTranslateBubble(
+    BrowserWindow* window,
+    translate::TranslateStep step,
+    translate::TranslateErrors::Type error_type,
+    bool is_user_gesture) {
+  BrowserView* view = static_cast<BrowserView*>(window);
+}
+
 base::WeakPtr<ValidationMessageBubble> TabDialogsViews::ShowValidationMessage(
     const gfx::Rect& anchor_in_root_view,
     const base::string16& main_text,

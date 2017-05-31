@@ -6,7 +6,11 @@
 #define CHROME_BROWSER_UI_COCOA_TAB_DIALOGS_COCOA_H_
 
 #include "base/macros.h"
+#include "base/mac/scoped_nsobject.h"
 #include "chrome/browser/ui/tab_dialogs.h"
+#include "ui/base/cocoa/window_closure_listener.h"
+
+@class TranslateBubbleController;
 
 // Cocoa implementation of TabDialogs interface.
 class TabDialogsCocoa : public TabDialogs {
@@ -27,6 +31,11 @@ class TabDialogsCocoa : public TabDialogs {
       std::unique_ptr<ui::ProfileSigninConfirmationDelegate> delegate) override;
   void ShowManagePasswordsBubble(bool user_action) override;
   void HideManagePasswordsBubble() override;
+  ShowTranslateBubbleResult ShowTranslateBubble(
+      BrowserWindow* window,
+      translate::TranslateStep step,
+      translate::TranslateErrors::Type error_type,
+      bool is_user_gesture) override;
   base::WeakPtr<ValidationMessageBubble> ShowValidationMessage(
       const gfx::Rect& anchor_in_root_view,
       const base::string16& main_text,
@@ -36,7 +45,11 @@ class TabDialogsCocoa : public TabDialogs {
   content::WebContents* web_contents() const { return web_contents_; }
 
  private:
+  void TranslateWindowDidClose();
+
   content::WebContents* web_contents_;  // Weak. Owns this.
+  TranslateBubbleController* translate_bubble_controller_;
+  base::scoped_nsobject<WindowClosureListener> translate_closure_listener_;
 
   DISALLOW_COPY_AND_ASSIGN(TabDialogsCocoa);
 };

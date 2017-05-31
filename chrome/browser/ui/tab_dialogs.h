@@ -11,7 +11,11 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "base/supports_user_data.h"
+#include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/ui/translate/translate_bubble_factory.h"
 #include "chrome/browser/ui/validation_message_bubble.h"
+#include "components/translate/core/browser/translate_step.h"
+#include "components/translate/core/common/translate_errors.h"
 #include "ui/gfx/native_widget_types.h"
 
 class Browser;
@@ -65,6 +69,12 @@ class TabDialogs : public base::SupportsUserData::Data {
   // Pass true for |user_action| if this is a user initiated action.
   virtual void ShowManagePasswordsBubble(bool user_action) = 0;
   virtual void HideManagePasswordsBubble() = 0;
+
+  virtual ShowTranslateBubbleResult ShowTranslateBubble(
+      BrowserWindow* window,
+      translate::TranslateStep step,
+      translate::TranslateErrors::Type type,
+      bool is_user_gesture) = 0;
 
   virtual base::WeakPtr<ValidationMessageBubble> ShowValidationMessage(
       const gfx::Rect& anchor_in_root_view,
