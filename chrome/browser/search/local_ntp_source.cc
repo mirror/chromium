@@ -23,6 +23,7 @@
 #include "chrome/browser/search/one_google_bar/one_google_bar_data.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_service.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_service_factory.h"
+#include "chrome/browser/search/one_google_bar/one_google_bar_service_observer.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/themes/theme_service.h"
@@ -188,7 +189,71 @@ std::unique_ptr<base::DictionaryValue> ConvertOGBDataToDict(
 
 }  // namespace
 
-class LocalNtpSource::GoogleSearchProviderTracker
+class LocalNtpSourceImpl : public content::URLDataSource,
+                           public OneGoogleBarServiceObserver {
+ public:
+  explicit LocalNtpSourceImpl(Profile* profile);
+  ~LocalNtpSourceImpl() override;
+
+  // Overridden from content::URLDataSource:
+  std::string GetSource() const override;
+  void StartDataRequest(
+      const std::string& path,
+      const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
+      const content::URLDataSource::GotDataCallback& callback) override;
+  std::string GetMimeType(const std::string& path) const override;
+  bool AllowCaching() const override;
+  bool ShouldServiceRequest(const GURL& url,  // IO
+                            content::ResourceContext* resource_context,
+                            int render_process_id) const override;
+  std::string GetContentSecurityPolicyScriptSrc() const override;  // IO
+  std::string GetContentSecurityPolicyChildSrc() const override;   // IO
+
+ private:
+  class GoogleSearchProviderTracker;
+
+  struct OneGoogleBarRequest {
+    OneGoogleBarRequest(
+        base::TimeTicks start_time,
+        const content::URLDataSource::GotDataCallback& callback);
+    OneGoogleBarRequest(const OneGoogleBarRequest&);
+    ~OneGoogleBarRequest();
+
+    base::TimeTicks start_time;
+    content::URLDataSource::GotDataCallback callback;
+  };
+
+  // Overridden from OneGoogleBarServiceObserver:
+  void OnOneGoogleBarDataChanged() override;
+  void OnOneGoogleBarFetchFailed() override;
+  void OnOneGoogleBarServiceShuttingDown() override;
+
+  void ServeOneGoogleBar(const base::Optional<OneGoogleBarData>& data);
+
+  void DefaultSearchProviderIsGoogleChanged(bool is_google);
+
+  void SetDefaultSearchProviderIsGoogleOnIOThread(bool is_google);
+
+  Profile* const profile_;
+
+  OneGoogleBarService* one_google_bar_service_;
+
+  ScopedObserver<OneGoogleBarService, OneGoogleBarServiceObserver>
+      one_google_bar_service_observer_;
+
+  std::vector<OneGoogleBarRequest> one_google_bar_requests_;
+
+  std::unique_ptr<GoogleSearchProviderTracker> google_tracker_;
+  bool default_search_provider_is_google_;
+  // A copy of |default_search_provider_is_google_| for use on the IO thread.
+  bool default_search_provider_is_google_io_thread_;
+
+  base::WeakPtrFactory<LocalNtpSourceImpl> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(LocalNtpSourceImpl);
+};
+
+class LocalNtpSourceImpl::GoogleSearchProviderTracker
     : public TemplateURLServiceObserver {
  public:
   using SearchProviderIsGoogleChangedCallback =
@@ -229,7 +294,7 @@ class LocalNtpSource::GoogleSearchProviderTracker
   bool is_google_;
 };
 
-LocalNtpSource::LocalNtpSource(Profile* profile)
+LocalNtpSourceImpl::LocalNtpSourceImpl(Profile* profile)
     : profile_(profile),
       one_google_bar_service_(nullptr),
       one_google_bar_service_observer_(this),
@@ -253,20 +318,23 @@ LocalNtpSource::LocalNtpSource(Profile* profile)
   if (template_url_service) {
     google_tracker_ = base::MakeUnique<GoogleSearchProviderTracker>(
         template_url_service,
-        base::Bind(&LocalNtpSource::DefaultSearchProviderIsGoogleChanged,
+        base::Bind(&LocalNtpSourceImpl::DefaultSearchProviderIsGoogleChanged,
                    base::Unretained(this)));
     DefaultSearchProviderIsGoogleChanged(
         google_tracker_->DefaultSearchProviderIsGoogle());
   }
 }
 
-LocalNtpSource::~LocalNtpSource() = default;
+LocalNtpSourceImpl::~LocalNtpSourceImpl() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  weak_ptr_factory_.InvalidateWeakPtrs();
+}
 
-std::string LocalNtpSource::GetSource() const {
+std::string LocalNtpSourceImpl::GetSource() const {
   return chrome::kChromeSearchLocalNtpHost;
 }
 
-void LocalNtpSource::StartDataRequest(
+void LocalNtpSourceImpl::StartDataRequest(
     const std::string& path,
     const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
     const content::URLDataSource::GotDataCallback& callback) {
@@ -368,8 +436,7 @@ void LocalNtpSource::StartDataRequest(
   callback.Run(nullptr);
 }
 
-std::string LocalNtpSource::GetMimeType(
-    const std::string& path) const {
+std::string LocalNtpSourceImpl::GetMimeType(const std::string& path) const {
   const std::string stripped_path = StripParameters(path);
   for (size_t i = 0; i < arraysize(kResources); ++i) {
     if (stripped_path == kResources[i].filename)
@@ -378,7 +445,7 @@ std::string LocalNtpSource::GetMimeType(
   return std::string();
 }
 
-bool LocalNtpSource::AllowCaching() const {
+bool LocalNtpSourceImpl::AllowCaching() const {
   // Some resources served by LocalNtpSource, i.e. config.js, are dynamically
   // generated and could differ on each access. To avoid using old cached
   // content on reload, disallow caching here. Otherwise, it fails to reflect
@@ -386,7 +453,7 @@ bool LocalNtpSource::AllowCaching() const {
   return false;
 }
 
-bool LocalNtpSource::ShouldServiceRequest(
+bool LocalNtpSourceImpl::ShouldServiceRequest(
     const GURL& url,
     content::ResourceContext* resource_context,
     int render_process_id) const {
@@ -409,7 +476,7 @@ bool LocalNtpSource::ShouldServiceRequest(
   return false;
 }
 
-std::string LocalNtpSource::GetContentSecurityPolicyScriptSrc() const {
+std::string LocalNtpSourceImpl::GetContentSecurityPolicyScriptSrc() const {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
 #if !defined(GOOGLE_CHROME_BUILD)
@@ -428,7 +495,7 @@ std::string LocalNtpSource::GetContentSecurityPolicyScriptSrc() const {
          "'sha256-yAvSu2Dl9rlQTpQn8P1hcE5GUFQVGbuCMHypwtN6uDg=';";
 }
 
-std::string LocalNtpSource::GetContentSecurityPolicyChildSrc() const {
+std::string LocalNtpSourceImpl::GetContentSecurityPolicyChildSrc() const {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   if (one_google_bar_service_) {
@@ -442,22 +509,22 @@ std::string LocalNtpSource::GetContentSecurityPolicyChildSrc() const {
                             chrome::kChromeSearchMostVisitedUrl);
 }
 
-void LocalNtpSource::OnOneGoogleBarDataChanged() {
+void LocalNtpSourceImpl::OnOneGoogleBarDataChanged() {
   const base::Optional<OneGoogleBarData>& data =
       one_google_bar_service_->one_google_bar_data();
   ServeOneGoogleBar(data);
 }
 
-void LocalNtpSource::OnOneGoogleBarFetchFailed() {
+void LocalNtpSourceImpl::OnOneGoogleBarFetchFailed() {
   ServeOneGoogleBar(base::nullopt);
 }
 
-void LocalNtpSource::OnOneGoogleBarServiceShuttingDown() {
+void LocalNtpSourceImpl::OnOneGoogleBarServiceShuttingDown() {
   one_google_bar_service_observer_.RemoveAll();
   one_google_bar_service_ = nullptr;
 }
 
-void LocalNtpSource::ServeOneGoogleBar(
+void LocalNtpSourceImpl::ServeOneGoogleBar(
     const base::Optional<OneGoogleBarData>& data) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -488,29 +555,72 @@ void LocalNtpSource::ServeOneGoogleBar(
   one_google_bar_requests_.clear();
 }
 
-void LocalNtpSource::DefaultSearchProviderIsGoogleChanged(bool is_google) {
+void LocalNtpSourceImpl::DefaultSearchProviderIsGoogleChanged(bool is_google) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   default_search_provider_is_google_ = is_google;
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
-      base::Bind(&LocalNtpSource::SetDefaultSearchProviderIsGoogleOnIOThread,
-                 weak_ptr_factory_.GetWeakPtr(), is_google));
+      base::Bind(
+          &LocalNtpSourceImpl::SetDefaultSearchProviderIsGoogleOnIOThread,
+          weak_ptr_factory_.GetWeakPtr(), is_google));
 }
 
-void LocalNtpSource::SetDefaultSearchProviderIsGoogleOnIOThread(
+void LocalNtpSourceImpl::SetDefaultSearchProviderIsGoogleOnIOThread(
     bool is_google) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   default_search_provider_is_google_io_thread_ = is_google;
 }
 
-LocalNtpSource::OneGoogleBarRequest::OneGoogleBarRequest(
+LocalNtpSourceImpl::OneGoogleBarRequest::OneGoogleBarRequest(
     base::TimeTicks start_time,
     const content::URLDataSource::GotDataCallback& callback)
     : start_time(start_time), callback(callback) {}
 
-LocalNtpSource::OneGoogleBarRequest::OneGoogleBarRequest(
+LocalNtpSourceImpl::OneGoogleBarRequest::OneGoogleBarRequest(
     const OneGoogleBarRequest&) = default;
 
-LocalNtpSource::OneGoogleBarRequest::~OneGoogleBarRequest() = default;
+LocalNtpSourceImpl::OneGoogleBarRequest::~OneGoogleBarRequest() = default;
+
+LocalNtpSource::LocalNtpSource(Profile* profile)
+    : ntp_source_(base::MakeUnique<LocalNtpSourceImpl>(profile)) {}
+
+LocalNtpSource::~LocalNtpSource() {
+  content::BrowserThread::DeleteSoon(content::BrowserThread::IO, FROM_HERE,
+                                     ntp_source_.release());
+}
+
+std::string LocalNtpSource::GetSource() const {
+  return ntp_source_->GetSource();
+}
+void LocalNtpSource::StartDataRequest(
+    const std::string& path,
+    const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
+    const content::URLDataSource::GotDataCallback& callback) {
+  return ntp_source_->StartDataRequest(path, wc_getter, callback);
+}
+
+std::string LocalNtpSource::GetMimeType(const std::string& path) const {
+  return ntp_source_->GetMimeType(path);
+}
+
+bool LocalNtpSource::AllowCaching() const {
+  return ntp_source_->AllowCaching();
+}
+
+bool LocalNtpSource::ShouldServiceRequest(
+    const GURL& url,
+    content::ResourceContext* resource_context,
+    int render_process_id) const {
+  return ntp_source_->ShouldServiceRequest(url, resource_context,
+                                           render_process_id);
+}
+
+std::string LocalNtpSource::GetContentSecurityPolicyScriptSrc() const {
+  return ntp_source_->GetContentSecurityPolicyScriptSrc();
+}
+
+std::string LocalNtpSource::GetContentSecurityPolicyChildSrc() const {
+  return ntp_source_->GetContentSecurityPolicyChildSrc();
+}
