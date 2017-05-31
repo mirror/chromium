@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "e461079e_1dbc0483",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-05-31T09:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44f7935a_81ea233a",
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b1a489b_a426aba3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 2
@@ -106,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0fa1a472_8d42c4ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-05-31T09:42:18Z",
+      "side": 1,
+      "message": "As discussed offline, solved by having the key in the cache be a pair of the filepath and size of image (in terms of height/width).",
+      "parentUuid": "999d99a9_7f4fd9a9",
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "880867be_8919fe27",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 2
@@ -129,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "2f0f21e6_d416cee6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-05-31T09:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "880867be_8919fe27",
+      "range": {
+        "startLine": 593,
+        "startChar": 16,
+        "endLine": 593,
+        "endChar": 19
+      },
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6b0da3e_f60f531a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegateImpl.java",
         "patchSetId": 2
@@ -149,6 +209,30 @@
       "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0d931e_6454d008",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-05-31T09:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b0da3e_f60f531a",
+      "range": {
+        "startLine": 40,
+        "startChar": 30,
+        "endLine": 40,
+        "endChar": 48
+      },
+      "revId": "882368e16516eb7cfe6c4eda28767468e8ce061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
