@@ -62,6 +62,22 @@ struct TargetWithFactory : public Target {
   WeakPtrFactory<Target> factory;
 };
 
+struct StructWithFactory {
+ public:
+  StructWithFactory() : weak_factory_(this) {}
+  ~StructWithFactory() {}
+
+  WeakPtrFactory<StructWithFactory> weak_factory_;
+};
+
+struct StructWithMemberFactory {
+ public:
+  StructWithMemberFactory() : weak_factory_(this) {}
+  ~StructWithMemberFactory() {}
+
+  MemberWeakPtrFactory<StructWithMemberFactory> weak_factory_;
+};
+
 // Helper class to create and destroy weak pointer copies
 // and delete objects on a background thread.
 class BackgroundThread : public Thread {
@@ -564,6 +580,18 @@ TEST(WeakPtrTest, NonOwnerThreadCanDeleteWeakPtr) {
   BackgroundThread background;
   background.Start();
   background.DeleteArrow(arrow);
+}
+
+TEST(WeakPtrTest, StructWithFactoryComparison) {
+  StructWithMemberFactory target;
+  EXPECT_EQ(&target, target.weak_factory_.GetWeakPtr().get());
+
+  StructWithFactory target2;
+  EXPECT_EQ(&target2, target2.weak_factory_.GetWeakPtr().get());
+
+  // TODO(kmarshall): Remove this
+  LOG(INFO) << "MemberWeakPtrFactory size: " << sizeof(target);
+  LOG(INFO) << "WeakPtrFactory size: " << sizeof(target2);
 }
 
 TEST(WeakPtrDeathTest, WeakPtrCopyDoesNotChangeThreadBinding) {
