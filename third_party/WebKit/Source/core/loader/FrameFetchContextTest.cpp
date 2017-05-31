@@ -188,8 +188,11 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
       SecurityViolationReportingPolicy reporting_policy) {
     KURL input_url(kParsedURLString, "http://example.com/");
     ResourceRequest resource_request(input_url);
+    ResourceLoaderOptions options;
+    options.allow_credentials = kDoNotAllowStoredCredentials;
+    options.credentials_requested = kClientDidNotRequestCredentials;
     return fetch_context->CanRequest(
-        Resource::kImage, resource_request, input_url, ResourceLoaderOptions(),
+        Resource::kImage, resource_request, input_url, options,
         reporting_policy, FetchParameters::kUseDefaultOriginRestrictionForType);
   }
 
@@ -486,9 +489,12 @@ TEST_F(FrameFetchContextTest, PopulateResourceRequestChecksReportOnlyCSP) {
   KURL url(KURL(), "http://baz.test");
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
+  ResourceLoaderOptions options;
+  options.allow_credentials = kDoNotAllowStoredCredentials;
+  options.credentials_requested = kClientDidNotRequestCredentials;
   fetch_context->PopulateResourceRequest(
       url, Resource::kScript, ClientHintsPreferences(),
-      FetchParameters::ResourceWidth(), ResourceLoaderOptions(),
+      FetchParameters::ResourceWidth(), options,
       SecurityViolationReportingPolicy::kReport, resource_request);
   EXPECT_EQ(1u, policy->violation_reports_sent_.size());
   // Check that the resource was upgraded to a secure URL.

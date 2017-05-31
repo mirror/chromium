@@ -74,13 +74,8 @@ class PLATFORM_EXPORT FetchParameters {
     ResourceWidth() : width(0), is_set(false) {}
   };
 
-  FetchParameters(const ResourceRequest&,
-                  const AtomicString& initiator,
-                  const String& charset = String());
-  FetchParameters(const ResourceRequest&,
-                  const AtomicString& initiator,
-                  const ResourceLoaderOptions&);
-  FetchParameters(const ResourceRequest&, const FetchInitiatorInfo&);
+  explicit FetchParameters(const ResourceRequest&);
+  FetchParameters(const ResourceRequest&, const ResourceLoaderOptions&);
   ~FetchParameters();
 
   ResourceRequest& MutableResourceRequest() { return resource_request_; }
