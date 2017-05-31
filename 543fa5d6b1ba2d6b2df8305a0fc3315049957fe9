@@ -22,6 +22,30 @@
       "revId": "543fa5d6b1ba2d6b2df8305a0fc3315049957fe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173eacf6_95ae6f9d",
+        "filename": "ios/web/public/app/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-05-31T15:08:48Z",
+      "side": 1,
+      "message": "Filed crbug.com/728161 to address this circular dependency.",
+      "parentUuid": "1244ba28_3f14b663",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "543fa5d6b1ba2d6b2df8305a0fc3315049957fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
