@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98cfb9bc_fe9e9a60",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-05-31T19:09:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "404c2afd_e60038d4",
+      "revId": "1cac00abb08722810f7d2a164e539ab034f18632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3fe88e6_15f15f62",
         "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "23b29682_ff2fdf28",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-05-31T19:09:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3fe88e6_15f15f62",
+      "revId": "1cac00abb08722810f7d2a164e539ab034f18632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c1c6c81_dd0e89a6",
         "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-05-31T18:09:21Z",
       "side": 1,
       "message": "I\u0027m not sure whether it\u0027s better to constrain the size of the lock icon via constraints or resize the image to the required size and avoid constraints. @lpromero should know.",
+      "revId": "1cac00abb08722810f7d2a164e539ab034f18632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb2faf0_fc4b0c35",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-05-31T19:09:12Z",
+      "side": 1,
+      "message": "Fixed to resizing instead of using constraints!",
+      "parentUuid": "3c1c6c81_dd0e89a6",
       "revId": "1cac00abb08722810f7d2a164e539ab034f18632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
