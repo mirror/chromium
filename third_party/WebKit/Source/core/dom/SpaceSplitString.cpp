@@ -29,6 +29,7 @@ namespace blink {
 // https://dom.spec.whatwg.org/#concept-ordered-set-parser
 template <typename CharacterType>
 inline void SpaceSplitString::Data::CreateVector(
+    const AtomicString& source,
     const CharacterType* characters,
     unsigned length) {
   HashSet<AtomicString> token_set;
@@ -42,9 +43,25 @@ inline void SpaceSplitString::Data::CreateVector(
     while (end < length && IsNotHTMLSpace<CharacterType>(characters[end]))
       ++end;
 
+    if (start == 0 && end == length) {
+      vector_.push_back(source);
+      return;
+    }
+
     AtomicString token(characters + start, end - start);
-    if (!token_set.Contains(token)) {
-      token_set.insert(token);
+    // We skip adding |token| to |token_set| for the first token to reduce the
+    // cost of HashSet<>::insert(), and adjust |token_set| when the second token
+    // is found.
+    if (vector_.size() == 0) {
+      vector_.push_back(token);
+    } else if (vector_.size() == 1) {
+      if (token_set.size() == 0)
+        token_set.insert(vector_[0]);
+      if (vector_[0] != token) {
+        token_set.insert(token);
+        vector_.push_back(token);
+      }
+    } else if (token_set.insert(token).is_new_entry) {
       vector_.push_back(token);
     }
 
@@ -52,15 +69,15 @@ inline void SpaceSplitString::Data::CreateVector(
   }
 }
 
-void SpaceSplitString::Data::CreateVector(const String& string) {
+void SpaceSplitString::Data::CreateVector(const AtomicString& string) {
   unsigned length = string.length();
 
   if (string.Is8Bit()) {
-    CreateVector(string.Characters8(), length);
+    CreateVector(string, string.Characters8(), length);
     return;
   }
 
-  CreateVector(string.Characters16(), length);
+  CreateVector(string, string.Characters16(), length);
 }
 
 bool SpaceSplitString::Data::ContainsAll(Data& other) {
