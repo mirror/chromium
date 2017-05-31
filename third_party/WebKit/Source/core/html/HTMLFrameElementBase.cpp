@@ -208,7 +208,7 @@ void HTMLFrameElementBase::DidNotifySubtreeInsertionsToDocument() {
 void HTMLFrameElementBase::AttachLayoutTree(const AttachContext& context) {
   HTMLFrameOwnerElement::AttachLayoutTree(context);
 
-  if (GetLayoutPart() && ContentFrame())
+  if (GetLayoutEmbeddedContentView() && ContentFrame())
     SetEmbeddedContentView(ContentFrame()->View());
 }
 

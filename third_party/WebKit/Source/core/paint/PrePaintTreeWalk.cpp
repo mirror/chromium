@@ -7,8 +7,8 @@
 #include "core/dom/DocumentLifecycle.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/layout/LayoutEmbeddedContentView.h"
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
-#include "core/layout/LayoutPart.h"
 #include "core/layout/LayoutView.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/graphics/paint/GeometryMapper.h"
@@ -331,13 +331,14 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
     Walk(*child, context);
   }
 
-  if (object.IsLayoutPart()) {
-    const LayoutPart& layout_part = ToLayoutPart(object);
-    LocalFrameView* frame_view = layout_part.ChildFrameView();
+  if (object.IsLayoutEmbeddedContentView()) {
+    const LayoutEmbeddedContentView& layout_embedded_content_view =
+        ToLayoutEmbeddedContentView(object);
+    LocalFrameView* frame_view = layout_embedded_content_view.ChildFrameView();
     if (frame_view) {
       if (context.tree_builder_context) {
         context.tree_builder_context->fragments[0].current.paint_offset +=
-            layout_part.ReplacedContentRect().Location() -
+            layout_embedded_content_view.ReplacedContentRect().Location() -
             frame_view->FrameRect().Location();
         context.tree_builder_context->fragments[0].current.paint_offset =
             RoundedIntPoint(context.tree_builder_context->fragments[0]

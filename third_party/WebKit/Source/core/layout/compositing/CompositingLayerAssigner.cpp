@@ -145,9 +145,9 @@ CompositingLayerAssigner::GetReasonsPreventingSquashing(
   // Don't squash iframes, frames or plugins.
   // FIXME: this is only necessary because there is frame code that assumes that
   // composited frames are not squashed.
-  if (layer->GetLayoutObject().IsLayoutPart() ||
-      squashing_layer.GetLayoutObject().IsLayoutPart())
-    return kSquashingDisallowedReasonSquashingLayoutPartIsDisallowed;
+  if (layer->GetLayoutObject().IsLayoutEmbeddedContentView() ||
+      squashing_layer.GetLayoutObject().IsLayoutEmbeddedContentView())
+    return kSquashingDisallowedReasonSquashingLayoutEmbeddedContentViewIsDisallowed;
 
   if (SquashingWouldExceedSparsityTolerance(layer, squashing_state))
     return kSquashingDisallowedReasonSquashingSparsityExceeded;

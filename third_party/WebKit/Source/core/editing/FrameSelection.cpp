@@ -65,7 +65,7 @@
 #include "core/input/EventHandler.h"
 #include "core/layout/HitTestRequest.h"
 #include "core/layout/HitTestResult.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContentView.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/page/EditorClient.h"
@@ -857,9 +857,9 @@ static bool IsFrameElement(const Node* n) {
   if (!n)
     return false;
   LayoutObject* layout_object = n->GetLayoutObject();
-  if (!layout_object || !layout_object->IsLayoutPart())
+  if (!layout_object || !layout_object->IsLayoutEmbeddedContentView())
     return false;
-  return ToLayoutPart(layout_object)->ChildFrameView();
+  return ToLayoutEmbeddedContentView(layout_object)->ChildFrameView();
 }
 
 void FrameSelection::SetFocusedNodeIfNeeded() {

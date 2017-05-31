@@ -24,13 +24,13 @@
 #ifndef LayoutEmbeddedObject_h
 #define LayoutEmbeddedObject_h
 
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContentView.h"
 
 namespace blink {
 
 // LayoutObject for embeds and objects, often, but not always, rendered via
 // plugins. For example, <embed src="foo.html"> does not invoke a plugin.
-class LayoutEmbeddedObject final : public LayoutPart {
+class LayoutEmbeddedObject final : public LayoutEmbeddedContentView {
  public:
   LayoutEmbeddedObject(Element*);
   ~LayoutEmbeddedObject() override;
@@ -59,7 +59,8 @@ class LayoutEmbeddedObject final : public LayoutPart {
   void UpdateLayout() final;
 
   bool IsOfType(LayoutObjectType type) const override {
-    return type == kLayoutObjectEmbeddedObject || LayoutPart::IsOfType(type);
+    return type == kLayoutObjectEmbeddedObject ||
+           LayoutEmbeddedContentView::IsOfType(type);
   }
   LayoutReplaced* EmbeddedReplacedContent() const final;
 
