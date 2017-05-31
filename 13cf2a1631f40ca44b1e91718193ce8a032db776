@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "878dbdac_12cc9488",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1212539
+      },
+      "writtenOn": "2017-05-31T04:37:07Z",
+      "side": 1,
+      "message": "Technically we should not have Https.ViaDRP or Https.BypassedDRP (here and above). Is there overhead for maintaining/reporting these \"bogus\" histograms? Should we exclude them from the reporting just to make it clear this is not supported?",
+      "revId": "13cf2a1631f40ca44b1e91718193ce8a032db776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114794ac_a3cc13e0",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1212539
+      },
+      "writtenOn": "2017-05-31T04:37:07Z",
+      "side": 1,
+      "message": "Why not std::pair? (This may be a stupid suggestion as I have no idea what the C++ coding style guideline is for Chromium.)",
+      "revId": "13cf2a1631f40ca44b1e91718193ce8a032db776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de66f975_6d752ee7",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1212539
+      },
+      "writtenOn": "2017-05-31T04:37:07Z",
+      "side": 1,
+      "message": "\"New\" is relative :-) Suggest another name given that these may not be \"New\" for long...",
+      "range": {
+        "startLine": 1430,
+        "startChar": 46,
+        "endLine": 1430,
+        "endChar": 62
+      },
+      "revId": "13cf2a1631f40ca44b1e91718193ce8a032db776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414029e6_de5a7e3a",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1212539
+      },
+      "writtenOn": "2017-05-31T04:37:07Z",
+      "side": 1,
+      "message": "Is it possible to have test cases for the \"Bypassed\" and \"Other\" histograms?",
+      "revId": "13cf2a1631f40ca44b1e91718193ce8a032db776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
