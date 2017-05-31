@@ -257,8 +257,8 @@ class SupervisedUserWhitelistComponentInstallerTraits
       const base::DictionaryValue& manifest,
       const base::FilePath& install_dir) override;
   void ComponentReady(const base::Version& version,
-                      const base::FilePath& install_dir,
-                      std::unique_ptr<base::DictionaryValue> manifest) override;
+                      const base::DictionaryValue& manifest,
+                      const base::FilePath& install_dir) override;
   base::FilePath GetRelativeInstallDir() const override;
   void GetHash(std::vector<uint8_t>* hash) const override;
   std::string GetName() const override;
@@ -304,14 +304,14 @@ SupervisedUserWhitelistComponentInstallerTraits::OnCustomInstall(
 
 void SupervisedUserWhitelistComponentInstallerTraits::ComponentReady(
     const base::Version& version,
-    const base::FilePath& install_dir,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& install_dir) {
   // TODO(treib): Before getting the title, we should localize the manifest
   // using extension_l10n_util::LocalizeExtension, but that doesn't exist on
   // Android. crbug.com/558387
-  callback_.Run(GetWhitelistTitle(*manifest),
-                GetLargeIconPath(*manifest, install_dir),
-                GetRawWhitelistPath(*manifest, install_dir));
+  callback_.Run(GetWhitelistTitle(manifest),
+                GetLargeIconPath(manifest, install_dir),
+                GetRawWhitelistPath(manifest, install_dir));
 }
 
 base::FilePath

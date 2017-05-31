@@ -5,6 +5,7 @@
 #include "chrome/browser/component_updater/ssl_error_assistant_component_installer.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/files/file_util.h"
@@ -78,8 +79,8 @@ base::FilePath SSLErrorAssistantComponentInstallerTraits::GetInstalledPath(
 
 void SSLErrorAssistantComponentInstallerTraits::ComponentReady(
     const base::Version& version,
-    const base::FilePath& install_dir,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& install_dir) {
   DVLOG(1) << "Component ready, version " << version.GetString() << " in "
            << install_dir.value();
 

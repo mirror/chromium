@@ -77,8 +77,7 @@ class OriginTrialsComponentInstallerTest : public PlatformTest {
     }
     ASSERT_TRUE(traits_->VerifyInstallation(*manifest, temp_dir_.GetPath()));
     const base::Version expected_version(kTestUpdateVersion);
-    traits_->ComponentReady(expected_version, temp_dir_.GetPath(),
-                            std::move(manifest));
+    traits_->ComponentReady(expected_version, *manifest, temp_dir_.GetPath());
   }
 
   void AddDisabledFeaturesToPrefs(const std::vector<std::string>& features) {
