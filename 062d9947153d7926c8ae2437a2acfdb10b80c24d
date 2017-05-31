@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4ca6706_1b594aaf",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-31T22:39:06Z",
+      "side": 1,
+      "message": "Can we just move SimNfcActivity to chrome_test_vr_java and remove this target?",
+      "range": {
+        "startLine": 584,
+        "startChar": 17,
+        "endLine": 584,
+        "endChar": 28
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc3afa9_4dca85ad",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-31T22:39:06Z",
+      "side": 1,
+      "message": "Don\u0027t need //chrome/android",
+      "range": {
+        "startLine": 586,
+        "startChar": 5,
+        "endLine": 586,
+        "endChar": 22
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2186c76_13b834f4",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-31T22:39:06Z",
+      "side": 1,
+      "message": "testonly \u003d true",
+      "range": {
+        "startLine": 948,
+        "startChar": 0,
+        "endLine": 948,
+        "endChar": 11
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7237d2_ef467ce3",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-31T22:39:06Z",
+      "side": 1,
+      "message": "Can we make this match the apk name a bit more?",
+      "range": {
+        "startLine": 948,
+        "startChar": 13,
+        "endLine": 948,
+        "endChar": 23
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe5d347_6335e450",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-31T22:39:06Z",
+      "side": 1,
+      "message": "Should this be NfcSimulatorTestVr like the above instrumentation apk name?",
+      "range": {
+        "startLine": 949,
+        "startChar": 14,
+        "endLine": 949,
+        "endChar": 28
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd60af6_58064071",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-31T22:39:06Z",
+      "side": 1,
+      "message": "Looks like all manifests are run through jinja_template first?  Should we be consistent?",
+      "range": {
+        "startLine": 950,
+        "startChar": 21,
+        "endLine": 950,
+        "endChar": 118
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867da0de_0efd3ec4",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-05-31T22:39:06Z",
+      "side": 1,
+      "message": "New line before deps?",
+      "range": {
+        "startLine": 951,
+        "startChar": 2,
+        "endLine": 951,
+        "endChar": 6
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
