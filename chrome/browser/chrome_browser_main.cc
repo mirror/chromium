@@ -323,10 +323,23 @@ PrefService* InitializeLocalState(
     base::SequencedTaskRunner* local_state_task_runner,
     const base::CommandLine& parsed_command_line) {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::InitializeLocalState")
-
   // Load local state.  This includes the application locale so we know which
   // locale dll to load.  This also causes local state prefs to be registered.
   PrefService* local_state = g_browser_process->local_state();
+
+  // Reading a pref 
+  const PrefService::Preference* pref = local_state->FindPreference(prefs::kShowFirstRunBubbleOption);
+  const std::string read_pref = pref->name();
+  LOG(INFO) << "testing read_pref: " << read_pref;
+
+  // Saving a pref
+  // Set new tab location to calendar
+  static const char kOverrideUrl[] = "http://calendar.google.com";
+  // PrefService* prefs = browser()->profile()->GetPrefs();
+  scoped_refptr<PrefRegistrySimple> registry = new PrefRegistrySimple();
+  registry->RegisterStringPref(prefs::kNewTabPageLocationOverride, std::string());
+ // local_state->SetString(prefs::kNewTabPageLocationOverride, kOverrideUrl);
+
   DCHECK(local_state);
 
 #if defined(OS_WIN)

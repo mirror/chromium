@@ -1984,14 +1984,10 @@ const char kChromeHomeSwipeLogicRestrictArea[] = "Restrict swipable area";
 
 //  In-Product Help flags
 
-#if defined(OS_ANDROID)
-
 const char kEnableIphDemoModeName[] = "In-Product Help Demo Mode";
 
 const char kEnableIphDemoModeDescription[] =
-    "Enables In-Product Help demo mode on Android.";
-
-#endif  // defined(OS_ANDROID)
+    "Enables In-Product Help demo mode.";
 
 //  Settings window flags
 
