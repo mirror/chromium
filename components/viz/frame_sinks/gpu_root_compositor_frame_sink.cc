@@ -36,6 +36,7 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
           this,
           std::move(compositor_frame_sink_private_request)),
       display_private_binding_(this, std::move(display_private_request)) {
+  DCHECK(display_begin_frame_source_);
   compositor_frame_sink_binding_.set_connection_error_handler(
       base::Bind(&GpuRootCompositorFrameSink::OnClientConnectionLost,
                  base::Unretained(this)));
@@ -45,7 +46,10 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
   display_->Initialize(this, surface_manager);
 }
 
-GpuRootCompositorFrameSink::~GpuRootCompositorFrameSink() = default;
+GpuRootCompositorFrameSink::~GpuRootCompositorFrameSink() {
+  support_->surface_manager()->UnregisterBeginFrameSource(
+      display_begin_frame_source_.get());
+}
 
 void GpuRootCompositorFrameSink::SetDisplayVisible(bool visible) {
   DCHECK(display_);
