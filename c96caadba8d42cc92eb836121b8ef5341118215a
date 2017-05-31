@@ -22,6 +22,30 @@
       "revId": "c96caadba8d42cc92eb836121b8ef5341118215a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7d6c57_ec290483",
+        "filename": "third_party/WebKit/Source/devtools/front_end/animation/AnimationModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-31T01:38:26Z",
+      "side": 1,
+      "message": "I\u0027ll just remove it. :-)",
+      "parentUuid": "ca8eaa78_f0636338",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 27
+      },
+      "revId": "c96caadba8d42cc92eb836121b8ef5341118215a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
