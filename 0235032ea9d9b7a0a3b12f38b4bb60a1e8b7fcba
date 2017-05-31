@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f09d6c5f_c19f2d7f",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "How is this different from exclude_paths, immediately below, which also matches using fnmatch? It seems like it only requires adding */ to the beginning of these patterns.",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea3817d_623216bb",
+        "filename": "content/test/data/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "What\u0027s changing here?",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4e9781_744a3331",
+        "filename": "third_party/WebKit/LayoutTests/mojo/bind-interface.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "This catch will catch the assert_unreached exception. If you keep in promise \"then\" style, you probably want to use the two-argument then:\n\nreturn helper.reverse(\"doesn\u0027t matter\").then(\n    reply \u003d\u003e assert_unreached(\"request should not succeed\"),\n    e \u003d\u003e {});",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99442c86_c5bd8c0c",
+        "filename": "third_party/WebKit/LayoutTests/mojo/bind-interface.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "This isn\u0027t required; promise_test will pass the result to Promise.resolve already, so if there\u0027s nothing asynchronous you can just use the default return. (Relatedly, this test could be a plain old \"test\" rather than a \"promise_test\", not that it matters.)",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310ffe7a_e88a6727",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "Is LocalFrameClient::GetFrameInterfaceProvider better? If so, why?",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ee656f_4e1fbb35",
+        "filename": "third_party/WebKit/Source/core/mojo/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "I\u0027d like to see us allow this here, but we\u0027ve so far been reticent to do so, so if you do want this it should probably be run by Kentaro (who\u0027s been doing much of the Onion Soup 2.0 planning).",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff48e4ce_e502db87",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "Does mojo::ScopedHandle guarantee that moving from it clears the handle? The comments allude to it by making reference to std::unique_ptr (which does guarantee that), but this isn\u0027t a general guarantee of move-construction.\n\nIf ScopedHandle doesn\u0027t have that as part of its contract, explicitly reset handle_ after moving from it.",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489d3158_508b86c7",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceInterceptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "This and the other new class could use class comments that explain what they do and what they are for. It might also be worth segregating the test-only ones into a core/mojo/testing/ or similar.",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6513d688_6b93b211",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceInterceptor.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "Eh, this is an idiomatic approach. If you want something slightly shorter but slightly less idiomatic, this would work:\n\ncallback MojoInterfaceInterceptCallback \u003d void(MojoHandle handle);\n[ActiveScriptWrappable, Constructor(DOMString interfaceName, MojoInterfaceInterceptCallback callback), ...] interface MojoInterfaceInterceptor {\n  [RaisesException] void start();\n  void stop();\n};\n\nor maybe:\n\ncallback MojoInterfaceInterceptCallback \u003d void(MojoHandle handle);\ninterface Internals {\n  [RaisesException] void setInterceptInterface(DOMString interfaceName, MojoInterfaceInterceptCallback callback);\n  void clearInterceptInterface(DOMString interfaceName);\n};\n\nWhich avoids a little of the event target boilerplate, but not much (and gives you a little bit of different boilerplate instead).",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e62b39f_e0dbd8a0",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceRequestEvent.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "Look at how Internals.{cpp,h,idl} work: we don\u0027t even compile them into chrome (but do into content_shell). Still protecting it this way seems reasonable (analogous to how we require --expose-internals-for-testing or --run-layout-test to expose Internals).",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7cc903_be708574",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-05-31T19:31:27Z",
+      "side": 1,
+      "message": "We do already have a blink::InterfaceProvider, which suffices for the production case, at least. It\u0027d probably be less controversial to expose TestApi via that rather than expose the underlying object (though I see we _do_ do that for Connector).\n\nIf you want to use service_manager::, we should probably loop in haraken@ to see if he\u0027s happy to let us do this. (Personally, I would like to move in this direction and only write wrappers when there\u0027s enough call sites for it to be worthwhile, but opinions vary.)",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
