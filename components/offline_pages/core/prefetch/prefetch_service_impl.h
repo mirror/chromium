@@ -14,17 +14,20 @@ namespace offline_pages {
 
 class PrefetchServiceImpl : public PrefetchService {
  public:
-  PrefetchServiceImpl();
+  PrefetchServiceImpl(
+      std::unique_ptr<OfflineMetricsCollector> offline_metrics_collector);
   ~PrefetchServiceImpl() override;
 
   // PrefetchService implementation:
   PrefetchDispatcher* GetDispatcher() override;
+  OfflineMetricsCollector* GetOfflineMetricsCollector() override;
 
   // KeyedService implementation:
   void Shutdown() override;
 
  private:
   std::unique_ptr<PrefetchDispatcher> dispatcher_;
+  std::unique_ptr<OfflineMetricsCollector> offline_metrics_collector_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchServiceImpl);
 };
