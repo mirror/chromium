@@ -8,13 +8,14 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/synchronization/waitable_event.h"
+#include "ui/gl/android/scoped_java_surface.h"
 #include "ui/gl/scoped_binders.h"
 #include "ui/gl/scoped_make_current.h"
 
 namespace media {
 
 // FrameAvailableEvent is a RefCounted wrapper for a WaitableEvent
-// because it's not possible to put one in RefCountedData.
+// (it's not possible to put one in RefCountedData).
 // This lets us safely signal an event on any thread.
 struct FrameAvailableEvent
     : public base::RefCountedThreadSafe<FrameAvailableEvent> {
@@ -29,7 +30,7 @@ struct FrameAvailableEvent
   ~FrameAvailableEvent() = default;
 };
 
-scoped_refptr<SurfaceTextureGLOwner> SurfaceTextureGLOwner::Create() {
+scoped_refptr<SurfaceTextureGLOwner> SurfaceTextureGLOwnerImpl::Create() {
   GLuint texture_id;
   glGenTextures(1, &texture_id);
   if (!texture_id)
@@ -44,25 +45,25 @@ scoped_refptr<SurfaceTextureGLOwner> SurfaceTextureGLOwner::Create() {
   glTexParameteri(GL_TEXTURE_EXTERNAL_OES, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   DCHECK_EQ(static_cast<GLenum>(GL_NO_ERROR), glGetError());
 
-  return new SurfaceTextureGLOwner(texture_id);
+  return new SurfaceTextureGLOwnerImpl(texture_id);
 }
 
-SurfaceTextureGLOwner::SurfaceTextureGLOwner(GLuint texture_id)
-    : SurfaceTexture(CreateJavaSurfaceTexture(texture_id)),
+SurfaceTextureGLOwnerImpl::SurfaceTextureGLOwnerImpl(GLuint texture_id)
+    : surface_texture_(gl::SurfaceTexture::Create(texture_id)),
+      texture_id_(texture_id),
       context_(gl::GLContext::GetCurrent()),
       surface_(gl::GLSurface::GetCurrent()),
-      texture_id_(texture_id),
       frame_available_event_(new FrameAvailableEvent()) {
   DCHECK(context_);
   DCHECK(surface_);
-  SetFrameAvailableCallbackOnAnyThread(
+  surface_texture_->SetFrameAvailableCallbackOnAnyThread(
       base::Bind(&FrameAvailableEvent::Signal, frame_available_event_));
 }
 
-SurfaceTextureGLOwner::~SurfaceTextureGLOwner() {
+SurfaceTextureGLOwnerImpl::~SurfaceTextureGLOwnerImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
   // Make sure that the SurfaceTexture isn't using the GL objects.
-  DestroyJavaObject();
+  surface_texture_ = nullptr;
 
   ui::ScopedMakeCurrent scoped_make_current(context_.get(), surface_.get());
   if (scoped_make_current.Succeeded()) {
@@ -71,19 +72,47 @@ SurfaceTextureGLOwner::~SurfaceTextureGLOwner() {
   }
 }
 
-void SurfaceTextureGLOwner::SetReleaseTimeToNow() {
+GLuint SurfaceTextureGLOwnerImpl::GetTextureId() const {
+  return texture_id_;
+}
+
+gl::ScopedJavaSurface SurfaceTextureGLOwnerImpl::CreateJavaSurface() const {
+  return gl::ScopedJavaSurface(surface_texture_.get());
+}
+
+void SurfaceTextureGLOwnerImpl::UpdateTexImage() {
+  surface_texture_->UpdateTexImage();
+}
+
+void SurfaceTextureGLOwnerImpl::GetTransformMatrix(float mtx[]) {
+  surface_texture_->GetTransformMatrix(mtx);
+}
+
+void SurfaceTextureGLOwnerImpl::ReleaseBackBuffers() {
+  surface_texture_->ReleaseBackBuffers();
+}
+
+gl::GLContext* SurfaceTextureGLOwnerImpl::GetContext() const {
+  return context_.get();
+}
+
+gl::GLSurface* SurfaceTextureGLOwnerImpl::GetSurface() const {
+  return surface_.get();
+}
+
+void SurfaceTextureGLOwnerImpl::SetReleaseTimeToNow() {
   release_time_ = base::TimeTicks::Now();
 }
 
-void SurfaceTextureGLOwner::IgnorePendingRelease() {
+void SurfaceTextureGLOwnerImpl::IgnorePendingRelease() {
   release_time_ = base::TimeTicks();
 }
 
-bool SurfaceTextureGLOwner::IsExpectingFrameAvailable() {
+bool SurfaceTextureGLOwnerImpl::IsExpectingFrameAvailable() {
   return !release_time_.is_null();
 }
 
-void SurfaceTextureGLOwner::WaitForFrameAvailable() {
+void SurfaceTextureGLOwnerImpl::WaitForFrameAvailable() {
   DCHECK(!release_time_.is_null());
 
   // 5msec covers >99.9% of cases, so just wait for up to that much before
@@ -111,14 +140,6 @@ void SurfaceTextureGLOwner::WaitForFrameAvailable() {
              << "ms, total: " << (elapsed + remaining).InMillisecondsF()
              << "ms";
   }
-}
-
-void SurfaceTextureGLOwner::AttachToGLContext() {
-  NOTIMPLEMENTED();
-}
-
-void SurfaceTextureGLOwner::DetachFromGLContext() {
-  NOTIMPLEMENTED();
 }
 
 }  // namespace media
