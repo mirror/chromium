@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e61a951_049cd9bf",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2185,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-05-31T04:55:25Z",
+      "side": 1,
+      "message": "I know this is done as part of the prefetch project, but wouldn\u0027t you think that this is more generic then that and therefore should be a more central item than that. Someplace core/ ?",
+      "range": {
+        "startLine": 2185,
+        "startChar": 21,
+        "endLine": 2185,
+        "endChar": 29
+      },
+      "revId": "87388244a49ee4a6913262e960a895e3059a6d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e536e94f_55543828",
+        "filename": "components/offline_pages/core/prefetch/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-05-31T04:55:25Z",
+      "side": 1,
+      "message": "same here, why not simply core?",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "87388244a49ee4a6913262e960a895e3059a6d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7935f19_a7c58d7c",
+        "filename": "components/offline_pages/core/prefetch/offline_metrics_collector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-05-31T04:55:25Z",
+      "side": 1,
+      "message": "This should probably be left out of the interface.",
+      "range": {
+        "startLine": 14,
+        "startChar": 29,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "87388244a49ee4a6913262e960a895e3059a6d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
