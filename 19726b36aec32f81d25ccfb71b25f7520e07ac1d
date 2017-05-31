@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0960d99f_64cf3911",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-05-31T09:01:04Z",
+      "side": 1,
+      "message": "I\u0027ve added named constants for the both the normal priority and high priority case.",
+      "parentUuid": "da873730_09289f16",
+      "range": {
+        "startLine": 343,
+        "startChar": 40,
+        "endLine": 343,
+        "endChar": 41
+      },
+      "revId": "19726b36aec32f81d25ccfb71b25f7520e07ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfe9c6f7_d2a8cc8c",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-25T18:05:13Z",
       "side": 1,
       "message": "Could you add/adapt a test that checks this isn\u0027t best_effort anymore?",
+      "range": {
+        "startLine": 1043,
+        "startChar": 54,
+        "endLine": 1043,
+        "endChar": 63
+      },
+      "revId": "19726b36aec32f81d25ccfb71b25f7520e07ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773e413a_0e1172f6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-05-31T09:01:04Z",
+      "side": 1,
+      "message": "Isn\u0027t this handled by https://chromium-review.googlesource.com/c/515542/2/third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc#957, since the I1 task is posted before C1 and C2 but is run after it.",
+      "parentUuid": "bfe9c6f7_d2a8cc8c",
       "range": {
         "startLine": 1043,
         "startChar": 54,
