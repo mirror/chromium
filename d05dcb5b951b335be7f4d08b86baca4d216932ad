@@ -45,6 +45,30 @@
       "revId": "d05dcb5b951b335be7f4d08b86baca4d216932ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da11062_6c220eee",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_condition_attribute_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1172974
+      },
+      "writtenOn": "2017-05-31T06:03:34Z",
+      "side": 1,
+      "message": "Ack, in order to avoid declaring a temp variable I made use of |GetList()| instead.",
+      "parentUuid": "ba02633b_1fde7073",
+      "range": {
+        "startLine": 402,
+        "startChar": 10,
+        "endLine": 402,
+        "endChar": 21
+      },
+      "revId": "d05dcb5b951b335be7f4d08b86baca4d216932ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
