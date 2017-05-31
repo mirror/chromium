@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5febac_c22cffdd",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-05-31T13:51:14Z",
+      "side": 1,
+      "message": "nit: \" cannot be longer than \" + kMaxStringLength + \" characters.\" ?",
+      "range": {
+        "startLine": 169,
+        "startChar": 59,
+        "endLine": 169,
+        "endChar": 63
+      },
+      "revId": "33d0098c278c4268da42aa2d5b297c4d60319e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
