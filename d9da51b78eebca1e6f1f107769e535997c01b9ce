@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "052d26fa_dafc4bcf",
+        "filename": "chrome/android/java/res/layout/data_reduction_main_menu_footer.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-31T17:43:32Z",
+      "side": 1,
+      "message": "We usually don\u0027t check in commented out code. We either keep, change or delete it usually :-)",
+      "revId": "d9da51b78eebca1e6f1f107769e535997c01b9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc24bc6_da5ea594",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-31T17:43:32Z",
+      "side": 1,
+      "message": "You don\u0027t need to track this. This is done automatically.",
+      "revId": "d9da51b78eebca1e6f1f107769e535997c01b9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab307e3a_477c9775",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-05-31T17:43:32Z",
+      "side": 1,
+      "message": "Should we extract the rest of this method into a private method? Might help for the reader.\n\nSomething like showDataSaverInProductHelp() or something like that.",
+      "revId": "d9da51b78eebca1e6f1f107769e535997c01b9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
