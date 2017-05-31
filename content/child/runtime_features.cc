@@ -48,8 +48,10 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
   WebRuntimeFeatures::EnableOnDeviceChange(false);
   WebRuntimeFeatures::EnableMediaSession(true);
   WebRuntimeFeatures::EnableMediaControlsOverlayPlayButton(true);
+  WebRuntimeFeatures::EnableRemotePlaybackBackend(true);
 #else  // defined(OS_ANDROID)
   WebRuntimeFeatures::EnableNavigatorContentUtils(true);
+  WebRuntimeFeatures::EnableRemotePlaybackBackend(false);
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_ANDROID) || defined(USE_AURA)

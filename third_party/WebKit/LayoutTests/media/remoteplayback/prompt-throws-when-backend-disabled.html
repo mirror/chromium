@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test that calling prompt() when backend is disabled, throws an exception</title>
+        <script src="../../resources/testharness.js"></script>
+        <script src="../../resources/testharnessreport.js"></script>
+        <script src="../media-file.js"></script>
+    </head>
+    <body>
+        <button id="button">Click me</button>
+        <script>
+            // WPT: this test can't be moved to WPT because of its usage of:
+            // - user gesture;
+            // - internals.mediaPlayerRemoteRouteAvailabilityChanged
+
+            window.internals.runtimeFlags.remotePlaybackBackendEnabled = false;
+
+            function clickOnElem(e) {
+                var x = e.offsetLeft + e.offsetWidth / 2;
+                var y = e.offsetTop + e.offsetHeight / 2;
+                chrome.gpuBenchmarking.pointerActionSequence(
+                     [
+                        {
+                            "source": "mouse",
+                            "actions":
+                            [
+                                { "name": "pointerDown", "x": x, "y": y },
+                                { "name": "pointerUp" }
+                            ]
+                        }
+                     ]);
+            }
+
+            async_test(function(test)
+            {
+                var v = document.createElement('video');
+                v.src = findMediaFile('video', 'content/test');
+                document.body.appendChild(v);
+
+                internals.mediaPlayerRemoteRouteAvailabilityChanged(v, true);
+
+                var btn = document.getElementById('button');
+                btn.onclick = function() {
+                    v.remote.prompt().then(test.unreached_func(),
+                        test.step_func_done(function(e) {
+                            assert_equals(e.name, 'NotFoundError');
+                            assert_equals(e.message, 'No remote playback devices found.');
+                        }));
+                }
+
+                clickOnElem(btn);
+            }, 'Test that calling prompt() when backend is disabled, throws an exception.');
+        </script>
+    </body>
+</html>
