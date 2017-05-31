@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ee92a7a_19d1551c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/nfc_apk/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-05-31T18:16:33Z",
+      "side": 1,
+      "message": "nit: min and target SdkVersion may as well be 24, right? This should only work on N?",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "56aac0ba1ab27e337bd292d35148a23f771aa286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
