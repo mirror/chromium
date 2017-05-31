@@ -13,6 +13,7 @@
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/command_buffer/client/transfer_buffer.h"
 #include "gpu/command_buffer/service/context_group.h"
+#include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/mailbox_manager.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
@@ -258,7 +259,7 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
   scoped_refptr<gpu::gles2::FeatureInfo> feature_info(
       new gpu::gles2::FeatureInfo(gpu_driver_bug_workarounds_));
   scoped_refptr<gpu::gles2::ContextGroup> group(new gpu::gles2::ContextGroup(
-      gpu_preferences_, nullptr, nullptr,
+      gpu_preferences_, nullptr, nullptr, nullptr,
       new gpu::gles2::ShaderTranslatorCache(gpu_preferences_),
       new gpu::gles2::FramebufferCompletenessCache, feature_info, true, nullptr,
       nullptr, gpu::GpuFeatureInfo(), discardable_manager_.get()));

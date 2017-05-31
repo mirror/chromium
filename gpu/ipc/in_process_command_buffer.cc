@@ -153,6 +153,13 @@ scoped_refptr<gl::GLShareGroup> InProcessCommandBuffer::Service::share_group() {
   return share_group_;
 }
 
+scoped_refptr<gles2::ImageManager>
+InProcessCommandBuffer::Service::image_manager() {
+  if (!image_manager_.get())
+    image_manager_ = new gles2::ImageManager();
+  return image_manager_;
+}
+
 scoped_refptr<gles2::MailboxManager>
 InProcessCommandBuffer::Service::mailbox_manager() {
   if (!mailbox_manager_.get()) {
@@ -300,7 +307,8 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
       params.context_group
           ? params.context_group->decoder_->GetContextGroup()
           : new gles2::ContextGroup(
-                service_->gpu_preferences(), service_->mailbox_manager(), NULL,
+                service_->gpu_preferences(), service_->mailbox_manager(),
+                service_->image_manager(), nullptr,
                 service_->shader_translator_cache(),
                 service_->framebuffer_completeness_cache(), feature_info,
                 bind_generates_resource, nullptr, nullptr, GpuFeatureInfo(),
@@ -772,7 +780,7 @@ void InProcessCommandBuffer::CreateImageOnGpuThread(
   if (!decoder_)
     return;
 
-  gpu::gles2::ImageManager* image_manager = decoder_->GetImageManager();
+  scoped_refptr<gles2::ImageManager> image_manager = service_->image_manager();
   DCHECK(image_manager);
   if (image_manager->LookupImage(id)) {
     LOG(ERROR) << "Image already exists with same ID.";
@@ -834,7 +842,7 @@ void InProcessCommandBuffer::DestroyImageOnGpuThread(int32_t id) {
   if (!decoder_)
     return;
 
-  gpu::gles2::ImageManager* image_manager = decoder_->GetImageManager();
+  scoped_refptr<gles2::ImageManager> image_manager = service_->image_manager();
   DCHECK(image_manager);
   if (!image_manager->LookupImage(id)) {
     LOG(ERROR) << "Image with ID doesn't exist.";

@@ -36,6 +36,7 @@ namespace gles2 {
 class ProgramCache;
 class BufferManager;
 class GLES2Decoder;
+class ImageManager;
 class MailboxManager;
 class RenderbufferManager;
 class PathManager;
@@ -59,6 +60,7 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
   ContextGroup(
       const GpuPreferences& gpu_preferences,
       const scoped_refptr<MailboxManager>& mailbox_manager,
+      const scoped_refptr<ImageManager>& image_manager,
       const scoped_refptr<MemoryTracker>& memory_tracker,
       const scoped_refptr<ShaderTranslatorCache>& shader_translator_cache,
       const scoped_refptr<FramebufferCompletenessCache>&
@@ -84,6 +86,8 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
   MailboxManager* mailbox_manager() const {
     return mailbox_manager_.get();
   }
+
+  ImageManager* image_manager() const { return image_manager_.get(); }
 
   MemoryTracker* memory_tracker() const {
     return memory_tracker_.get();
@@ -249,6 +253,7 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
 
   const GpuPreferences& gpu_preferences_;
   scoped_refptr<MailboxManager> mailbox_manager_;
+  scoped_refptr<ImageManager> image_manager_;
   scoped_refptr<MemoryTracker> memory_tracker_;
   scoped_refptr<ShaderTranslatorCache> shader_translator_cache_;
   scoped_refptr<FramebufferCompletenessCache> framebuffer_completeness_cache_;

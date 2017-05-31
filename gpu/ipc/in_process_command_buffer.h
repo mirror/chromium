@@ -199,6 +199,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
     const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds();
     scoped_refptr<gl::GLShareGroup> share_group();
     scoped_refptr<gles2::MailboxManager> mailbox_manager();
+    scoped_refptr<gles2::ImageManager> image_manager();
     gpu::gles2::ProgramCache* program_cache();
     ServiceDiscardableManager* discardable_manager();
     virtual bool BlockThreadOnWaitSyncToken() const = 0;
@@ -207,6 +208,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
     const GpuPreferences gpu_preferences_;
     const GpuDriverBugWorkarounds gpu_driver_bug_workarounds_;
     scoped_refptr<gles2::MailboxManager> mailbox_manager_;
+    scoped_refptr<gles2::ImageManager> image_manager_;
     scoped_refptr<gl::GLShareGroup> share_group_;
     std::unique_ptr<gpu::gles2::ProgramCache> program_cache_;
     // No-op default initialization is used in in-process mode.

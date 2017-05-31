@@ -10,6 +10,7 @@
 
 #include "gpu/command_buffer/service/gles2_cmd_decoder_mock.h"
 #include "gpu/command_buffer/service/gpu_service_test.h"
+#include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/mailbox_manager.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
 #include "gpu/command_buffer/service/test_helper.h"
@@ -44,9 +45,9 @@ class ContextGroupTest : public GpuServiceTest {
     decoder_.reset(new MockGLES2Decoder());
     scoped_refptr<FeatureInfo> feature_info = new FeatureInfo;
     group_ = scoped_refptr<ContextGroup>(
-        new ContextGroup(gpu_preferences_, NULL, NULL, NULL, NULL, feature_info,
-                         kBindGeneratesResource, nullptr, nullptr,
-                         GpuFeatureInfo(), &discardable_manager_));
+        new ContextGroup(gpu_preferences_, nullptr, nullptr, nullptr, nullptr,
+                         nullptr, feature_info, kBindGeneratesResource, nullptr,
+                         nullptr, GpuFeatureInfo(), &discardable_manager_));
   }
 
   GpuPreferences gpu_preferences_;

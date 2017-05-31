@@ -571,6 +571,7 @@ bool GpuCommandBufferStub::Initialize(
         channel_->gpu_channel_manager()->gpu_memory_buffer_factory();
     context_group_ = new gles2::ContextGroup(
         manager->gpu_preferences(), channel_->mailbox_manager(),
+        channel_->image_manager(),
         new GpuCommandBufferMemoryTracker(
             channel_, command_buffer_id_.GetUnsafeValue(),
             init_params.attribs.context_type, channel_->task_runner()),
@@ -1128,7 +1129,7 @@ void GpuCommandBufferStub::OnCreateImage(
   if (!decoder_)
     return;
 
-  gles2::ImageManager* image_manager = decoder_->GetImageManager();
+  scoped_refptr<gles2::ImageManager> image_manager = channel_->image_manager();
   DCHECK(image_manager);
   if (image_manager->LookupImage(id)) {
     LOG(ERROR) << "Image already exists with same ID.";
@@ -1168,7 +1169,7 @@ void GpuCommandBufferStub::OnDestroyImage(int32_t id) {
   if (!decoder_)
     return;
 
-  gles2::ImageManager* image_manager = decoder_->GetImageManager();
+  scoped_refptr<gles2::ImageManager> image_manager = channel_->image_manager();
   DCHECK(image_manager);
   if (!image_manager->LookupImage(id)) {
     LOG(ERROR) << "Image with ID doesn't exist.";
