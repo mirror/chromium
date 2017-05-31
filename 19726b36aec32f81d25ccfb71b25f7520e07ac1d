@@ -93,6 +93,30 @@
       "revId": "19726b36aec32f81d25ccfb71b25f7520e07ac1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd81c88f_848c3805",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-05-31T11:04:52Z",
+      "side": 1,
+      "message": "That\u0027s right, it\u0027s not completely obvious from the test\u0027s name but it does target this exact case. Thanks for checking.",
+      "parentUuid": "773e413a_0e1172f6",
+      "range": {
+        "startLine": 1043,
+        "startChar": 54,
+        "endLine": 1043,
+        "endChar": 63
+      },
+      "revId": "19726b36aec32f81d25ccfb71b25f7520e07ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
