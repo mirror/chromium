@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "094357b1_ea8b2a53",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T01:59:00Z",
+      "side": 1,
+      "message": "Nit: has -\u003e have\n\nThis comment implies that the block after this (which doesn\u0027t have such a comment) would still be excluded even if the macos issue were resolved.  If that\u0027s not true, and this sentiment really applies to anything in this #if (as I suspect it does), then move this concept up to the comment at the top of the #if, a la \"The following characters we\u0027d otherwise allow are reported as present...\"",
+      "revId": "ed6d682b74adefcaf7d1a3afb82fd45e9e084182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c90f87_5e6b7b20",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T01:59:00Z",
+      "side": 1,
+      "message": "Nit: Similarly, if these are all really \"blocked due to font issues\", I\u0027d place that kind of comment just once atop this #if.",
+      "revId": "ed6d682b74adefcaf7d1a3afb82fd45e9e084182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
