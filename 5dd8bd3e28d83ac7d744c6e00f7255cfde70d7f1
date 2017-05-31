@@ -22,6 +22,30 @@
       "revId": "5dd8bd3e28d83ac7d744c6e00f7255cfde70d7f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58216f3b_bef46eec",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetLibraryLoader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-05-31T21:12:53Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "87f27d4d_56304ace",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "5dd8bd3e28d83ac7d744c6e00f7255cfde70d7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
