@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cf660ab_8c3d035c",
+        "filename": "components/prefs/pref_registry.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-31T13:15:52Z",
+      "side": 1,
+      "message": "Nit: I think \"unowned\" isn\u0027t quite correct (and in fact the comment says that the pref is owned by another service). Maybe \"foreign\" pref?",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "aa29bb288d536f6f90196b6613122f3bfc2ff530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
