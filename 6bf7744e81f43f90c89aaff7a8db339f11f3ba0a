@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdd7d0a1_98551703",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-05-31T23:21:08Z",
+      "side": 1,
+      "message": "Optional: I\u0027m personally not fond of using default params (nor overloading) for code like this; and likewise would prefer to see an enum rather than a boolean, so that call-sites are clearer.  I\u0027m not an owner for this code, though, and the style guide allows for subjective judgement calls here, so I\u0027m just noting this personal style preference and suggesting using a non-default enum here.",
+      "range": {
+        "startLine": 352,
+        "startChar": 46,
+        "endLine": 352,
+        "endChar": 0
+      },
+      "revId": "6bf7744e81f43f90c89aaff7a8db339f11f3ba0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
