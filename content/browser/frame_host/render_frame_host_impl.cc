@@ -2856,6 +2856,11 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   GetInterfaceRegistry()->AddInterface(base::Bind(
       &KeyboardLockServiceImpl::CreateMojoService));
 
+  GetInterfaceRegistry()->AddInterface(base::Bind(
+      &SVGRendererRequestForwader::ForwardRequest,
+      const service_manager::BindSourceInfo&,
+      blink::mojom::SVGRendererRequest));
+
   GetContentClient()->browser()->ExposeInterfacesToFrame(GetInterfaceRegistry(),
                                                          this);
 }
