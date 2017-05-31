@@ -50,7 +50,6 @@ struct SameSizeAsRefCounted {
 #endif
 #if DCHECK_IS_ON()
   bool c;
-  ThreadRestrictionVerifier d;
 #endif
 };
 #else

@@ -23,12 +23,13 @@
 
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/Atomics.h"
+#include "platform/wtf/DynamicAnnotations.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/WTFExport.h"
 
 #if DCHECK_IS_ON()
 #define CHECK_REF_COUNTED_LIFECYCLE 1
-#include "platform/wtf/ThreadRestrictionVerifier.h"
 #else
 #define CHECK_REF_COUNTED_LIFECYCLE 0
 #endif
@@ -42,27 +43,18 @@ class WTF_EXPORT RefCountedBase {
  public:
   void Ref() const {
 #if CHECK_REF_COUNTED_LIFECYCLE
-    SECURITY_DCHECK(verifier_.OnRef(ref_count_));
     DCHECK(!adoption_is_required_);
 #endif
     SECURITY_DCHECK(!deletion_has_begun_);
-    ++ref_count_;
+    AtomicIncrement(&ref_count_);
   }
 
   bool HasOneRef() const {
     SECURITY_DCHECK(!deletion_has_begun_);
-#if CHECK_REF_COUNTED_LIFECYCLE
-    SECURITY_DCHECK(verifier_.IsSafeToUse());
-#endif
-    return ref_count_ == 1;
+    return RefCount() == 1;
   }
 
-  int RefCount() const {
-#if CHECK_REF_COUNTED_LIFECYCLE
-    SECURITY_DCHECK(verifier_.IsSafeToUse());
-#endif
-    return ref_count_;
-  }
+  int RefCount() const { return static_cast<int const volatile&>(ref_count_); }
 
  protected:
   RefCountedBase()
@@ -89,13 +81,14 @@ class WTF_EXPORT RefCountedBase {
   bool DerefBase() const {
     SECURITY_DCHECK(!deletion_has_begun_);
 #if CHECK_REF_COUNTED_LIFECYCLE
-    SECURITY_DCHECK(verifier_.OnDeref(ref_count_));
     DCHECK(!adoption_is_required_);
 #endif
 
     DCHECK_GT(ref_count_, 0);
-    --ref_count_;
-    if (!ref_count_) {
+    WTF_ANNOTATE_HAPPENS_BEFORE(&ref_count_);
+    if (!AtomicDecrement(&ref_count_)) {
+      WTF_ANNOTATE_HAPPENS_AFTER(&ref_count_);
+
 #if ENABLE(SECURITY_ASSERT)
       deletion_has_begun_ = true;
 #endif
@@ -120,7 +113,6 @@ class WTF_EXPORT RefCountedBase {
 #endif
 #if CHECK_REF_COUNTED_LIFECYCLE
   mutable bool adoption_is_required_;
-  mutable ThreadRestrictionVerifier verifier_;
 #endif
 };
 
