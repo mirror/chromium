@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "614ac9b2_ad20605a",
+        "filename": "third_party/WebKit/Source/core/css/threaded/CSSToLengthConversionDataThreadedTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-05-31T15:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f3097ab_760ccb8e",
+      "revId": "7968dcbef709fe1c01f5dc701407373d2397b1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f405ce60_d86d78a8",
         "filename": "third_party/WebKit/Source/core/css/threaded/CSSToLengthConversionDataThreadedTest.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-31T09:55:51Z",
       "side": 1,
       "message": "ComputedStyle is bound to a dom tree. Not only in the implementation, but also per spec. Hopefully we won\u0027t need to involve ComputedStyle off-main-thread. What exactly do you need from ComputedStyle in the off-main-thread parsing? Is it for relative units? Could we have a code path implementing length conversion which does not rely on ComputedStyle? Note that units like \"rem\" does not make immediate sense without a dom tree.",
+      "revId": "7968dcbef709fe1c01f5dc701407373d2397b1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51210e21_b994c965",
+        "filename": "third_party/WebKit/Source/core/css/threaded/CSSToLengthConversionDataThreadedTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-05-31T15:48:49Z",
+      "side": 1,
+      "message": "Yes, it doesn\u0027t. There\u0027s no absolute need for it, except that CSSToLengthConversionData asks for it. :)\n\nI\u0027m trying to fix today off-main-thread InitialStyle, but I\u0027m totally up for removing it from CSSToLengthConversionData too. Looking at the code, it seems easy enough.",
+      "parentUuid": "f405ce60_d86d78a8",
       "revId": "7968dcbef709fe1c01f5dc701407373d2397b1aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
