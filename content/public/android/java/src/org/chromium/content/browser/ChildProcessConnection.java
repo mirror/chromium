@@ -337,6 +337,7 @@ public class ChildProcessConnection {
             mConnectionParams = new ConnectionParams(connectionBundle, callback);
             // Run the setup if the service is already connected. If not, doConnectionSetup() will
             // be called from onServiceConnected().
+            System.err.println("** JAY ** SetUpConnection");
             if (mServiceConnectComplete) {
                 doConnectionSetup();
             }
@@ -442,6 +443,8 @@ public class ChildProcessConnection {
      * happen in any order.
      */
     private void doConnectionSetup() {
+        System.err.println("** JAY ** DO SetUpConnection");
+
         try {
             TraceEvent.begin("ChildProcessConnection.doConnectionSetup");
             assert mServiceConnectComplete && mService != null;
@@ -454,6 +457,7 @@ public class ChildProcessConnection {
                         @Override
                         public void run() {
                             onSetupConnectionResult(pid);
+                            System.err.println("** JAY ** ON CONNECTION RESULT " + pid);
                         }
                     });
                 }

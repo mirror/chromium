@@ -125,7 +125,6 @@ class ScopedGeneric {
   }
 
   const element_type& get() const { return data_.generic; }
-
   // Returns true if this object doesn't hold the special null value for the
   // associated data type.
   bool is_valid() const { return data_.generic != traits_type::InvalidValue(); }
