@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "2e39eb8c_3130de81",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-05-31T18:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a5014c_9b290438",
+      "range": {
+        "startLine": 1987,
+        "startChar": 0,
+        "endLine": 1990,
+        "endChar": 41
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7b70011_6ee32eb0",
         "filename": "components/BUILD.gn",
         "patchSetId": 1
