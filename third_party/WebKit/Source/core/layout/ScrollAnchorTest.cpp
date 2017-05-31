@@ -99,6 +99,8 @@ TEST_P(ScrollAnchorTest, UMAMetricUpdated) {
             GetScrollAnchor(viewport).AnchorObject());
 }
 
+// TODO(skobes): Convert this to web-platform-tests when visual viewport API is
+// launched (http://crbug.com/635031).
 TEST_P(ScrollAnchorTest, VisualViewportAnchors) {
   SetBodyInnerHTML(
       "<style>"
@@ -134,35 +136,6 @@ TEST_P(ScrollAnchorTest, VisualViewportAnchors) {
   // Scrolling the visual viewport should clear the anchor.
   v_viewport.SetLocation(FloatPoint(0, 0));
   EXPECT_EQ(nullptr, GetScrollAnchor(l_viewport).AnchorObject());
-}
-
-// Test that scroll anchoring causes no visible jump when a layout change
-// (such as removal of a DOM element) changes the scroll bounds of a scrolling
-// div.
-TEST_P(ScrollAnchorTest, AnchoringWhenContentRemovedFromScrollingDiv) {
-  SetBodyInnerHTML(
-      "<style>"
-      "    #scroller { height: 500px; width: 200px; overflow: scroll; }"
-      "    #changer { height: 1500px; }"
-      "    #anchor {"
-      "        width: 150px; height: 1000px; overflow: scroll;"
-      "    }"
-      "</style>"
-      "<div id='scroller'>"
-      "    <div id='changer'></div>"
-      "    <div id='anchor'></div>"
-      "</div>");
-
-  ScrollableArea* scroller =
-      ScrollerForElement(GetDocument().getElementById("scroller"));
-
-  GetDocument().getElementById("scroller")->setScrollTop(1600);
-
-  SetHeight(GetDocument().getElementById("changer"), 0);
-
-  EXPECT_EQ(100, scroller->ScrollOffsetInt().Height());
-  EXPECT_EQ(GetDocument().getElementById("anchor")->GetLayoutObject(),
-            GetScrollAnchor(scroller).AnchorObject());
 }
 
 // Test that a non-anchoring scroll on scroller clears scroll anchors for all
@@ -323,85 +296,6 @@ TEST_P(ScrollAnchorTest, RemoveScrollerWithLayerInScrollingDiv) {
   // Test that the inner scroller can be destroyed without crashing.
   GetDocument().getElementById("scroller")->remove();
   Update();
-}
-
-TEST_P(ScrollAnchorTest, ExcludeAnonymousCandidates) {
-  SetBodyInnerHTML(
-      "<style>"
-      "    body { height: 3500px }"
-      "    #div {"
-      "        position: relative; background-color: pink;"
-      "        top: 5px; left: 5px; width: 100px; height: 3500px;"
-      "    }"
-      "    #inline { padding-left: 10px }"
-      "</style>"
-      "<div id='div'>"
-      "    <a id='inline'>text</a>"
-      "    <p id='block'>Some text</p>"
-      "</div>"
-      "<div id=a>after</div>");
-
-  ScrollableArea* viewport = LayoutViewport();
-  Element* inline_elem = GetDocument().getElementById("inline");
-  EXPECT_TRUE(inline_elem->GetLayoutObject()->Parent()->IsAnonymous());
-
-  // Scroll #div into view, making anonymous block a viable candidate.
-  GetDocument().getElementById("div")->scrollIntoView();
-
-  // Trigger layout and verify that we don't anchor to the anonymous block.
-  SetHeight(GetDocument().getElementById("a"), 100);
-  Update();
-  EXPECT_EQ(inline_elem->GetLayoutObject()->SlowFirstChild(),
-            GetScrollAnchor(viewport).AnchorObject());
-}
-
-TEST_P(ScrollAnchorTest, FullyContainedInlineBlock) {
-  // Exercises every WalkStatus value:
-  // html, body -> Constrain
-  // #outer -> Continue
-  // #ib1, br -> Skip
-  // #ib2 -> Return
-  SetBodyInnerHTML(
-      "<style>"
-      "    body { height: 1000px }"
-      "    #outer { line-height: 100px }"
-      "    #ib1, #ib2 { display: inline-block }"
-      "</style>"
-      "<span id=outer>"
-      "    <span id=ib1>abc</span>"
-      "    <br><br>"
-      "    <span id=ib2>def</span>"
-      "</span>");
-
-  ScrollLayoutViewport(ScrollOffset(0, 150));
-
-  Element* ib1 = GetDocument().getElementById("ib1");
-  ib1->setAttribute(HTMLNames::styleAttr, "line-height: 150px");
-  Update();
-  EXPECT_EQ(GetDocument().getElementById("ib2")->GetLayoutObject(),
-            GetScrollAnchor(LayoutViewport()).AnchorObject());
-}
-
-TEST_P(ScrollAnchorTest, TextBounds) {
-  SetBodyInnerHTML(
-      "<style>"
-      "    body {"
-      "        position: absolute;"
-      "        font-size: 100px;"
-      "        width: 200px;"
-      "        height: 1000px;"
-      "        line-height: 100px;"
-      "    }"
-      "</style>"
-      "abc <b id=b>def</b> ghi"
-      "<div id=a>after</div>");
-
-  ScrollLayoutViewport(ScrollOffset(0, 150));
-
-  SetHeight(GetDocument().getElementById("a"), 100);
-  EXPECT_EQ(
-      GetDocument().getElementById("b")->GetLayoutObject()->SlowFirstChild(),
-      GetScrollAnchor(LayoutViewport()).AnchorObject());
 }
 
 TEST_P(ScrollAnchorTest, ExcludeFixedPosition) {
