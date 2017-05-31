@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09a367fb_a44abd6c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-31T21:00:43Z",
+      "side": 1,
+      "message": "Oops sorry, removed",
+      "parentUuid": "df9255a0_968c4295",
+      "revId": "5fc5bc1080ea49b3cf2ec35e1bb2aa758ddfd2bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70bb98db_b461ba70",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-31T20:50:35Z",
       "side": 1,
       "message": "Also, is args[0] always supposed to be \"git\"?",
+      "revId": "5fc5bc1080ea49b3cf2ec35e1bb2aa758ddfd2bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a846caba_ab00171f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-05-31T21:00:43Z",
+      "side": 1,
+      "message": "Yes, in this case it always is",
+      "parentUuid": "70bb98db_b461ba70",
       "revId": "5fc5bc1080ea49b3cf2ec35e1bb2aa758ddfd2bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
