@@ -46,6 +46,30 @@
       "revId": "98902b021c59abf02d5545d686f741dd8a4b1119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36249a6d_915f1246",
+        "filename": "base/synchronization/lock_impl_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-31T18:08:49Z",
+      "side": 0,
+      "message": "We discussed making this compile time only here:\nhttps://codereview.chromium.org/2178503003/diff/1/base/synchronization/lock_impl_posix.cc#newcode59\n\nTo do this correctly, you need to have both the compile time and runtime check.\nThe compile time check is necessary but insufficient because of the glibc versioning issue.\n\nThe reason we kept this call here is to avoid having to change any future callers.",
+      "parentUuid": "c8e6fc60_f28657e7",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "98902b021c59abf02d5545d686f741dd8a4b1119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
