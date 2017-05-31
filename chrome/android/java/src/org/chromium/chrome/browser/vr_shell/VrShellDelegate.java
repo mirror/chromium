@@ -176,7 +176,17 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
             sInstance.mDonSucceeded = true;
             if (sInstance.mPaused) {
                 if (sInstance.mInVrAtChromeLaunch == null) sInstance.mInVrAtChromeLaunch = false;
+                // We add a black overlay view so that we can show black while the VR UI is loading.
+                // Note that this alone isn't sufficient to prevent 2D UI from showing while
+                // resuming the Activity, see the comment about the custom animation below.
                 sInstance.addOverlayView();
+
+                // We start the Activity with a custom animation that keeps it hidden for a few
+                // hundred milliseconds - enough time for us to draw the first black view.
+                // TODO(mthiesse): This is really hacky. If we can find a way to cancel the
+                // transition animation (I couldn't), then we can just make it indefinite until the
+                // VR UI is ready, and then cancel it, rather than trying to guess how long it will
+                // take to draw the first view, and possibly adding latency to VR startup.
                 Bundle options =
                         ActivityOptions.makeCustomAnimation(activity, R.anim.stay_hidden, 0)
                                 .toBundle();
