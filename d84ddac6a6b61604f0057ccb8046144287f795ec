@@ -16,6 +16,24 @@
       "revId": "d84ddac6a6b61604f0057ccb8046144287f795ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f11be7_7ec1d2f4",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ClipPathDisplayItem.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T23:13:42Z",
+      "side": 0,
+      "message": "This was disabled by fmalita here: https://codereview.chromium.org/2039373003 but it does not count the number of paths, which makes me think we don\u0027t want to use that.. +fmalita",
+      "parentUuid": "86454ee6_a1ec72b2",
+      "revId": "d84ddac6a6b61604f0057ccb8046144287f795ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
