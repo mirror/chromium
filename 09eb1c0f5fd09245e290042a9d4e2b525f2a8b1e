@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62029d9e_12f863ad",
+        "filename": "ios/web/shell/shell_web_client.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-05-31T12:41:47Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that ShellWebClient needs access to ShellWebMainParts, but it is better to keep it as a raw pointer than having two std::unique_ptr\u003c\u003e owing the same object :-/",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "09eb1c0f5fd09245e290042a9d4e2b525f2a8b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
