@@ -28,7 +28,8 @@ namespace blink {
 
 namespace {
 
-const char* const kCrossOriginMetric = "WebAudio.Autoplay.CrossOrigin";
+const char* const kAutoplayMetric = "WebAudio.Autoplay";
+const char* const kAutoplayCrossOriginMetric = "WebAudio.Autoplay.CrossOrigin";
 
 class MockCrossOriginLocalFrameClient final : public EmptyLocalFrameClient {
  public:
@@ -85,7 +86,8 @@ class BaseAudioContextTestPlatform : public TestingPlatformSupport {
 
 }  // anonymous namespace
 
-class BaseAudioContextTest : public ::testing::Test {
+class BaseAudioContextAutoplayTest
+    : public ::testing::TestWithParam<AutoplayPolicy::Type> {
  protected:
   using AutoplayStatus = BaseAudioContext::AutoplayStatus;
 
@@ -94,6 +96,11 @@ class BaseAudioContextTest : public ::testing::Test {
     dummy_frame_owner_ = DummyFrameOwner::Create();
     GetDocument().UpdateSecurityOrigin(
         SecurityOrigin::Create("https", "example.com", 80));
+
+    CreateChildFrame();
+
+    GetDocument().GetSettings()->SetAutoplayPolicy(GetParam());
+    ChildDocument().GetSettings()->SetAutoplayPolicy(GetParam());
   }
 
   void TearDown() override {
@@ -136,36 +143,57 @@ class BaseAudioContextTest : public ::testing::Test {
   ScopedTestingPlatformSupport<BaseAudioContextTestPlatform> platform_;
 };
 
-TEST_F(BaseAudioContextTest, AutoplayMetrics_NoRestriction) {
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateNoGesture_Child) {
+  HistogramTester histogram_tester;
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      ChildDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+  }
+}
+
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateNoGesture_Main) {
   HistogramTester histogram_tester;
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
       GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
   RecordAutoplayStatus(audio_context);
 
-  histogram_tester.ExpectTotalCount(kCrossOriginMetric, 0);
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+  }
 }
 
-TEST_F(BaseAudioContextTest, AutoplayMetrics_CreateNoGesture) {
+TEST_P(BaseAudioContextAutoplayTest,
+       AutoplayMetrics_CallResumeNoGesture_Child) {
   HistogramTester histogram_tester;
-  CreateChildFrame();
-  ChildDocument().GetSettings()->SetAutoplayPolicy(
-      AutoplayPolicy::Type::kUserGestureRequired);
-
-  BaseAudioContext* audio_context = BaseAudioContext::Create(
-      ChildDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
-  RecordAutoplayStatus(audio_context);
-
-  histogram_tester.ExpectBucketCount(kCrossOriginMetric,
-                                     AutoplayStatus::kAutoplayStatusFailed, 1);
-  histogram_tester.ExpectTotalCount(kCrossOriginMetric, 1);
-}
-
-TEST_F(BaseAudioContextTest, AutoplayMetrics_CallResumeNoGesture) {
-  HistogramTester histogram_tester;
-  CreateChildFrame();
-  ChildDocument().GetSettings()->SetAutoplayPolicy(
-      AutoplayPolicy::Type::kUserGestureRequired);
 
   ScriptState::Scope scope(GetScriptStateFrom(ChildDocument()));
 
@@ -175,16 +203,53 @@ TEST_F(BaseAudioContextTest, AutoplayMetrics_CallResumeNoGesture) {
   RejectPendingResolvers(audio_context);
   RecordAutoplayStatus(audio_context);
 
-  histogram_tester.ExpectBucketCount(kCrossOriginMetric,
-                                     AutoplayStatus::kAutoplayStatusFailed, 1);
-  histogram_tester.ExpectTotalCount(kCrossOriginMetric, 1);
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+  }
 }
 
-TEST_F(BaseAudioContextTest, AutoplayMetrics_CreateGesture) {
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CallResumeNoGesture_Main) {
   HistogramTester histogram_tester;
-  CreateChildFrame();
-  ChildDocument().GetSettings()->SetAutoplayPolicy(
-      AutoplayPolicy::Type::kUserGestureRequired);
+
+  ScriptState::Scope scope(GetScriptStateFrom(GetDocument()));
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+  audio_context->resumeContext(GetScriptStateFrom(ChildDocument()));
+  RejectPendingResolvers(audio_context);
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+  }
+}
+
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateGesture_Child) {
+  HistogramTester histogram_tester;
 
   UserGestureIndicator user_gesture_scope(DocumentUserGestureToken::Create(
       &ChildDocument(), UserGestureToken::kNewGesture));
@@ -193,16 +258,53 @@ TEST_F(BaseAudioContextTest, AutoplayMetrics_CreateGesture) {
       ChildDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
   RecordAutoplayStatus(audio_context);
 
-  histogram_tester.ExpectBucketCount(
-      kCrossOriginMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
-  histogram_tester.ExpectTotalCount(kCrossOriginMetric, 1);
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric, AutoplayStatus::kAutoplayStatusSucceeded,
+          1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+  }
 }
 
-TEST_F(BaseAudioContextTest, AutoplayMetrics_CallResumeGesture) {
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateGesture_Main) {
   HistogramTester histogram_tester;
-  CreateChildFrame();
-  ChildDocument().GetSettings()->SetAutoplayPolicy(
-      AutoplayPolicy::Type::kUserGestureRequired);
+
+  UserGestureIndicator user_gesture_scope(DocumentUserGestureToken::Create(
+      &GetDocument(), UserGestureToken::kNewGesture));
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+  }
+}
+
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CallResumeGesture_Child) {
+  HistogramTester histogram_tester;
 
   ScriptState::Scope scope(GetScriptStateFrom(ChildDocument()));
 
@@ -216,32 +318,108 @@ TEST_F(BaseAudioContextTest, AutoplayMetrics_CallResumeGesture) {
   RejectPendingResolvers(audio_context);
   RecordAutoplayStatus(audio_context);
 
-  histogram_tester.ExpectBucketCount(
-      kCrossOriginMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
-  histogram_tester.ExpectTotalCount(kCrossOriginMetric, 1);
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric, AutoplayStatus::kAutoplayStatusSucceeded,
+          1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+  }
 }
 
-TEST_F(BaseAudioContextTest, AutoplayMetrics_NodeStartNoGesture) {
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CallResumeGesture_Main) {
   HistogramTester histogram_tester;
-  CreateChildFrame();
-  ChildDocument().GetSettings()->SetAutoplayPolicy(
-      AutoplayPolicy::Type::kUserGestureRequired);
+
+  ScriptState::Scope scope(GetScriptStateFrom(GetDocument()));
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+
+  UserGestureIndicator user_gesture_scope(DocumentUserGestureToken::Create(
+      &GetDocument(), UserGestureToken::kNewGesture));
+
+  audio_context->resumeContext(GetScriptStateFrom(GetDocument()));
+  RejectPendingResolvers(audio_context);
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+  }
+}
+
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartNoGesture_Child) {
+  HistogramTester histogram_tester;
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
       ChildDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
   audio_context->MaybeRecordStartAttempt();
   RecordAutoplayStatus(audio_context);
 
-  histogram_tester.ExpectBucketCount(kCrossOriginMetric,
-                                     AutoplayStatus::kAutoplayStatusFailed, 1);
-  histogram_tester.ExpectTotalCount(kCrossOriginMetric, 1);
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+  }
 }
 
-TEST_F(BaseAudioContextTest, AutoplayMetrics_NodeStartGesture) {
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartNoGesture_Main) {
   HistogramTester histogram_tester;
-  CreateChildFrame();
-  ChildDocument().GetSettings()->SetAutoplayPolicy(
-      AutoplayPolicy::Type::kUserGestureRequired);
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+  audio_context->MaybeRecordStartAttempt();
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+  }
+}
+
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartGesture_Child) {
+  HistogramTester histogram_tester;
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
       ChildDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
@@ -251,16 +429,55 @@ TEST_F(BaseAudioContextTest, AutoplayMetrics_NodeStartGesture) {
   audio_context->MaybeRecordStartAttempt();
   RecordAutoplayStatus(audio_context);
 
-  histogram_tester.ExpectBucketCount(
-      kCrossOriginMetric, AutoplayStatus::kAutoplayStatusFailedWithStart, 1);
-  histogram_tester.ExpectTotalCount(kCrossOriginMetric, 1);
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusFailedWithStart, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric,
+          AutoplayStatus::kAutoplayStatusFailedWithStart, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+  }
 }
 
-TEST_F(BaseAudioContextTest, AutoplayMetrics_NodeStartNoGestureThenSuccess) {
+TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartGesture_Main) {
   HistogramTester histogram_tester;
-  CreateChildFrame();
-  ChildDocument().GetSettings()->SetAutoplayPolicy(
-      AutoplayPolicy::Type::kUserGestureRequired);
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+
+  UserGestureIndicator user_gesture_scope(DocumentUserGestureToken::Create(
+      &GetDocument(), UserGestureToken::kNewGesture));
+  audio_context->MaybeRecordStartAttempt();
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusFailedWithStart, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+  }
+}
+
+TEST_P(BaseAudioContextAutoplayTest,
+       AutoplayMetrics_NodeStartNoGestureThenSuccess_Child) {
+  HistogramTester histogram_tester;
 
   ScriptState::Scope scope(GetScriptStateFrom(ChildDocument()));
 
@@ -274,16 +491,60 @@ TEST_F(BaseAudioContextTest, AutoplayMetrics_NodeStartNoGestureThenSuccess) {
   RejectPendingResolvers(audio_context);
   RecordAutoplayStatus(audio_context);
 
-  histogram_tester.ExpectBucketCount(
-      kCrossOriginMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
-  histogram_tester.ExpectTotalCount(kCrossOriginMetric, 1);
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric, AutoplayStatus::kAutoplayStatusSucceeded,
+          1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+  }
 }
 
-TEST_F(BaseAudioContextTest, AutoplayMetrics_NodeStartGestureThenSucces) {
+TEST_P(BaseAudioContextAutoplayTest,
+       AutoplayMetrics_NodeStartNoGestureThenSuccess_Main) {
   HistogramTester histogram_tester;
-  CreateChildFrame();
-  ChildDocument().GetSettings()->SetAutoplayPolicy(
-      AutoplayPolicy::Type::kUserGestureRequired);
+
+  ScriptState::Scope scope(GetScriptStateFrom(GetDocument()));
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+  audio_context->MaybeRecordStartAttempt();
+
+  UserGestureIndicator user_gesture_scope(DocumentUserGestureToken::Create(
+      &GetDocument(), UserGestureToken::kNewGesture));
+  audio_context->resumeContext(GetScriptStateFrom(GetDocument()));
+  RejectPendingResolvers(audio_context);
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+  }
+}
+
+TEST_P(BaseAudioContextAutoplayTest,
+       AutoplayMetrics_NodeStartGestureThenSucces_Child) {
+  HistogramTester histogram_tester;
 
   ScriptState::Scope scope(GetScriptStateFrom(ChildDocument()));
 
@@ -297,9 +558,125 @@ TEST_F(BaseAudioContextTest, AutoplayMetrics_NodeStartGestureThenSucces) {
   RejectPendingResolvers(audio_context);
   RecordAutoplayStatus(audio_context);
 
-  histogram_tester.ExpectBucketCount(
-      kCrossOriginMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
-  histogram_tester.ExpectTotalCount(kCrossOriginMetric, 1);
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric, AutoplayStatus::kAutoplayStatusSucceeded,
+          1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+  }
 }
+
+TEST_P(BaseAudioContextAutoplayTest,
+       AutoplayMetrics_NodeStartGestureThenSucces_Main) {
+  HistogramTester histogram_tester;
+
+  ScriptState::Scope scope(GetScriptStateFrom(GetDocument()));
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+
+  UserGestureIndicator user_gesture_scope(DocumentUserGestureToken::Create(
+      &GetDocument(), UserGestureToken::kNewGesture));
+  audio_context->MaybeRecordStartAttempt();
+  audio_context->resumeContext(GetScriptStateFrom(GetDocument()));
+  RejectPendingResolvers(audio_context);
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+  }
+}
+
+TEST_P(BaseAudioContextAutoplayTest,
+       AutoplayMetrics_DocumentReceivedGesture_Child) {
+  HistogramTester histogram_tester;
+
+  ChildDocument().GetFrame()->SetDocumentHasReceivedUserGesture();
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      ChildDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric, AutoplayStatus::kAutoplayStatusFailed, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectBucketCount(
+          kAutoplayCrossOriginMetric, AutoplayStatus::kAutoplayStatusSucceeded,
+          1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
+      break;
+  }
+}
+
+TEST_P(BaseAudioContextAutoplayTest,
+       AutoplayMetrics_DocumentReceivedGesture_Main) {
+  HistogramTester histogram_tester;
+
+  GetDocument().GetFrame()->SetDocumentHasReceivedUserGesture();
+
+  BaseAudioContext* audio_context = BaseAudioContext::Create(
+      GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
+  RecordAutoplayStatus(audio_context);
+
+  switch (GetParam()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 0);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      histogram_tester.ExpectBucketCount(
+          kAutoplayMetric, AutoplayStatus::kAutoplayStatusSucceeded, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayMetric, 1);
+      histogram_tester.ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
+      break;
+  }
+}
+
+INSTANTIATE_TEST_CASE_P(
+    BaseAudioContextAutoplayTest,
+    BaseAudioContextAutoplayTest,
+    testing::Values(AutoplayPolicy::Type::kNoUserGestureRequired,
+                    AutoplayPolicy::Type::kUserGestureRequired,
+                    AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin,
+                    AutoplayPolicy::Type::kDocumentUserActivationRequired));
 
 }  // namespace blink
