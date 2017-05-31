@@ -27,6 +27,9 @@ public class NotificationBuilderForO extends NotificationBuilder {
             ChannelsInitializer channelsInitializer) {
         super(context);
         assert BuildInfo.isAtLeastO();
+        if (channelId == null) {
+            return;
+        }
         channelsInitializer.ensureInitialized(channelId);
         // TODO(crbug.com/707804) Stop using reflection once compileSdkVersion is high enough.
         try {
