@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "416eb1b8_425a1bc3",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-31T10:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a1eb32f_60fc792c",
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59965151_f0bd0303",
         "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c4f4dc8b_91ecbc81",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-31T10:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59965151_f0bd0303",
+      "range": {
+        "startLine": 496,
+        "startChar": 21,
+        "endLine": 496,
+        "endChar": 33
+      },
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c4c98b6_79fc32f4",
         "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-05-31T08:25:29Z",
       "side": 1,
       "message": "I think these methods (OnGetTokenSuccess  and OnGetTokenFailure) will no longer be called on desktop, as the method service-\u003eStartRequest is not longer called.\n\nWould it be possible to add a DCHECK that these are only called on Chrome OS?",
+      "range": {
+        "startLine": 503,
+        "startChar": 5,
+        "endLine": 503,
+        "endChar": 33
+      },
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4151d183_506d9add",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-31T10:47:17Z",
+      "side": 1,
+      "message": "Made this class an OAuth2TokenService::Consumer only on ChromeOS",
+      "parentUuid": "5c4c98b6_79fc32f4",
       "range": {
         "startLine": 503,
         "startChar": 5,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "23efac41_bacd6668",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-31T10:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a2073d9_dc679439",
+      "range": {
+        "startLine": 571,
+        "startChar": 2,
+        "endLine": 571,
+        "endChar": 27
+      },
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "520bcb66_55b888e9",
         "filename": "services/identity/identity_manager.h",
         "patchSetId": 5
@@ -99,6 +189,30 @@
       "writtenOn": "2017-05-31T08:25:29Z",
       "side": 1,
       "message": "The current API does not allow the caller to cancel a request. This may be something that may be needed.",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "9db16948ca11798d9087801a704b63c9bd3c5371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b866ea_2169c49a",
+        "filename": "services/identity/identity_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-05-31T10:47:17Z",
+      "side": 1,
+      "message": "When a client resets an OAuth2TokenService::Request object, it doesn\u0027t cancel the underlying request; it just means that the client won\u0027t be called back when that request succeeds or failed. A client of IdentityManager can achieve the same thing by breaking its connection to the IdentityManager (e.g., where IdentityGetAuthTokenFunction resets |login_token_request_| in its Shutdown method, I have it also reset |identity_manager_|, which breaks its connection to the IdentityManager). So I think this should be OK.",
+      "parentUuid": "520bcb66_55b888e9",
       "range": {
         "startLine": 47,
         "startChar": 7,
