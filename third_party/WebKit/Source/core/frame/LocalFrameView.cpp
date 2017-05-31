@@ -66,8 +66,8 @@
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutCounter.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutEmbeddedObject.h"
-#include "core/layout/LayoutPart.h"
 #include "core/layout/LayoutScrollbar.h"
 #include "core/layout/LayoutScrollbarPart.h"
 #include "core/layout/LayoutView.h"
@@ -75,8 +75,8 @@
 #include "core/layout/TextAutosizer.h"
 #include "core/layout/TracedLayoutObject.h"
 #include "core/layout/api/LayoutBoxModel.h"
+#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/api/LayoutItem.h"
-#include "core/layout/api/LayoutPartItem.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/CompositedLayerMapping.h"
 #include "core/layout/compositing/CompositedSelection.h"
@@ -562,7 +562,7 @@ bool LocalFrameView::DidFirstLayout() const {
 }
 
 void LocalFrameView::InvalidateRect(const IntRect& rect) {
-  LayoutPartItem layout_item = frame_->OwnerLayoutItem();
+  LayoutEmbeddedContentItem layout_item = frame_->OwnerLayoutItem();
   if (layout_item.IsNull())
     return;
 
@@ -912,7 +912,7 @@ void LocalFrameView::CountObjectsNeedingLayout(unsigned& needs_layout_objects,
 }
 
 inline void LocalFrameView::ForceLayoutParentViewIfNeeded() {
-  LayoutPartItem owner_layout_item = frame_->OwnerLayoutItem();
+  LayoutEmbeddedContentItem owner_layout_item = frame_->OwnerLayoutItem();
   if (owner_layout_item.IsNull() || !owner_layout_item.GetFrame())
     return;
 
@@ -1463,16 +1463,16 @@ LayoutReplaced* LocalFrameView::EmbeddedReplacedContent() const {
   return nullptr;
 }
 
-void LocalFrameView::AddPart(LayoutPart* object) {
+void LocalFrameView::AddPart(LayoutEmbeddedContent* object) {
   parts_.insert(object);
 }
 
-void LocalFrameView::RemovePart(LayoutPart* object) {
+void LocalFrameView::RemovePart(LayoutEmbeddedContent* object) {
   parts_.erase(object);
 }
 
 void LocalFrameView::UpdateGeometries() {
-  Vector<RefPtr<LayoutPart>> parts;
+  Vector<RefPtr<LayoutEmbeddedContent>> parts;
   CopyToVector(parts_, parts);
 
   for (auto part : parts) {
@@ -1841,7 +1841,7 @@ void LocalFrameView::ScrollContentsSlowPath() {
     DisablePaintInvalidationStateAsserts disabler;
     GetLayoutViewItem().InvalidatePaintRectangle(LayoutRect(update_rect));
   }
-  LayoutPartItem frame_layout_item = frame_->OwnerLayoutItem();
+  LayoutEmbeddedContentItem frame_layout_item = frame_->OwnerLayoutItem();
   if (!frame_layout_item.IsNull()) {
     if (IsEnclosedInCompositingLayer()) {
       LayoutRect rect(
@@ -2691,7 +2691,7 @@ void LocalFrameView::ScrollbarFrameRectChanged() {
 }
 
 IntRect LocalFrameView::ScrollableAreaBoundingBox() const {
-  LayoutPartItem owner_layout_item = GetFrame().OwnerLayoutItem();
+  LayoutEmbeddedContentItem owner_layout_item = GetFrame().OwnerLayoutItem();
   if (owner_layout_item.IsNull())
     return FrameRect();
 
@@ -2863,7 +2863,7 @@ void LocalFrameView::UpdateScrollCorner() {
     if (!corner_style) {
       // If we have an owning ipage/LocalFrame element, then it can set the
       // custom scrollbar also.
-      LayoutPartItem layout_item = frame_->OwnerLayoutItem();
+      LayoutEmbeddedContentItem layout_item = frame_->OwnerLayoutItem();
       if (!layout_item.IsNull()) {
         corner_style = layout_item.GetUncachedPseudoStyle(
             PseudoStyleRequest(kPseudoIdScrollbarCorner), layout_item.Style());
@@ -3660,7 +3660,7 @@ IntRect LocalFrameView::ConvertToContainingEmbeddedContentView(
     const IntRect& local_rect) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
-    LayoutPartItem layout_item = frame_->OwnerLayoutItem();
+    LayoutEmbeddedContentItem layout_item = frame_->OwnerLayoutItem();
     if (layout_item.IsNull())
       return local_rect;
 
@@ -3690,7 +3690,7 @@ IntPoint LocalFrameView::ConvertToContainingEmbeddedContentView(
     const IntPoint& local_point) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
-    LayoutPartItem layout_item = frame_->OwnerLayoutItem();
+    LayoutEmbeddedContentItem layout_item = frame_->OwnerLayoutItem();
     if (layout_item.IsNull())
       return local_point;
 
@@ -3709,7 +3709,7 @@ IntPoint LocalFrameView::ConvertFromContainingEmbeddedContentView(
     const IntPoint& parent_point) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
-    LayoutPartItem layout_item = frame_->OwnerLayoutItem();
+    LayoutEmbeddedContentItem layout_item = frame_->OwnerLayoutItem();
     if (layout_item.IsNull())
       return parent_point;
 

@@ -29,8 +29,8 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrameView.h"
-#include "core/layout/LayoutPart.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/LayoutEmbeddedContent.h"
+#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
@@ -81,12 +81,12 @@ HTMLFrameOwnerElement::HTMLFrameOwnerElement(const QualifiedName& tag_name,
       embedded_content_view_(nullptr),
       sandbox_flags_(kSandboxNone) {}
 
-LayoutPart* HTMLFrameOwnerElement::GetLayoutPart() const {
+LayoutEmbeddedContent* HTMLFrameOwnerElement::GetLayoutEmbeddedContent() const {
   // HTMLObjectElement and HTMLEmbedElement may return arbitrary layoutObjects
   // when using fallback content.
-  if (!GetLayoutObject() || !GetLayoutObject()->IsLayoutPart())
+  if (!GetLayoutObject() || !GetLayoutObject()->IsLayoutEmbeddedContent())
     return nullptr;
-  return ToLayoutPart(GetLayoutObject());
+  return ToLayoutEmbeddedContent(GetLayoutObject());
 }
 
 void HTMLFrameOwnerElement::SetContentFrame(Frame& frame) {
@@ -233,21 +233,24 @@ void HTMLFrameOwnerElement::SetEmbeddedContentView(
   embedded_content_view_ = embedded_content_view;
   FrameOwnerPropertiesChanged();
 
-  LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
-  LayoutPartItem layout_part_item = LayoutPartItem(layout_part);
-  if (layout_part_item.IsNull())
+  LayoutEmbeddedContent* layout_embedded_content =
+      ToLayoutEmbeddedContent(GetLayoutObject());
+  LayoutEmbeddedContentItem layout_embedded_content_item =
+      LayoutEmbeddedContentItem(layout_embedded_content);
+  if (layout_embedded_content_item.IsNull())
     return;
 
   if (embedded_content_view_) {
-    layout_part_item.UpdateOnEmbeddedContentViewChange();
+    layout_embedded_content_item.UpdateOnEmbeddedContentViewChange();
 
-    DCHECK_EQ(GetDocument().View(), layout_part_item.GetFrameView());
-    DCHECK(layout_part_item.GetFrameView());
+    DCHECK_EQ(GetDocument().View(),
+              layout_embedded_content_item.GetFrameView());
+    DCHECK(layout_embedded_content_item.GetFrameView());
     embedded_content_view_->Attach();
   }
 
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
-    cache->ChildrenChanged(layout_part);
+    cache->ChildrenChanged(layout_embedded_content);
 }
 
 EmbeddedContentView* HTMLFrameOwnerElement::ReleaseEmbeddedContentView() {
@@ -255,10 +258,11 @@ EmbeddedContentView* HTMLFrameOwnerElement::ReleaseEmbeddedContentView() {
     return nullptr;
   if (embedded_content_view_->IsAttached())
     embedded_content_view_->Detach();
-  LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
-  if (layout_part) {
+  LayoutEmbeddedContent* layout_embedded_content =
+      ToLayoutEmbeddedContent(GetLayoutObject());
+  if (layout_embedded_content) {
     if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
-      cache->ChildrenChanged(layout_part);
+      cache->ChildrenChanged(layout_embedded_content);
   }
   return embedded_content_view_.Release();
 }

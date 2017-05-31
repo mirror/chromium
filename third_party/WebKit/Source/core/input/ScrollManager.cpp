@@ -13,7 +13,7 @@
 #include "core/input/EventHandler.h"
 #include "core/input/EventHandlingUtil.h"
 #include "core/layout/LayoutBlock.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/page/AutoscrollController.h"
@@ -452,10 +452,11 @@ WebInputEventResult ScrollManager::PassScrollGestureEvent(
   DCHECK(gesture_event.IsScrollEvent());
 
   if (!last_gesture_scroll_over_embedded_content_view_ || !layout_object ||
-      !layout_object->IsLayoutPart())
+      !layout_object->IsLayoutEmbeddedContent())
     return WebInputEventResult::kNotHandled;
 
-  LocalFrameView* frame_view = ToLayoutPart(layout_object)->ChildFrameView();
+  LocalFrameView* frame_view =
+      ToLayoutEmbeddedContent(layout_object)->ChildFrameView();
 
   if (!frame_view)
     return WebInputEventResult::kNotHandled;

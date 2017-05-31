@@ -69,7 +69,7 @@
 #include "core/input/TouchActionUtil.h"
 #include "core/layout/HitTestRequest.h"
 #include "core/layout/HitTestResult.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/DocumentLoader.h"
@@ -339,10 +339,11 @@ static LocalFrame* SubframeForTargetNode(Node* node) {
     return nullptr;
 
   LayoutObject* layout_object = node->GetLayoutObject();
-  if (!layout_object || !layout_object->IsLayoutPart())
+  if (!layout_object || !layout_object->IsLayoutEmbeddedContent())
     return nullptr;
 
-  LocalFrameView* frame_view = ToLayoutPart(layout_object)->ChildFrameView();
+  LocalFrameView* frame_view =
+      ToLayoutEmbeddedContent(layout_object)->ChildFrameView();
   if (!frame_view)
     return nullptr;
 
