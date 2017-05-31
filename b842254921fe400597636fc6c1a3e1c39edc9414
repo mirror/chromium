@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b89332a0_228342ca",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-05-31T11:59:58Z",
+      "side": 1,
+      "message": "I\u0027d be religiously conservative and add \u0026\u0026 !defined(OS_NACL)\n\nI don\u0027t even want to think if and what happens with NACL. BY experience excluding that in advance is a good way to avoid reverts.",
+      "range": {
+        "startLine": 197,
+        "startChar": 33,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c12fef_808f0f74",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-05-31T11:59:58Z",
+      "side": 1,
+      "message": "should this check also that the cmdline flag is either empty (--enable-heap-profiling) or one of native|pseudo|task-profiler? To rule out the case of --enable-heap-profiling\u003dtypo?",
+      "range": {
+        "startLine": 198,
+        "startChar": 9,
+        "endLine": 198,
+        "endChar": 13
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098e9feb_9f8c22b8",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-05-31T11:59:58Z",
+      "side": 1,
+      "message": "At this point here I think we should\nif (!IsHeapProfilingSupported())\n  return",
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd62ba25_3cbd20df",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-05-31T11:59:58Z",
+      "side": 1,
+      "message": "FYI I am writing a CL to clean up this right now. Historical reasons, but now this condition is identical to BUILDFLAG(USE_ALLOCATOR_SHIM) which in turn is identical to IsHeapProfilingSupported().\n\nSo I\u0027d rewrite all ths as:\n\nif (!IsHeapProfilingSupported())\n  return;\nif (pseudo)\n  ...\nif (native) // without the ifdef\n  ...\nif (task profiler)  // without the ifdef\n ...",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 42
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b92c2f_9ca448a4",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-05-31T11:59:58Z",
+      "side": 1,
+      "message": "and I think at this point we can get rid of this",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 8
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0481d1ac_c3be68fd",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-05-31T11:59:58Z",
+      "side": 1,
+      "message": "nit: is this clang-formated? this seems \u003e 80 col (or my polygerrit setup is screwed up)",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 104
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72d8235_d00e86a7",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-05-31T11:59:58Z",
+      "side": 1,
+      "message": "do we really need this extra complexity (also not sure whether inline structs declared and assigned in the scope of a function are allowed. THey seem extremely rare (see recent discussion with dcheng on slack).\nCan this just be\nif (HasSwitch(kEnableHeapProfiling) \u0026\u0026 !IsHeapProfilingSupported()) ?\n...",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
