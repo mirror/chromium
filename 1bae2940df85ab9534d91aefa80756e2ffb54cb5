@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44dc62b5_95a9a08c",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-05-31T15:21:47Z",
+      "side": 1,
+      "message": "I don\u0027t see the point of this function (it doesn\u0027t seem to get filled in next CL either?)",
+      "revId": "1bae2940df85ab9534d91aefa80756e2ffb54cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d266c057_f1d4582c",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-05-31T15:21:47Z",
+      "side": 1,
+      "message": "Code seems out of line with comment - how does the code below set up the static reference?",
+      "revId": "1bae2940df85ab9534d91aefa80756e2ffb54cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490f4e49_58628447",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-05-31T15:21:47Z",
+      "side": 1,
+      "message": "Just delete this block?  (leave a TODO comment only)",
+      "revId": "1bae2940df85ab9534d91aefa80756e2ffb54cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
