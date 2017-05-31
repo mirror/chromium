@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d18eb372_1047ae95",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-31T22:52:18Z",
+      "side": 1,
+      "message": "Do you need the read() here or does sys.stdout.write(f) do the same thing?",
+      "range": {
+        "startLine": 39,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5157a1c_b44ea0fd",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-31T22:52:18Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 11
+      },
+      "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0be9183_bae4fb85",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-31T22:52:18Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6715faf_87f90c55",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-05-31T22:52:18Z",
+      "side": 1,
+      "message": "noise",
+      "range": {
+        "startLine": 96,
+        "startChar": 31,
+        "endLine": 96,
+        "endChar": 33
+      },
+      "revId": "e07beb64f4d879d22e82760193fc2b0a54f0b636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
