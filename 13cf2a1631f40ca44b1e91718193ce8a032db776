@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a3e2ce8_eeb5a1fa",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-05-31T19:09:36Z",
+      "side": 1,
+      "message": "I have mixed feelings. I considered excluding them from the reporting, but I came down on the side of trying to be inclusive of a future, flywheel-over-https world without making new metrics. Can you see us using these variants in the next 1-2 years, or do you expect that they\u0027ll remain invalid indefinitely?",
+      "parentUuid": "878dbdac_12cc9488",
+      "revId": "13cf2a1631f40ca44b1e91718193ce8a032db776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "114794ac_a3cc13e0",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-31T04:37:07Z",
       "side": 1,
       "message": "Why not std::pair? (This may be a stupid suggestion as I have no idea what the C++ coding style guideline is for Chromium.)",
+      "revId": "13cf2a1631f40ca44b1e91718193ce8a032db776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882cb092_7a4042be",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-05-31T19:09:36Z",
+      "side": 1,
+      "message": "Readability. std::pair just had the members first and second, vs name/value",
+      "parentUuid": "114794ac_a3cc13e0",
       "revId": "13cf2a1631f40ca44b1e91718193ce8a032db776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

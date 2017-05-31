@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e21e74a5_7983fda2",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-05-31T19:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdeaad25_5d15ae64",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 13
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "028975f9_fe88de99",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
         "patchSetId": 3
@@ -92,6 +116,30 @@
       "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf9b407_523500f6",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-05-31T19:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "028975f9_fe88de99",
+      "range": {
+        "startLine": 87,
+        "startChar": 34,
+        "endLine": 87,
+        "endChar": 67
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ec0dd318_029971a2",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-05-31T19:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "722e703a_fd48c665",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 17
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0bf35b2_4d9040b0",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
         "patchSetId": 3
@@ -138,6 +210,30 @@
       "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554333bd_c8c7fdd1",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-05-31T19:09:36Z",
+      "side": 1,
+      "message": "I want to be able to test for set membership and I like using the auto style for loop.",
+      "parentUuid": "a0bf35b2_4d9040b0",
+      "range": {
+        "startLine": 1435,
+        "startChar": 30,
+        "endLine": 1435,
+        "endChar": 52
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "1ba871e0_9bd7a9a8",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-05-31T19:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c434260_21823130",
+      "range": {
+        "startLine": 1597,
+        "startChar": 9,
+        "endLine": 1597,
+        "endChar": 13
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77288718_e2bc3368",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
         "patchSetId": 3
@@ -184,6 +304,30 @@
       "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af71cd50_a03224cf",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-05-31T19:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77288718_e2bc3368",
+      "range": {
+        "startLine": 1598,
+        "startChar": 35,
+        "endLine": 1598,
+        "endChar": 43
+      },
+      "revId": "09638f260d338bc7aaac79dae8f08f64324b2590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
