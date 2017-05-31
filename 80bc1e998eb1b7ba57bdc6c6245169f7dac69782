@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6e5af38_73872cc1",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-05-31T15:37:41Z",
+      "side": 1,
+      "message": "Only one callsite...justified?",
+      "revId": "80bc1e998eb1b7ba57bdc6c6245169f7dac69782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba7c3ec_5fe410db",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-05-31T15:37:41Z",
+      "side": 1,
+      "message": "Pass rect as a second parameter to reduce copies?",
+      "revId": "80bc1e998eb1b7ba57bdc6c6245169f7dac69782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
