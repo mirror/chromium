@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1092dc08_7d7dc672",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-05-31T23:01:25Z",
+      "side": 0,
+      "message": "These lines are removed because CopyFragmentDataToLayoutBox already does this.\nWould we need them for RunOldLayoutI()?",
+      "revId": "5d5052f3e33d06bf1f6710a8e1a94fd972e9c83e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
