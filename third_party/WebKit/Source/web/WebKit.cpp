@@ -141,4 +141,9 @@ void SetRAILModeOnWorkerThreadIsolates(v8::RAILMode rail_mode) {
   WorkerBackingThread::SetRAILModeOnWorkerThreadIsolates(rail_mode);
 }
 
+void LogRuntimeCallStats() {
+  LOG(INFO) << "\n"
+            << RuntimeCallStats::MainThreadInstance()->ToString().Utf8().data();
+}
+
 }  // namespace blink
