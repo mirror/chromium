@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af2a588a_0fd5bb02",
+        "filename": "gpu/command_buffer/service/image_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-05-31T04:13:36Z",
+      "side": 1,
+      "message": "Does it need to be refcounted? I think it can be singly-owned by the GpuChannel/InProcessCommandBuffer::Service.",
+      "revId": "f64887b5d4535c73b24ca1f8a4e1f5066521efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
