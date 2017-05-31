@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d7b37f4_f8681b2b",
+        "filename": "components/prefs/in_memory_pref_store.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-05-31T21:55:16Z",
+      "side": 1,
+      "message": "Could this move into PersistentPrefStore so that versions which do no file work (InMemoryPrefStore, TestingPrefStore) don\u0027t have to duplicate the base case.",
+      "range": {
+        "startLine": 83,
+        "startChar": 63,
+        "endLine": 83,
+        "endChar": 76
+      },
+      "revId": "32703b5c28849c64acf44cdcc704ad8c6c5d5569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3908253_6c1ead60",
+        "filename": "components/prefs/in_memory_pref_store_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-05-31T21:55:16Z",
+      "side": 1,
+      "message": "This pattern is in 3 of the tests. Could it be extracted into a testing util in the components/prefs/ dir for reuse/future updates?",
+      "range": {
+        "startLine": 121,
+        "startChar": 72,
+        "endLine": 121,
+        "endChar": 73
+      },
+      "revId": "32703b5c28849c64acf44cdcc704ad8c6c5d5569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecc635c_f3b5166f",
+        "filename": "services/preferences/persistent_pref_store_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-05-31T21:55:16Z",
+      "side": 1,
+      "message": "So the mixture of the mojom redefinition of base::OnceClosure with the non-mojo class can be a bit confusing. Though I\u0027d be hesitant to use the mojom definition across the api.\n\nCould the test cases sharing the same name be renamed?",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "32703b5c28849c64acf44cdcc704ad8c6c5d5569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
