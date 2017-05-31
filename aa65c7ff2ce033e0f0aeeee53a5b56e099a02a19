@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f733837_76658554",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T19:33:23Z",
+      "side": 1,
+      "message": "please forward declare ResourceSettings here instead of depending on it coming from renderer_settings.h",
+      "revId": "aa65c7ff2ce033e0f0aeeee53a5b56e099a02a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
