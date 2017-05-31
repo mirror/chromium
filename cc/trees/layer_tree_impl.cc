@@ -1246,6 +1246,7 @@ void LayerTreeImpl::ClearSurfaceLayerIds() {
 }
 
 void LayerTreeImpl::AddLayerShouldPushProperties(LayerImpl* layer) {
+  DCHECK(!IsActiveTree()) << "The active tree does not push layer properties";
   layers_that_should_push_properties_.insert(layer);
 }
 
