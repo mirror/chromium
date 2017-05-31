@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63a64210_29dae18e",
+        "filename": "ui/views/controls/native/native_view_host_aura_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T20:42:39Z",
+      "side": 1,
+      "message": "Indeed you are right. I removed the comment entirely as it isn\u0027t particularly helpful.",
+      "parentUuid": "8bdc35ab_d71a280d",
+      "range": {
+        "startLine": 432,
+        "startChar": 29,
+        "endLine": 432,
+        "endChar": 30
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04e16a03_9ef7a854",
         "filename": "ui/views/controls/native/native_view_host_aura_unittest.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-31T19:02:36Z",
       "side": 1,
       "message": "Can you check the focused view before resetting the widget? Is it even necessary to reset this at all?",
+      "range": {
+        "startLine": 459,
+        "startChar": 2,
+        "endLine": 459,
+        "endChar": 14
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f59ed5e_b9998cd6",
+        "filename": "ui/views/controls/native/native_view_host_aura_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T20:42:39Z",
+      "side": 1,
+      "message": "Done. I have the explicit reset() so that I can verify focus is still null once the widget is destroyed.",
+      "parentUuid": "04e16a03_9ef7a854",
       "range": {
         "startLine": 459,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c5136c77_d139cf07",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T20:42:39Z",
+      "side": 1,
+      "message": "It only matters when the nativeview (the aura::Window for aura) is removed from the tree. NativeViewHost::Detach() is called in this case, and NVH::Detach() does in fact call ClearFocus(). ~NativeViewHost() wasn\u0027t though, hence this bug.",
+      "parentUuid": "20e47510_91c0e4cb",
+      "range": {
+        "startLine": 557,
+        "startChar": 15,
+        "endLine": 557,
+        "endChar": 26
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f016659_2dab1dbe",
         "filename": "ui/views/focus/focus_manager.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "34b82fad_fd447a6f",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T20:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f016659_2dab1dbe",
+      "range": {
+        "startLine": 562,
+        "startChar": 26,
+        "endLine": 562,
+        "endChar": 31
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f283b810_b0f6329b",
         "filename": "ui/views/view_tracker.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-05-31T19:02:36Z",
       "side": 1,
       "message": "optional nit: use std::set and set::count instead? (or just inline views_.find(view) !\u003d views_.end())?\nusing std::set would also seem to simplify Remove and OnViewIsDeleting.",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3787ddde_d65a081d",
+        "filename": "ui/views/view_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T20:42:39Z",
+      "side": 1,
+      "message": "I used vector for consistency with WindowTracker. It uses vector because we needed order at one point. I figure it best to keep the two in sync.",
+      "parentUuid": "f283b810_b0f6329b",
       "range": {
         "startLine": 20,
         "startChar": 20,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "3716e358_3e116a9b",
+        "filename": "ui/views/view_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T20:42:39Z",
+      "side": 1,
+      "message": "I went with calling Remove()",
+      "parentUuid": "88c811e1_53944d4a",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e911704_1626b098",
         "filename": "ui/views/view_tracker.h",
         "patchSetId": 1
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "11afda4a_f61210a1",
+        "filename": "ui/views/view_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T20:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e911704_1626b098",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14745dee_f2af21bb",
         "filename": "ui/views/view_tracker.h",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-05-31T19:02:36Z",
       "side": 1,
       "message": "It seems like all users only need to track one view; maybe simplify this class to support the common case?",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 15
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1de3c1_f307229f",
+        "filename": "ui/views/view_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-05-31T20:42:39Z",
+      "side": 1,
+      "message": "I think that is temporary given WindowTracker tracks n-windows. I would prefer to keep the two in sync(ish).",
+      "parentUuid": "14745dee_f2af21bb",
       "range": {
         "startLine": 25,
         "startChar": 11,
