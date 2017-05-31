@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf240c36_4c5f170c",
+        "filename": "content/renderer/media/media_stream_audio_processor_options.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "It\u0027s due to rules we have in clang. For types that have a certain number of fields and at least one non-POD field, no inline constructors/destructors are allowed, even if they are automatically generated. Therefore, they need to be explicitly defined outside the .h.",
+      "parentUuid": "1621dbd4_4c209e96",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fea1e5c2_55c602c0",
         "filename": "content/renderer/media/media_stream_constraints_util.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-29T17:33:38Z",
       "side": 1,
       "message": "https://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/WebMediaConstraints.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d242 says \"Constraints not exposed in Blink at the moment, only through the legacy name interface\". Is there a non-legacy constraint that shoud be checked first? If this is legacy-only, should IsDeviceCapture be renamed to imply it is legacy?",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d018495_ba53825e",
+        "filename": "content/renderer/media/media_stream_constraints_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Legacy and IsDeviceCapture are two different things.\nLegacy refers to using an older syntax to specify a string containing the constraints, as opposed to the new spec-compliant syntax.\nIsDeviceCapture refers to capturing audio from a microphone, and not from the audio output of the system or tab (content capture).\nAt the moment, device capture is supported with both the old and new syntax, while content capture is supported only with the old syntax (I have an active intent trying to change that).\nThis IsDeviceCapture function returns true if it\u0027s device capture, regardless of the syntax used to specify the constraints.\nIn this layer, we deal with a WebMediaConstraints, which is already parsed. The syntax used to build it is irrelevant here, since the algorithm is the same.",
+      "parentUuid": "fea1e5c2_55c602c0",
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0a8a131e_f05e7fa6",
+        "filename": "content/renderer/media/media_stream_constraints_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "I guess you mean AudioProcessingProperties instead of AudioCaptureSettings.\nAudioProcessingProperties contains the configuration for the audio-processing module.\nAudioParameters contains the hardware parameters of the device to be used for (device) audio capture. They don\u0027t refer to the same thing, although AudioParameters are used as part of the input for computing AudioProcessingProperties.\n\nI plan to use AudioParameters  to validate that the hardware parameters used to generate the stream coincide with the hardware parameters used to select the device. If there is a discrepancy (which could happen in the unlikely case of the user reconfiguring devices after the algorithm runs but before the streams are generated), the best course of action would be to make getUserMedia fail.\n\nAlso, the AudioParameters might be useful to implement MediaStreamTrack.getSettings(). My understanding is that there is currently a bug by which getSettings may return invalid values until after some time after getUserMedia returns because it needs to wait for hardware parameters after the stream is generated. I still have to confirm this, but https://codereview.chromium.org/2777583002/ was a failed attempt to delay getUserMedia\u0027s return until after settings coming from AudioParameters were known.",
+      "parentUuid": "ab97044b_f0dacc6d",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e482c730_011d6393",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b48ccc_bf4a6211",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "What is the concern more specifically here?\nThis class merely puts the device ID and device parameters (as returned by lower layers by querying capabilities) together for easier manipulation by the part of the algorithm that deals with selection. Added a comment that states that.\n\nThe AudioDeviceSet below starts out with a list of all the devices in the system (their IDs and parameters) and the list gets reduced as constraints are applied. Then the final device is chosen among the ones that remain in the list.\nThis is easiest to implement with a single list having all the required info. AudioDeviceInfo is that info. No need to have anything more fancy than that.",
+      "parentUuid": "e482c730_011d6393",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f8bd8bb9_5da332f8",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Done. Also renamed to AudioCaptureCandidates, since it\u0027s used for both device and content capture.",
+      "parentUuid": "bf4b7570_b3148c8e",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f090fac_5918e5d5",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce516c73_20e71598",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Added array with indices and other tricks to reduce the sections of code that are repeated.",
+      "parentUuid": "5f090fac_5918e5d5",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e022a969_7504c35f",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Comment added. \nmedia::AudioParameters is how information about audio devices is passed by the various layers in Chrome.\nPart of the input for this algorithm is a list of devices and their capabilities, which are provided using AudioParameters.\nWe could introduce a class with only the fields we are interested in and code to translate from AudioParameters, but  I see little value in doing that.",
+      "parentUuid": "9a306123_a2ce1f82",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66cf14d5_62b714c2",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784160a7_e0dc3b9c",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66cf14d5_62b714c2",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "024788c6_d2e16c10",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70b9d768_7c2cb528",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7f3768b_d7fcf843",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6ddaf6_49e249ad",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Some parts have been generalized, but not all.\nThis one in particular is a special case because it requires input from two constrains and hardware parameters (if available).",
+      "parentUuid": "c7f3768b_d7fcf843",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "a83737d8_8cfc62f7",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "for loop used for the properties that have the same processing.",
+      "parentUuid": "600b8ef9_234c69d6",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e90d86a_853b6b35",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 1
@@ -203,6 +401,24 @@
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd49c0a_e2bcf2f1",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e90d86a_853b6b35",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "2ef80948_f96e07c1",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe76d90a_1896ec30",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "768faf10_4ffa2b5e",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
         "patchSetId": 1
@@ -237,6 +471,24 @@
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fcff0b_8744f473",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "768faf10_4ffa2b5e",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "0666e7e3_75a8e17a",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd89d8ee_325a580f",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ecd0e2_b9ad77cf",
         "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
         "patchSetId": 1
@@ -271,6 +541,24 @@
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac95763a_315f7d47",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-05-31T21:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31ecd0e2_b9ad77cf",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
