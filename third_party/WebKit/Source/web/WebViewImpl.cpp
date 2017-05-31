@@ -4026,9 +4026,9 @@ void WebViewImpl::RecordWheelAndTouchScrollingCount(
     return;
 
   if (has_scrolled_by_wheel)
-    UseCounter::Count(MainFrameImpl()->GetFrame(), UseCounter::kScrollByWheel);
+    UseCounter::Count(MainFrameImpl()->GetFrame(), WebFeature::kScrollByWheel);
   if (has_scrolled_by_touch)
-    UseCounter::Count(MainFrameImpl()->GetFrame(), UseCounter::kScrollByTouch);
+    UseCounter::Count(MainFrameImpl()->GetFrame(), WebFeature::kScrollByTouch);
 }
 
 void WebViewImpl::UpdateLayerTreeViewport() {
