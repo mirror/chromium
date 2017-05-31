@@ -33,7 +33,7 @@
 namespace blink {
 
 class HTMLImageLoader;
-class LayoutPart;
+class LayoutEmbeddedContent;
 class LayoutEmbeddedItem;
 class PluginView;
 
@@ -62,8 +62,9 @@ class CORE_EXPORT HTMLPlugInElement
   // PluginWrapper).  It would be good to remove and/or rename some of these.
   // PluginWidget and OwnedPlugin both return the plugin that is stored as
   // widget in HTMLFrameOwnerElement.  However PluginWidget will synchronously
-  // create the plugin if required by calling LayoutPartForJSBindings.
-  // Possibly the PluginWidget code can be inlined into PluginWrapper.
+  // create the plugin if required by calling
+  // LayoutEmbeddedContentForJSBindings. Possibly the PluginWidget code can be
+  // inlined into PluginWrapper.
   PluginView* PluginWidget() const;
   PluginView* OwnedPlugin() const;
   bool CanProcessDrag() const;
@@ -99,9 +100,9 @@ class CORE_EXPORT HTMLPlugInElement
 
   virtual bool HasFallbackContent() const;
   virtual bool UseFallbackContent() const;
-  // Create or update the LayoutPart and return it, triggering layout if
-  // necessary.
-  virtual LayoutPart* LayoutPartForJSBindings() const;
+  // Create or update the LayoutEmbeddedContent and return it, triggering
+  // layout if necessary.
+  virtual LayoutEmbeddedContent* LayoutEmbeddedContentForJSBindings() const;
 
   bool IsImageType();
   bool ShouldPreferPlugInsForImages() const {
@@ -155,9 +156,9 @@ class CORE_EXPORT HTMLPlugInElement
   // HTMLFrameOwnerElement overrides:
   void DisconnectContentFrame() override;
 
-  // Return any existing LayoutPart without triggering relayout, or 0 if it
-  // doesn't yet exist.
-  virtual LayoutPart* ExistingLayoutPart() const = 0;
+  // Return any existing LayoutEmbeddedContent without triggering relayout,
+  // or 0 if it doesn't yet exist.
+  virtual LayoutEmbeddedContent* ExistingLayoutEmbeddedContent() const = 0;
   virtual void UpdatePluginInternal() = 0;
 
   bool LoadPlugin(const KURL&,
