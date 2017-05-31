@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1452afed_0084b800",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-05-31T21:56:02Z",
+      "side": 1,
+      "message": "content/public/test/test_utils.h has a RenderFrameDeletedObserver which looks identical to this, and you can use it here.",
+      "range": {
+        "startLine": 325,
+        "startChar": 6,
+        "endLine": 325,
+        "endChar": 44
+      },
+      "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b62863a_db917abe",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-05-31T21:56:02Z",
+      "side": 1,
+      "message": "IIUC this is the popup created by open_script. What happens to the popup opened by window_open_and_close.html?\n\nIf it\u0027s visible at the end of the test, then if you spin up a ShellAddedObserver (from content/public/test/content_browser_test_utils.h) here, can we capture it reliably? Or is this racy?",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 41
+      },
+      "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c5469f_e6e707f2",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-05-31T21:56:02Z",
+      "side": 1,
+      "message": "If you need to ensure a round trip in the renderer, maybe just do an ExecuteScript() in one of the remaining shells, to probe some \"still alive\" state?\n\nMaybe if you capture the result of open_script in a var |popup|, then you could do something like:\n\nbool is_closed \u003d false;\nEXPECT_TRUE(ExecuteScriptAndExtractBoolean(shell(), \"domAutomationController.send(popup.closed)\", \u0026is_closed);\nEXPECT_TRUE(is_closed);",
+      "range": {
+        "startLine": 354,
+        "startChar": 18,
+        "endLine": 354,
+        "endChar": 30
+      },
+      "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
