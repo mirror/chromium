@@ -22,6 +22,30 @@
       "revId": "24718172638c098407b9488254dcd62e0eb3cce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a44687f_ae746d03",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-05-31T20:03:36Z",
+      "side": 1,
+      "message": "The idea with this change is that PageLogicalHeightForOffset() never return 0. But I found two theoretical cases where it could happen (although I doubt that this code is reachable at all). Fixed that and also added a DCHECK to PageLogicalHeightForOffset() so that it will barf before returning 0.",
+      "parentUuid": "cfbd7815_04dde5aa",
+      "range": {
+        "startLine": 1137,
+        "startChar": 13,
+        "endLine": 1137,
+        "endChar": 32
+      },
+      "revId": "24718172638c098407b9488254dcd62e0eb3cce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
