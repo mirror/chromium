@@ -22,6 +22,30 @@
       "revId": "bec3990f1a89ed53ad92d80dc4d22faceb00fc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b858472_6e3dac0c",
+        "filename": "chrome/browser/android/metrics/uma_session_stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-05-31T20:49:27Z",
+      "side": 1,
+      "message": "Done.\n\nChanged to Stability.Android.RendererCrash, improved description.\n\nYes, Android only has normal termination status and oom_protected termination status. Only Windows has the oom exit status. See histogram: https://uma.googleplex.com/p/chrome/histograms/?endDate\u003d20170530\u0026dayCount\u003d1\u0026histograms\u003dCrashExitCodes.Renderer\u0026fixupData\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003dplatform%2Ceq%2CA%2Cchannel%2Ceq%2C2%2Cisofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial",
+      "parentUuid": "37f432e8_6876fc23",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "bec3990f1a89ed53ad92d80dc4d22faceb00fc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
