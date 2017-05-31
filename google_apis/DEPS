@@ -2,6 +2,9 @@ include_rules = [
   "-chrome",
   "-content",
   "+crypto",
+
+  # Needed to support typemaps of core types for the Identity Service.
+  "+mojo/public/cpp/bindings/struct_traits.h",
   "+net",
   "+third_party/ocmock",
 ]
