@@ -46982,6 +46982,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Omnibox.PhysicalWebProviderQueryMatches">
+  <owner>mmocny@chromium.org</owner>
+  <owner>cco3@chromium.org</owner>
+  <owner>mattreynolds@chromium.org</owner>
+  <summary>
+    The number of matches returned by PhysicalWebProvider. Emitted when the
+    omnibox search terms match URL metadata, unless the user is in incognito
+    mode. Capped at 10.
+  </summary>
+</histogram>
+
 <histogram name="Omnibox.ProgressBarBreakPointUpdateCount"
     units="break point updates">
   <obsolete>

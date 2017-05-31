@@ -286,6 +286,9 @@ void PhysicalWebProvider::ConstructQuerySuggestMatches(
       break;
     }
   }
+
+  UMA_HISTOGRAM_EXACT_LINEAR("Omnibox.PhysicalWebProviderQueryMatches",
+                             matches_.size(), kMaxMatches);
 }
 
 void PhysicalWebProvider::AppendOverflowItem(int additional_url_count,
