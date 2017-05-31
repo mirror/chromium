@@ -49,6 +49,46 @@
     },
     {
       "key": {
+        "uuid": "5484b4bd_aba3b554",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-05-31T18:19:03Z",
+      "side": 1,
+      "message": "Please put the implementations in the CC file.",
+      "revId": "87388244a49ee4a6913262e960a895e3059a6d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d227d153_7ca94eeb",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-05-31T18:19:03Z",
+      "side": 1,
+      "message": "nit: auto can be used when using MakeUnique.",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "87388244a49ee4a6913262e960a895e3059a6d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e536e94f_55543828",
         "filename": "components/offline_pages/core/prefetch/BUILD.gn",
         "patchSetId": 5
