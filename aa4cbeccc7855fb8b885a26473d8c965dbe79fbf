@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e79aab_bfc392da",
+        "filename": "services/identity/public/cpp/google_service_auth_error_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-31T07:55:54Z",
+      "side": 1,
+      "message": "Should the if start with data.image_width()  \u003c 0 (this would avoid calling ReadToken if the image_width() is less than 0)?",
+      "range": {
+        "startLine": 87,
+        "startChar": 34,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "aa4cbeccc7855fb8b885a26473d8c965dbe79fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f43e2a_07acd78d",
+        "filename": "services/identity/public/cpp/google_service_auth_error_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-05-31T07:55:54Z",
+      "side": 1,
+      "message": "Should the if start with data.field_length()  \u003c 0 (this would avoid calling ReadToken if the field_length is less than 0)?",
+      "range": {
+        "startLine": 126,
+        "startChar": 57,
+        "endLine": 126,
+        "endChar": 69
+      },
+      "revId": "aa4cbeccc7855fb8b885a26473d8c965dbe79fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
