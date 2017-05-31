@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e3a612_494e40a5",
+        "filename": "buildbucket.config",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-05-31T21:19:47Z",
+      "side": 1,
+      "message": "Could we also add android_blink_rel here?",
+      "range": {
+        "startLine": 3,
+        "startChar": 34,
+        "endLine": 3,
+        "endChar": 35
+      },
+      "revId": "9520df418b98bba7968409a08ce94859ea4a0946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
