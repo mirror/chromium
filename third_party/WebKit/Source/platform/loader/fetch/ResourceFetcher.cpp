@@ -1175,6 +1175,7 @@ void ResourceFetcher::ReloadImagesIfNotDeferred() {
 
 void ResourceFetcher::ClearContext() {
   ClearPreloads(ResourceFetcher::kClearAllPreloads);
+  Context().Detach();
   context_.Clear();
 }
 
