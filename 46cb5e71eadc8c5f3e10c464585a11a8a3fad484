@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df8a2e71_c71a68ce",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3107,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-05-31T19:47:42Z",
+      "side": 1,
+      "message": "Note: This will cause the Query group to get all the testing, since only the first entry is tested.",
+      "range": {
+        "startLine": 3107,
+        "startChar": 18,
+        "endLine": 3107,
+        "endChar": 0
+      },
+      "revId": "46cb5e71eadc8c5f3e10c464585a11a8a3fad484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
