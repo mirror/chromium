@@ -68,6 +68,9 @@ class TestingPrefetchService : public PrefetchService {
   TestingPrefetchService() = default;
 
   PrefetchDispatcher* GetDispatcher() override { return &dispatcher; };
+  OfflineMetricsCollector* GetOfflineMetricsCollector() override {
+    return nullptr;
+  }
 
   TestingPrefetchDispatcher dispatcher;
 };
