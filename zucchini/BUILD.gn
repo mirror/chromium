@@ -1,0 +1,117 @@
+# Copyright 2016 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//testing/test.gni")
+
+static_library("libzucchini") {
+  sources = [
+    "arm_utils.cc",
+    "arm_utils.h",
+    "binary_data_histogram.cc",
+    "binary_data_histogram.h",
+    "disassembler.cc",
+    "disassembler.h",
+    "disassembler_dex.cc",
+    "disassembler_dex.h",
+    "disassembler_elf.cc",
+    "disassembler_elf.h",
+    "disassembler_no_op.cc",
+    "disassembler_no_op.h",
+    "disassembler_win32.cc",
+    "disassembler_win32.h",
+    "encoded_view.cc",
+    "encoded_view.h",
+    "ensemble.cc",
+    "ensemble.h",
+    "equivalence_map.cc",
+    "equivalence_map.h",
+    "image_utils.h",
+    "io_utils.cc",
+    "io_utils.h",
+    "label_manager.cc",
+    "label_manager.h",
+    "patch.h",
+    "program_detector.cc",
+    "program_detector.h",
+    "ranges/algorithm.h",
+    "ranges/functional.h",
+    "ranges/iterator_facade.h",
+    "ranges/meta.h",
+    "ranges/range_adaptor.h",
+    "ranges/utility.h",
+    "ranges/view.h",
+    "reference_bytes_mixer.cc",
+    "reference_bytes_mixer.h",
+    "reference_holder.cc",
+    "reference_holder.h",
+    "region.cc",
+    "region.h",
+    "rel32_finder.cc",
+    "rel32_finder.h",
+    "rel32_utils.cc",
+    "rel32_utils.h",
+    "sink_patch.cc",
+    "sink_patch.h",
+    "source_patch.cc",
+    "source_patch.h",
+    "stream.cc",
+    "stream.h",
+    "suffix_array.h",
+    "type_dex.h",
+    "type_elf.h",
+    "type_win_pe.h",
+    "zucchini.h",
+    "zucchini_apply.cc",
+    "zucchini_gen.cc",
+    "zucchini_tools.cc",
+  ]
+
+  deps = [
+    "//base",
+  ]
+}
+
+executable("zucchini") {
+  sources = [
+    "main.cc",
+    "main_utils.cc",
+    "main_utils.h",
+  ]
+
+  deps = [
+    ":libzucchini",
+    "//base",
+  ]
+}
+
+test("zucchini_unittests") {
+  sources = [
+    "arm_utils_unittest.cc",
+    "binary_data_histogram_unittest.cc",
+    "disassembler_dex_unittest.cc",
+    "ensemble_unittest.cc",
+    "image_utils_unittest.cc",
+    "label_manager_unittest.cc",
+    "ranges/meta_unittest.cc",
+    "ranges/utility_unittest.cc",
+    "ranges/view_unittest.cc",
+    "reference_holder_unittest.cc",
+    "region_unittest.cc",
+    "rel32_finder_unittest.cc",
+    "rel32_utils_unittest.cc",
+    "stream_unittest.cc",
+  ]
+
+  deps = [
+    ":libzucchini",
+    "//base",
+    "//base/test:run_all_unittests",
+    "//base/test:test_support",
+    "//testing/gtest",
+  ]
+
+  data = [
+    "testdata/",
+  ]
+}
