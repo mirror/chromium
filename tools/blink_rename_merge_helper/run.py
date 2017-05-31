@@ -13,80 +13,18 @@ import sys
 import tempfile
 
 
-class _DepotToolsNotFoundException(Exception):
-  pass
-
-
-def _whereis(name):
-  """Find and return the first entry in $PATH containing a file named |name|.
-
-  Returns the path if found; otherwise returns nothing.
-  """
-  for path in os.environ['PATH'].split(os.pathsep):
-    if os.path.exists(os.path.join(path, name)):
-      return path
-
-
-def _find_depot_tools():
-  """Attempts to configure and return a wrapper for invoking depot tools.
-
-  Returns:
-    A helper object for invoking depot tools.
-
-  Raises:
-    _DepotToolsNotFoundException: An error occurred trying to find depot tools.
-  """
-
-  class DepotToolsWrapper(object):
-
-    def __init__(self, path):
-      self.__download_from_google_storage = os.path.join(
-          path, 'download_from_google_storage.py')
-      self.__gsutil = os.path.join(path, 'gsutil.py')
-
-    def call_download_from_google_storage(self, *args):
-      """Runs download_from_google_storage with the given args."""
-      subprocess.check_call(['python', self.__download_from_google_storage] +
-                            list(args))
-
-    def call_gsutil(self, *args):
-      """Runs gsutil with the given args."""
-      subprocess.check_call(['python', self.__gsutil] + list(args))
-
-  # Attempt to find download_from_google_storage.py from depot_tools
-  path = _whereis('download_from_google_storage.py')
-  if not path:
-    raise _DepotToolsNotFoundException(
-        'download_from_google_storage.py not found. Make sure depot_tools is '
-        'in $PATH.')
-
-  # Make sure gsutil.py is in the same location
-  path2 = _whereis('download_from_google_storage.py')
-  if not path2:
-    raise _DepotToolsNotFoundException(
-        'gsutil.py not found. Make sure depot_tools is in $PATH.')
-
-  if path != path2:
-    raise _DepotToolsNotFoundException(
-        'download_from_google_storage.py found in %s but gsutil.py found in %s.'
-        % (path, path2))
-
-  return DepotToolsWrapper(path)
-
 
 class Bootstrapper(object):
   """Helper class for bootstrapping startup of the rebase helper.
 
   Performs update checks and stages any required binaries."""
 
-  def __init__(self, depot_tools, components_manifest_name):
+  def __init__(self, components_manifest_name):
     """Bootstrapper constructor.
 
     Args:
-      depot_tools: a wrapper for invoking depot_tools.
       components_manifest_name: The name of the components manifest.
     """
-    self.__depot_tools = depot_tools
     self.__components_manifest_name = components_manifest_name
     self.__tmpdir = None
 
@@ -101,26 +39,26 @@ class Bootstrapper(object):
     """Performs an update check for various components."""
     components = self._get_latest_components()
     for name, sha1_hash in components.iteritems():
-      args = [
+      cmd = [
+          'download_from_google_storage',
           '--no_auth', '--no_resume', '-b', 'chromium-blink-rename',
           '--extract', sha1_hash
       ]
       if '-' in name:
-        name, platform = name.split('-', 1)
-        args.append('-p')
-        args.append(platform)
-      args.append('-o')
-      args.append(os.path.join('staging', '%s.tar.gz' % name))
-      self.__depot_tools.call_download_from_google_storage(*args)
+        name, platform = name.split('-', 1)[1]
+        cmd.extend(('-p', platform))
+      cmd.append('-o')
+      cmd.append(os.path.join('staging', '%s.tar.gz' % name))
+      subprocess.check_call(cmd)
 
   def _get_latest_components(self):
     """Fetches info about the latest components from google storage.
 
     The return value should be a dict of component names to SHA1 hashes."""
     components_path = os.path.join(self.__tmpdir, 'COMPONENTS')
-    self.__depot_tools.call_gsutil(
-        'cp', 'gs://chromium-blink-rename/%s' % self.__components_manifest_name,
-        components_path)
+    subprocess.check_call(
+        ['gsutil', 'cp', 'gs://chromium-blink-rename/%s' %
+          self.__components_manifest_name, components_path])
     with open(components_path) as f:
       return json.loads(f.read())
 
@@ -135,14 +73,8 @@ def main():
   script_dir = os.path.dirname(os.path.realpath(__file__))
   os.chdir(script_dir)
 
-  try:
-    depot_tools = _find_depot_tools()
-  except _DepotToolsNotFoundException as e:
-    print e.message
-    return 1
-
   print 'Checking for updates...'
-  with Bootstrapper(depot_tools, args.components_manifest_name) as bootstrapper:
+  with Bootstrapper(args.components_manifest_name) as bootstrapper:
     bootstrapper.update()
 
   # Import stage 2 and launch it.

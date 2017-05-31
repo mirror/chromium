@@ -14,26 +14,22 @@ import sys
 import tempfile
 
 
-sys.path.append(os.path.join(
-    os.path.dirname(__file__), os.pardir, os.pardir, 'build', 'android'))
+_THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(
+    os.path.join(_THIS_DIR, os.pardir, os.pardir, 'build', 'android'))
 import devil_chromium  # pylint: disable=import-error
 from devil.utils import cmd_helper  # pylint: disable=import-error
 
-sys.path.append(os.path.join(
-    os.path.dirname(__file__), os.pardir, os.pardir, 'build'))
-import find_depot_tools  # pylint: disable=import-error
-
 _CTS_BUCKET = 'gs://chromium-cts'
 
-_GSUTIL_PATH = os.path.join(find_depot_tools.DEPOT_TOOLS_PATH, 'gsutil.py')
 _TEST_RUNNER_PATH = os.path.join(
-    os.path.dirname(__file__), os.pardir, os.pardir,
+    _THIS_DIR, os.pardir, os.pardir,
     'build', 'android', 'test_runner.py')
 
 _EXPECTED_FAILURES_FILE = os.path.join(
-    os.path.dirname(__file__), 'cts_config', 'expected_failure_on_bot.json')
+    _THIS_DIR, 'cts_config', 'expected_failure_on_bot.json')
 _WEBVIEW_CTS_GCS_PATH_FILE = os.path.join(
-    os.path.dirname(__file__), 'cts_config', 'webview_cts_gcs_path.json')
+    _THIS_DIR, 'cts_config', 'webview_cts_gcs_path.json')
 
 
 def GetCtsPath(arch, platform):
@@ -75,8 +71,9 @@ def DownloadAndRunCTS(args, test_runner_args):
 
     # Download CTS APK if needed.
     if not os.path.exists(local_cts_path):
+      # If this fails, depot_tools is not in PATH.
       if cmd_helper.RunCmd(
-          [_GSUTIL_PATH, 'cp', google_storage_cts_path, local_cts_path]):
+          ['gsutil', 'cp', google_storage_cts_path, local_cts_path]):
         raise Exception('Error downloading CTS from Google Storage.')
 
     test_runner_args += ['--test-apk', local_cts_path]

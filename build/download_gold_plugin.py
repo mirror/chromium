@@ -5,7 +5,6 @@
 
 """Script to download LLVM gold plugin from google storage."""
 
-import find_depot_tools
 import json
 import os
 import shutil
@@ -13,12 +12,10 @@ import subprocess
 import sys
 import zipfile
 
+
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 CHROME_SRC = os.path.abspath(os.path.join(SCRIPT_DIR, os.pardir))
 
-
-DEPOT_PATH = find_depot_tools.add_depot_tools_to_path()
-GSUTIL_PATH = os.path.join(DEPOT_PATH, 'gsutil.py')
 
 LLVM_BUILD_PATH = os.path.join(CHROME_SRC, 'third_party', 'llvm-build',
                                'Release+Asserts')
@@ -28,17 +25,18 @@ CLANG_REVISION = os.popen(CLANG_UPDATE_PY + ' --print-revision').read().rstrip()
 
 CLANG_BUCKET = 'gs://chromium-browser-clang/Linux_x64'
 
+
 def main():
   targz_name = 'llvmgold-%s.tgz' % CLANG_REVISION
   remote_path = '%s/%s' % (CLANG_BUCKET, targz_name)
 
   os.chdir(LLVM_BUILD_PATH)
 
-  subprocess.check_call(['python', GSUTIL_PATH,
-                         'cp', remote_path, targz_name])
+  subprocess.check_call(['gsutil', 'cp', remote_path, targz_name])
   subprocess.check_call(['tar', 'xzf', targz_name])
   os.remove(targz_name)
   return 0
+
 
 if __name__ == '__main__':
   sys.exit(main())
