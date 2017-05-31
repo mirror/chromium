@@ -830,6 +830,11 @@
       name: "RemotePlayback",
       status: "stable",
     },
+    // Whether or not the Remote Playback API backend is implemented.
+    // Not web-exposed, set per platform.
+    {
+      name: "RemotePlaybackBackend",
+    },
     {
       name: "RenderingPipelineThrottling",
       status: "stable",
