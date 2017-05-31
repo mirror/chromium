@@ -735,7 +735,7 @@ void LocalFrameClientImpl::TransitionToCommittedForNewPage() {
 LocalFrame* LocalFrameClientImpl::CreateFrame(
     const FrameLoadRequest& request,
     const AtomicString& name,
-    HTMLFrameOwnerElement* owner_element) {
+    HTMLEmbeddedContentElement* owner_element) {
   return web_frame_->CreateChildFrame(request, name, owner_element);
 }
 
@@ -903,7 +903,7 @@ void LocalFrameClientImpl::DidAddContentSecurityPolicies(
 }
 
 void LocalFrameClientImpl::DidChangeFrameOwnerProperties(
-    HTMLFrameOwnerElement* frame_element) {
+    HTMLEmbeddedContentElement* frame_element) {
   if (!web_frame_->Client())
     return;
 

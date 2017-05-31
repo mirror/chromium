@@ -105,7 +105,7 @@ class ScopedFocusNavigation {
   static ScopedFocusNavigation OwnedByShadowHost(const Element&);
   static ScopedFocusNavigation OwnedByShadowInsertionPoint(HTMLShadowElement&);
   static ScopedFocusNavigation OwnedByHTMLSlotElement(const HTMLSlotElement&);
-  static ScopedFocusNavigation OwnedByIFrame(const HTMLFrameOwnerElement&);
+  static ScopedFocusNavigation OwnedByIFrame(const HTMLEmbeddedContentElement&);
   static HTMLSlotElement* FindFallbackScopeOwnerSlot(const Element&);
   static bool IsSlotFallbackScoped(const Element&);
   static bool IsSlotFallbackScopedForThisSlot(const HTMLSlotElement&,
@@ -280,7 +280,7 @@ ScopedFocusNavigation ScopedFocusNavigation::OwnedByShadowHost(
 }
 
 ScopedFocusNavigation ScopedFocusNavigation::OwnedByIFrame(
-    const HTMLFrameOwnerElement& frame) {
+    const HTMLEmbeddedContentElement& frame) {
   DCHECK(frame.ContentFrame());
   DCHECK(frame.ContentFrame()->IsLocalFrame());
   ToLocalFrame(frame.ContentFrame())->GetDocument()->UpdateDistribution();
@@ -642,12 +642,11 @@ Element* FindFocusableElementRecursively(WebFocusType type,
 
 Element* FindFocusableElementDescendingDownIntoFrameDocument(WebFocusType type,
                                                              Element* element) {
-  // The element we found might be a HTMLFrameOwnerElement, so descend down the
-  // tree until we find either:
-  // 1) a focusable element, or
-  // 2) the deepest-nested HTMLFrameOwnerElement.
-  while (element && element->IsFrameOwnerElement()) {
-    HTMLFrameOwnerElement& owner = ToHTMLFrameOwnerElement(*element);
+  // The element we found might be a HTMLEmbeddedContentElement, so descend down
+  // the tree until we find either: 1) a focusable element, or 2) the
+  // deepest-nested HTMLEmbeddedContentElement.
+  while (element && element->IsEmbeddedContentElement()) {
+    HTMLEmbeddedContentElement& owner = ToHTMLEmbeddedContentElement(*element);
     if (!owner.ContentFrame() || !owner.ContentFrame()->IsLocalFrame())
       break;
     ToLocalFrame(owner.ContentFrame())
@@ -831,7 +830,7 @@ Frame* FocusController::FocusedOrMainFrame() const {
   return page_->MainFrame();
 }
 
-HTMLFrameOwnerElement* FocusController::FocusedFrameOwnerElement(
+HTMLEmbeddedContentElement* FocusController::FocusedFrameOwnerElement(
     LocalFrame& current_frame) const {
   Frame* focused_frame = focused_frame_.Get();
   for (; focused_frame; focused_frame = focused_frame->Tree().Parent()) {
@@ -932,7 +931,7 @@ bool FocusController::AdvanceFocusAcrossFrames(
   Element* start = nullptr;
   if (from->Tree().Parent() == to) {
     DCHECK(from->Owner()->IsLocal());
-    start = ToHTMLFrameOwnerElement(from->Owner());
+    start = ToHTMLEmbeddedContentElement(from->Owner());
   }
 
   // If we're coming from a parent frame, we need to restart from the first or
@@ -1013,12 +1012,12 @@ bool FocusController::AdvanceFocusInDocumentOrder(
     return true;
   }
 
-  if (element->IsFrameOwnerElement() &&
+  if (element->IsEmbeddedContentElement() &&
       (!IsHTMLPlugInElement(*element) || !element->IsKeyboardFocusable())) {
     // We focus frames rather than frame owners.
     // FIXME: We should not focus frames that have no scrollbars, as focusing
     // them isn't useful to the user.
-    HTMLFrameOwnerElement* owner = ToHTMLFrameOwnerElement(element);
+    HTMLEmbeddedContentElement* owner = ToHTMLEmbeddedContentElement(element);
     if (!owner->ContentFrame())
       return false;
 
@@ -1238,14 +1237,15 @@ void FocusController::FindFocusCandidateInContainer(
 
   for (; element;
        element =
-           (element->IsFrameOwnerElement() ||
+           (element->IsEmbeddedContentElement() ||
             CanScrollInDirection(element, type))
                ? ElementTraversal::NextSkippingChildren(*element, &container)
                : ElementTraversal::Next(*element, &container)) {
     if (element == focused_element)
       continue;
 
-    if (!element->IsKeyboardFocusable() && !element->IsFrameOwnerElement() &&
+    if (!element->IsKeyboardFocusable() &&
+        !element->IsEmbeddedContentElement() &&
         !CanScrollInDirection(element, type))
       continue;
 
@@ -1284,7 +1284,8 @@ bool FocusController::AdvanceFocusDirectionallyInContainer(
     return ScrollInDirection(container, type);
   }
 
-  HTMLFrameOwnerElement* frame_element = FrameOwnerElement(focus_candidate);
+  HTMLEmbeddedContentElement* frame_element =
+      FrameOwnerElement(focus_candidate);
   // If we have an iframe without the src attribute, it will not have a
   // contentFrame().  We DCHECK here to make sure that
   // updateFocusCandidateIfNeeded() will never consider such an iframe as a

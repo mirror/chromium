@@ -31,7 +31,7 @@
 
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutBox.h"

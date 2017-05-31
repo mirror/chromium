@@ -18,7 +18,7 @@
  *
  */
 
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
@@ -52,7 +52,7 @@ static FrameOrPluginToParentMap& FrameOrPluginNewParentMap() {
 using FrameOrPluginSet = HeapHashSet<Member<FrameOrPlugin>>;
 static FrameOrPluginSet& FrameOrPluginsPendingTemporaryRemovalFromParent() {
   // FrameOrPlugins in this set will not leak because it will be cleared in
-  // HTMLFrameOwnerElement::UpdateSuspendScope::performDeferredWidgetTreeOperations.
+  // HTMLEmbeddedContentElement::UpdateSuspendScope::performDeferredWidgetTreeOperations.
   DEFINE_STATIC_LOCAL(FrameOrPluginSet, set, (new FrameOrPluginSet));
   return set;
 }
@@ -70,11 +70,11 @@ SubframeLoadingDisabler::DisabledSubtreeRoots() {
 
 static unsigned g_update_suspend_count = 0;
 
-HTMLFrameOwnerElement::UpdateSuspendScope::UpdateSuspendScope() {
+HTMLEmbeddedContentElement::UpdateSuspendScope::UpdateSuspendScope() {
   ++g_update_suspend_count;
 }
 
-void HTMLFrameOwnerElement::UpdateSuspendScope::
+void HTMLEmbeddedContentElement::UpdateSuspendScope::
     PerformDeferredWidgetTreeOperations() {
   FrameOrPluginToParentMap map;
   FrameOrPluginNewParentMap().swap(map);
@@ -108,7 +108,7 @@ void HTMLFrameOwnerElement::UpdateSuspendScope::
   }
 }
 
-HTMLFrameOwnerElement::UpdateSuspendScope::~UpdateSuspendScope() {
+HTMLEmbeddedContentElement::UpdateSuspendScope::~UpdateSuspendScope() {
   DCHECK_GT(g_update_suspend_count, 0u);
   if (g_update_suspend_count == 1)
     PerformDeferredWidgetTreeOperations();
@@ -140,14 +140,15 @@ void MoveFrameOrPluginToParentSoon(FrameOrPlugin* child,
   FrameOrPluginNewParentMap().Set(child, parent);
 }
 
-HTMLFrameOwnerElement::HTMLFrameOwnerElement(const QualifiedName& tag_name,
-                                             Document& document)
+HTMLEmbeddedContentElement::HTMLEmbeddedContentElement(
+    const QualifiedName& tag_name,
+    Document& document)
     : HTMLElement(tag_name, document),
       content_frame_(nullptr),
       widget_(nullptr),
       sandbox_flags_(kSandboxNone) {}
 
-LayoutPart* HTMLFrameOwnerElement::GetLayoutPart() const {
+LayoutPart* HTMLEmbeddedContentElement::GetLayoutPart() const {
   // HTMLObjectElement and HTMLEmbedElement may return arbitrary layoutObjects
   // when using fallback content.
   if (!GetLayoutObject() || !GetLayoutObject()->IsLayoutPart())
@@ -155,7 +156,7 @@ LayoutPart* HTMLFrameOwnerElement::GetLayoutPart() const {
   return ToLayoutPart(GetLayoutObject());
 }
 
-void HTMLFrameOwnerElement::SetContentFrame(Frame& frame) {
+void HTMLEmbeddedContentElement::SetContentFrame(Frame& frame) {
   // Make sure we will not end up with two frames referencing the same owner
   // element.
   DCHECK(!content_frame_ || content_frame_->Owner() != this);
@@ -167,7 +168,7 @@ void HTMLFrameOwnerElement::SetContentFrame(Frame& frame) {
     node->IncrementConnectedSubframeCount();
 }
 
-void HTMLFrameOwnerElement::ClearContentFrame() {
+void HTMLEmbeddedContentElement::ClearContentFrame() {
   if (!content_frame_)
     return;
 
@@ -178,7 +179,7 @@ void HTMLFrameOwnerElement::ClearContentFrame() {
     node->DecrementConnectedSubframeCount();
 }
 
-void HTMLFrameOwnerElement::DisconnectContentFrame() {
+void HTMLEmbeddedContentElement::DisconnectContentFrame() {
   // FIXME: Currently we don't do this in removedFrom because this causes an
   // unload event in the subframe which could execute script that could then
   // reach up into this document and then attempt to look back down. We should
@@ -188,23 +189,23 @@ void HTMLFrameOwnerElement::DisconnectContentFrame() {
   }
 }
 
-HTMLFrameOwnerElement::~HTMLFrameOwnerElement() {
+HTMLEmbeddedContentElement::~HTMLEmbeddedContentElement() {
   // An owner must by now have been informed of detachment
   // when the frame was closed.
   DCHECK(!content_frame_);
 }
 
-Document* HTMLFrameOwnerElement::contentDocument() const {
+Document* HTMLEmbeddedContentElement::contentDocument() const {
   return (content_frame_ && content_frame_->IsLocalFrame())
              ? ToLocalFrame(content_frame_)->GetDocument()
              : 0;
 }
 
-DOMWindow* HTMLFrameOwnerElement::contentWindow() const {
+DOMWindow* HTMLEmbeddedContentElement::contentWindow() const {
   return content_frame_ ? content_frame_->DomWindow() : 0;
 }
 
-void HTMLFrameOwnerElement::SetSandboxFlags(SandboxFlags flags) {
+void HTMLEmbeddedContentElement::SetSandboxFlags(SandboxFlags flags) {
   sandbox_flags_ = flags;
   // Recalculate the container policy in case the allow-same-origin flag has
   // changed.
@@ -220,11 +221,11 @@ void HTMLFrameOwnerElement::SetSandboxFlags(SandboxFlags flags) {
   }
 }
 
-bool HTMLFrameOwnerElement::IsKeyboardFocusable() const {
+bool HTMLEmbeddedContentElement::IsKeyboardFocusable() const {
   return content_frame_ && HTMLElement::IsKeyboardFocusable();
 }
 
-void HTMLFrameOwnerElement::DisposeFrameOrPluginSoon(
+void HTMLEmbeddedContentElement::DisposeFrameOrPluginSoon(
     FrameOrPlugin* frame_or_plugin) {
   if (g_update_suspend_count) {
     FrameOrPluginsPendingDispose().insert(frame_or_plugin);
@@ -233,7 +234,7 @@ void HTMLFrameOwnerElement::DisposeFrameOrPluginSoon(
   }
 }
 
-void HTMLFrameOwnerElement::UpdateContainerPolicy() {
+void HTMLEmbeddedContentElement::UpdateContainerPolicy() {
   container_policy_ = GetContainerPolicyFromAllowedFeatures(
       AllowedFeatures(), AllowFullscreen(), AllowPaymentRequest(),
       GetOriginForFeaturePolicy());
@@ -245,7 +246,7 @@ void HTMLFrameOwnerElement::UpdateContainerPolicy() {
   }
 }
 
-void HTMLFrameOwnerElement::FrameOwnerPropertiesChanged() {
+void HTMLEmbeddedContentElement::FrameOwnerPropertiesChanged() {
   // Don't notify about updates if ContentFrame() is null, for example when
   // the subframe hasn't been created yet.
   if (ContentFrame()) {
@@ -254,21 +255,22 @@ void HTMLFrameOwnerElement::FrameOwnerPropertiesChanged() {
   }
 }
 
-void HTMLFrameOwnerElement::DispatchLoad() {
+void HTMLEmbeddedContentElement::DispatchLoad() {
   DispatchScopedEvent(Event::Create(EventTypeNames::load));
 }
 
 const WebVector<WebFeaturePolicyFeature>&
-HTMLFrameOwnerElement::AllowedFeatures() const {
+HTMLEmbeddedContentElement::AllowedFeatures() const {
   DEFINE_STATIC_LOCAL(WebVector<WebFeaturePolicyFeature>, features, ());
   return features;
 }
 
-const WebParsedFeaturePolicy& HTMLFrameOwnerElement::ContainerPolicy() const {
+const WebParsedFeaturePolicy& HTMLEmbeddedContentElement::ContainerPolicy()
+    const {
   return container_policy_;
 }
 
-Document* HTMLFrameOwnerElement::getSVGDocument(
+Document* HTMLEmbeddedContentElement::getSVGDocument(
     ExceptionState& exception_state) const {
   Document* doc = contentDocument();
   if (doc && doc->IsSVGDocument())
@@ -276,7 +278,7 @@ Document* HTMLFrameOwnerElement::getSVGDocument(
   return nullptr;
 }
 
-void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
+void HTMLEmbeddedContentElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
   if (frame_or_plugin == widget_)
     return;
 
@@ -314,7 +316,7 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
     cache->ChildrenChanged(layout_part);
 }
 
-FrameOrPlugin* HTMLFrameOwnerElement::ReleaseWidget() {
+FrameOrPlugin* HTMLEmbeddedContentElement::ReleaseWidget() {
   if (!widget_)
     return nullptr;
   if (widget_->IsAttached())
@@ -327,7 +329,7 @@ FrameOrPlugin* HTMLFrameOwnerElement::ReleaseWidget() {
   return widget_.Release();
 }
 
-bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
+bool HTMLEmbeddedContentElement::LoadOrRedirectSubframe(
     const KURL& url,
     const AtomicString& frame_name,
     bool replace_current_item) {
@@ -351,16 +353,17 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
                                       "_self", kCheckContentSecurityPolicy);
 
   ReferrerPolicy policy = ReferrerPolicyAttribute();
-  if (policy != kReferrerPolicyDefault)
+  if (policy != kReferrerPolicyDefault) {
     frame_load_request.GetResourceRequest().SetHTTPReferrer(
         SecurityPolicy::GenerateReferrer(policy, url,
                                          GetDocument().OutgoingReferrer()));
+  }
 
   return parent_frame->Loader().Client()->CreateFrame(frame_load_request,
                                                       frame_name, this);
 }
 
-DEFINE_TRACE(HTMLFrameOwnerElement) {
+DEFINE_TRACE(HTMLEmbeddedContentElement) {
   visitor->Trace(content_frame_);
   visitor->Trace(widget_);
   HTMLElement::Trace(visitor);

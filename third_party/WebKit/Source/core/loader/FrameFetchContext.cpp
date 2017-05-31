@@ -45,7 +45,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/imports/HTMLImportsController.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/IdentifiersFactory.h"

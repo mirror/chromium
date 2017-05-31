@@ -58,7 +58,7 @@
 #include "core/frame/RootFrameViewport.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutFlexibleBox.h"
 #include "core/layout/LayoutPart.h"

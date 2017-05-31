@@ -9,7 +9,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/VisualViewport.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/page/ChromeClient.h"
@@ -86,8 +86,9 @@ Element* TopDocumentRootScrollerController::FindGlobalRootScrollerElement() {
   DCHECK(effective_root_scroller->IsElementNode());
   Element* element = ToElement(effective_root_scroller);
 
-  while (element && element->IsFrameOwnerElement()) {
-    HTMLFrameOwnerElement* frame_owner = ToHTMLFrameOwnerElement(element);
+  while (element && element->IsEmbeddedContentElement()) {
+    HTMLEmbeddedContentElement* frame_owner =
+        ToHTMLEmbeddedContentElement(element);
     DCHECK(frame_owner);
 
     Document* iframe_document = frame_owner->contentDocument();

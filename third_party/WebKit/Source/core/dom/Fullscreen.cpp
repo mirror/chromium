@@ -213,12 +213,13 @@ Document& TopmostLocalAncestor(Document& document) {
 // |descendant| Document, possibly through multiple levels of nesting.  This
 // works even in OOPIF scenarios like A-B-A, where there may be remote frames
 // in between |doc| and |descendant|.
-HTMLFrameOwnerElement* FindContainerForDescendant(const Document& doc,
-                                                  const Document& descendant) {
+HTMLEmbeddedContentElement* FindContainerForDescendant(
+    const Document& doc,
+    const Document& descendant) {
   Frame* frame = descendant.GetFrame();
   while (frame->Tree().Parent() != doc.GetFrame())
     frame = frame->Tree().Parent();
-  return ToHTMLFrameOwnerElement(frame->Owner());
+  return ToHTMLEmbeddedContentElement(frame->Owner());
 }
 
 // Fullscreen status affects scroll paint properties through
@@ -463,7 +464,7 @@ void Fullscreen::RequestFullscreen(Element& element,
       // 3. Otherwise, if document's fullscreen element stack is either empty or
       // its top element is not following document's browsing context container,
       Element* top_element = FullscreenElementFrom(*current_doc);
-      HTMLFrameOwnerElement* following_owner =
+      HTMLEmbeddedContentElement* following_owner =
           FindContainerForDescendant(*current_doc, *following_doc);
       if (!top_element || top_element != following_owner) {
         // ...push following document's browsing context container on document's
@@ -681,13 +682,13 @@ void Fullscreen::DidEnterFullscreen() {
   }
 
   // When |m_forCrossProcessDescendant| is true, m_currentFullScreenElement
-  // corresponds to the HTMLFrameOwnerElement for the out-of-process iframe
+  // corresponds to the HTMLEmbeddedContentElement for the out-of-process iframe
   // that contains the actual fullscreen element.   Hence, it must also set
   // the ContainsFullScreenElement flag (so that it gains the
   // -webkit-full-screen-ancestor style).
   if (for_cross_process_descendant_) {
-    DCHECK(current_full_screen_element_->IsFrameOwnerElement());
-    DCHECK(ToHTMLFrameOwnerElement(current_full_screen_element_)
+    DCHECK(current_full_screen_element_->IsEmbeddedContentElement());
+    DCHECK(ToHTMLEmbeddedContentElement(current_full_screen_element_)
                ->ContentFrame()
                ->IsRemoteFrame());
     current_full_screen_element_->SetContainsFullScreenElement(true);

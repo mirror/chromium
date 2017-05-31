@@ -46,7 +46,7 @@
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameBase.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
@@ -998,8 +998,9 @@ bool InspectorOverlayAgent::HandleMouseMove(const WebMouseEvent& event) {
   if (!node)
     return true;
 
-  if (node->IsFrameOwnerElement()) {
-    HTMLFrameOwnerElement* frame_owner = ToHTMLFrameOwnerElement(node);
+  if (node->IsEmbeddedContentElement()) {
+    HTMLEmbeddedContentElement* frame_owner =
+        ToHTMLEmbeddedContentElement(node);
     if (frame_owner->ContentFrame() &&
         !frame_owner->ContentFrame()->IsLocalFrame()) {
       // Do not consume event so that remote frame can handle it.

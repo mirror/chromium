@@ -9,7 +9,7 @@
 #include "core/events/GestureEvent.h"
 #include "core/frame/BrowserControls.h"
 #include "core/frame/LocalFrameView.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/input/EventHandler.h"
 #include "core/input/EventHandlingUtil.h"
 #include "core/layout/LayoutBlock.h"

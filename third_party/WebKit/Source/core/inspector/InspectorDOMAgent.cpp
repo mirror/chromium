@@ -54,7 +54,7 @@
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/frame/LocalFrame.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLLinkElement.h"
 #include "core/html/HTMLSlotElement.h"
@@ -297,9 +297,9 @@ void InspectorDOMAgent::Unbind(Node* node, NodeToIdMap* nodes_map) {
   id_to_node_.erase(id);
   id_to_nodes_map_.erase(id);
 
-  if (node->IsFrameOwnerElement()) {
+  if (node->IsEmbeddedContentElement()) {
     Document* content_document =
-        ToHTMLFrameOwnerElement(node)->contentDocument();
+        ToHTMLEmbeddedContentElement(node)->contentDocument();
     if (dom_listener_)
       dom_listener_->DidRemoveDocument(content_document);
     if (content_document)
@@ -1394,8 +1394,9 @@ std::unique_ptr<protocol::DOM::Node> InspectorDOMAgent::BuildObjectForNode(
     Element* element = ToElement(node);
     value->setAttributes(BuildArrayForElementAttributes(element));
 
-    if (node->IsFrameOwnerElement()) {
-      HTMLFrameOwnerElement* frame_owner = ToHTMLFrameOwnerElement(node);
+    if (node->IsEmbeddedContentElement()) {
+      HTMLEmbeddedContentElement* frame_owner =
+          ToHTMLEmbeddedContentElement(node);
       if (LocalFrame* frame =
               frame_owner->ContentFrame() &&
                       frame_owner->ContentFrame()->IsLocalFrame()
@@ -1705,8 +1706,9 @@ void InspectorDOMAgent::CollectNodes(Node* node,
 
   if (pierce && node->IsElementNode()) {
     Element* element = ToElement(node);
-    if (node->IsFrameOwnerElement()) {
-      HTMLFrameOwnerElement* frame_owner = ToHTMLFrameOwnerElement(node);
+    if (node->IsEmbeddedContentElement()) {
+      HTMLEmbeddedContentElement* frame_owner =
+          ToHTMLEmbeddedContentElement(node);
       if (frame_owner->ContentFrame() &&
           frame_owner->ContentFrame()->IsLocalFrame()) {
         if (Document* doc = frame_owner->contentDocument())
@@ -1748,7 +1750,7 @@ void InspectorDOMAgent::DomContentLoadedEventFired(LocalFrame* frame) {
 }
 
 void InspectorDOMAgent::InvalidateFrameOwnerElement(LocalFrame* frame) {
-  HTMLFrameOwnerElement* frame_owner = frame->GetDocument()->LocalOwner();
+  HTMLEmbeddedContentElement* frame_owner = frame->GetDocument()->LocalOwner();
   if (!frame_owner)
     return;
 

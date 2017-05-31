@@ -93,7 +93,7 @@ class WebRemoteFrame : public WebFrame {
 
   // This is called in OOPIF scenarios when an element contained in this
   // frame is about to enter fullscreen.  This frame's owner
-  // corresponds to the HTMLFrameOwnerElement to be fullscreened. Calling
+  // corresponds to the HTMLEmbeddedContentElement to be fullscreened. Calling
   // this prepares FullscreenController to enter fullscreen for that frame
   // owner.
   virtual void WillEnterFullscreen() = 0;

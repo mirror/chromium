@@ -43,7 +43,7 @@
 #include "core/events/MutationEvent.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLCollection.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLTagCollection.h"
 #include "core/html/RadioNodeList.h"
 #include "core/layout/LayoutBlockFlow.h"
@@ -599,7 +599,8 @@ Node* ContainerNode::RemoveChild(Node* old_child,
   }
 
   {
-    HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+    HTMLEmbeddedContentElement::UpdateSuspendScope
+        suspend_widget_hierarchy_updates;
     DocumentOrderedMap::RemoveScope tree_remove_scope;
 
     Node* prev = child->previousSibling();
@@ -655,7 +656,8 @@ void ContainerNode::ParserRemoveChild(Node& old_child) {
   ChildListMutationScope(*this).WillRemoveChild(old_child);
   old_child.NotifyMutationObserversNodeWillDetach();
 
-  HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+  HTMLEmbeddedContentElement::UpdateSuspendScope
+      suspend_widget_hierarchy_updates;
   DocumentOrderedMap::RemoveScope tree_remove_scope;
 
   Node* prev = old_child.previousSibling();
@@ -693,7 +695,8 @@ void ContainerNode::RemoveChildren(SubtreeModificationAction action) {
   }
 
   {
-    HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+    HTMLEmbeddedContentElement::UpdateSuspendScope
+        suspend_widget_hierarchy_updates;
     DocumentOrderedMap::RemoveScope tree_remove_scope;
     {
       EventDispatchForbiddenScope assert_no_event_dispatch;

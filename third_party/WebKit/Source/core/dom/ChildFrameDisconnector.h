@@ -10,7 +10,7 @@
 namespace blink {
 
 class ElementShadow;
-class HTMLFrameOwnerElement;
+class HTMLEmbeddedContentElement;
 class Node;
 
 class ChildFrameDisconnector {
@@ -29,7 +29,7 @@ class ChildFrameDisconnector {
   void DisconnectCollectedFrameOwners();
   Node& Root() const { return *root_; }
 
-  HeapVector<Member<HTMLFrameOwnerElement>, 10> frame_owners_;
+  HeapVector<Member<HTMLEmbeddedContentElement>, 10> frame_owners_;
   Member<Node> root_;
 };
 

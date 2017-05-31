@@ -34,7 +34,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLAreaElement.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutView.h"
@@ -695,9 +695,9 @@ LayoutRect VirtualRectForAreaElementAndDirection(HTMLAreaElement& area,
   return rect;
 }
 
-HTMLFrameOwnerElement* FrameOwnerElement(FocusCandidate& candidate) {
-  return candidate.IsFrameOwnerElement()
-             ? ToHTMLFrameOwnerElement(candidate.visible_node)
+HTMLEmbeddedContentElement* FrameOwnerElement(FocusCandidate& candidate) {
+  return candidate.IsEmbeddedContentElement()
+             ? ToHTMLEmbeddedContentElement(candidate.visible_node)
              : nullptr;
 };
 

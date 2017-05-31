@@ -86,9 +86,9 @@
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLAllCollection.h"
 #include "core/html/HTMLElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLFrameElementBase.h"
-#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLHtmlElement.h"
 #include "core/html/HTMLMetaElement.h"
 #include "core/loader/DocumentLoader.h"
@@ -304,9 +304,9 @@ void WebFrameSerializerImpl::OpenTagToString(Element* element,
 
   // Find out if we need to do frame-specific link rewriting.
   WebFrame* frame = nullptr;
-  if (element->IsFrameOwnerElement()) {
-    frame =
-        WebFrame::FromFrame(ToHTMLFrameOwnerElement(element)->ContentFrame());
+  if (element->IsEmbeddedContentElement()) {
+    frame = WebFrame::FromFrame(
+        ToHTMLEmbeddedContentElement(element)->ContentFrame());
   }
   WebString rewritten_frame_link;
   bool should_rewrite_frame_src =

@@ -47,7 +47,7 @@
 namespace blink {
 
 class GestureEvent;
-class HTMLFrameOwnerElement;
+class HTMLEmbeddedContentElement;
 class HTMLPlugInElement;
 class IntRect;
 class KeyboardEvent;
@@ -194,7 +194,7 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
   // Sets |unclippedAbsoluteRect| to the visible rect for the plugin (but
   // without also clipping to the screen), in local space of the plugin.
   void ComputeClipRectsForPlugin(
-      const HTMLFrameOwnerElement* plugin_owner_element,
+      const HTMLEmbeddedContentElement* plugin_owner_element,
       IntRect& window_rect,
       IntRect& clipped_local_rect,
       IntRect& unclipped_int_local_rect) const;

@@ -9,7 +9,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/ScriptableDocumentParser.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/inspector/ThreadDebugger.h"
 #include "core/inspector/V8InspectorString.h"
 #include "platform/ScriptForbiddenScope.h"

@@ -115,7 +115,7 @@ void PaintLayerCompositor::SetCompositingModeEnabled(bool enable) {
 
   // Schedule an update in the parent frame so the <iframe>'s layer in the owner
   // document matches the compositing state here.
-  if (HTMLFrameOwnerElement* owner_element =
+  if (HTMLEmbeddedContentElement* owner_element =
           layout_view_.GetDocument().LocalOwner())
     owner_element->SetNeedsCompositingUpdate();
 }
@@ -164,9 +164,9 @@ static LayoutVideo* FindFullscreenVideoLayoutObject(Document& document) {
   // Recursively find the document that is in fullscreen.
   Element* fullscreen_element = Fullscreen::FullscreenElementFrom(document);
   Document* content_document = &document;
-  while (fullscreen_element && fullscreen_element->IsFrameOwnerElement()) {
+  while (fullscreen_element && fullscreen_element->IsEmbeddedContentElement()) {
     content_document =
-        ToHTMLFrameOwnerElement(fullscreen_element)->contentDocument();
+        ToHTMLEmbeddedContentElement(fullscreen_element)->contentDocument();
     if (!content_document)
       return nullptr;
     fullscreen_element = Fullscreen::FullscreenElementFrom(*content_document);
@@ -769,11 +769,11 @@ std::unique_ptr<JSONObject> PaintLayerCompositor::LayerTreeAsJSON(
 
 PaintLayerCompositor* PaintLayerCompositor::FrameContentsCompositor(
     LayoutPart& layout_object) {
-  if (!layout_object.GetNode()->IsFrameOwnerElement())
+  if (!layout_object.GetNode()->IsEmbeddedContentElement())
     return nullptr;
 
-  HTMLFrameOwnerElement* element =
-      ToHTMLFrameOwnerElement(layout_object.GetNode());
+  HTMLEmbeddedContentElement* element =
+      ToHTMLEmbeddedContentElement(layout_object.GetNode());
   if (Document* content_document = element->contentDocument()) {
     if (LayoutViewItem view = content_document->GetLayoutViewItem())
       return view.Compositor();
@@ -1255,7 +1255,7 @@ void PaintLayerCompositor::AttachRootLayer() {
   if (layout_view_.GetFrame()->IsLocalRoot()) {
     root_layer_attachment_ = kRootLayerPendingAttachViaChromeClient;
   } else {
-    HTMLFrameOwnerElement* owner_element =
+    HTMLEmbeddedContentElement* owner_element =
         layout_view_.GetDocument().LocalOwner();
     DCHECK(owner_element);
     // The layer will get hooked up via
@@ -1278,7 +1278,7 @@ void PaintLayerCompositor::DetachRootLayer() {
       if (overflow_controls_host_layer_)
         overflow_controls_host_layer_->RemoveFromParent();
 
-      if (HTMLFrameOwnerElement* owner_element =
+      if (HTMLEmbeddedContentElement* owner_element =
               layout_view_.GetDocument().LocalOwner())
         owner_element->SetNeedsCompositingUpdate();
       break;

@@ -36,7 +36,7 @@ class SingleChildLocalFrameClient final : public EmptyLocalFrameClient {
   LocalFrame* FirstChild() const override { return child_.Get(); }
   LocalFrame* CreateFrame(const FrameLoadRequest&,
                           const AtomicString& name,
-                          HTMLFrameOwnerElement*) override;
+                          HTMLEmbeddedContentElement*) override;
 
   void DidDetachChild() { child_ = nullptr; }
 

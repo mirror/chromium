@@ -90,7 +90,7 @@ class RemoteFrameOwner final
                    const WebFrameOwnerProperties&);
 
   // Intentionally private to prevent redundant checks when the type is
-  // already HTMLFrameOwnerElement.
+  // already HTMLEmbeddedContentElement.
   bool IsLocal() const override { return false; }
   bool IsRemote() const override { return true; }
 

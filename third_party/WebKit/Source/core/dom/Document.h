@@ -114,7 +114,7 @@ class HTMLBodyElement;
 class HTMLCollection;
 class HTMLDialogElement;
 class HTMLElement;
-class HTMLFrameOwnerElement;
+class HTMLEmbeddedContentElement;
 class HTMLHeadElement;
 class HTMLImportLoader;
 class HTMLImportsController;
@@ -834,7 +834,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   // Returns the owning element in the parent document. Returns nullptr if
   // this is the top level document or the owner is remote.
-  HTMLFrameOwnerElement* LocalOwner() const;
+  HTMLEmbeddedContentElement* LocalOwner() const;
 
   void WillChangeFrameOwnerProperties(int margin_width,
                                       int margin_height,

@@ -803,10 +803,11 @@ bool CompositedLayerMapping::UpdateGraphicsLayerConfiguration() {
   if (WebLayer* layer = PlatformLayerForPlugin(layout_object)) {
     graphics_layer_->SetContentsToPlatformLayer(layer);
   } else if (layout_object.GetNode() &&
-             layout_object.GetNode()->IsFrameOwnerElement() &&
-             ToHTMLFrameOwnerElement(layout_object.GetNode())->ContentFrame()) {
+             layout_object.GetNode()->IsEmbeddedContentElement() &&
+             ToHTMLEmbeddedContentElement(layout_object.GetNode())
+                 ->ContentFrame()) {
     Frame* frame =
-        ToHTMLFrameOwnerElement(layout_object.GetNode())->ContentFrame();
+        ToHTMLEmbeddedContentElement(layout_object.GetNode())->ContentFrame();
     if (frame->IsRemoteFrame()) {
       WebLayer* layer = ToRemoteFrame(frame)->GetWebLayer();
       graphics_layer_->SetContentsToPlatformLayer(layer);

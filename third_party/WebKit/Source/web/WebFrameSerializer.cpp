@@ -40,8 +40,8 @@
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLAllCollection.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLFrameElementBase.h"
-#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLTableElement.h"
@@ -218,11 +218,11 @@ bool MHTMLFrameSerializerDelegate::ShouldIgnoreAttribute(
 
 bool MHTMLFrameSerializerDelegate::RewriteLink(const Element& element,
                                                String& rewritten_link) {
-  if (!element.IsFrameOwnerElement())
+  if (!element.IsEmbeddedContentElement())
     return false;
 
-  auto* frame_owner_element = ToHTMLFrameOwnerElement(&element);
-  Frame* frame = frame_owner_element->ContentFrame();
+  auto* embedded_content_element = ToHTMLEmbeddedContentElement(&element);
+  Frame* frame = embedded_content_element->ContentFrame();
   if (!frame)
     return false;
 
@@ -239,7 +239,7 @@ bool MHTMLFrameSerializerDelegate::RewriteLink(const Element& element,
   }
 
   if (isHTMLObjectElement(&element)) {
-    Document* doc = frame_owner_element->contentDocument();
+    Document* doc = embedded_content_element->contentDocument();
     bool is_handled_by_serializer = doc->IsHTMLDocument() ||
                                     doc->IsXHTMLDocument() ||
                                     doc->IsImageDocument();

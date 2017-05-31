@@ -415,7 +415,7 @@ void LocalFrameView::Dispose() {
   did_scroll_timer_.Stop();
 
   // FIXME: Do we need to do something here for OOPI?
-  HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
+  HTMLEmbeddedContentElement* owner_element = frame_->DeprecatedLocalOwner();
   // TODO(dcheng): It seems buggy that we can have an owner element that points
   // to another FrameOrPlugin. This can happen when a plugin element loads a
   // frame (FrameOrPlugin A of type LocalFrameView) and then loads a plugin
@@ -2721,7 +2721,7 @@ LocalFrameView::ScrollingReasons LocalFrameView::GetScrollingReasons() const {
 
   // Covers #2.
   // FIXME: Do we need to fix this for OOPI?
-  HTMLFrameOwnerElement* owner = frame_->DeprecatedLocalOwner();
+  HTMLEmbeddedContentElement* owner = frame_->DeprecatedLocalOwner();
   if (owner && (!owner->GetLayoutObject() ||
                 !owner->GetLayoutObject()->VisibleToHitTesting()))
     return kNotScrollableNotVisible;
@@ -4927,7 +4927,7 @@ void LocalFrameView::UpdateViewportIntersectionsForSubtree(
   }
 
   // Don't throttle display:none frames (see updateRenderThrottlingStatus).
-  HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
+  HTMLEmbeddedContentElement* owner_element = frame_->DeprecatedLocalOwner();
   if (hidden_for_throttling_ && owner_element &&
       !owner_element->GetLayoutObject()) {
     // No need to notify children because descendants of display:none frames
@@ -4967,7 +4967,7 @@ void LocalFrameView::UpdateRenderThrottlingStatus(
 
   // Note that we disallow throttling of 0x0 and display:none frames because
   // some sites use them to drive UI logic.
-  HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
+  HTMLEmbeddedContentElement* owner_element = frame_->DeprecatedLocalOwner();
   hidden_for_throttling_ = hidden && !FrameRect().IsEmpty() &&
                            (owner_element && owner_element->GetLayoutObject());
   subtree_throttled_ = subtree_throttled;
@@ -5041,7 +5041,7 @@ void LocalFrameView::RecordDeferredLoadingStats() {
 
   LocalFrameView* parent = ParentFrameView();
   if (!parent) {
-    HTMLFrameOwnerElement* element = GetFrame().DeprecatedLocalOwner();
+    HTMLEmbeddedContentElement* element = GetFrame().DeprecatedLocalOwner();
     // We would fall into an else block on some teardowns and other weird cases.
     if (!element || !element->GetLayoutObject()) {
       GetFrame().GetDocument()->RecordDeferredLoadReason(

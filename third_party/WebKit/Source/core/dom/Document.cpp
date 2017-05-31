@@ -154,7 +154,7 @@
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLDialogElement.h"
 #include "core/html/HTMLDocument.h"
-#include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLEmbeddedContentElement.h"
 #include "core/html/HTMLHeadElement.h"
 #include "core/html/HTMLHtmlElement.h"
 #include "core/html/HTMLIFrameElement.h"
@@ -1235,11 +1235,11 @@ Node* Document::adoptNode(Node* source, ExceptionState& exception_state) {
         return nullptr;
       }
 
-      if (source->IsFrameOwnerElement()) {
-        HTMLFrameOwnerElement* frame_owner_element =
-            ToHTMLFrameOwnerElement(source);
+      if (source->IsEmbeddedContentElement()) {
+        HTMLEmbeddedContentElement* embedded_content_element =
+            ToHTMLEmbeddedContentElement(source);
         if (GetFrame() && GetFrame()->Tree().IsDescendantOf(
-                              frame_owner_element->ContentFrame())) {
+                              embedded_content_element->ContentFrame())) {
           exception_state.ThrowDOMException(
               kHierarchyRequestError,
               "The node provided is a frame which contains this document.");
@@ -2122,7 +2122,7 @@ void Document::UpdateStyle() {
 
   unsigned initial_element_count = GetStyleEngine().StyleForElementCount();
 
-  HTMLFrameOwnerElement::UpdateSuspendScope
+  HTMLEmbeddedContentElement::UpdateSuspendScope
       suspend_frame_view_base_hierarchy_updates;
   lifecycle_.AdvanceTo(DocumentLifecycle::kInStyleRecalc);
 
@@ -2260,7 +2260,7 @@ void Document::UpdateStyleAndLayout() {
     return;
   }
 
-  if (HTMLFrameOwnerElement* owner = LocalOwner())
+  if (HTMLEmbeddedContentElement* owner = LocalOwner())
     owner->GetDocument().UpdateStyleAndLayout();
 
   UpdateStyleAndLayoutTree();
@@ -2546,7 +2546,7 @@ void Document::Shutdown() {
   // Defer FrameViewBase updates to avoid plugins trying to run script inside
   // ScriptForbiddenScope, which will crash the renderer after
   // https://crrev.com/200984
-  HTMLFrameOwnerElement::UpdateSuspendScope
+  HTMLEmbeddedContentElement::UpdateSuspendScope
       suspend_frame_view_base_hierarchy_updates;
   // Don't allow script to run in the middle of detachLayoutTree() because a
   // detaching Document is not in a consistent state.
@@ -2560,7 +2560,7 @@ void Document::Shutdown() {
   // we don't clear it here, it may be clobbered later in
   // LocalFrame::CreateView(). See also https://crbug.com/673170 and the comment
   // in LocalFrameView::Dispose().
-  HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
+  HTMLEmbeddedContentElement* owner_element = frame_->DeprecatedLocalOwner();
   if (owner_element)
     owner_element->SetWidget(nullptr);
 
@@ -4724,7 +4724,7 @@ void Document::AddListenerTypeIfNeeded(const AtomicString& event_type,
   }
 }
 
-HTMLFrameOwnerElement* Document::LocalOwner() const {
+HTMLEmbeddedContentElement* Document::LocalOwner() const {
   if (!GetFrame())
     return 0;
   // FIXME: This probably breaks the attempts to layout after a load is finished
@@ -5355,7 +5355,7 @@ Document& Document::TopDocument() const {
   // FIXME: Not clear what topDocument() should do in the OOPI case--should it
   // return the topmost available Document, or something else?
   Document* doc = const_cast<Document*>(this);
-  for (HTMLFrameOwnerElement* element = doc->LocalOwner(); element;
+  for (HTMLEmbeddedContentElement* element = doc->LocalOwner(); element;
        element = doc->LocalOwner())
     doc = &element->GetDocument();
 
