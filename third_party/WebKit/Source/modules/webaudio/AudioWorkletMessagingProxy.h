@@ -19,10 +19,9 @@ class AudioWorkletMessagingProxy final : public ThreadedWorkletMessagingProxy {
 
  public:
   explicit AudioWorkletMessagingProxy(ExecutionContext*);
-
- protected:
   ~AudioWorkletMessagingProxy() override;
 
+ protected:
   std::unique_ptr<WorkerThread> CreateWorkerThread(double origin_time) override;
 };
 

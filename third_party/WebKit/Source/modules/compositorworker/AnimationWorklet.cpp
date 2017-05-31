@@ -19,40 +19,32 @@ AnimationWorklet* AnimationWorklet::Create(LocalFrame* frame) {
   return new AnimationWorklet(frame);
 }
 
-AnimationWorklet::AnimationWorklet(LocalFrame* frame)
-    : ThreadedWorklet(frame), worklet_messaging_proxy_(nullptr) {}
+AnimationWorklet::AnimationWorklet(LocalFrame* frame) : Worklet(frame) {}
 
-AnimationWorklet::~AnimationWorklet() {
-  if (worklet_messaging_proxy_)
-    worklet_messaging_proxy_->ParentObjectDestroyed();
+AnimationWorklet::~AnimationWorklet() {}
+
+bool AnimationWorklet::NeedsToCreateGlobalScope() {
+  // For now, create only one global scope per document.
+  // TODO(nhiroki): Revisit this later.
+  return GetNumberOfGlobalScopes() == 0;
 }
 
-void AnimationWorklet::Initialize() {
+std::unique_ptr<WorkletGlobalScopeProxy> AnimationWorklet::CreateGlobalScope() {
   AnimationWorkletThread::EnsureSharedBackingThread();
 
-  DCHECK(!worklet_messaging_proxy_);
-  DCHECK(GetExecutionContext());
+  DCHECK(NeedsToCreateGlobalScope());
   Document* document = ToDocument(GetExecutionContext());
   AnimationWorkletProxyClient* proxy_client =
       document->GetFrame()->GetChromeClient().CreateAnimationWorkletProxyClient(
           document->GetFrame());
-
-  worklet_messaging_proxy_ =
-      new AnimationWorkletMessagingProxy(GetExecutionContext(), proxy_client);
-  worklet_messaging_proxy_->Initialize();
-}
-
-bool AnimationWorklet::IsInitialized() const {
-  return worklet_messaging_proxy_;
-}
-
-WorkletGlobalScopeProxy* AnimationWorklet::GetWorkletGlobalScopeProxy() const {
-  DCHECK(worklet_messaging_proxy_);
-  return worklet_messaging_proxy_;
+  auto proxy = WTF::MakeUnique<AnimationWorkletMessagingProxy>(
+      GetExecutionContext(), proxy_client);
+  proxy->Initialize();
+  return proxy;
 }
 
 DEFINE_TRACE(AnimationWorklet) {
-  ThreadedWorklet::Trace(visitor);
+  Worklet::Trace(visitor);
 }
 
 }  // namespace blink

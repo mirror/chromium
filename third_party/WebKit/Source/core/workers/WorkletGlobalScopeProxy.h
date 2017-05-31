@@ -29,6 +29,8 @@ class CORE_EXPORT WorkletGlobalScopeProxy {
       RefPtr<WebTaskRunner> outside_settings_task_runner,
       WorkletPendingTasks*) {}
 
+  virtual void WorkletObjectDestroyed() {}
+
   // Terminates the worklet global scope from the main thread.
   virtual void TerminateWorkletGlobalScope() = 0;
 };

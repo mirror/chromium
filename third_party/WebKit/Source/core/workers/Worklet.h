@@ -17,6 +17,7 @@ namespace blink {
 
 class LocalFrame;
 class ScriptPromiseResolver;
+class WorkletGlobalScopeProxy;
 
 // This is the base implementation of Worklet interface defined in the spec:
 // https://drafts.css-houdini.org/worklets/#worklet
@@ -30,13 +31,16 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
   WTF_MAKE_NONCOPYABLE(Worklet);
 
  public:
-  virtual ~Worklet() = default;
+  virtual ~Worklet();
 
   // Worklet.idl
   // addModule() imports ES6 module scripts.
   virtual ScriptPromise addModule(ScriptState*,
                                   const String& module_url,
                                   const WorkletOptions&);
+
+  // ContextLifecycleObserver
+  void ContextDestroyed(ExecutionContext*) final;
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -47,10 +51,32 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
   static WebURLRequest::FetchCredentialsMode ParseCredentialsOption(
       const String& credentials_option);
 
+  // Returns one of available global scopes.
+  WorkletGlobalScopeProxy* FindAvailableGlobalScope() const;
+
+  size_t GetNumberOfGlobalScopes() const { return proxies_.size(); }
+
  private:
-  virtual void FetchAndInvokeScript(const KURL& module_url_record,
-                                    const WorkletOptions&,
-                                    ScriptPromiseResolver*) = 0;
+  void FetchAndInvokeScript(const KURL& module_url_record,
+                            const WorkletOptions&,
+                            ScriptPromiseResolver*);
+
+  // Returns true if there are no global scopes or additional global scopes are
+  // necessary. CreateGlobalScope() will be called in that case. Each worklet
+  // can define how to pool global scopes here.
+  virtual bool NeedsToCreateGlobalScope() = 0;
+  virtual std::unique_ptr<WorkletGlobalScopeProxy> CreateGlobalScope() = 0;
+
+  // "A Worklet has a list of the worklet's WorkletGlobalScopes. Initially this
+  // list is empty; it is populated when the user agent chooses to create its
+  // WorkletGlobalScope."
+  // https://drafts.css-houdini.org/worklets/#worklet-section
+  //
+  // The proxies outlive the worklet as they're used to perform thread shutdown,
+  // they delete themselves once this has occurred.
+  // TODO(nhiroki): Make (Paint)WorkletGlobalScopeProxy GC-managed object to
+  // avoid that GC graphs are disjointed (https://crbug.com/719775).
+  HashSet<WorkletGlobalScopeProxy*> proxies_;
 };
 
 }  // namespace blink

@@ -22,10 +22,9 @@ class AnimationWorkletMessagingProxy final
  public:
   AnimationWorkletMessagingProxy(ExecutionContext*,
                                  AnimationWorkletProxyClient*);
-
- protected:
   ~AnimationWorkletMessagingProxy() override;
 
+ protected:
   std::unique_ptr<WorkerThread> CreateWorkerThread(double origin_time) override;
   Persistent<AnimationWorkletProxyClient> proxy_client_;
 };

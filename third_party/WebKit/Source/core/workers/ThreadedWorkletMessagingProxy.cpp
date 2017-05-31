@@ -126,6 +126,11 @@ void ThreadedWorkletMessagingProxy::FetchAndInvokeScript(
   loader->FetchScript(module_url_record);
 }
 
+void ThreadedWorkletMessagingProxy::WorkletObjectDestroyed() {
+  DCHECK(IsMainThread());
+  ParentObjectDestroyed();
+}
+
 void ThreadedWorkletMessagingProxy::TerminateWorkletGlobalScope() {
   DCHECK(IsMainThread());
   for (const auto& loader : loaders_)
