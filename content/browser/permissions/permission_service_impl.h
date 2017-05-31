@@ -31,11 +31,10 @@ class PermissionServiceImpl : public blink::mojom::PermissionService {
 
  private:
   using PermissionStatusCallback =
-      base::Callback<void(blink::mojom::PermissionStatus)>;
+      base::OnceCallback<void(blink::mojom::PermissionStatus)>;
 
   struct PendingRequest {
-    PendingRequest(const RequestPermissionsCallback& callback,
-                   int request_count);
+    PendingRequest(RequestPermissionsCallback callback, int request_count);
     ~PendingRequest();
 
     // Request ID received from the PermissionManager.
@@ -48,19 +47,19 @@ class PermissionServiceImpl : public blink::mojom::PermissionService {
   // blink::mojom::PermissionService.
   void HasPermission(blink::mojom::PermissionDescriptorPtr permission,
                      const url::Origin& origin,
-                     const PermissionStatusCallback& callback) override;
+                     PermissionStatusCallback callback) override;
   void RequestPermission(blink::mojom::PermissionDescriptorPtr permission,
                          const url::Origin& origin,
                          bool user_gesture,
-                         const PermissionStatusCallback& callback) override;
+                         PermissionStatusCallback callback) override;
   void RequestPermissions(
       std::vector<blink::mojom::PermissionDescriptorPtr> permissions,
       const url::Origin& origin,
       bool user_gesture,
-      const RequestPermissionsCallback& callback) override;
+      RequestPermissionsCallback callback) override;
   void RevokePermission(blink::mojom::PermissionDescriptorPtr permission,
                         const url::Origin& origin,
-                        const PermissionStatusCallback& callback) override;
+                        PermissionStatusCallback callback) override;
   void AddPermissionObserver(
       blink::mojom::PermissionDescriptorPtr permission,
       const url::Origin& origin,
