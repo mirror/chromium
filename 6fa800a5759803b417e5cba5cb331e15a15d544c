@@ -105,6 +105,24 @@
       "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0beb14_916f1189",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-05-31T16:37:30Z",
+      "side": 1,
+      "message": "I don\u0027t think the current set up is acceptable. I don\u0027t know the details of these classes, but work with cc owner (dana?) to see if this can be improved. This kind of register/unregister should be easily paired near each other, not spread through different classes/files, and this one in particular requires unregister to happen in cc client instead. It\u0027s too easy to miss and mess up in the future.",
+      "parentUuid": "11470add_362aebf3",
+      "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
