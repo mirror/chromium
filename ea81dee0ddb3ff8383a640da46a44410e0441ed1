@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "98a5300e_a54a0c0f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T18:00:17Z",
+      "side": 1,
+      "message": "Well, the indent should be 2 then :-)",
+      "parentUuid": "00460336_d7346b2a",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77e9d306_5deb05b5",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
         "patchSetId": 1
