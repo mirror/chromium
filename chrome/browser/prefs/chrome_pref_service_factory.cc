@@ -448,7 +448,8 @@ std::unique_ptr<PrefService> CreateLocalState(
   return factory.Create(pref_registry.get());
 }
 
-std::unique_ptr<sync_preferences::PrefServiceSyncable> CreateProfilePrefs(
+std::unique_ptr<sync_preferences::PrefServiceSyncableFactory>
+CreateProfilePrefs(
     const base::FilePath& profile_path,
     prefs::mojom::TrackedPreferenceValidationDelegatePtr validation_delegate,
     policy::PolicyService* policy_service,
@@ -464,7 +465,8 @@ std::unique_ptr<sync_preferences::PrefServiceSyncable> CreateProfilePrefs(
   mojo::MakeStrongBinding(
       base::MakeUnique<ResetOnLoadObserverImpl>(profile_path),
       mojo::MakeRequest(&reset_on_load_observer));
-  sync_preferences::PrefServiceSyncableFactory factory;
+  auto factory =
+      base::MakeUnique<sync_preferences::PrefServiceSyncableFactory>();
   scoped_refptr<PersistentPrefStore> user_pref_store(
       CreateProfilePrefStoreManager(profile_path)
           ->CreateProfilePrefStore(
@@ -472,13 +474,10 @@ std::unique_ptr<sync_preferences::PrefServiceSyncable> CreateProfilePrefs(
               content::BrowserThread::GetBlockingPool(),
               std::move(reset_on_load_observer), std::move(validation_delegate),
               connector, pref_registry));
-  PrepareFactory(&factory, profile_path, policy_service,
+  PrepareFactory(factory.get(), profile_path, policy_service,
                  supervised_user_settings, user_pref_store, extension_prefs,
                  async);
-  std::unique_ptr<sync_preferences::PrefServiceSyncable> pref_service =
-      factory.CreateSyncable(pref_registry.get(), connector);
-
-  return pref_service;
+  return factory;
 }
 
 void DisableDomainCheckForTesting() {
