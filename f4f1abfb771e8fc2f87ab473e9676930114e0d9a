@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "f29225b9_c431e64e",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-05-31T21:45:07Z",
+      "side": 1,
+      "message": "Nit",
+      "revId": "f4f1abfb771e8fc2f87ab473e9676930114e0d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f523968_dc7a50f1",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 2
@@ -64,6 +81,23 @@
       "writtenOn": "2017-05-31T21:35:04Z",
       "side": 1,
       "message": "goog.provide(\u0027Output.EventType\u0027);",
+      "revId": "f4f1abfb771e8fc2f87ab473e9676930114e0d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b125823a_d413fdbe",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-05-31T21:45:07Z",
+      "side": 1,
+      "message": "This is a test comment",
       "revId": "f4f1abfb771e8fc2f87ab473e9676930114e0d9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
