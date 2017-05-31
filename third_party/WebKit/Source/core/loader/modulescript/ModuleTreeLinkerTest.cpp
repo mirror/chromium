@@ -189,12 +189,10 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
     return ScriptValue();
   }
 
-  ScriptValue GetInstantiationError(
-      const ModuleScript* module_script) override {
+  ScriptValue GetError(const ModuleScript* module_script) override {
     ScriptState::Scope scope(script_state_.Get());
-    return ScriptValue(script_state_.Get(),
-                       module_script->CreateInstantiationErrorInternal(
-                           script_state_->GetIsolate()));
+    return ScriptValue(script_state_.Get(), module_script->CreateErrorInternal(
+                                                script_state_->GetIsolate()));
   }
 
   Vector<String> ModuleRequestsFromScriptModule(

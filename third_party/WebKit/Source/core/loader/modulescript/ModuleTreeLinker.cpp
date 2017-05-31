@@ -390,10 +390,9 @@ void ModuleTreeLinker::Instantiate() {
   ScriptValue error;
 
   // Step 6. If result's instantiation state is "errored",...
-  if (module_script_->InstantiationState() ==
-      ModuleInstantiationState::kErrored) {
+  if (module_script_->State() == ModuleInstantiationState::kErrored) {
     // ... Set instantiationStatus to record.ModuleDeclarationInstantiation().
-    error = modulator_->GetInstantiationError(module_script_);
+    error = modulator_->GetError(module_script_);
     DCHECK(!error.IsEmpty());
   } else {
     // Step 7. Otherwise:
@@ -518,8 +517,7 @@ ModuleTreeLinker::UninstantiatedInclusiveDescendants() {
   // instantiation state is "uninstantiated".
   HeapHashSet<Member<ModuleScript>> uninstantiated_set;
   for (const auto& script : inclusive_descendants) {
-    if (script->InstantiationState() ==
-        ModuleInstantiationState::kUninstantiated)
+    if (script->State() == ModuleInstantiationState::kUninstantiated)
       uninstantiated_set.insert(script);
   }
   return uninstantiated_set;
