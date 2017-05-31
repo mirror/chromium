@@ -431,6 +431,7 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
 
  public:
   virtual void ComputeOverflow(LayoutUnit old_client_after_edge, bool = false);
+  virtual void NGComputeOverflow();
 
  protected:
   virtual void AddOverflowFromChildren();
