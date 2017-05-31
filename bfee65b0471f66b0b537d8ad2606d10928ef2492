@@ -99,6 +99,24 @@
       "revId": "bfee65b0471f66b0b537d8ad2606d10928ef2492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476dcf01_7423847b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6270,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-05-31T21:52:02Z",
+      "side": 1,
+      "message": "I\u0027ve moved this to DidCommitProvisionalLoad with a check for same-document navigation. This matches the check in PermissionServiceContext::DidFinishNavigation.",
+      "parentUuid": "dce037df_1631817d",
+      "revId": "bfee65b0471f66b0b537d8ad2606d10928ef2492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
