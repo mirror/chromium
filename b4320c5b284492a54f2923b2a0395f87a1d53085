@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feca1f15_a566ef86",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-05-31T16:30:27Z",
+      "side": 1,
+      "message": "Is this even right?\nshouldn\u0027t it be: (damage_rect.x(), damage_rect.y(), damage_rect.width(), damage_rect.height())?",
+      "revId": "b4320c5b284492a54f2923b2a0395f87a1d53085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
