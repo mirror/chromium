@@ -139,7 +139,11 @@ class BASE_EXPORT MemoryDumpManager {
   void CreateProcessDump(const MemoryDumpRequestArgs& args,
                          const ProcessMemoryDumpCallback& callback);
 
-  // Enable heap profiling if kEnableHeapProfiling is specified.
+  // Returns true if this binary has the necessary features to support heap profiling
+  // (e.g. the binary has working allocator shims, backtrace capture, etc)
+  static bool IsHeapProfilingSupported();
+
+  // Enable heap profiling if supported, and kEnableHeapProfiling is specified.
   void EnableHeapProfilingIfNeeded();
 
   // Lets tests see if a dump provider is registered.

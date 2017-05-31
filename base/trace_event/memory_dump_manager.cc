@@ -192,6 +192,15 @@ MemoryDumpManager::~MemoryDumpManager() {
   g_instance_for_testing = nullptr;
 }
 
+// static
+bool MemoryDumpManager::IsHeapProfilingSupported() {
+#if BUILDFLAG(USE_ALLOCATOR_SHIM)
+  return true;
+#else
+  return false;
+#endif
+}
+
 void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
   if (heap_profiling_enabled_)
     return;
