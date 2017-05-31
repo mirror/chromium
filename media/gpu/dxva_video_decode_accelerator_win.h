@@ -169,13 +169,14 @@ class MEDIA_GPU_EXPORT DXVAVideoDecodeAccelerator
   };
 
   // Returns the minimum resolution for the |profile| passed in.
-  static std::pair<int, int> GetMinResolution(const VideoCodecProfile profile);
+  static std::pair<int, int> GetMinResolution(VideoCodecProfile profile);
 
   // Returns the maximum resolution for the |profile| passed in.
-  static std::pair<int, int> GetMaxResolution(const VideoCodecProfile profile);
+  static std::pair<int, int> GetMaxResolution(VideoCodecProfile profile);
 
   // Returns the maximum resolution for H264 video.
-  static std::pair<int, int> GetMaxH264Resolution();
+  static std::pair<int, int> GetMaxResolutionForGUIDs(
+      const std::vector<GUID>& valid_guids);
 
   // Certain AMD GPU drivers like R600, R700, Evergreen and Cayman and
   // some second generation Intel GPU drivers crash if we create a video

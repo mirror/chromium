@@ -139,6 +139,19 @@ static const GUID DXVA2_Intel_ModeH264_E = {
     0x4c54,
     {0x88, 0xFE, 0xAB, 0xD2, 0x5C, 0x15, 0xB3, 0xD6}};
 
+DEFINE_GUID(DXVA2_ModeVP9_VLD_Profile0,
+            0x463707f8,
+            0xa1d0,
+            0x4585,
+            0x87,
+            0x6d,
+            0x83,
+            0xaa,
+            0x6d,
+            0x60,
+            0xb8,
+            0x9e);
+
 // R600, R700, Evergreen and Cayman AMD cards. These support DXVA via UVD3
 // or earlier, and don't handle resolutions higher than 1920 x 1088 well.
 static const DWORD g_AMDUVD3GPUList[] = {
@@ -1283,31 +1296,29 @@ std::pair<int, int> DXVAVideoDecodeAccelerator::GetMinResolution(
 
 // static
 std::pair<int, int> DXVAVideoDecodeAccelerator::GetMaxResolution(
-    const VideoCodecProfile profile) {
+    VideoCodecProfile profile) {
   TRACE_EVENT0("gpu,startup", "DXVAVideoDecodeAccelerator::GetMaxResolution");
-  std::pair<int, int> max_resolution;
+
+  // Resolution detection operation is expensive, so we generate the max once
+  // and save it in a thread-safe static.
   if (profile >= H264PROFILE_BASELINE && profile <= H264PROFILE_HIGH) {
-    max_resolution = GetMaxH264Resolution();
-  } else {
-    // TODO(ananta)
-    // Detect this properly for VP8/VP9 profiles.
-    max_resolution = std::make_pair(4096, 2160);
+    static std::pair<int, int> kMaxH264Resolution =
+        GetMaxResolution({DXVA2_ModeH264_E, DXVA2_Intel_ModeH264_E});
+    return kMaxH264Resolution;
   }
-  return max_resolution;
+
+  // Despite the name this is the GUID for VP8/VP9.
+  static std::pair<int, int> kMaxVP9Resolution =
+      GetMaxResolution({DXVA2_ModeVP9_VLD_Profile0});
+  return kMaxVP9Resolution;
 }
 
-std::pair<int, int> DXVAVideoDecodeAccelerator::GetMaxH264Resolution() {
+std::pair<int, int> DXVAVideoDecodeAccelerator::GetMaxResolutionForGUIDs(
+    const std::vector<GUID>& valid_guids) {
   TRACE_EVENT0("gpu,startup",
                "DXVAVideoDecodeAccelerator::GetMaxH264Resolution");
-  // The H.264 resolution detection operation is expensive. This static flag
-  // allows us to run the detection once.
-  static bool resolution_detected = false;
   // Use 1088 to account for 16x16 macroblocks.
-  static std::pair<int, int> max_resolution = std::make_pair(1920, 1088);
-  if (resolution_detected)
-    return max_resolution;
-
-  resolution_detected = true;
+  std::pair<int, int> max_resolution = std::make_pair(1920, 1088);
 
   // On Windows 7 the maximum resolution supported by media foundation is
   // 1920 x 1088.
@@ -1345,8 +1356,8 @@ std::pair<int, int> DXVAVideoDecodeAccelerator::GetMaxH264Resolution() {
     for (UINT profile_idx = 0; profile_idx < profile_count; profile_idx++) {
       GUID profile_id = {};
       hr = video_device->GetVideoDecoderProfile(profile_idx, &profile_id);
-      if (SUCCEEDED(hr) && (profile_id == DXVA2_ModeH264_E ||
-                            profile_id == DXVA2_Intel_ModeH264_E)) {
+      if (SUCCEEDED(hr) && (std::find(valid_guids.begin(), valid_guids.end(),
+                                      profile_id) != valid_guids.end())) {
         decoder_guid = profile_id;
         found = true;
         break;
@@ -1362,24 +1373,22 @@ std::pair<int, int> DXVAVideoDecodeAccelerator::GetMaxH264Resolution() {
     return max_resolution;
 
   // We look for the following resolutions in the driver.
-  // TODO(ananta)
-  // Look into whether this list needs to be expanded.
-  static std::pair<int, int> resolution_array[] = {
+  static const std::pair<int, int> kResolutionsToTest[] = {
       // Use 1088 to account for 16x16 macroblocks.
       std::make_pair(1920, 1088), std::make_pair(2560, 1440),
       std::make_pair(3840, 2160), std::make_pair(4096, 2160),
-      std::make_pair(4096, 2304),
-  };
+      std::make_pair(4096, 2304), std::make_pair(7680, 4320)};
 
   {
     TRACE_EVENT0("gpu,startup",
                  "GetMaxH264Resolution. Resolution search begin");
 
-    for (size_t res_idx = 0; res_idx < arraysize(resolution_array); res_idx++) {
+    for (size_t res_idx = 0; res_idx < arraysize(kResolutionsToTest);
+         res_idx++) {
       D3D11_VIDEO_DECODER_DESC desc = {};
       desc.Guid = decoder_guid;
-      desc.SampleWidth = resolution_array[res_idx].first;
-      desc.SampleHeight = resolution_array[res_idx].second;
+      desc.SampleWidth = kResolutionsToTest[res_idx].first;
+      desc.SampleHeight = kResolutionsToTest[res_idx].second;
       desc.OutputFormat = DXGI_FORMAT_NV12;
       UINT config_count = 0;
       hr = video_device->GetVideoDecoderConfigCount(&desc, &config_count);
@@ -1397,9 +1406,10 @@ std::pair<int, int> DXVAVideoDecodeAccelerator::GetMaxH264Resolution() {
       if (!video_decoder.Get())
         return max_resolution;
 
-      max_resolution = resolution_array[res_idx];
+      max_resolution = kResolutionsToTest[res_idx];
     }
   }
+
   return max_resolution;
 }
 
