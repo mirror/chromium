@@ -123,6 +123,24 @@
       "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1447dd_55f57d4e",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T17:03:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d0beb14_916f1189",
+      "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
