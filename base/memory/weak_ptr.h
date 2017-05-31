@@ -191,6 +191,8 @@ class SupportsWeakPtrBase {
 
 }  // namespace internal
 
+template <typename T>
+class MemberWeakPtrFactory;
 template <typename T> class WeakPtrFactory;
 
 // The WeakPtr class holds a weak reference to |T*|.
@@ -244,6 +246,7 @@ class WeakPtr : public internal::WeakPtrBase {
  private:
   friend class internal::SupportsWeakPtrBase;
   template <typename U> friend class WeakPtr;
+  friend class MemberWeakPtrFactory<T>;
   friend class SupportsWeakPtr<T>;
   friend class WeakPtrFactory<T>;
 
@@ -309,6 +312,37 @@ class WeakPtrFactory {
   internal::WeakReferenceOwner weak_reference_owner_;
   T* ptr_;
   DISALLOW_IMPLICIT_CONSTRUCTORS(WeakPtrFactory);
+};
+
+// A smaller representation of WeakPtrFactory.
+template <class T>
+class MemberWeakPtrFactory {
+ public:
+  explicit MemberWeakPtrFactory(T* ptr) {
+    DCHECK_EQ(ComputePtr(), ptr) << "MemberWeakPtrFactory may only be used at "
+                                    "the end of a class or struct "
+                                    "definition.";
+  }
+
+  ~MemberWeakPtrFactory() {}
+
+  WeakPtr<T> GetWeakPtr() {
+    return WeakPtr<T>(weak_reference_owner_.GetRef(), ComputePtr());
+  }
+
+  // Call this method to invalidate all existing weak pointers.
+  void InvalidateWeakPtrs() { weak_reference_owner_.Invalidate(); }
+
+  // Call this method to determine if any weak pointers exist.
+  bool HasWeakPtrs() const { return weak_reference_owner_.HasRefs(); }
+
+ private:
+  T* ComputePtr() {
+    return reinterpret_cast<T*>(reinterpret_cast<char*>(this) - sizeof(T) +
+                                sizeof(*this));
+  }
+
+  internal::WeakReferenceOwner weak_reference_owner_;
 };
 
 // A class may extend from SupportsWeakPtr to let others take weak pointers to
