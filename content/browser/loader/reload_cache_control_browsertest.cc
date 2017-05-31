@@ -156,8 +156,14 @@ IN_PROC_BROWSER_TEST_F(ReloadCacheControlBrowserTest, NormalReload) {
 }
 
 // Test if bypassing reload issues requests with proper cache control flags.
-IN_PROC_BROWSER_TEST_F(ReloadCacheControlBrowserTest, BypassingReload) {
-
+//
+// Disabled for Win. See http://crbug.com/728060.
+#if defined(OS_WIN)
+#define MAYBE_BypassingReload DISABLED_BypassingReload
+#else
+#define MAYBE_BypassingReload BypassingReload
+#endif
+IN_PROC_BROWSER_TEST_F(ReloadCacheControlBrowserTest, MAYBE_BypassingReload) {
   GURL url(embedded_test_server()->GetURL(kReloadTestPath));
 
   NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
