@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86454ee6_a1ec72b2",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ClipPathDisplayItem.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-05-31T23:11:19Z",
+      "side": 0,
+      "message": "While rebasing, I removed the SetNumSlowPaths that was added to DisplayItemList since it can grab it from the PaintOpBuffer directly. This led me back here where I could remove the counting on the blink display items. I noticed this here which is returning 0 with a bug pointer. However PaintOpBuffer is doing something else in ClipPathOp::CountSlowPaths. So I copied this comment over there with a TODO to resolve that.. but if you have any thoughts that\u0027d be welcome.\n\nClipPathOp is doing this:\n\n  return antialias \u0026\u0026 !path.isConvex() ? 1 : 0;",
+      "revId": "d84ddac6a6b61604f0057ccb8046144287f795ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
