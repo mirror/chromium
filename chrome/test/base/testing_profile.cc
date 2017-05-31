@@ -820,8 +820,12 @@ void TestingProfile::CreateIncognitoPrefService() {
   DCHECK(!testing_prefs_);
   // Simplified version of ProfileImpl::GetOffTheRecordPrefs(). Note this
   // leaves testing_prefs_ unset.
-  prefs_.reset(CreateIncognitoPrefServiceSyncable(
-      original_profile_->prefs_.get(), NULL));
+  sync_preferences::PrefServiceMockFactory factory;
+  factory.set_user_prefs(new TestingPrefStore());
+  scoped_refptr<user_prefs::PrefRegistrySyncable> registry(
+      new user_prefs::PrefRegistrySyncable);
+  prefs_ = factory.CreateIncognitoSyncable(registry.get(), nullptr, {}, {},
+                                           nullptr, nullptr);
   user_prefs::UserPrefs::Set(this, prefs_.get());
 }
 

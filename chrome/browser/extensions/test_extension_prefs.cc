@@ -115,11 +115,11 @@ void TestExtensionPrefs::RecreateExtensionPrefs() {
   }
 
   extension_pref_value_map_.reset(new ExtensionPrefValueMap);
-  sync_preferences::PrefServiceMockFactory factory;
-  factory.SetUserPrefsFile(preferences_file_, task_runner_.get());
-  factory.set_extension_prefs(
+  factory_ = base::MakeUnique<sync_preferences::PrefServiceMockFactory>();
+  factory_->SetUserPrefsFile(preferences_file_, task_runner_.get());
+  factory_->set_extension_prefs(
       new ExtensionPrefStore(extension_pref_value_map_.get(), false));
-  pref_service_ = factory.CreateSyncable(pref_registry_.get());
+  pref_service_ = factory_->CreateSyncable(pref_registry_.get());
   std::unique_ptr<ExtensionPrefs> prefs(ExtensionPrefs::Create(
       &profile_, pref_service_.get(), temp_dir_.GetPath(),
       extension_pref_value_map_.get(), extensions_disabled_,
@@ -195,10 +195,11 @@ void TestExtensionPrefs::AddExtension(Extension* extension) {
                                 std::string());
 }
 
-PrefService* TestExtensionPrefs::CreateIncognitoPrefService() const {
-  return CreateIncognitoPrefServiceSyncable(
-      pref_service_.get(),
-      new ExtensionPrefStore(extension_pref_value_map_.get(), true));
+PrefService* TestExtensionPrefs::CreateIncognitoPrefService() {
+  return factory_->CreateIncognitoSyncable(
+      pref_registry().get(),
+      new ExtensionPrefStore(extension_pref_value_map_.get(), true), {}, {},
+      nullptr, nullptr).release();
 }
 
 void TestExtensionPrefs::set_extensions_disabled(bool extensions_disabled) {

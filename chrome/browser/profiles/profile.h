@@ -191,6 +191,9 @@ class Profile : public content::BrowserContext {
   // time that this method is called.
   virtual PrefService* GetOffTheRecordPrefs() = 0;
 
+  virtual PrefService* CreateOffTheRecordPrefs(
+      service_manager::Connector* otr_connector);
+
   // Returns the main request context.
   virtual net::URLRequestContextGetter* GetRequestContext() = 0;
 

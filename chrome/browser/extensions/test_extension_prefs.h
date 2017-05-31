@@ -24,6 +24,7 @@ class SequencedTaskRunner;
 
 namespace sync_preferences {
 class PrefServiceSyncable;
+class PrefServiceMockFactory;
 }
 
 namespace user_prefs {
@@ -85,7 +86,7 @@ class TestExtensionPrefs {
   // This will add extension in our ExtensionPrefs.
   void AddExtension(Extension* extension);
 
-  PrefService* CreateIncognitoPrefService() const;
+  PrefService* CreateIncognitoPrefService();
 
   // Allows disabling the loading of preferences of extensions. Becomes
   // active after calling RecreateExtensionPrefs(). Defaults to false.
@@ -104,6 +105,7 @@ class TestExtensionPrefs {
 
  private:
   TestingProfile profile_;
+  std::unique_ptr<sync_preferences::PrefServiceMockFactory> factory_;
   bool extensions_disabled_;
   DISALLOW_COPY_AND_ASSIGN(TestExtensionPrefs);
 };

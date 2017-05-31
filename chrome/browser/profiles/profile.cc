@@ -253,6 +253,11 @@ bool ProfileCompare::operator()(Profile* a, Profile* b) const {
   return a->GetOriginalProfile() < b->GetOriginalProfile();
 }
 
+PrefService* Profile::CreateOffTheRecordPrefs(
+    service_manager::Connector* otr_connector) {
+  return GetOffTheRecordPrefs();
+}
+
 #if !defined(OS_ANDROID)
 double Profile::GetDefaultZoomLevelForProfile() {
   return GetDefaultStoragePartition(this)
