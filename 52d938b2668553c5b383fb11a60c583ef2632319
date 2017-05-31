@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e898268_170b2c29",
+        "filename": "media/filters/vpx_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-05-31T20:56:44Z",
+      "side": 1,
+      "message": "This should probably post with DecodeStatus::ABORTED? (I\u0027m not sure what that affects.)",
+      "range": {
+        "startLine": 386,
+        "startChar": 4,
+        "endLine": 386,
+        "endChar": 10
+      },
+      "revId": "52d938b2668553c5b383fb11a60c583ef2632319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2d33d2_63705d6b",
+        "filename": "media/filters/vpx_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-05-31T20:56:44Z",
+      "side": 1,
+      "message": "Note: blocking can be avoided by posting the reset closure through the offload thread.",
+      "range": {
+        "startLine": 452,
+        "startChar": 24,
+        "endLine": 452,
+        "endChar": 47
+      },
+      "revId": "52d938b2668553c5b383fb11a60c583ef2632319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7e86d2_4bbaac17",
+        "filename": "media/filters/vpx_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-05-31T20:56:44Z",
+      "side": 1,
+      "message": "It seems to me that the abort flag should be reset more often than this. Looks to be safe right after WaitForOutstandingTasks() completes?",
+      "range": {
+        "startLine": 507,
+        "startChar": 6,
+        "endLine": 507,
+        "endChar": 58
+      },
+      "revId": "52d938b2668553c5b383fb11a60c583ef2632319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
