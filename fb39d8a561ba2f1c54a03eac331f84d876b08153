@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6fd2881_882bb840",
+        "filename": "ash/system/tray/tray_popup_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "I think this 0 should be 8?",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 19
+      },
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebd1702_9e02e612",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Replace whole thing with provider-\u003eGetInsetsMetric(views::INSETS_DIALOG_CONTENTS)",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c3042c_381ed3f3",
+        "filename": "chrome/browser/ui/views/arc_app_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Replace whole thing with provider-\u003eGetInsetsMetric(views::INSETS_DIALOG_CONTENTS)",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f44f6f_028f98e1",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Nit: With these no longer being all ints, they can\u0027t be easily swapped around anymore, and the meanings are more clear, so I\u0027d remove these param name comments.",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496db056_2fb52a40",
+        "filename": "chrome/browser/ui/views/desktop_capture/desktop_media_picker_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Replace whole thing with provider-\u003eGetInsetsMetric(views::INSETS_DIALOG_CONTENTS)",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1f167c_4649254f",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Replace whole thing with provider-\u003eGetInsetsMetric(views::INSETS_DIALOG_CONTENTS)",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a182992b_da038251",
+        "filename": "chrome/browser/ui/views/payments/credit_card_editor_view_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Hrm, this code looks like it was wrong.  I wonder if they intended a 0 top inset.  I wouldn\u0027t touch it in this patch set I guess. :/",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfddd67_794038e0",
+        "filename": "chrome/browser/ui/views/settings_reset_prompt_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Replace whole thing with provider-\u003eGetInsetsMetric(views::INSETS_DIALOG_CONTENTS)",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0b673f_271740f7",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Replace whole thing with provider-\u003eGetInsetsMetric(views::INSETS_DIALOG_CONTENTS)",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e38cef_16faf014",
+        "filename": "ui/message_center/views/notification_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Nit: While touching this, can you fix the spelling typo of \"vectical\"?",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439eb95f_21a80412",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "I think this should probably just pass |content_marings_| -- that seems more correct.",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68f5689_09b99ffd",
+        "filename": "ui/views/layout/box_layout.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-05-31T23:53:40Z",
+      "side": 1,
+      "message": "Nit: Names here and below don\u0027t match.",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
