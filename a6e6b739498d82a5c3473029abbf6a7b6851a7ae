@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bdc35ab_d71a280d",
+        "filename": "ui/views/controls/native/native_view_host_aura_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-05-31T19:02:36Z",
+      "side": 1,
+      "message": "Does it actually have two views? (|view1| and |child_widget-\u003eGetContentsView()|, I guess?) Maybe it\u0027s more pertinent to describe the relationships between |child_widget|, |toplevel()|, and |window|? I\u0027m not too familiar with NativeViewHost, and this test setup doesn\u0027t seem entirely straightforward.",
+      "range": {
+        "startLine": 432,
+        "startChar": 29,
+        "endLine": 432,
+        "endChar": 30
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e16a03_9ef7a854",
+        "filename": "ui/views/controls/native/native_view_host_aura_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-05-31T19:02:36Z",
+      "side": 1,
+      "message": "Can you check the focused view before resetting the widget? Is it even necessary to reset this at all?",
+      "range": {
+        "startLine": 459,
+        "startChar": 2,
+        "endLine": 459,
+        "endChar": 14
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e47510_91c0e4cb",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-05-31T19:02:36Z",
+      "side": 1,
+      "message": "Should NativeViewHost instead be fixing up the FocusManager when the parent widget is changed? I don\u0027t have a lot of experience with NativeViewHost...",
+      "range": {
+        "startLine": 557,
+        "startChar": 15,
+        "endLine": 557,
+        "endChar": 26
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f016659_2dab1dbe",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-05-31T19:02:36Z",
+      "side": 1,
+      "message": "s/cache/store/?",
+      "range": {
+        "startLine": 562,
+        "startChar": 26,
+        "endLine": 562,
+        "endChar": 31
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f283b810_b0f6329b",
+        "filename": "ui/views/view_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-05-31T19:02:36Z",
+      "side": 1,
+      "message": "optional nit: use std::set and set::count instead? (or just inline views_.find(view) !\u003d views_.end())?\nusing std::set would also seem to simplify Remove and OnViewIsDeleting.",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c811e1_53944d4a",
+        "filename": "ui/views/view_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-05-31T19:02:36Z",
+      "side": 1,
+      "message": "optional nit: use std::set or just call Remove(observed_view)? Why do we have these base functions?",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e911704_1626b098",
+        "filename": "ui/views/view_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-05-31T19:02:36Z",
+      "side": 1,
+      "message": "Do you mean RAII? Can you avoid using an acronym and just explain what you mean?",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14745dee_f2af21bb",
+        "filename": "ui/views/view_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-05-31T19:02:36Z",
+      "side": 1,
+      "message": "It seems like all users only need to track one view; maybe simplify this class to support the common case?",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 15
+      },
+      "revId": "a6e6b739498d82a5c3473029abbf6a7b6851a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
