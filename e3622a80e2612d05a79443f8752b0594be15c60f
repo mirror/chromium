@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29c95892_60051560",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-31T17:54:42Z",
+      "side": 1,
+      "message": "Fix the line length here.\n\nhttps://google.github.io/styleguide/cppguide.html#Line_Length",
+      "range": {
+        "startLine": 331,
+        "startChar": 2,
+        "endLine": 331,
+        "endChar": 102
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b95730_8554efef",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-31T17:54:42Z",
+      "side": 1,
+      "message": "This pref isn\u0027t bound to a profile (and it\u0027s one of the reasons why you needed to call RegisterStringPref. This preference is already registered there https://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_impl.cc?type\u003dcs\u0026q\u003dkNewTabPageLocationOverride+package:%5Echromium$\u0026l\u003d398 )\n\nYou\u0027ll need to look at a later stage of startup after the profile is initialized to get that PrefService.",
+      "range": {
+        "startLine": 335,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 77
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a5014c_9b290438",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-31T17:54:42Z",
+      "side": 1,
+      "message": "Move these to match the ordering in the corresponding header file.",
+      "range": {
+        "startLine": 1987,
+        "startChar": 0,
+        "endLine": 1990,
+        "endChar": 41
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b70011_6ee32eb0",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-31T17:54:42Z",
+      "side": 1,
+      "message": "Inline this with the existing deps list above.",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 61
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a444ac_beb64672",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-31T17:54:42Z",
+      "side": 1,
+      "message": "What made this change necessary?",
+      "range": {
+        "startLine": 81,
+        "startChar": 55,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
