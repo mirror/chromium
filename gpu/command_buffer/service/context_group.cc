@@ -63,6 +63,7 @@ DisallowedFeatures AdjustDisallowedFeatures(
 ContextGroup::ContextGroup(
     const GpuPreferences& gpu_preferences,
     const scoped_refptr<MailboxManager>& mailbox_manager,
+    const scoped_refptr<ImageManager>& image_manager,
     const scoped_refptr<MemoryTracker>& memory_tracker,
     const scoped_refptr<ShaderTranslatorCache>& shader_translator_cache,
     const scoped_refptr<FramebufferCompletenessCache>&
@@ -75,6 +76,7 @@ ContextGroup::ContextGroup(
     ServiceDiscardableManager* discardable_manager)
     : gpu_preferences_(gpu_preferences),
       mailbox_manager_(mailbox_manager),
+      image_manager_(image_manager),
       memory_tracker_(memory_tracker),
       shader_translator_cache_(shader_translator_cache),
 #if defined(OS_MACOSX)

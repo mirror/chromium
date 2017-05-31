@@ -17,6 +17,7 @@
 #include "gpu/command_buffer/common/gles2_cmd_format.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/service/context_group.h"
+#include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/logger.h"
 #include "gpu/command_buffer/service/mailbox_manager.h"
 #include "gpu/command_buffer/service/program_manager.h"
@@ -197,7 +198,7 @@ void GLES2DecoderTestBase::InitDecoderWithCommandLine(
   }
 
   group_ = scoped_refptr<ContextGroup>(
-      new ContextGroup(gpu_preferences_, NULL, memory_tracker_,
+      new ContextGroup(gpu_preferences_, nullptr, nullptr, memory_tracker_,
                        new ShaderTranslatorCache(gpu_preferences_),
                        new FramebufferCompletenessCache, feature_info,
                        normalized_init.bind_generates_resource, nullptr,

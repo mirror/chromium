@@ -172,7 +172,9 @@ class GLES2DecoderTestBase : public ::testing::TestWithParam<bool> {
     return decoder_->GetFramebufferManager();
   }
 
-  ImageManager* GetImageManager() { return decoder_->GetImageManager(); }
+  ImageManager* GetImageManagerForTest() {
+    return decoder_->GetImageManagerForTest();
+  }
 
   void DoCreateProgram(GLuint client_id, GLuint service_id);
   void DoCreateShader(GLenum shader_type, GLuint client_id, GLuint service_id);

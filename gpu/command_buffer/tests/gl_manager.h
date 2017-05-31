@@ -40,6 +40,7 @@ class TransferBuffer;
 
 namespace gles2 {
 
+class ImageManager;
 class MailboxManager;
 class GLES2Decoder;
 class GLES2CmdHelper;
@@ -156,6 +157,7 @@ class GLManager : private GpuControl {
   gpu::GpuPreferences gpu_preferences_;
 
   scoped_refptr<gles2::MailboxManager> mailbox_manager_;
+  scoped_refptr<gles2::ImageManager> image_manager_;
   scoped_refptr<gl::GLShareGroup> share_group_;
   std::unique_ptr<ServiceDiscardableManager> discardable_manager_;
   std::unique_ptr<CommandBufferDirect> command_buffer_;

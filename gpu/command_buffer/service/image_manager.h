@@ -20,16 +20,19 @@ namespace gpu {
 namespace gles2 {
 
 // This class keeps track of the images and their state.
-class GPU_EXPORT ImageManager {
+class GPU_EXPORT ImageManager : public base::RefCounted<ImageManager> {
  public:
   ImageManager();
-  ~ImageManager();
 
   void AddImage(gl::GLImage* image, int32_t service_id);
   void RemoveImage(int32_t service_id);
   gl::GLImage* LookupImage(int32_t service_id);
 
  private:
+  friend class base::RefCounted<ImageManager>;
+
+  ~ImageManager();
+
   typedef base::hash_map<int32_t, scoped_refptr<gl::GLImage>> GLImageMap;
   GLImageMap images_;
 
