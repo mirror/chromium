@@ -79,5 +79,6 @@ template("tweak_info_plist") {
       "--platform=$current_os",
     ]
     deps = _deps
+
   }
 }
