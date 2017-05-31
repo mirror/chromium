@@ -93,6 +93,30 @@
       "revId": "561915cd4c2c152dc7207f5d1cbea910f56079f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "296816e8_327c2157",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-31T17:32:48Z",
+      "side": 1,
+      "message": "I see, so the distinction here is that it requires a user gesture on the *element* itself?",
+      "parentUuid": "27c11090_f589e72d",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 72
+      },
+      "revId": "561915cd4c2c152dc7207f5d1cbea910f56079f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
