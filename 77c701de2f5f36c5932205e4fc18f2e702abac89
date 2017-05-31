@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "803ece67_ab6a61a8",
+        "filename": "services/preferences/public/cpp/pref_service_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-05-31T13:15:31Z",
+      "side": 1,
+      "message": "Nit: Add a comma and make it \"incognito mode\", so the sentence is a bit easier to parse.",
+      "range": {
+        "startLine": 80,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "77c701de2f5f36c5932205e4fc18f2e702abac89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
