@@ -22,6 +22,276 @@
       "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de2eda0_661a202a",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "nit: put this close to the loop in line 330",
+      "range": {
+        "startLine": 289,
+        "startChar": 8,
+        "endLine": 289,
+        "endChar": 11
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f11f33_117f42a0",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "nit: declare this in the inner scope above line 331 below where it is used.",
+      "range": {
+        "startLine": 326,
+        "startChar": 10,
+        "endLine": 326,
+        "endChar": 14
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de369f87_4dd245e3",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "const char* host_keys[] \u003d {...}, we can avoid constructing strings, right?",
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f70d22_2a546cb0",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "Construct directly instead of construct + assign:\nURLPattern pattern(extension_scheme_mask)",
+      "range": {
+        "startLine": 335,
+        "startChar": 10,
+        "endLine": 335,
+        "endChar": 20
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ea9a69_22d17123",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "kAllUrlsPattern\nAlthough, can\u0027t we use if (!pattern.match_all_urls())",
+      "range": {
+        "startLine": 348,
+        "startChar": 34,
+        "endLine": 348,
+        "endChar": 42
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf66cdf6_9314f192",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "So http://foo -\u003e PARSE_ERROR_EMPTY_PATH, but http://foo/ -\u003e PARSE_SUCCESS?\nI\u0027d expect policy admins to put one for the other, maybe we can improve the error message in this case to help them? Because \"contains a path\" isn\u0027t super targeted message. Might not be worth it though.",
+      "range": {
+        "startLine": 354,
+        "startChar": 14,
+        "endLine": 354,
+        "endChar": 20
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26091997_18e60256",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "Do we need to return false here?",
+      "range": {
+        "startLine": 359,
+        "startChar": 28,
+        "endLine": 359,
+        "endChar": 29
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b3c605_9bfd3abc",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "did you run \"git cl format\" to your CL?",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 19
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f71e26c_f0246e18",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "I think I\u0027ve always seen \"url_parses_successfully\" style auto function names in our codebase\n\nAlso, const std::string\u0026 url",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35837d89_fdddfc7b",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 106,
+        "startChar": 26,
+        "endLine": 106,
+        "endChar": 43
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36483169_e20ddb5a",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": ".get() shouldn\u0027t be necessary",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 21
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d1d532_6091ba10",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-05-31T18:27:56Z",
+      "side": 1,
+      "message": "const std::string\u0026 url, here and below\nnit: remove {} for single line statement loops",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 5
+      },
+      "revId": "fea93432311d1e821f6e2e4378249a2c48c4093a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
