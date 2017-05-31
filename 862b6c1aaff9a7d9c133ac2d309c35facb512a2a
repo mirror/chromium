@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e90c7503_ecacddb1",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-31T17:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cf94ed8_25b89763",
+      "range": {
+        "startLine": 385,
+        "startChar": 21,
+        "endLine": 385,
+        "endChar": 25
+      },
+      "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3002d438_c0725ecb",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-05-30T21:53:04Z",
       "side": 1,
       "message": "nit: Can/should this be folding into the if...else below, i.e:\n\nif (IsCancelled()) {\n  ...\n} else if (!is_null()) {\n  ...\n} else {\n  ...\n}\n\nfor consistency, since the existing !is_null() case is already a continue case, in effect?",
+      "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4935f0a9_51d2118f",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-31T17:34:08Z",
+      "side": 1,
+      "message": "Done, though I\u0027m uncertain whether this actually makes it easier to read.",
+      "parentUuid": "3002d438_c0725ecb",
       "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f41e3ca_030138d0",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-31T17:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b00d51e4_57a1ccad",
+      "range": {
+        "startLine": 605,
+        "startChar": 28,
+        "endLine": 605,
+        "endChar": 0
+      },
+      "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -109,6 +175,30 @@
       "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289e34af_115401be",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-31T17:34:08Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d prefer not to do this as well unless there\u0027s a clear need to do this.\n\n(The proposed mitigation is quite complex and was previously unmergeable. I think this will be a strict improvement over what we previously had anyway)",
+      "parentUuid": "3591cac7_aa48c932",
+      "range": {
+        "startLine": 368,
+        "startChar": 41,
+        "endLine": 368,
+        "endChar": 46
+      },
+      "revId": "862b6c1aaff9a7d9c133ac2d309c35facb512a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4b584f67_82b3498f",
+        "filename": "chrome/browser/metrics/thread_watcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-05-31T17:34:08Z",
+      "side": 0,
+      "message": "Done, I think it\u0027s just this one.",
+      "parentUuid": "bf3ad993_bc3402bb",
+      "range": {
+        "startLine": 41,
+        "startChar": 31,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "931b0527cd26875c0b6bc5645b9ae29f484ce6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "610d9361_3d85db7b",
         "filename": "chrome/browser/metrics/thread_watcher.h",
         "patchSetId": 6
