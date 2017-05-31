@@ -277,7 +277,7 @@ class TranslateCompactInfoBar extends InfoBar
 
     private void closeInfobar(boolean explicitly) {
         // Check if we should trigger the auto "never translate" if infobar is closed explicitly.
-        if (explicitly
+        if (explicitly && mNativeTranslateInfoBarPtr != 0
                 && nativeShouldAutoNeverTranslate(mNativeTranslateInfoBarPtr, mMenuExpanded)) {
             createAndShowSnackbar(getContext().getString(R.string.translate_snackbar_language_never,
                                           mOptions.sourceLanguageName()),
