@@ -70,7 +70,7 @@ bool GetIOAllowed() {
 // Note: ExecutionMode is verified inside TestTaskFactory.
 void VerifyTaskEnvironment(const TaskTraits& traits) {
   const bool supports_background_priority =
-      Lock::HandlesMultipleThreadPriorities() &&
+      LOCK_HANDLES_MULTIPLE_THREAD_PRIORITES() &&
       PlatformThread::CanIncreaseCurrentThreadPriority();
 
   EXPECT_EQ(supports_background_priority &&

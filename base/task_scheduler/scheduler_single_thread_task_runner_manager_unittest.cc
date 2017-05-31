@@ -243,10 +243,11 @@ TEST_P(TaskSchedulerSingleThreadTaskRunnerManagerCommonTest,
   waitable_event_background.Wait();
   waitable_event_normal.Wait();
 
-  if (Lock::HandlesMultipleThreadPriorities())
-    EXPECT_EQ(ThreadPriority::BACKGROUND, thread_priority_background);
-  else
-    EXPECT_EQ(ThreadPriority::NORMAL, thread_priority_background);
+#if LOCK_HANDLES_MULTIPLE_THREAD_PRIORITES()
+  EXPECT_EQ(ThreadPriority::BACKGROUND, thread_priority_background);
+#else
+  EXPECT_EQ(ThreadPriority::NORMAL, thread_priority_background);
+#endif
   EXPECT_EQ(ThreadPriority::NORMAL, thread_priority_normal);
 }
 

@@ -61,23 +61,6 @@ class BASE_EXPORT Lock {
   void AssertAcquired() const;
 #endif  // DCHECK_IS_ON()
 
-  // Whether Lock mitigates priority inversion when used from different thread
-  // priorities.
-  static bool HandlesMultipleThreadPriorities() {
-#if defined(OS_POSIX)
-    // POSIX mitigates priority inversion by setting the priority of a thread
-    // holding a Lock to the maximum priority of any other thread waiting on it.
-    return internal::LockImpl::PriorityInheritanceAvailable();
-#elif defined(OS_WIN)
-    // Windows mitigates priority inversion by randomly boosting the priority of
-    // ready threads.
-    // https://msdn.microsoft.com/library/windows/desktop/ms684831.aspx
-    return true;
-#else
-#error Unsupported platform
-#endif
-  }
-
 #if defined(OS_POSIX) || defined(OS_WIN)
   // Both Windows and POSIX implementations of ConditionVariable need to be
   // able to see our lock and tweak our debugging counters, as they release and
@@ -149,5 +132,35 @@ class AutoUnlock {
 };
 
 }  // namespace base
+
+// Whether base::Lock mitigates priority inversion when used from different
+// thread priorities.
+//
+// Windows mitigates priority inversion by randomly boosting the priority of
+// ready threads.
+// https://msdn.microsoft.com/library/windows/desktop/ms684831.aspx
+//
+// Mac mitigates priority inversion by setting the priority of a thread
+// holding a Lock to the maximum priority of any other thread waiting on it.
+//
+// Other POSIX platforms could mitigate priority inversion the same way as Mac,
+// but this feature is disabled because of security concerns.
+//   * CVE-2010-0622 - wake_futex_pi unlocks incorrect, possible DoS.
+//     https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-0622
+//   * CVE-2012-6647 - Linux < 3.5.1, futex_wait_requeue_pi possible DoS.
+//     https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6647
+//   * CVE-2014-3153 - Linux <= 3.14.5, futex_requeue, privilege escalation.
+//     https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3153
+// Note that prior to glibc 2.17, priority inheritance mutexes may deadlock with
+// condition variables during recacquisition of the mutex after the condition
+// variable is signaled. This is not an issue for base/ since it isn't supposed
+// to run with versions of glibc older than 2.17.
+#if defined(OS_WIN) || defined(OS_MACOSX)
+#define LOCK_HANDLES_MULTIPLE_THREAD_PRIORITES() 1
+#elif defined(OS_POSIX)
+#define LOCK_HANDLES_MULTIPLE_THREAD_PRIORITES() 0
+#else
+#error "Unsupported platform"
+#endif
 
 #endif  // BASE_SYNCHRONIZATION_LOCK_H_
