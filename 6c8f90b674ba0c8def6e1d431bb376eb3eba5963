@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2fc92b3_31f58707",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationBuilderForO.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-05-31T15:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a42dd4_087942d3",
+      "revId": "6c8f90b674ba0c8def6e1d431bb376eb3eba5963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41808307_bb617246",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "6c8f90b674ba0c8def6e1d431bb376eb3eba5963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa89ac55_fe05d0b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-05-31T15:22:42Z",
+      "side": 1,
+      "message": "Done - referred to the one you created as the reason for passing null.\n\nLet me know if you want me to file a new one for creating channels for web apks.",
+      "parentUuid": "41808307_bb617246",
+      "revId": "6c8f90b674ba0c8def6e1d431bb376eb3eba5963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
