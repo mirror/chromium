@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ff45d12_020b040a",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-05-31T23:35:37Z",
+      "side": 1,
+      "message": "I tried this, but doing so resulted in build errors due to multiple dex files defining the same thing.",
+      "parentUuid": "e4ca6706_1b594aaf",
+      "range": {
+        "startLine": 584,
+        "startChar": 17,
+        "endLine": 584,
+        "endChar": 28
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc3afa9_4dca85ad",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1b644d_25155756",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-05-31T23:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddc3afa9_4dca85ad",
+      "range": {
+        "startLine": 586,
+        "startChar": 5,
+        "endLine": 586,
+        "endChar": 22
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "aeb93893_8e5af16c",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-05-31T23:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2186c76_13b834f4",
+      "range": {
+        "startLine": 948,
+        "startChar": 0,
+        "endLine": 948,
+        "endChar": 11
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca590068_cdcc996f",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-05-31T23:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7237d2_ef467ce3",
+      "range": {
+        "startLine": 948,
+        "startChar": 13,
+        "endLine": 948,
+        "endChar": 23
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fe5d347_6335e450",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-05-31T22:39:06Z",
       "side": 1,
       "message": "Should this be NfcSimulatorTestVr like the above instrumentation apk name?",
+      "range": {
+        "startLine": 949,
+        "startChar": 14,
+        "endLine": 949,
+        "endChar": 28
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb9a9e6_2f761d22",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-05-31T23:35:37Z",
+      "side": 1,
+      "message": "That would make it look more consistent, but wouldn\u0027t make as much sense IMO.\n\n\"ChromePublicTestVr\" came from it being the VR-specific version of \"ChromePublicTest\", which I assume got its name because it\u0027s testing \"ChromePublic\".  \"NfcSimulatorTestVr\" would imply that it\u0027s a VR-specific test for \"NfcSimulator\", which isn\u0027t the case.\n\nI\u0027m not against \"NfcSimulatorTestVr\" if you still prefer that, but that was my reasoning for the current name.",
+      "parentUuid": "5fe5d347_6335e450",
       "range": {
         "startLine": 949,
         "startChar": 14,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c8e5ae85_c3ecb624",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-05-31T23:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd60af6_58064071",
+      "range": {
+        "startLine": 950,
+        "startChar": 21,
+        "endLine": 950,
+        "endChar": 118
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "867da0de_0efd3ec4",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce94944_9b73fed8",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-05-31T23:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "867da0de_0efd3ec4",
+      "range": {
+        "startLine": 951,
+        "startChar": 2,
+        "endLine": 951,
+        "endChar": 6
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
