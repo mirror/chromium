@@ -55,6 +55,7 @@ class ClientBase {
     std::unique_ptr<zwp_linux_dmabuf_v1> linux_dmabuf;
     std::unique_ptr<wl_shell> shell;
     std::unique_ptr<wl_seat> seat;
+    std::unique_ptr<wl_subcompositor> subcompositor;
   };
 
   struct Buffer {
@@ -76,6 +77,9 @@ class ClientBase {
   };
 
   bool Init(const InitParams& params);
+  std::unique_ptr<Buffer> CreateBuffer(uint32_t width,
+                                       uint32_t height,
+                                       int32_t drm_format);
 
  protected:
   ClientBase();
@@ -101,9 +105,6 @@ class ClientBase {
   unsigned egl_sync_type_ = 0;
   std::vector<std::unique_ptr<Buffer>> buffers_;
   sk_sp<GrContext> gr_context_;
-
- private:
-  std::unique_ptr<Buffer> CreateBuffer(int32_t drm_format);
 
   DISALLOW_COPY_AND_ASSIGN(ClientBase);
 };
