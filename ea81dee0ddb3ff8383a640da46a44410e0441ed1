@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a5967a_43572071",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "There must be some generated constant for this, something like Storage::StorageQuoteTypeEnum",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b7d694_36ddd1ed",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "Where are these coming from?",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8646b71_cf7ba4c5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "Here and below, I think we\u0027re keeping the old webkit style for layout tests -- i.e. move { to next line.",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e9d306_5deb05b5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "return parent.children().find(child \u003d\u003e child.title \u003d\u003d\u003d name) -- perhaps just inline this at the cals-site.",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f43f46_88b8ccfb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "matchingRefreshPromise()?",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a73de30_b31e25af",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "Did you intend to keep this?",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98749a4_6b96fbda",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "move this within waitForRefreshMatching()?",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31793930_8dede72c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "We avoid assert in tests, just dump the type perhaps?",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a02cf8d_c2a042a8",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4510,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "Should we perhaps just return quotas \u0026 usage for all storage types at once? We end up calling this twice anyway.",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad413059_67038d9d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "There isn\u0027t much common for two storate types, so perhaps just inline something like\n\nthis._persistentQuotaRow.textContent \u003d Common.UIString(\u0027...\u0027, Number.bytesToString(usage), Number.bytesToString(quota));\nand same for temporary storage.",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfcf4d7_fd8f2fca",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-05-31T01:06:44Z",
+      "side": 1,
+      "message": "We never assign to innerHTML!",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
