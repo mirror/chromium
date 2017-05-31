@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c6a3fe5_e914c698",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "That\u0027s fair. In the absolute worst case you\u0027ll run out of audio every time, which has a queuing strategy of 200ms, 400ms, 800ms, 1600ms, 3000ms - so a max of 5 underflow events in a 7 second period, or a minimum MTBR of 1.4s.\n\nYes generally we expect an MTBR in minutes which is what YouTube defines it as. We could use FromMinutes(1) - FromHours(10) in that case, but I\u0027d like this to afford the full range of values without truncation since it will otherwise affect the mean of our MTBR values as you\u0027ve noted in another comment.",
+      "parentUuid": "101d564b_0b40852f",
+      "range": {
+        "startLine": 355,
+        "startChar": 35,
+        "endLine": 355,
+        "endChar": 51
+      },
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9633e25_ddee3f6d",
         "filename": "content/browser/media/media_internals.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-31T19:58:23Z",
       "side": 1,
       "message": "What does YT do when there\u0027s no underflow?",
+      "range": {
+        "startLine": 383,
+        "startChar": 11,
+        "endLine": 383,
+        "endChar": 26
+      },
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ff8094_1395a2f2",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "They have a full timeline of events, so if no underflow MTBR is not calculated, but they then calculate a smooth rate which is percentage of playbacks with zero underflow.",
+      "parentUuid": "c9633e25_ddee3f6d",
       "range": {
         "startLine": 383,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "449e3fd6_d8166b2b",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "This reflects what YouTube reports, per their docs \"MTBR can be disproportionately affected by a small number of playbacks; taking into account the smooth rate (percentage of playbacks which are rebuffer-free) can help give a sense to whether MTBR is low due to a small or large number of playbacks.\"",
+      "parentUuid": "9cccbf94_2626357b",
+      "range": {
+        "startLine": 391,
+        "startChar": 45,
+        "endLine": 391,
+        "endChar": 51
+      },
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b15003b8_ccdf3fe5",
         "filename": "content/browser/media/media_internals.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-31T19:58:23Z",
       "side": 1,
       "message": "Please add a comment what the strings are.\n\nAlso, we don\u0027t use uncommon abbreviations like mtbr. Readers not familiar with it will have no clue what it means.",
+      "range": {
+        "startLine": 450,
+        "startChar": 61,
+        "endLine": 450,
+        "endChar": 71
+      },
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4703d3e5_43cb38c4",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "I think mtbr_ is fine here, I did not abbreviate in the key names for that reason though. Will add some comments though.",
+      "parentUuid": "b15003b8_ccdf3fe5",
       "range": {
         "startLine": 450,
         "startChar": 61,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "7d2f54dd_c80bd6fb",
+        "filename": "media/base/media_log.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "I put it here for consistency with the rest of the keys. Probably all of this should be moved into its own media watch time keys file. I can do that in a followup CL though.",
+      "parentUuid": "09034837_98d9501b",
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "794a6a23_cf08fb42",
         "filename": "media/base/media_log.h",
         "patchSetId": 7
@@ -122,6 +236,30 @@
       "writtenOn": "2017-05-31T19:58:23Z",
       "side": 1,
       "message": "ditto, this seems to be only used in media_internals* as well...",
+      "range": {
+        "startLine": 150,
+        "startChar": 43,
+        "endLine": 150,
+        "endChar": 59
+      },
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c11106_8b218d1b",
+        "filename": "media/base/media_log.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "This is here since otherwise we have this function and the key defines in different places which makes it prone to error and forgetting to update the full key list.",
+      "parentUuid": "794a6a23_cf08fb42",
       "range": {
         "startLine": 150,
         "startChar": 43,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "88ed62f3_6bc0ee50",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "a67958f8_028ea70a",
+      "range": {
+        "startLine": 332,
+        "startChar": 25,
+        "endLine": 332,
+        "endChar": 26
+      },
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93d4cb73_d4e87cd1",
         "filename": "media/blink/watch_time_reporter.h",
         "patchSetId": 7
@@ -168,6 +330,30 @@
       "writtenOn": "2017-05-31T19:58:23Z",
       "side": 1,
       "message": "nit: add include for \u003cvector\u003e\n\nActually, does it make sense to use a base::flat_set and then use lower_bound() to search for the timestamps lower than the end timestamp? But given the vector is typically small, probably it\u0027s not worth it :)",
+      "range": {
+        "startLine": 180,
+        "startChar": 20,
+        "endLine": 180,
+        "endChar": 29
+      },
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b75d45_0c327552",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "Not worth it due to small size. Done.",
+      "parentUuid": "93d4cb73_d4e87cd1",
       "range": {
         "startLine": 180,
         "startChar": 20,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "895e5b30_e9b2a76b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 28585,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "Per previous discussion with UMA folk, when reporting averages I think they prefer that we compute the average ourselves so as to not mix different samples when computing the average. I.e.,  if we report every rebuffer delta some of those will not be sent to UMA, so the mean that shows up is not entirely reflective of single playback performance.\n\nBy computing the average and recording that sample, we either drop or include the entire set of rebuffer deltas, instead partial includes with mixing across users.",
+      "parentUuid": "d115646a_ce0a5b94",
+      "range": {
+        "startLine": 28585,
+        "startChar": 23,
+        "endLine": 28585,
+        "endChar": 47
+      },
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "338f64ab_fd9e562a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -220,6 +430,24 @@
     },
     {
       "key": {
+        "uuid": "b220fcf2_15512879",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 28589,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "No value is reported. I can add smooth rate in a followup CL.",
+      "parentUuid": "338f64ab_fd9e562a",
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83076b8a_65fc9312",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -231,6 +459,24 @@
       "writtenOn": "2017-05-31T19:58:23Z",
       "side": 1,
       "message": "nit: We could put this into MediaCommonCategories which will affect both Media.MeanTimeBetweenRebuffers and Media.WatchTime UMAs. Then we can remove the duplicate entries from MediaWatchTimeCategories. In the future, we can reuse MediaCommonCategories for other UMAs. It\u0027ll be tricky if some UMA needs MediaCommonCategories plus some other categories though. WDYT?",
+      "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f900332c_d9d10e9d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 88378,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-05-31T22:21:21Z",
+      "side": 1,
+      "message": "I thought the same, but the problem is the label and that all combinations become generated instantly. So common categories seems to mean each metric which uses the category explodes into all possible combinations.",
+      "parentUuid": "83076b8a_65fc9312",
       "revId": "a4517b4304edca45af8a8e022be072079baa80ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
