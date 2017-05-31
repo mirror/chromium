@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f464de1_2d5eeb8e",
+        "filename": "components/offline_pages/core/prefetch/suggested_articles_observer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-05-31T20:17:51Z",
+      "side": 1,
+      "message": "nit: This contradicts prefetch_service.h:30: All pointers are raw and are always valid.",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "9213d3996c0b2abee864bb34b60d0e5db9ec421a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
