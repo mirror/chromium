@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a27ab17c_b1bf972e",
+        "filename": "base/synchronization/lock_impl_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-05-31T17:34:11Z",
+      "side": 0,
+      "message": "Is there a pressing request to make this a compile time check? To do this properly, you need the runtime check and the compile time check. See the deleted comment here.",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "98902b021c59abf02d5545d686f741dd8a4b1119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
