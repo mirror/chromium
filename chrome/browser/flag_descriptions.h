@@ -217,6 +217,9 @@ extern const char kEnableHttpFormWarningDescription[];
 extern const char kEnableIdleTimeSpellCheckingName[];
 extern const char kEnableIdleTimeSpellCheckingDescription[];
 
+extern const char kEnableIphDemoModeName[];
+extern const char kEnableIphDemoModeDescription[];
+
 extern const char kEnableMaterialDesignBookmarksName[];
 extern const char kEnableMaterialDesignBookmarksDescription[];
 
@@ -901,9 +904,6 @@ extern const char kEnableDataReductionProxyMainMenuDescription[];
 
 extern const char kEnableDataReductionProxySiteBreakdownName[];
 extern const char kEnableDataReductionProxySiteBreakdownDescription[];
-
-extern const char kEnableIphDemoModeName[];
-extern const char kEnableIphDemoModeDescription[];
 
 extern const char kEnableOmniboxClipboardProviderName[];
 extern const char kEnableOmniboxClipboardProviderDescription[];
