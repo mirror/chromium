@@ -87,6 +87,24 @@
       "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11470add_362aebf3",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-05-31T13:39:26Z",
+      "side": 1,
+      "message": "I\u0027ve tried that. \n\ncc::Display outlives DirectCompositorFrameSink. Unregister BFS in DirectCFS would result in a Display losing its BFS too early.",
+      "parentUuid": "99804c83_3bba0f1d",
+      "revId": "6fa800a5759803b417e5cba5cb331e15a15d544c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
