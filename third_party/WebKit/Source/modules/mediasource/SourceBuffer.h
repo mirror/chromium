@@ -126,9 +126,12 @@ class SourceBuffer final : public EventTargetWithInlineData,
   bool IsRemoved() const;
   void ScheduleEvent(const AtomicString& event_name);
 
-  bool PrepareAppend(size_t new_data_size, ExceptionState&);
-  bool EvictCodedFrames(size_t new_data_size);
-  void AppendBufferInternal(const unsigned char*, unsigned, ExceptionState&);
+  bool PrepareAppend(double curr_time, size_t new_data_size, ExceptionState&);
+  bool EvictCodedFrames(double curr_time, size_t new_data_size);
+  void AppendBufferInternal(double curr_time,
+                            const unsigned char*,
+                            unsigned,
+                            ExceptionState&);
   void AppendBufferAsyncPart();
   void AppendError();
 
