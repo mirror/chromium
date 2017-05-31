@@ -29,8 +29,6 @@ source_set("cells") {
     "//ios/chrome/browser/ui/colors",
     "//ios/third_party/material_components_ios",
     "//ios/third_party/material_roboto_font_loader_ios",
-    "//skia",
-    "//ui/gfx",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]

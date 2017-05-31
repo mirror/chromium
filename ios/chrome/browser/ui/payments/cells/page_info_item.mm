@@ -5,11 +5,10 @@
 #import "ios/chrome/browser/ui/payments/cells/page_info_item.h"
 
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
+#import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #include "ios/chrome/grit/ios_theme_resources.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
 #import "ios/third_party/material_roboto_font_loader_ios/src/src/MaterialRobotoFontLoader.h"
-#include "skia/ext/skia_utils_ios.h"
-#include "ui/gfx/color_palette.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -73,7 +72,7 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
     NSMutableAttributedString* text = [[NSMutableAttributedString alloc]
         initWithString:cell.pageHostLabel.text];
     [text addAttribute:NSForegroundColorAttributeName
-                 value:skia::UIColorFromSkColor(gfx::kGoogleGreen700)
+                 value:[[MDCPalette cr_greenPalette] tint700]
                  range:NSMakeRange(0, [kHttpsScheme length])];
     [cell.pageHostLabel setAttributedText:text];
     // Set lock image. UIImageRenderingModeAlwaysTemplate is used so that
@@ -143,7 +142,7 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
     _pageLockIndicatorView.accessibilityIdentifier =
         kPageInfoLockIndicatorImageViewID;
     [_pageLockIndicatorView
-        setTintColor:skia::UIColorFromSkColor(gfx::kGoogleGreen700)];
+        setTintColor:[[MDCPalette cr_greenPalette] tint700]];
     [self.contentView addSubview:_pageLockIndicatorView];
 
     // Set up the lock indicator size constraints. They are activated here
