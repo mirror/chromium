@@ -322,4 +322,36 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
   wc->SetJavaScriptDialogManagerForTesting(nullptr);
 }
 
+class RenderFrameDeletedWebContentsObserver : public WebContentsObserver {
+ public:
+  RenderFrameDeletedWebContentsObserver(content::WebContents* web_contents)
+      : WebContentsObserver(web_contents) {}
+  ~RenderFrameDeletedWebContentsObserver() override = default;
+  void RenderFrameDeleted(RenderFrameHost* rfh) override { run_loop_.Quit(); }
+  void Wait() { run_loop_.Run(); }
+
+ private:
+  base::RunLoop run_loop_;
+};
+
+IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest, WindowOpen) {
+  NavigateToURL(shell(), GetTestUrl("", "title1.html"));
+  EXPECT_EQ(1u, Shell::windows().size());
+  GURL test_url = GetTestUrl("render_frame_host", "window_open_and_close.html");
+  std::string open_script =
+      base::StringPrintf("window.open('%s');", test_url.spec().c_str());
+
+  EXPECT_TRUE(content::ExecuteScript(shell(), open_script));
+  ASSERT_EQ(2u, Shell::windows().size());
+
+  Shell* new_shell = Shell::windows()[1];
+  RenderFrameDeletedWebContentsObserver deleted_observer(
+      new_shell->web_contents());
+  deleted_observer.Wait();
+
+  // A bit of a hack to pump the RunLoop. This is needed to ensure that the task
+  // runs in the renderer.
+  base::RunLoop().RunUntilIdle();
+}
+
 }  // namespace content
