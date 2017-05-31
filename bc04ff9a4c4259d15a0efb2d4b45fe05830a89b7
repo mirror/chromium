@@ -22,6 +22,30 @@
       "revId": "bc04ff9a4c4259d15a0efb2d4b45fe05830a89b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ad2537_ef8d5922",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-05-31T01:32:01Z",
+      "side": 1,
+      "message": "Let\u0027s use let for cases like this. It is basically one of the reasons the let keyword was introduced for. The code looks more clean than it would with bind. Yes, we do use let already in the front end code.",
+      "parentUuid": "8a80bdbc_78537f21",
+      "range": {
+        "startLine": 1218,
+        "startChar": 9,
+        "endLine": 1218,
+        "endChar": 12
+      },
+      "revId": "bc04ff9a4c4259d15a0efb2d4b45fe05830a89b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
