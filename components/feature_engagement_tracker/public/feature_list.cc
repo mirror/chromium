@@ -12,7 +12,8 @@ namespace feature_engagement_tracker {
 namespace {
 
 const base::Feature* kAllFeatures[] = {
-    &kIPHDataSaverPreview, &kIPHDownloadPageFeature, &kIPHDownloadHomeFeature};
+    &kIPHDataSaverPreview, &kIPHDataSaverDetail, &kIPHDownloadPageFeature,
+    &kIPHDownloadHomeFeature};
 
 }  // namespace
 
