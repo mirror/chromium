@@ -58,6 +58,9 @@ def mock_file_tree(tree):
 
 
 class ExtractComponentsTest(unittest.TestCase):
+  def setUp(self):
+    super(ExtractComponentsTest, self).setUp()
+    self.maxDiff = None
 
   @mock_file_tree({
       'src': 'boss@chromium.org\n',
@@ -73,7 +76,7 @@ class ExtractComponentsTest(unittest.TestCase):
   def testBaseCase(self):
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
-      error_code = extract_components.main(['%prog'])
+      error_code = extract_components.main(['%prog', 'src'])
     self.assertEqual(0, error_code)
     result_minus_readme = json.loads(saved_output.getvalue())
     del result_minus_readme['AAA-README']
@@ -84,10 +87,10 @@ class ExtractComponentsTest(unittest.TestCase):
             'Dummy>Component>Subcomponent': 'dummy-specialist-team@chromium.org'
         },
         'dir-to-component': {
-            'tools/checkteamtags/src/dummydir1': 'Dummy>Component',
-            'tools/checkteamtags/src/dummydir1/innerdir1':
+            'dummydir1': 'Dummy>Component',
+            'dummydir1/innerdir1':
                 'Dummy>Component>Subcomponent',
-            'tools/checkteamtags/src/dummydir2': 'Components>Component2'
+            'dummydir2': 'Components>Component2'
         }})
 
   @mock_file_tree({
@@ -160,12 +163,14 @@ class ExtractComponentsTest(unittest.TestCase):
   def testCompleteCoverage(self):
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
-      extract_components.main(['%prog', '-c'])
+      extract_components.main(['%prog', '-c', 'src'])
     output = saved_output.getvalue()
     self.assertIn('4 OWNERS files in total.', output)
     self.assertIn('3 (75.00%) OWNERS files have COMPONENT', output)
     self.assertIn('2 (50.00%) OWNERS files have TEAM and COMPONENT', output)
-    self.assertIn('4 OWNERS files at depth 0', output)
+    self.assertIn('1 OWNERS files at depth 0', output)
+    self.assertIn('2 OWNERS files at depth 1', output)
+    self.assertIn('1 OWNERS files at depth 2', output)
 
   # We use OrderedDict here to guarantee that mocked version of os.walk returns
   # directories in the specified order (top-down).
@@ -221,9 +226,9 @@ class ExtractComponentsTest(unittest.TestCase):
   def testDisplayFile(self):
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
-      extract_components.main(['%prog', '-m 2'])
+      extract_components.main(['%prog', '-m 2', 'src'])
     output = saved_output.getvalue()
     self.assertIn('OWNERS files that have missing team and component by depth:',
                   output)
     self.assertIn('at depth 0', output)
-    self.assertIn('[\'tools/checkteamtags/src/OWNERS\']', output)
+    self.assertIn('[\'./OWNERS\']', output)
