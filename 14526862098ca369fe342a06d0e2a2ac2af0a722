@@ -68,6 +68,23 @@
       "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93aa37b1_c31c49a4",
+        "filename": "content/test/data/render_frame_host/window_open_and_close.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-05-31T21:57:58Z",
+      "side": 1,
+      "message": "what\u0027s the importance/signficance of the setTimeout here? I\u0027m wondering why this couldn\u0027t be:\n\nwindow.close();\nwindow.open();",
+      "revId": "14526862098ca369fe342a06d0e2a2ac2af0a722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
