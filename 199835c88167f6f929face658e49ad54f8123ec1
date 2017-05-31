@@ -16,6 +16,24 @@
       "revId": "199835c88167f6f929face658e49ad54f8123ec1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f731fc3_3327a4fd",
+        "filename": "ui/gl/init/gl_initializer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-05-31T14:07:59Z",
+      "side": 1,
+      "message": "Cleaned up this code. I realized that while kGLImplementationSwiftShaderForWebGLName and kGLImplementationSwiftShaderName have distinct behaviors in the browser process (in the GPU data manager), but not in the GPU process (GL initialization), so I moved all that logic to InitializeGLOneOff().",
+      "parentUuid": "0e5c6ac2_436e19d4",
+      "revId": "199835c88167f6f929face658e49ad54f8123ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
