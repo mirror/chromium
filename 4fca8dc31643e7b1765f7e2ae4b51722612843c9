@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3499de2a_91cbf8a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-05-31T17:55:34Z",
+      "side": 1,
+      "message": "Link the intent to ship thread\nhttps://groups.google.com/a/chromium.org/forum/#!topic/blink-dev/KuXx_k2KIis",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "4fca8dc31643e7b1765f7e2ae4b51722612843c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
