@@ -61,7 +61,7 @@ using ::payments::data_util::GetPaymentAddressFromAutofillProfile;
   [_viewController setPageFavicon:_pageFavicon];
   [_viewController setPageTitle:_pageTitle];
   [_viewController setPageHost:_pageHost];
-  [_viewController setConnectionStatus:_connectionSecure];
+  [_viewController setConnectionSecure:_connectionSecure];
   [_viewController setDelegate:self];
   [_viewController setDataSource:_mediator];
   [_viewController loadModel];

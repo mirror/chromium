@@ -19,6 +19,8 @@ NSString* const kPageInfoFaviconImageViewID = @"kPageInfoFaviconImageViewID";
 NSString* const kPageInfoLockIndicatorImageViewID =
     @"kPageInfoLockIndicatorImageViewID";
 
+NSString* const kHttpsScheme = @"https";
+
 namespace {
 // Padding used on the top and bottom edges of the cell.
 const CGFloat kVerticalPadding = 12;
@@ -40,7 +42,7 @@ const CGFloat kLockIndicatorHorizontalPadding = 4;
 // indicator image contents and the square box it is contained within.
 // This padding represents that difference. This is useful when it comes
 // to aligning the lock indicator image with the bottom of the host label.
-const CGFloat kLockIndicatorVerticalPadding = 3;
+const CGFloat kLockIndicatorVerticalPadding = 4;
 }
 
 @implementation PageInfoItem
@@ -64,14 +66,22 @@ const CGFloat kLockIndicatorVerticalPadding = 3;
   [super configureCell:cell];
   cell.pageFaviconView.image = self.pageFavicon;
   cell.pageTitleLabel.text = self.pageTitle;
-  cell.pageHostLabel.text = self.pageHost;
-  cell.pageLockIndicatorView.image = nil;
 
   if (self.connectionSecure) {
+    cell.pageHostLabel.text = [NSString stringWithFormat:@"%@://%@", kHttpsScheme, self.pageHost];
+    NSMutableAttributedString* text =
+    [[NSMutableAttributedString alloc] initWithString:cell.pageHostLabel.text];
+    [text addAttribute:NSForegroundColorAttributeName
+                 value:skia::UIColorFromSkColor(gfx::kGoogleGreen700)
+                 range:NSMakeRange(0, [kHttpsScheme length])];
+    [cell.pageHostLabel setAttributedText:text];
     // Set lock image. UIImageRenderingModeAlwaysTemplate is used so that
     // the color of the lock indicator image can be changed to green.
     cell.pageLockIndicatorView.image = [NativeImage(IDR_IOS_OMNIBOX_HTTPS_VALID)
         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  } else {
+    cell.pageHostLabel.text = self.pageHost;
+    cell.pageLockIndicatorView.image = nil;
   }
 
   // Invalidate the constraints so that layout can account for whether or not a
