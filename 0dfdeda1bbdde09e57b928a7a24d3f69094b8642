@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14ce2f61_ea706fa9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-05-31T21:28:21Z",
+      "side": 1,
+      "message": "\"Removes pkl@\" instead of \"myself\", since this will go into the commit log.",
+      "revId": "0dfdeda1bbdde09e57b928a7a24d3f69094b8642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f4f94f_1f3ee1d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-05-31T21:28:21Z",
+      "side": 1,
+      "message": "Maybe just remove this line?",
+      "revId": "0dfdeda1bbdde09e57b928a7a24d3f69094b8642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
