@@ -13,7 +13,9 @@
 #include "ui/aura/mus/window_tree_client_delegate.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
+#include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_observer.h"
+#include "ui/aura/window_tree_host.h"
 #include "ui/base/class_property.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -21,6 +23,10 @@
 namespace aura {
 
 namespace {
+
+// How long to wait for resizing of the embeddee window.
+constexpr int kCompositorLockTimeoutMs = 750;
+
 // Helper function to get the device_scale_factor() of the display::Display
 // nearest to |window|.
 float ScaleFactorForDisplay(Window* window) {
@@ -294,6 +300,8 @@ void WindowPortMus::SetPrimarySurfaceInfo(const cc::SurfaceInfo& surface_info) {
   UpdateClientSurfaceEmbedder();
   if (window_->delegate())
     window_->delegate()->OnWindowSurfaceChanged(surface_info);
+  if (surface_info.size_in_pixels() == expected_size_)
+    resize_lock_.reset();
 }
 
 void WindowPortMus::SetFallbackSurfaceInfo(
@@ -385,6 +393,10 @@ WindowPortMus::PrepareForServerVisibilityChange(bool value) {
 
 void WindowPortMus::PrepareForDestroy() {
   ScheduleChange(ServerChangeType::DESTROY, ServerChangeData());
+  if (hold_pointer_moves_) {
+    window_->GetHost()->dispatcher()->ReleasePointerMoves();
+    hold_pointer_moves_ = false;
+  }
 }
 
 void WindowPortMus::PrepareForTransientRestack(WindowMus* window) {
@@ -451,6 +463,28 @@ void WindowPortMus::OnVisibilityChanged(bool visible) {
 
 void WindowPortMus::OnDidChangeBounds(const gfx::Rect& old_bounds,
                                       const gfx::Rect& new_bounds) {
+
+  bool embeds_surface = window_mus_type() == WindowMusType::TOP_LEVEL_IN_WM ||
+                        window_mus_type() == WindowMusType::EMBED_IN_OWNER;
+  if (embeds_surface && !resize_lock_) {
+    // Compositor is locked.
+    if (old_bounds.size() != new_bounds.size() &&
+        new_bounds.size().height() != 22) {
+      ui::Compositor* compositor = window_->layer()->GetCompositor();
+      if (compositor) {
+        resize_lock_ = compositor->GetCompositorLock(
+            this, base::TimeDelta::FromMilliseconds(kCompositorLockTimeoutMs));
+        expected_size_ = new_bounds.size();
+        // If the window is a toplevel window in window manager, we will stop
+        // processing pointer move events to avoid flooding client prcoesses.
+        if (window_mus_type() == WindowMusType::TOP_LEVEL_IN_WM) {
+          window_->GetHost()->dispatcher()->HoldPointerMoves();
+          hold_pointer_moves_ = true;
+        }
+      }
+    }
+  }
+
   ServerChangeData change_data;
   change_data.bounds_in_dip = new_bounds;
   if (!RemoveChangeByTypeAndData(ServerChangeType::BOUNDS, change_data))
@@ -498,6 +532,42 @@ WindowPortMus::CreateCompositorFrameSink() {
 cc::SurfaceId WindowPortMus::GetSurfaceId() const {
   // TODO(penghuang): Implement it for Mus.
   return cc::SurfaceId();
+}
+
+void WindowPortMus::WindowPortMus::OnWindowAddedToRootWindow() {
+  bool embeds_surface = window_mus_type() == WindowMusType::TOP_LEVEL_IN_WM ||
+                        window_mus_type() == WindowMusType::EMBED_IN_OWNER;
+  if (embeds_surface) {
+    window_->layer()->GetCompositor()->AddObserver(this);
+    compositor_observer_added_ = true;
+  }
+}
+
+void WindowPortMus::OnWillRemoveWindowFromRootWindow() {
+  if (compositor_observer_added_) {
+    resize_lock_.reset();
+    window_->layer()->GetCompositor()->RemoveObserver(this);
+    compositor_observer_added_ = false;
+  }
+}
+
+void WindowPortMus::OnCompositingDidCommit(ui::Compositor* compositor) {
+  if (hold_pointer_moves_) {
+    window_->GetHost()->dispatcher()->ReleasePointerMoves();
+    hold_pointer_moves_ = false;
+  }
+}
+
+void WindowPortMus::OnCompositingShuttingDown(ui::Compositor* compositor) {
+  if (compositor_observer_added_) {
+    resize_lock_.reset();
+    window_->layer()->GetCompositor()->RemoveObserver(this);
+    compositor_observer_added_ = false;
+  }
+}
+
+void WindowPortMus::CompositorLockTimedOut() {
+  resize_lock_.reset();
 }
 
 void WindowPortMus::UpdatePrimarySurfaceInfo() {

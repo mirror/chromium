@@ -21,6 +21,8 @@
 #include "ui/aura/mus/mus_types.h"
 #include "ui/aura/mus/window_mus.h"
 #include "ui/aura/window_port.h"
+#include "ui/compositor/compositor_lock.h"
+#include "ui/compositor/compositor_observer.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/platform_window/mojo/text_input_state.mojom.h"
 
@@ -39,7 +41,10 @@ class WindowTreeHostMus;
 // WindowTreeClient to the underlying Window route through this class (by
 // way of WindowMus) and are done in such a way that they don't result in
 // calling back to WindowTreeClient.
-class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
+class AURA_EXPORT WindowPortMus : public WindowPort,
+                                  public WindowMus,
+                                  public ui::CompositorObserver,
+                                  public ui::CompositorLockClient {
  public:
   // See WindowMus's constructor for details on |window_mus_type|.
   WindowPortMus(WindowTreeClient* client, WindowMusType window_mus_type);
@@ -252,8 +257,19 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
                          std::unique_ptr<ui::PropertyData> data) override;
   std::unique_ptr<cc::CompositorFrameSink> CreateCompositorFrameSink() override;
   cc::SurfaceId GetSurfaceId() const override;
-  void OnWindowAddedToRootWindow() override {}
-  void OnWillRemoveWindowFromRootWindow() override {}
+  void OnWindowAddedToRootWindow() override;
+  void OnWillRemoveWindowFromRootWindow() override;
+
+  // ui::CompositorObserver:
+  void OnCompositingDidCommit(ui::Compositor* compositor) override;
+  void OnCompositingStarted(ui::Compositor* compositor,
+                            base::TimeTicks start_time) override {}
+  void OnCompositingEnded(ui::Compositor* compositor) override {}
+  void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override;
+
+  // ui::CompositorLockClient:
+  void CompositorLockTimedOut() override;
 
   void UpdatePrimarySurfaceInfo();
   void UpdateClientSurfaceEmbedder();
@@ -276,6 +292,11 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   cc::LocalSurfaceId local_surface_id_;
   cc::LocalSurfaceIdAllocator local_surface_id_allocator_;
   gfx::Size last_surface_size_;
+
+  std::unique_ptr<ui::CompositorLock> resize_lock_;
+  gfx::Size expected_size_;
+  bool hold_pointer_moves_ = false;
+  bool compositor_observer_added_ = false;
 
   ui::CursorData cursor_;
 
