@@ -5,7 +5,6 @@
 
 """Script to download Clang translation_unit tool from google storage."""
 
-import find_depot_tools
 import json
 import os
 import shutil
@@ -13,12 +12,10 @@ import subprocess
 import sys
 import tarfile
 
+
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 CHROME_SRC = os.path.abspath(os.path.join(SCRIPT_DIR, os.pardir))
 
-
-DEPOT_PATH = find_depot_tools.add_depot_tools_to_path()
-GSUTIL_PATH = os.path.join(DEPOT_PATH, 'gsutil.py')
 
 LLVM_BUILD_PATH = os.path.join(CHROME_SRC, 'third_party', 'llvm-build',
                                'Release+Asserts')
@@ -42,12 +39,12 @@ def main():
 
   os.chdir(LLVM_BUILD_PATH)
 
-  subprocess.check_call(['python', GSUTIL_PATH,
-                         'cp', cds_full_url, targz_name])
+  subprocess.check_call(['gsutil', 'cp', cds_full_url, targz_name])
   tarfile.open(name=targz_name, mode='r:gz').extractall(path=LLVM_BUILD_PATH)
 
   os.remove(targz_name)
   return 0
+
 
 if __name__ == '__main__':
   sys.exit(main())

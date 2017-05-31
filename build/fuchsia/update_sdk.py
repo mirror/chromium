@@ -13,12 +13,6 @@ import sys
 import tarfile
 import tempfile
 
-REPOSITORY_ROOT = os.path.abspath(os.path.join(
-    os.path.dirname(__file__), '..', '..'))
-sys.path.append(os.path.join(REPOSITORY_ROOT, 'build'))
-
-import find_depot_tools
-
 
 def EnsureDirExists(path):
   if not os.path.exists(path):
@@ -48,9 +42,7 @@ def main():
 
   bucket = 'gs://fuchsia-build/fuchsia/sdk/linux64/'
   with tempfile.NamedTemporaryFile() as f:
-    cmd = [os.path.join(find_depot_tools.DEPOT_TOOLS_PATH, 'gsutil.py'),
-           'cp', bucket + sdk_hash, f.name]
-    subprocess.check_call(cmd)
+    subprocess.check_call(['gsutil', 'cp', bucket + sdk_hash, f.name])
     f.seek(0)
     EnsureDirExists(output_dir)
     tarfile.open(mode='r:gz', fileobj=f).extractall(path=output_dir)

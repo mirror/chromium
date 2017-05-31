@@ -67,24 +67,8 @@ def GetExpectedStamp():
   return subprocess.check_output(rev_cmd).rstrip()
 
 
-def GetGsutilPath():
-  if not 'find_depot_tools' in sys.modules:
-    sys.path.insert(0, os.path.join(CHROMIUM_DIR, 'build'))
-    global find_depot_tools
-    import find_depot_tools
-  depot_path = find_depot_tools.add_depot_tools_to_path()
-  if depot_path is None:
-    print ('depot_tools are not found in PATH. '
-           'Follow the instructions in this document '
-           'http://dev.chromium.org/developers/how-tos/install-depot-tools'
-           ' to install depot_tools and then try again.')
-    sys.exit(1)
-  gsutil_path = os.path.join(depot_path, 'gsutil.py')
-  return gsutil_path
-
-
 def RunGsutil(args):
-  return subprocess.call([sys.executable, GetGsutilPath()] + args)
+  return subprocess.call(['gsutil'] + args)
 
 
 def GsutilArchiveExists(archive_name, platform):
