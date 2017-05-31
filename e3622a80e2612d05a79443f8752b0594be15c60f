@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "f01a0d93_7d4ec3fc",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-05-31T19:43:25Z",
+      "side": 1,
+      "message": "kEnableMaterialDesignBookmarksName[] is first in the .cc file, so I added it after kEnableIdleTimeSpellCheckingDescription[]",
+      "parentUuid": "70fa4779_016fac94",
+      "range": {
+        "startLine": 1987,
+        "startChar": 0,
+        "endLine": 1990,
+        "endChar": 41
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7b70011_6ee32eb0",
         "filename": "components/BUILD.gn",
         "patchSetId": 1
@@ -259,6 +283,30 @@
       "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e98fbe_a396b762",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-05-31T19:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba3721a_28d7d94f",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 61
+      },
+      "revId": "e3622a80e2612d05a79443f8752b0594be15c60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
