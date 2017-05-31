@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test that watchAvailability throws when backend is disabled.</title>
+        <script src="../../resources/testharness.js"></script>
+        <script src="../../resources/testharnessreport.js"></script>
+        <script src="../../resources/gc.js"></script>
+        <script src="../media-file.js"></script>
+    </head>
+    <body>
+        <script>
+            window.internals.runtimeFlags.remotePlaybackBackendEnabled = false;
+
+            promise_test(function(t) {
+                var v = document.createElement('video');
+                v.src = findMediaFile('video', 'content/test');
+                document.body.appendChild(v);
+
+                function callback(available) {}
+
+                var expectedException = new DOMException(
+                        'Availability monitoring is not supported on this device.',
+                        'NotSupportedError');
+                return promise_rejects(t, expectedException,
+                        v.remote.watchAvailability(t.unreached_func()));
+            }, 'Test that watchAvailability throws when backend is disabled.');
+        </script>
+    </body>
+</html>

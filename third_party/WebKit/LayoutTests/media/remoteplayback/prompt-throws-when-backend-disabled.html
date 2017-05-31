@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Test that calling prompt() before the promise returned by the previous call is resolved throws an exception</title>
+        <title>Test that calling prompt() when backend is disabled, throws an exception</title>
         <script src="../../resources/testharness.js"></script>
         <script src="../../resources/testharnessreport.js"></script>
         <script src="../media-file.js"></script>
@@ -13,7 +13,7 @@
             // - user gesture;
             // - internals.mediaPlayerRemoteRouteAvailabilityChanged
 
-            window.internals.runtimeFlags.remotePlaybackBackendEnabled = true;
+            window.internals.runtimeFlags.remotePlaybackBackendEnabled = false;
 
             function clickOnElem(e) {
                 eventSender.mouseMoveTo(
@@ -33,22 +33,15 @@
 
                 var btn = document.getElementById('button');
                 btn.onclick = function() {
-                    v.remote.prompt();
-
-                    btn.onclick = function() {
-                        v.remote.prompt().then(
-                            test.unreached_func(),
-                            test.step_func_done(function(e) {
-                                assert_equals(e.name, 'OperationError');
-                                assert_equals(e.message, 'A prompt is already being shown for this media element.');
-                            }));
-                        btn.onclick = null;
-                    };
-                    clickOnElem(btn);
+                    v.remote.prompt().then(test.unreached_func(),
+                        test.step_func_done(function(e) {
+                            assert_equals(e.name, 'NotFoundError');
+                            assert_equals(e.message, 'No remote playback devices found.');
+                        }));
                 }
 
                 clickOnElem(btn);
-            }, 'Test that calling prompt() before the promise returned by the previous call is resolved throws an exception.');
+            }, 'Test that calling prompt() when backend is disabled, throws an exception.');
         </script>
     </body>
 </html>
