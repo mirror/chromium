@@ -16,6 +16,24 @@
       "revId": "17b6a01c9fe4de8f252053c62bbaa768370b1c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f40eee9_ce475a7d",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-01T17:24:04Z",
+      "side": 1,
+      "message": "Thanks, added kernel.halt_on_panic\u003dtrue.",
+      "parentUuid": "11598697_b5e342a3",
+      "revId": "17b6a01c9fe4de8f252053c62bbaa768370b1c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
