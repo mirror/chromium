@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45257c49_cdeb2b7b",
+        "filename": "cc/surfaces/surface_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-06-01T23:23:26Z",
+      "side": 1,
+      "message": "This might cause an extra static initializer to be created.  If you make it static inside the function that\u0027s less likely to be an issue. You can check this with tools/linux/dump-static-initializers.py",
+      "revId": "9fe1a6bb72cae9f7c6b7f5700bcc572dc646ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
