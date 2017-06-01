@@ -990,7 +990,9 @@ size_t PictureLayerTiling::GPUMemoryUsageInBytes() const {
 
 gfx::Rect PictureLayerTiling::EnclosingContentsRectFromLayerRect(
     const gfx::Rect& layer_rect) const {
-  return ToEnclosingRect(raster_transform_.MapRect(gfx::RectF(layer_rect)));
+  auto rect = raster_transform_.MapRect(gfx::RectF(layer_rect));
+  rect.Inset(-1, -1);
+  return ToEnclosingRect(rect);
 }
 
 gfx::Rect PictureLayerTiling::EnclosingLayerRectFromContentsRect(
