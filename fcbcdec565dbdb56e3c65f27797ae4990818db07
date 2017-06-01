@@ -16,6 +16,24 @@
       "revId": "fcbcdec565dbdb56e3c65f27797ae4990818db07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7edeeb_ceb258c8",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-01T01:47:06Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f77993e5_d621b261",
+      "revId": "fcbcdec565dbdb56e3c65f27797ae4990818db07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
