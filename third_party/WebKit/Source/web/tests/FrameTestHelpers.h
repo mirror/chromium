@@ -54,6 +54,7 @@ namespace blink {
 
 class WebFrame;
 class WebLocalFrameBase;
+class WebRemoteFrameBase;
 class WebRemoteFrameImpl;
 class WebSettings;
 enum class WebCachePolicy;
@@ -61,6 +62,7 @@ enum class WebCachePolicy;
 namespace FrameTestHelpers {
 
 class TestWebFrameClient;
+class TestWebRemoteFrameClient;
 class TestWebWidgetClient;
 class TestWebViewClient;
 
@@ -88,18 +90,25 @@ WebMouseEvent CreateMouseEvent(WebInputEvent::Type,
                                const IntPoint&,
                                int modifiers);
 
+WebLocalFrameBase* CreateLocalChild(WebLocalFrame* parent,
+                                    WebTreeScopeType,
+                                    TestWebFrameClient* = nullptr);
+
+WebLocalFrameBase* CreateProvisional(TestWebFrameClient*,
+                                     WebRemoteFrame* old_frame);
+
 // Calls WebRemoteFrame::createLocalChild, but with some arguments prefilled
 // with default test values (i.e. with a default |client| or |properties| and/or
 // with a precalculated |uniqueName|).
 WebLocalFrameBase* CreateLocalChild(
     WebRemoteFrame* parent,
     const WebString& name = WebString(),
-    WebFrameClient* = nullptr,
+    TestWebFrameClient* = nullptr,
     WebWidgetClient* = nullptr,
     WebFrame* previous_sibling = nullptr,
     const WebFrameOwnerProperties& = WebFrameOwnerProperties());
 WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame* parent,
-                                      WebRemoteFrameClient*,
+                                      TestWebRemoteFrameClient*,
                                       const WebString& name = WebString());
 
 // Helpers for unit tests with parameterized WebSettings overrides.
@@ -239,6 +248,9 @@ class WebViewHelper {
 
   WebViewBase* WebView() const { return web_view_; }
 
+  WebLocalFrameBase* LocalMainFrame();
+  WebRemoteFrameBase* RemoteMainFrame();
+
  private:
   WebViewBase* web_view_;
   SettingOverrider* setting_overrider_;
@@ -269,7 +281,7 @@ class TestWebFrameClient : public WebFrameClient {
   void DidStartLoading(bool) override;
   void DidStopLoading() override;
 
-  bool IsLoading() { return loads_in_progress_ > 0; }
+  static bool IsLoading() { return loads_in_progress_ > 0; }
 
   // Tests can override the virtual method below to mock the interface provider.
   virtual blink::InterfaceProvider* GetInterfaceProvider() { return nullptr; }
@@ -280,10 +292,10 @@ class TestWebFrameClient : public WebFrameClient {
   }
 
  private:
-  int loads_in_progress_ = 0;
+  static int loads_in_progress_;
 
   // This is null from when the client is created until it is initialized.
-  WebLocalFrame* frame_;
+  WebLocalFrame* frame_ = nullptr;
 };
 
 // Minimal implementation of WebRemoteFrameClient needed for unit tests that

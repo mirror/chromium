@@ -460,6 +460,7 @@ TEST_P(WebViewTest, SetBaseBackgroundColorBeforeMainFrame) {
   FrameTestHelpers::TestWebFrameClient web_frame_client;
   WebLocalFrame* frame = WebLocalFrame::Create(
       WebTreeScopeType::kDocument, &web_frame_client, nullptr, nullptr);
+  web_frame_client.SetFrame(frame);
   web_view->SetMainFrame(frame);
   web_view->Close();
 }
@@ -2057,6 +2058,7 @@ TEST_P(WebViewTest, ClientTapHandlingNullWebViewClient) {
   FrameTestHelpers::TestWebWidgetClient web_widget_client;
   WebLocalFrame* local_frame = WebLocalFrame::Create(
       WebTreeScopeType::kDocument, &web_frame_client, nullptr, nullptr);
+  web_frame_client.SetFrame(local_frame);
   web_view->SetMainFrame(local_frame);
 
   // TODO(dcheng): The main frame widget currently has a special case.

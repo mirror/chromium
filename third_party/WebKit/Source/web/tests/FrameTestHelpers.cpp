@@ -30,6 +30,8 @@
 
 #include "web/tests/FrameTestHelpers.h"
 
+#include <utility>
+
 #include "core/frame/WebLocalFrameBase.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -71,23 +73,23 @@ namespace {
 // 6. When runServeAsyncRequestsTask() notices there are no more loads in
 //    progress, it exits the run loop.
 // 7. At this point, all parsing, resource loads, and layout should be finished.
-TestWebFrameClient* TestClientForFrame(WebFrame* frame) {
-  return static_cast<TestWebFrameClient*>(ToWebLocalFrameBase(frame)->Client());
-}
 
-void RunServeAsyncRequestsTask(TestWebFrameClient* client) {
+void RunServeAsyncRequestsTask() {
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
-  if (client->IsLoading())
+  if (TestWebFrameClient::IsLoading()) {
     Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
-        BLINK_FROM_HERE,
-        WTF::Bind(&RunServeAsyncRequestsTask, WTF::Unretained(client)));
-  else
+        BLINK_FROM_HERE, WTF::Bind(&RunServeAsyncRequestsTask));
+  } else {
     testing::ExitRunLoop();
+  }
 }
 
-TestWebFrameClient* DefaultWebFrameClient() {
-  DEFINE_STATIC_LOCAL(TestWebFrameClient, client, ());
-  return &client;
+using TestWebFrameClientMap =
+    HashMap<WebLocalFrame*, std::unique_ptr<TestWebFrameClient>>;
+
+TestWebFrameClientMap& TestWebFrameClientRegistrations() {
+  DEFINE_STATIC_LOCAL(TestWebFrameClientMap, clients, ());
+  return clients;
 }
 
 TestWebWidgetClient* DefaultWebWidgetClient() {
@@ -132,8 +134,7 @@ void ReloadFrameBypassingCache(WebFrame* frame) {
 
 void PumpPendingRequestsForFrameToLoad(WebFrame* frame) {
   Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&RunServeAsyncRequestsTask,
-                                 WTF::Unretained(TestClientForFrame(frame))));
+      BLINK_FROM_HERE, WTF::Bind(&RunServeAsyncRequestsTask));
   testing::EnterRunLoop();
 }
 
@@ -149,19 +150,56 @@ WebMouseEvent CreateMouseEvent(WebInputEvent::Type type,
   return result;
 }
 
+WebLocalFrameBase* CreateLocalChild(WebLocalFrame* parent,
+                                    WebTreeScopeType scope,
+                                    TestWebFrameClient* client) {
+  std::unique_ptr<TestWebFrameClient> owned_client;
+  if (!client) {
+    owned_client = WTF::MakeUnique<TestWebFrameClient>();
+    client = owned_client.get();
+  }
+  WebLocalFrameBase* frame = ToWebLocalFrameBase(parent->CreateLocalChild(
+      scope, client, client->GetInterfaceProvider(), nullptr));
+  client->SetFrame(frame);
+  TestWebFrameClientRegistrations().insert(frame, std::move(owned_client));
+  return frame;
+}
+
+WebLocalFrameBase* CreateProvisional(TestWebFrameClient* client,
+                                     WebRemoteFrame* old_frame) {
+  std::unique_ptr<TestWebFrameClient> owned_client;
+  if (!client) {
+    owned_client = WTF::MakeUnique<TestWebFrameClient>();
+    client = owned_client.get();
+  }
+  WebLocalFrameBase* frame =
+      ToWebLocalFrameBase(WebLocalFrame::CreateProvisional(
+          client, client->GetInterfaceProvider(), nullptr, old_frame,
+          WebSandboxFlags::kNone));
+  client->SetFrame(frame);
+  TestWebFrameClientRegistrations().insert(frame, std::move(owned_client));
+  return frame;
+}
+
 WebLocalFrameBase* CreateLocalChild(WebRemoteFrame* parent,
                                     const WebString& name,
-                                    WebFrameClient* client,
+                                    TestWebFrameClient* client,
                                     WebWidgetClient* widget_client,
                                     WebFrame* previous_sibling,
                                     const WebFrameOwnerProperties& properties) {
-  if (!client)
-    client = DefaultWebFrameClient();
+  std::unique_ptr<TestWebFrameClient> owned_client;
+  if (!client) {
+    owned_client = WTF::MakeUnique<TestWebFrameClient>();
+    client = owned_client.get();
+  }
 
   WebLocalFrameBase* frame = ToWebLocalFrameBase(parent->CreateLocalChild(
       WebTreeScopeType::kDocument, name, WebSandboxFlags::kNone, client,
-      static_cast<TestWebFrameClient*>(client)->GetInterfaceProvider(), nullptr,
-      previous_sibling, WebParsedFeaturePolicy(), properties, nullptr));
+      client->GetInterfaceProvider(), nullptr, previous_sibling,
+      WebParsedFeaturePolicy(), properties, nullptr));
+
+  client->SetFrame(frame);
+  TestWebFrameClientRegistrations().insert(frame, std::move(owned_client));
 
   if (!widget_client)
     widget_client = DefaultWebWidgetClient();
@@ -171,7 +209,7 @@ WebLocalFrameBase* CreateLocalChild(WebRemoteFrame* parent,
 }
 
 WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame* parent,
-                                      WebRemoteFrameClient* client,
+                                      TestWebRemoteFrameClient* client,
                                       const WebString& name) {
   return ToWebRemoteFrameImpl(parent->CreateRemoteChild(
       WebTreeScopeType::kDocument, name, WebSandboxFlags::kNone,
@@ -194,8 +232,11 @@ WebViewBase* WebViewHelper::InitializeWithOpener(
     void (*update_settings_func)(WebSettings*)) {
   Reset();
 
-  if (!web_frame_client)
-    web_frame_client = DefaultWebFrameClient();
+  std::unique_ptr<TestWebFrameClient> owned_web_frame_client;
+  if (!web_frame_client) {
+    owned_web_frame_client = base::MakeUnique<TestWebFrameClient>();
+    web_frame_client = owned_web_frame_client.get();
+  }
   if (!web_view_client) {
     owned_test_web_view_client_ = WTF::MakeUnique<TestWebViewClient>();
     web_view_client = owned_test_web_view_client_.get();
@@ -222,8 +263,11 @@ WebViewBase* WebViewHelper::InitializeWithOpener(
   WebLocalFrame* frame = WebLocalFrameBase::Create(
       WebTreeScopeType::kDocument, web_frame_client,
       web_frame_client->GetInterfaceProvider(), nullptr, opener);
-  web_view_->SetMainFrame(frame);
   web_frame_client->SetFrame(frame);
+  TestWebFrameClientRegistrations().insert(frame,
+                                           std::move(owned_web_frame_client));
+  web_view_->SetMainFrame(frame);
+
   // TODO(dcheng): The main frame widget currently has a special case.
   // Eliminate this once WebView is no longer a WebWidget.
   blink::WebFrameWidget::Create(web_widget_client, web_view_, frame);
@@ -261,12 +305,19 @@ WebViewBase* WebViewHelper::InitializeAndLoad(
 
 void WebViewHelper::Reset() {
   if (web_view_) {
-    DCHECK(web_view_->MainFrame()->IsWebRemoteFrame() ||
-           !TestClientForFrame(web_view_->MainFrame())->IsLoading());
+    DCHECK(!TestWebFrameClient::IsLoading());
     web_view_->WillCloseLayerTreeView();
     web_view_->Close();
     web_view_ = nullptr;
   }
+}
+
+WebLocalFrameBase* WebViewHelper::LocalMainFrame() {
+  return ToWebLocalFrameBase(web_view_->MainFrame());
+}
+
+WebRemoteFrameBase* WebViewHelper::RemoteMainFrame() {
+  return ToWebRemoteFrameBase(web_view_->MainFrame());
 }
 
 void WebViewHelper::Resize(WebSize size) {
@@ -276,13 +327,17 @@ void WebViewHelper::Resize(WebSize size) {
   test_web_view_client_->ClearAnimationScheduled();
 }
 
+int TestWebFrameClient::loads_in_progress_ = 0;
+
 TestWebFrameClient::TestWebFrameClient() {}
 
 void TestWebFrameClient::FrameDetached(WebLocalFrame* frame, DetachType type) {
-  if (frame->FrameWidget())
-    frame->FrameWidget()->Close();
+  if (frame_->FrameWidget())
+    frame_->FrameWidget()->Close();
 
-  frame->Close();
+  frame_->Close();
+  // This may delete |this|.
+  TestWebFrameClientRegistrations().erase(frame_);
 }
 
 WebLocalFrame* TestWebFrameClient::CreateChildFrame(
@@ -293,9 +348,7 @@ WebLocalFrame* TestWebFrameClient::CreateChildFrame(
     WebSandboxFlags sandbox_flags,
     const WebParsedFeaturePolicy& container_policy,
     const WebFrameOwnerProperties& frame_owner_properties) {
-  WebLocalFrame* frame =
-      parent->CreateLocalChild(scope, this, GetInterfaceProvider(), nullptr);
-  return frame;
+  return CreateLocalChild(parent, scope);
 }
 
 void TestWebFrameClient::DidStartLoading(bool) {
