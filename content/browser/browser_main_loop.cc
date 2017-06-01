@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <algorithm>
 #include <string>
 #include <utility>
 #include <vector>
@@ -33,6 +34,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/sys_info.h"
 #include "base/system_monitor/system_monitor.h"
 #include "base/task_scheduler/initialization_util.h"
 #include "base/task_scheduler/post_task.h"
@@ -950,6 +952,27 @@ int BrowserMainLoop::CreateThreads() {
     if (!task_scheduler_init_params)
       task_scheduler_init_params = GetDefaultTaskSchedulerInitParams();
     DCHECK(task_scheduler_init_params);
+
+    // For optimal performance, a renderer needs as many threads in the
+    // foreground pool as there are cores on the machine. RenderProcessImpl
+    // correctly configures the number of threads in the foreground pool for
+    // renderer processes. In the case where renderers live in the browser
+    // process, the code below adjusts the number of threads in the foreground
+    // pool.
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kSingleProcess)) {
+      const base::SchedulerWorkerPoolParams&
+          current_foreground_worker_pool_params(
+              task_scheduler_init_params->foreground_worker_pool_params);
+      task_scheduler_init_params->foreground_worker_pool_params =
+          base::SchedulerWorkerPoolParams(
+              current_foreground_worker_pool_params.standby_thread_policy(),
+              std::max(base::SysInfo::NumberOfProcessors(),
+                       current_foreground_worker_pool_params.max_threads()),
+              current_foreground_worker_pool_params.suggested_reclaim_time(),
+              current_foreground_worker_pool_params.backward_compatibility());
+    }
+
     base::TaskScheduler::GetInstance()->Start(
         *task_scheduler_init_params.get());
   }
