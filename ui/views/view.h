@@ -541,7 +541,7 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   void Paint(const ui::PaintContext& parent_context);
 
   // The background object is owned by this object and may be NULL.
-  void set_background(Background* b);
+  void SetBackground(std::unique_ptr<Background> b);
   const Background* background() const { return background_.get(); }
   Background* background() { return background_.get(); }
 
