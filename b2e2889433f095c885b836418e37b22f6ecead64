@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0611425a_6122a8a1",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "Please add tests for OS tag and for correct raw data to be returned from scrap_owners function. The latter test should probably be added to owners_file_tags_test.py.",
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948655d5_5586a5ee",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "range": {
+        "startLine": 79,
+        "startChar": 51,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47161fcf_b7e35812",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "Why is this changed? Shouldn\u0027t we have produced the same results with the new code?",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 54
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec67520a_3712f1e6",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "Isn\u0027t rel_dirname already relative to root?",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f134bf9_17a32cd9",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "Why prefix before the name? AFAIK, in python this is used to mean that the value will not be used in the future, but it\u0027s used on the next line already.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 7
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04c7114_80a4a751",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "How about adding a space between component and OS? IMHO this is more user-friendly and for machines that need to parse data we have raw JSON format. This is not a strong opinion, feel free to leave as is.",
+      "range": {
+        "startLine": 85,
+        "startChar": 19,
+        "endLine": 85,
+        "endChar": 25
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8736ea3f_7bd7b166",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "Should \"and not _os\" also be added here? Files with just \"OS\" tag are technically not missing info, they just lack component and team information.",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 18
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2beec2c4_478a9647",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "This should be removed after this is deployed and I\u0027ve updated my scripts to use it. Please add a comment to remove it.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 76
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32237b68_65bad1e9",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "nit: subdirs",
+      "range": {
+        "startLine": 153,
+        "startChar": 60,
+        "endLine": 153,
+        "endChar": 67
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7193bd_73c9e1ee",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "nit: move to next line, i.e.\n\n\u0027/path/to/dir\u0027: {\n    \u0027component\u0027: \u0027component\u003ename\u0027,\n    \u0027team\u0027: \u0027team@email.here\u0027,\n    \u0027os\u0027: \u0027Linux|Windows|Mac|Android|Chrome|Fuchsia\u0027\n},",
+      "range": {
+        "startLine": 161,
+        "startChar": 58,
+        "endLine": 161,
+        "endChar": 59
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1179d435_f17eb443",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-01T12:54:08Z",
+      "side": 1,
+      "message": "ditto here",
+      "range": {
+        "startLine": 163,
+        "startChar": 26,
+        "endLine": 163,
+        "endChar": 27
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
