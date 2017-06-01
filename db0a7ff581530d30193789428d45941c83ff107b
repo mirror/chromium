@@ -70,6 +70,24 @@
       "revId": "db0a7ff581530d30193789428d45941c83ff107b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7bafc2_c92b64b4",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T17:19:56Z",
+      "side": 1,
+      "message": "Oh ok. It looks like it doesn\u0027t do much anymore.\n\nGPU w/ counting:\nCSS bouncing clipped rects\t372.92\t390.59\t385.14\nCSS bouncing blend circles\t289.37\t264.08\t280.62\n\nGPU w/out counting:\nCSS bouncing clipped rects\t344.12\t385.74\t383.31\nCSS bouncing blend circles\t280.42\t324.58\t283.72\n\n\nThere\u0027s one outlier in the middle there, but it looks like the bouncing blend circles runs the same speed regardless of counting or not for the clipped rects test first with GPU raster on.",
+      "parentUuid": "8d08d13b_d1ace205",
+      "revId": "db0a7ff581530d30193789428d45941c83ff107b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
