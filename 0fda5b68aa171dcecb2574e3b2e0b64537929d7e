@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16fe64a2_0829eafe",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T15:36:25Z",
+      "side": 1,
+      "message": "Would it make sense to do:\n`assertEquals(BuildInfo.IsAtLeastO() ? null, mFavicon, getDisplayedIcon());`",
+      "revId": "0fda5b68aa171dcecb2574e3b2e0b64537929d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
