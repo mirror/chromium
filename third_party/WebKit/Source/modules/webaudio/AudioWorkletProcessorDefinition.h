@@ -6,6 +6,7 @@
 #define AudioWorkletProcessorDefinition_h
 
 #include "modules/ModulesExport.h"
+#include "modules/webaudio/AudioParamDescriptor.h"
 #include "platform/bindings/ScopedPersistent.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
@@ -34,14 +35,18 @@ class MODULES_EXPORT AudioWorkletProcessorDefinition final
   const String& GetName() const { return name_; }
   v8::Local<v8::Function> ConstructorLocal(v8::Isolate*);
   v8::Local<v8::Function> ProcessLocal(v8::Isolate*);
+  void SetAudioParamDescriptors(const HeapVector<AudioParamDescriptor>&);
+  const Vector<String> GetAudioParamDescriptorNames() const;
+  const AudioParamDescriptor* GetAudioParamDescriptor(const String& key) const;
 
-  DEFINE_INLINE_TRACE(){};
+  DEFINE_INLINE_TRACE() { visitor->Trace(audio_param_descriptors_); }
 
  private:
-  AudioWorkletProcessorDefinition(v8::Isolate*,
-                                  const String& name,
-                                  v8::Local<v8::Function> constructor,
-                                  v8::Local<v8::Function> process);
+  AudioWorkletProcessorDefinition(
+      v8::Isolate*,
+      const String& name,
+      v8::Local<v8::Function> constructor,
+      v8::Local<v8::Function> process);
 
   const String name_;
 
@@ -50,8 +55,7 @@ class MODULES_EXPORT AudioWorkletProcessorDefinition final
   ScopedPersistent<v8::Function> constructor_;
   ScopedPersistent<v8::Function> process_;
 
-  // TODO(hongchan): A container for AudioParamDescriptor objects.
-  // ScopedPersistent<v8::Array> m_parameterDescriptors;
+  HeapVector<AudioParamDescriptor> audio_param_descriptors_;
 };
 
 }  // namespace blink
