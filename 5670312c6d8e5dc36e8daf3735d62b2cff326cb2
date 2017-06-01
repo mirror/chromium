@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3c35db_dd659f1e",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-01T17:49:39Z",
+      "side": 1,
+      "message": "Now that we changed the parameter from a Region to a RegionMap, it may make more sense to change the method here to be SetTouchEventHandlerRegionMap so that all the callers knows that it is setting a map.",
+      "range": {
+        "startLine": 245,
+        "startChar": 7,
+        "endLine": 245,
+        "endChar": 33
+      },
+      "revId": "5670312c6d8e5dc36e8daf3735d62b2cff326cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a3e673_e9d7ffd3",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-01T17:49:39Z",
+      "side": 1,
+      "message": "Similarly, I\u0027d suggest to change the name to be touch_event_handler_region_map().",
+      "range": {
+        "startLine": 246,
+        "startChar": 19,
+        "endLine": 246,
+        "endChar": 45
+      },
+      "revId": "5670312c6d8e5dc36e8daf3735d62b2cff326cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e2536c_f9b38c78",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-01T17:49:39Z",
+      "side": 1,
+      "message": "DITTO.",
+      "range": {
+        "startLine": 580,
+        "startChar": 41,
+        "endLine": 580,
+        "endChar": 0
+      },
+      "revId": "5670312c6d8e5dc36e8daf3735d62b2cff326cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
