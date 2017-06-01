@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a79be4d1_7aa291ec",
+        "filename": "chrome/browser/ui/cocoa/translate/translate_bubble_bridge_views.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T21:19:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t system includes be first?",
+      "revId": "35715715e0bfb5c7c7d402c27c70b7d4b10acb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
