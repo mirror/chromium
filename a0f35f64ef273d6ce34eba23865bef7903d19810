@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d80a8243_e42d12a4",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-06-01T19:29:49Z",
+      "side": 1,
+      "message": "This one is wrong (and now pretty confusing)  :-).  Just remove the TODO?",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "a0f35f64ef273d6ce34eba23865bef7903d19810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
