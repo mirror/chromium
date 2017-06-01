@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac436f34_3ee45e0c",
+        "filename": "ui/views/layout/box_layout.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T21:30:40Z",
+      "side": 1,
+      "message": "WDYT of making inside_border_insets and between_child_spacing have defaults of 0? Many call sites use 0 for them.",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 23
+      },
+      "revId": "b7de25b87bb1e44b6bf3da6e1de6cbc693ad627b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
