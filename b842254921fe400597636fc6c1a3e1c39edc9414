@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "750657e3_c7a62c1a",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-01T01:17:12Z",
+      "side": 1,
+      "message": "Latest patch-set adds the enum, to give a feel for how over the top that is.",
+      "parentUuid": "53759e04_f2f432e3",
+      "range": {
+        "startLine": 198,
+        "startChar": 9,
+        "endLine": 198,
+        "endChar": 13
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "098e9feb_9f8c22b8",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 1
@@ -110,6 +134,24 @@
       "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fb1385_1299e6f5",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-01T01:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "098e9feb_9f8c22b8",
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "ce1397f1_6227cda9",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-01T01:17:12Z",
+      "side": 1,
+      "message": "Looks like enable_memory_task_profiler _defaults_ to being the same as use_allocator_shim - so is that discrepancy what you\u0027re cleaning up?",
+      "parentUuid": "dd62ba25_3cbd20df",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 42
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b92c2f_9ca448a4",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 1
@@ -156,6 +222,30 @@
       "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4071b82f_3537d97e",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-01T01:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47b92c2f_9ca448a4",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 8
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -182,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "def24bfa_40626953",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-01T01:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0481d1ac_c3be68fd",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 104
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c72d8235_d00e86a7",
         "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
         "patchSetId": 1
@@ -202,6 +316,30 @@
       "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075b95b2_b51886f3",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-01T01:17:12Z",
+      "side": 1,
+      "message": "We could reduce it just to the special-case, yes, but that seemed too much like an invitation for this function to become horribly bloated with other special-cases in future.\n\nDone, for the sake of seeing how it looks, though.",
+      "parentUuid": "c72d8235_d00e86a7",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
