@@ -43,8 +43,8 @@ RecoveryImprovedInstallerTraits::OnCustomInstall(
 
 void RecoveryImprovedInstallerTraits::ComponentReady(
     const base::Version& version,
-    const base::FilePath& install_dir,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& install_dir) {
   DVLOG(1) << "RecoveryImproved component is ready.";
 }
 

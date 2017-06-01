@@ -182,13 +182,13 @@ bool GetOptionalBehaviour(
 // SwReporter should not be run at all.
 void RunExperimentalSwReporter(const base::FilePath& exe_path,
                                const base::Version& version,
-                               std::unique_ptr<base::DictionaryValue> manifest,
+                               const base::DictionaryValue& manifest,
                                const SwReporterRunner& reporter_runner) {
   // The experiment requires launch_params so if they aren't present just
   // return. This isn't an error because the user could get into the experiment
   // group before they've downloaded the experiment component.
-  base::Value* launch_params = nullptr;
-  if (!manifest->Get("launch_params", &launch_params))
+  const base::Value* launch_params = nullptr;
+  if (!manifest.Get("launch_params", &launch_params))
     return;
 
   const base::ListValue* parameter_list = nullptr;
@@ -316,13 +316,12 @@ update_client::CrxInstaller::Result SwReporterInstallerTraits::OnCustomInstall(
 
 void SwReporterInstallerTraits::ComponentReady(
     const base::Version& version,
-    const base::FilePath& install_dir,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& install_dir) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   const base::FilePath exe_path(install_dir.Append(kSwReporterExeName));
   if (IsExperimentalEngineEnabled()) {
-    RunExperimentalSwReporter(exe_path, version, std::move(manifest),
-                              reporter_runner_);
+    RunExperimentalSwReporter(exe_path, version, manifest, reporter_runner_);
   } else {
     base::CommandLine command_line(exe_path);
     command_line.AppendSwitchASCII(chrome_cleaner::kSessionIdSwitch,
