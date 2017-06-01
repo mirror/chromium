@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebe354d3_7f10841e",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-06-01T17:45:39Z",
+      "side": 1,
+      "message": "Add a comment that points to the bug or something for more details.  Obviously this code should be pretty surprising to anyone reading it :-)",
+      "range": {
+        "startLine": 226,
+        "startChar": 6,
+        "endLine": 226,
+        "endChar": 28
+      },
+      "revId": "229450804275cf2c2a5a0a49bb1ce931d0ea2381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987295ac_f5dccbd4",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-06-01T17:45:39Z",
+      "side": 1,
+      "message": "I don\u0027t know enough about V8/bindings to say for sure this is 100% safe (eg. can a function somehow have a name that isn\u0027t a valid string)?  Please get a 2nd set of eyes on this line from a V8/Bindings perspective (eg. jbroman).",
+      "range": {
+        "startLine": 234,
+        "startChar": 30,
+        "endLine": 234,
+        "endChar": 39
+      },
+      "revId": "229450804275cf2c2a5a0a49bb1ce931d0ea2381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
