@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2a865bf_321fc43d",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-01T08:59:09Z",
+      "side": 1,
+      "message": "Yes, I like that better.\n\nAlso, we might just cancel script streaming in case a loader is moved.",
+      "parentUuid": "46eef69a_86af9822",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 26
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8d508dc_04be5a4d",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-01T01:45:12Z",
       "side": 1,
       "message": "Is this to allow GetSource() while the state is kReadyStreaming by ignoring ongoing streaming, right?",
+      "range": {
+        "startLine": 214,
+        "startChar": 24,
+        "endLine": 214,
+        "endChar": 53
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2aa3b6_ca47654f",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-01T08:59:09Z",
+      "side": 1,
+      "message": "Yes.\n\nMy thought was that if kReadyStreaming is a \u0027ready\u0027 state, then the class should also allow all methods that are normally callable when \u0027ready\u0027 to proceed normally, too.",
+      "parentUuid": "f8d508dc_04be5a4d",
       "range": {
         "startLine": 214,
         "startChar": 24,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "acc0600c_47b06143",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-01T08:59:09Z",
+      "side": 1,
+      "message": "Ah... I like 1b, because I think it will simplify the ScriptRunner quite a bit. (Essentially, most of my added code is for introducing a fifth \u0027queue\u0027 (currently_streamed_script_) If instead I have a predicate and check it in ExecuteTaskFromQueue, much of that logic should drop away.)\n\nI\u0027ll try that out.",
+      "parentUuid": "c6f72070_cf946fa9",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 48
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "578d44da_d34c200c",
         "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
         "patchSetId": 1
@@ -105,6 +177,30 @@
       "writtenOn": "2017-06-01T01:45:12Z",
       "side": 1,
       "message": "[3]\nIf [2] and [1b], then we don\u0027t need streamers_, and we can avoid double streaming by checking IsStreamingInProgress() instead.\n\nSimilar to [1b], it\u0027s better to avoid controlling the state by having pointers, and also it\u0027s better to avoid duplicating Member\u003cScriptLoader\u003e to the same ScriptLoader in streamers_ and async_scripts_to_execute_soon_.",
+      "range": {
+        "startLine": 112,
+        "startChar": 60,
+        "endLine": 112,
+        "endChar": 70
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dfce730_70017e1c",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-01T08:59:09Z",
+      "side": 1,
+      "message": "Mostly agree. I think we\u0027ll need two methods, though: HasStreamer() (to prevent double-streaming) and IsStreamingInProgress() (to prevent script execution before streaming has finished).",
+      "parentUuid": "578d44da_d34c200c",
       "range": {
         "startLine": 112,
         "startChar": 60,

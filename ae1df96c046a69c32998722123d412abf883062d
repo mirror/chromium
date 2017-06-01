@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dcecf834_3ebe75e1",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-01T08:59:09Z",
+      "side": 1,
+      "message": "Hmm. Not sure about the two notifications. My assumptions are:\n- Each script would be streamed at most once.\n- This is enforced in both SetStreamer and StartStreamingIfPossible, which check for !streamer_.\n- Since StreamingFinished is the streamer callback (now separate from the \u0027internal\u0027 use of FinishWaitingForStreaming), it would be called once when for each streamer_.\n- Since we\u0027ll have only one streamer_ (points 1 + 2), we should only have one callback.",
+      "parentUuid": "6c1cf574_8cdba96e",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 43
+      },
+      "revId": "ae1df96c046a69c32998722123d412abf883062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68eceac7_c13961cf",
         "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
         "patchSetId": 3
@@ -60,6 +84,24 @@
       "writtenOn": "2017-06-01T07:18:45Z",
       "side": 1,
       "message": "Can we put this under RuntimeEnabledFlag controlled by Finch?\nI strongly encourage this as we can have a precise impact measurement.",
+      "revId": "ae1df96c046a69c32998722123d412abf883062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a658c62_08815abe",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-01T08:59:09Z",
+      "side": 1,
+      "message": "I think you\u0027re right.\n\nAlthough last time I tried, the results were quite noisy. :-]",
+      "parentUuid": "68eceac7_c13961cf",
       "revId": "ae1df96c046a69c32998722123d412abf883062d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
