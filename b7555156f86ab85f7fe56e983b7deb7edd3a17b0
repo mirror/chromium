@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70efd8fc_02f4ba03",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T10:20:55Z",
+      "side": 1,
+      "message": "Maybe add a comment explaining that the new pipeline is using PresentationAvailability instead?",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f8e0e0_771f3a41",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T10:20:55Z",
+      "side": 1,
+      "message": "nit: maybe early return? It would also match the comment as your condition isn\u0027t to ignore if not meaningful but to do something if meaningful",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7d637a_e28e332b",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T10:20:55Z",
+      "side": 1,
+      "message": "I\u0027m a bit worried about this method being called pretty much everywhere. It will be easy to forget one call.",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e362ff6e_3e4b2ee5",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T10:20:55Z",
+      "side": 1,
+      "message": "Maybe rename `will_be_listening` to `should_be_listening`?",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fb66cd_ccddd58e",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T10:20:55Z",
+      "side": 1,
+      "message": "Anything specific in mind? as-is, this TODO isn\u0027t actionable.",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
