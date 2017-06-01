@@ -813,6 +813,15 @@ void Layer::UpdateScrollOffset(const gfx::ScrollOffset& scroll_offset) {
   property_trees.transform_tree.set_needs_update(true);
 }
 
+Region Layer::UnionOfRegions(const RegionMap& region_map) const {
+  Region region;
+  for (RegionMap::const_iterator it = region_map.begin();
+       it != region_map.end(); ++it) {
+    region.Union(it->second);
+  }
+  return region;
+}
+
 void Layer::SetScrollClipLayerId(int clip_layer_id) {
   DCHECK(IsPropertyChangeAllowed());
   if (inputs_.scroll_clip_layer_id == clip_layer_id)
@@ -882,12 +891,12 @@ void Layer::SetNonFastScrollableRegion(const Region& region) {
   SetNeedsCommit();
 }
 
-void Layer::SetTouchEventHandlerRegion(const Region& region) {
+void Layer::SetTouchEventHandlerRegionMap(
+    const RegionMap& touch_event_handler_region_map) {
   DCHECK(IsPropertyChangeAllowed());
-  if (inputs_.touch_event_handler_region == region)
+  if (inputs_.touch_event_handler_region_map == touch_event_handler_region_map)
     return;
-
-  inputs_.touch_event_handler_region = region;
+  inputs_.touch_event_handler_region_map = touch_event_handler_region_map;
   SetPropertyTreesNeedRebuild();
   SetNeedsCommit();
 }
@@ -1160,7 +1169,8 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
   layer->set_main_thread_scrolling_reasons(
       inputs_.main_thread_scrolling_reasons);
   layer->SetNonFastScrollableRegion(inputs_.non_fast_scrollable_region);
-  layer->SetTouchEventHandlerRegion(inputs_.touch_event_handler_region);
+  layer->SetTouchEventHandlerRegionMap(
+      UnionOfRegions(inputs_.touch_event_handler_region_map));
   layer->SetContentsOpaque(inputs_.contents_opaque);
   layer->SetPosition(inputs_.position);
   layer->set_should_flatten_transform_from_property_tree(
