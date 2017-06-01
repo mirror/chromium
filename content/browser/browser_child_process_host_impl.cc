@@ -101,7 +101,17 @@ BrowserChildProcessHost* BrowserChildProcessHost::Create(
     content::ProcessType process_type,
     BrowserChildProcessHostDelegate* delegate,
     const std::string& service_name) {
-  return new BrowserChildProcessHostImpl(process_type, delegate, service_name);
+  return new BrowserChildProcessHostImpl(process_type, delegate, service_name,
+                                         "");
+}
+
+BrowserChildProcessHost* BrowserChildProcessHost::Create(
+    content::ProcessType process_type,
+    BrowserChildProcessHostDelegate* delegate,
+    const std::string& service_name,
+    const std::string& tag) {
+  return new BrowserChildProcessHostImpl(process_type, delegate, service_name,
+                                         tag);
 }
 
 BrowserChildProcessHost* BrowserChildProcessHost::FromID(int child_process_id) {
@@ -110,6 +120,18 @@ BrowserChildProcessHost* BrowserChildProcessHost::FromID(int child_process_id) {
       g_child_process_list.Pointer();
   for (BrowserChildProcessHostImpl* host : *process_list) {
     if (host->GetData().id == child_process_id)
+      return host;
+  }
+  return nullptr;
+}
+
+BrowserChildProcessHost* BrowserChildProcessHost::FromTag(
+    const std::string& tag) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserChildProcessHostImpl::BrowserChildProcessList* process_list =
+      g_child_process_list.Pointer();
+  for (BrowserChildProcessHostImpl* host : *process_list) {
+    if (host->tag() == tag)
       return host;
   }
   return nullptr;
@@ -144,8 +166,10 @@ void BrowserChildProcessHostImpl::RemoveObserver(
 BrowserChildProcessHostImpl::BrowserChildProcessHostImpl(
     content::ProcessType process_type,
     BrowserChildProcessHostDelegate* delegate,
-    const std::string& service_name)
-    : data_(process_type),
+    const std::string& service_name,
+    const std::string& tag)
+    : tag_(tag),
+      data_(process_type),
       delegate_(delegate),
       broker_client_invitation_(new mojo::edk::OutgoingBrokerClientInvitation),
       channel_(nullptr),
