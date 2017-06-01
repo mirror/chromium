@@ -2831,6 +2831,12 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       base::Bind(&IgnoreInterfaceRequest<device::mojom::VRService>));
 #endif
 
+  if (RendererAudioOutputStreamFactoryContextImpl::UseMojoFactories()) {
+    GetInterfaceRegistry()->AddInterface(base::BindRepeating(
+        &RenderFrameHostImpl::CreateAudioOutputStreamFactory,
+        base::Unretained(this)));
+  }
+
 #if BUILDFLAG(ENABLE_WEBRTC)
   // BrowserMainLoop::GetInstance() may be null on unit tests.
   if (BrowserMainLoop::GetInstance()) {
@@ -3828,6 +3834,15 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
       frame_tree_node()->effective_container_policy();
   feature_policy_ = FeaturePolicy::CreateFromParentPolicy(
       parent_policy, container_policy, last_committed_origin_);
+}
+
+void RenderFrameHostImpl::CreateAudioOutputStreamFactory(
+    const service_manager::BindSourceInfo& source_info,
+    mojom::RendererAudioOutputStreamFactoryRequest request) {
+  RenderProcessHostImpl* process =
+      static_cast<RenderProcessHostImpl*>(GetProcess());
+  audio_output_stream_factory_ = process->CreateAudioOutputStreamFactory(
+      GetRoutingID(), std::move(request));
 }
 
 void RenderFrameHostImpl::BindMediaInterfaceFactoryRequest(

@@ -8,10 +8,12 @@
 #include <memory>
 #include <string>
 
+#include "content/browser/renderer_host/media/audio_output_authorization_handler.h"
+#include "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h"
 #include "content/browser/renderer_host/media/renderer_audio_output_stream_factory_context.h"
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
-#include "mojo/public/cpp/bindings/interface_request.h"
-#include "mojo/public/cpp/bindings/strong_binding_set.h"
+#include "content/public/browser/browser_thread.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 namespace media {
 class AudioManager;
@@ -39,10 +41,28 @@ class MediaStreamManager;
 //                 | owns (one).
 //                 |
 // media::MojoAudioOutputStream
-
+//
 class CONTENT_EXPORT RendererAudioOutputStreamFactoryContextImpl
     : public RendererAudioOutputStreamFactoryContext {
  public:
+  class CONTENT_EXPORT FactoryHandle {
+   public:
+    ~FactoryHandle();
+
+   private:
+    friend class RendererAudioOutputStreamFactoryContextImpl;
+
+    FactoryHandle(RendererAudioOutputStreamFactoryContextImpl* context,
+                  int frame_id);
+
+    void Init(mojom::RendererAudioOutputStreamFactoryRequest request);
+
+    RenderFrameAudioOutputStreamFactory impl_;
+    mojo::Binding<mojom::RendererAudioOutputStreamFactory> binding_;
+
+    DISALLOW_COPY_AND_ASSIGN(FactoryHandle);
+  };
+
   RendererAudioOutputStreamFactoryContextImpl(
       int render_process_id,
       media::AudioSystem* audio_system,
@@ -52,13 +72,17 @@ class CONTENT_EXPORT RendererAudioOutputStreamFactoryContextImpl
 
   ~RendererAudioOutputStreamFactoryContextImpl() override;
 
-  // Creates a factory and binds it to the request. Intended to be registered
-  // in a RenderFrameHosts InterfaceRegistry.
-  void CreateFactory(
-      int frame_host_id,
+  // Creates a factory and binds it to the request. The returned FactoryHandle
+  // is used to manage the lifetime of the created factory. It should not
+  // outlive |this|. This function should be called on the UI thread.
+  std::unique_ptr<RendererAudioOutputStreamFactoryContextImpl::FactoryHandle,
+                  BrowserThread::DeleteOnIOThread>
+  CreateFactory(
+      int frame_id,
       mojo::InterfaceRequest<mojom::RendererAudioOutputStreamFactory> request);
 
-  // RendererAudioOutputStreamFactoryContext implementation.
+  // RendererAudioOutputStreamFactoryContext implementation. To be called on
+  // the IO thread
   int GetRenderProcessId() const override;
 
   std::string GetHMACForDeviceId(
@@ -78,6 +102,8 @@ class CONTENT_EXPORT RendererAudioOutputStreamFactoryContextImpl
       const media::AudioParameters& params,
       media::AudioOutputDelegate::EventHandler* handler) override;
 
+  static bool UseMojoFactories();
+
  private:
   // Used for hashing the device_id.
   const std::string salt_;
@@ -90,12 +116,12 @@ class CONTENT_EXPORT RendererAudioOutputStreamFactoryContextImpl
   // All streams requires ids for logging, so we keep a count for that.
   int next_stream_id_ = 0;
 
-  // The factories created by |this| is kept here, so that we can make sure they
-  // don't keep danging references to |this|.
-  mojo::StrongBindingSet<mojom::RendererAudioOutputStreamFactory> factories_;
-
   DISALLOW_COPY_AND_ASSIGN(RendererAudioOutputStreamFactoryContextImpl);
 };
+
+using UniqueAudioOutputStreamFactoryPtr =
+    std::unique_ptr<RendererAudioOutputStreamFactoryContextImpl::FactoryHandle,
+                    BrowserThread::DeleteOnIOThread>;
 
 }  // namespace content
 

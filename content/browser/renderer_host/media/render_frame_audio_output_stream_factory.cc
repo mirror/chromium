@@ -43,6 +43,9 @@ RenderFrameAudioOutputStreamFactory::RenderFrameAudioOutputStreamFactory(
       context_(context),
       weak_ptr_factory_(this) {
   DCHECK(context_);
+  // No thread-hostsile state has been initialized yet, so we don't have to bind
+  // to this specific thread.
+  thread_checker_.DetachFromThread();
 }
 
 RenderFrameAudioOutputStreamFactory::~RenderFrameAudioOutputStreamFactory() {

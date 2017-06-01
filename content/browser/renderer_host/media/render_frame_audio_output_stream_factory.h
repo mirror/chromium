@@ -19,7 +19,8 @@ namespace content {
 class RendererAudioOutputStreamFactoryContext;
 
 // Handles a RendererAudioOutputStreamFactory request for a render frame host,
-// using the provided RendererAudioOutputStreamFactoryContext.
+// using the provided RendererAudioOutputStreamFactoryContext. This class may
+// be constructed on any thread, but must be used on the IO thread after that.
 class CONTENT_EXPORT RenderFrameAudioOutputStreamFactory
     : public mojom::RendererAudioOutputStreamFactory {
  public:
