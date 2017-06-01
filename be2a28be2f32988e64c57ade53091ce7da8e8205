@@ -34,6 +34,24 @@
       "revId": "be2a28be2f32988e64c57ade53091ce7da8e8205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1fbcc4_f21b3b30",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-01T18:43:22Z",
+      "side": 1,
+      "message": "Ah got it, TIL about sets and \u0026\n\nI can\u0027t think of a way to make the code clearer, but you could add a comment to clarify (basically what you said above)",
+      "parentUuid": "48c8eecd_f9e240e2",
+      "revId": "be2a28be2f32988e64c57ade53091ce7da8e8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
