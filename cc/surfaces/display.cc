@@ -411,7 +411,7 @@ void Display::OnSurfaceDamaged(const SurfaceId& surface_id,
   if (scheduler_)
     scheduler_->SurfaceDamaged(surface_id, ack, *changed);
 
-  if (surface_id == current_surface_id_)
+  if (ack.has_damage && surface_id == current_surface_id_)
     UpdateRootSurfaceResourcesLocked();
 }
 
