@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "379f26ff_4e01b0f1",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-01T22:39:27Z",
+      "side": 1,
+      "message": "I think this section can also go away now that this is available on all Chrome-based platforms.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 3
+      },
+      "revId": "e23adc90906b3cb9de01c1309f68e4f03e0bb4d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
