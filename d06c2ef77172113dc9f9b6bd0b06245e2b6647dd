@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f3c114_fb60d772",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-01T20:44:15Z",
+      "side": 1,
+      "message": "Isn\u0027t the actual todo to support simple tab switching in VR and not need this exclusion at all?",
+      "range": {
+        "startLine": 1745,
+        "startChar": 20,
+        "endLine": 1745,
+        "endChar": 28
+      },
+      "revId": "d06c2ef77172113dc9f9b6bd0b06245e2b6647dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f59a90_e41e7f8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-01T20:44:15Z",
+      "side": 1,
+      "message": "FYI Custom Tabs can create multiple tabs as well, and the handleBackPressed there will close them (although a much smaller usecase most likely)",
+      "range": {
+        "startLine": 583,
+        "startChar": 36,
+        "endLine": 583,
+        "endChar": 45
+      },
+      "revId": "d06c2ef77172113dc9f9b6bd0b06245e2b6647dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef580d5_35e28baa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-01T20:44:15Z",
+      "side": 1,
+      "message": "Not that it is very likely, but you can have New Tab pages not at the root of the nav hierarchy.  I would do canGoBack \u003d mTab.canGoBack() here just to be a bit more cautious.",
+      "revId": "d06c2ef77172113dc9f9b6bd0b06245e2b6647dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
