@@ -644,6 +644,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
       GLenum internal_format,
       GLsizei width,
       GLsizei height);
+  bool RegenerateRenderbufferIfNeeded(Renderbuffer* renderbuffer);
 
   void BlitFramebufferHelper(GLint srcX0,
                              GLint srcY0,
@@ -5070,6 +5071,7 @@ bool GLES2DecoderImpl::ResizeOffscreenFramebuffer(const gfx::Size& size) {
   // Reallocate the offscreen target buffers.
   DCHECK(offscreen_target_color_format_);
   if (IsOffscreenBufferMultisampled()) {
+    // XXX?
     if (!offscreen_target_color_render_buffer_->AllocateStorage(
             feature_info_.get(), offscreen_size_,
             offscreen_target_color_format_, offscreen_target_samples_)) {
@@ -5086,6 +5088,7 @@ bool GLES2DecoderImpl::ResizeOffscreenFramebuffer(const gfx::Size& size) {
     }
   }
   if (offscreen_target_depth_format_ &&
+      // XXX?
       !offscreen_target_depth_render_buffer_->AllocateStorage(
           feature_info_.get(),
           offscreen_size_,
@@ -5096,6 +5099,7 @@ bool GLES2DecoderImpl::ResizeOffscreenFramebuffer(const gfx::Size& size) {
     return false;
   }
   if (offscreen_target_stencil_format_ &&
+      // XXX?
       !offscreen_target_stencil_render_buffer_->AllocateStorage(
           feature_info_.get(),
           offscreen_size_,
@@ -5782,6 +5786,7 @@ void GLES2DecoderImpl::DoBindFramebuffer(GLenum target, GLuint client_id) {
 }
 
 void GLES2DecoderImpl::DoBindRenderbuffer(GLenum target, GLuint client_id) {
+  DCHECK_EQ(target, (GLenum)GL_RENDERBUFFER);
   Renderbuffer* renderbuffer = NULL;
   GLuint service_id = 0;
   if (client_id != 0) {
@@ -8427,6 +8432,19 @@ void GLES2DecoderImpl::RenderbufferStorageMultisampleHelper(
   }
 }
 
+bool GLES2DecoderImpl::RegenerateRenderbufferIfNeeded(
+    Renderbuffer* renderbuffer) {
+  if (!workarounds().multisample_renderbuffer_resize_broken) {
+    return false;
+  }
+
+  if (!renderbuffer->RegenerateBackingObjectIfNeeded()) {
+    return false;
+  }
+
+  return true;
+}
+
 void GLES2DecoderImpl::BlitFramebufferHelper(GLint srcX0,
                                              GLint srcY0,
                                              GLint srcX1,
@@ -8507,7 +8525,11 @@ void GLES2DecoderImpl::DoRenderbufferStorageMultisampleCHROMIUM(
     return;
   }
 
+  if (RegenerateRenderbufferIfNeeded(state_.bound_renderbuffer.get())) {
+    state_.bound_renderbuffer_valid = false;
+  }
   EnsureRenderbufferBound();
+
   GLenum impl_format =
       renderbuffer_manager()->InternalRenderbufferFormatToImplFormat(
           internalformat);
@@ -8528,7 +8550,7 @@ void GLES2DecoderImpl::DoRenderbufferStorageMultisampleCHROMIUM(
       }
     }
 
-    // TODO(gman): If renderbuffers tracked which framebuffers they were
+    // XXX: If renderbuffers tracked which framebuffers they were
     // attached to we could just mark those framebuffers as not complete.
     framebuffer_manager()->IncFramebufferStateChangeCount();
     renderbuffer_manager()->SetInfo(
@@ -8553,7 +8575,11 @@ void GLES2DecoderImpl::DoRenderbufferStorageMultisampleEXT(
     return;
   }
 
+  if (RegenerateRenderbufferIfNeeded(state_.bound_renderbuffer.get())) {
+    state_.bound_renderbuffer_valid = false;
+  }
   EnsureRenderbufferBound();
+
   GLenum impl_format =
       renderbuffer_manager()->InternalRenderbufferFormatToImplFormat(
           internalformat);
@@ -8567,7 +8593,7 @@ void GLES2DecoderImpl::DoRenderbufferStorageMultisampleEXT(
   }
   GLenum error = LOCAL_PEEK_GL_ERROR("glRenderbufferStorageMultisampleEXT");
   if (error == GL_NO_ERROR) {
-    // TODO(gman): If renderbuffers tracked which framebuffers they were
+    // XXX: If renderbuffers tracked which framebuffers they were
     // attached to we could just mark those framebuffers as not complete.
     framebuffer_manager()->IncFramebufferStateChangeCount();
     renderbuffer_manager()->SetInfo(

@@ -15,6 +15,7 @@
 #include "base/trace_event/trace_event.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/service/feature_info.h"
+#include "gpu/command_buffer/service/framebuffer_manager.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
 #include "ui/gl/gl_implementation.h"
@@ -112,12 +113,61 @@ Renderbuffer::Renderbuffer(RenderbufferManager* manager,
       client_id_(client_id),
       service_id_(service_id),
       cleared_(true),
+      allocated_(false),
       has_been_bound_(false),
       samples_(0),
       internal_format_(GL_RGBA4),
       width_(0),
       height_(0) {
   manager_->StartTracking(this);
+}
+
+bool Renderbuffer::RegenerateBackingObjectIfNeeded() {
+  if (!allocated_ || !has_been_bound_) {
+    return false;
+  }
+
+  GLint original_fbo = 0;
+  glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &original_fbo);
+
+  // Detach old renderbuffer from all framebuffers
+  for (auto& point : framebuffer_attachment_points_) {
+    glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER, point.first->service_id());
+    glFramebufferRenderbufferEXT(GL_DRAW_FRAMEBUFFER, point.second,
+                                 GL_RENDERBUFFER, 0);
+    // Clear the framebuffer manager's attachment info
+    point.first->AttachRenderbufferImpl(point.second, nullptr);
+  }
+
+  glDeleteRenderbuffersEXT(1, &service_id_);
+  service_id_ = 0;
+  glGenRenderbuffersEXT(1, &service_id_);
+  glBindRenderbufferEXT(GL_RENDERBUFFER, service_id_);
+
+  // Attach new renderbuffer to all framebuffers
+  for (auto& point : framebuffer_attachment_points_) {
+    glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER, point.first->service_id());
+    glFramebufferRenderbufferEXT(GL_DRAW_FRAMEBUFFER, point.second,
+                                 GL_RENDERBUFFER, service_id_);
+    // Clear the framebuffer manager's attachment info
+    point.first->AttachRenderbufferImpl(point.second, this);
+  }
+
+  glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER, original_fbo);
+
+  allocated_ = false;
+  return true;
+}
+
+void Renderbuffer::AddFramebufferAttachmentPoint(Framebuffer* framebuffer,
+                                                 GLenum attachment) {
+  framebuffer_attachment_points_.insert(
+      std::make_pair(framebuffer, attachment));
+}
+
+void Renderbuffer::RemoveFramebufferAttachmentPoint(Framebuffer* framebuffer,
+                                                    GLenum attachment) {
+  framebuffer_attachment_points_.erase(std::make_pair(framebuffer, attachment));
 }
 
 Renderbuffer::~Renderbuffer() {
