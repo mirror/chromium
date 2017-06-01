@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "702c2b64_4efcafe4",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-01T15:12:52Z",
+      "side": 1,
+      "message": "Suggest adding some comments above these macros to explain what they\u0027re doing since not everyone is familiar with the ## syntax.",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff1ca92_d908b8ce",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-01T15:12:52Z",
+      "side": 1,
+      "message": "base_feature##ChoiceParam",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355f221b_d9382296",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-01T15:12:52Z",
+      "side": 1,
+      "message": "Maybe name this macro DEFINE_VARIATION_PARAM() to make it clear that it\u0027s defining something?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3a7b44_f47f78cf",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-01T15:12:52Z",
+      "side": 1,
+      "message": "Nit: Why does DataSaverPreview not have Feature as a suffix like the other ones?",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5533b84c_eaf35596",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-01T15:12:52Z",
+      "side": 1,
+      "message": "Maybe make this comment mention that this is for about_flags?",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f72668a0_a01c7c64",
         "filename": "components/feature_engagement_tracker/public/feature_list.h",
         "patchSetId": 3
@@ -13,6 +128,30 @@
       "writtenOn": "2017-06-01T00:55:07Z",
       "side": 1,
       "message": "asvitkine: Do you have any idea how I can declare this as a constant or something like that in the .cc file?",
+      "range": {
+        "startLine": 22,
+        "startChar": 33,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e08d7b_90749139",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-01T15:12:52Z",
+      "side": 1,
+      "message": "Well you can use arraysize(kIPHDemoModeChoiceVariations) - so you don\u0027t need a constant. But I guess I\u0027m not sure which specific problem you\u0027re trying to solve?",
+      "parentUuid": "f72668a0_a01c7c64",
       "range": {
         "startLine": 22,
         "startChar": 33,
