@@ -4,6 +4,7 @@
 
 #include "core/loader/WorkerFetchContext.h"
 
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
 #include "core/loader/MixedContentChecker.h"
@@ -14,7 +15,6 @@
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/scheduler/child/web_scheduler.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebMixedContent.h"
 #include "public/platform/WebMixedContentContextType.h"
 #include "public/platform/WebThread.h"
@@ -80,10 +80,8 @@ WorkerFetchContext::WorkerFetchContext(
     std::unique_ptr<WebWorkerFetchContext> web_context)
     : global_scope_(global_scope),
       web_context_(std::move(web_context)),
-      loading_task_runner_(Platform::Current()
-                               ->CurrentThread()
-                               ->Scheduler()
-                               ->LoadingTaskRunner()) {
+      loading_task_runner_(
+          TaskRunnerHelper::Get(TaskType::kUnspecedLoading, global_scope_)) {
   web_context_->InitializeOnWorkerThread(
       loading_task_runner_->ToSingleThreadTaskRunner());
 }
