@@ -22,6 +22,47 @@
       "revId": "fa23aaa8563ce1026cfe5b49312c369d92f91735",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c9b50b_7c6909b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/PaymentRequestSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-01T14:16:48Z",
+      "side": 1,
+      "message": "See line 1309.",
+      "parentUuid": "ff338467_b24f5071",
+      "range": {
+        "startLine": 820,
+        "startChar": 30,
+        "endLine": 820,
+        "endChar": 43
+      },
+      "revId": "fa23aaa8563ce1026cfe5b49312c369d92f91735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e65d01_56654f96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/PaymentRequestSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-01T14:16:48Z",
+      "side": 1,
+      "message": "The PaymentItem can be null here, for example.",
+      "revId": "fa23aaa8563ce1026cfe5b49312c369d92f91735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
