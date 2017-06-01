@@ -526,6 +526,16 @@ void FFmpegDemuxerStream::EnqueuePacket(ScopedAVPacket packet) {
 
   buffer->set_timestamp(stream_timestamp - start_time);
 
+  if (packet->flags & AV_PKT_FLAG_DISCARD) {
+    buffer->set_discard_padding(
+        std::make_pair(kInfiniteDuration, base::TimeDelta()));
+    if (buffer->timestamp() < base::TimeDelta()) {
+      buffer->set_timestamp(last_packet_timestamp_ == kNoTimestamp
+                                ? base::TimeDelta()
+                                : last_packet_timestamp_);
+    }
+  }
+
   // Only allow negative timestamps past if we know they'll be fixed up by the
   // code paths below; otherwise they should be treated as a parse error.
   if ((!fixup_negative_timestamps_ || last_packet_timestamp_ == kNoTimestamp) &&
