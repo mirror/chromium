@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69d9aa6e_3a94e259",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T20:56:19Z",
+      "side": 1,
+      "message": "It will be empty if the view was deleted after it was stored.",
+      "parentUuid": "cbe2fd86_2050522c",
+      "range": {
+        "startLine": 436,
+        "startChar": 6,
+        "endLine": 436,
+        "endChar": 35
+      },
+      "revId": "4aba27cc3025b6a9e1f25d24d1f1950eed5c44aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62bd0532_95a8738b",
         "filename": "ui/views/focus/focus_manager.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "70bebbe9_3470d2e2",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T20:56:19Z",
+      "side": 1,
+      "message": "Right you are! I\u0027ll send you a patch to clean this up.",
+      "parentUuid": "62bd0532_95a8738b",
+      "range": {
+        "startLine": 564,
+        "startChar": 57,
+        "endLine": 564,
+        "endChar": 58
+      },
+      "revId": "4aba27cc3025b6a9e1f25d24d1f1950eed5c44aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2657198_21efc135",
         "filename": "ui/views/focus/focus_manager.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-01T17:56:23Z",
       "side": 1,
       "message": "nit: did you mean to complete the trailing sentence, or just have it lead into the code?",
+      "range": {
+        "startLine": 566,
+        "startChar": 48,
+        "endLine": 566,
+        "endChar": 53
+      },
+      "revId": "4aba27cc3025b6a9e1f25d24d1f1950eed5c44aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e06a90c_f9c15712",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T20:56:19Z",
+      "side": 1,
+      "message": "Oops! I\u0027m going to nuke this comment entirely. New patch coming up.",
+      "parentUuid": "b2657198_21efc135",
       "range": {
         "startLine": 566,
         "startChar": 48,
