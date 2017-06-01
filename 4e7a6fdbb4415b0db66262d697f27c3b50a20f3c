@@ -22,6 +22,30 @@
       "revId": "4e7a6fdbb4415b0db66262d697f27c3b50a20f3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20fcc12a_95978b41",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-01T14:57:35Z",
+      "side": 1,
+      "message": "LOL. You know, I have to keep myself employed :P\nfixed",
+      "parentUuid": "cebd332f_0c636c8d",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "4e7a6fdbb4415b0db66262d697f27c3b50a20f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
