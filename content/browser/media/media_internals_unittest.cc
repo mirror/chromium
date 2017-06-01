@@ -357,6 +357,8 @@ class MediaInternalsWatchTimeTest : public testing::Test,
         has_audio, has_video, is_mse, is_encrypted, true, media_log_.get(),
         gfx::Size(800, 600),
         base::Bind(&MediaInternalsWatchTimeTest::GetCurrentMediaTime,
+                   base::Unretained(this)),
+        base::Bind(&MediaInternalsWatchTimeTest::HasNativeControls,
                    base::Unretained(this))));
     wtr_->set_reporting_interval_for_testing();
   }
@@ -396,6 +398,7 @@ class MediaInternalsWatchTimeTest : public testing::Test,
   }
 
   MOCK_METHOD0(GetCurrentMediaTime, base::TimeDelta());
+  MOCK_METHOD0(HasNativeControls, bool());
 
  protected:
   const int render_process_id_;
@@ -417,6 +420,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicAudio) {
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillRepeatedly(testing::Return(kWatchTimeLate));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, false, true, true);
   wtr_->OnPlaying();
 
@@ -431,11 +435,12 @@ TEST_F(MediaInternalsWatchTimeTest, BasicAudio) {
   ExpectWatchTime(
       {media::MediaLog::kWatchTimeAudioAll, media::MediaLog::kWatchTimeAudioMse,
        media::MediaLog::kWatchTimeAudioEme, media::MediaLog::kWatchTimeAudioAc,
+       media::MediaLog::kWatchTimeAudioCustomControls,
        media::MediaLog::kWatchTimeAudioEmbeddedExperience},
       kWatchTimeLate);
 
   ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 4, kWatchTimeLate);
+  ExpectUkmWatchTime(0, 5, kWatchTimeLate);
   EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
@@ -446,6 +451,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicVideo) {
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillRepeatedly(testing::Return(kWatchTimeLate));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, false, true);
   wtr_->OnPlaying();
 
@@ -461,11 +467,12 @@ TEST_F(MediaInternalsWatchTimeTest, BasicVideo) {
                    media::MediaLog::kWatchTimeAudioVideoSrc,
                    media::MediaLog::kWatchTimeAudioVideoEme,
                    media::MediaLog::kWatchTimeAudioVideoAc,
+                   media::MediaLog::kWatchTimeAudioVideoCustomControls,
                    media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience},
                   kWatchTimeLate);
 
   ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 4, kWatchTimeLate);
+  ExpectUkmWatchTime(0, 5, kWatchTimeLate);
   EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
@@ -479,6 +486,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicPower) {
       .WillOnce(testing::Return(kWatchTime2))
       .WillOnce(testing::Return(kWatchTime2))
       .WillRepeatedly(testing::Return(kWatchTime3));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
 
   Initialize(true, true, false, true);
   wtr_->OnPlaying();
@@ -504,6 +512,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicPower) {
       media::MediaLog::kWatchTimeAudioVideoAll,
       media::MediaLog::kWatchTimeAudioVideoSrc,
       media::MediaLog::kWatchTimeAudioVideoEme,
+      media::MediaLog::kWatchTimeAudioVideoCustomControls,
       media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience};
 
   for (auto key : watch_time_keys_) {
@@ -535,8 +544,116 @@ TEST_F(MediaInternalsWatchTimeTest, BasicPower) {
   // Spot check one of the non-AC keys; this relies on the assumption that the
   // AC metric is not last.
   const auto& metrics_vector = test_recorder_->GetEntry(1)->metrics;
-  ASSERT_EQ(4U, metrics_vector.size());
+  ASSERT_EQ(5U, metrics_vector.size());
+}
+
+TEST_F(MediaInternalsWatchTimeTest, BasicControls) {
+  constexpr base::TimeDelta kWatchTime1 = base::TimeDelta::FromSeconds(5);
+  constexpr base::TimeDelta kWatchTime2 = base::TimeDelta::FromSeconds(10);
+  constexpr base::TimeDelta kWatchTime3 = base::TimeDelta::FromSeconds(30);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTime1))
+      .WillOnce(testing::Return(kWatchTime2))
+      .WillOnce(testing::Return(kWatchTime2))
+      .WillRepeatedly(testing::Return(kWatchTime3));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(true));
+
+  Initialize(true, true, false, true);
+  wtr_->OnPlaying();
+
+  // No log should have been generated yet since the message loop has not had
+  // any chance to pump.
+  CycleWatchTimeReporter();
+  ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
+
+  CycleWatchTimeReporter();
+
+  // Transition back to custom controls, this should generate controls watch
+  // time as well.
+  wtr_->OnNativeControlsEnabled(false);
+  CycleWatchTimeReporter();
+
+  // This should finalize the power watch time on native controls.
+  ExpectWatchTime({media::MediaLog::kWatchTimeAudioVideoNativeControls},
+                  kWatchTime2);
+  ResetHistogramTester();
+  wtr_.reset();
+
+  std::vector<base::StringPiece> normal_keys = {
+      media::MediaLog::kWatchTimeAudioVideoAll,
+      media::MediaLog::kWatchTimeAudioVideoSrc,
+      media::MediaLog::kWatchTimeAudioVideoEme,
+      media::MediaLog::kWatchTimeAudioVideoAc,
+      media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience};
+
+  for (auto key : watch_time_keys_) {
+    if (key == media::MediaLog::kWatchTimeAudioVideoCustomControls) {
+      histogram_tester_->ExpectUniqueSample(
+          key.as_string(), (kWatchTime3 - kWatchTime2).InMilliseconds(), 1);
+      continue;
+    }
+
+    auto it = std::find(normal_keys.begin(), normal_keys.end(), key);
+    if (it == normal_keys.end()) {
+      histogram_tester_->ExpectTotalCount(key.as_string(), 0);
+    } else {
+      histogram_tester_->ExpectUniqueSample(key.as_string(),
+                                            kWatchTime3.InMilliseconds(), 1);
+    }
+  }
+
+  // Each finalize creates a new source and entry. We don't check the URL here
+  // since the TestUkmService() helpers DCHECK() a unique URL per source.
+  ASSERT_EQ(2U, test_recorder_->sources_count());
+  ASSERT_EQ(2U, test_recorder_->entries_count());
+  ExpectUkmWatchTime(0, 1, kWatchTime2);
+
+  // Verify Media.WatchTime keys are properly stripped for UKM reporting.
+  EXPECT_TRUE(test_recorder_->FindMetric(test_recorder_->GetEntry(0),
+                                         "AudioVideo.NativeControls"));
+
+  // Spot check one of the non-AC keys; this relies on the assumption that the
+  // AC metric is not last.
+  const auto& metrics_vector = test_recorder_->GetEntry(1)->metrics;
+  ASSERT_EQ(5U, metrics_vector.size());
   EXPECT_EQ(kWatchTime3.InMilliseconds(), metrics_vector.back()->value);
+}
+
+TEST_F(MediaInternalsWatchTimeTest, PowerControlsFinalize) {
+  constexpr base::TimeDelta kWatchTime1 = base::TimeDelta::FromSeconds(5);
+  constexpr base::TimeDelta kWatchTime2 = base::TimeDelta::FromSeconds(10);
+  constexpr base::TimeDelta kWatchTime3 = base::TimeDelta::FromSeconds(30);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(kWatchTime1))
+      .WillOnce(testing::Return(kWatchTime1))
+      .WillOnce(testing::Return(kWatchTime2))
+      .WillOnce(testing::Return(kWatchTime2))
+      .WillRepeatedly(testing::Return(kWatchTime3));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
+
+  Initialize(true, true, false, true);
+  wtr_->OnPlaying();
+
+  // No log should have been generated yet since the message loop has not had
+  // any chance to pump.
+  CycleWatchTimeReporter();
+  ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
+
+  CycleWatchTimeReporter();
+
+  // Transition controls and power.
+  wtr_->OnNativeControlsEnabled(true);
+  wtr_->OnPowerStateChangeForTesting(true);
+  CycleWatchTimeReporter();
+
+  // This should finalize the power and controls watch times.
+  ExpectWatchTime({media::MediaLog::kWatchTimeAudioVideoCustomControls,
+                   media::MediaLog::kWatchTimeAudioVideoAc},
+                  kWatchTime2);
+  ResetHistogramTester();
+  wtr_.reset();
 }
 
 TEST_F(MediaInternalsWatchTimeTest, BasicHidden) {
@@ -546,6 +663,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicHidden) {
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillRepeatedly(testing::Return(kWatchTimeLate));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, false, true);
   wtr_->OnHidden();
   wtr_->OnPlaying();
@@ -563,11 +681,12 @@ TEST_F(MediaInternalsWatchTimeTest, BasicHidden) {
        media::MediaLog::kWatchTimeAudioVideoBackgroundSrc,
        media::MediaLog::kWatchTimeAudioVideoBackgroundEme,
        media::MediaLog::kWatchTimeAudioVideoBackgroundAc,
+       media::MediaLog::kWatchTimeAudioVideoBackgroundCustomControls,
        media::MediaLog::kWatchTimeAudioVideoBackgroundEmbeddedExperience},
       kWatchTimeLate);
 
   ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 4, kWatchTimeLate);
+  ExpectUkmWatchTime(0, 5, kWatchTimeLate);
   EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
@@ -578,6 +697,7 @@ TEST_F(MediaInternalsWatchTimeTest, PlayerDestructionFinalizes) {
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillRepeatedly(testing::Return(kWatchTimeLate));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, false, true);
   wtr_->OnPlaying();
 
@@ -595,11 +715,12 @@ TEST_F(MediaInternalsWatchTimeTest, PlayerDestructionFinalizes) {
                    media::MediaLog::kWatchTimeAudioVideoSrc,
                    media::MediaLog::kWatchTimeAudioVideoEme,
                    media::MediaLog::kWatchTimeAudioVideoAc,
+                   media::MediaLog::kWatchTimeAudioVideoCustomControls,
                    media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience},
                   kWatchTimeLate);
 
   ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 4, kWatchTimeLate);
+  ExpectUkmWatchTime(0, 5, kWatchTimeLate);
   EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
@@ -610,6 +731,7 @@ TEST_F(MediaInternalsWatchTimeTest, ProcessDestructionFinalizes) {
       .WillOnce(testing::Return(base::TimeDelta()))
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillRepeatedly(testing::Return(kWatchTimeLate));
+  EXPECT_CALL(*this, HasNativeControls()).WillOnce(testing::Return(false));
   Initialize(true, true, false, true);
   wtr_->OnPlaying();
 
@@ -627,6 +749,7 @@ TEST_F(MediaInternalsWatchTimeTest, ProcessDestructionFinalizes) {
                    media::MediaLog::kWatchTimeAudioVideoSrc,
                    media::MediaLog::kWatchTimeAudioVideoEme,
                    media::MediaLog::kWatchTimeAudioVideoAc,
+                   media::MediaLog::kWatchTimeAudioVideoCustomControls,
                    media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience},
                   kWatchTimeLate);
 }

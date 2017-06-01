@@ -31,6 +31,10 @@ const char MediaLog::kWatchTimeAudioVideoBattery[] =
 const char MediaLog::kWatchTimeAudioVideoAc[] = "Media.WatchTime.AudioVideo.AC";
 const char MediaLog::kWatchTimeAudioVideoEmbeddedExperience[] =
     "Media.WatchTime.AudioVideo.EmbeddedExperience";
+const char MediaLog::kWatchTimeAudioVideoNativeControls[] =
+    "Media.WatchTime.AudioVideo.NativeControls";
+const char MediaLog::kWatchTimeAudioVideoCustomControls[] =
+    "Media.WatchTime.AudioVideo.CustomControls";
 
 // Audio only "watch time" metrics.
 const char MediaLog::kWatchTimeAudioAll[] = "Media.WatchTime.Audio.All";
@@ -41,6 +45,10 @@ const char MediaLog::kWatchTimeAudioBattery[] = "Media.WatchTime.Audio.Battery";
 const char MediaLog::kWatchTimeAudioAc[] = "Media.WatchTime.Audio.AC";
 const char MediaLog::kWatchTimeAudioEmbeddedExperience[] =
     "Media.WatchTime.Audio.EmbeddedExperience";
+const char MediaLog::kWatchTimeAudioNativeControls[] =
+    "Media.WatchTime.Audio.NativeControls";
+const char MediaLog::kWatchTimeAudioCustomControls[] =
+    "Media.WatchTime.Audio.CustomControls";
 
 // Audio+video background watch time metrics.
 const char MediaLog::kWatchTimeAudioVideoBackgroundAll[] =
@@ -57,9 +65,14 @@ const char MediaLog::kWatchTimeAudioVideoBackgroundAc[] =
     "Media.WatchTime.AudioVideo.Background.AC";
 const char MediaLog::kWatchTimeAudioVideoBackgroundEmbeddedExperience[] =
     "Media.WatchTime.AudioVideo.Background.EmbeddedExperience";
+const char MediaLog::kWatchTimeAudioVideoBackgroundNativeControls[] =
+    "Media.WatchTime.AudioVideo.Background.NativeControls";
+const char MediaLog::kWatchTimeAudioVideoBackgroundCustomControls[] =
+    "Media.WatchTime.AudioVideo.Background.CustomControls";
 
 const char MediaLog::kWatchTimeFinalize[] = "FinalizeWatchTime";
 const char MediaLog::kWatchTimeFinalizePower[] = "FinalizePowerWatchTime";
+const char MediaLog::kWatchTimeFinalizeControls[] = "FinalizeControlsWatchTime";
 
 base::flat_set<base::StringPiece> MediaLog::GetWatchTimeKeys() {
   return base::flat_set<base::StringPiece>(
@@ -70,6 +83,8 @@ base::flat_set<base::StringPiece> MediaLog::GetWatchTimeKeys() {
        kWatchTimeAudioBattery,
        kWatchTimeAudioAc,
        kWatchTimeAudioEmbeddedExperience,
+       kWatchTimeAudioNativeControls,
+       kWatchTimeAudioCustomControls,
        kWatchTimeAudioVideoAll,
        kWatchTimeAudioVideoMse,
        kWatchTimeAudioVideoEme,
@@ -77,13 +92,17 @@ base::flat_set<base::StringPiece> MediaLog::GetWatchTimeKeys() {
        kWatchTimeAudioVideoBattery,
        kWatchTimeAudioVideoAc,
        kWatchTimeAudioVideoEmbeddedExperience,
+       kWatchTimeAudioVideoNativeControls,
+       kWatchTimeAudioVideoCustomControls,
        kWatchTimeAudioVideoBackgroundAll,
        kWatchTimeAudioVideoBackgroundMse,
        kWatchTimeAudioVideoBackgroundEme,
        kWatchTimeAudioVideoBackgroundSrc,
        kWatchTimeAudioVideoBackgroundBattery,
        kWatchTimeAudioVideoBackgroundAc,
-       kWatchTimeAudioVideoBackgroundEmbeddedExperience},
+       kWatchTimeAudioVideoBackgroundEmbeddedExperience,
+       kWatchTimeAudioVideoBackgroundNativeControls,
+       kWatchTimeAudioVideoBackgroundCustomControls},
       base::KEEP_FIRST_OF_DUPES);
 }
 
@@ -92,6 +111,15 @@ base::flat_set<base::StringPiece> MediaLog::GetWatchTimePowerKeys() {
       {kWatchTimeAudioBattery, kWatchTimeAudioAc, kWatchTimeAudioVideoBattery,
        kWatchTimeAudioVideoAc, kWatchTimeAudioVideoBackgroundBattery,
        kWatchTimeAudioVideoBackgroundAc},
+      base::KEEP_FIRST_OF_DUPES);
+}
+
+base::flat_set<base::StringPiece> MediaLog::GetWatchTimeControlsKeys() {
+  return base::flat_set<base::StringPiece>(
+      {kWatchTimeAudioCustomControls, kWatchTimeAudioNativeControls,
+       kWatchTimeAudioVideoCustomControls, kWatchTimeAudioVideoNativeControls,
+       kWatchTimeAudioVideoBackgroundCustomControls,
+       kWatchTimeAudioVideoBackgroundNativeControls},
       base::KEEP_FIRST_OF_DUPES);
 }
 
