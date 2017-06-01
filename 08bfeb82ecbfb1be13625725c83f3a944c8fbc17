@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4f9ebde_1bd41bc2",
+        "filename": "third_party/WebKit/Source/core/loader/WorkerFetchContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-01T05:38:57Z",
+      "side": 1,
+      "message": "Maybe we want a slightly better comment for landing... (maybe, just add a TODO to add ResourceTiming API support once it\u0027s spec\u0027ed or something like that)",
+      "revId": "08bfeb82ecbfb1be13625725c83f3a944c8fbc17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e800b13e_b3727966",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-01T05:38:57Z",
+      "side": 1,
+      "message": "nit: maybe add a comment in WorkerClients to note that it\u0027s used in general for both Workers and Worklets (I assume we\u0027re fine with the naming)",
+      "revId": "08bfeb82ecbfb1be13625725c83f3a944c8fbc17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
