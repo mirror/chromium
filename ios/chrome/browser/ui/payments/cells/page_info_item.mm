@@ -153,8 +153,8 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
       [_pageFaviconView.centerYAnchor
           constraintEqualToAnchor:self.contentView.centerYAnchor],
       [_pageFaviconView.heightAnchor
-          constraintEqualToAnchor:self.contentView.heightAnchor
-                         constant:-(2 * kVerticalPadding)],
+          constraintLessThanOrEqualToAnchor:self.contentView.heightAnchor
+                                   constant:-(2 * kVerticalPadding)],
       [_pageFaviconView.widthAnchor
           constraintEqualToAnchor:_pageFaviconView.heightAnchor],
 
@@ -165,7 +165,7 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
           constraintEqualToAnchor:_pageTitleLabel.leadingAnchor
                          constant:-kLockIndicatorHorizontalPadding],
       [_pageLockIndicatorView.bottomAnchor
-          constraintEqualToAnchor:_pageFaviconView.bottomAnchor
+          constraintEqualToAnchor:_pageHostLabel.bottomAnchor
                          constant:kLockIndicatorVerticalPadding],
 
       [_pageTitleLabel.trailingAnchor
@@ -174,15 +174,23 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
       [_pageHostLabel.trailingAnchor
           constraintEqualToAnchor:_pageTitleLabel.trailingAnchor],
 
+      [_pageTitleLabel.topAnchor
+          constraintEqualToAnchor:self.contentView.topAnchor
+                         constant:kVerticalPadding],
+      [_pageHostLabel.bottomAnchor
+          constraintEqualToAnchor:self.contentView.bottomAnchor
+                         constant:-kVerticalPadding],
+
       // UILabel leaves some empty space above the height of capital letters. In
-      // order to align the tops of the letters with the top of the favicon,
-      // anchor the bottom of the label to the top of the favicon plus
+      // order to align the top of the favicon with the tops of the letters,
+      // anchor the top of the favicon to the bottom of the title label plus
       // pointSize (which describes the actual height of the letters).
-      [_pageTitleLabel.bottomAnchor
-          constraintEqualToAnchor:_pageFaviconView.topAnchor
-                         constant:_pageTitleLabel.font.pointSize],
-      [_pageHostLabel.firstBaselineAnchor
-          constraintEqualToAnchor:_pageFaviconView.bottomAnchor],
+      [_pageFaviconView.topAnchor
+          constraintEqualToAnchor:_pageTitleLabel.bottomAnchor
+                         constant:-_pageTitleLabel.font.pointSize],
+      [_pageFaviconView.bottomAnchor
+          constraintEqualToAnchor:_pageHostLabel.firstBaselineAnchor],
+
     ]];
   }
   return self;
