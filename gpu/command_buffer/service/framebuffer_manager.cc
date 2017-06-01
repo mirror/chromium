@@ -980,6 +980,17 @@ void Framebuffer::DoUnbindGLAttachmentsForWorkaround(GLenum target) {
 
 void Framebuffer::AttachRenderbuffer(
     GLenum attachment, Renderbuffer* renderbuffer) {
+  if (renderbuffer) {
+    if (const Attachment* a = GetAttachment(attachment)) {
+      renderbuffer->RemoveFramebufferAttachmentPoint(this, attachment);
+    }
+    renderbuffer->AddFramebufferAttachmentPoint(this, attachment);
+  }
+  AttachRenderbufferImpl(attachment, renderbuffer);
+}
+
+void Framebuffer::AttachRenderbufferImpl(GLenum attachment,
+                                         Renderbuffer* renderbuffer) {
   DCHECK(attachment != GL_DEPTH_STENCIL_ATTACHMENT);
   const Attachment* a = GetAttachment(attachment);
   if (a)
