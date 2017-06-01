@@ -1648,8 +1648,8 @@ void LocalFrameView::ViewportSizeChanged(bool width_changed,
     }
   }
 
-  if (frame_->IsMainFrame())
-    frame_->GetPage()->GlobalRootScrollerController().DidResizeViewport();
+  if (GetFrame().GetDocument())
+    GetFrame().GetDocument()->GetRootScrollerController().DidResizeFrameView();
 
   ShowOverlayScrollbars();
 
@@ -1992,6 +1992,15 @@ void LocalFrameView::SetLayoutSize(const IntSize& size) {
   DCHECK(!LayoutSizeFixedToFrameSize());
 
   SetLayoutSizeInternal(size);
+}
+
+void LocalFrameView::SetLayoutSizeFixedToFrameSize(bool is_fixed) {
+  if (layout_size_fixed_to_frame_size_ == is_fixed)
+    return;
+
+  layout_size_fixed_to_frame_size_ = is_fixed;
+  if (is_fixed)
+    SetLayoutSizeInternal(Size());
 }
 
 void LocalFrameView::DidScrollTimerFired(TimerBase*) {
