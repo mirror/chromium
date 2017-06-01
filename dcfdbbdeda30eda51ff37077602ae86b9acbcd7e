@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b6ffa6_4955ad08",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T19:46:59Z",
+      "side": 1,
+      "message": "Maybe just have a constructor that takes the URL?",
+      "range": {
+        "startLine": 267,
+        "startChar": 33,
+        "endLine": 267,
+        "endChar": 44
+      },
+      "revId": "dcfdbbdeda30eda51ff37077602ae86b9acbcd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec5b3a1_528c16f7",
+        "filename": "content/public/browser/download_item.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T19:46:59Z",
+      "side": 1,
+      "message": "const\u0026 for all of these?",
+      "range": {
+        "startLine": 9,
+        "startChar": 39,
+        "endLine": 9,
+        "endChar": 67
+      },
+      "revId": "dcfdbbdeda30eda51ff37077602ae86b9acbcd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6bea7c_9b7af324",
+        "filename": "content/public/browser/download_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T19:46:59Z",
+      "side": 1,
+      "message": "const \u0026?",
+      "range": {
+        "startLine": 184,
+        "startChar": 15,
+        "endLine": 184,
+        "endChar": 26
+      },
+      "revId": "dcfdbbdeda30eda51ff37077602ae86b9acbcd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
