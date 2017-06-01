@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
+#include "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
@@ -31,7 +32,9 @@ PrefetchService* PrefetchServiceFactory::GetForBrowserContext(
 
 KeyedService* PrefetchServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  return new PrefetchServiceImpl(base::MakeUnique<PrefetchGCMAppHandler>());
+  return new PrefetchServiceImpl(base::MakeUnique<PrefetchGCMAppHandler>(
+      base::MakeUnique<PrefetchInstanceIDProxy>(kPrefetchingOfflinePagesAppId,
+                                                context)));
 }
 
 }  // namespace offline_pages

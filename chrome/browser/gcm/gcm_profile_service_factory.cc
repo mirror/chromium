@@ -28,6 +28,7 @@
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
 #include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
+#include "components/gcm_driver/gcm_driver.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #endif
