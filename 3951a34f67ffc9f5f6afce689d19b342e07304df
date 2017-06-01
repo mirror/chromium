@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f898e3b_381ff14b",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T13:46:00Z",
+      "side": 1,
+      "message": "I went with this route because it makes the remove case easier and minimizes memory.",
+      "parentUuid": "d4b8680b_c0630556",
+      "range": {
+        "startLine": 426,
+        "startChar": 2,
+        "endLine": 426,
+        "endChar": 31
+      },
+      "revId": "3951a34f67ffc9f5f6afce689d19b342e07304df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "415d5327_d6de6399",
         "filename": "ui/views/focus/focus_manager.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8f2a020e_a3310a38",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T13:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "415d5327_d6de6399",
+      "range": {
+        "startLine": 435,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 8
+      },
+      "revId": "3951a34f67ffc9f5f6afce689d19b342e07304df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ce0b6de_56793700",
         "filename": "ui/views/focus/focus_manager.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-01T00:19:52Z",
       "side": 1,
       "message": "nit: maybe just say \"Also clear the stored focus view as needed.\" optionally adding something like \"The current |focused_view_| is sometimes also set as the stored focus view.\" (otherwise, this could be misinterpreted as saying \"|focused_view_| should *not* also be the stored focus view\", but that is allowed, right?)",
+      "range": {
+        "startLine": 561,
+        "startChar": 5,
+        "endLine": 561,
+        "endChar": 19
+      },
+      "revId": "3951a34f67ffc9f5f6afce689d19b342e07304df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a640c907_7d0bbb86",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T13:46:00Z",
+      "side": 1,
+      "message": "I changed this around. It\u0027s actually rather subtle why this is needed and my comment didn\u0027t quite convey that.",
+      "parentUuid": "9ce0b6de_56793700",
       "range": {
         "startLine": 561,
         "startChar": 5,
