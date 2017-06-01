@@ -93,6 +93,8 @@ DEFINE_TRACE(CustomElementRegistry) {
 
 DEFINE_TRACE_WRAPPERS(CustomElementRegistry) {
   visitor->TraceWrappers(&CustomElementReactionStack::Current());
+  for (auto definition : definitions_.Values())
+    visitor->TraceWrappers(definition);
 }
 
 CustomElementDefinition* CustomElementRegistry::define(
