@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/mac/foundation_util.h"
 #include "base/mac/mac_util.h"
 #import "base/mac/scoped_nsobject.h"
 #import "base/mac/sdk_forward_declarations.h"
@@ -33,6 +32,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/vector_icons.h"
 #include "content/public/browser/web_contents.h"
+#import "ui/base/cocoa/touch_bar_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/gfx/color_palette.h"
@@ -107,12 +107,6 @@ NSButton* CreateTouchBarButton(const gfx::VectorIcon& icon,
   button.tag = command;
   [button setAccessibilityLabel:l10n_util::GetNSString(tooltip_id)];
   return button;
-}
-
-NSString* GetTouchBarId(NSString* touch_bar_id) {
-  NSString* chrome_bundle_id =
-      base::SysUTF8ToNSString(base::mac::BaseBundleID());
-  return [NSString stringWithFormat:@"%@.%@", chrome_bundle_id, touch_bar_id];
 }
 
 TouchBarAction TouchBarActionFromCommand(int command) {
@@ -196,12 +190,6 @@ class HomePrefNotificationBridge {
 @synthesize isPageLoading = isPageLoading_;
 @synthesize isStarred = isStarred_;
 
-+ (NSString*)identifierForTouchBarId:(NSString*)touchBarId
-                              itemId:(NSString*)itemId {
-  return
-      [NSString stringWithFormat:@"%@-%@", GetTouchBarId(touchBarId), itemId];
-}
-
 - (instancetype)initWithBrowser:(Browser*)browser
         browserWindowController:(BrowserWindowController*)bwc {
   if ((self = [self init])) {
@@ -233,7 +221,8 @@ class HomePrefNotificationBridge {
 
   base::scoped_nsobject<NSTouchBar> touchBar(
       [[NSClassFromString(@"NSTouchBar") alloc] init]);
-  [touchBar setCustomizationIdentifier:GetTouchBarId(kBrowserWindowTouchBarId)];
+  [touchBar setCustomizationIdentifier:ui::CreateTouchBarId(
+                                           kBrowserWindowTouchBarId)];
   [touchBar setDelegate:self];
 
   NSMutableArray* customIdentifiers = [NSMutableArray arrayWithCapacity:7];
@@ -246,8 +235,7 @@ class HomePrefNotificationBridge {
 
   for (NSString* item in touchBarItems) {
     NSString* itemIdentifier =
-        [BrowserWindowTouchBar identifierForTouchBarId:kBrowserWindowTouchBarId
-                                                itemId:item];
+        ui::CreateTouchBarItemId(kBrowserWindowTouchBarId, item);
     [customIdentifiers addObject:itemIdentifier];
 
     // Don't add the home button if it's not shown in the toolbar.
@@ -348,15 +336,12 @@ class HomePrefNotificationBridge {
 
   if ([touchBar respondsToSelector:
       @selector(setEscapeKeyReplacementItemIdentifier:)]) {
-    NSString* exitIdentifier =
-        [BrowserWindowTouchBar identifierForTouchBarId:kTabFullscreenTouchBarId
-                                                itemId:kExitFullscreenTouchId];
+    NSString* exitIdentifier = ui::CreateTouchBarItemId(
+        kTabFullscreenTouchBarId, kExitFullscreenTouchId);
     [touchBar setEscapeKeyReplacementItemIdentifier:exitIdentifier];
-    [touchBar setDefaultItemIdentifiers:@[
-      [BrowserWindowTouchBar
-          identifierForTouchBarId:kTabFullscreenTouchBarId
-                           itemId:kFullscreenOriginLabelTouchId]
-    ]];
+    [touchBar setDefaultItemIdentifiers:@[ ui::CreateTouchBarItemId(
+                                            kTabFullscreenTouchBarId,
+                                            kFullscreenOriginLabelTouchId) ]];
 
     base::scoped_nsobject<NSCustomTouchBarItem> touchBarItem(
         [[NSClassFromString(@"NSCustomTouchBarItem") alloc]
