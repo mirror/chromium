@@ -12796,7 +12796,6 @@ TEST_F(HttpNetworkTransactionTest, ProxyGet) {
   EXPECT_TRUE(response->headers->IsKeepAlive());
   EXPECT_EQ(200, response->headers->response_code());
   EXPECT_EQ(100, response->headers->GetContentLength());
-  EXPECT_TRUE(response->was_fetched_via_proxy);
   EXPECT_EQ(ProxyServer(ProxyServer::SCHEME_HTTP,
                         HostPortPair::FromString("myproxy:70")),
             response->proxy_server);
@@ -12879,7 +12878,6 @@ TEST_F(HttpNetworkTransactionTest, ProxyTunnelGet) {
   EXPECT_EQ(200, response->headers->response_code());
   EXPECT_EQ(100, response->headers->GetContentLength());
   EXPECT_TRUE(HttpVersion(1, 1) == response->headers->GetHttpVersion());
-  EXPECT_TRUE(response->was_fetched_via_proxy);
   EXPECT_EQ(ProxyServer(ProxyServer::SCHEME_HTTP,
                         HostPortPair::FromString("myproxy:70")),
             response->proxy_server);
@@ -12958,7 +12956,6 @@ TEST_F(HttpNetworkTransactionTest, ProxyTunnelGetIPv6) {
   EXPECT_EQ(200, response->headers->response_code());
   EXPECT_EQ(100, response->headers->GetContentLength());
   EXPECT_TRUE(HttpVersion(1, 1) == response->headers->GetHttpVersion());
-  EXPECT_TRUE(response->was_fetched_via_proxy);
   EXPECT_EQ(ProxyServer(ProxyServer::SCHEME_HTTP,
                         HostPortPair::FromString("myproxy:70")),
             response->proxy_server);
