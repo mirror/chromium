@@ -1137,6 +1137,10 @@ void LocalFrameView::UpdateLayout() {
   DCHECK_EQ(frame_->View(), this);
   DCHECK(frame_->GetPage());
 
+  RuntimeCallTimerScope scope(
+      RuntimeCallStats::From(V8PerIsolateData::MainThreadIsolate()),
+      RuntimeCallStats::CounterId::kUpdateLayout);
+
   ScriptForbiddenScope forbid_script;
 
   if (IsInPerformLayout() || ShouldThrottleRendering() ||
