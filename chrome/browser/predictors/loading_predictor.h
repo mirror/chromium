@@ -17,6 +17,7 @@ class Profile;
 namespace predictors {
 
 class ResourcePrefetchPredictor;
+class GlowplugStatsCollector;
 
 // Entry point for the Loading predictor.
 // From a high-level request (GURL and motivation) and a database of historical
@@ -50,6 +51,7 @@ class LoadingPredictor : public KeyedService,
 
  private:
   std::unique_ptr<ResourcePrefetchPredictor> resource_prefetch_predictor_;
+  std::unique_ptr<GlowplugStatsCollector> stats_collector_;
 
   DISALLOW_COPY_AND_ASSIGN(LoadingPredictor);
 };

@@ -977,6 +977,8 @@ split_static_library("browser") {
     "predictors/glowplug_key_value_data.h",
     "predictors/glowplug_key_value_table.cc",
     "predictors/glowplug_key_value_table.h",
+    "predictors/glowplug_stats_collector.cc",
+    "predictors/glowplug_stats_collector.h",
     "predictors/loading_predictor.cc",
     "predictors/loading_predictor.h",
     "predictors/loading_predictor_android.cc",

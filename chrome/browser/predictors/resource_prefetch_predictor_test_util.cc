@@ -18,6 +18,7 @@ namespace predictors {
 
 using URLRequestSummary = ResourcePrefetchPredictor::URLRequestSummary;
 using PageRequestSummary = ResourcePrefetchPredictor::PageRequestSummary;
+using Prediction = ResourcePrefetchPredictor::Prediction;
 
 void InitializeResourceData(ResourceData* resource,
                             const std::string& resource_url,
@@ -174,6 +175,33 @@ URLRequestSummary CreateURLRequestSummary(SessionID::id_type tab_id,
   summary.is_no_store = false;
   summary.network_accessed = true;
   return summary;
+}
+
+ResourcePrefetchPredictor::Prediction CreatePrediction(
+    const std::string& main_frame_key,
+    std::vector<GURL> subresource_urls) {
+  Prediction prediction;
+  prediction.main_frame_key = main_frame_key;
+  prediction.subresource_urls = subresource_urls;
+  prediction.is_host = true;
+  prediction.is_redirected = false;
+  return prediction;
+}
+
+void PopulateTestConfig(LoadingPredictorConfig* config, bool small_db) {
+  if (small_db) {
+    config->max_urls_to_track = 3;
+    config->max_hosts_to_track = 2;
+    config->min_url_visit_count = 2;
+    config->max_resources_per_entry = 4;
+    config->max_consecutive_misses = 2;
+    config->max_redirect_consecutive_misses = 2;
+    config->min_resource_confidence_to_trigger_prefetch = 0.5;
+  }
+  config->is_url_learning_enabled = true;
+  config->is_manifests_enabled = true;
+  config->is_origin_learning_enabled = true;
+  config->mode = LoadingPredictorConfig::LEARNING;
 }
 
 std::ostream& operator<<(std::ostream& os, const PrefetchData& data) {
