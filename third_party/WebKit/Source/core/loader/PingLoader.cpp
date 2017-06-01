@@ -56,6 +56,7 @@
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/UniqueIdentifier.h"
@@ -310,6 +311,8 @@ bool PingLoaderImpl::WillFollowRedirect(
 
     String error_description;
     ResourceLoaderOptions options;
+    options.allow_credentials = kDoNotAllowStoredCredentials;
+    options.credentials_requested = kClientDidNotRequestCredentials;
     // TODO(tyoshino): Save updated data in options.securityOrigin and pass it
     // on the next time.
     if (!CrossOriginAccessControl::HandleRedirect(
