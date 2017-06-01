@@ -329,6 +329,30 @@
       "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db94f841_7aa080eb",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T17:33:04Z",
+      "side": 1,
+      "message": "I could, but constexpr requires a full definition, so I couldn\u0027t just declare it as such. I.e.:\n../../components/feature_engagement_tracker/public/feature_list.h:31:5: error: constexpr variable declaration must be a definition\n    kIPHDemoModeChoiceVariations[];\n    ^\n\nThat means I would have to move all those weird define-things out to the public header. And if I moved those out, the real definition would be available anyway, and arraysize() would work as normal, even without constexpr.\n\nWould you be OK with keeping it as an extern const?",
+      "parentUuid": "0826d337_7edcfcf8",
+      "range": {
+        "startLine": 22,
+        "startChar": 33,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
