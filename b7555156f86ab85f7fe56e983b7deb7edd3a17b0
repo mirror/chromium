@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4dbcd500_b6937afa",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-01T14:04:00Z",
+      "side": 1,
+      "message": "It\u0027s still possible at this point that the playback won\u0027t start, is that a problem or is this information only used at some later point?",
+      "range": {
+        "startLine": 1136,
+        "startChar": 28,
+        "endLine": 1136,
+        "endChar": 41
+      },
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70efd8fc_02f4ba03",
         "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
         "patchSetId": 2
@@ -70,6 +93,23 @@
     },
     {
       "key": {
+        "uuid": "cfa5efcd_b4f655f8",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-01T14:04:00Z",
+      "side": 1,
+      "message": "Why is this plural given that it only takes a single URL as the argument?",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80fb66cd_ccddd58e",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 2
@@ -81,6 +121,23 @@
       "writtenOn": "2017-06-01T10:20:55Z",
       "side": 1,
       "message": "Anything specific in mind? as-is, this TODO isn\u0027t actionable.",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4208f1be_7987e4fe",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-01T14:04:00Z",
+      "side": 1,
+      "message": "A vector of 1 URL is also a bit odd.",
       "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
