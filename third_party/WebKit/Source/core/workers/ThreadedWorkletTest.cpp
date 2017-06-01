@@ -71,7 +71,8 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
         SecurityOrigin::Create(startup_data->script_url_);
     return new ThreadedWorkletGlobalScope(
         startup_data->script_url_, startup_data->user_agent_,
-        security_origin.Release(), this->GetIsolate(), this);
+        security_origin.Release(), this->GetIsolate(), this,
+        WorkerClients::Create());
   }
 
   bool IsOwningBackingThread() const final { return false; }
@@ -116,7 +117,8 @@ class ThreadedWorkletMessagingProxyForTest
     : public ThreadedWorkletMessagingProxy {
  public:
   ThreadedWorkletMessagingProxyForTest(ExecutionContext* execution_context)
-      : ThreadedWorkletMessagingProxy(execution_context) {
+      : ThreadedWorkletMessagingProxy(execution_context,
+                                      nullptr /* worker_clients */) {
     worklet_object_proxy_ = WTF::MakeUnique<ThreadedWorkletObjectProxyForTest>(
         weak_ptr_factory_.CreateWeakPtr(), GetParentFrameTaskRunners());
     worker_thread_ =
