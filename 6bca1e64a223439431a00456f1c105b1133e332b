@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c90e10f8_228529f5",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-01T17:07:53Z",
+      "side": 1,
+      "message": "Since InitParams is no longer const, seems like we can just substitute a new foreground_worker_pool_params instead of mutating in place, preserving the \"constness\" of SchedulerWorkerPoolParams.\n\nSo here you can just create a new SchedulerWorkerPoolParams pulling in the parameters from the old one. Thoughts?",
+      "range": {
+        "startLine": 982,
+        "startChar": 64,
+        "endLine": 982,
+        "endChar": 79
+      },
+      "revId": "6bca1e64a223439431a00456f1c105b1133e332b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
