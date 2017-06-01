@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0d36556_741c4f88",
+        "filename": "ui/views/examples/scroll_view_example.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-01T00:33:15Z",
+      "side": 1,
+      "message": "nit: keep overrides together and add // View:\n\n(PlaceChildAt/CalcularePreferredSize should move too)",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a432b649_481a8fcf",
+        "filename": "ui/views/examples/scroll_view_example.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-01T00:33:15Z",
+      "side": 1,
+      "message": "add\n\n#include \"cc/paint/paint_flags.h\"\n\nmaybe this triggers DEPS...  ah, nope - cc/paint is allowed by ui/views/DEPS\n\n\n(the include helps find which file wants the //cc/paint library dep)",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78cfc6e_f7147892",
+        "filename": "ui/views/examples/scroll_view_example.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-01T00:33:15Z",
+      "side": 1,
+      "message": "note I think without the SetNativeControlColor(..) call, subpixel AA might get messed up, but that\u0027s probably not important here since the buttons have their own backgrounds.",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f2792e_fd24e2ed",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-01T00:33:15Z",
+      "side": 1,
+      "message": "header has this, so this can be dropped",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b258bb62_985abce9",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-01T00:33:15Z",
+      "side": 1,
+      "message": "this too",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c92e610_406722e1",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-01T00:33:15Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 13,
+        "startChar": 27,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a869ee1_d3747b29",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-01T00:33:15Z",
+      "side": 1,
+      "message": "pretty sure this is no longer used (maybe some others too)",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
