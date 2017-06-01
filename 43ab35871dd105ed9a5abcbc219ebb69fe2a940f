@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "491d47bc_25cc8012",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-01T10:34:14Z",
+      "side": 1,
+      "message": "Done. Also added a comment to the header file.",
+      "parentUuid": "08380be9_76a91e0d",
+      "revId": "43ab35871dd105ed9a5abcbc219ebb69fe2a940f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14646797_a5682b65",
         "filename": "content/browser/renderer_host/media/renderer_audio_output_stream_factory_context_impl.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "29575142_7c43e1ee",
+        "filename": "content/browser/renderer_host/media/renderer_audio_output_stream_factory_context_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-01T10:34:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14646797_a5682b65",
+      "revId": "43ab35871dd105ed9a5abcbc219ebb69fe2a940f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46028b71_02f7754c",
         "filename": "content/browser/renderer_host/media/renderer_audio_output_stream_factory_context_impl.h",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "43ab35871dd105ed9a5abcbc219ebb69fe2a940f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df42f2e7_4e9f4dda",
+        "filename": "content/browser/renderer_host/media/renderer_audio_output_stream_factory_context_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-01T10:34:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46028b71_02f7754c",
+      "revId": "43ab35871dd105ed9a5abcbc219ebb69fe2a940f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
