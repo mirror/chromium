@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6871a715_0b25c168",
+        "filename": "third_party/boringssl/.clang-format",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-06-01T23:55:06Z",
+      "side": 1,
+      "message": "Doesn\u0027t this disable clang-format for the whole tree under this path? Is that what we want?",
+      "revId": "2178f28ea7df5bcfb3d545354971d13fdeb7caf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
