@@ -2,6 +2,489 @@
   "comments": [
     {
       "key": {
+        "uuid": "0f51604b_96cc8150",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: Add \"provider\".",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cce8bf0_ab4d1af2",
+        "filename": "chrome/browser/chromeos/certificate_provider/certificate_provider_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: s/by/for/",
+      "range": {
+        "startLine": 166,
+        "startChar": 31,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338c70d9_82ab9d05",
+        "filename": "chrome/browser/chromeos/certificate_provider/thread_safe_certificate_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: Add a pairing \"|\".",
+      "range": {
+        "startLine": 76,
+        "startChar": 43,
+        "endLine": 76,
+        "endChar": 44
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151743c6_a1bee8ff",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: s/certificat_found/certificate_found/",
+      "range": {
+        "startLine": 168,
+        "startChar": 4,
+        "endLine": 168,
+        "endChar": 20
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f6f20c_3893bda1",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: s/WorkerThread/OnWorkerThread/",
+      "range": {
+        "startLine": 662,
+        "startChar": 5,
+        "endLine": 662,
+        "endChar": 40
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ee5b33_1e6f9bfe",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: Isn\u0027t this function already documented in the header file?",
+      "range": {
+        "startLine": 942,
+        "startChar": 0,
+        "endLine": 944,
+        "endChar": 59
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707baaaf_0282af09",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: #include \"base/logging.h\"",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 16
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333db0f4_79b2f7e7",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: Constructing std::string explicitly here shouldn\u0027t be required. Or you add this for clarification?\nI\u0027d suggest either to drop this or, if you\u0027d like to use this, do it consistently (see e.g. CertificateSupportsHashTask::CheckCertificateProvider).",
+      "range": {
+        "startLine": 316,
+        "startChar": 20,
+        "endLine": 316,
+        "endChar": 31
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87298ad7_eff824e0",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: return is not needed.",
+      "range": {
+        "startLine": 338,
+        "startChar": 4,
+        "endLine": 338,
+        "endChar": 10
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45086838_dde0f178",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: Looks like the comment is copy-pasted: this task shouldn\u0027t do signing or updating the permissions.",
+      "range": {
+        "startLine": 641,
+        "startChar": 54,
+        "endLine": 645,
+        "endChar": 35
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf01a113_742c1d98",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: This comment also has to be fixed.",
+      "range": {
+        "startLine": 683,
+        "startChar": 2,
+        "endLine": 684,
+        "endChar": 77
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a116b2_bf1ef296",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: Not oinsisting, but there\u0027s a shorter (though non-STL) alternative: base::ContainsValue.",
+      "range": {
+        "startLine": 699,
+        "startChar": 10,
+        "endLine": 699,
+        "endChar": 19
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2494dcc_19c2c928",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: Maybe add comment \"/* error_message */\" to clarify this argument?\n(And the same in lines 717, 737.",
+      "range": {
+        "startLine": 701,
+        "startChar": 36,
+        "endLine": 701,
+        "endChar": 49
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e4267e_bbf4e681",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: s/2015/2017/",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118675b5_4a001891",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: #include \"testing/gtest/include/gtest/gtest.h\"",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 13
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24aea817_c91e9813",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate to have to copy-paste this code from the neighboring test file.\nI\u0027d suggest either extracting the common functions into a small test helper (new .h and .cc files located just by) or merging the new test file with the existing one (certificate_provider_apitest.cc).",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bba89e2_8279b870",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: The Style Guide recommends not using \"else\" after \"return\":\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 8
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d05abc8_20de58fe",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: The comment seems to be unfinished.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 20
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4714143_d579d9fb",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: #include \"base/logging.h\"",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 170,
+        "endChar": 8
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3995eada_42dceae4",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: const std::string\u0026",
+      "range": {
+        "startLine": 224,
+        "startChar": 29,
+        "endLine": 224,
+        "endChar": 40
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc763b89_75d836be",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: Please add a comment explaining what is this delegate for.",
+      "range": {
+        "startLine": 280,
+        "startChar": 6,
+        "endLine": 280,
+        "endChar": 24
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36475b44_7ba26cb1",
         "filename": "chrome/browser/extensions/api/platform_keys/platform_keys_api.cc",
         "patchSetId": 3
@@ -13,6 +496,30 @@
       "writtenOn": "2017-06-01T07:45:12Z",
       "side": 1,
       "message": "Is this OK? I have two namespace platform_key blocks in this file now.\nReason was:\n- PublicKeyInfo members are used in the following anonymous namespace, so it must be complete by then\n- Moving PublicKeyInfo to header requires including x509_certificate.h because the declaration of PublicKeyInfo references members of X509Certificate",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f540cbcd_a9ae4776",
+        "filename": "chrome/browser/extensions/api/platform_keys/platform_keys_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "Hmm, can\u0027t you just place the anonymous namespace into namespace platform_keys?",
+      "parentUuid": "36475b44_7ba26cb1",
       "range": {
         "startLine": 32,
         "startChar": 10,
@@ -41,6 +548,144 @@
         "startChar": 48,
         "endLine": 63,
         "endChar": 53
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740bc0e9_65d08342",
+        "filename": "chrome/browser/extensions/api/platform_keys/platform_keys_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "Add return true.",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 3
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9751c6_696796c1",
+        "filename": "chrome/common/extensions/api/platform_keys.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: s/extensions/extension?",
+      "range": {
+        "startLine": 135,
+        "startChar": 56,
+        "endLine": 135,
+        "endChar": 66
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a56fdf9_199ac92c",
+        "filename": "chrome/common/extensions/api/platform_keys.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: Probably better to use a ref here:\n$(ref:certificateProvider chrome.certificateProvider)",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 46
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0039d900_e4ed9030",
+        "filename": "chrome/common/extensions/api/platform_keys_internal.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: s/ that is//",
+      "range": {
+        "startLine": 18,
+        "startChar": 69,
+        "endLine": 18,
+        "endChar": 76
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5910d5_de606326",
+        "filename": "chrome/common/extensions/api/platform_keys_internal.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: s/wil/will/",
+      "range": {
+        "startLine": 20,
+        "startChar": 73,
+        "endLine": 20,
+        "endChar": 76
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5bdb93_e08e08df",
+        "filename": "chrome/renderer/resources/extensions/platform_keys/get_public_key.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:04:45Z",
+      "side": 1,
+      "message": "nit: It\u0027s not clear from the name what this method is doing.\nMaybe rename it to something like \"convertInternalApiAlgorithm\"?",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 43,
+        "endChar": 29
       },
       "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
