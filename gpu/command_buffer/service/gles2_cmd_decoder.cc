@@ -8528,11 +8528,8 @@ void GLES2DecoderImpl::DoRenderbufferStorageMultisampleCHROMIUM(
       }
     }
 
-    // TODO(gman): If renderbuffers tracked which framebuffers they were
-    // attached to we could just mark those framebuffers as not complete.
-    framebuffer_manager()->IncFramebufferStateChangeCount();
-    renderbuffer_manager()->SetInfo(
-        renderbuffer, samples, internalformat, width, height);
+    renderbuffer_manager()->SetInfoAndInvalidate(
+       renderbuffer, samples, internalformat, width, height);
   }
 }
 
@@ -8567,10 +8564,7 @@ void GLES2DecoderImpl::DoRenderbufferStorageMultisampleEXT(
   }
   GLenum error = LOCAL_PEEK_GL_ERROR("glRenderbufferStorageMultisampleEXT");
   if (error == GL_NO_ERROR) {
-    // TODO(gman): If renderbuffers tracked which framebuffers they were
-    // attached to we could just mark those framebuffers as not complete.
-    framebuffer_manager()->IncFramebufferStateChangeCount();
-    renderbuffer_manager()->SetInfo(
+    renderbuffer_manager()->SetInfoAndInvalidate(
         renderbuffer, samples, internalformat, width, height);
   }
 }
@@ -8721,10 +8715,7 @@ void GLES2DecoderImpl::DoRenderbufferStorage(
       height);
   GLenum error = LOCAL_PEEK_GL_ERROR("glRenderbufferStorage");
   if (error == GL_NO_ERROR) {
-    // TODO(gman): If tetxures tracked which framebuffers they were attached to
-    // we could just mark those framebuffers as not complete.
-    framebuffer_manager()->IncFramebufferStateChangeCount();
-    renderbuffer_manager()->SetInfo(
+    renderbuffer_manager()->SetInfoAndInvalidate(
         renderbuffer, 0, internalformat, width, height);
   }
 }
