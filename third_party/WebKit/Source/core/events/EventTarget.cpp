@@ -184,6 +184,7 @@ inline LocalDOMWindow* EventTarget::ExecutingWindow() {
 
 void EventTarget::SetDefaultAddEventListenerOptions(
     const AtomicString& event_type,
+    EventListener* event_listener,
     AddEventListenerOptionsResolved& options) {
   options.SetPassiveSpecified(options.hasPassive());
 
@@ -193,7 +194,8 @@ void EventTarget::SetDefaultAddEventListenerOptions(
     return;
   }
 
-  if (LocalDOMWindow* executing_window = this->ExecutingWindow()) {
+  LocalDOMWindow* executing_window = this->ExecutingWindow();
+  if (executing_window) {
     if (options.hasPassive()) {
       UseCounter::Count(executing_window->document(),
                         options.passive()
@@ -216,6 +218,27 @@ void EventTarget::SetDefaultAddEventListenerOptions(
       } else if (ToLocalDOMWindow()) {
         options.setPassive(true);
         options.SetPassiveForcedForDocumentTarget(true);
+        return;
+      }
+    }
+  }
+
+  if (RuntimeEnabledFeatures::smoothScrollJSInterventionEnabled() &&
+      event_type == EventTypeNames::mousewheel && ToLocalDOMWindow() &&
+      event_listener) {
+    if (V8AbstractEventListener* v8_listener =
+            V8AbstractEventListener::Cast(event_listener)) {
+      v8::Local<v8::Object> function = v8_listener->GetExistingListenerObject();
+      if (function->IsFunction() &&
+          strcmp("ssc_wheel",
+                 *v8::String::Utf8Value(
+                     v8::Local<v8::Function>::Cast(function)->GetName())) ==
+              0) {
+        options.setPassive(true);
+        if (executing_window) {
+          UseCounter::Count(executing_window->document(),
+                            UseCounter::kSmoothScrollJSInterventionActivated);
+        }
         return;
       }
     }
@@ -258,7 +281,7 @@ bool EventTarget::addEventListener(const AtomicString& event_type,
                                    bool use_capture) {
   AddEventListenerOptionsResolved options;
   options.setCapture(use_capture);
-  SetDefaultAddEventListenerOptions(event_type, options);
+  SetDefaultAddEventListenerOptions(event_type, listener, options);
   return AddEventListenerInternal(event_type, listener, options);
 }
 
@@ -279,7 +302,7 @@ bool EventTarget::addEventListener(
 bool EventTarget::addEventListener(const AtomicString& event_type,
                                    EventListener* listener,
                                    AddEventListenerOptionsResolved& options) {
-  SetDefaultAddEventListenerOptions(event_type, options);
+  SetDefaultAddEventListenerOptions(event_type, listener, options);
   return AddEventListenerInternal(event_type, listener, options);
 }
 
