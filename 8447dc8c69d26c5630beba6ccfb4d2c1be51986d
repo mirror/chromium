@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f781b234_b1f4ebbd",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-06-01T22:15:43Z",
+      "side": 1,
+      "message": "Can you change this to |mCanEditRichly| since it is now also being used for the selection menu",
+      "revId": "8447dc8c69d26c5630beba6ccfb4d2c1be51986d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
