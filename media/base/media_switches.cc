@@ -200,6 +200,16 @@ const base::Feature kResumeBackgroundVideo {
 #endif
 };
 
+// Display the Cast overlay button on the media controls.
+const base::Feature kMediaCastOverlayButton {
+  "MediaCastOverlayButton",
+#if defined(OS_ANDROID)
+      base::FEATURE_ENABLED_BY_DEFAULT
+#else
+      base::FEATURE_DISABLED_BY_DEFAULT
+#endif
+};
+
 // Use AndroidOverlay rather than ContentVideoView in clank?
 const base::Feature kUseAndroidOverlay{"use-android_overlay",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
