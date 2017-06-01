@@ -393,6 +393,7 @@ void Display::SetNeedsRedrawRect(const gfx::Rect& damage_rect) {
 void Display::OnSurfaceDamaged(const SurfaceId& surface_id,
                                const BeginFrameAck& ack,
                                bool* changed) {
+  bool display_damaged = false;
   if (ack.has_damage) {
     if (aggregator_ &&
         aggregator_->previous_contained_surfaces().count(surface_id)) {
@@ -402,16 +403,17 @@ void Display::OnSurfaceDamaged(const SurfaceId& surface_id,
         if (surface->GetActiveFrame().resource_list.empty())
           aggregator_->ReleaseResources(surface_id);
       }
-      *changed = true;
+      display_damaged = true;
     } else if (surface_id == current_surface_id_) {
-      *changed = true;
+      display_damaged = true;
     }
   }
 
   if (scheduler_)
-    scheduler_->SurfaceDamaged(surface_id, ack, *changed);
+    scheduler_->SurfaceDamaged(surface_id, ack, display_damaged);
+  *changed |= display_damaged;
 
-  if (surface_id == current_surface_id_)
+  if (ack.has_damage && surface_id == current_surface_id_)
     UpdateRootSurfaceResourcesLocked();
 }
 
