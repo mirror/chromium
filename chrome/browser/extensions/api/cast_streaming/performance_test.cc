@@ -665,7 +665,10 @@ class CastV2PerformanceTest
     }
 
     std::string json_events;
-    ASSERT_TRUE(tracing::BeginTracing("gpu.capture,cast_perf_test"));
+    ASSERT_TRUE(tracing::BeginTracing(
+        "*,gpu.capture,cast_perf_test,disabled-by-default-cc."
+        "debug,disabled-by-default-cc.debug.scheduler,disabled-by-default-cc."
+        "debug.scheduler.frames"));
     const std::string page_url = base::StringPrintf(
         "performance%d.html?port=%d&autoThrottling=%s&aesKey=%s&aesIvMask=%s",
         getfps(), receiver_end_point.port(),
@@ -674,6 +677,7 @@ class CastV2PerformanceTest
         base::HexEncode(kAesIvMask, sizeof(kAesIvMask)).c_str());
     ASSERT_TRUE(RunExtensionSubtest("cast_streaming", page_url)) << message_;
     ASSERT_TRUE(tracing::EndTracing(&json_events));
+    fprintf(stderr, "\n\n%s\n\n\n", json_events.c_str());
     receiver->Stop();
 
     // Stop all threads, removes the need for synchronization when analyzing
