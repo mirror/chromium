@@ -32,6 +32,7 @@
 #include "components/search_engines/util.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/vector_icons.h"
+#include "components/url_formatter/url_formatter.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
@@ -316,15 +317,24 @@ class HomePrefNotificationBridge {
   } else if ([identifier hasSuffix:kFullscreenOriginLabelTouchId]) {
     content::WebContents* contents =
         browser_->tab_strip_model()->GetActiveWebContents();
-    GURL originUrl = contents->GetLastCommittedURL();
 
-    base::string16 displayText = base::ASCIIToUTF16(originUrl.spec());
+    if (!contents)
+      return nil;
+
+    // Strip the trailing slash.
+    base::string16 displayText = url_formatter::FormatUrl(
+        contents->GetLastCommittedURL(),
+        url_formatter::kFormatUrlOmitTrailingSlashOnBareHostname,
+        net::UnescapeRule::SPACES, nullptr, nullptr, nullptr);
+    GURL originUrl = GURL(displayText);
+
     base::scoped_nsobject<NSMutableAttributedString> attributedString(
         [[NSMutableAttributedString alloc]
             initWithString:base::SysUTF16ToNSString(displayText)]);
 
     if (originUrl.has_path()) {
-      size_t pathIndex = originUrl.GetWithEmptyPath().spec().length();
+      size_t pathIndex = originUrl.GetWithEmptyPath().spec().length() - 1;
+
       [attributedString
           addAttribute:NSForegroundColorAttributeName
                  value:OmniboxViewMac::BaseTextColor(true)
