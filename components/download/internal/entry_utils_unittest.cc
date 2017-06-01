@@ -15,9 +15,9 @@
 namespace download {
 
 TEST(DownloadServiceEntryUtilsTest, TestGetNumberOfEntriesForClient_NoEntries) {
-  Entry entry1 = test::BuildEntry(DownloadClient::TEST, base::GenerateGUID());
-  Entry entry2 = test::BuildEntry(DownloadClient::TEST, base::GenerateGUID());
-  Entry entry3 = test::BuildEntry(DownloadClient::TEST, base::GenerateGUID());
+  Entry entry1 = test::BuildBasicEntry();
+  Entry entry2 = test::BuildBasicEntry();
+  Entry entry3 = test::BuildBasicEntry();
 
   std::vector<Entry*> entries = {&entry1, &entry2, &entry3};
 
@@ -28,9 +28,9 @@ TEST(DownloadServiceEntryUtilsTest, TestGetNumberOfEntriesForClient_NoEntries) {
 }
 
 TEST(DownloadServiceEntryUtilsTest, MapEntriesToClients) {
-  Entry entry1 = test::BuildEntry(DownloadClient::TEST, base::GenerateGUID());
-  Entry entry2 = test::BuildEntry(DownloadClient::TEST, base::GenerateGUID());
-  Entry entry3 = test::BuildEntry(DownloadClient::TEST, base::GenerateGUID());
+  Entry entry1 = test::BuildBasicEntry();
+  Entry entry2 = test::BuildBasicEntry();
+  Entry entry3 = test::BuildBasicEntry();
 
   std::vector<Entry*> entries = {&entry1, &entry2, &entry3};
   std::vector<std::string> expected_list = {entry1.guid, entry2.guid,
