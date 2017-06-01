@@ -25,8 +25,10 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabObserver;
@@ -577,14 +579,24 @@ public class VrShellImpl
 
     @CalledByNative
     public void navigateBack() {
-        mActivity.getToolbarManager().back();
+        if (mActivity instanceof ChromeTabbedActivity) {
+            ((ChromeTabbedActivity) mActivity).handleBackPressed();
+        } else {
+            mActivity.getToolbarManager().back();
+        }
         updateHistoryButtonsVisibility();
     }
 
     private void updateHistoryButtonsVisibility() {
-        boolean canGoBack = mTab != null && mTab.canGoBack();
-        boolean canGoForward = mTab != null && mTab.canGoForward();
-        nativeSetHistoryButtonsEnabled(mNativeVrShell, canGoBack, canGoForward);
+        if (mTab == null) {
+            nativeSetHistoryButtonsEnabled(mNativeVrShell, false, false);
+            return;
+        }
+        boolean canGoBack = mTab.canGoBack() || mActivity instanceof ChromeTabbedActivity;
+        // Hitting back when on the NTP usually closes Chrome, which we don't allow in VR, so we
+        // just disable the back button.
+        if (mNativePage != null && mNativePage instanceof NewTabPage) canGoBack = false;
+        nativeSetHistoryButtonsEnabled(mNativeVrShell, canGoBack, mTab.canGoForward());
     }
 
     @CalledByNative
