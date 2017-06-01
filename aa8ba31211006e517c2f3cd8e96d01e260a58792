@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81357737_9e45b335",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-01T22:06:13Z",
+      "side": 1,
+      "message": "This does a heap allocation and copies the function name. It\u0027s probably fine, but if it turns out to be hot we can optimize it later (e.g. by keeping an internalized V8 string around instead and doing the string comparison in V8).",
+      "revId": "aa8ba31211006e517c2f3cd8e96d01e260a58792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec61d1e_1da28c56",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14158,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-01T22:06:13Z",
+      "side": 1,
+      "message": "Are these changes removing OBSOLETE_ intended?",
+      "revId": "aa8ba31211006e517c2f3cd8e96d01e260a58792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
