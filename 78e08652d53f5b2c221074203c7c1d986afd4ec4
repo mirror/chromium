@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "835067d2_f95ed91a",
+        "filename": "third_party/WebKit/Source/core/css/CSSToLengthConversionData.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-01T11:37:22Z",
+      "side": 1,
+      "message": "Ah, it\u0027s only needed for these flags? I was asking someone to get rid of this dependency in another CL, but it was too much drilling to be a simple fix.",
+      "revId": "78e08652d53f5b2c221074203c7c1d986afd4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
