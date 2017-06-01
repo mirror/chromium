@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eb1dd80_227a85b1",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-01T20:05:46Z",
+      "side": 1,
+      "message": "looks like this import is not needed? odd the script didn\u0027t complain about unused import, I guess it\u0027s confused by the comment",
+      "revId": "b23f254ec54f81007f7aa1a21a0d24c3dbbd9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f9fbea_74ebcedb",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-01T20:05:46Z",
+      "side": 1,
+      "message": "oh so outdated :p",
+      "revId": "b23f254ec54f81007f7aa1a21a0d24c3dbbd9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76229e4a_e231eab9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-01T20:05:46Z",
+      "side": 1,
+      "message": "nit: constants at the top",
+      "revId": "b23f254ec54f81007f7aa1a21a0d24c3dbbd9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f216e00c_b970b912",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-01T20:05:46Z",
+      "side": 1,
+      "message": "nit: non-final members below final members",
+      "revId": "b23f254ec54f81007f7aa1a21a0d24c3dbbd9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950c421a_d427505e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-01T20:05:46Z",
+      "side": 1,
+      "message": "I thought I fixed this one already? make sure this moved code is rebased",
+      "revId": "b23f254ec54f81007f7aa1a21a0d24c3dbbd9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94778cd_9971c0c5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-01T20:05:46Z",
+      "side": 1,
+      "message": "nit: instance methods below static methods",
+      "revId": "b23f254ec54f81007f7aa1a21a0d24c3dbbd9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8861eb82_3e4fb161",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-01T20:05:46Z",
+      "side": 1,
+      "message": "why false instead of passing the argument along? I guess doesn\u0027t matter in practice, but still looks odd..\n\nAlso warmup is calling allocateBoundConnection directly, so looks like you don\u0027t even need retryIfNone, because it\u0027s always true?",
+      "range": {
+        "startLine": 477,
+        "startChar": 66,
+        "endLine": 477,
+        "endChar": 71
+      },
+      "revId": "b23f254ec54f81007f7aa1a21a0d24c3dbbd9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c00a4d7_8efcc198",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-01T20:05:46Z",
+      "side": 1,
+      "message": "nit: constants at the top",
+      "revId": "b23f254ec54f81007f7aa1a21a0d24c3dbbd9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ac7146_fd36efc4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-01T20:05:46Z",
+      "side": 1,
+      "message": "hmm, does this cover all cases of not forgetting things in the map? what if child crashes? seems to be making a lot of unnecessary assumptions here",
+      "revId": "b23f254ec54f81007f7aa1a21a0d24c3dbbd9272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
