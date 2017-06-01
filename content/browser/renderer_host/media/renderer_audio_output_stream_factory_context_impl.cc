@@ -13,11 +13,28 @@
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h"
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "media/audio/audio_system.h"
 
 namespace content {
+
+using FactoryHandle =
+    RendererAudioOutputStreamFactoryContextImpl::FactoryHandle;
+
+FactoryHandle::~FactoryHandle() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+}
+
+FactoryHandle::FactoryHandle(
+    RendererAudioOutputStreamFactoryContextImpl* context,
+    int frame_id)
+    : impl_(frame_id, context), binding_(&impl_) {}
+
+void FactoryHandle::Init(
+    mojom::RendererAudioOutputStreamFactoryRequest request) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  binding_.Bind(std::move(request));
+}
 
 RendererAudioOutputStreamFactoryContextImpl::
     RendererAudioOutputStreamFactoryContextImpl(
@@ -41,14 +58,20 @@ RendererAudioOutputStreamFactoryContextImpl::
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
 
-void RendererAudioOutputStreamFactoryContextImpl::CreateFactory(
-    int frame_host_id,
+std::unique_ptr<FactoryHandle, BrowserThread::DeleteOnIOThread>
+RendererAudioOutputStreamFactoryContextImpl::CreateFactory(
+    int frame_id,
     mojo::InterfaceRequest<mojom::RendererAudioOutputStreamFactory> request) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  std::unique_ptr<FactoryHandle, BrowserThread::DeleteOnIOThread> factory(
+      new FactoryHandle(this, frame_id));
+  // Unretained is safe since FactoryHandle is destroyed on the IO thread.
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&FactoryHandle::Init, base::Unretained(factory.get()),
+                     std::move(request)));
 
-  factories_.AddBinding(base::MakeUnique<RenderFrameAudioOutputStreamFactory>(
-                            frame_host_id, this),
-                        std::move(request));
+  return factory;
 }
 
 int RendererAudioOutputStreamFactoryContextImpl::GetRenderProcessId() const {
@@ -96,6 +119,12 @@ RendererAudioOutputStreamFactoryContextImpl::CreateDelegate(
       handler, audio_manager_, std::move(audio_log),
       AudioMirroringManager::GetInstance(), media_observer, stream_id,
       render_frame_id, render_process_id_, params, unique_device_id);
+}
+
+// static
+bool RendererAudioOutputStreamFactoryContextImpl::UseMojoFactories() {
+  // TODO(maxmorin): Introduce a feature for this.
+  return false;
 }
 
 }  // namespace content
