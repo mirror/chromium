@@ -2153,8 +2153,14 @@ void LocalFrameView::ScrollbarExistenceDidChange() {
       ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
       !ShouldUseCustomScrollbars(custom_scrollbar_element);
 
-  if (!uses_overlay_scrollbars && NeedsLayout())
-    UpdateLayout();
+  if (!uses_overlay_scrollbars) {
+    if (NeedsLayout())
+      UpdateLayout();
+
+    if (frame_->IsMainFrame() &&
+        RuntimeEnabledFeatures::visualViewportAPIEnabled())
+      frame_->GetDocument()->EnqueueVisualViewportResizeEvent();
+  }
 
   if (!GetLayoutViewItem().IsNull() && GetLayoutViewItem().UsesCompositing()) {
     GetLayoutViewItem().Compositor()->FrameViewScrollbarsExistenceDidChange();
