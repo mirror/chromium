@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f542fdae_d7e8fe3e",
+        "filename": "content/renderer/media/media_stream_constraints_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Done.  Added a comment for the class similar to the one for video. In both cases it is explained what failed_constraint_name is.",
+      "parentUuid": "534179a8_09ead677",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3703be12_78bab278",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f923f360_dfc521b8",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3703be12_78bab278",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cb3adac_58c40a75",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc311f24_ec2d68e1",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cb3adac_58c40a75",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "804a7fbc_d7b36d87",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8e9285d_b02f9db4",
+      "range": {
+        "startLine": 276,
+        "startChar": 8,
+        "endLine": 276,
+        "endChar": 16
+      },
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "354016fe_1a9d4b45",
         "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
         "patchSetId": 2
@@ -90,6 +168,24 @@
       "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95192ea_dc9450c5",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-01T16:24:25Z",
+      "side": 1,
+      "message": "For content capture all device IDs are considered valid by SelectSettings.\nIn practice the string has a format and contains information about the tab to be captured, but it is impossible to validate it in the renderer process. So, SelectSettings accepts the ideal in this case since it is included in the universal set, which is the unconstrained case in content capture.\nAdded a comment about this.",
+      "parentUuid": "354016fe_1a9d4b45",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "beca5d84_9d94aca2",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc74c5d8_96c08659",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9954cdf_5d370386",
         "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c069fa_734f8c4d",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-01T16:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9954cdf_5d370386",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
