@@ -75,8 +75,8 @@ STHSetComponentInstallerTraits::OnCustomInstall(
 
 void STHSetComponentInstallerTraits::ComponentReady(
     const base::Version& version,
-    const base::FilePath& install_dir,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& install_dir) {
   const base::Closure load_sths_closure = base::Bind(
       &STHSetComponentInstallerTraits::LoadSTHsFromDisk,
       weak_ptr_factory_.GetWeakPtr(), GetInstalledPath(install_dir), version);

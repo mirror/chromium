@@ -161,7 +161,7 @@ void CRLSetFetcher::OnUpdateError(int error) {
 }
 
 update_client::CrxInstaller::Result CRLSetFetcher::Install(
-    const base::DictionaryValue& manifest,
+    std::unique_ptr<base::DictionaryValue> manifest,
     const base::FilePath& unpack_path) {
   const auto result = update_client::InstallFunctionWrapper(
       base::Bind(&CRLSetFetcher::DoInstall, base::Unretained(this),
