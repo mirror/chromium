@@ -29,6 +29,8 @@
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "bindings/modules/v8/DecodeErrorCallback.h"
+#include "bindings/modules/v8/DecodeSuccessCallback.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
@@ -42,7 +44,6 @@
 #include "modules/mediastream/MediaStream.h"
 #include "modules/webaudio/AnalyserNode.h"
 #include "modules/webaudio/AudioBuffer.h"
-#include "modules/webaudio/AudioBufferCallback.h"
 #include "modules/webaudio/AudioBufferSourceNode.h"
 #include "modules/webaudio/AudioContext.h"
 #include "modules/webaudio/AudioListener.h"
@@ -274,8 +275,25 @@ AudioBuffer* BaseAudioContext::createBuffer(unsigned number_of_channels,
 ScriptPromise BaseAudioContext::decodeAudioData(
     ScriptState* script_state,
     DOMArrayBuffer* audio_data,
-    AudioBufferCallback* success_callback,
-    AudioBufferCallback* error_callback,
+    ExceptionState& exception_state) {
+  return decodeAudioData(script_state, audio_data, nullptr, nullptr,
+                         exception_state);
+}
+
+ScriptPromise BaseAudioContext::decodeAudioData(
+    ScriptState* script_state,
+    DOMArrayBuffer* audio_data,
+    DecodeSuccessCallback* success_callback,
+    ExceptionState& exception_state) {
+  return decodeAudioData(script_state, audio_data, success_callback, nullptr,
+                         exception_state);
+}
+
+ScriptPromise BaseAudioContext::decodeAudioData(
+    ScriptState* script_state,
+    DOMArrayBuffer* audio_data,
+    DecodeSuccessCallback* success_callback,
+    DecodeErrorCallback* error_callback,
     ExceptionState& exception_state) {
   DCHECK(IsMainThread());
   DCHECK(audio_data);
@@ -296,6 +314,17 @@ ScriptPromise BaseAudioContext::decodeAudioData(
     DOMArrayBuffer* audio = DOMArrayBuffer::Create(buffer_contents);
 
     decode_audio_resolvers_.insert(resolver);
+
+    // Add a reference to success_callback and error_callback so that
+    // they don't get collected prematurely before decodeAudioData
+    // calls them.
+    if (success_callback) {
+      success_callback_.emplace_back(this, success_callback);
+    }
+    if (error_callback) {
+      error_callback_.emplace_back(this, error_callback);
+    }
+
     audio_decoder_.DecodeAsync(audio, rate, success_callback, error_callback,
                                resolver, this);
   } else {
@@ -305,7 +334,7 @@ ScriptPromise BaseAudioContext::decodeAudioData(
         kDataCloneError, "Cannot decode detached ArrayBuffer");
     resolver->Reject(error);
     if (error_callback) {
-      error_callback->handleEvent(error);
+      error_callback->call(this, error);
     }
   }
 
@@ -315,27 +344,41 @@ ScriptPromise BaseAudioContext::decodeAudioData(
 void BaseAudioContext::HandleDecodeAudioData(
     AudioBuffer* audio_buffer,
     ScriptPromiseResolver* resolver,
-    AudioBufferCallback* success_callback,
-    AudioBufferCallback* error_callback) {
+    DecodeSuccessCallback* success_callback,
+    DecodeErrorCallback* error_callback) {
   DCHECK(IsMainThread());
 
   if (audio_buffer) {
     // Resolve promise successfully and run the success callback
     resolver->Resolve(audio_buffer);
     if (success_callback)
-      success_callback->handleEvent(audio_buffer);
+      success_callback->call(this, audio_buffer);
   } else {
     // Reject the promise and run the error callback
     DOMException* error =
         DOMException::Create(kEncodingError, "Unable to decode audio data");
     resolver->Reject(error);
     if (error_callback)
-      error_callback->handleEvent(error);
+      error_callback->call(this, error);
   }
 
   // We've resolved the promise.  Remove it now.
   DCHECK(decode_audio_resolvers_.Contains(resolver));
   decode_audio_resolvers_.erase(resolver);
+
+  // Find the success_callback and error_callback and remove it from
+  // our list so that it can be collected.  Remove any matching entry
+  // found (callback methods could be duplicated) which should be ok
+  // because we're only using this to hold a reference to the
+  // callback.
+
+  size_t index = success_callback_.Find(success_callback);
+  DCHECK_NE(index, kNotFound);
+  success_callback_.erase(index);
+
+  index = error_callback_.Find(error_callback);
+  DCHECK_NE(index, kNotFound);
+  error_callback_.erase(index);
 }
 
 AudioBufferSourceNode* BaseAudioContext::createBufferSource(
@@ -910,6 +953,8 @@ DEFINE_TRACE(BaseAudioContext) {
   visitor->Trace(listener_);
   visitor->Trace(active_source_nodes_);
   visitor->Trace(resume_resolvers_);
+  visitor->Trace(success_callback_);
+  visitor->Trace(error_callback_);
   visitor->Trace(decode_audio_resolvers_);
 
   visitor->Trace(periodic_wave_sine_);
@@ -918,6 +963,15 @@ DEFINE_TRACE(BaseAudioContext) {
   visitor->Trace(periodic_wave_triangle_);
   EventTargetWithInlineData::Trace(visitor);
   SuspendableObject::Trace(visitor);
+}
+
+DEFINE_TRACE_WRAPPERS(BaseAudioContext) {
+  for (auto callback : success_callback_) {
+    visitor->TraceWrappers(callback);
+  }
+  for (auto callback : error_callback_) {
+    visitor->TraceWrappers(callback);
+  }
 }
 
 SecurityOrigin* BaseAudioContext::GetSecurityOrigin() const {
