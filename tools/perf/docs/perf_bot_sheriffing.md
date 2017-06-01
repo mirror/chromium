@@ -279,7 +279,7 @@ be investigated. When a test fails:
     crashes.
 
 ## Swarming Bots
-As of Q4 2016 all desktop bots have been moved to the swarming pool with a goal
+As of Q2 2017 all desktop bots have been moved to the swarming pool with a goal
 of moving all android bots to swarming in early 2017.  There is now one machine
 on the chromium.perf waterfall for each desktop configuration that is triggering
 test tasks on 5 corresponding swarming bots.  All of our swarming bots exists in
