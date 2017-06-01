@@ -533,4 +533,22 @@ ResolutionSet ResolutionSet::FromConstraintSet(
       MaxAspectRatioFromConstraint(constraint_set.aspect_ratio));
 }
 
+StringSet StringSetFromConstraint(const blink::StringConstraint& constraint) {
+  if (!constraint.HasExact())
+    return StringSet::UniversalSet();
+
+  std::vector<std::string> elements;
+  for (const auto& entry : constraint.Exact())
+    elements.push_back(entry.Ascii());
+
+  return StringSet(std::move(elements));
+}
+
+BoolSet BoolSetFromConstraint(const blink::BooleanConstraint& constraint) {
+  if (!constraint.HasExact())
+    return BoolSet::UniversalSet();
+
+  return BoolSet({constraint.Exact()});
+}
+
 }  // namespace content
