@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03ad522b_3e9536ec",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T22:09:59Z",
+      "side": 1,
+      "message": "Reading this CL, I think having both \"Detach\" and \"Dispose\" is a bit confusing. Not sure if we want to call it something more specific, like DetachFromLayout, etc.\n\nMaybe we should have Document::Shutdown() just call detach/dispose directly so we don\u0027t need this block here? Or maybe this code should just be part of Dispose(), and Detach() can just flip the bool? WDYT?",
+      "range": {
+        "startLine": 386,
+        "startChar": 67,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
