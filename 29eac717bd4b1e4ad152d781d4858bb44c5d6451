@@ -22,6 +22,30 @@
       "revId": "29eac717bd4b1e4ad152d781d4858bb44c5d6451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007a484e_b9dd4345",
+        "filename": "third_party/WebKit/Source/core/workers/InProcessWorkerMessagingProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-01T06:59:01Z",
+      "side": 1,
+      "message": "Good point. WorkerClients will be reattached to the worker thread (see the ctor of WorkerOrWorkletGlobalScope), so it would be better to release it here. Done.",
+      "parentUuid": "a1ed6a5f_5f6b9dea",
+      "range": {
+        "startLine": 116,
+        "startChar": 10,
+        "endLine": 116,
+        "endChar": 26
+      },
+      "revId": "29eac717bd4b1e4ad152d781d4858bb44c5d6451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
