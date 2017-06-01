@@ -16,6 +16,24 @@
       "revId": "c628bebc85586067c70b2cd5f0407a66a78dfbe6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6afe7323_ca60978a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-01T22:03:37Z",
+      "side": 1,
+      "message": "The current approach looks cleaner to me. I can easily see the sequence of actions.",
+      "parentUuid": "f32869c3_cf8ec314",
+      "revId": "c628bebc85586067c70b2cd5f0407a66a78dfbe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
