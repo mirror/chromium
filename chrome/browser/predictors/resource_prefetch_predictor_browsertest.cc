@@ -13,6 +13,7 @@
 #include "base/test/histogram_tester.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 
+#include "chrome/browser/predictors/glowplug_stats_collector.h"
 #include "chrome/browser/predictors/loading_predictor.h"
 #include "chrome/browser/predictors/loading_predictor_factory.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor_test_util.h"
