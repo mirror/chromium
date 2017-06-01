@@ -83,7 +83,8 @@ PepperMediaDeviceManager::GetForRenderFrame(
 PepperMediaDeviceManager::PepperMediaDeviceManager(RenderFrame* render_frame)
     : RenderFrameObserver(render_frame),
       RenderFrameObserverTracker<PepperMediaDeviceManager>(render_frame),
-      next_id_(1) {}
+      next_id_(1),
+      media_devices_dispatcher_(render_frame) {}
 
 PepperMediaDeviceManager::~PepperMediaDeviceManager() {
   DCHECK(open_callbacks_.empty());
@@ -97,7 +98,7 @@ void PepperMediaDeviceManager::EnumerateDevices(
   bool request_video_input = type == PP_DEVICETYPE_DEV_VIDEOCAPTURE;
   bool request_audio_output = type == PP_DEVICETYPE_DEV_AUDIOOUTPUT;
   CHECK(request_audio_input || request_video_input || request_audio_output);
-  GetMediaDevicesDispatcher()->EnumerateDevices(
+  media_devices_dispatcher_->EnumerateDevices(
       request_audio_input, request_video_input, request_audio_output,
       base::Bind(&PepperMediaDeviceManager::DevicesEnumerated, AsWeakPtr(),
                  callback, ToMediaDeviceType(type)));
@@ -284,18 +285,6 @@ MediaStreamDispatcher* PepperMediaDeviceManager::GetMediaStreamDispatcher()
       static_cast<RenderFrameImpl*>(render_frame())->GetMediaStreamDispatcher();
   DCHECK(dispatcher);
   return dispatcher;
-}
-
-const ::mojom::MediaDevicesDispatcherHostPtr&
-PepperMediaDeviceManager::GetMediaDevicesDispatcher() {
-  if (!media_devices_dispatcher_) {
-    CHECK(render_frame());
-    CHECK(render_frame()->GetRemoteInterfaces());
-    render_frame()->GetRemoteInterfaces()->GetInterface(
-        mojo::MakeRequest(&media_devices_dispatcher_));
-  }
-
-  return media_devices_dispatcher_;
 }
 
 void PepperMediaDeviceManager::OnDestruct() {

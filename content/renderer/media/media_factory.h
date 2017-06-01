@@ -74,10 +74,10 @@ class MediaFactory {
                media::RequestRoutingTokenCallback request_routing_token_cb);
   ~MediaFactory();
 
-  // Instruct MediaFactory to establish Mojo channels as needed to perform its
-  // factory duties. This should be called by RenderFrameImpl as soon as its own
-  // interface provider is bound.
-  void SetupMojo();
+  // Instruct MediaFactory to establish remote interface connections for the
+  // current document. This must be called by RenderFrameImpl any time it
+  // rebinds its own InterfaceProvider for a new document navigation.
+  void BindRemoteInterfaces();
 
   // Creates a new WebMediaPlayer for the given |source| (either a stream or
   // URL). All pointers other than |initial_cdm| are required to be non-null.
@@ -127,10 +127,6 @@ class MediaFactory {
   RendererMediaPlayerManager* GetMediaPlayerManager();
 #endif
 
-#if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-  media::mojom::RemoterFactory* GetRemoterFactory();
-#endif
-
   bool AreSecureCodecsSupported();
 
   media::CdmFactory* GetCdmFactory();
@@ -148,11 +144,6 @@ class MediaFactory {
 
   // Injected callback for requesting overlay routing tokens.
   media::RequestRoutingTokenCallback request_routing_token_cb_;
-
-  // Handy pointer to RenderFrame's remote interfaces. Null until SetupMojo().
-  // Lifetime matches that of the owning |render_frame_|. Will always be valid
-  // once assigned.
-  service_manager::InterfaceProvider* remote_interfaces_ = nullptr;
 
 #if defined(OS_ANDROID)
   // Manages media players and sessions in this render frame for communicating
@@ -184,8 +175,8 @@ class MediaFactory {
       web_encrypted_media_client_;
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-  // Lazy-bound pointer to the RemoterFactory service in the browser
-  // process. Always use the GetRemoterFactory() accessor instead of this.
+  // Client interface to the RemoterFactory implementation in the browser
+  // process.
   media::mojom::RemoterFactoryPtr remoter_factory_;
 
   // An observer for the remoting sink availability that is used by

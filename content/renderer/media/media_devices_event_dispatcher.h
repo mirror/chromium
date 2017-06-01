@@ -16,6 +16,7 @@
 #include "content/common/content_export.h"
 #include "content/common/media/media_devices.h"
 #include "content/common/media/media_devices.mojom.h"
+#include "content/public/renderer/document_scoped_lazy_interface_ptr.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_frame_observer_tracker.h"
 
@@ -85,15 +86,14 @@ class CONTENT_EXPORT MediaDevicesEventDispatcher
  private:
   explicit MediaDevicesEventDispatcher(RenderFrame* render_frame);
 
-  const ::mojom::MediaDevicesDispatcherHostPtr& GetMediaDevicesDispatcher();
-
   SubscriptionId current_id_;
 
   using Subscription = std::pair<SubscriptionId, DevicesChangedCallback>;
   using SubscriptionList = std::vector<Subscription>;
   SubscriptionList device_change_subscriptions_[NUM_MEDIA_DEVICE_TYPES];
 
-  ::mojom::MediaDevicesDispatcherHostPtr media_devices_dispatcher_;
+  DocumentScopedLazyInterfacePtr<::mojom::MediaDevicesDispatcherHost>
+      media_devices_dispatcher_;
 
   base::ThreadChecker thread_checker_;
 
