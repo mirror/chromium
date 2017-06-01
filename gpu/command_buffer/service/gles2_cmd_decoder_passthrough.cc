@@ -5,6 +5,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 
 #include "base/strings/string_split.h"
+#include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/feature_info.h"
 #include "gpu/command_buffer/service/gl_utils.h"
 #include "ui/gl/gl_version_info.h"
@@ -79,6 +80,9 @@ GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(ContextGroup* group)
       offscreen_(false),
       group_(group),
       feature_info_(new FeatureInfo),
+      has_robustness_extension_(false),
+      context_lost_(false),
+      reset_by_robustness_extension_(false),
       weak_ptr_factory_(this) {
   DCHECK(group);
 }
@@ -132,6 +136,10 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommands(
       }
     } else {
       result = DoCommonCommand(command, arg_count, cmd_data);
+    }
+
+    if (result == error::kNoError && context_lost_) {
+      result = error::kLostContext;
     }
 
     if (result != error::kDeferCommandUntilLater) {
@@ -217,6 +225,9 @@ bool GLES2DecoderPassthroughImpl::Initialize(
     InitializeGLDebugLogging();
   }
 
+  has_robustness_extension_ = feature_info_->feature_flags().khr_robustness ||
+                              feature_info_->feature_flags().ext_robustness;
+
   set_initialized();
   return true;
 }
@@ -288,9 +299,23 @@ bool GLES2DecoderPassthroughImpl::MakeCurrent() {
   if (!context_.get())
     return false;
 
+  if (WasContextLost()) {
+    LOG(ERROR) << "  GLES2DecoderPassthroughImpl: Trying to make lost context "
+                  "current.";
+    return false;
+  }
+
   if (!context_->MakeCurrent(surface_.get())) {
-    LOG(ERROR) << "  GLES2DecoderImpl: Context lost during MakeCurrent.";
+    LOG(ERROR)
+        << "  GLES2DecoderPassthroughImpl: Context lost during MakeCurrent.";
     MarkContextLost(error::kMakeCurrentFailed);
+    group_->LoseContexts(error::kUnknown);
+    return false;
+  }
+
+  if (CheckResetStatus()) {
+    LOG(ERROR) << "  GLES2DecoderPassthroughImpl: Context reset detected after "
+                  "MakeCurrent.";
     group_->LoseContexts(error::kUnknown);
     return false;
   }
@@ -545,15 +570,24 @@ void GLES2DecoderPassthroughImpl::SetShaderCacheCallback(
 void GLES2DecoderPassthroughImpl::WaitForReadPixels(base::Closure callback) {}
 
 bool GLES2DecoderPassthroughImpl::WasContextLost() const {
-  return false;
+  return context_lost_;
 }
 
 bool GLES2DecoderPassthroughImpl::WasContextLostByRobustnessExtension() const {
-  return false;
+  return WasContextLost() && reset_by_robustness_extension_;
 }
 
 void GLES2DecoderPassthroughImpl::MarkContextLost(
-    error::ContextLostReason reason) {}
+    error::ContextLostReason reason) {
+  // Only lose the context once.
+  if (WasContextLost()) {
+    return;
+  }
+
+  // Don't make GL calls in here, the context might not be current.
+  command_buffer_service()->SetContextLostReason(reason);
+  context_lost_ = true;
+}
 
 gpu::gles2::Logger* GLES2DecoderPassthroughImpl::GetLogger() {
   return &logger_;
@@ -738,9 +772,54 @@ bool GLES2DecoderPassthroughImpl::FlushErrors() {
   while (error != GL_NO_ERROR) {
     errors_.insert(error);
     had_error = true;
+
+    // Check for context loss on out-of-memory errors
+    if (error == GL_OUT_OF_MEMORY && !WasContextLost() && CheckResetStatus()) {
+      MarkContextLost(error::kOutOfMemory);
+      group_->LoseContexts(error::kUnknown);
+      break;
+    }
+
     error = glGetError();
   }
   return had_error;
+}
+
+bool GLES2DecoderPassthroughImpl::CheckResetStatus() {
+  DCHECK(!WasContextLost());
+  DCHECK(context_->IsCurrent(nullptr));
+
+  if (IsRobustnessSupported()) {
+    // If the reason for the call was a GL error, we can try to determine the
+    // reset status more accurately.
+    GLenum driver_status = glGetGraphicsResetStatusARB();
+    if (driver_status == GL_NO_ERROR) {
+      return false;
+    }
+
+    switch (driver_status) {
+      case GL_GUILTY_CONTEXT_RESET_ARB:
+        MarkContextLost(error::kGuilty);
+        break;
+      case GL_INNOCENT_CONTEXT_RESET_ARB:
+        MarkContextLost(error::kInnocent);
+        break;
+      case GL_UNKNOWN_CONTEXT_RESET_ARB:
+        MarkContextLost(error::kUnknown);
+        break;
+      default:
+        NOTREACHED();
+        return false;
+    }
+    reset_by_robustness_extension_ = true;
+    return true;
+  }
+  return false;
+}
+
+bool GLES2DecoderPassthroughImpl::IsRobustnessSupported() {
+  return has_robustness_extension_ &&
+         context_->WasAllocatedUsingRobustnessExtension();
 }
 
 bool GLES2DecoderPassthroughImpl::IsEmulatedQueryTarget(GLenum target) const {
