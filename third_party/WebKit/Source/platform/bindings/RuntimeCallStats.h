@@ -98,8 +98,15 @@ class PLATFORM_EXPORT RuntimeCallStats {
   static RuntimeCallStats* From(v8::Isolate*);
 
 // Counters
-#define FOR_EACH_COUNTER(V) \
-  V(TestCounter1)           \
+#define FOR_EACH_COUNTER(V)          \
+  V(UpdateStyle)                     \
+  V(UpdateLayout)                    \
+  V(CollectGarbage)                  \
+  V(PerformIdleLazySweep)            \
+  V(UpdateLayerPositionsAfterLayout) \
+  V(PaintContents)                   \
+  V(ProcessStyleSheet)               \
+  V(TestCounter1)                    \
   V(TestCounter2)
 
   enum class CounterId : uint16_t {
